@@ -1,4 +1,5 @@
-# test
+# ApeX-Web
+[![Build Status](https://travis-ci.com/DarkGeekMS/ApeX-Web.svg?token=kEyZRKsdTeESZQ8KMgx8&branch=master)](https://travis-ci.com/DarkGeekMS/ApeX-Web)
 
 ## Project setup
 ```
