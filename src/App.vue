@@ -3,10 +3,10 @@
     <!-- <c11></c11> -->
     <!-- <document></document> -->
     <post></post>
-    
+
     <c11></c11>
     <document></document>
-  <!--  <navBar></navBar> -->
+   <navBar></navBar>
   </div>
 </template>
 
