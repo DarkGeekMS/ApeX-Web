@@ -1,21 +1,21 @@
 <template>
   <div id="app">
-    <c11></c11>
-    <document></document>
-    
+    <!-- <c11></c11> -->
+    <!-- <document></document> -->
+    <post></post>
   </div>
 </template>
 
 <script>
 
-// importing locally 
+// importing locally
 import Vue from 'vue'
 import Elucidate from 'vue-elucidate'
 Vue.use(Elucidate)
 import "vue-elucidate/dist/style.css"
 import docu from "./docu.vue"
 import component1 from "./components/component1.vue"
-
+import post from "./components/Post.vue"
 
 
 
@@ -23,7 +23,8 @@ export default {
   // importing locally
   components:{
     'c11':component1,
-    'document':docu
+    'document':docu,
+    'Post':post
   },
   name: 'app',
   data(){

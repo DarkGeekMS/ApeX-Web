@@ -1,8 +1,8 @@
 <template>
   <ul id = 'list'>
-  <li v-for="number in array">{{number}}</li>  
-  </ul>  
-    
+  <li v-for="number in array">{{number}}</li>
+  </ul>
+
 </template>
 
 <script>
@@ -10,9 +10,9 @@ export default {
   data(){
     return{
       array:['11','22','33']
-    }
-    },
-    props:{
+          }
+        },
+  props:{
       vevo:{
         type:String,
         default:'primary'

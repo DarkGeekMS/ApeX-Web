@@ -80,38 +80,38 @@ export default {
 
                 Not_Hide:true,
                is_Hide:false,
-           
+
        className_up: 'btn btn-light btn-sm is-gray',
        className_down: 'btn btn-light btn-sm is-gray',
-               
+
          pressed_up : false,
          pressed_down : false,
            votes:0,
            Saved:"Save",
            name:"post_name"
-        
-        
+
+
    };
    },
-    
+
   methods: {
       Hide(){
-        
+
       if(this.Not_Hide){
           this.Not_Hide=false;
           this.is_Hide=true;
           alert("Post hidden successfully.")
-          
+
       }
           this.$http.post("http://localhost/Hide",{
-            
-            
+
+
               ID:1, //don't done yet
-              token:'' //don't done yet 
-            
+              token:'' //don't done yet
+
         }).then(function(data){
               console.log(data);
-              
+
           });
           },
       changeColor_up(){
@@ -121,50 +121,50 @@ export default {
                         this.votes+=1;
                         this.pressed_down=false;
                         this.className_down='btn btn-light btn-sm is-gray';
-                        
+
                                              }
-                        
+
                         this.className_up = 'btn btn-light btn-sm is-red';
                         this.pressed_up=true;
-                       
+
                         this.votes+=1;
                         this.$http.post("http://localhost/vote",{
-            
 
-                          ID:'', //don't done yet 
-                          name:'', //don't done 
+
+                          ID:'', //don't done yet
+                          name:'', //don't done
                          direction:1
 
                     }).then(function(data){
                           console.log(data);
 
                       });
-                     
-                      
-                       
+
+
+
                     }
                 else {
                     this.className_up = 'btn btn-light btn-sm is-gray';
-                   
+
                       this.votes-=1;
-                                        
+
                       this.pressed_up=false;
                     this.$http.post("http://localhost/vote",{
-            
-            
+
+
               ID:'',//don't done yet
-              name:'', //don't done 
+              name:'', //don't done
              direction:0
-            
+
         }).then(function(data){
               console.log(data);
-              
+
           });
-                                    
-                    
+
+
                 }
-          
-          
+
+
                 },
        changeColor_down(){
                     if(!this.pressed_down){
@@ -172,34 +172,34 @@ export default {
                             this.votes-=1;
                             this.pressed_up=false;
                             this.className_up = 'btn btn-light btn-sm is-gray';
-                            
+
                         }
                         this.className_down = 'btn btn-light btn-sm is-blue';
                         this.pressed_down=true;
-                       
+
                         this.votes-=1;
                        this.$http.post("http://localhost/vote",{
-            
-            
-                      ID:'', //don't done yet 
-                      name:'', //don't done yet 
+
+
+                      ID:'', //don't done yet
+                      name:'', //don't done yet
                      direction:-1
 
                 }).then(function(data){
                       console.log(data);
 
-                  });           
-                       
+                  });
+
                     }
                 else {
                     this.className_down = 'btn btn-light btn-sm is-gray';
-                    
-                   
+
+
                      this.votes+=1;
                     this.pressed_down=false;
                         this.$http.post("http://localhost/vote",{
-            
-            
+
+
                       ID:'',
                       name:'',
                      direction:0
@@ -207,11 +207,11 @@ export default {
                 }).then(function(data){
                       console.log(data);
 
-                  });                
+                  });
 
-                     
-                   
-                    
+
+
+
                 }
                 },
       Save(){
@@ -219,44 +219,44 @@ export default {
           alert('Post saved successfully');
           this.Saved="unsave";
                this.$http.post( "http://localhost/save",{
-            
-     
-        
+
+
+
               ID:'' ,
                /* token:auth.getAuthHeader()*/
-            
+
         }).then(function(data){
               console.log(data);
-              
+
           });
-          
+
           }
           else{
-              
+
                alert('Post unsaved successfully');
               this.Saved="Save";
-              
+
           }
-          
-          
-          
-          
+
+
+
+
       }
-      
+
   },
-    created(){
-        
+    created(){}
+
       /*  Vue.http.interceptors.push(function(request){
-            
-           request.headers['Authorization']=            
-            
-            
+
+           request.headers['Authorization']=
+
+
         });*/
-            
-        });
-        
-        
-    }
+
+
+
+
+    
   }
 
 </script>
@@ -269,7 +269,7 @@ export default {
             color: rgb(113, 147, 255);
         }
             .is-gray{
-                
+
                 color: rgb(135, 138, 140)
             }
             #up:hover {
@@ -277,19 +277,19 @@ export default {
 }
             #down:hover{
                 color: rgb(90, 117, 204);
-                
+
             }
             .column1 {
            float: left;
             column-rule-width: 1px;
 }
-           
-            
+
+
             h5 {
     text-align: center;
 }
-            
- 
+
+
 #footer{
     width: 100%;
     height: 30px;
