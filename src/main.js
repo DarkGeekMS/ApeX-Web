@@ -12,6 +12,8 @@ Vue.use(VueResource);
 export const globalStore = new Vue({
   data: {
     Val: '',
+    Username: '',
+    login:false
   }
 })
 

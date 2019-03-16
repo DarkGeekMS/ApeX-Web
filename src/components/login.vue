@@ -32,6 +32,7 @@
 
 <script>
 const MODAL_WIDTH = 656;
+import {globalStore} from '../main.js'
 export default {
   name: 'DemoLoginModal',
   data(){
@@ -44,6 +45,9 @@ export default {
   created () {
     this.modalWidth = window.innerWidth < MODAL_WIDTH ? MODAL_WIDTH / 2 : MODAL_WIDTH
   },
+  updated(){
+    globalStore.Username = this.username;
+  },
   methods:{
     post: function()
       {
@@ -52,6 +56,7 @@ export default {
           password : this.pass,
           userid:1
         }).then(function(){
+          globalStore.login = true;
         })
       } 
   }
