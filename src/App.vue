@@ -1,8 +1,8 @@
 <template>
   <div id="app">
-    <c11></c11>
-    <document></document> 
-  <!--  <navBar></navBar> -->
+  <!--  <c11></c11>
+    <document></document> -->
+    <navBar></navBar>
     
   </div>
 </template>
@@ -43,7 +43,6 @@ export default {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
   background-color: #DAE0E6;
   width:100%;
