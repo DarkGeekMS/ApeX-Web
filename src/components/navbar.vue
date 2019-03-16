@@ -4,46 +4,53 @@
 
  <demo-login-modal/>
  <demo-sign-modal/>
- <nav class="navbar navbar-expand-lg navbar-light fixed-top" style="border:1px solid #eee" id="mainNav">
+ <nav class="navbar navbar-expand-lg navbar-light navbar-fixed-top" id="mainNav">
    
-    <a style="margin:-7px -3px"class="navbar-brand" href="#">
-     <img width="45"src="../../public/redditwhite.jpg" >
+    <a class="navbar-brand" href="#">
+          <img style="margin-top:-8px" width="90" src="../../public/reddit2.png" >
     </a>
-      <div class="container">
-       
-        <a class="navbar-brand js-scroll-trigger" style="font-weight:bold; font-size:22px"href="#page-top" id="top-name">reddit
-           <span class="circle"></span>
-        </a>
-        
-        <div class="form-group col-sm-3" style="display:inline-block; margin:5px 5px">
+    <div class="container-fluid"> 
+       <div class="form-group drop" style="display:inline-block; margin:0.5% 0.5%">
           <select class="form-control" name="category">
               <option>Popular</option>
-              <option>All</option>
+              <option> All</option>
               <option>Original Content</option>
           </select>
-        </div>        
-        <div class="form-group has-feedback has-search" style="display:inline-block">
-          <span class="glyphicon glyphicon-search form-control-feedback"></span>
-          <input type="text" class="form-control" placeholder="Search Reddit">
         </div>
+                  
 
-        
-        <div style="margin-right:70px; display:inline-block"></div>
-        <button type="button" class="btn btn-info " @click="$modal.show('demo-login')"> LOG IN </button>
-        <button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off" @click="$modal.show('demo-sign')">SIGN UP</button>  
+      <div class="form-group has-feedback has-search" style="display:inline-block">
+        <span class="glyphicon glyphicon-search form-control-feedback"></span>
+        <input type="text" class="form-control" placeholder="Search Reddit">
+      </div>
 
-       </div> 
+          
+      <div v-show='log' class="form-group log" style="display:inline-block">
+          <button type="button" class="btn btn-info log1" @click="$modal.show('demo-login')"> LOG IN </button>
+          <button type="button" class="btn btn-primary log1" data-toggle="button" aria-pressed="false" autocomplete="off" @click="$modal.show('demo-sign')">SIGN UP</button> 
+      </div> 
+
+      <div v-show='log' class="form-group log" style="display:inline-block">
+            <select class="form-control">
+                <option>My Profile</option>
+                <option>User Settings</option>
+                <option>Log Out</option>
+            </select>
+      </div>  
+
       
- </nav>
 
+    </div> 
+      
+  </nav>
 </div>
 
 </template>
 
 <script>
-
   import DemoLoginModal  from './login.vue'
   import DemoSignModal  from './signup.vue'
+  import {globalStore} from '../main.js'
   export default {
     components:{
       DemoLoginModal,
@@ -52,13 +59,18 @@
     
     data () {
       return {
-        canBeShown: false
+        canBeShown: false,
+        log : false,
+        userLog: globalStore.Username 
       }
     },
     created () {
       setInterval(() => {
         this.canBeShown = !this.canBeShown
       }, 5000)
+    },
+    updated(){
+         this.log = globalStore.login
     },
     methods: {
       conditionalShow () {
@@ -73,38 +85,44 @@
 <style scoped>
 #mainNav{
   background-color: white;
-  width:100%;
-  max-height: 40px;
+  max-height:3%;
+  border:1px solid #eee
 }
-
-#top-name{
-  color:black;
-  margin:-5px -152px;
+.drop
+{
+  width:10%
 }
-
 input{
-  width:600px;
-  margin: 5px;
+  width:100%;
+  margin-top:1.3%;
   display:inline-block;
 } 
-.circle{
-    background-color: #FF4500;
-    width: 4px;
-    height: 4px;
-    border-radius: 50%;
-    display: inline-block;
-    margin:10px -18px;
+.has-search{
+  width:35%;
+  height:100%;
 }
-
 .has-search .form-control-feedback {
     right: initial;
     left: 0;
     color: #ccc;
-    margin: 5px;
+    margin-top:1.3%
 }
 
 .has-search .form-control {
     padding-right: 12px;
     padding-left: 34px;
+}
+.log{
+  height:100%;
+  float:right; 
+  margin:0.5% 0.5%;
+}
+@media(max-width:768px){
+  .log,.log1{
+    display:none
+  }
+  .has-search,.drop{
+      width:30%;
+  }
 }
  </style>
