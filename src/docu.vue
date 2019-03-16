@@ -1,13 +1,13 @@
 <template>
   <div id="app">
-  <doc1></doc1>  
-    
+  <doc1></doc1>
+
   </div>
 </template>
 
 <script>
 
-// importing locally 
+// importing locally
 import Vue from 'vue'
 import Elucidate from 'vue-elucidate'
 Vue.use(Elucidate)
@@ -26,7 +26,7 @@ export default {
     return{
       title:'title described',
       doc1:docComp1
-      
+
     }
   }
 }
