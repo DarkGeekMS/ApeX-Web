@@ -88,13 +88,15 @@ export default {
          pressed_down : false,
            votes:0,
            Saved:"Save",
-           name:"post_name"
+           name:"",
+           token:null
 
 
    };
    },
 
   methods: {
+
       Hide(){
 
       if(this.Not_Hide){
@@ -103,16 +105,14 @@ export default {
           alert("Post hidden successfully.")
 
       }
+
           this.$http.post("http://localhost/Hide",{
 
 
-              ID:1, //don't done yet
-              token:'' //don't done yet
+              ID:this.name,
+              token:this.token
 
-        }).then(function(data){
-              console.log(data);
-
-          });
+        }).then(response => response.json());
           },
       changeColor_up(){
                     if(!this.pressed_up){
@@ -131,14 +131,11 @@ export default {
                         this.$http.post("http://localhost/vote",{
 
 
-                          ID:'', //don't done yet
-                          name:'', //don't done
+                          ID:this.token,
+                          name:this.name,
                          direction:1
 
-                    }).then(function(data){
-                          console.log(data);
-
-                      });
+                    }).then(response => response.json());
 
 
 
@@ -152,14 +149,11 @@ export default {
                     this.$http.post("http://localhost/vote",{
 
 
-              ID:'',//don't done yet
-              name:'', //don't done
+              ID:this.token,
+              name:this.name,
              direction:0
 
-        }).then(function(data){
-              console.log(data);
-
-          });
+        }).then(response => response.json());
 
 
                 }
@@ -181,14 +175,11 @@ export default {
                        this.$http.post("http://localhost/vote",{
 
 
-                      ID:'', //don't done yet
-                      name:'', //don't done yet
+                      ID:this.token,
+                      name:this.name,
                      direction:-1
 
-                }).then(function(data){
-                      console.log(data);
-
-                  });
+                }).then(response => response.json());
 
                     }
                 else {
@@ -200,15 +191,11 @@ export default {
                         this.$http.post("http://localhost/vote",{
 
 
-                      ID:'',
-                      name:'',
+                      ID:this.token,
+                      name:this.name,
                      direction:0
 
-                }).then(function(data){
-                      console.log(data);
-
-                  });
-
+                }).then(response => response.json());
 
 
 
@@ -222,13 +209,12 @@ export default {
 
 
 
-              ID:'' ,
+              ID:this.data.name ,
+              token:this.token
                /* token:auth.getAuthHeader()*/
 
-        }).then(function(data){
-              console.log(data);
-
-          });
+        }).then(response => response.json())
+        ;
 
           }
           else{
@@ -241,23 +227,27 @@ export default {
 
 
 
-      }
+      },
+         getUser() {
+      this.$http.get('http://localhost:8000/api/user',
+      {
+        headers: {
+          'Authorization': 'Bearer eyJ0e.....etc',
+          'Accept': 'application/json'
+        }
+      }).then(response => response.json())
+    ;
 
-  },
-    created(){}
-
-      /*  Vue.http.interceptors.push(function(request){
-
-           request.headers['Authorization']=
-
-
-        });*/
-
-
-
-
-    
   }
+
+
+},
+props:{
+
+  test:{type:String,default:'secondry'}
+},
+
+}
 
 </script>
 
@@ -296,4 +286,5 @@ export default {
     position: absolute;
     bottom: 0px;
 }
+
 </style>

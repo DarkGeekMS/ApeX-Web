@@ -3,6 +3,10 @@
     <!-- <c11></c11> -->
     <!-- <document></document> -->
     <post></post>
+    
+    <c11></c11>
+    <document></document>
+  <!--  <navBar></navBar> -->
   </div>
 </template>
 
@@ -17,6 +21,7 @@ import docu from "./docu.vue"
 import component1 from "./components/component1.vue"
 import post from "./components/Post.vue"
 
+import Nav from './components/navbar.vue'
 
 
 export default {
@@ -24,7 +29,9 @@ export default {
   components:{
     'c11':component1,
     'document':docu,
-    'Post':post
+    'Post':post,
+    'navBar': Nav
+
   },
   name: 'app',
   data(){
@@ -44,6 +51,8 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  background-color: #DAE0E6;
+  width:100%;
+  height:710px
 }
 </style>
