@@ -3,19 +3,19 @@
   <!--  <c11></c11>
     <document></document> -->
     <navBar></navBar>
-    
   </div>
 </template>
 
 <script>
 
-// importing locally 
+// importing locally
 import Vue from 'vue'
 import Elucidate from 'vue-elucidate'
 Vue.use(Elucidate)
 import "vue-elucidate/dist/style.css"
 import docu from "./docu.vue"
 import component1 from "./components/component1.vue"
+import post from "./components/Post.vue"
 
 import Nav from './components/navbar.vue'
 
@@ -25,7 +25,9 @@ export default {
   components:{
     'c11':component1,
     'document':docu,
+    'Post':post,
     'navBar': Nav
+
   },
   name: 'app',
   data(){
