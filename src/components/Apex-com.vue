@@ -26,8 +26,8 @@
   <!-- list of moderators -->
   <div class="content">
     <h3 class="Header">Moderators</h3>
-    <ul style="list-style-type:none;">
-      <li  v-for="moderator in moderators">
+    <ul style="list-style-type:none;" v-for="moderator in moderators">
+      <li>
         <a v-bind:href="geturl(moderator.userID)">{{moderator.userName}}</a>
       </li>
     </ul>
@@ -62,7 +62,7 @@ export default {
     geturl:function(moderatorID)
     {
       this.$http.get('http://localhost/user_data',{params: { userID:this.userID ,
-      moderatorID
+      id:moderatorID
     }}).then(function(response){
       return respose;
     });
@@ -78,7 +78,13 @@ export default {
     this.description = response.description;
     this.moderators=response.moderators;
     });
-  }
+  },
+  mounted () {
+        $.getJSON('http://ilikecoding.net/membership/api/memberships', json => {
+          this.userID = json.userID
+          console.log(json.data)
+        })
+      }
 }
 </script>
 
