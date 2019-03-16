@@ -1,6 +1,7 @@
 <template>
   <div id="app">
 <<<<<<< HEAD
+<<<<<<< HEAD
     <!-- <c11></c11> -->
     <!-- <document></document> -->
     <post></post>
@@ -9,6 +10,11 @@
     <document></document>
   <!--  <navBar></navBar> -->
   <!-- <ApexCom></ApexCom> -->
+=======
+  <!--  <c11></c11>
+    <document></document> -->
+    <navBar></navBar>
+>>>>>>> a0a384627848c90bd402e9b59ebd8ab6e80d17bb
 =======
   <!--  <c11></c11>
     <document></document> -->
@@ -39,7 +45,6 @@ export default {
     'Post':post,
     'navBar': Nav,
     'ApexCom':ApexCom
-
   },
   name: 'app',
   data(){
