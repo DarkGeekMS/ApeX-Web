@@ -1,14 +1,23 @@
 <template>
   <div id="app">
+    <!-- <c11></c11> -->
+    <!-- <document></document> -->
+    <!-- <post></post> -->
+
+    <c11></c11>
+    <document></document>
+   <navBar></navBar>
+
   <!--  <c11></c11>
     <document></document> -->
     <navBar></navBar>
+
   </div>
 </template>
 
 <script>
 
-// importing locally
+
 import Vue from 'vue'
 import Elucidate from 'vue-elucidate'
 Vue.use(Elucidate)
@@ -18,16 +27,16 @@ import component1 from "./components/component1.vue"
 import post from "./components/Post.vue"
 
 import Nav from './components/navbar.vue'
-
+import ApexCom from './components/Apex-com.vue'
 
 export default {
-  // importing locally
+
   components:{
     'c11':component1,
     'document':docu,
     'Post':post,
-    'navBar': Nav
-
+    'navBar': Nav,
+    'ApexCom':ApexCom
   },
   name: 'app',
   data(){
