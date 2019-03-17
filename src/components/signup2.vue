@@ -7,26 +7,26 @@
 
         <div class="partition-title">
         <h1 class=""> Choose your username </h1>
-          <p> 
+          <p>
               Your username is how other community members will see you. This name will be used to credit you for things you share on Reddit. What should we call you?
           </p>
         </div>
               <div style="margin-top: 32px"></div>
 
-        <div class="partition-form"> 
+        <div class="partition-form">
           <form>
 
             <div class="add" >
               <input type="text" class="form-control" name="username" placeholder="CHOOSE A USERNAME" v-model="username" required autofocus>
-                     <div style="margin-top: 20px"></div> 
+                     <div style="margin-top: 20px"></div>
               <input id="password" type="password" class="form-control" name="password" placeholder="PASSWORD" v-model="pass" required autofocus>
             </div>
             <div style="margin-top: 90px"></div>
             <div style="background_color:#eee;border-top:1.5px solid #eee; height:55px" >
               <a class="btn blue" @click="$modal.hide('demo-sign2')">BACK</a>
-              <button class="btn blue" type="submit" style="margin-left:450px" @click="post()">SIGN UP</button>
+              <button :disabled="username == '' && pass =='' " class="btn blue" type="submit" style="margin-left:450px" @click="post()">SIGN UP</button>
             </div>
-            
+
           </form>
         </div>
 
@@ -58,15 +58,19 @@ export default {
   methods:{
     post: function()
       {
-        this.$http.post('https://jsonplaceholder.typicode.com/posts',{ 
+  //      alert('WORK');
+        this.$http.post('https://jsonplaceholder.typicode.com/posts',{
           Email: globalStore.Val,
           Username : this.username,
           password : this.pass
-        }).then(function(){
+        }).then(function(data){
+          console.log('data',data);
           this.$modal.show('demo-sign3'),
           this.$modal.hide('demo-sign1')
+        }).catch(function(data){
+          console.log('error!!')
         })
-      } 
+      },
   }
 }
 </script>
@@ -96,7 +100,7 @@ $background_color: #404142;
     box-sizing: border-box;
     height: 100%;
     width: 100%;
-    
+
   }
   .partition {
     width: 100%;
@@ -124,9 +128,9 @@ $background_color: #404142;
       padding: 0 20px;
       box-sizing: border-box;
     }
-    
+
   }
-  
+
   .autocomplete-fix {
     position: absolute;
     visibility: hidden;
@@ -155,7 +159,7 @@ button.btn {
   padding: 10px 18px;
   cursor: pointer;
   border-radius: 3px;
-  color: white;  
+  color: white;
   box-shadow: 0 4px 8px rgba(#20a0ff, .3);
   background: #4db3ff;
   font-weight: 600;

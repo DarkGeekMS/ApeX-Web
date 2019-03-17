@@ -6,6 +6,9 @@ import App from './App.vue'
 import VueResource from 'vue-resource'
 import VModal from 'vue-js-modal'
 
+
+
+
 Vue.use(VModal);
 Vue.use(VueResource);
 

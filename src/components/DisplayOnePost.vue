@@ -1,60 +1,36 @@
 <template>
-<modal name="demo-login" transition="pop-out" :width="modalWidth" :height="400">
-  <div class="box">
-    <div class="box-part" id="bp-left">
-      <div class="partition" id="partition-register">
 
-        <div class="partition-title">
-        <img  width="45"src="../../public/redditwhite.jpg" >
-         Sign in
-        </div>
-        <div class="partition-form">
 
-          <form>
-            <input type="text" placeholder="Username" v-model="username" required autofocus>
-             <div style="margin-top: 42px"></div>
-            <input id="password" type="password" placeholder="Password" v-model="pass" name="password" required>
-
-            <div style="margin-top: 32px"></div>
-            <button class="btn blue" type="submit" @click="post()" style="display:block">Sign In</button>
-          </form>
-
-           <a class="btn btn-link"  href="#" > Forgot username </a>
-           <a class="btn btn-link"  href="#" > Forgot password </a>
-
-        </div>
-      </div>
-    </div>
-    <div class="box-part" id="bp-right"> </div>
-  </div>
+<modal name="Demo-OnePost" transition="pop-out" :width="1300" :height="700">
+  <post></post>
+  
 </modal>
 </template>
 
 <script>
-const MODAL_WIDTH = 656;
+import post from "./Post.vue"
 export default {
-  name: 'DemoLoginModal',
-  data(){
-        return{
-          modalWidth: MODAL_WIDTH,
-          username: '',
-          pass: ''
-        }
+name: 'DemoOnePost',
+data(){
+return{
+Title:'marc',
+
+     }
+},
+methods:{
+  test:function()
+  {
+    alert('gada3 yala');
+
   },
   created () {
     this.modalWidth = window.innerWidth < MODAL_WIDTH ? MODAL_WIDTH / 2 : MODAL_WIDTH
   },
-  methods:{
-    post: function()
-      {
-        this.$http.post('https://jsonplaceholder.typicode.com/posts',{
-          Username : this.username,
-          password : this.pass,
-          userid:1
-        }).then(function(){
-        })
-      }
-  }
+},
+components:{
+'Post':post
+}
+
 }
 </script>
 

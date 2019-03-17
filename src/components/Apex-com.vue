@@ -70,7 +70,7 @@ export default {
   },
   created()
   {
-    this.$http.get('http://localhost/about',{params: {ApexCom_id :this.ApexComName, 
+    this.$http.get('http://localhost/about',{params: {ApexCom_id :this.ApexComName,
     userID:this.userID
     }}).then(function(response){
     this.rules = response.rules;
@@ -82,7 +82,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .title{
   background-color: deepSkyBlue;
   width:auto;
@@ -118,7 +118,7 @@ button{
 .content
 {
   margin:20px 4px;
-  background-color:#eee; 
+  background-color:#eee;
 }
 .navBar{
   background-color: #eee;

@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div  id="app" style="margin:100px 50px;">
   <div class="card" style="width: 37rem;" v-show="Not_Hide">
 
 <div class="row">
@@ -251,7 +251,7 @@ props:{
 
 </script>
 
-<style>
+<style scoped>
 .is-red{
             color:rgb(255, 69, 0);
         }

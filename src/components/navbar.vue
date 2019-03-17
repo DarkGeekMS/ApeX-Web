@@ -5,11 +5,11 @@
  <demo-login-modal/>
  <demo-sign-modal/>
  <nav class="navbar navbar-expand-lg navbar-light navbar-fixed-top" id="mainNav">
-   
+
     <a class="navbar-brand" href="#">
           <img style="margin-top:-8px" width="90" src="../../public/reddit2.png" >
     </a>
-    <div class="container-fluid"> 
+    <div class="container-fluid">
        <div class="form-group drop" style="display:inline-block; margin:0.5% 0.5%">
           <select class="form-control" name="category">
               <option>Popular</option>
@@ -17,18 +17,18 @@
               <option>Original Content</option>
           </select>
         </div>
-                  
+
 
       <div class="form-group has-feedback has-search" style="display:inline-block">
         <span class="glyphicon glyphicon-search form-control-feedback"></span>
         <input type="text" class="form-control" placeholder="Search Reddit">
       </div>
 
-          
-      <div v-show='log' class="form-group log" style="display:inline-block">
+
+      <div v-show='!log' class="form-group log" style="display:inline-block">
           <button type="button" class="btn btn-info log1" @click="$modal.show('demo-login')"> LOG IN </button>
-          <button type="button" class="btn btn-primary log1" data-toggle="button" aria-pressed="false" autocomplete="off" @click="$modal.show('demo-sign')">SIGN UP</button> 
-      </div> 
+          <button type="button" class="btn btn-primary log1" data-toggle="button" aria-pressed="false" autocomplete="off" @click="$modal.show('demo-sign')">SIGN UP</button>
+      </div>
 
       <div v-show='log' class="form-group log" style="display:inline-block">
             <select class="form-control">
@@ -36,12 +36,12 @@
                 <option>User Settings</option>
                 <option>Log Out</option>
             </select>
-      </div>  
+      </div>
 
-      
 
-    </div> 
-      
+
+    </div>
+
   </nav>
 </div>
 
@@ -56,12 +56,12 @@
       DemoLoginModal,
       DemoSignModal
     },
-    
+
     data () {
       return {
         canBeShown: false,
         log : false,
-        userLog: globalStore.Username 
+        userLog: globalStore.Username
       }
     },
     created () {
@@ -96,7 +96,7 @@ input{
   width:100%;
   margin-top:1.3%;
   display:inline-block;
-} 
+}
 .has-search{
   width:35%;
   height:100%;
@@ -114,7 +114,7 @@ input{
 }
 .log{
   height:100%;
-  float:right; 
+  float:right;
   margin:0.5% 0.5%;
 }
 @media(max-width:768px){

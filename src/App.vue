@@ -2,21 +2,19 @@
   <div id="app">
     <!-- <c11></c11> -->
     <!-- <document></document> -->
-    <post></post>
+     <navBar></navBar>
+<hotposts></hotposts>
+  <!-- <post></post> -->
+  <!-- <OP></OP> -->
 
-    <c11></c11>
-    <document></document>
-   <navBar></navBar>
-
-  <!--  <c11></c11>
-    <document></document> -->
-    <navBar></navBar>
+    <!-- <c11></c11> -->
+    <!-- <document></document> -->
+<!-- <ApexCom></ApexCom> -->
 
   </div>
 </template>
 
 <script>
-
 
 import Vue from 'vue'
 import Elucidate from 'vue-elucidate'
@@ -28,7 +26,8 @@ import post from "./components/Post.vue"
 
 import Nav from './components/navbar.vue'
 import ApexCom from './components/Apex-com.vue'
-
+import hotposts from './components/HotPosts.vue'
+// import OnePost from './components/DisplayOnePost.vue'
 export default {
 
   components:{
@@ -36,7 +35,9 @@ export default {
     'document':docu,
     'Post':post,
     'navBar': Nav,
-    'ApexCom':ApexCom
+    'ApexCom':ApexCom,
+    'hotposts':hotposts
+    // 'OP':OnePost
   },
   name: 'app',
   data(){
