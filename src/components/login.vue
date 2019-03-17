@@ -49,9 +49,9 @@ export default {
       {
         this.$http.post('https://jsonplaceholder.typicode.com/posts',{
           Username : this.username,
-          password : this.pass,
-          userid:1
+          password : this.pass
         }).then(function(){
+          globalStore.login = true;
         })
       }
   }

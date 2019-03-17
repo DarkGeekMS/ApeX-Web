@@ -7,7 +7,7 @@
  <nav class="navbar navbar-expand-lg navbar-light navbar-fixed-top" id="mainNav">
 
     <a class="navbar-brand" href="#">
-          <img style="margin-top:-8px" width="90" src="../../public/reddit2.png" >
+          <img style="margin-top:-8px" width="90" src="../../public/App_Logo.png" >
     </a>
     <div class="container-fluid">
        <div class="form-group drop" style="display:inline-block; margin:0.5% 0.5%">
@@ -32,14 +32,11 @@
 
       <div v-show='log' class="form-group log" style="display:inline-block">
             <select class="form-control">
-                <option>My Profile</option>
-                <option>User Settings</option>
-                <option>Log Out</option>
+                <option><a role="menuitem" tabindex="-1" href="#">My Profile</a></option>
+                <option><a role="menuitem" tabindex="-1" href="#">User Settings</a></option>
+                <option><a role="menuitem" tabindex="-1" href="#" @click="Logout()">Log Out</a></option>
             </select>
       </div>
-
-
-
     </div>
 
   </nav>
@@ -70,7 +67,8 @@
       }, 5000)
     },
     updated(){
-         this.log = globalStore.login
+         this.log = globalStore.login;
+         console.log('gets called when updated me!')
     },
     methods: {
       conditionalShow () {
@@ -78,6 +76,14 @@
           show: this.canBeShown
         })
       },
+      Logout: function(){
+        this.$http.post('https://jsonplaceholder.typicode.com/posts',{
+          Token : globalStore.token
+        }).then(function(){
+          this.log = false;
+          globalStore.token = NULL ;
+        })
+      }
     }
 }
 </script>
@@ -94,7 +100,7 @@
 }
 input{
   width:100%;
-  margin-top:1.3%;
+  margin-top:1.2%;
   display:inline-block;
 }
 .has-search{
@@ -124,5 +130,9 @@ input{
   .has-search,.drop{
       width:30%;
   }
+}
+button{
+  width:100px;
+  margin:0 5px;
 }
  </style>

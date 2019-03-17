@@ -1,55 +1,61 @@
 <template>
-  <div  id="app" style="margin:100px 50px;">
-  <div class="card" style="width: 37rem;" v-show="Not_Hide">
 
+  <div id="app">
+
+
+
+  <!-- <div class="card" style="width: 37rem;" v-show="Not_Hide"> -->
+<div class="panel panel-default" style="width: 37rem;" v-show="Not_Hide">
 <div class="row">
-
+<div class="panel2 panel-default" style="width: 3.7rem;" >
 <div class="column1">
 
-<div class="card" style="width:2.5rem;" >
+
 
 
 
 <button @click="changeColor_up" type="button" :class="className_up" id="up">
-         <i class="fa fa-arrow-up" ></i>
+        <i class="glyphicon glyphicon-arrow-up"></i>
 </button>
 
 <h5>{{votes}}</h5>
 
 <button @click="changeColor_down" type="button" :class="className_down" id="down">
-         <i class="fa fa-arrow-down " ></i>
+         <i class="glyphicon glyphicon-arrow-down"></i>
 </button>
 
 
-
-
-
 </div>
+
+
+
 </div>
 <div class="column">
 
 
 <!--<img src="./assets/a.jpg"  >-->
-<h1>Post</h1>
-
+<h1>Post title</h1>
+<h2>Post Body</h2>
+<h2>Post Body</h2>
+<h2>Post Body</h2>
 
 <footer >
-       <button type="button" class="btn btn-light btn-sm" >
+       <!-- <button type="button" class="btn btn-light btn-sm" >
 
 <i class="far fa-comment-alt"></i>
    Comments</button>
   <button type="button" class="btn btn-light btn-sm" @click="Save">
 
 <i class="fa fa-plus-square"></i>
-{{Saved}}</button>
+{{Saved}}</button> -->
 
-
+<!--
   <div class="btn-group" role="group">
     <button id="btnGroupDrop1" type="button" class="btn btn-light btn-sm" data-toggle="dropdown" >
       <i class="fa fa-ellipsis-h"></i>
     </button>
     <div class="dropdown-menu" >
-      <a class="dropdown-item" href="#" v-on:click="Hide">
+      <a class="dropdown-item" href="#" @click="Hide">
     <i class="fa fa-ban"></i>
 Hide</a>
       <a class="dropdown-item" href="#">
@@ -57,8 +63,44 @@ Hide</a>
 
 Report</a>
     </div>
-  </div>
+  </div> -->
+<!-- <div class="dropdown">
+    <button id="btnGroupDrop1" type="button" class="btn btn-light btn-sm" data-toggle="dropdown">
+        <i class="fa fa-ellipsis-h"></i>
+    </button>
+    <div class="dropdown-menu" >
+      <a class="dropdown-item" href="#" @click="Hide">
+    <i class="fa fa-ban"></i>
+  Hide</a>
+      <a class="dropdown-item" href="#">
+<i class="glyphicon glyphicon-flag"></i>
+  Report</a>
+    </div>
+</div> -->
+<div class="btn-group" role="group" aria-label="...">
 
+  <button type="button" class="btn btn-default "><i class="far fa-comment-alt"></i>
+Comments</button>
+  <button type="button" class="btn btn-default"  @click="Save">
+
+    <i class="fa fa-plus-square" v-if="Saved=='Save'"></i>
+    <i class="glyphicon glyphicon-check" v-if="Saved!='Save'"></i>
+    <!-- <i class="glyphicon glyphicon-ok" v-if="Saved!='Save'"></i> -->
+
+
+    {{Saved}}</button>
+
+  <div class="btn-group" role="group">
+    <button type="button" class="btn btn-default " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+      <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu">
+      <li><a href="#"  @click="Hide"><i class="fa fa-ban"></i>Hide</a></li>
+      <li><a href="#"><i class="glyphicon glyphicon-flag"></i>Report</a></li>
+    </ul>
+  </div>
+</div>
     </footer>
 
 
@@ -69,12 +111,16 @@ Report</a>
 </div>
 
 </div>
+
   </div>
+
 </template>
 
 <script>
+
+
 export default {
-  name: 'app',
+  name: 'App',
    data(){
        return{
 
@@ -96,7 +142,17 @@ export default {
    },
 
   methods: {
+delete(){
+  this.$http.post("http://localhost/DelComment",{
 
+
+      ID:this.name,
+      token:this.token
+
+}).then(response => response.json());
+
+
+},
       Hide(){
 
       if(this.Not_Hide){
@@ -205,7 +261,7 @@ export default {
           if(this.Saved=="Save"){
           alert('Post saved successfully');
           this.Saved="unsave";
-               this.$http.post( "http://localhost/save",{
+          this.$http.post( "https://my-json-server.typicode.com/typicode/demo/posts",{
 
 
 
@@ -246,6 +302,12 @@ props:{
 
   test:{type:String,default:'secondry'}
 },
+mounted () {
+        $.getJSON('http://ilikecoding.net/membership/api/memberships', json => {
+          this.token = json.userID
+          console.log(json.data)
+        })
+      }
 
 }
 
@@ -278,6 +340,15 @@ props:{
             h5 {
     text-align: center;
 }
+.row {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: 0;
+}
 
 
 #footer{
@@ -286,5 +357,12 @@ props:{
     position: absolute;
     bottom: 0px;
 }
-
+.panel2 {
+    margin-bottom: 0px;
+    background-color: #fff;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05);
+    box-shadow: 0 1px 1px rgba(0,0,0,.05);
+}
 </style>

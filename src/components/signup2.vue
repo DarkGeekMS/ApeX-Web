@@ -58,17 +58,14 @@ export default {
   methods:{
     post: function()
       {
-  //      alert('WORK');
         this.$http.post('https://jsonplaceholder.typicode.com/posts',{
-          Email: globalStore.Val,
+          email: globalStore.Val,
           Username : this.username,
           password : this.pass
-        }).then(function(data){
-          console.log('data',data);
-          this.$modal.show('demo-sign3'),
-          this.$modal.hide('demo-sign1')
-        }).catch(function(data){
-          console.log('error!!')
+        }).then(function(){
+          this.$modal.show('demo-sign3');
+          this.$modal.hide('demo-sign1');
+          globalStore.login = true;
         })
       },
   }
