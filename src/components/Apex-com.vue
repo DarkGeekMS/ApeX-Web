@@ -1,10 +1,9 @@
-
 <template>
   <div class="title">
     <h1>{{ApexComName}}</h1>
     <div class="navBar">
-      <a href="#posts">Posts</a>
-      <a href="#subscribers">subscribers</a>
+        <router-link to="/main">Posts</router-link>
+        <router-link to="/subscribersList">subscribers</router-link>
     </div>
   <div class="sideBox">
     <!-- description of Apex-com -->
@@ -26,9 +25,9 @@
   <!-- list of moderators -->
   <div class="content">
     <h3 class="Header">Moderators</h3>
-    <ul style="list-style-type:none;" v-for="moderator in moderators">
-      <li>
-        <a v-bind:href="geturl(moderator.userID)">{{moderator.userName}}</a>
+    <ul style="list-style-type:none;">
+      <li v-for="moderator in moderators">
+        <a  v-bind:href="geturl(moderator.userID)">{{moderator.userName}}</a>
       </li>
     </ul>
   </div>
@@ -79,16 +78,16 @@ export default {
     this.moderators=response.moderators;
     });
   },
-  mounted () {
-        $.getJSON('http://ilikecoding.net/membership/api/memberships', json => {
-          this.userID = json.userID
-          console.log(json.data)
-        })
-      }
+  // mounted () {
+  //       this.json('http://ilikecoding.net/membership/api/memberships', json => {
+  //         this.userID = json.userID
+  //         console.log(json.data)
+  //       })
+  //     }
 }
 </script>
 
-<style>
+<style scoped>
 .title{
   background-color: deepSkyBlue;
   width:auto;
@@ -106,12 +105,14 @@ export default {
   margin:40px 150px;
   float: right;
   background-color:white;
+  border-radius: 8px;
 }
 .Header{
   background-color: DodgerBlue;
   padding:12px;
   margin: 0;
   height:auto;
+  border-radius: 8px;
 }
 button{
   width:150px;
@@ -124,7 +125,8 @@ button{
 .content
 {
   margin:20px 4px;
-  background-color:#eee; 
+  background-color:#eee;
+  border-radius: 8px; 
 }
 .navBar{
   background-color: #eee;

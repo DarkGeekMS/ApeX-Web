@@ -5,9 +5,18 @@ import App from './App.vue'
 //Vue.component('c1',component1)
 import VueResource from 'vue-resource'
 import VModal from 'vue-js-modal'
+import VueRouter from 'vue-router'
+import Routes from './routes'
+
+Vue.use(VueResource);
+Vue.use(VueRouter);
+
+const router = new VueRouter({
+  routes:Routes,
+  mode:'history'
+});
 
 Vue.use(VModal);
-Vue.use(VueResource);
 
 export const globalStore = new Vue({
   data: {
@@ -21,4 +30,5 @@ Vue.config.productionTip = false
 
 new Vue({
   render: h => h(App),
+  router:router,
 }).$mount('#app')
