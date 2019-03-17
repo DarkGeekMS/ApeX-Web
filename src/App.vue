@@ -1,14 +1,8 @@
 <template>
   <div id="app">
-    <!-- <c11></c11> -->
-    <!-- <document></document> -->
     <!-- <post></post> -->
 
-    <c11></c11>
-    <document></document>
-   <navBar></navBar>
-
-  <!--  <c11></c11>
+    <!--  <c11></c11>
     <document></document> -->
     <navBar></navBar>
 
@@ -16,7 +10,6 @@
 </template>
 
 <script>
-
 
 import Vue from 'vue'
 import Elucidate from 'vue-elucidate'

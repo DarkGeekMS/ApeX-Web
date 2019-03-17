@@ -7,7 +7,7 @@
  <nav class="navbar navbar-expand-lg navbar-light navbar-fixed-top" id="mainNav">
    
     <a class="navbar-brand" href="#">
-          <img style="margin-top:-8px" width="90" src="../../public/reddit2.png" >
+          <img style="margin-top:-8px" width="90" src="../../public/App_Logo.png" >
     </a>
     <div class="container-fluid"> 
        <div class="form-group drop" style="display:inline-block; margin:0.5% 0.5%">
@@ -34,7 +34,7 @@
             <select class="form-control">
                 <option><a role="menuitem" tabindex="-1" href="#">My Profile</a></option>
                 <option><a role="menuitem" tabindex="-1" href="#">User Settings</a></option>
-                <option><a role="menuitem" tabindex="-1" href="#" @click="out()">Log Out</a></option>
+                <option><a role="menuitem" tabindex="-1" href="#" @click="Logout()">Log Out</a></option>
             </select>
       </div>
     </div> 
@@ -76,8 +76,13 @@
           show: this.canBeShown
         })
       },
-      out: function(){
-        this.log = false;
+      Logout: function(){
+        this.$http.post('https://jsonplaceholder.typicode.com/posts',{ 
+          Token : globalStore.token
+        }).then(function(){
+          this.log = false;
+          globalStore.token = NULL ;
+        }) 
       }
     }
 }
@@ -125,5 +130,9 @@ input{
   .has-search,.drop{
       width:30%;
   }
+}
+button{
+  width:100px;
+  margin:0 5px;
 }
  </style>

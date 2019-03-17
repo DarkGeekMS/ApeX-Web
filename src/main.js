@@ -10,19 +10,21 @@ import Routes from './routes'
 
 Vue.use(VueResource);
 Vue.use(VueRouter);
+Vue.use(VModal);
 
 const router = new VueRouter({
   routes:Routes,
   mode:'history'
 });
 
-Vue.use(VModal);
+
 
 export const globalStore = new Vue({
   data: {
     Val: '',
     Username: '',
-    login:false
+    login:false,
+    token: ''
   }
 })
 

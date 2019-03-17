@@ -59,13 +59,13 @@ export default {
     post: function()
       {
         this.$http.post('https://jsonplaceholder.typicode.com/posts',{ 
-          Email: globalStore.Val,
+          email: globalStore.Val,
           Username : this.username,
-          password : this.pass,
-          userid:1
+          password : this.pass
         }).then(function(){
-          this.$modal.show('demo-sign3'),
-          this.$modal.hide('demo-sign1')
+          this.$modal.show('demo-sign3');
+          this.$modal.hide('demo-sign1');
+          globalStore.login = true;
         })
       } 
   }

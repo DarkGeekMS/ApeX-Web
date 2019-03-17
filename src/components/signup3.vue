@@ -4,8 +4,8 @@
     <button class="glyphicon-glyphicon-remove-sign" style="margin:0 631px" @click="action()" > X </button>
     <div class="box-part">
       <h1 > Welcome to </h1>
-      <span class="circle"></span>
-      <h2 style="display:inline-block"> Reddit </h2>
+      
+      <h2 style="display:inline-block"> ApEX </h2>
       
     </div>
   </div>
@@ -41,7 +41,7 @@ export default {
 <style lang="scss" scoped >
 $background_color: #404142;
 .box {
-  background: url('../../public/form.jpg');
+  background: url('../../public/App_Logo.png') no-repeat top right;
   overflow: hidden;
   width: 1000px;
   height: 450px;
@@ -62,14 +62,4 @@ $background_color: #404142;
     width: 60%;
   }
 }
-.circle{
-    background-color: #ff2f0e;
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    display: inline-block;
-    margin:18px -70px;
-}
-  
-
 </style>
