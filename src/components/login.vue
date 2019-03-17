@@ -57,7 +57,7 @@ export default {
           userid:1
         }).then(function(){
           globalStore.login = true;
-        })
+        }) 
       } 
   }
 }

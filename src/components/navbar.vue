@@ -25,21 +25,18 @@
       </div>
 
           
-      <div v-show='log' class="form-group log" style="display:inline-block">
+      <div v-show='!log' class="form-group log" style="display:inline-block">
           <button type="button" class="btn btn-info log1" @click="$modal.show('demo-login')"> LOG IN </button>
           <button type="button" class="btn btn-primary log1" data-toggle="button" aria-pressed="false" autocomplete="off" @click="$modal.show('demo-sign')">SIGN UP</button> 
       </div> 
 
       <div v-show='log' class="form-group log" style="display:inline-block">
             <select class="form-control">
-                <option>My Profile</option>
-                <option>User Settings</option>
-                <option>Log Out</option>
+                <option><a role="menuitem" tabindex="-1" href="#">My Profile</a></option>
+                <option><a role="menuitem" tabindex="-1" href="#">User Settings</a></option>
+                <option><a role="menuitem" tabindex="-1" href="#" @click="out()">Log Out</a></option>
             </select>
-      </div>  
-
-      
-
+      </div>
     </div> 
       
   </nav>
@@ -70,7 +67,8 @@
       }, 5000)
     },
     updated(){
-         this.log = globalStore.login
+         this.log = globalStore.login;
+         console.log('gets called when updated me!')
     },
     methods: {
       conditionalShow () {
@@ -78,6 +76,9 @@
           show: this.canBeShown
         })
       },
+      out: function(){
+        this.log = false;
+      }
     }
 }
 </script>
@@ -94,7 +95,7 @@
 }
 input{
   width:100%;
-  margin-top:1.3%;
+  margin-top:1.2%;
   display:inline-block;
 } 
 .has-search{

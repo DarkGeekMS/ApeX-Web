@@ -61,7 +61,8 @@ export default {
         this.$http.post('https://jsonplaceholder.typicode.com/posts',{ 
           Email: globalStore.Val,
           Username : this.username,
-          password : this.pass
+          password : this.pass,
+          userid:1
         }).then(function(){
           this.$modal.show('demo-sign3'),
           this.$modal.hide('demo-sign1')
