@@ -2,7 +2,7 @@
   <div id="app">
     <!-- <c11></c11> -->
     <!-- <document></document> -->
-    <post></post>
+    <!-- <post></post> -->
 
     <c11></c11>
     <document></document>
