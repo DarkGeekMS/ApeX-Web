@@ -2,8 +2,16 @@
   <div class="hotposts">
 <DemoOnePost></DemoOnePost>
 <div  @click="$modal.show('Demo-OnePost')" >
-  <h3>{{Title}}</h3>
-  <p>555 points.588 comments.3d </p>
+  <h3>{{Title1}}</h3>
+  <p>{{point1}} points.{{comment1}} comments.{{time1}} </p>
+</div>
+<div  @click="$modal.show('Demo-OnePost')" >
+  <h3>{{Title2}}</h3>
+  <p>{{point2}} points.{{comment2}} comments.{{time2}} </p>
+</div>
+<div  @click="$modal.show('Demo-OnePost')" >
+  <h3>{{Title3}}</h3>
+  <p>{{point3}} points.{{comment3}} comments.{{time3}} </p>
 </div>
 
 </div>
@@ -14,16 +22,22 @@ import DemoOnePost from './DisplayOnePost.vue'
 export default {
 data(){
 return{
-Title:'Press Here',
-
+Title1:'Title1',
+Title2:'Title2',
+Title3:'Title3',
+point1:'555',
+point2:'55',
+point3:'55',
+comment1:'855',
+comment2:'85',
+comment3:'8',
+time1:'4d',
+time2:'3d',
+time3:'1d'
      }
 },
 methods:{
-  conditionalShow () {
-    this.$modal.show('conditional-modal', {
-      show: this.canBeShown
-    })
-  },
+
 },
 components:{
   DemoOnePost
@@ -40,47 +54,9 @@ components:{
   margin:100px 50px;
   float: right;
   background-color:white;
-  position: fixed;
+  /* position: fixed; */
   bottom: 1;
-    right: 0;
-}
-.navBar {
-  height: auto; /* Full-height: remove this if you want "auto" height */
-  width: 180px; /* Set the width of the sidebar */
-  position: fixed; /* Fixed Sidebar (stay in place on scroll) */
-  /* z-index: 2; /* Stay on top  */
-
-  float: right;
-  margin: 100px 50px;
-  background-color: white; /* Black */
-  overflow-x: hidden; /* Disable horizontal scroll */
-  padding-top: 20px;
-}
-
-/* The navigation menu links */
-.sidenav a {
-  padding: 6px 8px 6px 16px;
-  text-decoration: none;
-  font-size: 25px;
-  color: #818181;
-  display: block;
-}
-
-/* When you mouse over the navigation links, change their color */
-.sidenav a:hover {
-  color: #f1f1f1;
-}
-
-/* Style page content */
-.main {
-  margin-left: 160px; /* Same as the width of the sidebar */
-  padding: 0px 10px;
-}
-
-/* On smaller screens, where height is less than 450px, change the style of the sidebar (less padding and a smaller font size) */
-@media screen and (max-height: 450px) {
-  .sidenav {padding-top: 15px;}
-  .sidenav a {font-size: 18px;}
+  right: 0;
 }
 
 </style>

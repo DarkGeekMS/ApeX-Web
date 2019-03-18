@@ -1,10 +1,14 @@
 <template>
-  <div id="app">
+  <div id="app" >
     <!-- <c11></c11> -->
     <!-- <document></document> -->
-     <navBar></navBar>
+     <!-- <navBar></navBar> -->
+
 <hotposts></hotposts>
-  <!-- <post></post> -->
+
+<!-- <post></post> -->
+<DisplayPosts></DisplayPosts>
+
   <!-- <OP></OP> -->
 
     <!-- <c11></c11> -->
@@ -23,7 +27,7 @@ import "vue-elucidate/dist/style.css"
 import docu from "./docu.vue"
 import component1 from "./components/component1.vue"
 import post from "./components/Post.vue"
-
+import DisplayPosts from "./components/DisplayPosts.vue"
 import Nav from './components/navbar.vue'
 import ApexCom from './components/Apex-com.vue'
 import hotposts from './components/HotPosts.vue'
@@ -36,7 +40,8 @@ export default {
     'Post':post,
     'navBar': Nav,
     'ApexCom':ApexCom,
-    'hotposts':hotposts
+    'hotposts':hotposts,
+    'DisplayPosts':DisplayPosts
     // 'OP':OnePost
   },
   name: 'app',
@@ -44,13 +49,14 @@ export default {
     return{
       title:'title ',
       c11:component1,
-      document:docu
+      document:docu,
     }
   }
 }
 </script>
 
 <style scoped>
+
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -58,6 +64,6 @@ export default {
   color: #2c3e50;
   background-color: #DAE0E6;
   width:100%;
-  height:710px
+  height:100%;
 }
 </style>
