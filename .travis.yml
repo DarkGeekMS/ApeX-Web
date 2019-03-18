@@ -8,7 +8,18 @@ notifications:
     secure: XrUzyyZUUEDQU8Up7n0emYPbD4WDClIFTAMIQwG4GJvUgJHmUjs33GyP+YL2kjP5rNVOU+lzrjDoLPKw31Rg5z3MUjpA6Kx5SRh/zBjB9TdmKQpxHpNpr3rFyF5LYIv9zYyDz5KKP01lpcsmBIF9hbatRW1zYKSjh55lVPdmY53OS7RZvQBiq0DP+M2z8toqK7/vSPFlZD4zpDxbx569WIPHgkWEwnfCHGVvy4o6kTw2HvlGFMBr7TcuGN+CWjNDIoA/Xu+Mzc2aEy6ZfXQ9c/eCfWnW5cCHGHDVnKbuOuj9cp5+lUQX4Mrv+1E8wOkLeAXtm0IY/e3zGqpuNEUStiLQNH4rNpoJ6UDkz5FFpPYUNKdo9wl/Zl5EDrSIEiBjl0bMn66FLMx4YcRU0FC8AdY3xj9BJK6IvBwk6SobMrAI9YmvWj09+wjA5lJrVHl7Q5TsL7Jd9fYyBzotqTHfCyB9FZd69ooaktlniHV0eBHx9WNf/ytzNHGOA6DOqO2CiJgbpdKHwScFZNku/yJxyDpQ3T36FhJXA3nKsAT240/SI0ZLBaT1Eb3qyTN2ePq65SUuvVgsCgg4vs9Cvk+cLTLqFF46/6+2tfqSNKiiQD8tZdeeC0aznG08tljpCcc/FvvxppjuruuVDxDj7021sWozbKh/8YVT9ZHyIUE6Cxk=
   on_success: change
   on_failure: always
-branches: 
-  only: master
+tags: true
+branches:
+  only: 
+    - master
+    - /^v[0-9]+\.[0-9]+\.[0-9]+/
 cache: npm
 before_script: npm install
+# TODO: uncomment when cloud is available
+# before_deploy:
+# deploy:
+#   skip_cleanup: true
+#   provider: script
+#   script: bash scripts/deploy.sh
+#   on:
+#     tags: true
