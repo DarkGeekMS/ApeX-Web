@@ -1,17 +1,12 @@
 <template>
+<div id="PostItme">
 
-  <div id="app">
-
-
-
-  <!-- <div class="card" style="width: 37rem;" v-show="Not_Hide"> -->
-<div class="panel panel-default" style="width: 37rem;" v-show="Not_Hide">
-<div class="row">
-<div class="panel2 panel-default" style="width: 3.7rem;" >
-<div class="column1">
+<div class="panel panel-default" style="width: 62rem;   " v-show="Not_Hide" id="post">
+  <div class="row">
+    <div class="panel2 panel-default" style="width: 3.7rem;" >
 
 
-
+         <div class="column1">
 
 
 <button @click="changeColor_up" type="button" :class="className_up" id="up">
@@ -25,58 +20,25 @@
 </button>
 
 
-</div>
+        </div>
 
 
 
-</div>
-<div class="column">
+
+      </div>
+        <div class="column">
 
 
-<!--<img src="./assets/a.jpg"  >-->
-<h1>Post title</h1>
-<h2>Post Body</h2>
-<h2>Post Body</h2>
-<h2>Post Body</h2>
+      <a href="#" class="fontUser" > subreddit </a>
+      <font class="postby">. Posted by</font>
+      <a href="#" class="postby"> username </a>
+      <font class="postby"> </font>
+      <a href="#" class="postby"> 15 hours ago </a>
+      <h3>Post Body Here </h3>
 
-<footer >
-       <!-- <button type="button" class="btn btn-light btn-sm" >
 
-<i class="far fa-comment-alt"></i>
-   Comments</button>
-  <button type="button" class="btn btn-light btn-sm" @click="Save">
+<footer>
 
-<i class="fa fa-plus-square"></i>
-{{Saved}}</button> -->
-
-<!--
-  <div class="btn-group" role="group">
-    <button id="btnGroupDrop1" type="button" class="btn btn-light btn-sm" data-toggle="dropdown" >
-      <i class="fa fa-ellipsis-h"></i>
-    </button>
-    <div class="dropdown-menu" >
-      <a class="dropdown-item" href="#" @click="Hide">
-    <i class="fa fa-ban"></i>
-Hide</a>
-      <a class="dropdown-item" href="#">
-      <i class="fa fa-flag"></i>
-
-Report</a>
-    </div>
-  </div> -->
-<!-- <div class="dropdown">
-    <button id="btnGroupDrop1" type="button" class="btn btn-light btn-sm" data-toggle="dropdown">
-        <i class="fa fa-ellipsis-h"></i>
-    </button>
-    <div class="dropdown-menu" >
-      <a class="dropdown-item" href="#" @click="Hide">
-    <i class="fa fa-ban"></i>
-  Hide</a>
-      <a class="dropdown-item" href="#">
-<i class="glyphicon glyphicon-flag"></i>
-  Report</a>
-    </div>
-</div> -->
 <div class="btn-group" role="group" aria-label="...">
 
   <button type="button" class="btn btn-default "><i class="far fa-comment-alt"></i>
@@ -100,19 +62,22 @@ Comments</button>
       <li><a href="#"><i class="glyphicon glyphicon-flag"></i>Report</a></li>
     </ul>
   </div>
-</div>
-    </footer>
-
-
-
-
 
 </div>
-</div>
+ <button type="button" v-show="moderator" class="buttonDelete"><i class="glyphicon glyphicon-trash"></i>Delete Post</button>
+
+
+</footer>
+
+
+
+          </div>
+
+       </div>
+
+   </div>
 
 </div>
-
-  </div>
 
 </template>
 
@@ -120,157 +85,162 @@ Comments</button>
 
 
 export default {
-  name: 'App',
+  name: 'PostItem',
    data(){
        return{
 
-                Not_Hide:true,
-               is_Hide:false,
+             Not_Hide :true,
+             is_Hide  :false,
 
-       className_up: 'btn btn-light btn-sm is-gray',
-       className_down: 'btn btn-light btn-sm is-gray',
+             className_up   : 'btn btn-light btn-sm is-gray',
+             className_down : 'btn btn-light btn-sm is-gray',
 
-         pressed_up : false,
-         pressed_down : false,
-           votes:0,
-           Saved:"Save",
-           name:"",
-           token:null
+             pressed_up   : false,
+             pressed_down : false,
 
+             votes  :0,
+             Saved  :"Save",
+             PostId   :"",
+             token  :null,
+             moderator:false
 
-   };
-   },
+            };
+         },
 
   methods: {
-delete(){
-  this.$http.post("http://localhost/DelComment",{
+         deletePost()
+         {
+           this.$http.post("http://localhost/DelComment",{
+           ID    : this.PostId,
+           token : this.token
+
+   }).then(response => response.json());
 
 
-      ID:this.name,
-      token:this.token
+         },
 
-}).then(response => response.json());
+         Hide(){
 
+          if(this.Not_Hide)
+              {
+              this.Not_Hide=false;
+              this.is_Hide=true;
+              alert("Post hidden successfully.")
 
-},
-      Hide(){
+              }
 
-      if(this.Not_Hide){
-          this.Not_Hide=false;
-          this.is_Hide=true;
-          alert("Post hidden successfully.")
+          this.$http.post("http://localhost/Hide",
+          {
+              ID    : this.name,
+              token : this.token
 
-      }
-
-          this.$http.post("http://localhost/Hide",{
-
-
-              ID:this.name,
-              token:this.token
-
-        }).then(response => response.json());
-          },
-      changeColor_up(){
-                    if(!this.pressed_up){
+          }).then(response => response.json());
+              },
+      changeColor_up()
+      {
+            if(!this.pressed_up)
+            {
                         if(this.pressed_down)
                         {
-                        this.votes+=1;
-                        this.pressed_down=false;
-                        this.className_down='btn btn-light btn-sm is-gray';
+                        this.votes         += 1;
+                        this.pressed_down   = false;
+                        this.className_down = 'btn btn-light btn-sm is-gray';
 
-                                             }
+                        }
 
-                        this.className_up = 'btn btn-light btn-sm is-red';
-                        this.pressed_up=true;
+                        this.className_up    = 'btn btn-light btn-sm is-red';
+                        this.pressed_up      =true;
 
-                        this.votes+=1;
-                        this.$http.post("http://localhost/vote",{
+                        this.votes          += 1;
+                        this.$http.post("http://localhost/vote",
+                        {
+
+                          ID       : this.token,
+                          name     : this.PostId,
+                          direction:1
+
+                        }).then(response => response.json());
 
 
-                          ID:this.token,
-                          name:this.name,
-                         direction:1
+
+            }
+                else {
+                      this.className_up = 'btn btn-light btn-sm is-gray';
+                      this.votes     -= 1;
+                      this.pressed_up = false;
+                      this.$http.post("http://localhost/vote",
+                     {
+
+
+                      ID:this.token,
+                      name:this.PostId,
+                      direction:0
 
                     }).then(response => response.json());
 
 
-
                     }
-                else {
-                    this.className_up = 'btn btn-light btn-sm is-gray';
-
-                      this.votes-=1;
-
-                      this.pressed_up=false;
-                    this.$http.post("http://localhost/vote",{
 
 
-              ID:this.token,
-              name:this.name,
-             direction:0
-
-        }).then(response => response.json());
-
-
-                }
-
-
-                },
+        },
        changeColor_down(){
-                    if(!this.pressed_down){
-                        if(this.pressed_up){
+                    if(!this.pressed_down)
+                    {
+                        if(this.pressed_up)
+                        {
                             this.votes-=1;
                             this.pressed_up=false;
                             this.className_up = 'btn btn-light btn-sm is-gray';
 
                         }
-                        this.className_down = 'btn btn-light btn-sm is-blue';
-                        this.pressed_down=true;
+                           this.className_down = 'btn btn-light btn-sm is-blue';
+                           this.pressed_down=true;
 
-                        this.votes-=1;
-                       this.$http.post("http://localhost/vote",{
+                           this.votes-=1;
+                           this.$http.post("http://localhost/vote",
+                       {
 
 
-                      ID:this.token,
-                      name:this.name,
-                     direction:-1
+                            ID      : this.token,
+                            name    : this.PostId,
+                            direction: -1
 
-                }).then(response => response.json());
+                       }).then(response => response.json());
 
-                    }
+                  }
                 else {
                     this.className_down = 'btn btn-light btn-sm is-gray';
 
 
-                     this.votes+=1;
-                    this.pressed_down=false;
-                        this.$http.post("http://localhost/vote",{
+                     this.votes += 1;
+                     this.pressed_down = false;
+                     this.$http.post("http://localhost/vote",
+                     {
 
 
                       ID:this.token,
                       name:this.name,
-                     direction:0
+                      direction:0
 
-                }).then(response => response.json());
+                     }).then(response => response.json());
 
 
 
-                }
+                   }
                 },
       Save(){
-          if(this.Saved=="Save"){
+          if(this.Saved=="Save")
+          {
           alert('Post saved successfully');
           this.Saved="unsave";
-          this.$http.post( "https://my-json-server.typicode.com/typicode/demo/posts",{
+          this.$http.post( "https://my-json-server.typicode.com/typicode/demo/posts",
+          {
 
-
-
-              ID:this.data.name ,
+              ID:this.data.PostId ,
               token:this.token
-               /* token:auth.getAuthHeader()*/
 
-        }).then(response => response.json())
-        ;
+
+          }).then(response => response.json());
 
           }
           else{
@@ -278,30 +248,29 @@ delete(){
                alert('Post unsaved successfully');
               this.Saved="Save";
 
-          }
+             }
 
 
 
 
       },
-         getUser() {
-      this.$http.get('http://localhost:8000/api/user',
-      {
-        headers: {
-          'Authorization': 'Bearer eyJ0e.....etc',
-          'Accept': 'application/json'
-        }
-      }).then(response => response.json())
-    ;
-
-  }
+//         getUser() {
+//      this.$http.get('http://localhost:8000/api/user',
+//      {
+//        headers: {
+//          'Authorization': 'Bearer eyJ0e.....etc',
+//          'Accept': 'application/json'
+//        }
+//      }).then(response => response.json())
+//    ;
+//
+//  }
 
 
 },
-props:{
+props: {
 
-  test:{type:String,default:'secondry'}
-},
+       },
 mounted () {
         $.getJSON('http://ilikecoding.net/membership/api/memberships', json => {
           this.token = json.userID
@@ -317,29 +286,36 @@ mounted () {
 .is-red{
             color:rgb(255, 69, 0);
         }
-        .is-blue{
+
+.is-blue{
             color: rgb(113, 147, 255);
         }
-            .is-gray{
 
-                color: rgb(135, 138, 140)
-            }
-            #up:hover {
-    color: rgb(204, 55, 0);
-}
-            #down:hover{
-                color: rgb(90, 117, 204);
+.is-gray{
+
+             color: rgb(135, 138, 140);
+        }
+
+#up:hover{
+            color: rgb(204, 55, 0);
+         }
+
+#down:hover{
+            color: rgb(90, 117, 204);
 
             }
-            .column1 {
-           float: left;
+.column1 {
+            float: left;
             column-rule-width: 1px;
-}
+         }
+ #post:hover{
+            border-color:rgb(135, 138, 140);
 
+            }
 
-            h5 {
+h5 {
     text-align: center;
-}
+   }
 .row {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -348,7 +324,7 @@ mounted () {
     flex-wrap: wrap;
     margin-right: -15px;
     margin-left: 0;
-}
+     }
 
 
 #footer{
@@ -356,13 +332,37 @@ mounted () {
     height: 30px;
     position: absolute;
     bottom: 0px;
-}
-.panel2 {
+      }
+.panel2{
     margin-bottom: 0px;
     background-color: #fff;
     border: 1px solid transparent;
     border-radius: 4px;
     -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05);
-    box-shadow: 0 1px 1px rgba(0,0,0,.05);
+    box-shadow: 0 1px 1px rgba(0,0,0,.05);}
+
+    .panel {
+        margin-bottom: 19px;
+        margin-left: 100px;
+        margin-top: 100px;
+        background-color: #fff;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05);
+        box-shadow: 0 1px 1px rgba(0,0,0,.05);
+    }
+.fontUser{
+    font-size: 12px;
+    font-weight: 700;
+    color: rgb(28, 28, 28);
+         }
+.postby{
+    font-size: 12px;
+    color: rgb(120, 124, 126);
 }
+.buttonDelete{
+      background-color: #f4511e;
+/*      margin-left: 470px;*/
+} /* Red */
+
 </style>
