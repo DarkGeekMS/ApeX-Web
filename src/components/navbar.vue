@@ -2,12 +2,13 @@
 
 <div>
 
- <demo-login-modal/>
- <demo-sign-modal/>
+ <demo-login-modal> </demo-login-modal>
+ <demo-sign-modal> </demo-sign-modal>
  <nav class="navbar navbar-expand-lg navbar-light navbar-fixed-top" id="mainNav">
 
     <a class="navbar-brand" href="#">
-          <img style="margin-top:-8px" width="90" src="../../public/App_Logo.png" >
+          <img style="margin-top:-8px" width="85" 
+          src="../../public/Logo_small.png" >
     </a>
     <div class="container-fluid">
        <div class="form-group drop" style="display:inline-block; margin:0.5% 0.5%">
@@ -45,8 +46,8 @@
 </template>
 
 <script>
-  import DemoLoginModal  from './login.vue'
-  import DemoSignModal  from './signup.vue'
+  import DemoLoginModal  from './DemoLoginModal.vue'
+  import DemoSignModal  from './DemoSignModal.vue'
   import {globalStore} from '../main.js'
   export default {
     components:{

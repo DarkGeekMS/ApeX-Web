@@ -1,18 +1,14 @@
 <template>
   <div id="app" >
-    <!-- <c11></c11> -->
-    <!-- <document></document> -->
-     <!-- <navBar></navBar> -->
+ 
+     <nav-bar></nav-bar>
 
-<hotposts></hotposts>
+<!-- <hotposts></hotposts> -->
 
 <!-- <post></post> -->
-<DisplayPosts></DisplayPosts>
+<!-- <DisplayPosts></DisplayPosts> -->
 
   <!-- <OP></OP> -->
-
-    <!-- <c11></c11> -->
-    <!-- <document></document> -->
 <!-- <ApexCom></ApexCom> -->
 
   </div>
@@ -28,7 +24,7 @@ import docu from "./docu.vue"
 import component1 from "./components/component1.vue"
 import post from "./components/Post.vue"
 import DisplayPosts from "./components/DisplayPosts.vue"
-import Nav from './components/navbar.vue'
+import NavBar from './components/NavBar.vue'
 import ApexCom from './components/Apex-com.vue'
 import hotposts from './components/HotPosts.vue'
 // import OnePost from './components/DisplayOnePost.vue'
@@ -38,7 +34,7 @@ export default {
     'c11':component1,
     'document':docu,
     'Post':post,
-    'navBar': Nav,
+    'nav-bar': NavBar,
     'ApexCom':ApexCom,
     'hotposts':hotposts,
     'DisplayPosts':DisplayPosts

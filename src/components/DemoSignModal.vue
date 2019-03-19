@@ -1,73 +1,55 @@
 <template>
-<modal name="demo-sign2" transition="pop-out" :width="modalWidth" :height="400">
-  <demo-sign3-modal/>
+<modal name="demo-sign" transition="pop-out" :width="modalWidth" :height="400">
+  <demo-sign2-modal> </demo-sign2-modal>
   <div class="box">
     <div class="box-part" id="bp-left">
       <div class="partition" id="partition-register">
 
         <div class="partition-title">
-        <h1 class=""> Choose your username </h1>
-          <p>
-              Your username is how other community members will see you. This name will be used to credit you for things you share on Reddit. What should we call you?
-          </p>
+        <h1 class=""> Join the worldwide conversation. </h1>
+        <p> 
+            By having a Reddit account, you can subscribe, vote, and  comment on all your favorite Reddit content. </br>
+            Sign up in just seconds.
+        </p>
         </div>
-              <div style="margin-top: 32px"></div>
 
         <div class="partition-form">
-          <form>
+          
+            <input type="email" class="form-control" name="email"
+              placeholder="EMAIL"
+              v-model="Value" required autofocus>
+                 <div style="margin-top: 32px"></div>
+            <button class="btn blue" style="display:block" @click="$modal.show('demo-sign2')">NEXT</button>
 
-            <div class="add" >
-              <input type="text" class="form-control" name="username" placeholder="CHOOSE A USERNAME" v-model="username" required autofocus>
-                     <div style="margin-top: 20px"></div>
-              <input id="password" type="password" class="form-control" name="password" placeholder="PASSWORD" v-model="pass" required autofocus>
-            </div>
-            <div style="margin-top: 90px"></div>
-            <div style="background_color:#eee;border-top:1.5px solid #eee; height:55px" >
-              <a class="btn blue" @click="$modal.hide('demo-sign2')">BACK</a>
-              <button :disabled="username == '' && pass =='' " class="btn blue" type="submit" style="margin-left:450px" @click="post()">SIGN UP</button>
-            </div>
-
-          </form>
         </div>
 
       </div>
     </div>
+    <div class="box-part" id="bp-right"> </div>
   </div>
 </modal>
 </template>
 
 <script>
 const MODAL_WIDTH = 656;
-import DemoSign3Modal  from './signup3.vue'
+import DemoSign2Modal  from './DemoSign2Modal.vue'
 import {globalStore} from '../main.js'
 export default {
-  name: 'Demo-sign2-Modal',
+  name: 'DemoSignModal',
   components:{
-      DemoSign3Modal
+      DemoSign2Modal
   },
   data(){
-        return{
-          modalWidth: MODAL_WIDTH,
-          username: '',
-          pass: ''
-        }
+      return{
+        modalWidth: MODAL_WIDTH,
+        Value: ''
+      }
     },
   created () {
     this.modalWidth = window.innerWidth < MODAL_WIDTH ? MODAL_WIDTH / 2 : MODAL_WIDTH
   },
-  methods:{
-    post: function()
-      {
-        this.$http.post('https://jsonplaceholder.typicode.com/posts',{
-          email: globalStore.Val,
-          Username : this.username,
-          password : this.pass
-        }).then(function(){
-          this.$modal.show('demo-sign3');
-          this.$modal.hide('demo-sign1');
-          globalStore.login = true;
-        })
-      },
+  updated(){
+    globalStore.Val = this.Value;
   }
 }
 </script>
@@ -75,9 +57,7 @@ export default {
 <style lang="scss" scoped >
 body{
   display: grid;
-}
-*{
-  font-family:Arial ,Tohama, fantasy
+  font-family: IBMPlexSans,sans-serif;
 }
 $background_color: #404142;
 .box {
@@ -96,38 +76,38 @@ $background_color: #404142;
     vertical-align: top;
     box-sizing: border-box;
     height: 100%;
-    width: 100%;
-
+    width: 50%;
+    &#bp-right {
+      background: url("../../public/form.jpg") no-repeat top left;
+      border-left: 1px solid #eee;
+    }
+    &#bp-left{
+      
+    }
   }
   .partition {
     width: 100%;
     height: 100%;
     .partition-title {
       box-sizing: border-box;
-      border:1.52px solid #eee;
-      padding: 10px;
+      padding: 30px;
       width: 100%;
       letter-spacing: 1px;
+      font-family: Noto Sans,sans-serif;
         font-size: 14px;
         font-weight: 500;
         line-height: 21px;
-        font-family: "Times New Roman", Times, serif;
-    }
-    .partition-title p{
-      width:65%
     }
     .partition-title h1{
         font-size: 20px;
-        color:black;
-        font-family:JMH Typewriter dry
+        color:black
     }
-    .partition-form .add{
+    .partition-form {
       padding: 0 20px;
       box-sizing: border-box;
     }
-
   }
-
+  
   .autocomplete-fix {
     position: absolute;
     visibility: hidden;
@@ -156,7 +136,7 @@ button.btn {
   padding: 10px 18px;
   cursor: pointer;
   border-radius: 3px;
-  color: white;
+  color: white;  
   box-shadow: 0 4px 8px rgba(#20a0ff, .3);
   background: #4db3ff;
   font-weight: 600;
@@ -189,7 +169,7 @@ input[type=text] {
 display: block;
 box-sizing: border-box;
 margin-bottom: 4px;
-width: 50%;
+width: 100%;
 font-size: 12px;
 line-height: 2;
 border: 0;

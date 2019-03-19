@@ -5,15 +5,22 @@
       <div class="partition" id="partition-register">
 
         <div class="partition-title">
-        <img  width="45"src="../../public/redditwhite.jpg" >
+        <img  width="45"
+         src="../../public//Logo_X.png" >
          Sign in
         </div>
         <div class="partition-form">
 
           <form>
-            <input type="text" placeholder="Username" v-model="username" required autofocus>
+            <input type="text" 
+             placeholder="Username" 
+             v-model="username" required autofocus>
+             
              <div style="margin-top: 42px"></div>
-            <input id="password" type="password" placeholder="Password" v-model="pass" name="password" required>
+            
+            <input id="password" type="password"
+             placeholder="Password" 
+             v-model="pass" name="password" required>
 
             <div style="margin-top: 32px"></div>
             <button class="btn blue" type="submit" @click="post()" style="display:block">Sign In</button>
