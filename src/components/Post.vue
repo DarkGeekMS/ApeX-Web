@@ -1,22 +1,22 @@
-<template>
+<template id="PostTemlate">
 <div id="PostItme">
 
 <div class="panel panel-default" style="width: 62rem;   " v-show="Not_Hide" id="post">
-  <div class="row">
-    <div class="panel2 panel-default" style="width: 3.7rem;" >
+  <div class="row" id="postRow">
+    <div class="panel2 panel-default" style="width: 3.7rem;" id="postSide">
 
 
-         <div class="column1">
+         <div class="column1" id="postCol1">
 
 
 <button @click="changeColor_up" type="button" :class="className_up" id="up">
         <i class="glyphicon glyphicon-arrow-up"></i>
 </button>
 
-<h5>{{votes}}</h5>
+<h5 id="PostVote">{{votes}}</h5>
 
 <button @click="changeColor_down" type="button" :class="className_down" id="down">
-         <i class="glyphicon glyphicon-arrow-down"></i>
+         <i class="glyphicon glyphicon-arrow-down" id="upArrow"></i>
 </button>
 
 
@@ -26,45 +26,45 @@
 
 
       </div>
-        <div class="column">
+        <div class="column" id="postCol2">
 
 
-      <a href="#" class="fontUser" > subreddit </a>
-      <font class="postby">. Posted by</font>
-      <a href="#" class="postby"> username </a>
-      <font class="postby"> </font>
-      <a href="#" class="postby"> 15 hours ago </a>
-      <h3>Post Body Here </h3>
+      <a href="#" class="fontUser" id="subred"> subreddit </a>
+      <font class="postby" id="fontPostby">. Posted by</font>
+      <a href="#" class="postby" id="user"> username </a>
+      <font class="postby" id="fontpost"> </font>
+      <a href="#" class="postby" id="timeAgo"> 15 hours ago </a>
+      <h3 id="postBody">Post Body Here </h3>
 
 
 <footer>
 
-<div class="btn-group" role="group" aria-label="...">
+<div class="btn-group" role="group" aria-label="..." id="drop">
 
-  <button type="button" class="btn btn-default "><i class="far fa-comment-alt"></i>
+  <button type="button" class="btn btn-default " id="commentButton"><i class="far fa-comment-alt" id="commentIcon"></i>
 Comments</button>
-  <button type="button" class="btn btn-default"  @click="Save">
+  <button type="button" class="btn btn-default"  @click="Save" id="SaveButton">
 
-    <i class="fa fa-plus-square" v-if="Saved=='Save'"></i>
-    <i class="glyphicon glyphicon-check" v-if="Saved!='Save'"></i>
-    <!-- <i class="glyphicon glyphicon-ok" v-if="Saved!='Save'"></i> -->
+    <i class="fa fa-plus-square" v-if="Saved=='Save'" id="SaveIcon"></i>
+    <i class="glyphicon glyphicon-check" v-if="Saved!='Save'" id="UnsaveIcon"></i>
+
 
 
     {{Saved}}</button>
 
-  <div class="btn-group" role="group">
-    <button type="button" class="btn btn-default " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+  <div class="btn-group" role="group" id="DropDiv">
+    <button type="button" class="btn btn-default " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="DropButton">
 
-      <span class="caret"></span>
+      <span class="caret" id="postSpan"></span>
     </button>
-    <ul class="dropdown-menu">
-      <li><a href="#"  @click="Hide"><i class="fa fa-ban"></i>Hide</a></li>
-      <li><a href="#"><i class="glyphicon glyphicon-flag"></i>Report</a></li>
+    <ul class="dropdown-menu" id="dropMenu">
+      <li><a href="#"  @click="Hide"><i class="fa fa-ban" id="HideIcon"></i>Hide</a></li>
+      <li><a href="#"><i class="glyphicon glyphicon-flag" id="ReportIcon"></i>Report</a></li>
     </ul>
   </div>
 
 </div>
- <button type="button" v-show="moderator" class="buttonDelete"><i class="glyphicon glyphicon-trash"></i>Delete Post</button>
+ <button type="button" v-show="moderator" class="buttonDelete" id="DeleteButton"><i class="glyphicon glyphicon-trash" id="DeleteIcon"></i>Delete Post</button>
 
 
 </footer>
@@ -81,7 +81,7 @@ Comments</button>
 
 </template>
 
-<script>
+<script id="postScript">
 
 
 export default {
@@ -102,7 +102,8 @@ export default {
              Saved  :"Save",
              PostId   :"",
              token  :null,
-             moderator:false
+             moderator:false,
+             Deleted:false
 
             };
          },
@@ -114,7 +115,9 @@ export default {
            ID    : this.PostId,
            token : this.token
 
-   }).then(response => response.json());
+   }).then(function(){
+     this.Deleted = true;
+   });
 
 
          },
@@ -233,7 +236,7 @@ export default {
           {
           alert('Post saved successfully');
           this.Saved="unsave";
-          this.$http.post( "https://my-json-server.typicode.com/typicode/demo/posts",
+          this.$http.post( "http://localhost/save",
           {
 
               ID:this.data.PostId ,
@@ -254,35 +257,32 @@ export default {
 
 
       },
-//         getUser() {
-//      this.$http.get('http://localhost:8000/api/user',
-//      {
-//        headers: {
-//          'Authorization': 'Bearer eyJ0e.....etc',
-//          'Accept': 'application/json'
-//        }
-//      }).then(response => response.json())
-//    ;
-//
-//  }
+      getUserId(){
+     this.$http.get("http://localhost/me",{token:this.token}).then(response=>{this.userId=response.userID});
+
+
+
+      }
 
 
 },
 props: {
 
        },
-mounted () {
-        $.getJSON('http://ilikecoding.net/membership/api/memberships', json => {
-          this.token = json.userID
-          console.log(json.data)
-        })
-      }
+       created(){
+         this.$http.get("http://localhost/me",{token:this.token}).then(response=>{this.userId=response.userID});
+        if(this.userId==2){
+         this.moderator=true;
+
+        }
+
+       }
 
 }
 
 </script>
 
-<style scoped>
+<style scoped id="PostStyle">
 .is-red{
             color:rgb(255, 69, 0);
         }
