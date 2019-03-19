@@ -1,6 +1,7 @@
 <template>
   <div id="app" >
- 
+
+<hotposts></hotposts>
      <nav-bar></nav-bar>
 
 <!-- <hotposts></hotposts> -->
@@ -8,8 +9,13 @@
 <!-- <post></post> -->
 <!-- <DisplayPosts></DisplayPosts> -->
 
+
   <!-- <OP></OP> -->
-<!-- <ApexCom></ApexCom> -->
+
+    <!-- <c11></c11> -->
+    <!-- <document></document> -->
+<ApexCom></ApexCom>
+<router-view></router-view>
 
   </div>
 </template>
