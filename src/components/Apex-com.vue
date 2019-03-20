@@ -3,7 +3,7 @@
     <h1 id="apexcomName">{{ApexComName}}</h1>
     <div class="navBar" id="navbar">
         <router-link id="postslink" class="navbarLinks" to="/ApexComName">Posts</router-link>
-        <router-link id="subscribersListlink" class="navbarLinks" to="/subscribersList">subscribers</router-link>
+        <router-link v-show="!(type==3)" id="subscribersListlink" class="navbarLinks" to="/subscribersList">subscribers</router-link>
     </div>
   <div class="sideBar" id="sidebar">
     <!-- description of Apex-com -->
@@ -36,11 +36,13 @@
 </template>
 
 <script>
+import {globalStore} from '../main.js'
 export default {
   data () {
     return {
       ApexComName:'Apex-com name',
-      userID: '',
+      token:globalStore.token,
+      type:globalStore.val,
       description:'',
       moderators:[],
       rules:[],
@@ -51,25 +53,40 @@ export default {
   {
     subscribe:function()
     {
-      this.$http.post('http://localhost/subscribe',{
-        ApexCom_id:this.ApexComName,
-        userID:this.userID
-      }).then(function(data){
-        alert('subscribed');
+      axios.post('http://localhost/subscribe', {
+      ApexCom_id:this.ApexComName,
+      Token:this.token
+      })
+      .then(function (response) {
+        if(response){
+          alert('done :)');}
+        else{
+          alert('something wrong happened try again later');
+          }
+          })
+      .catch(function (error) {
+      console.log(error);
       });
     },
   },
-  created()
+  mounted()
   {
-    this.$http.get('http://localhost/about',{params: {ApexCom_id :this.ApexComName,
-    userID:this.userID
-    }}).then(function(response){
+    axios.get('http://localhost/about', {
+    params: {
+      ApexCom_id :this.ApexComName,
+      Token:this.token
+    }
+  })
+  .then(function (response) {
     this.rules = response.rules;
     this.subscribersCount = response.subscribersCount;
     this.description = response.description;
     this.moderators=response.moderators;
-    });
-  },
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+  }
 }
 </script>
 
@@ -78,7 +95,7 @@ export default {
   background-color: deepSkyBlue;
   width:auto;
   height:65px;
-  margin:0 -7px;
+  margin:50px 0px;
   padding:15px;
 }
 .sideBar{

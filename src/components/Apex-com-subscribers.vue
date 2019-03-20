@@ -8,11 +8,12 @@
 </template>
 
 <script>
+import {globalStore} from '../main.js'
 export default {
   data () {
     return {
       ApexComName:'',
-      moderatorID:'',
+      token:globalStore.token,
       SubscribersList:[]
     }
   },
@@ -20,22 +21,38 @@ export default {
   {
     blockUser:function(userName)
     {
-      this.$http.post('http://localhost/block',{
+      axios.post('http://localhost/block', {
         ApexCom_id:this.ApexComName,
         user_id:userName,
-        moderatorID:this.moderatorID
-      }).then(function(data){
-        alert('subscriber has been blocked');
+        token:this.token
+      })
+      .then(function (response) {
+        if(response){
+          alert('done :)');}
+        else{
+          alert('something wrong happened try again later');
+          }
+          })
+      .catch(function (error) {
+      console.log(error);
       });
     },
   },
-    created()
-    {
-      this.$http.get('http://localhost/get_subscribers',{params: {ApexCom_id :this.ApexComName, 
-      userID:this.userID}}).then(function(response){
-        this.SubscribersList=response;
-    });
-  },
+  mounted()
+  {
+    axios.get('http://localhost/get_subscribers', {
+    params: {
+      ApexCom_id :this.ApexComName,
+      token:this.token
+    }
+  })
+  .then(function (response) {
+    this.SubscribersList=response.data;
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+  }
 }
 </script>
 
