@@ -1,7 +1,6 @@
 
-<template>
-  <div class="postsBox">
-    <p>viewpost-tag</p>
+<template id="posts desing">
+  <div class="postsBox" id="posts list">
   </div>
 </template>
 
@@ -9,7 +8,6 @@
 export default {
   data () {
     return {
-
   }
   }
 }

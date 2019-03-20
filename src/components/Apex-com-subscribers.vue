@@ -1,7 +1,8 @@
-<template>
-<div class="list">
-  <div class="box" v-for="sub in SubscribersList">
-    <a  href="#userAccount">{{sub.userName}}</a><button>Remove</button>
+<template id="subscribers list design">
+<div class="list" id="subscribers list">
+  <div id="subscribers box" class="box" v-for="subscriber in SubscribersList" :key="subscriber.id">
+    <a id="subscribers account link" class="accountLink" href="#userAccount">{{subscriber.userName}}</a>
+    <button id="remove button" class="removeButton" v-on="block(subscriber.userName)">Remove</button>
   </div>
 </div>
 </template>
@@ -11,15 +12,28 @@ export default {
   data () {
     return {
       ApexComName:'',
-      userID:'',
+      moderatorID:'',
       SubscribersList:[]
     }
+  },
+  methods:
+  {
+    blockUser:function(userName)
+    {
+      this.$http.post('http://localhost/block',{
+        ApexCom_id:this.ApexComName,
+        user_id:userName,
+        moderatorID:this.moderatorID
+      }).then(function(data){
+        alert('subscriber has been blocked');
+      });
+    },
   },
     created()
     {
       this.$http.get('http://localhost/get_subscribers',{params: {ApexCom_id :this.ApexComName, 
       userID:this.userID}}).then(function(response){
-        //missing
+        this.SubscribersList=response;
     });
   },
 }
@@ -42,16 +56,17 @@ export default {
   margin:20px 5px;
   padding:15px 15px;
 }
-.box h3{
-  display:inline-block;
-}
-button{
-  background-color:DodgerBlue;
+.removeButton{
+  background-color:skyBlue;
   width:auto;
   height:auto;
   border-radius: 8px;
   padding:12px 12px;
   margin:10px 20px;
   float:right;
+  cursor:pointer;
+}
+.accountLink{
+  text-decoration: none;
 }
 </style>

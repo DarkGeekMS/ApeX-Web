@@ -1,22 +1,20 @@
 <template>
 <modal name="demo-sign3" transition="pop-out" :width="modalWidth" :height="450">
   <div class="box">
-    <button class="glyphicon-glyphicon-remove-sign" style="margin:0 631px" @click="action()" > X </button>
-    <div class="box-part">
-      <h1 > Welcome to </h1>
-      
-      <h2 style="display:inline-block"> ApEX </h2>
-      
-    </div>
+    
+    <button class="btn-primary" style="margin:0px 631px" @click="action()"  > X </button>
+    <img width="650" height="450"
+     src="../../public/Logo.png" >
+
   </div>
 </modal>
 </template>
 
 <script>
 const MODAL_WIDTH = 656;
-import DemoSignModal  from './signup.vue'
+import DemoSignModal  from './DemoSignModal.vue'
 export default {
-  name: 'Demosign3Modal',
+  name: 'DemoSign3Modal',
   components:{
       DemoSignModal
   },
@@ -41,16 +39,12 @@ export default {
 <style lang="scss" scoped >
 $background_color: #404142;
 .box {
-  background: url('../../public/App_Logo.png') no-repeat top right;
   overflow: hidden;
   width: 1000px;
   height: 450px;
-  border-radius: 2px;
+  border-radius: 40px;
   box-sizing: border-box;
   box-shadow: 0 0 40px black;
-  color: #000;
-  font-family:Neo Fobia Regular;
-
   .box-part {
     text-align:right;
     margin:17px;

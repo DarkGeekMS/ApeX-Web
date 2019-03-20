@@ -2,9 +2,12 @@
   <div id="app" >
     <!-- <c11></c11> -->
     <!-- <document></document> -->
-     <navBar></navBar>
+  
 
 <hotposts></hotposts>
+     <nav-bar></nav-bar>
+
+<!-- <hotposts></hotposts> -->
 
  <DisplayPosts></DisplayPosts>
 
@@ -22,7 +25,7 @@ import "vue-elucidate/dist/style.css"
 import docu from "./docu.vue"
 import component1 from "./components/component1.vue"
 import DisplayPosts from "./components/DisplayPosts.vue"
-import Nav from './components/navbar.vue'
+import NavBar from './components/NavBar.vue'
 import ApexCom from './components/Apex-com.vue'
 import hotposts from './components/HotPosts.vue'
 
