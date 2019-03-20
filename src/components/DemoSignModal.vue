@@ -17,7 +17,8 @@
           
             <input type="email" class="form-control" name="email"
               placeholder="EMAIL"
-              v-model="Value" required autofocus>
+              v-model="Value"
+              required autofocus>
                  <div style="margin-top: 32px"></div>
             <button class="btn blue" style="display:block" @click="$modal.show('demo-sign2')">NEXT</button>
 

@@ -20,7 +20,7 @@
               <input type="text" class="form-control" name="username" 
                placeholder="CHOOSE A USERNAME" 
                v-model="username" required autofocus>
-                     <div style="margin-top: 20px"></div>
+               <div style="margin-top: 20px"></div>
               <input id="password" type="password" class="form-control" name="password"
                 placeholder="PASSWORD"
                 v-model="pass" required autofocus>
@@ -28,7 +28,7 @@
             <div style="margin-top: 90px"></div>
             <div style="background_color:#eee;border-top:1.5px solid #eee; height:55px" >
               <a class="btn blue" @click="$modal.hide('demo-sign2')">BACK</a>
-              <button :disabled="username == '' && pass =='' " class="btn blue" type="submit" style="margin-left:450px" @click="post()">SIGN UP</button>
+              <button :disabled="check" class="btn blue" type="submit" style="margin-left:450px" @click.prevent="post()">SIGN UP</button>
             </div>
 
           </form>
@@ -44,6 +44,7 @@
 const MODAL_WIDTH = 656;
 import DemoSign3Modal  from './DemoSign3Modal.vue'
 import {globalStore} from '../main.js'
+import Authentication from '../MimicServices/Authentication.js'
 export default {
   name: 'DemoSign2Modal',
   components:{
@@ -52,26 +53,39 @@ export default {
   data(){
         return{
           modalWidth: MODAL_WIDTH,
-          username: '',
-          pass: ''
+          username: "",
+          pass: ""
         }
-    },
+  },
   created () {
     this.modalWidth = window.innerWidth < MODAL_WIDTH ? MODAL_WIDTH / 2 : MODAL_WIDTH
   },
+  computed:{
+    check:function(){
+       if((this.username != '') && (this.pass != ''))
+       {
+         return false;
+       }
+       else{
+         return true;
+       }
+    }
+  },
   methods:{
-    post: function()
-      {
-        this.$http.post('https://jsonplaceholder.typicode.com/posts',{
-          email: globalStore.Val,
-          Username : this.username,
-          password : this.pass
-        }).then(function(){
-          this.$modal.show('demo-sign3');
-          this.$modal.hide('demo-sign1');
-          globalStore.login = true;
-        })
-      },
+    post: function(){
+        axios.post('https://jsonplaceholder.typicode.com/posts', {
+            email: globalStore.Val,
+            username: this.username,
+            password: this.pass
+          }).then(response => {
+             globalStore.login = true;
+             globalStore.Username = this.username;
+             this.$modal.show('demo-sign3');
+             this.$modal.hide('demo-sign1');
+          }).catch(function (error) {
+             console.log(error);
+          });
+      }
   }
 }
 </script>

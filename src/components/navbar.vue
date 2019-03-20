@@ -30,14 +30,19 @@
           <button type="button" class="btn btn-info log1" @click="$modal.show('demo-login')"> LOG IN </button>
           <button type="button" class="btn btn-primary log1" data-toggle="button" aria-pressed="false" autocomplete="off" @click="$modal.show('demo-sign')">SIGN UP</button>
       </div>
-
-      <div v-show='log' class="form-group log" style="display:inline-block">
-            <select class="form-control">
-                <option><a role="menuitem" tabindex="-1" href="#">My Profile</a></option>
-                <option><a role="menuitem" tabindex="-1" href="#">User Settings</a></option>
-                <option><a role="menuitem" tabindex="-1" href="#" @click="Logout()">Log Out</a></option>
-            </select>
-      </div>
+      
+      <div v-show='log' class="btn-group log" id="loggedDiv">
+        <button type="button" data-toggle="dropdown" class="btn btn-default dropdown-toggle" id="loggedbutton">
+          <img  width="20"
+          src="../../public//Logo_X.png" > {{ userLog }}  <span class="caret"></span></button>
+        <ul class="dropdown-menu">
+            <li class="dropdown-header">MY STUFF</li>
+            <li><a href="#">My Profile</a></li>
+            <li><a href="#">User Settings</a></li>
+            <li class="divider"></li>
+            <li><a href="#" @click="Logout()">Log Out</a></li>
+        </ul>
+    </div>
     </div>
 
   </nav>
@@ -59,17 +64,15 @@
       return {
         canBeShown: false,
         log : false,
-        userLog: globalStore.Username
+        userLog: 'Ayat Mostafa'
       }
     },
     created () {
       setInterval(() => {
+        this.log = globalStore.login;
+        this.userLog = globalStore.Username;
         this.canBeShown = !this.canBeShown
       }, 5000)
-    },
-    updated(){
-         this.log = globalStore.login;
-         console.log('gets called when updated me!')
     },
     methods: {
       conditionalShow () {
@@ -78,11 +81,13 @@
         })
       },
       Logout: function(){
-        this.$http.post('https://jsonplaceholder.typicode.com/posts',{
+        axios.post('https://jsonplaceholder.typicode.com/posts',{
           Token : globalStore.token
-        }).then(function(){
+        }).then(response => {
           this.log = false;
-          globalStore.token = NULL ;
+          globalStore.login = false;
+          globalStore.Username = '';
+          globalStore.token = '' ;
         })
       }
     }
@@ -136,4 +141,23 @@ button{
   width:100px;
   margin:0 5px;
 }
+
+#loggedbutton{
+  width:200px;
+  height:40px;
+  margin:-3px 4px;
+  font-size:17px;
+  color:#999999;
+}
+
+#loggedbutton:hover {
+  background: #fff;
+}
+
+ul{
+  width:200px;
+  margin:2px 4px;
+}
+
  </style>
+

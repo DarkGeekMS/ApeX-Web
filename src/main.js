@@ -1,8 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 //importing globally
-//import component1 from './components/component1.vue'
-//Vue.component('c1',component1)
+
 import VueResource from 'vue-resource'
 import VModal from 'vue-js-modal'
 import VueRouter from 'vue-router'
@@ -16,8 +15,6 @@ const router = new VueRouter({
   routes:Routes,
   mode:'history'
 });
-
-
 
 export const globalStore = new Vue({
   data: {

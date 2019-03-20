@@ -23,7 +23,7 @@
              v-model="pass" name="password" required>
 
             <div style="margin-top: 32px"></div>
-            <button class="btn blue" type="submit" @click="post()" style="display:block">Sign In</button>
+            <button class="btn blue" type="submit" @click.prevent="post()" style="display:block">Sign In</button>
           </form>
 
            <a class="btn btn-link"  href="#" > Forgot username </a>
@@ -39,6 +39,7 @@
 
 <script>
 const MODAL_WIDTH = 656;
+import {globalStore} from '../main.js'
 export default {
   name: 'DemoLoginModal',
   data(){
@@ -54,12 +55,16 @@ export default {
   methods:{
     post: function()
       {
-        this.$http.post('https://jsonplaceholder.typicode.com/posts',{
-          Username : this.username,
-          password : this.pass
-        }).then(function(){
-          globalStore.login = true;
-        })
+        axios.post('https://jsonplaceholder.typicode.com/posts', {
+            Username : this.username,
+            password : this.pass
+          }).then(response => {
+             globalStore.login = true;
+             globalStore.Username = this.username;
+             this.$modal.hide('demo-login');
+          }).catch(function (error) {
+             console.log(error);
+          });
       }
   }
 }
