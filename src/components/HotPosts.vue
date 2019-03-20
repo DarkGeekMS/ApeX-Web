@@ -1,17 +1,17 @@
 <template>
-  <div class="hotposts">
-<DemoOnePost></DemoOnePost>
-<div  @click="$modal.show('Demo-OnePost')" >
-  <h3>{{Title1}}</h3>
-  <p>{{point1}} points.{{comment1}} comments.{{time1}} </p>
+  <div id="hotposts" class="hotposts">
+<DemoOnePost id="PostModal"></DemoOnePost>
+<div id="HotPost1" @click="$modal.show('Demo-OnePost')" >
+  <h3 id="TitlePost1">{{Title1}}</h3>
+  <p id="Details1">{{point1}} points.{{comment1}} comments.{{time1}} </p>
 </div>
-<div  @click="$modal.show('Demo-OnePost')" >
-  <h3>{{Title2}}</h3>
-  <p>{{point2}} points.{{comment2}} comments.{{time2}} </p>
+<div id="HotPost2" @click="$modal.show('Demo-OnePost')" >
+  <h3 id="TitlePost2">{{Title2}}</h3>
+  <p id="Details2">{{point2}} points.{{comment2}} comments.{{time2}} </p>
 </div>
-<div  @click="$modal.show('Demo-OnePost')" >
-  <h3>{{Title3}}</h3>
-  <p>{{point3}} points.{{comment3}} comments.{{time3}} </p>
+<div id="HotPost3" @click="$modal.show('Demo-OnePost')" >
+  <h3 id="TitlePost3">{{Title3}}</h3>
+  <p id="Details3">{{point3}} points.{{comment3}} comments.{{time3}} </p>
 </div>
 
 </div>

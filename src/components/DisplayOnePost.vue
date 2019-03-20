@@ -1,17 +1,7 @@
 <template>
-<div>
-
-
-
-<modal  name="Demo-OnePost" transition="pop-out" :width="1300" :height="700" >
-  <div class="PostContent">
-
-
-  <post></post>
-  <post></post>
-  <post></post>
-  <post></post>
-  <post></post>
+<div id="DisplayOnePost">
+<modal id="PopupModal" name="Demo-OnePost" transition="pop-out" :width="1300" :height="700" >
+  <div id="PostContent" class="PostContent">
   <post></post>
 </div>
 </modal>

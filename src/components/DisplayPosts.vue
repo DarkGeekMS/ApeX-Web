@@ -1,10 +1,10 @@
 <template>
-  <div>
-    <DemoOnePost></DemoOnePost>
-    <div v-for="post in posts">
-      <div  @click="$modal.show('Demo-OnePost')" >
+  <div id="DisplayPosts">
+    <!-- <DemoOnePost></DemoOnePost> -->
+    <div id="PostContainer" v-for="post in posts">
+
      <post></post>
-     </div>
+
     </div>
   </div>
 </template>

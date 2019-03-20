@@ -1,6 +1,6 @@
 <template>
-<div id="PostItme">
-
+<div id="PostItme"  @click="ShowModal()" >
+<DemoOnePost id="PostModal"></DemoOnePost>
 <div class="panel panel-default" style="width: 62rem;   " v-show="Not_Hide" id="post">
   <div class="row">
     <div class="panel2 panel-default" style="width: 3.7rem;" >
@@ -53,7 +53,7 @@ Comments</button>
     {{Saved}}</button>
 
   <div class="btn-group" role="group">
-    <button type="button" class="btn btn-default " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <button @click="ToggleShowModalVar()" type="button" class="btn btn-default " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
       <span class="caret"></span>
     </button>
@@ -82,9 +82,10 @@ Comments</button>
 </template>
 
 <script>
-
+// import DemoOnePost from './DisplayOnePost.vue'
 
 export default {
+
   name: 'PostItem',
    data(){
        return{
@@ -102,14 +103,17 @@ export default {
              Saved  :"Save",
              PostId   :"",
              token  :null,
-             moderator:false
-
+             moderator:false,
+             ShowModalVar:true,
             };
          },
 
   methods: {
          deletePost()
          {
+           if(this.ShowModalVar == true){
+           this.ToggleShowModalVar();
+         }
            this.$http.post("http://localhost/DelComment",{
            ID    : this.PostId,
            token : this.token
@@ -120,7 +124,9 @@ export default {
          },
 
          Hide(){
-
+           if(this.ShowModalVar == true){
+           this.ToggleShowModalVar();
+           }
           if(this.Not_Hide)
               {
               this.Not_Hide=false;
@@ -138,6 +144,9 @@ export default {
               },
       changeColor_up()
       {
+        if(this.ShowModalVar == true){
+        this.ToggleShowModalVar();
+      }
             if(!this.pressed_up)
             {
                         if(this.pressed_down)
@@ -184,6 +193,9 @@ export default {
 
         },
        changeColor_down(){
+         if(this.ShowModalVar == true){
+         this.ToggleShowModalVar();
+       }
                     if(!this.pressed_down)
                     {
                         if(this.pressed_up)
@@ -229,6 +241,9 @@ export default {
                    }
                 },
       Save(){
+        if(this.ShowModalVar == true){
+        this.ToggleShowModalVar();
+      }
           if(this.Saved=="Save")
           {
           alert('Post saved successfully');
@@ -254,6 +269,18 @@ export default {
 
 
       },
+      ShowModal(){
+        if(this.ShowModalVar == true){
+          this.$modal.show('Demo-OnePost');}
+          else {
+            this.ToggleShowModalVar();
+          }
+
+
+      },
+      ToggleShowModalVar(){
+        this.ShowModalVar=!this.ShowModalVar;
+              },
 //         getUser() {
 //      this.$http.get('http://localhost:8000/api/user',
 //      {
