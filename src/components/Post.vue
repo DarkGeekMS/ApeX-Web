@@ -82,6 +82,7 @@ Comments</button>
 </template>
 
 <script id="postScript">
+import {globalStore} from '../main.js'
 
 
 export default {
@@ -102,7 +103,7 @@ export default {
              votes  :0,
              Saved  :"Save",
              PostId   :"",
-             token  :null,
+             token  :globalStore.token,
              moderator:false,
              ShowModalVar:true,
              Deleted:false
