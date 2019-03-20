@@ -1,33 +1,33 @@
-<template>
-  <div class="title">
-    <h1>{{ApexComName}}</h1>
-    <div class="navBar">
-        <router-link to="/main">Posts</router-link>
-        <router-link to="/subscribersList">subscribers</router-link>
+<template id="ApexComDesign">
+  <div class="Apexcom" id="Apexcom">
+    <h1 id="apexcomName">{{ApexComName}}</h1>
+    <div class="navBar" id="navbar">
+        <router-link id="postslink" class="navbarLinks" to="/ApexComName">Posts</router-link>
+        <router-link v-show="!(type==3)" id="subscribersListlink" class="navbarLinks" to="/subscribersList">subscribers</router-link>
     </div>
-  <div class="sideBox">
+  <div class="sideBar" id="sidebar">
     <!-- description of Apex-com -->
-    <div class="content">
-     <h3 class="Header">Community Details</h3>
-     <h3>r/{{ApexComName}}</h3>
-     <p>{{subscribersCount}} subscribers</p>
-     <p>{{description}}</p>
-     <button type="button" v-on:click="subscribe()">subscribe</button>
-     <button type="button">create post</button>
+    <div class="content" id="descroption box">
+     <h3 class="Header" id="descroption box header">Community Details</h3>
+     <h3 id="Apex-com-name">r/{{ApexComName}}</h3>
+     <p id="subscribers Count">{{subscribersCount}} subscribers</p>
+     <p id="description">{{description}}</p>
+     <button id="subscribe button" class="button" type="button" v-on:click="subscribe()">subscribe</button>
+     <button id="create post button" class="button" type="button">create post</button>
      </div>
      <!-- list of rules -->
-     <div class="content">
-    <h3 class="Header">Rules</h3>
-    <ol>
-      <li v-for="rule in rules">{{rule}}</li>
+     <div class="content" id="rules box">
+    <h3 class="Header" id="rules box header">Rules</h3>
+    <ol id="rules list">
+      <li id="rules list item" v-for="rule in rules" :key="rule.id">{{rule}}</li>
     </ol>
   </div>
   <!-- list of moderators -->
-  <div class="content">
-    <h3 class="Header">Moderators</h3>
-    <ul style="list-style-type:none;">
-      <li v-for="moderator in moderators">
-        <a  v-bind:href="geturl(moderator.userID)">{{moderator.userName}}</a>
+  <div class="content" id="moderators box">
+    <h3 class="Header" id="moderators box header">Moderators</h3>
+    <ul style="list-style-type:none;" id="moderators list">
+      <li id="moderators list item" v-for="moderator in moderators" :key="moderator.id">
+        <a id="moderators account link" class="AccountLink" href="#link">{{moderator.userName}}</a>
       </li>
     </ul>
   </div>
@@ -36,11 +36,13 @@
 </template>
 
 <script>
+import {globalStore} from '../main.js'
 export default {
   data () {
     return {
       ApexComName:'Apex-com name',
-      userID: '',
+      token:globalStore.token,
+      type:globalStore.val,
       description:'',
       moderators:[],
       rules:[],
@@ -51,82 +53,81 @@ export default {
   {
     subscribe:function()
     {
-      this.$http.post('http://localhost/subscribe',{
-        ApexCom_id:this.ApexComName,
-        userID:this.userID
-      }).then(function(data){
-        alert('subscribed');
+      axios.post('http://localhost/subscribe', {
+      ApexCom_id:this.ApexComName,
+      Token:this.token
+      })
+      .then(function (response) {
+        if(response){
+          alert('done :)');}
+        else{
+          alert('something wrong happened try again later');
+          }
+          })
+      .catch(function (error) {
+      console.log(error);
       });
     },
-    geturl:function(moderatorID)
-    {
-      this.$http.get('http://localhost/user_data',{params: { userID:this.userID ,
-      id:moderatorID
-    }}).then(function(response){
-      return respose;
-    });
-    }
   },
-  created()
+  mounted()
   {
-    this.$http.get('http://localhost/about',{params: {ApexCom_id :this.ApexComName,
-    userID:this.userID
-    }}).then(function(response){
+    axios.get('http://localhost/about', {
+    params: {
+      ApexCom_id :this.ApexComName,
+      Token:this.token
+    }
+  })
+  .then(function (response) {
     this.rules = response.rules;
     this.subscribersCount = response.subscribersCount;
     this.description = response.description;
     this.moderators=response.moderators;
-    });
-  },
-  // mounted () {
-  //       this.json('http://ilikecoding.net/membership/api/memberships', json => {
-  //         this.userID = json.userID
-  //         console.log(json.data)
-  //       })
-  //     }
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+  }
 }
 </script>
 
 <style scoped>
-.title{
+.Apexcom{
   background-color: deepSkyBlue;
   width:auto;
-  height:40px;
-  margin:0 -7px;
+  height:65px;
+  margin:50px 0px;
   padding:15px;
 }
-.title h1{
-  margin: 4px 16px ;
-  padding: 0;
-}
-.sideBox{
+.sideBar{
   width:300px;
   height: auto;
-  margin:40px 150px;
+  margin:40px 86px;
   float: right;
   background-color:white;
   border-radius: 8px;
 }
 .Header{
-  background-color: DodgerBlue;
+  background-color: skyBlue;
   padding:12px;
   margin: 0;
   height:auto;
   border-radius: 8px;
 }
-button{
+.button{
   width:150px;
   margin:5px 70px;
-  background-color:DodgerBlue;
+  background-color:skyBlue;
   padding: 7px;
   border-width: 0px;
   border-radius: 8px;
+  cursor:pointer;
 }
 .content
 {
   margin:20px 4px;
   background-color:#eee;
   border-radius: 8px;
+  padding:1px;
 }
 .navBar{
   background-color: #eee;
@@ -135,12 +136,21 @@ button{
   margin:15px -14px;
   padding:15px;
 }
-.navBar a {
+.navbarLinks{
   color: deepSkyBlue;
   padding: 14px 16px;
   text-decoration: none;
+  margin:7px;
 }
-.navBar a:hover,a:active {
+.navbarLinks:hover {
   background-color: white;
+  border-radius: 8px;
+}
+.AccountLink{
+  text-decoration: none;
+}
+.router-link-active{
+  background-color:white;
+  border-radius: 8px;
 }
 </style>

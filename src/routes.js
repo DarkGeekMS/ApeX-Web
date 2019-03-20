@@ -1,7 +1,7 @@
-import main from './components/Apex-com-posts.vue'
-import sub from './components/Apex-com-subscribers.vue'
-// watch the names
+import ApexComPosts from './components/Apex-com-posts.vue'
+import ApexComCubscribers from './components/Apex-com-subscribers.vue'
+
 export default[
-    {path:'/subscribersList',component:sub},
-    {path:'/main',component:main}
+    {path:'/subscribersList',component:ApexComCubscribers},
+    {path:'/ApexComName',component:ApexComPosts}
 ]

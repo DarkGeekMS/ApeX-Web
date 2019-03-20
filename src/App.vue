@@ -1,14 +1,16 @@
 <template>
   <div id="app" >
- 
+    <!-- <c11></c11> -->
+    <!-- <document></document> -->
+  
+
+<hotposts></hotposts>
      <nav-bar></nav-bar>
 
 <!-- <hotposts></hotposts> -->
 
-<!-- <post></post> -->
-<!-- <DisplayPosts></DisplayPosts> -->
+ <DisplayPosts></DisplayPosts>
 
-  <!-- <OP></OP> -->
 <!-- <ApexCom></ApexCom> -->
 
   </div>
@@ -22,23 +24,20 @@ Vue.use(Elucidate)
 import "vue-elucidate/dist/style.css"
 import docu from "./docu.vue"
 import component1 from "./components/component1.vue"
-import post from "./components/Post.vue"
 import DisplayPosts from "./components/DisplayPosts.vue"
 import NavBar from './components/NavBar.vue'
 import ApexCom from './components/Apex-com.vue'
 import hotposts from './components/HotPosts.vue'
-// import OnePost from './components/DisplayOnePost.vue'
+
 export default {
 
   components:{
     'c11':component1,
     'document':docu,
-    'Post':post,
-    'nav-bar': NavBar,
+    'navBar': Nav,
     'ApexCom':ApexCom,
     'hotposts':hotposts,
     'DisplayPosts':DisplayPosts
-    // 'OP':OnePost
   },
   name: 'app',
   data(){
@@ -61,5 +60,6 @@ export default {
   background-color: #DAE0E6;
   width:100%;
   height:100%;
+  min-width: 1000px;
 }
 </style>

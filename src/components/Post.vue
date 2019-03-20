@@ -1,6 +1,6 @@
 <template id="PostTemlate">
-<div id="PostItme">
-
+<div id="PostItme"  @click="ShowModal()" >
+<DemoOnePost id="PostModal"></DemoOnePost>
 <div class="panel panel-default" style="width: 62rem;   " v-show="Not_Hide" id="post">
   <div class="row" id="postRow">
     <div class="panel2 panel-default" style="width: 3.7rem;" id="postSide">
@@ -53,7 +53,7 @@ Comments</button>
     {{Saved}}</button>
 
   <div class="btn-group" role="group" id="DropDiv">
-    <button type="button" class="btn btn-default " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="DropButton">
+    <button @click="ToggleShowModalVar()" type="button" class="btn btn-default " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="DropButton">
 
       <span class="caret" id="postSpan"></span>
     </button>
@@ -82,9 +82,11 @@ Comments</button>
 </template>
 
 <script id="postScript">
+import {globalStore} from '../main.js'
 
 
 export default {
+
   name: 'PostItem',
    data(){
        return{
@@ -101,16 +103,19 @@ export default {
              votes  :0,
              Saved  :"Save",
              PostId   :"",
-             token  :null,
+             token  :globalStore.token,
              moderator:false,
+             ShowModalVar:true,
              Deleted:false
-
             };
          },
 
   methods: {
          deletePost()
          {
+           if(this.ShowModalVar == true){
+           this.ToggleShowModalVar();
+         }
            this.$http.post("http://localhost/DelComment",{
            ID    : this.PostId,
            token : this.token
@@ -123,7 +128,9 @@ export default {
          },
 
          Hide(){
-
+           if(this.ShowModalVar == true){
+           this.ToggleShowModalVar();
+           }
           if(this.Not_Hide)
               {
               this.Not_Hide=false;
@@ -141,6 +148,9 @@ export default {
               },
       changeColor_up()
       {
+        if(this.ShowModalVar == true){
+        this.ToggleShowModalVar();
+      }
             if(!this.pressed_up)
             {
                         if(this.pressed_down)
@@ -187,6 +197,9 @@ export default {
 
         },
        changeColor_down(){
+         if(this.ShowModalVar == true){
+         this.ToggleShowModalVar();
+       }
                     if(!this.pressed_down)
                     {
                         if(this.pressed_up)
@@ -232,6 +245,9 @@ export default {
                    }
                 },
       Save(){
+        if(this.ShowModalVar == true){
+        this.ToggleShowModalVar();
+      }
           if(this.Saved=="Save")
           {
           alert('Post saved successfully');
@@ -257,12 +273,21 @@ export default {
 
 
       },
-      getUserId(){
-     this.$http.get("http://localhost/me",{token:this.token}).then(response=>{this.userId=response.userID});
+      ShowModal(){
+        if(this.ShowModalVar == true){
+          this.$modal.show('Demo-OnePost');}
+          else {
+            this.ToggleShowModalVar();
+          }
 
 
-
-      }
+      },
+      ToggleShowModalVar(){
+        this.ShowModalVar=!this.ShowModalVar;
+              },
+//        getUserId(){
+this.$http.get("http://localhost/me",{token:this.token}).then(response=>{this.userId=response.userID});
+}
 
 
 },
