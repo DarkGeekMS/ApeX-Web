@@ -2,7 +2,7 @@
 <div class="list" id="subscribers list">
   <div id="subscribers box" class="box" v-for="subscriber in SubscribersList" :key="subscriber.id">
     <a id="subscribers account link" class="accountLink" href="#userAccount">{{subscriber.userName}}</a>
-    <button id="remove button" class="removeButton" v-on="block(subscriber.userName)">Remove</button>
+    <button id="remove button" class="removeButton" v-on:click="blockUser(subscriber.userName)">Remove</button>
   </div>
 </div>
 </template>
@@ -12,7 +12,7 @@ import {globalStore} from '../main.js'
 export default {
   data () {
     return {
-      ApexComName:'',
+      ApexComName:this.$route.params.ApexComName,
       token:globalStore.token,
       SubscribersList:[]
     }
