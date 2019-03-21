@@ -2,14 +2,15 @@
 
 <div>
 
- <demo-login-modal/>
- <demo-sign-modal/>
+ <demo-login-modal> </demo-login-modal>
+ <demo-sign-modal> </demo-sign-modal>
  <nav class="navbar navbar-expand-lg navbar-light navbar-fixed-top" id="mainNav">
-   
+
     <a class="navbar-brand" href="#">
-          <img style="margin-top:-8px" width="90" src="../../public/reddit2.png" >
+          <img style="margin-top:-8px" width="85" 
+          src="../../public/Logo_small.png" >
     </a>
-    <div class="container-fluid"> 
+    <div class="container-fluid">
        <div class="form-group drop" style="display:inline-block; margin:0.5% 0.5%">
           <select class="form-control" name="category">
               <option>Popular</option>
@@ -17,60 +18,61 @@
               <option>Original Content</option>
           </select>
         </div>
-                  
+
 
       <div class="form-group has-feedback has-search" style="display:inline-block">
         <span class="glyphicon glyphicon-search form-control-feedback"></span>
         <input type="text" class="form-control" placeholder="Search Reddit">
       </div>
 
-          
-      <div v-show='log' class="form-group log" style="display:inline-block">
+
+      <div v-show='!log' class="form-group log" style="display:inline-block">
           <button type="button" class="btn btn-info log1" @click="$modal.show('demo-login')"> LOG IN </button>
-          <button type="button" class="btn btn-primary log1" data-toggle="button" aria-pressed="false" autocomplete="off" @click="$modal.show('demo-sign')">SIGN UP</button> 
-      </div> 
-
-      <div v-show='log' class="form-group log" style="display:inline-block">
-            <select class="form-control">
-                <option>My Profile</option>
-                <option>User Settings</option>
-                <option>Log Out</option>
-            </select>
-      </div>  
-
+          <button type="button" class="btn btn-primary log1" data-toggle="button" aria-pressed="false" autocomplete="off" @click="$modal.show('demo-sign')">SIGN UP</button>
+      </div>
       
+      <div v-show='log' class="btn-group log" id="loggedDiv">
+        <button type="button" data-toggle="dropdown" class="btn btn-default dropdown-toggle" id="loggedbutton">
+          <img  width="20"
+          src="../../public//Logo_X.png" > {{ userLog }}  <span class="caret"></span></button>
+        <ul class="dropdown-menu">
+            <li class="dropdown-header">MY STUFF</li>
+            <li><a href="#">My Profile</a></li>
+            <li><a href="#">User Settings</a></li>
+            <li class="divider"></li>
+            <li><a href="#" @click="Logout()">Log Out</a></li>
+        </ul>
+    </div>
+    </div>
 
-    </div> 
-      
   </nav>
 </div>
 
 </template>
 
 <script>
-  import DemoLoginModal  from './login.vue'
-  import DemoSignModal  from './signup.vue'
+  import DemoLoginModal  from './DemoLoginModal.vue'
+  import DemoSignModal  from './DemoSignModal.vue'
   import {globalStore} from '../main.js'
   export default {
     components:{
       DemoLoginModal,
       DemoSignModal
     },
-    
+
     data () {
       return {
         canBeShown: false,
         log : false,
-        userLog: globalStore.Username 
+        userLog: 'Ayat Mostafa'
       }
     },
     created () {
       setInterval(() => {
+        this.log = globalStore.login;
+        this.userLog = globalStore.Username;
         this.canBeShown = !this.canBeShown
       }, 5000)
-    },
-    updated(){
-         this.log = globalStore.login
     },
     methods: {
       conditionalShow () {
@@ -78,6 +80,16 @@
           show: this.canBeShown
         })
       },
+      Logout: function(){
+        axios.post('https://jsonplaceholder.typicode.com/posts',{
+          Token : globalStore.token
+        }).then(response => {
+          this.log = false;
+          globalStore.login = false;
+          globalStore.Username = '';
+          globalStore.token = '' ;
+        })
+      }
     }
 }
 </script>
@@ -94,9 +106,9 @@
 }
 input{
   width:100%;
-  margin-top:1.3%;
+  margin-top:1.2%;
   display:inline-block;
-} 
+}
 .has-search{
   width:35%;
   height:100%;
@@ -114,7 +126,7 @@ input{
 }
 .log{
   height:100%;
-  float:right; 
+  float:right;
   margin:0.5% 0.5%;
 }
 @media(max-width:768px){
@@ -125,4 +137,27 @@ input{
       width:30%;
   }
 }
+button{
+  width:100px;
+  margin:0 5px;
+}
+
+#loggedbutton{
+  width:200px;
+  height:40px;
+  margin:-3px 4px;
+  font-size:17px;
+  color:#999999;
+}
+
+#loggedbutton:hover {
+  background: #fff;
+}
+
+ul{
+  width:200px;
+  margin:2px 4px;
+}
+
  </style>
+
