@@ -14,7 +14,7 @@ import "vue-elucidate/dist/style.css"
 import docu from "./docu.vue"
 import component1 from "./components/component1.vue"
 import HomePage from "./components/HomePage.vue"
-import navbar from "./components/NavBar.vue"
+import navbar from "./components/navbar.vue"
 
 export default {
 
@@ -52,7 +52,7 @@ export default {
     background-color: #DAE0E6;
     width:100%;
     height:100%;
-  
+
 
 }
 </style>
