@@ -1,4 +1,5 @@
 <template>
+
 <div id="DisplayOnePost" class="Modalview">
 <modal id="PopupModal" name="Demo-OnePost" transition="pop-out" :width="1300" :height="700" >
   <div id="PostContent" class="PostContent">
@@ -59,7 +60,4 @@ width: 1300px;
   min-width: 1300px;
   min-height: 700px;
 
-
-
-}
 </style>

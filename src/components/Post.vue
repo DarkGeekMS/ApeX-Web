@@ -28,14 +28,12 @@
       </div>
         <div class="column" id="postCol2">
 
-
       <a href="#" class="fontUser" id="subred"> {{postdata.apex_id}} </a>
       <font class="postby" id="fontPostby">. Posted by</font>
       <a href="#" class="postby" id="user">{{postdata.postedby}}  </a>
       <font class="postby" id="fontpost"> </font>
       <a href="#" class="postby" id="timeAgo"> 15 hours ago </a>
       <h3 id="postBody"> {{postdata.content}} </h3>
-
 
 <footer>
 
@@ -84,7 +82,6 @@ Comments</button>
 
 <script id="postScript">
 import {globalStore} from '../main.js'
-
 
 export default {
 
@@ -259,7 +256,6 @@ postdata3:this.postdata,
                        console.log(error);
                      });
 
-
                    }
                 },
       Save(){
@@ -294,7 +290,6 @@ postdata3:this.postdata,
                 ID:this.PostId ,
                 token:this.token
 
-
             }).then(function(response){
               if(response){
                 alert('Post unsaved successfully');
@@ -302,7 +297,6 @@ postdata3:this.postdata,
             } ).catch(function (error)
             {
                  console.log(error);
-
             });
                //alert('Post unsaved successfully');
               this.Saved="Save";
@@ -325,7 +319,6 @@ postdata3:this.postdata,
             this.ToggleShowModalVar();
           }
 
-
       },
       ToggleShowModalVar(){
         this.ShowModalVar=!this.ShowModalVar;
@@ -333,8 +326,6 @@ postdata3:this.postdata,
 //       getUserId(){
 // //axios.get("http://localhost/me",{token:this.token}).then(response=>{this.userId=response.userID});
 // }
-
-
 },
 props: {
 postdata:{},

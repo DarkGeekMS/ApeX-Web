@@ -1,5 +1,5 @@
 <template>
-  <div id="app" >
+  <div id="app" 
 <navbar></navbar>
 <router-view></router-view>
  </div>
@@ -15,14 +15,12 @@ import docu from "./docu.vue"
 import component1 from "./components/component1.vue"
 import HomePage from "./components/HomePage.vue"
 import navbar from "./components/navbar.vue"
-
 export default {
 
   components:{
     'c11':component1,
     'document':docu,
     navbar,
-
   },
   methods:{
 
@@ -34,7 +32,6 @@ export default {
       title:'title ',
       c11:component1,
       document:docu,
-
     }
   }
 }
@@ -52,7 +49,3 @@ export default {
     background-color: #DAE0E6;
     width:100%;
     height:100%;
-  
-
-}
-</style>

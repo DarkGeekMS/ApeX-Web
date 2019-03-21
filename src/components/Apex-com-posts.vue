@@ -11,7 +11,6 @@
 <script>
 import DisplayPosts from './DisplayPosts.vue'
 
-
 export default {
   data () {
     return {
@@ -19,7 +18,6 @@ export default {
 },
   components:{
     DisplayPosts,
-
   }
 }
 </script>

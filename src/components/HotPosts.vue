@@ -38,8 +38,6 @@ methods:{
 
 },
 components:{
-  
-
 }
 
 }
