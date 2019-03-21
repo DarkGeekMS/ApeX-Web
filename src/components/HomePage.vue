@@ -14,7 +14,7 @@
 
 import component1 from "./component1.vue"
 import DisplayPosts from "./DisplayPosts.vue"
-import NavBar from './navbar.vue'
+import NavBar from './NavBar.vue'
 import hotposts from './HotPosts.vue'
 
 
