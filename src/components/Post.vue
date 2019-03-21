@@ -80,6 +80,7 @@ Comments</button>
 </div>
 
 </template>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
 <script id="postScript">
 import {globalStore} from '../main.js'
@@ -116,16 +117,19 @@ export default {
            if(this.ShowModalVar == true){
            this.ToggleShowModalVar();
          }
-           this.$http.post("http://localhost/DelComment",{
+           axios.post("http://localhost/DelComment",{
            ID    : this.PostId,
            token : this.token
 
    }).then(function(){
      this.Deleted = true;
-   });
+   }).catch(function (error)
+   {
+    console.log(error);
 
 
-         },
+     });
+     },
 
          Hide(){
            if(this.ShowModalVar == true){
@@ -139,13 +143,16 @@ export default {
 
               }
 
-          this.$http.post("http://localhost/Hide",
+          axios.post("http://localhost/Hide",
           {
-              ID    : this.name,
-              token : this.token
+              name    : this.PostId,
+              ID : this.token
 
-          }).then(response => response.json());
-              },
+          }).then(response => response.json()).catch(function (error)
+          {
+             console.log(error);
+          });
+           },
       changeColor_up()
       {
         if(this.ShowModalVar == true){
@@ -165,23 +172,24 @@ export default {
                         this.pressed_up      =true;
 
                         this.votes          += 1;
-                        this.$http.post("http://localhost/vote",
+                        axios.post("http://localhost/vote",
                         {
 
                           ID       : this.token,
                           name     : this.PostId,
                           direction:1
 
-                        }).then(response => response.json());
+                        }).then(response => response.json()).catch(function (error)
+                        {
+                      console.log(error);
 
-
-
-            }
+                    });
+                  }
                 else {
                       this.className_up = 'btn btn-light btn-sm is-gray';
                       this.votes     -= 1;
                       this.pressed_up = false;
-                      this.$http.post("http://localhost/vote",
+                      axios.post("http://localhost/vote",
                      {
 
 
@@ -189,10 +197,12 @@ export default {
                       name:this.PostId,
                       direction:0
 
-                    }).then(response => response.json());
+                    }).then(response => response.json()).catch(function (error)
+                    {
+                     console.log(error);
+                   });
+                 }
 
-
-                    }
 
 
         },
@@ -213,7 +223,7 @@ export default {
                            this.pressed_down=true;
 
                            this.votes-=1;
-                           this.$http.post("http://localhost/vote",
+                           axios.post("http://localhost/vote",
                        {
 
 
@@ -221,25 +231,29 @@ export default {
                             name    : this.PostId,
                             direction: -1
 
-                       }).then(response => response.json());
+                       }).then(response => response.json()).catch(function (error)
+                       {
+                        console.log(error);
 
-                  }
+                      });
+                    }
                 else {
                     this.className_down = 'btn btn-light btn-sm is-gray';
 
 
                      this.votes += 1;
                      this.pressed_down = false;
-                     this.$http.post("http://localhost/vote",
+                     axios.post("http://localhost/vote",
                      {
 
 
                       ID:this.token,
-                      name:this.name,
+                      name:this.PostId,
                       direction:0
 
-                     }).then(response => response.json());
-
+                    }).then(response => response.json()).catch(function (error) {
+                       console.log(error);
+                     });
 
 
                    }
@@ -252,16 +266,19 @@ export default {
           {
           alert('Post saved successfully');
           this.Saved="unsave";
-          this.$http.post( "http://localhost/save",
+          axios.post( "http://localhost/save",
           {
 
-              ID:this.data.PostId ,
+              ID:this.PostId ,
               token:this.token
 
 
-          }).then(response => response.json());
+          }).then(response => response.json()).catch(function (error)
+          {
+               console.log(error);
 
-          }
+          });
+        }
           else{
 
                alert('Post unsaved successfully');
@@ -285,9 +302,9 @@ export default {
       ToggleShowModalVar(){
         this.ShowModalVar=!this.ShowModalVar;
               },
-//        getUserId(){
-this.$http.get("http://localhost/me",{token:this.token}).then(response=>{this.userId=response.userID});
-}
+//       getUserId(){
+// //axios.get("http://localhost/me",{token:this.token}).then(response=>{this.userId=response.userID});
+// }
 
 
 },
@@ -295,15 +312,21 @@ props: {
 
        },
        created(){
-         this.$http.get("http://localhost/me",{token:this.token}).then(response=>{this.userId=response.userID});
-        if(this.userId==2){
-         this.moderator=true;
+         axios.get("http://localhost/me",{token:this.token}).then(response=>{this.userId=response.userID}).catch(function (error)
+         {
+          console.log(error);
+        });
 
-        }
+
+
+       if(this.userId==2){
+        this.moderator=true;
 
        }
 
+},
 }
+
 
 </script>
 
