@@ -1,15 +1,14 @@
 <template>
   <div id="app" >
-    <!-- <c11></c11> -->
-    <!-- <document></document> -->
+    
   
 
-<hotposts></hotposts>
-     <nav-bar></nav-bar>
+<!-- <hotposts></hotposts> -->
+     <navBar></navBar>
 
 <!-- <hotposts></hotposts> -->
 
- <DisplayPosts></DisplayPosts>
+ <!-- <DisplayPosts></DisplayPosts> -->
 
 <!-- <ApexCom></ApexCom> -->
 
@@ -19,8 +18,8 @@
 <script>
 
 import Vue from 'vue'
-import Elucidate from 'vue-elucidate'
-Vue.use(Elucidate)
+//import Elucidate from 'vue-elucidate'
+//Vue.use(Elucidate)
 import "vue-elucidate/dist/style.css"
 import docu from "./docu.vue"
 import component1 from "./components/component1.vue"
@@ -34,7 +33,7 @@ export default {
   components:{
     'c11':component1,
     'document':docu,
-    'navBar': Nav,
+    'navBar': NavBar,
     'ApexCom':ApexCom,
     'hotposts':hotposts,
     'DisplayPosts':DisplayPosts
@@ -42,9 +41,6 @@ export default {
   name: 'app',
   data(){
     return{
-      title:'title ',
-      c11:component1,
-      document:docu,
     }
   }
 }
