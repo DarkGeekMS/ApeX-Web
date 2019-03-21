@@ -6,7 +6,7 @@
       <div class="partition" id="partition-register">
 
         <div class="partition-title">
-        <h1 class=""> Join the worldwide conversation. </h1>
+        <h1> Join the worldwide conversation. </h1>
         <p> 
             By having a Reddit account, you can subscribe, vote, and  comment on all your favorite Reddit content. </br>
             Sign up in just seconds.
@@ -19,8 +19,10 @@
               placeholder="EMAIL"
               v-model="Value"
               required autofocus>
-                 <div style="margin-top: 32px"></div>
-            <button class="btn blue" style="display:block" @click="$modal.show('demo-sign2')">NEXT</button>
+            <span class="lead"> {{error}}  </span>
+
+            <div style="margin-top: 32px"></div>
+            <button class="btn blue" style="display:block" @click.prevent="checkEmail()">NEXT</button>
 
         </div>
 
@@ -43,7 +45,8 @@ export default {
   data(){
       return{
         modalWidth: MODAL_WIDTH,
-        Value: ''
+        Value: '',
+        error: ''
       }
     },
   created () {
@@ -51,6 +54,26 @@ export default {
   },
   updated(){
     globalStore.Val = this.Value;
+  },
+  methods:{
+    validateEmail: function(email) {
+      var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return re.test(String(email).toLowerCase());
+    },
+    checkEmail: function(){
+      if(this.Value == '')
+      {
+         this.error = 'Email is required'
+      }
+      else if(!(this.validateEmail(this.Value)))
+      {
+         this.error = 'please fix your email to continue'
+      }
+      else{
+        this.$modal.show('demo-sign2');
+        this.error = ''
+      }
+    }
   }
 }
 </script>
@@ -107,6 +130,12 @@ $background_color: #404142;
       padding: 0 20px;
       box-sizing: border-box;
     }
+    .partition-form span{
+      color: #FF0000;
+      display: block;
+      font-size:14px;
+      margin-left:15px
+    }
   }
   
   .autocomplete-fix {
@@ -120,7 +149,7 @@ $background_color: #404142;
     top: 0;
   }
 }
-.pop-out-enter-active,
+/*.pop-out-enter-active,
 .pop-out-leave-active {
   transition: all 0.5s;
 }
@@ -128,7 +157,7 @@ $background_color: #404142;
 .pop-out-leave-active {
   opacity: 0;
   transform: translateY(24px);
-}
+} */
 
 button.btn {
   outline: none;
