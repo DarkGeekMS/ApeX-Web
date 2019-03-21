@@ -121,8 +121,9 @@ export default {
            ID    : this.PostId,
            token : this.token
 
-   }).then(function(){
+   }).then(function(response){
      this.Deleted = true;
+     alert("Deleted successfully");
    }).catch(function (error)
    {
     console.log(error);
@@ -148,7 +149,10 @@ export default {
               name    : this.PostId,
               ID : this.token
 
-          }).then(response => response.json()).catch(function (error)
+          }).then(function(response){
+            if(response){
+            alert("Hidden successfully")}
+          }).catch(function (error)
           {
              console.log(error);
           });
@@ -264,7 +268,7 @@ export default {
       }
           if(this.Saved=="Save")
           {
-          alert('Post saved successfully');
+          //alert('Post saved successfully');
           this.Saved="unsave";
           axios.post( "http://localhost/save",
           {
@@ -273,15 +277,34 @@ export default {
               token:this.token
 
 
-          }).then(response => response.json()).catch(function (error)
+          }).then(function(response){
+            if(response){
+              alert('Post saved successfully');
+            }
+          } ).catch(function (error)
           {
                console.log(error);
 
           });
         }
           else{
+            axios.post( "http://localhost/save",
+            {
 
-               alert('Post unsaved successfully');
+                ID:this.PostId ,
+                token:this.token
+
+
+            }).then(function(response){
+              if(response){
+                alert('Post unsaved successfully');
+              }
+            } ).catch(function (error)
+            {
+                 console.log(error);
+
+            });
+               //alert('Post unsaved successfully');
               this.Saved="Save";
 
              }
