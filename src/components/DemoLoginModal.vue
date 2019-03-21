@@ -5,18 +5,25 @@
       <div class="partition" id="partition-register">
 
         <div class="partition-title">
-        <img  width="45"src="../../public/redditwhite.jpg" >
+        <img  width="45"
+         src="../../public//Logo_X.png" >
          Sign in
         </div>
         <div class="partition-form">
-          
+
           <form>
-            <input type="text" placeholder="Username" v-model="username" required autofocus> 
-             <div style="margin-top: 42px"></div> 
-            <input id="password" type="password" placeholder="Password" v-model="pass" name="password" required>
+            <input type="text" 
+             placeholder="Username" 
+             v-model="username" required autofocus>
+             
+             <div style="margin-top: 42px"></div>
+            
+            <input id="password" type="password"
+             placeholder="Password" 
+             v-model="pass" name="password" required>
 
             <div style="margin-top: 32px"></div>
-            <button class="btn blue" type="submit" @click="post()" style="display:block">Sign In</button>
+            <button class="btn blue" type="submit" @click.prevent="post()" style="display:block">Sign In</button>
           </form>
 
            <a class="btn btn-link"  href="#" > Forgot username </a>
@@ -45,20 +52,20 @@ export default {
   created () {
     this.modalWidth = window.innerWidth < MODAL_WIDTH ? MODAL_WIDTH / 2 : MODAL_WIDTH
   },
-  updated(){
-    globalStore.Username = this.username;
-  },
   methods:{
     post: function()
       {
-        this.$http.post('https://jsonplaceholder.typicode.com/posts',{ 
-          Username : this.username,
-          password : this.pass,
-          userid:1
-        }).then(function(){
-          globalStore.login = true;
-        })
-      } 
+        axios.post('https://jsonplaceholder.typicode.com/posts', {
+            Username : this.username,
+            password : this.pass
+          }).then(response => {
+             globalStore.login = true;
+             globalStore.Username = this.username;
+             this.$modal.hide('demo-login');
+          }).catch(function (error) {
+             console.log(error);
+          });
+      }
   }
 }
 </script>
@@ -93,7 +100,7 @@ $background_color: #404142;
       border-left: 1px solid #eee;
     }
     &#bp-left{
-      
+
     }
   }
   .partition {
@@ -112,7 +119,7 @@ $background_color: #404142;
       box-sizing: border-box;
     }
   }
-  
+
   .autocomplete-fix {
     position: absolute;
     visibility: hidden;
@@ -141,7 +148,7 @@ button.btn {
   padding: 10px 18px;
   cursor: pointer;
   border-radius: 3px;
-  color: white;  
+  color: white;
   box-shadow: 0 4px 8px rgba(#20a0ff, .3);
   background: #4db3ff;
   font-weight: 600;
@@ -196,7 +203,7 @@ button.btn {
   background: #0077FF;
   transform: scaleX(0);
   transform-origin: 0 0;
-  transition: all .15s ease; 
+  transition: all .15s ease;
 }
 input{
   -webkit-appearance: none;
@@ -218,7 +225,7 @@ input{
   &:not(:placeholder-shown),
     + span{
       color: #5A667F;
-      transform: translateY(-26px) scale(.95);   
+      transform: translateY(-26px) scale(.95);
   }
   &:focus
   {
@@ -231,6 +238,6 @@ input{
     }
       + .border{
           transform: scaleX(1);
-        }  
-  } 
+        }
+  }
 </style>
