@@ -113,164 +113,193 @@ postdata3:this.postdata,
          },
 
   methods: {
-         deletePost()
-         {
-           if(this.ShowModalVar == true){
-           this.ToggleShowModalVar();
-         }
-           axios.post("http://localhost/DelComment",{
-           ID    : this.PostId,
-           token : this.token
+    deletePost()
+       {
+         if(this.ShowModalVar == true){
+         this.ToggleShowModalVar();
+       }
+         axios.post("http://localhost/DelComment",{
+         ID    : this.PostId,
+         token : this.token
 
-   }).then(function(response){
+ }).then(response=>{
+   if(response){
      this.Deleted = true;
      alert("Deleted successfully");
-   }).catch(function (error)
-   {
-    console.log(error);
+   }
+
+ }).catch(function (error)
+ {
+  console.log(error);
 
 
-     });
-     },
+   });
+   },
 
-         Hide(){
-           if(this.ShowModalVar == true){
-           this.ToggleShowModalVar();
-           }
-          if(this.Not_Hide)
-              {
-              this.Not_Hide=false;
-              this.is_Hide=true;
-              alert("Post hidden successfully.")
-
-              }
-
-          axios.post("http://localhost/Hide",
-          {
-              name    : this.PostId,
-              ID : this.token
-
-          }).then(function(response){
-            if(response){
-            alert("Hidden successfully")}
-          }).catch(function (error)
-          {
-             console.log(error);
-          });
-           },
-      changeColor_up()
-      {
-        if(this.ShowModalVar == true){
-        this.ToggleShowModalVar();
-      }
-            if(!this.pressed_up)
+       Hide(){
+         if(this.ShowModalVar == true){
+         this.ToggleShowModalVar();
+         }
+        if(this.Not_Hide)
             {
-                        if(this.pressed_down)
-                        {
-                        this.votes         += 1;
-                        this.pressed_down   = false;
-                        this.className_down = 'btn btn-light btn-sm is-gray';
+            this.Not_Hide=false;
+            this.is_Hide=true;
+            alert("Post hidden successfully.")
 
-                        }
+            }
 
-                        this.className_up    = 'btn btn-light btn-sm is-red';
-                        this.pressed_up      =true;
+        axios.post("http://localhost/Hide",
+        {
+            name    : this.PostId,
+            ID : this.token
 
-                        this.votes          += 1;
-                        axios.post("http://localhost/vote",
-                        {
+        }).then(response => {
+          if(response){
+          alert("Hidden successfully");}
+        }).catch(function (error)
+        {
+           console.log(error);
+        });
+         },
+    changeColor_up()
+    {
+      if(this.ShowModalVar == true){
+      this.ToggleShowModalVar();
+    }
+          if(!this.pressed_up)
+          {
+                      if(this.pressed_down)
+                      {
+                      this.votes         += 1;
+                      this.pressed_down   = false;
+                      this.className_down = 'btn btn-light btn-sm is-gray';
 
-                          ID       : this.token,
-                          name     : this.PostId,
-                          direction:1
+                      }
 
-                        }).then(response => response.json()).catch(function (error)
-                        {
+                      this.className_up    = 'btn btn-light btn-sm is-red';
+                      this.pressed_up      =true;
+
+                      this.votes          += 1;
+                      axios.post("http://localhost/vote",
+                      {
+
+                        ID       : this.token,
+                        name     : this.PostId,
+                        direction:1
+
+                      }).then(response => {
+                        if(response){
+                           alert("upvote successfully");}
+
+                      }).catch(function (error)
+                      {
+                    console.log(error);
+
+                  });
+                }
+              else {
+                    this.className_up = 'btn btn-light btn-sm is-gray';
+                    this.votes     -= 1;
+                    this.pressed_up = false;
+                    axios.post("http://localhost/vote",
+                   {
+
+
+                    ID:this.token,
+                    name:this.PostId,
+                    direction:0
+
+                  }).then(response => {}).catch(function (error)
+                  {
+                   console.log(error);
+                 });
+               }
+
+
+
+      },
+     changeColor_down(){
+       if(this.ShowModalVar == true){
+       this.ToggleShowModalVar();
+     }
+                  if(!this.pressed_down)
+                  {
+                      if(this.pressed_up)
+                      {
+                          this.votes-=1;
+                          this.pressed_up=false;
+                          this.className_up = 'btn btn-light btn-sm is-gray';
+
+                      }
+                         this.className_down = 'btn btn-light btn-sm is-blue';
+                         this.pressed_down=true;
+
+                         this.votes-=1;
+                         axios.post("http://localhost/vote",
+                     {
+
+
+                          ID      : this.token,
+                          name    : this.PostId,
+                          direction: -1
+
+                     }).then(response =>{
+                       if(response){
+                         alert("downvote successfully");
+                       }
+                     }).catch(function (error)
+                     {
                       console.log(error);
 
                     });
                   }
-                else {
-                      this.className_up = 'btn btn-light btn-sm is-gray';
-                      this.votes     -= 1;
-                      this.pressed_up = false;
-                      axios.post("http://localhost/vote",
-                     {
+              else {
+                  this.className_down = 'btn btn-light btn-sm is-gray';
 
 
-                      ID:this.token,
-                      name:this.PostId,
-                      direction:0
+                   this.votes += 1;
+                   this.pressed_down = false;
+                   axios.post("http://localhost/vote",
+                   {
 
-                    }).then(response => response.json()).catch(function (error)
-                    {
+
+                    ID:this.token,
+                    name:this.PostId,
+                    direction:0
+
+                  }).then(response => {}).catch(function (error) {
                      console.log(error);
                    });
+
+
                  }
+              },
+    Save(){
+      if(this.ShowModalVar == true){
+      this.ToggleShowModalVar();
+    }
+        if(this.Saved=="Save")
+        {
+        //alert('Post saved successfully');
+        this.Saved="unsave";
+        axios.post( "http://localhost/save",
+        {
+
+            ID:this.PostId ,
+            token:this.token
 
 
+        }).then(response=>{
+          if(response){
+            alert('Post saved successfully');
+          }
+        } ).catch(function (error)
+        {
+             console.log(error);
 
-        },
-       changeColor_down(){
-         if(this.ShowModalVar == true){
-         this.ToggleShowModalVar();
-       }
-                    if(!this.pressed_down)
-                    {
-                        if(this.pressed_up)
-                        {
-                            this.votes-=1;
-                            this.pressed_up=false;
-                            this.className_up = 'btn btn-light btn-sm is-gray';
-
-                        }
-                           this.className_down = 'btn btn-light btn-sm is-blue';
-                           this.pressed_down=true;
-
-                           this.votes-=1;
-                           axios.post("http://localhost/vote",
-                       {
-
-
-                            ID      : this.token,
-                            name    : this.PostId,
-                            direction: -1
-
-                       }).then(response => response.json()).catch(function (error)
-                       {
-                        console.log(error);
-
-                      });
-                    }
-                else {
-                    this.className_down = 'btn btn-light btn-sm is-gray';
-
-
-                     this.votes += 1;
-                     this.pressed_down = false;
-                     axios.post("http://localhost/vote",
-                     {
-
-
-                      ID:this.token,
-                      name:this.PostId,
-                      direction:0
-
-                    }).then(response => response.json()).catch(function (error) {
-                       console.log(error);
-                     });
-
-
-                   }
-                },
-      Save(){
-        if(this.ShowModalVar == true){
-        this.ToggleShowModalVar();
+        });
       }
-          if(this.Saved=="Save")
-          {
-          //alert('Post saved successfully');
-          this.Saved="unsave";
+        else{
           axios.post( "http://localhost/save",
           {
 
@@ -278,42 +307,24 @@ postdata3:this.postdata,
               token:this.token
 
 
-          }).then(function(response){
+          }).then(response=>{
             if(response){
-              alert('Post saved successfully');
+              alert('Post unsaved successfully');
             }
           } ).catch(function (error)
           {
                console.log(error);
 
           });
-        }
-          else{
-            axios.post( "http://localhost/save",
-            {
+             //alert('Post unsaved successfully');
+            this.Saved="Save";
 
-                ID:this.PostId ,
-                token:this.token
-
-
-            }).then(function(response){
-              if(response){
-                alert('Post unsaved successfully');
-              }
-            } ).catch(function (error)
-            {
-                 console.log(error);
-
-            });
-               //alert('Post unsaved successfully');
-              this.Saved="Save";
-
-             }
+           }
 
 
 
 
-      },
+    },
       ShowModal(){
         if(this.ShowModalVar == true){
           // alert('1111')
