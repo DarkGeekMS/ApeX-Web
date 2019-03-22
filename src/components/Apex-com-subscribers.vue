@@ -2,17 +2,18 @@
 <div class="list" id="subscribers list">
   <div id="subscribers box" class="box" v-for="subscriber in SubscribersList" :key="subscriber.id">
     <a id="subscribers account link" class="accountLink" href="#userAccount">{{subscriber.userName}}</a>
-    <button id="remove button" class="removeButton" v-on="block(subscriber.userName)">Remove</button>
+    <button id="remove button" class="removeButton" v-on:click="blockUser(subscriber.userName)">Remove</button>
   </div>
 </div>
 </template>
 
 <script>
+import axios from 'axios'
 import {globalStore} from '../main.js'
 export default {
   data () {
     return {
-      ApexComName:'',
+      ApexComName:this.$route.params.ApexComName,
       token:globalStore.token,
       SubscribersList:[]
     }
@@ -34,7 +35,7 @@ export default {
           }
           })
       .catch(function (error) {
-      console.log(error);
+      // console.log(error);
       });
     },
   },
@@ -50,7 +51,7 @@ export default {
     this.SubscribersList=response.data;
   })
   .catch(function (error) {
-    console.log(error);
+    // console.log(error);
   });
   }
 }
@@ -66,7 +67,7 @@ export default {
   border-radius: 8px;
 }
 .box{
-  
+
   width:770px;
   height:auto;
   background-color:white;

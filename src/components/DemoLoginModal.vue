@@ -12,14 +12,14 @@
         <div class="partition-form">
 
           <form>
-            <input type="text" 
-             placeholder="Username" 
+            <input type="text"
+             placeholder="Username"
              v-model="username" required autofocus>
-             
+
              <div style="margin-top: 42px"></div>
-            
+
             <input id="password" type="password"
-             placeholder="Password" 
+             placeholder="Password"
              v-model="pass" name="password" required>
 
             <div style="margin-top: 32px"></div>
@@ -38,6 +38,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 const MODAL_WIDTH = 656;
 import {globalStore} from '../main.js'
 export default {
@@ -55,15 +56,16 @@ export default {
   methods:{
     post: function()
       {
-        axios.post('https://jsonplaceholder.typicode.com/posts', {
-            Username : this.username,
+        axios.post('http://127.0.0.1:8000/api/Sign_in', {
+            username : this.username,
             password : this.pass
           }).then(response => {
              globalStore.login = true;
              globalStore.Username = this.username;
              this.$modal.hide('demo-login');
+             globalStore.token = response.data.token;
           }).catch(function (error) {
-             console.log(error);
+             alert("Username or Password is invalid");
           });
       }
   }

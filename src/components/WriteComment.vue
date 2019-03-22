@@ -17,22 +17,19 @@ import axios from 'axios'
 import {globalStore} from '../main.js'
 
 export default {
-
-
   name: 'WriteCommentItem',
   props:{
     buttonType:String,
     content:String,
     parentIdx:Number,
     parentLevel:Number,
-    parentID:Number
-
+    parentID:String
   },
 
   data(){
     return{
       clicked:0,
-      currentID:0
+      currentID:''
     }
   },
   methods:{
@@ -50,53 +47,49 @@ export default {
       }
     },
     comment:function(){
+      var self = this;
        if (this.content!=null)
       {
+
       //TODO:send request and get currentID
-      axios.post('http://localhost/comment', {
-       name: "comment",
+      axios.post('http://127.0.0.1:8000/api/comment', {
        content: this.content,
-       parent_I: this.parentID,
-       AuthID: globalStore.token
+       parent: this.parentID,
+       token: globalStore.token
         })
       .then(function (response) {
-        console.log(response);
-        this.currentID=response.toString(response.getData());
-
-       })
+      self.currentID = response.data.id;
+      self.$emit('Comment',self.content,globalStore.token,self.parentID,self.currentID );
+      })
       .catch(function (error) {
-       console.log(error);
+       alert("Something went wrong");
        });
       //to test
       //this.currentID=this.parentID+1;
-      //
-      this.$emit('Comment',this.content,globalStore.token,this.parentID,this.currentID );
-
       }
       else
       alert("Empty Text cannot be submitted!");
     },
     reply:function(){
+    var self = this;
        if (this.content!=null)
       {
         //TODO:send request and get currentID
-      axios.post('http://localhost/comment', {
-       name: "reply",
+      axios.post('http://127.0.0.1:8000/api/comment', {
        content: this.content,
-       parent_I: this.parentID,
-       AuthID: globalStore.token
+       parent: this.parentID,
+       token: globalStore.token
         })
       .then(function (response) {
-        console.log(response);
-        this.currentID=response.toString(response.getData());
+       self.currentID = response.data.id;
+       self.$emit('Reply',self.content,globalStore.token,self.parentIdx,self.parentLevel,self.parentID,self.currentID );
        })
       .catch(function (error) {
-       console.log(error);
+       alert("Something went wrong");
        });
       //to test
       //this.currentID=this.parentID+1;
       //
-      this.$emit('Reply',this.content,globalStore.token,this.parentIdx,this.parentLevel,this.parentID,this.currentID );
       this.clicked=!this.clicked;
       }
       else
