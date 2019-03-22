@@ -83,6 +83,7 @@ Comments</button>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
 <script id="postScript">
+import axios from 'axios'
 import {globalStore} from '../main.js'
 
 

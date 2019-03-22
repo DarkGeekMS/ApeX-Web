@@ -38,6 +38,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 import {globalStore} from '../main.js'
 export default {
   data () {
@@ -67,7 +68,7 @@ export default {
           }
           })
       .catch(function (error) {
-      console.log(error);
+      // console.log(error);
       });
     },
   },
@@ -86,7 +87,7 @@ export default {
     this.moderators=response.moderators;
   })
   .catch(function (error) {
-    console.log(error);
+    // console.log(error);
   });
   }
 }

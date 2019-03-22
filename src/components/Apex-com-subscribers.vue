@@ -8,6 +8,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 import {globalStore} from '../main.js'
 export default {
   data () {
@@ -34,7 +35,7 @@ export default {
           }
           })
       .catch(function (error) {
-      console.log(error);
+      // console.log(error);
       });
     },
   },
@@ -50,7 +51,7 @@ export default {
     this.SubscribersList=response.data;
   })
   .catch(function (error) {
-    console.log(error);
+    // console.log(error);
   });
   }
 }
@@ -66,7 +67,7 @@ export default {
   border-radius: 8px;
 }
 .box{
-  
+
   width:770px;
   height:auto;
   background-color:white;

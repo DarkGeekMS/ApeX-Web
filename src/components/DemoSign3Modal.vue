@@ -1,7 +1,7 @@
 <template>
 <modal name="demo-sign3" transition="pop-out" :width="modalWidth" :height="450">
   <div class="box">
-    
+
     <button class="btn-primary" style="margin:0px 631px" @click="action()"  > X </button>
     <img width="650" height="450"
      src="../../public/Logo.png" >
@@ -32,7 +32,7 @@ export default {
       this.$modal.hide('demo-sign2'),
       this.$modal.hide('demo-sign')
     }
-  } 
+  }
 }
 </script>
 
