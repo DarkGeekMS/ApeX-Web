@@ -22,6 +22,19 @@ module.exports = {
           'vue-style-loader',
           'css-loader'
         ]
+      },
+      {
+          test: /\.(png|jpg)$/,
+          exclude: /node_modules/,
+          loader: 'file-loader?name=images/[name].[ext]'
+      },
+      {
+          test: /\.scss$/,
+          use: [
+          'vue-style-loader',
+          'css-loader',
+          'sass-loader'
+        ],
       }
     ]
   },

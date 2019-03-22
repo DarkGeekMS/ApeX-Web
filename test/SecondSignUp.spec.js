@@ -1,13 +1,13 @@
 import { mount } from 'vue-test-utils';
-import LogIn from '../src/components/DemoLoginModal.vue';
+import SignUp from '../src/components/DemoSign2Modal.vue';
 import expect from 'expect';
 import moxios from 'moxios'
 
-describe ('Login' , () =>{
+describe ('SignUp' , () =>{
     let wrapper;
     
     beforeEach(() => {
-    	wrapper = mount(LogIn);
+    	wrapper = mount(SignUp);
     	moxios.install();
     });
 
@@ -15,17 +15,17 @@ describe ('Login' , () =>{
       	moxios.uninstall();
     });
 
-    it('default username and password equal to null' , () =>{
+    it('default username and password equal to zero' , () =>{
  		expect(wrapper.vm.username).toBe('');
         expect(wrapper.vm.pass).toBe('');
     }); 
 
     it('check value from input to variables' , () =>{
-    	let inputUser = wrapper.find('input[type=text]');
+    	let inputUser = wrapper.find('input[name=username]');
         inputUser.element.value = 'myName';
         inputUser.trigger('input');
 
-        let inputPass = wrapper.find('input[type=password]');
+        let inputPass = wrapper.find('input[name=password]');
         inputPass.element.value = 'password';
         inputPass.trigger('input');
 
@@ -33,14 +33,8 @@ describe ('Login' , () =>{
         expect(wrapper.vm.pass).toBe('password');
     }); 
 
-/*    it('increments the count when the button is clicked', () =>{
-    	expect(wrapper.vm.count).toBe(0);
-    	wrapper.find('button').trigger('click');
-    	expect(wrapper.vm.count).toBe(1);
-     }); */
 
-
-     it('check data send to the server', () =>{
+    it('check data send to the server', () =>{
      	let inputUser = wrapper.find('input[type=text]');
         inputUser.element.value = 'myName';
         inputUser.trigger('input');
@@ -60,6 +54,6 @@ describe ('Login' , () =>{
      		}
      	});
 
-     });
+    });
 
 });
