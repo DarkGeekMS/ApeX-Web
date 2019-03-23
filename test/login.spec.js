@@ -1,13 +1,13 @@
-import { mount } from 'vue-test-utils';
+import { mount } from '@vue/test-utils'
 import LogIn from '../src/components/DemoLoginModal.vue';
 import expect from 'expect';
 import moxios from 'moxios'
 
 describe ('Login' , () =>{
     let wrapper;
-    
+
     beforeEach(() => {
-    	wrapper = mount(LogIn);
+    	 wrapper = mount(LogIn);
     	moxios.install();
     });
 
@@ -18,7 +18,7 @@ describe ('Login' , () =>{
     it('default username and password equal to null' , () =>{
  		expect(wrapper.vm.username).toBe('');
         expect(wrapper.vm.pass).toBe('');
-    }); 
+    });
 
     it('check value from input to variables' , () =>{
     	let inputUser = wrapper.find('input[type=text]');
@@ -31,7 +31,7 @@ describe ('Login' , () =>{
 
  		expect(wrapper.vm.username).toBe('myName');
         expect(wrapper.vm.pass).toBe('password');
-    }); 
+    });
 
 /*    it('increments the count when the button is clicked', () =>{
     	expect(wrapper.vm.count).toBe(0);

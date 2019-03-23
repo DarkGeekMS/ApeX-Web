@@ -1,12 +1,12 @@
-import { mount } from 'vue-test-utils';
+import { mount } from '@vue/test-utils'
 import SignUp from '../src/components/DemoSignModal.vue';
 import expect from 'expect';
 
 describe ('SignUp' , () =>{
     let wrapper;
-    
+
     beforeEach(() => {
-    	wrapper = mount(SignUp);
+    	 wrapper = mount(SignUp);
     });
 
     it('default email equal to null' , () =>{
@@ -19,7 +19,7 @@ describe ('SignUp' , () =>{
         inputUser.trigger('input');
 
  		expect(wrapper.vm.Value).toBe('myEmail');
-    }); 
+    });
 
 
     it('check data valid', () =>{
