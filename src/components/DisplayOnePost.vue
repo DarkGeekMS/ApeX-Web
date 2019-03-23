@@ -3,7 +3,7 @@
 <modal id="PopupModal" name="Demo-OnePost" transition="pop-out" :width="1300" :height="700" >
   <div id="PostContent" class="PostContent">
   <post v-bind:postdata="onepostdata"></post>
-  <CommentParent userID=this.onepostdata ></CommentParent>
+  <CommentParent postID='t3_5' ></CommentParent>
 
 </div>
 </modal>

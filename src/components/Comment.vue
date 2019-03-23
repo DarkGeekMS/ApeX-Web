@@ -55,7 +55,7 @@ export default {
     level:Number,
     parentIdx:Number,
     parentID:Number,
-    ID:Number
+    ID:String
   },
   data(){
     return{
@@ -83,15 +83,16 @@ retrieveWithNoEdit:function(){
 },
 Delete:function(){
   this.$emit('Delete',this.idx );
-  axios.post('http://localhost/DelComment', {
-       name: this.ID,
-       ID: globalStore.token
+  axios.delete('http://127.0.0.1:8000/api/delete', {
+      data : {
+      name: this.ID,
+      token: globalStore.token
+      }
         })
       .then(function (response) {
-        console.log(response);
        })
       .catch(function (error) {
-       console.log(error);
+       alert("Something went wrong");
        });
 },
 Save:function(){
@@ -100,46 +101,43 @@ Save:function(){
   else
     this.unSaved='Save';
 
-  axios.post('http://localhost/save', {
-       name: this.ID,
-       ID: globalStore.token
+  axios.post('http://127.0.0.1:8000/api/save', {
+       ID: this.ID,
+       token: globalStore.token
         })
       .then(function (response) {
-        console.log(response);
        })
       .catch(function (error) {
-       console.log(error);
+       alert("Something went wrong");
        });
-
 },
 Upvote:function(){
   this.upVoted = !this.upVoted;
   this.downVoted = false;
-  axios.post('http://localhost/vote', {
+  axios.post('http://127.0.0.1:8000/api/vote', {
        name: this.ID,
-       direction: this.upVoted?1:0,
-       ID: globalStore.token
+       dir: 1,
+       token: globalStore.token
         })
       .then(function (response) {
-        console.log(response);
        })
-      .catch(function (error) {
-       console.log(error);
+      .catch(function (error)
+      {
+       alert("Something went wrong");
        });
 },
 Downvote:function(){
   this.downVoted = !this.downVoted;
   this.upVoted = false;
-  axios.post('http://localhost/vote', {
+  axios.post('http://127.0.0.1:8000/api/vote', {
        name: this.ID,
-       direction: this.upVoted?-1:0,
-       ID: globalStore.token
+       dir: -1,
+       token: globalStore.token
         })
       .then(function (response) {
-        console.log(response);
        })
       .catch(function (error) {
-       console.log(error);
+       alert("Something went wrong");
        });
 },
 addReply:function(cont,use,parent,parentLevel,parentID,currentID){
@@ -232,7 +230,6 @@ addReply:function(cont,use,parent,parentLevel,parentID,currentID){
 }
 #secondLine{
     padding-top: 4px;
-    float: left;
 }
 #thirdLine{
     height: 23px;

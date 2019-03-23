@@ -8,6 +8,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 import post from "./Post.vue"
 import DemoOnePost from './DisplayOnePost.vue'
 import {globalStore} from '../main.js'
@@ -60,10 +61,10 @@ mounted:{
       SortingParam: "date"
           })
         .then(function (response) {
-          console.log(response);
+          // console.log(response);
          })
         .catch(function (error) {
-         console.log(error);
+         // console.log(error);
          });
 
   }

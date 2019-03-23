@@ -10,7 +10,6 @@
 <script>
 import WriteComment from './WriteComment.vue'
 import Comment from './Comment.vue'
-import axios from 'axios'
 import {globalStore} from '../main.js'
 
 
@@ -18,7 +17,6 @@ import {globalStore} from '../main.js'
 export default {
   name:'CommentParentItem',
   props:{
-    userID:String,
     postID:String
   },
  components: {

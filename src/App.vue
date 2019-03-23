@@ -1,7 +1,7 @@
 <template>
   <div id="app" >
-<navbar></navbar>
-<router-view></router-view>
+    <navbar></navbar>
+    <router-view></router-view>
  </div>
 </template>
 
@@ -21,13 +21,12 @@ export default {
   components:{
     'c11':component1,
     'document':docu,
-    navbar,
-
+    navbar
   },
   methods:{
 
 
-},
+  },
   name: 'app',
   data(){
     return{
@@ -52,7 +51,5 @@ export default {
     background-color: #DAE0E6;
     width:100%;
     height:100%;
-
-
 }
 </style>
