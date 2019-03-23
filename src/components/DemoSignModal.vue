@@ -15,14 +15,14 @@
 
         <div class="partition-form">
           
-            <input type="email" class="form-control" name="email"
+            <input id="Email" type="email" class="form-control" name="email"
               placeholder="EMAIL"
               v-model="Value"
               required autofocus>
-            <span class="lead"> {{error}}  </span>
+            <span id="EmailError" class="lead"> {{error}}  </span>
 
             <div style="margin-top: 32px"></div>
-            <button class="btn blue" style="display:block" @click.prevent="checkEmail()">NEXT</button>
+            <button id="Next" class="btn blue" style="display:block" @click.prevent="checkEmail()">NEXT</button>
 
         </div>
 

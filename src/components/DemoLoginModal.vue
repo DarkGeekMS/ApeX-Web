@@ -12,7 +12,7 @@
         <div class="partition-form">
 
           <form>
-            <input type="text" 
+            <input id="usernamextxt" type="text" 
              placeholder="Username" 
              v-model="username" required autofocus>
              
@@ -23,11 +23,11 @@
              v-model="pass" name="password" required>
 
             <div style="margin-top: 32px"></div>
-            <button class="btn blue" type="submit" @click.prevent="post()" style="display:block">Sign In</button>
+            <button class="btn blue" type="submit" @click.prevent="post()" style="display:block" id="submit">Sign In</button>
           </form>
 
-           <a class="btn btn-link"  href="#" > Forgot username </a>
-           <a class="btn btn-link"  href="#" > Forgot password </a>
+           <a id="forgetname" class="btn btn-link"  href="#" > Forgot username </a>
+           <a id="forgetpass" class="btn btn-link"  href="#" > Forgot password </a>
 
         </div>
       </div>
