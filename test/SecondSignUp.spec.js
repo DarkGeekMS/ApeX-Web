@@ -1,11 +1,11 @@
-import { shallowMount } from '@vue/test-utils'
+import { shallowMount } from '@vue/test-utils
 import SignUp2 from '../src/components/DemoSign2Modal.vue';
 import expect from 'expect';
 import moxios from 'moxios'
 
 describe ('SignUp2' , () =>{
     let wrapper;
-    
+
     beforeEach(() => {
     	wrapper = shallowMount(SignUp2);
     	moxios.install();
@@ -18,7 +18,7 @@ describe ('SignUp2' , () =>{
     it('default username and password equal to zero' , () =>{
  		    expect(wrapper.vm.username).toBe('');
         expect(wrapper.vm.pass).toBe('');
-    }); 
+    });
 
     it('check value from input to variables' , () =>{
     	  let inputUser = wrapper.find('input[name=username]');
@@ -31,7 +31,7 @@ describe ('SignUp2' , () =>{
 
  		    expect(wrapper.vm.username).toBe('myName');
         expect(wrapper.vm.pass).toBe('password');
-    }); 
+    });
 
 
     it('check data send to the server', () =>{

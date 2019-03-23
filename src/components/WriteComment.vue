@@ -1,13 +1,13 @@
 <template>
-  <div id="WriteComment" v-show="!clicked">
+  <div id="WriteComment" v-show="!replyClicked && !editClicked">
     <div>
       <textarea  class="write" v-model="content"  cols="30" rows="10"></textarea>
     </div>
 
     <div id="Buttons">
-      <button v-show = "buttonType == 0"  class="com" v-on:click="comment">Comment</button>
-      <button v-show = "buttonType == 1"  class="rep" v-on:click="reply">Reply</button>
-      <button v-if = "buttonType == 2"  class="ed" v-on:click="edit">Edit</button>
+      <button id = "Comment" v-show = "buttonType == 0"  class="com" v-on:click="comment">Comment</button>
+      <button id = "Reply" v-show = "buttonType == 1"  class="rep" v-on:click="reply">Reply</button>
+      <button  v-show = "buttonType == 2"  class="ed" v-on:click="edit" id = "Edit">Edit</button>
     </div>
   </div>
 </template>
@@ -28,13 +28,14 @@ export default {
 
   data(){
     return{
-      clicked:0,
+      editClicked:false,
+      replyClicked:false,
       currentID:''
     }
   },
   methods:{
     edit:function(){
-      this.clicked=!this.clicked;
+      this.editClicked=!this.editClicked;
 
       if (this.content!='')
       {
@@ -47,6 +48,7 @@ export default {
       }
     },
     comment:function(){
+
       var self = this;
        if (this.content!=null)
       {
@@ -72,6 +74,8 @@ export default {
     },
     reply:function(){
     var self = this;
+            this.replyClicked=!this.replyClicked;
+
        if (this.content!=null)
       {
         //TODO:send request and get currentID
@@ -90,7 +94,6 @@ export default {
       //to test
       //this.currentID=this.parentID+1;
       //
-      this.clicked=!this.clicked;
       }
       else
       alert("Empty Text cannot be submitted!");

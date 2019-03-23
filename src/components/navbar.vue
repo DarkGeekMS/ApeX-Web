@@ -27,8 +27,8 @@
 
 
       <div v-show='!log' class="form-group log" style="display:inline-block">
-          <button type="button" class="btn btn-info log1" @click="$modal.show('demo-login')"> LOG IN </button>
-          <button type="button" class="btn btn-primary log1" data-toggle="button" aria-pressed="false" autocomplete="off" @click="$modal.show('demo-sign')">SIGN UP</button>
+          <button id="LoginBTN" type="button" class="btn btn-info log1" @click="$modal.show('demo-login')"> LOG IN </button>
+          <button id="SignUp" type="button" class="btn btn-primary log1" data-toggle="button" aria-pressed="false" autocomplete="off" @click="$modal.show('demo-sign')">SIGN UP</button>
       </div>
 
       <div v-show='log' class="btn-group log" id="loggedDiv">

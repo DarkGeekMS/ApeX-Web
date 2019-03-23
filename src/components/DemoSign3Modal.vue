@@ -3,7 +3,7 @@
   <div class="box">
 
     <button class="btn-primary" style="margin:0px 631px" @click="action()"  > X </button>
-    <img width="650" height="450"
+    <img id="SignUpSucces" width="650" height="450"
      src="../../public/Logo.png" >
 
   </div>

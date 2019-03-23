@@ -17,9 +17,8 @@
           <form>
 
             <div class="add" >
-              <input type="text" class="form-control" name="username"
-               placeholder="CHOOSE A USERNAME"
-               v-model="username" required autofocus>
+              <input id="SignUpUserName" type="text" class="form-control" name="username" 
+               placeholder="CHOOSE A USERNAME" v-model="username" required autofocus>
 
                <span class="lead" style = "fontSize:10px" v-show="invalidUser" >Enter a username of max length 50</span>
 
@@ -36,8 +35,8 @@
             </div>
             <div style="margin-top: 80px"></div>
             <div style="background_color:#eee;border-top:1.5px solid #eee; height:55px" >
-              <a class="btn blue" @click="$modal.hide('demo-sign2')">BACK</a>
-              <button :disabled="check" class="btn blue" type="submit" style="margin-left:450px" @click.prevent="post()">SIGN UP</button>
+              <a id="Back" class="btn blue" @click="$modal.hide('demo-sign2')">BACK</a>
+              <button :disabled="check" class="btn blue" type="submit" style="margin-left:450px" @click.prevent="post()" id="SignUpFinish">SIGN UP</button>
             </div>
 
           </form>

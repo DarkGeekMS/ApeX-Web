@@ -15,7 +15,7 @@
 
 <h5 id="PostVote">{{votes}}</h5>
 
-<button @click="changeColor_down" type="button" :class="className_down" id="down">
+<button @click="changeColor_down" type="button" :class="className_down" id="down" class="DOWN">
          <i class="glyphicon glyphicon-arrow-down" id="upArrow"></i>
 </button>
 
@@ -28,14 +28,20 @@
       </div>
         <div class="column" id="postCol2">
 
-
-      <a href="#" class="fontUser" id="subred"> {{postdata.apex_id}} </a>
+<!--
+    <a href="#" class="fontUser" id="subred"> {{apex_id}} </a>
       <font class="postby" id="fontPostby">. Posted by</font>
       <a href="#" class="postby" id="user">{{postdata.postedby}}  </a>
       <font class="postby" id="fontpost"> </font>
       <a href="#" class="postby" id="timeAgo"> 15 hours ago </a>
-      <h3 id="postBody"> {{postdata.content}} </h3>
+      <h3 id="postBody"> {{postdata.content}} </h3> -->
 
+      <a href="#" class="fontUser" id="subred"> apex_id </a>
+        <font class="postby" id="fontPostby">. Posted by</font>
+        <a href="#" class="postby" id="user"> username</a>
+        <font class="postby" id="fontpost"> </font>
+        <a href="#" class="postby" id="timeAgo"> 15 hours ago </a>
+        <h3 id="postBody">content </h3>
 
 <footer>
 
@@ -43,7 +49,7 @@
 
   <button type="button" class="btn btn-default " id="commentButton"><i class="far fa-comment-alt" id="commentIcon"></i>
 Comments</button>
-  <button type="button" class="btn btn-default"  @click="Save" id="SaveButton">
+  <button  type="button" class="btn btn-default  SAVE"  @click="Save" id="SaveButton" >
 
     <i class="fa fa-plus-square" v-if="Saved=='Save'" id="SaveIcon"></i>
     <i class="glyphicon glyphicon-check" v-if="Saved!='Save'" id="UnsaveIcon"></i>
@@ -58,7 +64,7 @@ Comments</button>
       <span class="caret" id="postSpan"></span>
     </button>
     <ul class="dropdown-menu" id="dropMenu">
-      <li><a href="#"  @click="Hide"><i class="fa fa-ban" id="HideIcon"></i>Hide</a></li>
+      <li ><a href="#"  @click="Hide" class="HIDE"><i class="fa fa-ban" id="HideIcon"></i>Hide</a></li>
       <li><a href="#"><i class="glyphicon glyphicon-flag" id="ReportIcon"></i>Report</a></li>
     </ul>
   </div>
@@ -92,7 +98,7 @@ export default {
   name: 'PostItem',
    data(){
        return{
-postdata3:this.postdata,
+             postdata3:this.postdata,
              Not_Hide :true,
              is_Hide  :false,
 
@@ -106,6 +112,7 @@ postdata3:this.postdata,
              Saved  :"Save",
              PostId   :"",
              token  :globalStore.token,
+
              moderator:false,
              ShowModalVar:true,
              Deleted:false

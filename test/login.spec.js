@@ -1,11 +1,11 @@
 import { shallowMount } from '@vue/test-utils'
-import LogIn from '../src/components/DemoLoginModal.vue';
-import expect from 'expect';
+import LogIn from '../src/components/DemoLoginModal.vue'
+import expect from 'expect'
 import moxios from 'moxios'
 
 describe ('Login' , () =>{
     let wrapper;
-    
+
     beforeEach(() => {
     	wrapper = shallowMount(LogIn);
     	moxios.install();
@@ -20,6 +20,7 @@ describe ('Login' , () =>{
         expect(wrapper.vm.pass).toBe('');
 	}); 
 
+
     it('check value from input to variables' , () =>{
     	let inputUser = wrapper.find('input[type=text]');
         inputUser.element.value = 'myName';
@@ -31,9 +32,10 @@ describe ('Login' , () =>{
 
  		expect(wrapper.vm.username).toBe('myName');
         expect(wrapper.vm.pass).toBe('password');
-    }); 
+    });
 
-    it('login hide after data send to server ', () =>{
+
+     it('check data send to the server', (done) =>{
      	let inputUser = wrapper.find('input[type=text]');
         inputUser.element.value = 'myName';
         inputUser.trigger('input');
@@ -59,5 +61,18 @@ describe ('Login' , () =>{
         });
 
     });
+
+
+     it('Visits the app root url', () => {
+         wrapper.server()
+         wrapper.route('https://jsonplaceholder.typicode.com/posts/1', {
+           title: 'This is a stubbed title'
+         })
+
+         wrapper.visit('/')
+         wrapper.contains('div', 'This is a stubbed title')
+       });
+
+
 
 });
