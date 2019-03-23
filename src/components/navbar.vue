@@ -40,7 +40,7 @@
             <li><a href="#">My Profile</a></li>
             <li><a href="#">User Settings</a></li>
             <li class="divider"></li>
-            <li><a href="#" @click="Logout()">Log Out</a></li>
+            <li><a class="logOut" href="#" @click="Logout()">Log Out</a></li>
         </ul>
     </div>
     </div>

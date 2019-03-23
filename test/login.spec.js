@@ -1,4 +1,4 @@
-import { mount } from 'vue-test-utils';
+import { shallowMount } from '@vue/test-utils'
 import LogIn from '../src/components/DemoLoginModal.vue';
 import expect from 'expect';
 import moxios from 'moxios'
@@ -7,7 +7,7 @@ describe ('Login' , () =>{
     let wrapper;
     
     beforeEach(() => {
-    	wrapper = mount(LogIn);
+    	wrapper = shallowMount(LogIn);
     	moxios.install();
     });
 
@@ -18,7 +18,7 @@ describe ('Login' , () =>{
     it('default username and password equal to null' , () =>{
  		expect(wrapper.vm.username).toBe('');
         expect(wrapper.vm.pass).toBe('');
-    }); 
+	}); 
 
     it('check value from input to variables' , () =>{
     	let inputUser = wrapper.find('input[type=text]');
@@ -33,14 +33,7 @@ describe ('Login' , () =>{
         expect(wrapper.vm.pass).toBe('password');
     }); 
 
-/*    it('increments the count when the button is clicked', () =>{
-    	expect(wrapper.vm.count).toBe(0);
-    	wrapper.find('button').trigger('click');
-    	expect(wrapper.vm.count).toBe(1);
-     }); */
-
-
-     it('check data send to the server', () =>{
+    it('login hide after data send to server ', () =>{
      	let inputUser = wrapper.find('input[type=text]');
         inputUser.element.value = 'myName';
         inputUser.trigger('input');
@@ -49,17 +42,22 @@ describe ('Login' , () =>{
         inputPass.element.value = 'password';
         inputPass.trigger('input');
 
-        expect(wrapper.contains('button.btn blue')).toBe(true);
-        wrapper.find('button.btn blue').trigger('click');
+       expect(wrapper.contains('button')).toBe(true);
+        wrapper.find('button').trigger('click');
 
-     	maxios.stubRequest('https://jsonplaceholder.typicode.com/posts',{
+     	moxios.stubRequest('http://127.0.0.1:8000/api/Sign_in',{
      		status:200,
      		response:{
-     			Username : 'myName',
-         	    password : 'mypassword'
+     			Username : wrapper.vm.username,
+         	    password : wrapper.vm.pass
      		}
-     	});
+     	}); 
 
-     });
+     	moxios.wait(() => {
+        expect(wrapper.contains('button')).toBe(false);
+        done()
+        });
+
+    });
 
 });

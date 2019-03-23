@@ -1,4 +1,4 @@
-import { mount } from 'vue-test-utils'
+/*import { mount } from 'vue-test-utils'
 import Post from '../src/components/Post.vue'
 import expect from 'expect';
 
@@ -10,4 +10,4 @@ it('unit test of post',()=>{
 
 });
 
-});
+}); */
