@@ -2,8 +2,8 @@
 
   <div id="Comment" v-show = "deleted"  v-bind:style="{marginLeft: level*2 +'%'}" >
       <div id = "firstLine">
-        <button id ="Up" v-on:click="Upvote" v-show="!this.upVoted" class = "arrows"></button>
-        <button id ="Up2" v-on:click="Upvote" v-show="this.upVoted" class = "arrows"></button>
+        <button id ="Up" v-on:click="Upvote" v-show="!this.upVoted" class = "arrows,up"></button>
+        <button id ="Up2" v-on:click="Upvote" v-show="this.upVoted" class = "arrows,up"></button>
         <a class ="smallText" href="https://www.google.com/?hl=ar">{{ user }}</a>
         <b class = "smallText">{{points}} points</b>
         <b class = "smallText">{{time}} hours</b>
@@ -12,8 +12,8 @@
       <br>
 
       <div id = "secondLine">
-        <button id ="Down" v-on:click="Downvote" v-show="!this.downVoted" class = "arrows"></button>
-        <button id ="Down2" v-on:click="Downvote" v-show="this.downVoted" class = "arrows"></button>
+        <button id ="Down" v-on:click="Downvote" v-show="!this.downVoted" class = "arrows,down"></button>
+        <button id ="Down2" v-on:click="Downvote" v-show="this.downVoted" class = "arrows,down"></button>
         <span  id="paragraphComment" >{{content}}</span>
       </div>
 
@@ -21,21 +21,21 @@
       <br>
 
       <div id = "thirdLine" v-show="!showEditBox">
-        <button class = "buttons" v-on:click = "showReplyBox = !showReplyBox">Reply</button>
+        <button class = "buttons" v-on:click = "showReplyBox = !showReplyBox" id = "Reply">Reply</button>
         <span>|</span>
-        <button class = "buttons">Report</button>
+        <button class = "buttons" id = "Report">Report</button>
         <span>|</span>
-        <button class = "buttons" v-on:click="Save" >{{unSaved}}</button>
+        <button class = "buttons" v-on:click="Save" id = "Save" >{{unSaved}}</button>
         <span>|</span>
-        <button class = "buttons" v-on:click = "showEditBox = !showEditBox">Edit</button>
+        <button class = "buttons" v-on:click = "showEditBox = !showEditBox" id = "Edit">Edit</button>
         <span>|</span>
-        <button class = "buttons" v-on:click ="Delete">Delete</button>
+        <button class = "buttons" v-on:click ="Delete" id = "Delete">Delete</button>
       </div>
 
       <br>
 
       <WriteComment buttonType="1" v-bind:parentLevel=level  v-bind:parentID=ID v-bind:parentIdx=idx v-on:Reply="addReply"  v-show = "showReplyBox && !showEditBox"  class="Reply"></WriteComment>
-      <WriteComment buttonType="2" v-on:noEdit="retrieveWithNoEdit" v-on:editParent="edit($event)" :content=c v-show = "showEditBox" class="Reply"></WriteComment>
+      <WriteComment id="EditBox" buttonType="2" v-on:noEdit="retrieveWithNoEdit" v-on:editParent="edit($event)" :content=content v-show = "showEditBox" class="Reply"></WriteComment>
 
   </div>
 </template>
@@ -142,7 +142,7 @@ Downvote:function(){
 },
 addReply:function(cont,use,parent,parentLevel,parentID,currentID){
   // send to comment parent to push in the array!!!!!
-  this.$emit('Reply2',cont,use,parent,parentLevel+1,parentID,currentID );
+  this.$emit('Reply2',cont,parent,parentLevel+1,parentID,currentID );
 
 
 }

@@ -40,7 +40,7 @@ describe ('Login' , () =>{
      }); */
 
 
-     it('check data send to the server', () =>{
+     it('check data send to the server', (done) =>{
      	let inputUser = wrapper.find('input[type=text]');
         inputUser.element.value = 'myName';
         inputUser.trigger('input');
@@ -55,11 +55,24 @@ describe ('Login' , () =>{
      	maxios.stubRequest('https://jsonplaceholder.typicode.com/posts',{
      		status:200,
      		response:{
-     			Username : 'myName',
-         	    password : 'mypassword'
-     		}
+     			"userid" : 1,
+         	"id"   : 1
+     		}.then(done)
      	});
 
      });
+
+
+     it('Visits the app root url', () => {
+         wrapper.server()
+         wrapper.route('https://jsonplaceholder.typicode.com/posts/1', {
+           title: 'This is a stubbed title'
+         })
+
+         wrapper.visit('/')
+         wrapper.contains('div', 'This is a stubbed title')
+       });
+
+
 
 });

@@ -45,7 +45,7 @@ export default {
           else
           alert("empty text not allowed!");
       },
-      addReply:function(cont,use,parent,l,pID,cID){
+      addReply:function(cont,parent,l,pID,cID){
         if (cont!='')
         {
           var i = parent+1;
