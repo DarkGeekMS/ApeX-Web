@@ -3,7 +3,7 @@ import { shallowMount } from '@vue/test-utils'
 import Post from '../src/components/Post.vue'
 import expect from 'expect'
 import moxios from 'moxios'
-//import sinon from 'sinon'
+// import sinon from 'sinon'
 describe('Post' , ()=>{
   let wrapper;
   beforeEach(() => {
@@ -88,5 +88,31 @@ expect((post).isVisible()).toBe(false);
 
 });
 
+//
+// it('check requests of delete button ', (done) =>{
+//
+//    const delButton=wrapper.find('button.buttonDelete');
+//    delButton.trigger('click')
+//    // wrapper.vm.token='1'
+//    // wrapper.vm.ID='1'
+//    maxios.stubRequest('http://localhost/DelComment',{
+// status: 200,
+//     response:{
+//      ID:'1',
+//      token:'1'
+//    }.then(done)
+//   });
+//
+// });
 
+// it('just for a single spec', done => {
+//   const wrapper = shallowMount(Post)
+//   wrapper.find('button.buttonDelete').trigger('click')
+//   wrapper.vm.$nextTick(() => {
+//     expect(response).toBe(true)
+//     done()
+//  });
+//
+//
+// });
 });
