@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Module: SignUp2Modal | Module: SignUp2Modal</title>
+    <title>Module: WriteComment | Module: WriteComment</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -24,7 +24,7 @@
         
     </div>
     <div class="title">
-        <h1><a href="index.html" class="link">Module: SignUp2Modal</a></h1>
+        <h1><a href="index.html" class="link">Module: WriteComment</a></h1>
         
     </div>
     <div class="search-container" id="search-container">
@@ -46,7 +46,7 @@
 
 <header>
     
-        <h2>SignUp2Modal</h2>
+        <h2>WriteComment</h2>
         
             
         
@@ -89,45 +89,59 @@
         <tbody>
 
         <tr>
-            <td class="name"><code>username</code></td>
+            <td class="name"><code>buttonType</code></td>
             <td class="type"><span class="param-type">string</span></td>
-            <td class="description"><code>&quot;&quot;</code></td>
-            <td class="description last">name of user sign up</td>
+            <td class="description">-</td>
+            <td class="description last">1:Comment -- 2:Reply -- 3:Edit</td>
         </tr>
 
         <tr>
-            <td class="name"><code>pass</code></td>
+            <td class="name"><code>content</code></td>
             <td class="type"><span class="param-type">string</span></td>
-            <td class="description"><code>&quot;&quot;</code></td>
-            <td class="description last">password of user sign up</td>
+            <td class="description">-</td>
+            <td class="description last">content entered by the user</td>
         </tr>
 
         <tr>
-            <td class="name"><code>modalWidth</code></td>
+            <td class="name"><code>parentLevel</code></td>
             <td class="type"><span class="param-type">integer</span></td>
-            <td class="description"><code>656</code></td>
-            <td class="description last">width of modal</td>
+            <td class="description">-</td>
+            <td class="description last">level of indentation of the parent comment in the view to create the current comment's level</td>
         </tr>
 
         <tr>
-            <td class="name"><code>invalidUser</code></td>
-            <td class="type"><span class="param-type">boolean</span></td>
-            <td class="description"><code>false</code></td>
-            <td class="description last">invaliduser</td>
+            <td class="name"><code>parentIdx</code></td>
+            <td class="type"><span class="param-type">integer</span></td>
+            <td class="description">-</td>
+            <td class="description last">idx of the parent of the comment in the array of comments</td>
         </tr>
 
         <tr>
-            <td class="name"><code>invalidPass</code></td>
-            <td class="type"><span class="param-type">boolean</span></td>
-            <td class="description"><code>false</code></td>
-            <td class="description last">invalidPass</td>
+            <td class="name"><code>parentID</code></td>
+            <td class="type"><span class="param-type">string</span></td>
+            <td class="description">-</td>
+            <td class="description last">ID of the parent component</td>
         </tr>
 
         <tr>
-            <td class="name"><code>invalidUserAndPass</code></td>
+            <td class="name"><code>currentID</code></td>
+            <td class="type"><span class="param-type">string</span></td>
+            <td class="description">-</td>
+            <td class="description last">ID of the the current comment</td>
+        </tr>
+
+        <tr>
+            <td class="name"><code>editClicked</code></td>
             <td class="type"><span class="param-type">boolean</span></td>
             <td class="description"><code>false</code></td>
-            <td class="description last">invalidUserAndPass</td>
+            <td class="description last">to hide edit box after editing</td>
+        </tr>
+
+        <tr>
+            <td class="name"><code>replyClicked</code></td>
+            <td class="type"><span class="param-type">boolean</span></td>
+            <td class="description"><code>false</code></td>
+            <td class="description last">to hide reply box after replying</td>
         </tr>
 
         </tbody>
@@ -231,34 +245,57 @@
     
 
     
-        <h3 class="subsection-title">Members</h3>
+
+    
+        <h3 class="subsection-title">Methods</h3>
 
         <dl>
-            
+                
 
 <dt>
-<h4 class="name" id=".computed">
-    <span class="type-signature"><span class="icon green">static</span> </span>computed<span class="type-signature"></span>
     
-    <div class="container-source members">
-        <code><a href="SignUp2Modal.vue.html">SignUp2Modal.vue</a></code>,
-        <code><a href="SignUp2Modal.vue.html#line32">line 32</a></code>
-    </div>
+        <h4 class="name" id="comment">
+            
+                <span class="type-signature"></span>comment<span class="signature">()</span><span class="type-signature"></span>
+                
+            
+            <div class="container-source members">
+                <code><a href="WriteComment.vue.html">WriteComment.vue</a></code>,
+                <code><a href="WriteComment.vue.html#line41">line 41</a></code>
+            </div>
+            
+        </h4>
+
+        
     
-</h4>
-
-
 </dt>
 <dd>
+
     
     <div class="description">
-        <p>check out username and password is empty or not</p>
+        <p>sends to the comment parent to add the comment in the array and sends the details to the database</p>
     </div>
     
 
-    <!--
     
-    -->
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
 
     
 
@@ -299,28 +336,21 @@
 
     
 
-    
 </dd>
 
-        </dl>
-    
-
-    
-        <h3 class="subsection-title">Methods</h3>
-
-        <dl>
+            
                 
 
 <dt>
     
-        <h4 class="name" id="post">
+        <h4 class="name" id="edit">
             
-                <span class="type-signature"></span>post<span class="signature">()</span><span class="type-signature"></span>
+                <span class="type-signature"></span>edit<span class="signature">()</span><span class="type-signature"></span>
                 
             
             <div class="container-source members">
-                <code><a href="SignUp2Modal.vue.html">SignUp2Modal.vue</a></code>,
-                <code><a href="SignUp2Modal.vue.html#line51">line 51</a></code>
+                <code><a href="WriteComment.vue.html">WriteComment.vue</a></code>,
+                <code><a href="WriteComment.vue.html#line26">line 26</a></code>
             </div>
             
         </h4>
@@ -332,7 +362,96 @@
 
     
     <div class="description">
-        <p>axios post request to send username and password to the server to sign up user</p>
+        <p>sends to the comment parent to update the comment's content in the array</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id="reply">
+            
+                <span class="type-signature"></span>reply<span class="signature">()</span><span class="type-signature"></span>
+                
+            
+            <div class="container-source members">
+                <code><a href="WriteComment.vue.html">WriteComment.vue</a></code>,
+                <code><a href="WriteComment.vue.html#line67">line 67</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>sends to the comment parent to add the reply in the array and sends the details to the database</p>
     </div>
     
 
@@ -422,7 +541,7 @@
 <script src="scripts/linenumber.js"></script>
 
     <script>
-        var id = 'module:SignUp2Modal_sub'.replace(/"/g, '_');
+        var id = 'module:WriteComment_sub'.replace(/"/g, '_');
         var selectedApi = document.getElementById(id); // do not use jquery selector
         var $selectedApi = $(selectedApi);
 

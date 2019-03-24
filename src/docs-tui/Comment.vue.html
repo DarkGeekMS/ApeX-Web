@@ -1,8 +1,10 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Module: SignUp2Modal | Module: SignUp2Modal</title>
+    <title>Source:  Comment.vue | Source:  Comment.vue</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -24,7 +26,7 @@
         
     </div>
     <div class="title">
-        <h1><a href="index.html" class="link">Module: SignUp2Modal</a></h1>
+        <h1><a href="index.html" class="link">Source:  Comment.vue</a></h1>
         
     </div>
     <div class="search-container" id="search-container">
@@ -41,371 +43,160 @@
 
 
 
-
-<section>
-
-<header>
     
-        <h2>SignUp2Modal</h2>
-        
-            
-        
-    
-</header>
-
-<article>
-    
-        <div class="container-overview">
-        
-            
-                <div class="description"><p></p></div></div> </p>
-<style>
-.container-overview {
-    display: none;
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>&lt;template>
+&lt;/template>
+&lt;script>
+/**
+ * @vue-data {string} [Content] content of the comment
+ * @vue-data {integer} [idx]    idx of the comment in the array of comments
+ * @vue-data {integer} [level]   level of indentation of the comment in the view
+ * @vue-data {integer} [parentIdx]    idx of the parent of the comment in the array of comments
+ * @vue-data {string} [parentID]  ID of the parent component
+ * @vue-data {string} [ID]  ID of the the current comment
+ * @vue-data {string} [user] user name of the current logged-in user
+ * @vue-data {boolean} [upVoted=false] check if the Post is upVoted by the user
+ * @vue-data {boolean} [downVoted=false] check if the Post is downVoted by the user
+ * @vue-data  {integer} [Points=0] # of points the the comment got
+ * @vue-data  {object} [time=0] the time that the post created in
+ * @vue-data  {boolean} [showReplyBox=0] to show the reply box
+ * @vue-data  {boolean} [showEditBox=0] to show the edit box
+ * @vue-data  {boolean} [deleted=1] check if the comment is Deleted
+ * @vue-data  {string} [unSaved='Save'] check if the comment is Saved
+ */
+export default {
+  name: 'CommentItem',
+  props:{
+    content:String,
+    idx:Number,
+    level:Number,
+    parentIdx:Number,
+    parentID:String,
+    ID:String
+  },
+  data(){
+    return{
+    user:globalStore.Username,
+    upVoted:false,
+    downVoted:false,
+    points:0,
+    time:0,
+    showReplyBox:0,
+    showEditBox:0,
+    deleted:1,
+    unSaved:'Save'
+    }
+  },
+  methods:{
+    /**
+     * edits the comment's content
+     * @param {string} updatedContent the updated content of the comment to be rendered
+     */
+edit:function(updatedContent){
+  this.content=updatedContent;
+  this.showEditBox =0;
+  //EMIT EVENT TO COMMENT PARENT TO EDIT THE CONTENT OF THE IDX = idx  by updatedContent
+  this.$emit('Edit',updatedContent,this.idx );
+},
+    /**
+     * hides the edit box and do nothing if it's empty
+     */
+retrieveWithNoEdit:function(){
+  this.showEditBox =0;
+},
+/**
+     * deletes the the comment and sends to the CommentParent to delete it and its children from the array
+     */
+Delete:function(){
+  this.$emit('Delete',this.idx );
+  axios.delete('http://127.0.0.1:8000/api/delete', {
+      data : {
+      name: this.ID,
+      token: globalStore.token
+      }
+        })
+      .then(function (response) {
+       })
+      .catch(function (error) {
+       alert("Something went wrong");
+       });
+},
+/**
+     * saves the the comment
+     */
+Save:function(){
+  if(this.unSaved=='Save')
+    this.unSaved='Unsave';
+  else
+    this.unSaved='Save';
+  axios.post('http://127.0.0.1:8000/api/save', {
+       ID: this.ID,
+       token: globalStore.token
+        })
+      .then(function (response) {
+       })
+      .catch(function (error) {
+       alert("Something went wrong");
+       });
+},
+/**
+     * upvotes the comment
+     */
+Upvote:function(){
+  this.upVoted = !this.upVoted;
+  this.downVoted = false;
+  axios.post('http://127.0.0.1:8000/api/vote', {
+       name: this.ID,
+       dir: 1,
+       token: globalStore.token
+        })
+      .then(function (response) {
+       })
+      .catch(function (error)
+      {
+       alert("Something went wrong");
+       });
+},
+/**
+     * downvotes the comment
+     */
+Downvote:function(){
+  this.downVoted = !this.downVoted;
+  this.upVoted = false;
+  axios.post('http://127.0.0.1:8000/api/vote', {
+       name: this.ID,
+       dir: -1,
+       token: globalStore.token
+        })
+      .then(function (response) {
+       })
+      .catch(function (error) {
+       alert("Something went wrong");
+       });
+},
+/**
+     * function due to the response of the reply box to send the data to the CommentParent to be set in the array
+     * @param {string} cont content of the added comment
+     * @param {integer} parent parent index in the array
+     * @param {integer} parentLevel level of the parent comment
+     * @param {string} parentID parent ID
+     * @param {string} currentID current ID
+     */
+addReply:function(cont,use,parent,parentLevel,parentID,currentID){
+  // send to comment parent to push in the array!!!!!
+  this.$emit('Reply2',cont,parent,parentLevel+1,parentID,currentID );
 }
-
-.main section article table td.name,
-.main section article table td.type,
-.main section article table td.attributes,
-.main section article table td.default {
-    max-width: none;
+  },
+  components: {
+    WriteComment
+  }
 }
-</style>
-
-
-
-
-<p><h3 class="subsection-title" style="margin-top: 1em" data-jsdoc-vuejs="section-data">Data</h3></p>
-<div class="container-params">
-    <table class="params" data-jsdoc-vuejs="table-data">
-        <thead>
-        <tr>
-            <th>Name</th>
-            <th>Type</th>
-            <th>Default value</th>
-            <th class="last">Description</th>
-        </tr>
-        </thead>
-        <tbody>
-
-        <tr>
-            <td class="name"><code>username</code></td>
-            <td class="type"><span class="param-type">string</span></td>
-            <td class="description"><code>&quot;&quot;</code></td>
-            <td class="description last">name of user sign up</td>
-        </tr>
-
-        <tr>
-            <td class="name"><code>pass</code></td>
-            <td class="type"><span class="param-type">string</span></td>
-            <td class="description"><code>&quot;&quot;</code></td>
-            <td class="description last">password of user sign up</td>
-        </tr>
-
-        <tr>
-            <td class="name"><code>modalWidth</code></td>
-            <td class="type"><span class="param-type">integer</span></td>
-            <td class="description"><code>656</code></td>
-            <td class="description last">width of modal</td>
-        </tr>
-
-        <tr>
-            <td class="name"><code>invalidUser</code></td>
-            <td class="type"><span class="param-type">boolean</span></td>
-            <td class="description"><code>false</code></td>
-            <td class="description last">invaliduser</td>
-        </tr>
-
-        <tr>
-            <td class="name"><code>invalidPass</code></td>
-            <td class="type"><span class="param-type">boolean</span></td>
-            <td class="description"><code>false</code></td>
-            <td class="description last">invalidPass</td>
-        </tr>
-
-        <tr>
-            <td class="name"><code>invalidUserAndPass</code></td>
-            <td class="type"><span class="param-type">boolean</span></td>
-            <td class="description"><code>false</code></td>
-            <td class="description last">invalidUserAndPass</td>
-        </tr>
-
-        </tbody>
-    </table>
-</div>
-
-
-
-
-
-
-<p><div class="container-overview"><div><p> </p></div>
-            
-
-            
-                
-
-<dt>
-    
-</dt>
-<dd>
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-    
-
-</dd>
-
-            
-        
-        </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-        <h3 class="subsection-title">Members</h3>
-
-        <dl>
-            
-
-<dt>
-<h4 class="name" id=".computed">
-    <span class="type-signature"><span class="icon green">static</span> </span>computed<span class="type-signature"></span>
-    
-    <div class="container-source members">
-        <code><a href="SignUp2Modal.vue.html">SignUp2Modal.vue</a></code>,
-        <code><a href="SignUp2Modal.vue.html#line32">line 32</a></code>
-    </div>
-    
-</h4>
-
-
-</dt>
-<dd>
-    
-    <div class="description">
-        <p>check out username and password is empty or not</p>
-    </div>
-    
-
-    <!--
-    
-    -->
-
-    
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-    
-
-    
-</dd>
-
-        </dl>
-    
-
-    
-        <h3 class="subsection-title">Methods</h3>
-
-        <dl>
-                
-
-<dt>
-    
-        <h4 class="name" id="post">
-            
-                <span class="type-signature"></span>post<span class="signature">()</span><span class="type-signature"></span>
-                
-            
-            <div class="container-source members">
-                <code><a href="SignUp2Modal.vue.html">SignUp2Modal.vue</a></code>,
-                <code><a href="SignUp2Modal.vue.html#line51">line 51</a></code>
-            </div>
-            
-        </h4>
-
-        
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        <p>axios post request to send username and password to the server to sign up user</p>
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-    
-
-</dd>
-
-            </dl>
-    
-
-    
-
-    
-</article>
-
-</section>
+&lt;/script>
+</code></pre>
+        </article>
+    </section>
 
 
 
@@ -422,7 +213,7 @@
 <script src="scripts/linenumber.js"></script>
 
     <script>
-        var id = 'module:SignUp2Modal_sub'.replace(/"/g, '_');
+        var id = '_sub'.replace(/"/g, '_');
         var selectedApi = document.getElementById(id); // do not use jquery selector
         var $selectedApi = $(selectedApi);
 
