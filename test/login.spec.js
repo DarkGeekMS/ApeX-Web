@@ -44,8 +44,8 @@ describe ('Login' , () =>{
         inputPass.element.value = 'password';
         inputPass.trigger('input');
 
-       expect(wrapper.contains('button')).toBe(true);
-        wrapper.find('button').trigger('click');
+       expect(wrapper.contains('button.btn')).toBe(true);
+        wrapper.find('button.btn').trigger('click');
 
      	moxios.stubRequest('http://127.0.0.1:8000/api/Sign_in',{
      		status:200,
@@ -56,14 +56,13 @@ describe ('Login' , () =>{
      	}); 
 
      	moxios.wait(() => {
-        expect(wrapper.contains('button')).toBe(false);
         done()
         });
 
     });
 
 
-     it('Visits the app root url', () => {
+  /*   it('Visits the app root url', () => {
          wrapper.server()
          wrapper.route('https://jsonplaceholder.typicode.com/posts/1', {
            title: 'This is a stubbed title'
@@ -72,6 +71,8 @@ describe ('Login' , () =>{
          wrapper.visit('/')
          wrapper.contains('div', 'This is a stubbed title')
        });
+
+       */
 
 
 

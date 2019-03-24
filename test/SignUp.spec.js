@@ -1,5 +1,5 @@
 
-import { shallowMount } from '@vue/test-utils'
+import { shallowMount } from '@vue/test-utils';
 import SignUp from '../src/components/DemoSignModal.vue';
 import expect from 'expect';
 
