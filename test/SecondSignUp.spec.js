@@ -57,7 +57,7 @@ describe ('SignUp2' , () =>{
       moxios.wait(() => {
         expect(wrapper.contains('button')).toBe(false);
         done()
-      }); 
+      });
 
     });
 

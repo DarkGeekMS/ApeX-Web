@@ -1,8 +1,14 @@
-import { shallowMount } from '@vue/test-utils'
+import { shallowMount,mount, createLocalVue } from '@vue/test-utils'
 import ApexCom from '../src/components/Apex-com.vue'
 import expect from 'expect';
 import moxios from 'moxios'
 import axios from 'axios'
+import VueRouter from "vue-router"
+import NestedRoute from "../src/components/Apex-com-subscribers.vue"
+import routes from "../src/routes.js"
+
+const localVue = createLocalVue();
+localVue.use(VueRouter);
 
 describe('ApexCom test',()=>{
     const wrapper = shallowMount(ApexCom);
@@ -30,7 +36,15 @@ describe('ApexCom test',()=>{
         const link=wrapper.find('#subscribersListlink');
         if(wrapper.vm.type==3){
           expect((link).isVisible()).toBe(false);
-        }  
+        }
+    });
+    it("renders a child component via routing", () => {
+        const router = new VueRouter({ routes });
+        const wrapper = mount(ApexCom, { localVue, router });
+
+        router.push("/ApexCom/subscribersList/:ApexComName");
+
+        expect(wrapper.find(NestedRoute).exists()).toBe(true);
     });
 });
 describe('some-thing', () => {
@@ -55,5 +69,12 @@ describe('some-thing', () => {
         axiosInstance.get('http://localhost/about')
             .then(res => assert(res.status === 200))
             .finally(done);
+<<<<<<< HEAD
     });
 });
+=======
+    });  
+});
+// subscribersList/:ApexComName
+// /ApexComsubscribersList/
+>>>>>>> 88b98c83dedddb556c4fe2fc1332488df0d11cb0
