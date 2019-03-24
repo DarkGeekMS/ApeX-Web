@@ -177,6 +177,12 @@ $background_color: #404142;
       padding: 0 20px;
       box-sizing: border-box;
     }
+    .partition-form span{
+      color: #FF0000;
+      display: block;
+      font-size:14px;
+      margin-left:15px
+    }
 
   }
 
