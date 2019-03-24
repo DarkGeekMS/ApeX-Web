@@ -33,14 +33,14 @@
 
       <div v-show='log' class="btn-group log" id="loggedDiv">
         <button type="button" data-toggle="dropdown" class="btn btn-default dropdown-toggle" id="loggedbutton">
-          <img  width="20"
+          <img id="logoutPic" width="20"
           src="../../public//Logo_X.png" > {{ userLog }}  <span class="caret"></span></button>
         <ul class="dropdown-menu">
             <li class="dropdown-header">MY STUFF</li>
             <li><a href="#">My Profile</a></li>
             <li><a href="#">User Settings</a></li>
             <li class="divider"></li>
-            <li><a href="#" @click="Logout()">Log Out</a></li>
+            <li><a id="logoutList" href="#" @click="Logout()">Log Out</a></li>
         </ul>
     </div>
     </div>

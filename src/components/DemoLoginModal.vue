@@ -22,7 +22,7 @@
              v-model="pass" name="password" required>
 
             <div style="margin-top: 32px"></div>
-            <button class="btn blue" type="submit" @click.prevent="post()" style="display:block" id="submit">Sign In</button>
+            <button class="btn blue" type="submit" @click.prevent="post()" style="display:block" id="LoginButton">Sign In</button>
           </form>
 
            <a id="forgetname" class="btn btn-link"  href="#" > Forgot username </a>
