@@ -30,7 +30,7 @@ describe('ApexCom test',()=>{
         const link=wrapper.find('#subscribersListlink');
         if(wrapper.vm.type==3){
           expect((link).isVisible()).toBe(false);
-        }  
+        }
     });
 });
 describe('some-thing', () => {

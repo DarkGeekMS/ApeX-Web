@@ -4,7 +4,7 @@ import expect from 'expect';
 
 describe ('SignUp3' , () =>{
     let wrapper;
-    
+
     beforeEach(() => {
     	wrapper = shallowMount(SignUp3);
     });
@@ -13,6 +13,6 @@ describe ('SignUp3' , () =>{
  		expect(wrapper.contains('button')).toBe(true);
     });
 
-    
+
 
 });
