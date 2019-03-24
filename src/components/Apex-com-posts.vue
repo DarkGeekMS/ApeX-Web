@@ -1,7 +1,7 @@
 
 <template id="posts desing">
   <!-- class="postsBox" -->
-   <div  id="posts list">
+   <div  id="postslist">
 
 
     <DisplayPosts></DisplayPosts>
@@ -18,14 +18,14 @@ export default {
   }
 },
   components:{
-    DisplayPosts,
+    'DisplayPosts':DisplayPosts,
 
   }
 }
 </script>
 
 <style scoped>
-.postsBox{
+#postslist{
   width:810px;
   height:auto;
   background-color:#eee;

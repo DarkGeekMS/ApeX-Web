@@ -8,7 +8,7 @@
        <h3 id="Apex-com-name">r/{{ApexComName}}</h3>
        <p id="subscribers Count">{{subscribersCount}} subscribers</p>
        <p id="description">{{description}}</p>
-       <button id="subscribe button" class="button" type="button" v-on:click="subscribe()">subscribe</button>
+       <button id="subscribebutton" class="button" type="button" v-on:click="subscribe()">subscribe</button>
        <button id="create post button" class="button" type="button">create post</button>
        </div>
 
@@ -31,10 +31,11 @@
 
     <div class="navBar" id="navbar">
         <router-link id="postslink" class="navbarLinks" to="/ApexCom/ApexComName">Posts</router-link>
-        <router-link v-show="!(type==3)" id="subscribersListlink" class="navbarLinks" v-bind:to="'/ApexCom/subscribersList'+ApexComName">subscribers</router-link>
+        <router-link v-show="!(type==3)" id="subscribersListlink" class="navbarLinks" to="/ApexCom/subscribersList">subscribers</router-link>
     </div>
+    
     <router-view></router-view>
-    </div>
+  </div>
 </template>
 
 <script>
@@ -62,13 +63,14 @@ export default {
       })
       .then(function (response) {
         if(response){
-          alert('done :)');}
+          console.log('done :)');
+          }
         else{
           alert('something wrong happened try again later');
           }
           })
       .catch(function (error) {
-      // console.log(error);
+      console.log(error);
       });
     },
   },
@@ -87,7 +89,7 @@ export default {
     this.moderators=response.moderators;
   })
   .catch(function (error) {
-    // console.log(error);
+    console.log(error);
   });
   }
 }
@@ -100,6 +102,9 @@ export default {
   height:65px;
   margin:50px 0px;
   padding:15px;
+}
+#apexcomName{
+  margin-top:3px;
 }
 .sideBar{
   width:300px;
@@ -138,7 +143,7 @@ export default {
   background-color: #eee;
   width:auto;
   height:auto;
-  margin:15px -14px;
+  margin:0px -14px;
   padding:15px;
 }
 .navbarLinks{

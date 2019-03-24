@@ -17,7 +17,7 @@
           
             <input id="Email" type="email" class="form-control" name="email"
               placeholder="EMAIL"
-              v-model="Value"
+              v-model="email"
               required autofocus>
             <span id="EmailError" class="lead"> {{error}}  </span>
 
@@ -45,7 +45,7 @@ export default {
   data(){
       return{
         modalWidth: MODAL_WIDTH,
-        Value: '',
+        email: '',
         error: ''
       }
     },
@@ -53,7 +53,7 @@ export default {
     this.modalWidth = window.innerWidth < MODAL_WIDTH ? MODAL_WIDTH / 2 : MODAL_WIDTH
   },
   updated(){
-    globalStore.Val = this.Value;
+    globalStore.Val = this.email;
   },
   methods:{
     validateEmail: function(email) {
@@ -61,11 +61,11 @@ export default {
       return re.test(String(email).toLowerCase());
     },
     checkEmail: function(){
-      if(this.Value == '')
+      if(this.email == '')
       {
          this.error = 'Email is required'
       }
-      else if(!(this.validateEmail(this.Value)))
+      else if(!(this.validateEmail(this.email)))
       {
          this.error = 'please fix your email to continue'
       }

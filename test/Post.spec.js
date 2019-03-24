@@ -1,18 +1,21 @@
 import { mount } from '@vue/test-utils'
-import { shallowMount } from '@vue/test-utils'
 import Post from '../src/components/Post.vue'
 import expect from 'expect'
 import moxios from 'moxios'
-//import sinon from 'sinon'
-describe('Post' , ()=>{
+// import sinon from 'sinon'
+describe('Post' , (done)=>{
   let wrapper;
+
   beforeEach(() => {
-    wrapper = mount(Post);
+     wrapper = mount(Post);
+
     moxios.install();
+
   });
 
   afterEach(() =>{
       moxios.uninstall();
+
   });
 
 it('unit test of post', () => {
@@ -53,7 +56,10 @@ it('has upvote button pressed ', () => {
      button.trigger('click')
      expect(wrapper.vm.votes).toBe(1);
      expect(wrapper.vm.className_down).toBe('btn btn-light btn-sm is-gray');
+
 });
+
+
 
 
 
@@ -64,6 +70,7 @@ it('has downvote button pressed ', () => {
      button.trigger('click')
      expect(wrapper.vm.votes).toBe(-1);
      expect(wrapper.vm.className_up).toBe('btn btn-light btn-sm is-gray');
+
 });
 
 
@@ -87,6 +94,5 @@ wrapper.find('a.HIDE').trigger('click');
 expect((post).isVisible()).toBe(false);
 
 });
-
 
 });
