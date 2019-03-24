@@ -13,7 +13,7 @@ import {globalStore} from '../main.js'
 export default {
   data () {
     return {
-      ApexComName:this.$route.params.ApexComName,
+      ApexComName:'',
       token:globalStore.token,
       SubscribersList:[]
     }

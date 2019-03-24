@@ -26,7 +26,6 @@ export default {
     'DisplayPosts':DisplayPosts,
 
   },
-
   }
 
 </script>
