@@ -8,7 +8,7 @@
        <h3 id="Apex-com-name">r/{{ApexComName}}</h3>
        <p id="subscribers Count">{{subscribersCount}} subscribers</p>
        <p id="description">{{description}}</p>
-       <button id="subscribe button" class="button" type="button" v-on:click="subscribe()">subscribe</button>
+       <button id="subscribebutton" class="button" type="button" v-on:click="subscribe()">subscribe</button>
        <button id="create post button" class="button" type="button">create post</button>
        </div>
 
@@ -34,10 +34,11 @@
         <router-link v-show="!(type==3)" id="subscribersListlink" class="navbarLinks" to="/ApexCom/subscribersList">subscribers</router-link>
     </div>
     <router-view></router-view>
-    </div>
+  </div>
 </template>
 
 <script>
+import axios from 'axios'
 import {globalStore} from '../main.js'
 export default {
   data () {
@@ -61,7 +62,8 @@ export default {
       })
       .then(function (response) {
         if(response){
-          alert('done :)');}
+          console.log('done :)');
+          }
         else{
           alert('something wrong happened try again later');
           }

@@ -1,25 +1,26 @@
 <template id="subscribers list design">
 <div class="list" id="subscribers list">
-  <div id="subscribers box" class="box" v-for="subscriber in SubscribersList" :key="subscriber.id">
+  <div id="subscribers box" class="box" v-for="(subscriber,index) in SubscribersList" :key="subscriber.id">
     <a id="subscribers account link" class="accountLink" href="#userAccount">{{subscriber.userName}}</a>
-    <button id="remove button" class="removeButton" v-on="block(subscriber.userName)">Remove</button>
+    <button id="remove button" class="removeButton" v-on:click="blockUser(subscriber.userName,index)">Remove</button>
   </div>
 </div>
 </template>
 
 <script>
+import axios from 'axios'
 import {globalStore} from '../main.js'
 export default {
   data () {
     return {
-      ApexComName:'',
+      ApexComName:this.$route.params.ApexComName,
       token:globalStore.token,
       SubscribersList:[]
     }
   },
   methods:
   {
-    blockUser:function(userName)
+    blockUser:function(userName,index)
     {
       axios.post('http://localhost/block', {
         ApexCom_id:this.ApexComName,
@@ -28,7 +29,9 @@ export default {
       })
       .then(function (response) {
         if(response){
-          alert('done :)');}
+          alert('done :)');
+          this.SubscribersList.splice(index, 1);
+          }
         else{
           alert('something wrong happened try again later');
           }
@@ -66,7 +69,7 @@ export default {
   border-radius: 8px;
 }
 .box{
-  
+
   width:770px;
   height:auto;
   background-color:white;

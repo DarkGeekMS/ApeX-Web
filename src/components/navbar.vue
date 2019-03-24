@@ -1,4 +1,4 @@
-<template>
+  <template>
 
 <div>
 
@@ -7,7 +7,7 @@
  <nav class="navbar navbar-expand-lg navbar-light navbar-fixed-top" id="mainNav">
 
     <a class="navbar-brand" href="#">
-          <img style="margin-top:-8px" width="85" 
+          <img style="margin-top:-8px" width="85"
           src="../../public/Logo_small.png" >
     </a>
     <div class="container-fluid">
@@ -27,10 +27,10 @@
 
 
       <div v-show='!log' class="form-group log" style="display:inline-block">
-          <button type="button" class="btn btn-info log1" @click="$modal.show('demo-login')"> LOG IN </button>
-          <button type="button" class="btn btn-primary log1" data-toggle="button" aria-pressed="false" autocomplete="off" @click="$modal.show('demo-sign')">SIGN UP</button>
+          <button id="LoginBTN" type="button" class="btn btn-info log1" @click="$modal.show('demo-login')"> LOG IN </button>
+          <button id="SignUp" type="button" class="btn btn-primary log1" data-toggle="button" aria-pressed="false" autocomplete="off" @click="$modal.show('demo-sign')">SIGN UP</button>
       </div>
-      
+
       <div v-show='log' class="btn-group log" id="loggedDiv">
         <button type="button" data-toggle="dropdown" class="btn btn-default dropdown-toggle" id="loggedbutton">
           <img  width="20"
@@ -40,7 +40,7 @@
             <li><a href="#">My Profile</a></li>
             <li><a href="#">User Settings</a></li>
             <li class="divider"></li>
-            <li><a href="#" @click="Logout()">Log Out</a></li>
+            <li><a class="logOut" href="#" @click="Logout()">Log Out</a></li>
         </ul>
     </div>
     </div>
@@ -51,6 +51,7 @@
 </template>
 
 <script>
+  import axios from 'axios'
   import DemoLoginModal  from './DemoLoginModal.vue'
   import DemoSignModal  from './DemoSignModal.vue'
   import {globalStore} from '../main.js'
@@ -81,8 +82,8 @@
         })
       },
       Logout: function(){
-        axios.post('https://jsonplaceholder.typicode.com/posts',{
-          Token : globalStore.token
+        axios.post('http://127.0.0.1:8000/api/sign_out',{
+          token : globalStore.token
         }).then(response => {
           this.log = false;
           globalStore.login = false;
@@ -160,4 +161,3 @@ ul{
 }
 
  </style>
-

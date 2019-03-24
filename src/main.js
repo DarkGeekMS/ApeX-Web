@@ -21,8 +21,7 @@ export const globalStore = new Vue({
     Val: '',
     Username: '',
     login:false,
-    token: '',
-
+    token: ''
   }
 })
 

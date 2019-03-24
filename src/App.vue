@@ -1,42 +1,22 @@
 <template>
   <div id="app" >
-<navbar></navbar>
-<router-view></router-view>
+    <navbar></navbar>
+    <router-view></router-view>
  </div>
 </template>
 
 <script>
 
 import Vue from 'vue'
-//import Elucidate from 'vue-elucidate'
-//Vue.use(Elucidate)
-import "vue-elucidate/dist/style.css"
-import docu from "./docu.vue"
-import component1 from "./components/component1.vue"
-import HomePage from "./components/HomePage.vue"
-import navbar from "./components/navbar.vue"
+import NavBar from "./components/NavBar.vue"
 
 export default {
-
-  components:{
-    'c11':component1,
-    'document':docu,
-    navbar,
-
-  },
-  methods:{
-
-
-},
   name: 'app',
-  data(){
-    return{
-      title:'title ',
-      c11:component1,
-      document:docu,
+  components:{
 
-    }
-  }
+    'navbar':NavBar
+  },
+
 }
 </script>
 
@@ -52,7 +32,5 @@ export default {
     background-color: #DAE0E6;
     width:100%;
     height:100%;
-  
-
 }
 </style>

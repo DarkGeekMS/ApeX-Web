@@ -7,21 +7,34 @@ module.exports = {
         test: /\.vue$/,
         loader: 'vue-loader'
       },
-      // this will apply to both plain `.js` files
-      // AND `<script>` blocks in `.vue` files
+      // this will apply to both plain .js files
+      // AND <script> blocks in .vue files
       {
         test: /\.js$/,
         loader: 'babel-loader',
         exclude: /node_modules/
       },
-      // this will apply to both plain `.css` files
-      // AND `<style>` blocks in `.vue` files
+      // this will apply to both plain .css files
+      // AND <style> blocks in .vue files
       {
         test: /\.css$/,
         use: [
           'vue-style-loader',
           'css-loader'
         ]
+      },
+      {
+          test: /\.(png|jpg)$/,
+          exclude: /node_modules/,
+          loader: 'file-loader?name=images/[name].[ext]'
+      },
+      {
+          test: /\.scss$/,
+          use: [
+          'vue-style-loader',
+          'css-loader',
+          'sass-loader'
+        ],
       }
     ]
   },
@@ -30,4 +43,6 @@ module.exports = {
 
  new VueLoaderPlugin()
   ]
+
+  
 };

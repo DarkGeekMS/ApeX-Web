@@ -17,18 +17,26 @@
           <form>
 
             <div class="add" >
-              <input type="text" class="form-control" name="username" 
-               placeholder="CHOOSE A USERNAME" 
-               v-model="username" required autofocus>
+              <input id="SignUpUserName" type="text" class="form-control" name="username" 
+               placeholder="CHOOSE A USERNAME" v-model="username" required autofocus>
+
+               <span class="lead" style = "fontSize:10px" v-show="invalidUser" >Enter a username of max length 50</span>
+
                <div style="margin-top: 20px"></div>
+
+
+
               <input id="password" type="password" class="form-control" name="password"
                 placeholder="PASSWORD"
                 v-model="pass" required autofocus>
+                <span class="lead" style = "fontSize:10px" v-show="invalidPass" >Enter a password of min length 6</span>
+                <span class="lead" style = "fontSize:10px" v-show="invalidUserAndPass" >Enter a password of min length 6 &  a username of max length 50</span>
+
             </div>
-            <div style="margin-top: 90px"></div>
+            <div style="margin-top: 80px"></div>
             <div style="background_color:#eee;border-top:1.5px solid #eee; height:55px" >
-              <a class="btn blue" @click="$modal.hide('demo-sign2')">BACK</a>
-              <button :disabled="check" class="btn blue" type="submit" style="margin-left:450px" @click.prevent="post()">SIGN UP</button>
+              <a id="Back" class="btn blue" @click="$modal.hide('demo-sign2')">BACK</a>
+              <button :disabled="check" class="btn blue" type="submit" style="margin-left:450px" @click.prevent="post()" id="SignUpFinish">SIGN UP</button>
             </div>
 
           </form>
@@ -41,6 +49,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 const MODAL_WIDTH = 656;
 import DemoSign3Modal  from './DemoSign3Modal.vue'
 import {globalStore} from '../main.js'
@@ -54,7 +63,10 @@ export default {
         return{
           modalWidth: MODAL_WIDTH,
           username: "",
-          pass: ""
+          pass: "",
+          invalidUser:false,
+          invalidPass:false,
+          invalidUserAndPass:false
         }
   },
   created () {
@@ -73,18 +85,40 @@ export default {
   },
   methods:{
     post: function(){
-        axios.post('https://jsonplaceholder.typicode.com/posts', {
+        if (this.username.length <= 50 && this.pass.length >= 6)
+        {
+        axios.post('http://127.0.0.1:8000/api/sign_up', {
             email: globalStore.Val,
             username: this.username,
             password: this.pass
           }).then(response => {
              globalStore.login = true;
              globalStore.Username = this.username;
+             globalStore.token = response.data.token;
              this.$modal.show('demo-sign3');
              this.$modal.hide('demo-sign1');
           }).catch(function (error) {
-             console.log(error);
+             alert("Username or Email already exists");
           });
+        }
+        else if (this.username.length > 50 && this.pass.length < 6){
+        this.invalidUserAndPass=true;
+        this.invalidUser=false;
+        this.invalidPass=false;
+
+        }
+        else if (this.username.length > 50)
+        {
+        this.invalidUserAndPass=false;
+        this.invalidUser=true;
+        this.invalidPass=false;
+
+        }
+        else 
+        {
+        this.invalidUserAndPass=false;
+        this.invalidUser=false;
+        this.invalidPass=true;        }
       }
   }
 }
@@ -142,6 +176,12 @@ $background_color: #404142;
     .partition-form .add{
       padding: 0 20px;
       box-sizing: border-box;
+    }
+    .partition-form span{
+      color: #FF0000;
+      display: block;
+      font-size:14px;
+      margin-left:15px
     }
 
   }

@@ -6,7 +6,7 @@
       <div class="partition" id="partition-register">
 
         <div class="partition-title">
-        <h1 class=""> Join the worldwide conversation. </h1>
+        <h1> Join the worldwide conversation. </h1>
         <p> 
             By having a Reddit account, you can subscribe, vote, and  comment on all your favorite Reddit content. </br>
             Sign up in just seconds.
@@ -15,12 +15,14 @@
 
         <div class="partition-form">
           
-            <input type="email" class="form-control" name="email"
+            <input id="Email" type="email" class="form-control" name="email"
               placeholder="EMAIL"
-              v-model="Value"
+              v-model="email"
               required autofocus>
-                 <div style="margin-top: 32px"></div>
-            <button class="btn blue" style="display:block" @click="$modal.show('demo-sign2')">NEXT</button>
+            <span id="EmailError" class="lead"> {{error}}  </span>
+
+            <div style="margin-top: 32px"></div>
+            <button id="Next" class="btn blue" style="display:block" @click.prevent="checkEmail()">NEXT</button>
 
         </div>
 
@@ -43,14 +45,35 @@ export default {
   data(){
       return{
         modalWidth: MODAL_WIDTH,
-        Value: ''
+        email: '',
+        error: ''
       }
     },
   created () {
     this.modalWidth = window.innerWidth < MODAL_WIDTH ? MODAL_WIDTH / 2 : MODAL_WIDTH
   },
   updated(){
-    globalStore.Val = this.Value;
+    globalStore.Val = this.email;
+  },
+  methods:{
+    validateEmail: function(email) {
+      var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return re.test(String(email).toLowerCase());
+    },
+    checkEmail: function(){
+      if(this.email == '')
+      {
+         this.error = 'Email is required'
+      }
+      else if(!(this.validateEmail(this.email)))
+      {
+         this.error = 'please fix your email to continue'
+      }
+      else{
+        this.$modal.show('demo-sign2');
+        this.error = ''
+      }
+    }
   }
 }
 </script>
@@ -107,6 +130,12 @@ $background_color: #404142;
       padding: 0 20px;
       box-sizing: border-box;
     }
+    .partition-form span{
+      color: #FF0000;
+      display: block;
+      font-size:14px;
+      margin-left:15px
+    }
   }
   
   .autocomplete-fix {
@@ -120,7 +149,7 @@ $background_color: #404142;
     top: 0;
   }
 }
-.pop-out-enter-active,
+/*.pop-out-enter-active,
 .pop-out-leave-active {
   transition: all 0.5s;
 }
@@ -128,7 +157,7 @@ $background_color: #404142;
 .pop-out-leave-active {
   opacity: 0;
   transform: translateY(24px);
-}
+} */
 
 button.btn {
   outline: none;
