@@ -4,7 +4,7 @@ import HomePage from './components/HomePage.vue'
 import ApexCom from './components/Apex-com.vue'
 export default[
       {path:'/ApexCom',component:ApexCom , children :[
-    
+
     {path:'ApexComName',component:ApexComPosts},
   {path:'subscribersList',component:ApexComCubscribers}
 ]

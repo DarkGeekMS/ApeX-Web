@@ -36,7 +36,7 @@ describe('ApexCom test',()=>{
         const link=wrapper.find('#subscribersListlink');
         if(wrapper.vm.type==3){
           expect((link).isVisible()).toBe(false);
-        }  
+        }
     });
 });
 describe('axios get requsts', () => {
@@ -61,5 +61,13 @@ describe('axios get requsts', () => {
         axiosInstance.get('http://localhost/about')
             .then(res => assert(res.status === 200))
             .finally(done);
+<<<<<<< HEAD
     });  
 });
+=======
+    });
+});
+  
+// subscribersList/:ApexComName
+// /ApexComsubscribersList/
+>>>>>>> 2f92117badc322c933458d1d9f2b052c48ee5c82

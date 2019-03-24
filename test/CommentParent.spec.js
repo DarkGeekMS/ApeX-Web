@@ -17,7 +17,7 @@ describe ('Comment' , () =>{
       	moxios.uninstall();
     });
 
-    
+
     it('add comments in the array', () => {
 
         wrapper.vm.addComment('content1','user1','parentID_1','currentID_1');
@@ -36,7 +36,7 @@ describe ('Comment' , () =>{
         wrapper.vm.addComment('content2','user2','parentID_2','currentID_2');
         wrapper.vm.addComment('content3','user3','parentID_3','currentID_3');
         expect(wrapper.vm.comments.length).toBe(3);
- 
+
         wrapper.vm.addReply('Reply to comment 2',1,1,'parentID_2','currentID_4');
         expect(wrapper.vm.comments[2]).toEqual(
             {
@@ -51,7 +51,7 @@ describe ('Comment' , () =>{
         );
 
 
-        
+
     });
 
 
@@ -80,8 +80,8 @@ describe ('Comment' , () =>{
 
         wrapper.vm.addComment('content1','user1','parentID_1','currentID_1');
         wrapper.vm.addComment('content2','user2','parentID_2','currentID_2');
-       
- 
+
+
         wrapper.vm.addReply('Reply to comment 1',0,1,'parentID_2','currentID_4');
         wrapper.vm.addReply('Reply to reply of comment 1',1,2,'currentID_4','currentID_5');
 
@@ -102,7 +102,7 @@ describe ('Comment' , () =>{
 
 
 
-        
+
     });
 
 

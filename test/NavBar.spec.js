@@ -5,7 +5,7 @@ import moxios from 'moxios'
 
 describe ('NavBar' , () =>{
     let wrapper;
-    
+
     beforeEach(() => {
     	wrapper = shallowMount(NavBar);
         moxios.install();
@@ -13,6 +13,7 @@ describe ('NavBar' , () =>{
 
     afterEach(() =>{
         moxios.uninstall();
+
     });
 
     it('Login button and sign up button exist in navBar' , () =>{
@@ -34,12 +35,12 @@ describe ('NavBar' , () =>{
             response:{
                 token : 1001
             }
-        }); 
-
-        moxios.wait(() => {
-        done()
         });
+        //
+        // moxios.wait(() => {
+        // done()
+        // });
 
-    }); 
+    });
 
 });
