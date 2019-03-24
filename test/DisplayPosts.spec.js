@@ -4,9 +4,14 @@ import expect from 'expect';
 import moxios from 'moxios'
 
 describe ('DisplayPosts' , () =>{
-    let wrapper = mount(DisplayPosts);
+  let wrapper;
+  beforeEach(() => {
+       wrapper = mount(DisplayPosts);
+
+  });
+
     it('default postInfo to be null' , () =>{
- 		expect(wrapper.vm.postInfo).toBe({});
+ 		expect(wrapper.vm.postInfo).toBe('');
     });
 
 
