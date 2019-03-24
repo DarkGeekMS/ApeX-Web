@@ -38,16 +38,8 @@ describe('ApexCom test',()=>{
           expect((link).isVisible()).toBe(false);
         }  
     });
-    it("renders a child component via routing", () => {
-        const router = new VueRouter({ routes });
-        const wrapper = mount(ApexCom, { localVue, router });
-
-        router.push("/ApexCom/subscribersList/:ApexComName");
-
-        expect(wrapper.find(NestedRoute).exists()).toBe(true);
-    });
 });
-describe('some-thing', () => {
+describe('axios get requsts', () => {
     let axiosInstance;
     beforeEach(() => {
       axiosInstance = axios.create();
@@ -56,7 +48,7 @@ describe('some-thing', () => {
     afterEach(() => {
       moxios.uninstall(axiosInstance);
     });
-    it('should axios a thing', (done) => {
+    it('should axios get request', (done) => {
         moxios.stubRequest('http://localhost/about', {
           status: 200,
           response:{
@@ -71,5 +63,3 @@ describe('some-thing', () => {
             .finally(done);
     });  
 });
-// subscribersList/:ApexComName
-// /ApexComsubscribersList/

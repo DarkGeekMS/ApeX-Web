@@ -6,7 +6,7 @@ export default[
       {path:'/ApexCom',component:ApexCom , children :[
     
     {path:'ApexComName',component:ApexComPosts},
-  {path:'subscribersList/:ApexComName',component:ApexComCubscribers}
+  {path:'subscribersList',component:ApexComCubscribers}
 ]
 },
     {path:'/',component:HomePage},

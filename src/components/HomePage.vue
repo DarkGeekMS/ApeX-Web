@@ -32,7 +32,7 @@ export default {
     return{
       title:'title ',
       c11:component1,
-      document:docu,
+      // document:docu,
     }
   }
 }
