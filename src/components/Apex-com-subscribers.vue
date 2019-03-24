@@ -1,8 +1,8 @@
 <template id="subscribers list design">
 <div class="list" id="subscribers list">
-  <div id="subscribers box" class="box" v-for="subscriber in SubscribersList" :key="subscriber.id">
+  <div id="subscribers box" class="box" v-for="(subscriber,index) in SubscribersList" :key="subscriber.id">
     <a id="subscribers account link" class="accountLink" href="#userAccount">{{subscriber.userName}}</a>
-    <button id="remove button" class="removeButton" v-on:click="blockUser(subscriber.userName)">Remove</button>
+    <button id="remove button" class="removeButton" v-on:click="blockUser(subscriber.userName,index)">Remove</button>
   </div>
 </div>
 </template>
@@ -20,7 +20,7 @@ export default {
   },
   methods:
   {
-    blockUser:function(userName)
+    blockUser:function(userName,index)
     {
       axios.post('http://localhost/block', {
         ApexCom_id:this.ApexComName,
@@ -29,13 +29,15 @@ export default {
       })
       .then(function (response) {
         if(response){
-          alert('done :)');}
+          alert('done :)');
+          this.SubscribersList.splice(index, 1);
+          }
         else{
           alert('something wrong happened try again later');
           }
           })
       .catch(function (error) {
-      // console.log(error);
+      console.log(error);
       });
     },
   },
@@ -51,7 +53,7 @@ export default {
     this.SubscribersList=response.data;
   })
   .catch(function (error) {
-    // console.log(error);
+    console.log(error);
   });
   }
 }

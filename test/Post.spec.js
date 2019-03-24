@@ -3,7 +3,7 @@ import { shallowMount } from '@vue/test-utils'
 import Post from '../src/components/Post.vue'
 import expect from 'expect'
 import moxios from 'moxios'
-//import sinon from 'sinon'
+// import sinon from 'sinon'
 describe('Post' , ()=>{
   let wrapper;
   beforeEach(() => {
@@ -57,6 +57,8 @@ it('has upvote button pressed ', () => {
 
 
 
+
+
 it('has downvote button pressed ', () => {
 
      expect(wrapper.vm.votes).toBe(0)
@@ -87,6 +89,4 @@ wrapper.find('a.HIDE').trigger('click');
 expect((post).isVisible()).toBe(false);
 
 });
-
-
-});
+}); 

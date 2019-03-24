@@ -8,7 +8,7 @@
        <h3 id="Apex-com-name">r/{{ApexComName}}</h3>
        <p id="subscribers Count">{{subscribersCount}} subscribers</p>
        <p id="description">{{description}}</p>
-       <button id="subscribe button" class="button" type="button" v-on:click="subscribe()">subscribe</button>
+       <button id="subscribebutton" class="button" type="button" v-on:click="subscribe()">subscribe</button>
        <button id="create post button" class="button" type="button">create post</button>
        </div>
 
@@ -62,13 +62,14 @@ export default {
       })
       .then(function (response) {
         if(response){
-          alert('done :)');}
+          console.log('done :)');
+          }
         else{
           alert('something wrong happened try again later');
           }
           })
       .catch(function (error) {
-      // console.log(error);
+      console.log(error);
       });
     },
   },
@@ -87,7 +88,7 @@ export default {
     this.moderators=response.moderators;
   })
   .catch(function (error) {
-    // console.log(error);
+    console.log(error);
   });
   }
 }

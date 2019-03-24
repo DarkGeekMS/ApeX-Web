@@ -36,6 +36,12 @@
       <a href="#" class="postby" id="timeAgo"> 15 hours ago </a>
       <h3 id="postBody"> {{postdata.content}} </h3>
 
+      <a href="#" class="fontUser" id="subred"> apex_id </a>
+        <font class="postby" id="fontPostby">. Posted by</font>
+        <a href="#" class="postby" id="user"> username</a>
+        <font class="postby" id="fontpost"> </font>
+        <a href="#" class="postby" id="timeAgo"> 15 hours ago </a>
+        <h3 id="postBody">content </h3>
 
 <footer>
 
@@ -106,6 +112,7 @@ export default {
              Saved  :"Save",
              PostId   :"",
              token  :globalStore.token,
+
              moderator:false,
              ShowModalVar:true,
              Deleted:false
