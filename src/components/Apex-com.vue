@@ -31,11 +31,11 @@
 
     <div class="navBar" id="navbar">
         <router-link id="postslink" class="navbarLinks" to="/ApexCom/ApexComName">Posts</router-link>
-        <router-link  v-show="!(type==3)" id="subscribersListlink" class="navbarLinks" v-bind:to="'/ApexCom/subscribersList'">subscribers</router-link>
+        <router-link v-show="!(type==3)" id="subscribersListlink" class="navbarLinks" to="/ApexCom/subscribersList">subscribers</router-link>
     </div>
     
     <router-view></router-view>
-    </div>
+  </div>
 </template>
 
 <script>

@@ -61,13 +61,7 @@ describe('axios get requsts', () => {
         axiosInstance.get('http://localhost/about')
             .then(res => assert(res.status === 200))
             .finally(done);
-<<<<<<< HEAD
     });  
 });
-=======
-    });
-});
-  
-// subscribersList/:ApexComName
-// /ApexComsubscribersList/
->>>>>>> 2f92117badc322c933458d1d9f2b052c48ee5c82
+
+
