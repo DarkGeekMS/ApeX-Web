@@ -1,7 +1,7 @@
-import ApexComPosts from './components/Apex-com-posts.vue'
-import ApexComCubscribers from './components/Apex-com-subscribers.vue'
+import ApexComPosts from './components/ApexComPosts.vue'
+import ApexComCubscribers from './components/ApexComSubscribers.vue'
 import HomePage from './components/HomePage.vue'
-import ApexCom from './components/Apex-com.vue'
+import ApexCom from './components/ApexCom.vue'
 export default[
       {path:'/ApexCom',component:ApexCom , children :[
 

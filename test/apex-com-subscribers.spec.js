@@ -1,5 +1,5 @@
 import { shallowMount } from '@vue/test-utils'
-import ApexCom from '../src/components/Apex-com-subscribers.vue'
+import ApexCom from '../src/components/ApexComSubscribers.vue'
 import expect from 'expect';
 import moxios from 'moxios'
 import axios from 'axios'
