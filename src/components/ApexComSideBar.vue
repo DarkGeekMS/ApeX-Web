@@ -87,17 +87,10 @@ export default {
 
 <style scoped>
 
-.sidebar{
-  width:25%;
-  height: auto;
-  margin:6% 6%;
-  background-color:white;
-  float:right;
-}
 .Header{
   background-color: skyBlue;
   padding:12px;
-  margin: 0;
+  margin: 0%;
   height:auto;
   border-radius: 8px;
 }
@@ -112,7 +105,8 @@ export default {
 }
 .content
 {
-  margin:20px 4px;
+  margin-top:0%;
+  margin-bottom: 8%;
   background-color:#eee;
   border-radius: 8px;
   padding:1px;

@@ -1,17 +1,20 @@
 <template id="ApexComDesign">
+<div id="all">
   <div class="Apexcom" id="Apexcom">
-    <h1 id="apexcomName">{{ApexComName}}</h1>
-
+    <div class="apexcomName" id="apexcomName">
+      <h1 id="Name">{{ApexComName}}</h1>
+    </div>
+  
     <div class="navBar" id="navbar">
         <router-link id="postslink" class="navbarLinks" to="/ApexCom/ApexComName">Posts</router-link>
         <router-link  id="subscribersListlink" class="navbarLinks" to="/ApexCom/subscribersList">subscribers</router-link>
     </div>
-
-      <SideBar v-bind:apexComName="ApexComName"></SideBar> 
+</div>
+    <SideBar class="sidebar" v-bind:apexComName="ApexComName"></SideBar> 
     <div class="routerview">
     <router-view></router-view>
     </div>
-  </div>
+</div>
 </template>
 
 <script>
@@ -32,46 +35,57 @@ export default {
 </script>
 
 <style scoped>
+
 .Apexcom{
-  background-color: deepSkyBlue;
   width:auto;
   height:65px;
-  margin:50px 0px;
-  padding:15px;
+  margin:4% 0%;
 }
-#apexcomName{
-  margin-top:0%;
+.apexcomName{
+  background-color: deepSkyBlue;
+  width:auto;
+  height: 85px;
+  padding:1px;
+  color: #eee;
+}
+#Name{
+  padding-left: 8%;
 }
 .navBar{
-  background-color: #eee;
+  background-color: rgb(219, 240, 255);
   width:auto;
   height:auto;
-  margin:0px -14px;
-  padding:15px;
+  margin:0% 0%;
+  padding:1%;
+  padding-left: 7%;
 }
 .navbarLinks{
   color: deepSkyBlue;
-  padding: 14px 16px;
+  padding: 0px 1%;
+  padding-bottom: 1%;
   text-decoration: none;
-  margin:7px;
-}
-.navbarLinks:hover {
-  background-color: white;
-  border-radius: 8px;
-}
-.AccountLink{
-  text-decoration: none;
-}
-.router-link-active{
-  background-color:white;
-  border-radius: 8px;
+  margin:1%;
 }
 .routerview{
-  width:60%;
+  width:56%;
   margin: 8% 0%;
+  margin-left: 4%;
   border-radius:8px;
   padding: 2%;
   background-color: #eee;
   float:left;
 }
+.sidebar{
+  width:25%;
+  height: auto;
+  margin:8%;
+  margin-left: 3%;
+  margin-right: 6%;
+  background-color:white;
+  float:right;
+}
+.router-link-active{
+  border-bottom: 3px solid deepSkyBlue;
+}
+
 </style>

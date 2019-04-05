@@ -15,7 +15,8 @@ export default {
     return {
       ApexComName:'',
       token:globalStore.token,
-      SubscribersList:[]
+      SubscribersList:[{userName:'omar'},{userName:'omar'},{userName:'omar'}
+      ]
     }
   },
   methods:
@@ -61,20 +62,20 @@ export default {
 
 <style scoped>
 .box{
-
-  width:770px;
+  width:100%;
   height:auto;
   background-color:white;
-  margin:20px 5px;
-  padding:15px 15px;
+  margin:5% 0%;
+  padding:4% 3%;
+  border-radius: 8px;
 }
 .removeButton{
   background-color:skyBlue;
   width:auto;
   height:auto;
   border-radius: 8px;
-  padding:12px 12px;
-  margin:10px 20px;
+  padding:1% 1%;
+  margin:-1% 2%;
   float:right;
   cursor:pointer;
 }
