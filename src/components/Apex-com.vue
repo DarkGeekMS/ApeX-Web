@@ -32,8 +32,9 @@
     <div class="navBar" id="navbar">
         <router-link id="postslink" class="navbarLinks" to="/ApexCom/ApexComName">Posts</router-link>
         <router-link v-show="!(type==3)" id="subscribersListlink" class="navbarLinks" to="/ApexCom/subscribersList">subscribers</router-link>
+
     </div>
-    
+
     <router-view></router-view>
   </div>
 </template>
@@ -46,7 +47,7 @@ export default {
     return {
       ApexComName:'Apex-com name',
       token:globalStore.token,
-      type:globalStore.val,
+      type:3,
       description:'',
       moderators:[],
       rules:[],
