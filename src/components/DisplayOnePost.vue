@@ -43,8 +43,5 @@ width: 1300px;
   width: 1300px;
   min-width: 1300px;
   min-height: 700px;
-
-
-
 }
 </style>

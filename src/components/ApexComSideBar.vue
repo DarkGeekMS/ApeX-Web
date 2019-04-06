@@ -6,7 +6,10 @@
        <h3 id="Apex-com-name">r/{{apexComName}}</h3>
        <p id="subscribers Count">{{subscribersCount}} subscribers</p>
        <p id="description">{{description}}</p>
-       <button id="subscribebutton" class="button" type="button" v-on:click="subscribe()">subscribe</button>
+       <button id="subscribebutton" v-bind:class="{button1:subscribed,button2:!subscribed}" type="button" v-on:click="subscribe()">
+       <span v-show="subscribed" v-on:mouseover="state='unsubscribe'" v-on:mouseleave="state='subscribed'"> {{state}} </span>  
+       <span v-show="!subscribed"> {{state}} </span>
+        </button>
        <button id="create post button" class="button" type="button">create post</button>
        </div>
 
@@ -30,6 +33,7 @@
 
 
 <script>
+import {globalStore} from '../main.js'
 export default {
     props:{
        apexComName:String
@@ -40,19 +44,34 @@ export default {
       description:'',
       moderators:[],
       rules:[],
-      subscribersCount: ''
+      subscribersCount: '',
+      subscribers:['omar',
+      'basma',
+      'mohamed',
+      'ahmed'],
+      subscribed:true,
+      state:'subscribed'
         }
     },
     methods:
   {
     subscribe:function()
     {
+      if(this.subscribed){
+      this.subscribed = false;
+      this.state='subscribe';
+    }
+    else{
+      this.subscribed=true;
+      this.state='subscribed';
+    }
       axios.post('http://localhost/subscribe', {
       ApexCom_id:this.ApexComName,
       Token:this.token
       })
       .then(function (response) {
         if(response){
+          
           console.log('done :)');
           }
         else{
@@ -63,7 +82,25 @@ export default {
       console.log(error);
       });
     },
+    CheckUser:function(name)
+    {
+      if( name == 'basma'){
+      return true;}
+    },
   },
+  created(){
+    var subscribe = this.subscribers.find(this.CheckUser);
+    if(subscribe == 'basmaa'){
+      this.subscribed = true;
+      this.state='subscribed';
+      console.log('calledif');
+    }
+    else{
+      this.subscribed=false;
+      this.state='subscribe';
+      console.log('calledelse');
+    }
+},
   mounted()
   {
     axios.get('http://localhost/about', {
@@ -81,7 +118,19 @@ export default {
   .catch(function (error) {
     console.log(error);
   });
-  }
+  axios.get('http://localhost/get_subscribers', {
+    params: {
+      ApexCom_id :this.ApexComName,
+      token:this.token
+    }
+  })
+  .then(function (response) {
+    this.Subscribers=response.data;
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+  },
 }
 </script>
 
@@ -94,15 +143,7 @@ export default {
   height:auto;
   border-radius: 8px;
 }
-.button{
-  width:150px;
-  margin:5px 70px;
-  background-color:skyBlue;
-  padding: 7px;
-  border-width: 0px;
-  border-radius: 8px;
-  cursor:pointer;
-}
+
 .content
 {
   margin-top:0%;
@@ -110,6 +151,40 @@ export default {
   background-color:#eee;
   border-radius: 8px;
   padding:1px;
+}
+.button{
+  width:150px;
+  margin:5px 70px;
+  background-color:skyBlue;
+  color: #eee;
+  padding: 7px;
+  border-width: 1px;
+  border-radius: 8px;
+  cursor:pointer;
+  border-style: solid;
+}
+.button1{
+  width:150px;
+  margin:5px 70px;
+  color:skyBlue;
+  background-color: #eee;
+  padding: 7px;
+  border-width: 1px;
+  border-radius: 8px;
+  cursor:pointer;
+  border-color: skyblue;
+  border-style: solid;
+}
+.button2{
+  width:150px;
+  margin:5px 70px;
+  background-color:skyBlue;
+  color: #eee;
+  padding: 7px;
+  border-radius: 8px;
+  cursor:pointer;
+  border-width: 1px;
+  border-style: solid;
 }
 </style>
 
