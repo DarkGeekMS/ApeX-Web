@@ -9,7 +9,7 @@ export  const MimicDisplayPosts =new Vue({
               postedby:' Nada',
               apex_id:'555',
               title:'dj',
-              content:'hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh',
+              content:'hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh',
               locked:false,
               commenetnum:5,
               votes:9
@@ -30,7 +30,7 @@ export  const MimicDisplayPosts =new Vue({
               postedby:' Double',
               apex_id:'222',
               title:'dj',
-              content:'hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh'
+              content:'hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh'
             }
           ]
 

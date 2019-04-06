@@ -1,6 +1,5 @@
 <template>
   <div id="HomePage" >
-     <nav-bar></nav-bar>
      <hotposts></hotposts>
      <DisplayPosts></DisplayPosts>
 
@@ -13,7 +12,6 @@
 
 
 import DisplayPosts from "./DisplayPosts.vue"
-import NavBar from './NavBar.vue'
 import hotposts from './HotPosts.vue'
 
 
@@ -21,7 +19,6 @@ export default {
   name: 'HomePage',
   components:{
 
-    'navBar': NavBar,
     'hotposts':hotposts,
     'DisplayPosts':DisplayPosts,
 

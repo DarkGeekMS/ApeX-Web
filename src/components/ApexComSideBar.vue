@@ -187,5 +187,3 @@ export default {
   border-style: solid;
 }
 </style>
-
-

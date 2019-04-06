@@ -6,8 +6,8 @@
 
     <div id="Buttons">
       <button v-show = "buttonType == 0"  class="com" v-on:click="comment" id="InnerCommentButton">Comment</button>
-      <button v-show = "buttonType == 1"  class="rep" v-on:click="reply">Reply</button>
-      <button v-if = "buttonType == 2"  class="ed" v-on:click="edit">Edit</button>
+      <button v-show = "buttonType == 1"  class="rep" v-on:click="reply" id = "Reply">Reply</button>
+      <button v-show = "buttonType == 2"  class="ed" v-on:click="edit" id = "Edit">Edit</button>
 
     </div>
   </div>
