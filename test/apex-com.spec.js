@@ -1,14 +1,9 @@
 import { shallowMount,mount, createLocalVue } from '@vue/test-utils'
-import ApexCom from '../src/components/Apex-com.vue'
+import ApexCom from '../src/components/ApexCom.vue'
 import expect from 'expect';
 import moxios from 'moxios'
 import axios from 'axios'
-import VueRouter from "vue-router"
-import NestedRoute from "../src/components/Apex-com-subscribers.vue"
-import routes from "../src/routes.js"
 
-const localVue = createLocalVue();
-localVue.use(VueRouter);
 
 describe('ApexCom test',()=>{
     const wrapper = shallowMount(ApexCom);
