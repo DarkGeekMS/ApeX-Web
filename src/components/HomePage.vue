@@ -9,15 +9,15 @@
 </template>
 
 <script>
+
 import DisplayPosts from "./DisplayPosts.vue"
 import hotposts from './HotPosts.vue'
 
 export default {
-
+  name: 'HomePage',
   components:{
     'hotposts':hotposts,
     'DisplayPosts':DisplayPosts,
-
   },
   name: 'app',
   data(){
@@ -26,6 +26,7 @@ export default {
     }
   }
 }
+
 </script>
 
 <style scoped>

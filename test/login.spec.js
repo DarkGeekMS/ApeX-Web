@@ -18,7 +18,7 @@ describe ('Login' , () =>{
     it('default username and password equal to null' , () =>{
  		expect(wrapper.vm.username).toBe('');
         expect(wrapper.vm.pass).toBe('');
-	}); 
+	});
 
 
     it('check value from input to variables' , () =>{
@@ -53,7 +53,7 @@ describe ('Login' , () =>{
      			Username : wrapper.vm.username,
          	    password : wrapper.vm.pass
      		}
-     	}); 
+     	});
 
      	moxios.wait(() => {
         done()

@@ -1,14 +1,15 @@
-<template id="ApexComDesign">
-  <div class="Apexcom" id="Apexcom">
-    <h1 id="apexcomName">{{ApexComName}}</h1>
-    <div class="sideBar" id="sidebar">
+<template>
+    <div class="sidebar" >
 
       <div class="content" id="descroption box">
        <h3 class="Header" id="descroption box header">Community Details</h3>
-       <h3 id="Apex-com-name">r/{{ApexComName}}</h3>
+       <h3 id="Apex-com-name">r/{{apexComName}}</h3>
        <p id="subscribers Count">{{subscribersCount}} subscribers</p>
        <p id="description">{{description}}</p>
-       <button id="subscribebutton" class="button" type="button" v-on:click="subscribe()">subscribe</button>
+       <button id="subscribebutton" v-bind:class="{button1:subscribed,button2:!subscribed}" type="button" v-on:click="subscribe()">
+       <span v-show="subscribed" v-on:mouseover="state='unsubscribe'" v-on:mouseleave="state='subscribed'"> {{state}} </span>  
+       <span v-show="!subscribed"> {{state}} </span>
+        </button>
        <button id="create post button" class="button" type="button">create post</button>
        </div>
 
@@ -28,40 +29,49 @@
       </ul>
     </div>
       </div>
-
-    <div class="navBar" id="navbar">
-        <router-link id="postslink" class="navbarLinks" to="/ApexCom/ApexComName">Posts</router-link>
-        <router-link v-show="!(type==3)" id="subscribersListlink" class="navbarLinks" v-bind:to="'/ApexCom/subscribersList'+ApexComName">subscribers</router-link>
-    </div>
-    <router-view></router-view>
-    </div>
 </template>
 
+
 <script>
-import axios from 'axios'
 import {globalStore} from '../main.js'
 export default {
-  data () {
-    return {
-      ApexComName:'Apex-com name',
-      token:globalStore.token,
-      type:globalStore.val,
+    props:{
+       apexComName:String
+       },
+    data(){
+        return{
+            token:globalStore.token,
       description:'',
       moderators:[],
       rules:[],
-      subscribersCount: ''
-    }
-  },
-  methods:
+      subscribersCount: '',
+      subscribers:['omar',
+      'basma',
+      'mohamed',
+      'ahmed'],
+      subscribed:true,
+      state:'subscribed'
+        }
+    },
+    methods:
   {
     subscribe:function()
     {
+      if(this.subscribed){
+      this.subscribed = false;
+      this.state='subscribe';
+    }
+    else{
+      this.subscribed=true;
+      this.state='subscribed';
+    }
       axios.post('http://localhost/subscribe', {
       ApexCom_id:this.ApexComName,
       Token:this.token
       })
       .then(function (response) {
         if(response){
+          
           console.log('done :)');
           }
         else{
@@ -72,7 +82,25 @@ export default {
       console.log(error);
       });
     },
+    CheckUser:function(name)
+    {
+      if( name == 'basma'){
+      return true;}
+    },
   },
+  created(){
+    var subscribe = this.subscribers.find(this.CheckUser);
+    if(subscribe == 'basmaa'){
+      this.subscribed = true;
+      this.state='subscribed';
+      console.log('calledif');
+    }
+    else{
+      this.subscribed=false;
+      this.state='subscribe';
+      console.log('calledelse');
+    }
+},
   mounted()
   {
     axios.get('http://localhost/about', {
@@ -90,73 +118,72 @@ export default {
   .catch(function (error) {
     console.log(error);
   });
-  }
+  axios.get('http://localhost/get_subscribers', {
+    params: {
+      ApexCom_id :this.ApexComName,
+      token:this.token
+    }
+  })
+  .then(function (response) {
+    this.Subscribers=response.data;
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+  },
 }
 </script>
 
 <style scoped>
-.Apexcom{
-  background-color: deepSkyBlue;
-  width:auto;
-  height:65px;
-  margin:50px 0px;
-  padding:15px;
-}
-.sideBar{
-  width:300px;
-  height: auto;
-  margin:140px 86px;
-  float: right;
-  background-color:white;
-  border-radius: 8px;
-  bottom: 1;
-  right: 0;
-}
+
 .Header{
   background-color: skyBlue;
   padding:12px;
-  margin: 0;
+  margin: 0%;
   height:auto;
   border-radius: 8px;
+}
+
+.content
+{
+  margin-top:0%;
+  margin-bottom: 8%;
+  background-color:#eee;
+  border-radius: 8px;
+  padding:1px;
 }
 .button{
   width:150px;
   margin:5px 70px;
   background-color:skyBlue;
+  color: #eee;
   padding: 7px;
-  border-width: 0px;
+  border-width: 1px;
   border-radius: 8px;
   cursor:pointer;
+  border-style: solid;
 }
-.content
-{
-  margin:20px 4px;
-  background-color:#eee;
-  border-radius: 8px;
-  padding:1px;
-}
-.navBar{
+.button1{
+  width:150px;
+  margin:5px 70px;
+  color:skyBlue;
   background-color: #eee;
-  width:auto;
-  height:auto;
-  margin:15px -14px;
-  padding:15px;
-}
-.navbarLinks{
-  color: deepSkyBlue;
-  padding: 14px 16px;
-  text-decoration: none;
-  margin:7px;
-}
-.navbarLinks:hover {
-  background-color: white;
+  padding: 7px;
+  border-width: 1px;
   border-radius: 8px;
+  cursor:pointer;
+  border-color: skyblue;
+  border-style: solid;
 }
-.AccountLink{
-  text-decoration: none;
-}
-.router-link-active{
-  background-color:white;
+.button2{
+  width:150px;
+  margin:5px 70px;
+  background-color:skyBlue;
+  color: #eee;
+  padding: 7px;
   border-radius: 8px;
+  cursor:pointer;
+  border-width: 1px;
+  border-style: solid;
 }
 </style>

@@ -1,13 +1,14 @@
 <template>
   <div id="WriteComment" v-show="!replyClicked && !editClicked">
     <div>
-      <textarea  class="write" v-model="content"  cols="30" rows="10"></textarea>
+      <textarea  id="CommentSpace" class="write" v-model="content"  cols="30" rows="10"></textarea>
     </div>
 
     <div id="Buttons">
-      <button id = "Comment" v-show = "buttonType == 0"  class="com" v-on:click="comment">Comment</button>
-      <button id = "Reply" v-show = "buttonType == 1"  class="rep" v-on:click="reply">Reply</button>
-      <button  v-show = "buttonType == 2"  class="ed" v-on:click="edit" id = "Edit">Edit</button>
+      <button v-show = "buttonType == 0"  class="com" v-on:click="comment" id="InnerCommentButton">Comment</button>
+      <button v-show = "buttonType == 1"  class="rep" v-on:click="reply" id = "Reply">Reply</button>
+      <button v-show = "buttonType == 2"  class="ed" v-on:click="edit" id = "Edit">Edit</button>
+
     </div>
   </div>
 </template>

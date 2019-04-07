@@ -1,8 +1,9 @@
-import { shallowMount } from '@vue/test-utils'
-import ApexCom from '../src/components/Apex-com.vue'
+import { shallowMount,mount, createLocalVue } from '@vue/test-utils'
+import ApexCom from '../src/components/ApexCom.vue'
 import expect from 'expect';
 import moxios from 'moxios'
 import axios from 'axios'
+
 
 describe('ApexCom test',()=>{
     const wrapper = shallowMount(ApexCom);
@@ -30,10 +31,10 @@ describe('ApexCom test',()=>{
         const link=wrapper.find('#subscribersListlink');
         if(wrapper.vm.type==3){
           expect((link).isVisible()).toBe(false);
-        }  
+        }
     });
 });
-describe('some-thing', () => {
+describe('axios get requsts', () => {
     let axiosInstance;
     beforeEach(() => {
       axiosInstance = axios.create();
@@ -42,7 +43,7 @@ describe('some-thing', () => {
     afterEach(() => {
       moxios.uninstall(axiosInstance);
     });
-    it('should axios a thing', (done) => {
+    it('should axios get request', (done) => {
         moxios.stubRequest('http://localhost/about', {
           status: 200,
           response:{
@@ -55,5 +56,7 @@ describe('some-thing', () => {
         axiosInstance.get('http://localhost/about')
             .then(res => assert(res.status === 200))
             .finally(done);
-    });
+    });  
 });
+
+

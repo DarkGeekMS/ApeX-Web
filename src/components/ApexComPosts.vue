@@ -2,9 +2,7 @@
 <template id="posts desing">
   <!-- class="postsBox" -->
    <div  id="postslist">
-
-
-    <DisplayPosts></DisplayPosts>
+    <DisplayPosts class="box"></DisplayPosts>
   </div>
 </template>
 
@@ -18,19 +16,19 @@ export default {
   }
 },
   components:{
-    DisplayPosts,
+    'DisplayPosts':DisplayPosts,
 
   }
 }
 </script>
 
 <style scoped>
-#postslist{
-  width:810px;
+.box{
+  width:100%;
   height:auto;
-  background-color:#eee;
-  margin:124px 15px;
-  padding:15px 15px;
+  background-color:white;
+  margin:5% 0%;
+  padding:4% 3%;
   border-radius: 8px;
 }
 </style>

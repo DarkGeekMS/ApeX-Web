@@ -1,4 +1,4 @@
-<template>
+  <template>
 
 <div>
 
@@ -33,7 +33,7 @@
 
       <div v-show='log' class="btn-group log" id="loggedDiv">
         <button type="button" data-toggle="dropdown" class="btn btn-default dropdown-toggle" id="loggedbutton">
-          <img  width="20"
+          <img id="logoutPic" width="20"
           src="../../public//Logo_X.png" > {{ userLog }}  <span class="caret"></span></button>
         <ul class="dropdown-menu">
             <li class="dropdown-header">MY STUFF</li>

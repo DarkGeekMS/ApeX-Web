@@ -17,28 +17,13 @@ import CommentParent from "./CommentParent.vue"
 
 export default {
 name: 'DemoOnePost',
-data(){
-return{
-Title:'marc',
-singlepostdata: this.onepostdata
-}
-},
 props:{
   onepostdata:{},
 },
-methods:{
-  test:function()
-  {
-    alert('gada3 yala');
-
-  },
-  created () {
-    this.modalWidth = window.innerWidth < MODAL_WIDTH ? MODAL_WIDTH / 2 : MODAL_WIDTH
-  },
-},
-components:{
-'Post':post,
-'CommentParent':CommentParent
+components:
+{
+  'Post':post,
+  'CommentParent':CommentParent
 }
 
 }
@@ -58,8 +43,5 @@ width: 1300px;
   width: 1300px;
   min-width: 1300px;
   min-height: 700px;
-
-
-
 }
 </style>

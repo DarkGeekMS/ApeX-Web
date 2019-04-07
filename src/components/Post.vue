@@ -29,19 +29,20 @@
         <div class="column" id="postCol2">
 
 <!--
-    <a href="#" class="fontUser" id="subred"> {{apex_id}} </a>
+    <a href="#" class="fontUser" id="subred"> {{postdata.apex_id}} </a>
       <font class="postby" id="fontPostby">. Posted by</font>
       <a href="#" class="postby" id="user">{{postdata.postedby}}  </a>
       <font class="postby" id="fontpost"> </font>
       <a href="#" class="postby" id="timeAgo"> 15 hours ago </a>
-      <h3 id="postBody"> {{postdata.content}} </h3> -->
+      <h3 id="postBody"> {{postdata.content}} </h3>-->
 
-      <a href="#" class="fontUser" id="subred"> apex_id </a>
+
+      <!-- <a href="#" class="fontUser" id="subred"> apex_id </a>
         <font class="postby" id="fontPostby">. Posted by</font>
         <a href="#" class="postby" id="user"> username</a>
         <font class="postby" id="fontpost"> </font>
         <a href="#" class="postby" id="timeAgo"> 15 hours ago </a>
-        <h3 id="postBody">content </h3>
+        <h3 id="postBody">content </h3> -->
 
 <footer>
 
@@ -91,6 +92,7 @@ Comments</button>
 <script id="postScript">
 import axios from 'axios'
 import {globalStore} from '../main.js'
+import {MimicDisplayPosts} from '../MimicServices/DisplayPosts.js'
 
 
 export default {
@@ -334,10 +336,7 @@ export default {
     },
       ShowModal(){
         if(this.ShowModalVar == true){
-          // alert('1111')
-          // globalStore.oneposttest=this.postdata3;
           this.$emit('showUp',this.postdata);
-          // alert('222')
           this.$modal.show('Demo-OnePost');
         }
           else {
