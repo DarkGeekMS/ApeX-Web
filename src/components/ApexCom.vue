@@ -2,7 +2,9 @@
 <div id="all">
   <div class="Apexcom" id="Apexcom">
     <div class="apexcomName" id="apexcomName">
-      <h1 id="Name">{{ApexComName}}</h1>
+      <h1 id="Name">
+        <img class="image" src="../../public/Logo_small.png" >
+        {{ApexComName}}</h1>
     </div>
   
     <div class="navBar" id="navbar">
@@ -39,7 +41,8 @@ export default {
 .Apexcom{
   width:auto;
   height:65px;
-  margin:4% 0%;
+  margin-top:3%;
+  margin-bottom:5%;
 }
 .apexcomName{
   background-color: deepSkyBlue;
@@ -87,5 +90,14 @@ export default {
 .router-link-active{
   border-bottom: 3px solid deepSkyBlue;
 }
-
+.image{
+  width:4%;
+  height:50px;
+  margin-top:0%;
+  margin-bottom:1%;
+  margin-right:0%;
+  margin-left:0%;
+  border-radius: 25px;
+  box-sizing: border-box;
+}
 </style>
