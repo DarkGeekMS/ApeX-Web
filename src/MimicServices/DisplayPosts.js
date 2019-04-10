@@ -1,8 +1,9 @@
 import Vue from 'vue'
+import axios from 'axios'
 export  const MimicDisplayPosts =new Vue({
-
   methods:{
-    getPostsData: function(){
+    getPostsData: function(mimic){
+      if(mimic==true){
   var posts=[
             {
               id:'555',
@@ -35,8 +36,22 @@ export  const MimicDisplayPosts =new Vue({
           ]
 
 return posts
-
+                }
+else {
+  axios.get('http://localhost/sort_posts',
+  {
+    ApexCommID: "YNL2AYkKaW4mwaE8",
+    SortingParam: "date"
+  })
+  .then(function (response) {
+    // console.log(response);
+   })
+  .catch(function (error) {
+   // console.log(error);
+   });
+ }
     }
   }
-}
-)
+
+
+})
