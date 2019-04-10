@@ -10,6 +10,7 @@
     <div class="navBar" id="navbar">
         <router-link id="postslink" class="navbarLinks" to="/ApexCom/ApexComName">Posts</router-link>
         <router-link  id="subscribersListlink" class="navbarLinks" to="/ApexCom/subscribersList">subscribers</router-link>
+        <router-link  id="reportlink" class="navbarLinks" to="/ApexCom/reports">view reports</router-link>
     </div>
 </div>
     <SideBar class="sidebar" v-bind:apexComName="ApexComName"></SideBar> 

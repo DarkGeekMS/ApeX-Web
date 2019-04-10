@@ -4,15 +4,20 @@
         <a class="navbarlinks" href="#">posts</a>
         <a class="navbarlinks" href="#">saved</a>
         <a class="navbarlinks" href="#">hidden</a>
+        <a class="navbarlinks" href="#">report</a>
+
     </div> 
-        <SideBar class="sidebar" ></SideBar>
+        <SideBar v-bind:userName="userName"
+      v-bind:karmaCount="karmaCount"
+      v-bind:picture="picture"
+      v-bind:reports="reports" 
+      class="sidebar" ></SideBar>
 </div>
 </template>
 
 <script>
 import axios from 'axios'
 import {globalStore} from '../main.js'
-
 import SideBar from './UserProfileSideBar.vue'
 
 export default {
@@ -22,6 +27,13 @@ export default {
   data () {
     return {
       token:globalStore.token,
+      userName:'UserName',
+      karmaCount:1,
+      picture:'https://images.app.goo.gl/TfvYZgbpeD9ZveTC9.png',
+      personalPosts:[],
+      savedPosts:[],
+      hiddenPosts:[],
+      reports:[],
     }
   },
   methods:
@@ -29,6 +41,23 @@ export default {
   },
   mounted()
   {
+    axios.get('http://localhost/info', {
+    params: {
+      Token:this.token
+    }
+  })
+  .then(function (response) {
+    this.karma = response.karmaCount;
+    this.picture = response.picture;
+    this.userName = response.userName;
+    this.saved = response.saved;
+    this.hidden = response.hidden;
+    this.personalPosts = response.personalPosts;
+    this.reports = response.reports;
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
   }
 }
 </script>
@@ -71,9 +100,4 @@ export default {
     background-color:white;
     float:right;
 }
-
-.navbarlinks:active{
-   border-bottom: 3px solid deepSkyBlue;
-}
-
 </style>

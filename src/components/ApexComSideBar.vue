@@ -11,7 +11,7 @@
        <button id="subscribebutton" v-bind:class="{button1:subscribed,button:!subscribed}" v-on:mouseover="changeState('unsubscribe')" v-on:mouseleave="changeState('subscribed')" type="button" v-on:click="subscribe()">
        <span> {{state}} </span> </button>
        <button id="create post button" class="button" type="button">create post</button>
-       <button id="deteteApexCom" class="button" type="button" v-on:click="deleteAC()">delete</button>
+       <button id="deteteApexCom" v-show="isAdmin()" class="button" type="button" v-on:click="deleteAC()">delete</button>
        </div>
        </div>
 
@@ -47,11 +47,12 @@ export default {
     data(){
         return{
             token:globalStore.token,
-            description:'sjfsijidjsoajidj nuh t hure',
+            userName:globalStore.Username,
+            description:'',
             moderators:[],
             rules:[],
             subscribersCount: '',
-            subscribers:['omar','basma','mohamed','ahmed'],
+            subscribers:[],
             subscribed:true,
             state:'subscribed'
         }
@@ -83,6 +84,25 @@ export default {
       console.log(error);
       });
       },
+
+      isAdmin:function()
+      {
+         axios.post('http://localhost/me', {
+         Token:this.token
+        })
+          .then(function (response) {
+            if(response.ID ==1){
+          return true;
+          }
+        else{
+          return false;
+          }
+          })
+      .catch(function (error) {
+      console.log(error);
+      });
+      },
+
     subscribe:function()
     {
       if(this.subscribed){
@@ -112,23 +132,23 @@ export default {
     },
     CheckUser:function(name)
     {
-      if( name == 'basma'){
+      if( name == this.userName){
       return true;}
     },
   },
-  created(){
-    var subscribe = this.subscribers.find(this.CheckUser);
-    if(subscribe == 'basmaa'){
-      this.subscribed = true;
-      this.state='subscribed';
-      console.log('calledif');
-    }
-    else{
-      this.subscribed=false;
-      this.state='subscribe';
-      console.log('calledelse');
-    }
-},
+//   created(){
+//     // var subscribe = this.subscribers.find(this.CheckUser);
+//     // if(subscribe == 'basmaa'){
+//     //   this.subscribed = true;
+//     //   this.state='subscribed';
+//     //   console.log('calledif');
+//     // }
+//     // else{
+//     //   this.subscribed=false;
+//     //   this.state='subscribe';
+//     //   console.log('calledelse');
+//     // }
+// },
   mounted()
   {
     axios.get('http://localhost/about', {
@@ -154,6 +174,15 @@ export default {
   })
   .then(function (response) {
     this.Subscribers=response.data;
+    var subscribe = this.subscribers.find(this.CheckUser);
+    if(subscribe == this.userName){
+      this.subscribed = true;
+      this.state='subscribed';
+    }
+    else{
+      this.subscribed=false;
+      this.state='subscribe';
+    }
   })
   .catch(function (error) {
     console.log(error);

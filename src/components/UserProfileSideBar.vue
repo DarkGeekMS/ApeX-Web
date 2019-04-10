@@ -10,8 +10,8 @@
           <a class="link" href="#account" > {{userName}} </a>
           <h5 id="karma">Karma</h5>
           <h5 id="karmanumber"> {{karmaCount}} </h5>
-          <button v-show="notGuest" id="create post button" class="button" type="button">new post</button>
-          <button v-on:click="deleteUser()" id="create post button" class="button" type="button">delete user</button>
+          <button id="create post button" class="button" type="button">new post</button>
+          <button v-show="admin()" v-on:click="deleteUser()" id="create post button" class="button" type="button">delete user</button>
         </div>       
     </div> 
 </div>
@@ -21,38 +21,40 @@
 import axios from 'axios'
 import {globalStore} from '../main.js'
 export default {
+  props:{
+      userName:String,
+      karmaCount:Number,
+      picture:String,
+       },
   data () {
     return {
       token:globalStore.token,
-      userName:'UserName',
-      karmaCount:1,
-      picture:'../../public/Logo_small.png',
     }
   },
   methods:
   {
-    notGuest:function(){    
-    },
-    deleteUser:function(){
-       
-    },
-  },
-  mounted()
-  {
-    axios.get('http://localhost/info', {
+    admin:function(){
+      axios.get('http://localhost/me', {
     params: {
       Token:this.token
     }
   })
   .then(function (response) {
-    this.karma = response.karmaCount;
-    this.picture = response.picture;
-    this.userName = response.userName;
+    if(response==1){
+      return false;
+    }
+    else{
+      return true;
+    }
   })
   .catch(function (error) {
     console.log(error);
   });
-  }
+    },
+    deleteUser:function(){
+       
+    },
+  },
 }
 </script>
 
@@ -120,5 +122,23 @@ export default {
   font-size: 12px;
   font-weight: 400;
 }
-
+.Header{
+  background-color: skyBlue;
+  padding:12px;
+  margin-top: 10%;
+  margin-bottom: 0%;
+  height:auto;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+#apexcomlistbox{
+  background-color: #eee;
+  height: auto;
+  padding: 4%;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+#apexcomlist{
+  padding-left: 0%;
+}
 </style>
