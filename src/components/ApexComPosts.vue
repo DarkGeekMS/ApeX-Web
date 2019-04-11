@@ -30,5 +30,6 @@ export default {
   margin:-8% -11%;
   padding:4% 3%;
   border-radius: 8px;
+  margin-top: 3%;
 }
 </style>
