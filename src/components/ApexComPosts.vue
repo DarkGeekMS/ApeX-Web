@@ -2,7 +2,7 @@
 <template id="posts desing">
   <!-- class="postsBox" -->
    <div  id="postslist">
-    <DisplayPosts class="box"></DisplayPosts>
+    <DisplayPosts class="box" v-bind:ApexComName="ApexComName"></DisplayPosts>
   </div>
 </template>
 
@@ -11,6 +11,7 @@ import DisplayPosts from './DisplayPosts.vue'
 
 
 export default {
+  props:['ApexComName'],
   data () {
     return {
   }
