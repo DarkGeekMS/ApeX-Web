@@ -56,6 +56,14 @@ export default {
     data(){
         return{
             token:globalStore.token,
+            //userName:globalStore.Username,
+            // description:'',
+            // moderators:[],
+            // rules:[],
+            // subscribersCount: '',
+            // subscribers:[],
+            // subscribed:true,
+            // state:'subscribed'
         }
     },
     methods:
@@ -137,6 +145,58 @@ export default {
       return true;}
     },
   },
+//   created(){
+    // var subscribe = this.subscribers.find(this.CheckUser);
+    // if(subscribe == 'basmaa'){
+    //   this.subscribed = true;
+    //   this.state='subscribed';
+    //   console.log('calledif');
+    // }
+    // else{
+    //   this.subscribed=false;
+    //   this.state='subscribe';
+    //   console.log('calledelse');
+    // }
+// },
+  // mounted()
+  // {
+  //   axios.get('http://localhost/about', {
+  //   params: {
+  //     ApexCom_id :this.ApexComName,
+  //     Token:this.token
+  //   }
+  // })
+  // .then(function (response) {
+  //   this.rules = response.rules;
+  //   this.subscribersCount = response.subscribersCount;
+  //   this.description = response.description;
+  //   this.moderators=response.moderators;
+  // })
+  // .catch(function (error) {
+  //   console.log(error);
+  // });
+  // axios.get('http://localhost/get_subscribers', {
+  //   params: {
+  //     ApexCom_id :this.ApexComName,
+  //     token:this.token
+  //   }
+  // })
+  // .then(function (response) {
+  //   this.Subscribers=response.data;
+  //   var subscribe = this.subscribers.find(this.CheckUser);
+  //   if(subscribe == this.userName){
+  //     this.subscribed = true;
+  //     this.state='subscribed';
+  //   }
+  //   else{
+  //     this.subscribed=false;
+  //     this.state='subscribe';
+  //   }
+  // })
+  // .catch(function (error) {
+  //   console.log(error);
+  // });
+  // },
 }
 </script>
 
