@@ -11,7 +11,7 @@ import { MimicPosts } from './Post.js';
 export  const AllServices =new Vue({
   data(){
     return{
-      mimic:true
+      mimic:false
     }
   },
   methods:{
@@ -19,8 +19,8 @@ export  const AllServices =new Vue({
   var posts=MimicDisplayPosts.getPostsData(this.mimic);
     return posts
 },
-    submit:function(){
-      MimicCreatePosts.submitPost(this.mimic);
+    submit:function(videoUrl,apexComId,bodyPost,imgName, isLocked,token){
+      MimicCreatePosts.submitPost(videoUrl,apexComId,bodyPost,imgName,isLocked,token,this.mimic);
 
     },
     Post:function(){
@@ -47,12 +47,12 @@ export  const AllServices =new Vue({
        return posts
     },
 	getAbout:function(ApexComName) {
-	  var about=MimicApexCom.getAbout(this.mimic,ApexComName);
-	    return about
+    var about=MimicApexCom.getAbout(this.mimic,ApexComName);
+    return about
 	},
 	getSubscribers:function(ApexComName) {
-	  var SubscribersList=MimicApexCom.getSubscribers(this.mimic,ApexComName);
-	    return SubscribersList
+    var SubscribersList=MimicApexCom.getSubscribers(this.mimic,ApexComName);
+    return SubscribersList
 	},
 	getUserInfo:function() {
 	  var profileInfo=MimicUserProfile.getUserInfo(this.mimic);
@@ -64,7 +64,7 @@ export  const AllServices =new Vue({
   },
   save:function(token,ID){
     return MimicPosts.save(token,ID,this.mimic);
-    
+
   },
 Hide:function(name,ID){
 return MimicPost.Hide(name,ID,this.mimic);
@@ -81,10 +81,28 @@ deletePost:function(name,ID){
 
 
   return MimicPost.deletePost(name,ID,this.mimic);
-}
+},
 
-
-
+userType:function(){
+  var data=MimicUserProfile.getUserType(this.mimic);
+  return data
+},
+deleteSubscriber:function(userName,ApexComName){
+  var data=MimicApexCom.deleteSubscriber(this.mimic,userName,ApexComName);
+  return data
+},
+deleteUser:function(userName){
+  var data=MimicUserProfile.deleteUser(this.mimic,userName);
+  return data
+},
+deleteApexCom:function(apexComName){
+  var data=MimicApexCom.deleteApexCom(this.mimic,apexComName);
+  return data
+},
+subscribe:function(apexComName){
+  var data=MimicApexCom.subscribe(this.mimic,apexComName);
+  return data 
+},
 
 
 

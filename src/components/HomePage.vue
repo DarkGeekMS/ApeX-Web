@@ -4,7 +4,6 @@
      <DisplayPosts :ApexComName="''"></DisplayPosts>
      <SideBar> </SideBar>
 
-
   </div>
 </template>
 

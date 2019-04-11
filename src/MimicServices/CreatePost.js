@@ -1,31 +1,42 @@
 import Vue from 'vue'
 import axios from 'axios'
 export  const MimicCreatePosts =new Vue({
+  data(){
+return {
+token:'1',
+
+
+
+}
+
+  },
   methods:{
-    submitPost: function(mimic){
+    submitPost: function(videoUrl,apexComId,bodyPost,imgName,token,isLocked,mimic){
       if(mimic===true){
-  
+         if(token=='1' && apexComId=='1'){
             return true;
-       
+         }
+            return false;
                 }
+
 else {
-    axios.post( "http://127.0.0.1:8000/api/submit_post"  ,{
+    axios.post( "http://34.66.175.211/api/submit_post"  ,{
 
-        ApexCom_id:this.apexComId,
-        _token:this.$localStorage.get('token'),
-        body:this.bodyPost,
-        img_name:this.imgName,
-        video_url:this.videoUrl,
-        isLocked:this.isLocked
+        ApexCom_id:apexComId,
+        _token:token,
+        body:bodyPost,
+        img_name:imgName,
+        video_url:videoUrl,
+        isLocked:isLocked
 
- 
+
 
 
        }).then(function(response){
 
          if(response){
-           //TODO it will  display your Post which you have created soon 
-          
+           //TODO it will  display your Post which you have created soon
+
          }
        })
  }

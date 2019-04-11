@@ -5,27 +5,27 @@ export  const MimicPosts=new Vue({
 methods:{
 
     save:function(token,ID,mimic){
-      
+
         if(mimic){
-   
+
                 if(token=="1" && ID=="1"){
-            
+
                     return true;
-            
+
               }
                 return false;
-            
-            
+
+
              }
              else{
 
-                axios.post( "http://localhost/save",
+                axios.post( "http://34.66.175.211/save",
                 {
-        
+
                     ID:this.PostId ,
                     token:this.$localStorage.get('token')
-        
-        
+
+
                 }).then(response=>{
                   if(response){
                     alert('Post saved successfully');
@@ -33,57 +33,57 @@ methods:{
                 } ).catch(function ()
                 {
                     // console.log(error);
-        
+
                 });
              }
-            
-            
-        
-            
+
+
+
+
                 },
 
                 deletePost(name,ID,mimic){
                     if(mimic){
                         if(name=="1" && ID=="1"){
-                
+
                             return true;
-                    
-                    
+
+
                         }
                         return false;
 
 
                     }
-                   
+
             else{
 
 
-                axios.post("http://localhost/DelComment",{
+                axios.post("http://34.66.175.211/DelComment",{
                     ID    : this.PostId,
                     token : this.$localStorage.get('token')
-           
+
             }).then(response=>{
               if(response){
                 this.Deleted = true;
                 alert("Deleted successfully");
               }
-           
+
             }).catch(function ()
             {
              //console.log(error);
-           
-           
+
+
               });
             }
-            
-            
-    
-    
+
+
+
+
             },
                Hide(name,ID,mimic){
                    if(mimic===true){
                     if(name==="1" && ID==="1"){
-            
+
                         return true;
                     }
                     return false;
@@ -91,12 +91,12 @@ methods:{
                    }
               else{
 
-                axios.post("http://localhost/Hide",
+                axios.post("http://34.66.175.211/Hide",
                 {
                     name    : this.PostId,
                     ID : this.$localStorage.get('token')
-        
-        
+
+
                 }).then(response => {
                   if(response){
                   alert("Hidden successfully");}
@@ -106,20 +106,20 @@ methods:{
                 });
 
               }
-            
+
             },
             upvote(name,ID,direction,mimic){
                 if(mimic){
                     if(name=="1"  && ID=="1"){
-                
+
                         if(direction==1){
-               
+
                           return 200;
                        }
-           
+
            }
            else{
-            axios.post("http://localhost/vote",
+            axios.post("http://34.66.175.211/vote",
             {
 
               ID       : this.$localStorage.get('token'),
@@ -143,15 +143,15 @@ methods:{
  downvote(name,ID,direction,mimic){
                 if(mimic){
                     if(name=="1"  && ID=="1"){
-                
+
                         if(direction==-1){
-               
+
                           return 200;
                        }
-           
+
            }
            else{
-            axios.post("http://localhost/vote",
+            axios.post("http://34.66.175.211/vote",
                    {
 
 
@@ -167,11 +167,11 @@ methods:{
                  });
 
               }
-            
-                
-            
-            
-          
+
+
+
+
+
 
 
     }

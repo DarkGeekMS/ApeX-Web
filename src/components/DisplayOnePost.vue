@@ -1,8 +1,8 @@
 <template>
-<div id="DisplayOnePost" class="Modalview">
+<div id="DisplayOnePost" class="modalview">
 <modal id="PopupModal" name="Demo-OnePost" transition="pop-out" :width="1300" :height="700" >
-  <div id="PostContent" class="PostContent">
-  <post v-bind:postdata="onepostdata"></post>
+  <div id="PostContent" class="postContent">
+  <post v-bind:postData="onePostData"></post>
   <CommentParent postID='t3_5' ></CommentParent>
 
 </div>
@@ -18,7 +18,7 @@ import CommentParent from "./CommentParent.vue"
 export default {
 name: 'DemoOnePost',
 props:{
-  onepostdata:{},
+  onePostData:{},
 },
 components:
 {
@@ -30,14 +30,14 @@ components:
 </script>
 
 <style lang="scss" scoped >
-.PostContent{
+.postContent{
 overflow: auto;
 height: 700px;
 width: 1300px;
 // min-width: 1000px;
 // min-height: 800px;
 }
-.Modalview{
+.modalview{
   overflow: auto;
   height: 700px;
   width: 1300px;
