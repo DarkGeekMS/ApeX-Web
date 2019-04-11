@@ -2,7 +2,7 @@
   <div id="HomePage" >
      <!-- <hotposts></hotposts> -->
      <DisplayPosts :ApexComName="''"></DisplayPosts>
-
+     <SideBar> </SideBar>
 
 
   </div>
@@ -11,6 +11,8 @@
 <script>
 
 import DisplayPosts from "./DisplayPosts.vue"
+import HomeSideBar from "./HomeSideBar.vue"
+
 import hotposts from './HotPosts.vue'
 
 export default {
@@ -18,6 +20,7 @@ export default {
   components:{
     'hotposts':hotposts,
     'DisplayPosts':DisplayPosts,
+    'SideBar':HomeSideBar,
   },
   name: 'app',
   data(){

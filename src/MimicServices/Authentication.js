@@ -51,7 +51,8 @@ export  const MimicAuth =new Vue({
           if( this.$localStorage.get('token') )
             this.$localStorage.set('login', false);
             this.$localStorage.set('token', '');
-            this.$localStorage.set('userName', '')
+            this.$localStorage.set('userName', '');
+            this.$router.replace('/HomePage');
         }
         else{
           axios.post('http://127.0.0.1:8000/api/sign_out',{
@@ -60,6 +61,7 @@ export  const MimicAuth =new Vue({
             this.$localStorage.set('login', false);
             this.$localStorage.set('token', '');
             this.$localStorage.set('userName', '');
+            this.$router.replace('/');
           }) 
         }
     },
