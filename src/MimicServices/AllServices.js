@@ -1,8 +1,11 @@
 import Vue from 'vue'
 import {MimicDisplayPosts} from './DisplayPosts.js'
+import {MimicCreatePosts} from './CreatePost.js'
+import {MimicPost} from './CreatePost.js'
 import {MimicAuth} from './Authentication.js'
 import {MimicApexCom} from './ApexCom.js'
 import {MimicUserProfile} from './UserProfile.js'
+import { MimicPosts } from './Post.js';
 
 
 export  const AllServices =new Vue({
@@ -12,14 +15,29 @@ export  const AllServices =new Vue({
     }
   },
   methods:{
+    getPosts:function() {
+  var posts=MimicDisplayPosts.getPostsData(this.mimic);
+    return posts
+},
+    submit:function(){
+      MimicCreatePosts.submitPost(this.mimic);
+
+    },
+    Post:function(){
+      MimicPost.Post(this.mimic);
+
+    },
+
     signUp: function(user,pass)
     {
        return MimicAuth.SignUp(user,pass,this.mimic);
     },
+
     logOut: function()
     {
     	MimicAuth.LogOut(this.mimic);
     },
+
     logIn: function(user,pass)
     {
     	return MimicAuth.LogIn(user,pass,this.mimic);
@@ -43,7 +61,34 @@ export  const AllServices =new Vue({
 	getUserInfoById:function(userName) {
 	  var userInfo=MimicUserProfile.getUserInfoById(this.mimic,userName);
 	    return userInfo
-	},
+  },
+  save:function(token,ID){
+    return MimicPosts.save(token,ID,this.mimic);
+    
+  },
+Hide:function(name,ID){
+return MimicPost.Hide(name,ID,this.mimic);
+},
+upvote:function(name,ID,direction){
+
+return MimicPost.upvote(name,ID,direction,this.mimic);
+},
+downvote:function(name,ID,direction){
+
+return MimicPost.downvote(name,ID,direction,this.mimic);
+},
+deletePost:function(name,ID){
+
+
+  return MimicPost.deletePost(name,ID,this.mimic);
+}
+
+
+
+
+
+
+
   }
 
 })

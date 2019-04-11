@@ -9,9 +9,8 @@
   
     <div class="navBar" id="navbar">
         <router-link id="postslink" class="navbarLinks" :to="{name:'Posts'}">Posts</router-link>
-        <router-link  id="subscribersListlink" class="navbarLinks" :to="{name:'Subscribers'}">subscribers</router-link>
-        <router-link  id="reportlink" class="navbarLinks" :to="{name:'Reports'}">view reports</router-link>
-        <!-- v-show="isModerator()" -->
+        <router-link v-show="isModerator()" id="subscribersListlink" class="navbarLinks" :to="{name:'Subscribers'}">subscribers</router-link>
+        <router-link v-show="isModerator()" id="reportlink" class="navbarLinks" :to="{name:'Reports'}">view reports</router-link>
     </div>
 </div>
     <SideBar class="sidebar" v-bind:apexComName="ApexComName"
@@ -43,8 +42,8 @@ export default {
   data () {
     return {
       // ApexComName:'Apex-com name',
-      token:globalStore.token,
-      userName:globalStore.Username,
+      token:this.$localStorage.get('token'),
+      userName:this.$localStorage.get('userName'),
       description:'',
       moderators:[],
       rules:[],

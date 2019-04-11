@@ -1,9 +1,12 @@
+    
 import ApexComPosts from './components/ApexComPosts.vue'
 import ApexComCubscribers from './components/ApexComSubscribers.vue'
 import HomePage from './components/HomePage.vue'
 import ApexCom from './components/ApexCom.vue'
 
 import userprofile from './components/UserProfile.vue'
+//import ApexComReports from './components/ApexComReports.vue'
+import CreatePost from './components/CreatePost.vue'
 import Reports from './components/Reports.vue'
 import Search from './components/Search.vue'
 import Users from './components/Users.vue'
@@ -18,6 +21,9 @@ export default[
 },
     {path:'/',component:HomePage},
     {path:'/HomePage',component:HomePage},
+    {path:'/userprofile',component:userprofile},
+    {'path':'/submit',component:CreatePost},
+
     {path:'/search', name:'search' , component:Search, props:true, children :[
         {path:'users', component:Users },]},
     {path:'/userprofile/:userName',name:'UserProfile',component:userprofile,props:true}
