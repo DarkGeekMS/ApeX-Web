@@ -4,7 +4,7 @@
         <a class="navbarlinks" href="#">posts</a>
         <a v-show="notGuest()" class="navbarlinks" href="#">saved</a>
         <a v-show="notGuest()" class="navbarlinks" href="#">hidden</a>
-        <a v-show="isModerator" class="navbarlinks" href="#">report</a>
+        <a v-show="isModerator()" class="navbarlinks" href="#">report</a>
 
     </div> 
         <SideBar 
@@ -28,10 +28,10 @@ export default {
   },
   data () {
     return {
-      token:globalStore.token,
-      loggeduser:globalStore.Username,
+      token:this.$localStorage.get('token'),
+      loggeduser:this.$localStorage.get('userName'),
       karmaCount:1,
-      picture:'https://images.app.goo.gl/BzmBcoc4giGqgSFV7.jpg',
+      picture:'../../public/AMFz23O.jpg',
       personalPosts:[],
       savedPosts:[],
       hiddenPosts:[],
@@ -40,6 +40,24 @@ export default {
   },
   methods:
   {
+    isModerator:function()
+      {
+         axios.get('http://localhost/me', {
+         Token:this.token
+        })
+          .then(function (response) {
+            if(response.ID ==2){
+          return true;
+          }
+        else{
+          return false;
+          }
+          })
+      .catch(function (error) {
+      console.log(error);
+      });
+      },
+
     notGuest:function(){
       if(this.userName != this.loggeduser){
         return false;
@@ -51,7 +69,7 @@ export default {
     getUserProfile:function(){
       var data= AllServices.getUserInfo();
       this.karmaCount = data.karma;
-      this.picture = data.picture;
+      // this.picture = data.picture;
       //this.userName = data.userName;
       this.savedPosts = data.saved;
       this.hiddenPosts = data.hidden;
@@ -61,17 +79,9 @@ export default {
    getUserData:function(){
       var data= AllServices.getUserInfoById(this.userName);
       this.karmaCount = data.karma;
-      this.picture = data.picture;
+      // this.picture = data.picture;
      // this.userName = data.userName;
       this.personalPosts = data.personalPosts;
-
-      // var img =new Image();
-      // var reader = new filereader();
-      // var vm = this;
-      // reader.onload = function(e){
-      // vm.Image = e.target.result;
-      //}
-
 
    },
 

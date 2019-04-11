@@ -7,7 +7,7 @@ export  const MimicUserProfile =new Vue({
       if(mimic){
   var profileInfo={
       userName:'historiaAckerman',
-      picture:'https://images.app.goo.gl/qL9YsdPhD597B6Vf9',
+      picture:'',
       karma:9,
       saved:[{},{}],
       hidden:[{},{}],
@@ -36,7 +36,7 @@ else {
     if(mimic){
 var profileInfo={
     userName:'historiaAckerman',
-    picture:'https://images.app.goo.gl/qL9YsdPhD597B6Vf9',
+    picture:'',
     karma:9,
     personalPosts:[{},{}],
 }
