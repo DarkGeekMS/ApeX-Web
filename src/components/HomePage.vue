@@ -2,9 +2,6 @@
   <div id="HomePage" >
      <hotposts></hotposts>
      <DisplayPosts></DisplayPosts>
-
-
-
   </div>
 </template>
 
