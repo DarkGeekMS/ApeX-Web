@@ -21,6 +21,9 @@
              placeholder="Password"
              v-model="pass" name="password" required>
 
+            <p class = "lead" style = "fontSize:15px; color:red; padding-left:15px" > {{ error }}  </p>
+
+
             <div style="margin-top: 32px"></div>
             <button class="btn blue" type="submit" @click.prevent="post()" style="display:block" id="LoginButton">Sign In</button>
           </form>
@@ -45,7 +48,8 @@ export default {
         return{
           modalWidth: MODAL_WIDTH,
           username: '',
-          pass: ''
+          pass: '',
+          error: ''
         }
   },
   created () {
@@ -59,7 +63,7 @@ export default {
           this.$modal.hide('demo-login');
         }
         else{
-          alert("Username or Password is invalid");
+            this.error =  this.$localStorage.get('error');
         }
 
       }

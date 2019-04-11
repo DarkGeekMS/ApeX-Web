@@ -19,8 +19,8 @@ export  const AllServices =new Vue({
   var posts=MimicDisplayPosts.getPostsData(this.mimic);
     return posts
 },
-    submit:function(){
-      MimicCreatePosts.submitPost(this.mimic);
+    submit:function(videoUrl,apexComId,bodyPost,imgName, isLocked,token){
+      MimicCreatePosts.submitPost(videoUrl,apexComId,bodyPost,imgName,isLocked,token,this.mimic);
 
     },
     Post:function(){
