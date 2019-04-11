@@ -1,4 +1,4 @@
-    
+
 import ApexComPosts from './components/ApexComPosts.vue'
 import ApexComCubscribers from './components/ApexComSubscribers.vue'
 import HomePage from './components/HomePage.vue'
@@ -16,13 +16,12 @@ export default[
     {path:'ApexPosts',name:'Posts',component:ApexComPosts},
   {path:'ApexSubscribers',name:'Subscribers',component:ApexComCubscribers,props:true},
   {path:'ApexReports',name:'Reports',component:Reports,props:true}
-  
+
 ]
 },
     {path:'/',component:HomePage},
     {path:'/HomePage',component:HomePage},
-    {path:'/userprofile',component:userprofile},
-    {'path':'/submit',component:CreatePost},
+    {path:'/submit',component:CreatePost},
 
     {path:'/search', name:'search' , component:Search, props:true, children :[
         {path:'users', component:Users },]},

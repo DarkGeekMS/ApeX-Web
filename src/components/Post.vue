@@ -28,15 +28,13 @@
       </div>
         <div class="column" id="postCol2">
 
-<router-link class="fontUser" id="subred" :to="{name:'ApexCom' , params: {ApexComName:postdata.apex_id}}">{{postdata.apex_id}}</router-link>
-    <!-- <a href="#" class="fontUser" id="subred"> {{postdata.apex_id}} </a> -->
+      <router-link class="fontUser" id="subred" :to="{name:'ApexCom' , params: {ApexComName:postData.apex_id}}">{{postData.apex_id}}</router-link>
       <font class="postby" id="fontPostby">. Posted by</font>
-      <!-- <a href="#" class="postby" id="user">{{postdata.postedby}}  </a> -->
-      <router-link class="postby" id="user" :to="{name:'UserProfile' , params: {userName:postdata.postedby}}"> {{postdata.postedby}}</router-link>
+      <router-link class="postby" id="user" :to="{name:'UserProfile' , params: {userName:postData.postedby}}"> {{postData.postedby}}</router-link>
 
       <font class="postby" id="fontpost"> </font>
       <a href="#" class="postby" id="timeAgo"> 15 hours ago </a>
-      <h3 id="postBody"> {{postdata.content}} </h3>
+      <h3 id="postBody"> {{postData.content}} </h3>
 
 
       <!-- <a href="#" class="fontUser" id="subred"> apex_id </a>
@@ -102,7 +100,6 @@ export default {
   name: 'PostItem',
    data(){
        return{
-             postdata3:this.postdata,
              Not_Hide :true,
              is_Hide  :false,
 
@@ -339,7 +336,7 @@ export default {
     },
       ShowModal(){
         if(this.ShowModalVar == true){
-          this.$emit('showUp',this.postdata);
+          this.$emit('showUp',this.postData);
           this.$modal.show('Demo-OnePost');
         }
           else {
@@ -358,7 +355,7 @@ export default {
 
 },
 props: {
-postdata:{},
+postData:{},
        },
 created(){
          axios.get("http://localhost/me",{token:this.token}).then(response=>{this.userId=response.userID}).catch(function (error)

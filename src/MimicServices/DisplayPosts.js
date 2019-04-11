@@ -44,7 +44,7 @@ export  const MimicDisplayPosts =new Vue({
 
 return posts
                 }
-              
+
               else{
                  posts=[
                   {
