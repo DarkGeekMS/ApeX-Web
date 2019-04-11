@@ -23,7 +23,7 @@ export  const AllServices =new Vue({
     logIn: function(user,pass)
     {
     	return MimicAuth.LogIn(user,pass,this.mimic);
-    }
+    },
     getPosts:function(ApexComName) {
  	   var posts=MimicDisplayPosts.getPostsData(this.mimic,ApexComName);
        return posts
