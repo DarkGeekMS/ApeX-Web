@@ -13,16 +13,16 @@
 
           <form>
             <input id="usernamextxt" type="text" 
-             placeholder="Username" v-model="username" required autofocus>
+             placeholder="Username" v-model="username" v-on:keyup="restart()" required autofocus>
 
              <div style="margin-top: 42px"></div>
 
             <input id="password" type="password"
              placeholder="Password"
-             v-model="pass" name="password" required>
+             v-model="pass" name="password" v-on:keyup="restart()" required>
 
             <p class = "lead" style = "fontSize:15px; color:red; padding-left:15px" > {{ error }}  </p>
-
+            <p class = "lead" style = "fontSize:15px; color:blue; padding-left:15px" > {{ congra }}  </p>
 
             <div style="margin-top: 32px"></div>
             <button class="btn blue" type="submit" @click.prevent="post()" style="display:block" id="LoginButton">Sign In</button>
@@ -49,23 +49,32 @@ export default {
           modalWidth: MODAL_WIDTH,
           username: '',
           pass: '',
-          error: ''
+          error: '',
+          congra: ''
         }
   },
   created () {
-    this.modalWidth = window.innerWidth < MODAL_WIDTH ? MODAL_WIDTH / 2 : MODAL_WIDTH
+    this.modalWidth = window.innerWidth < MODAL_WIDTH ? MODAL_WIDTH / 2 : MODAL_WIDTH,
+    this.congra = ''
   },
   methods:{
     post: function()
       {
+
          if( AllServices.logIn(this.username, this.pass) )
         {
-          this.$modal.hide('demo-login');
+          this.congra = 'You are now logged in. You will soon be redirected' ;
+          setTimeout(() =>this.$modal.hide('demo-login') , 1000)
         }
         else{
             this.error =  this.$localStorage.get('error');
         }
 
+      },
+      restart: function()
+      {
+        this.congra = ''
+        this.error = ''
       }
   }
 }
