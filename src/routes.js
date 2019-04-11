@@ -5,6 +5,7 @@ import HomePage from './components/HomePage.vue'
 import ApexCom from './components/ApexCom.vue'
 import userprofile from './components/UserProfile.vue'
 import ApexComReports from './components/ApexComReports.vue'
+import CreatePost from './components/CreatePost.vue'
 
 export default[
       {path:'/ApexCom',component:ApexCom , children :[
@@ -17,5 +18,6 @@ export default[
 },
     {path:'/',component:HomePage},
     {path:'/HomePage',component:HomePage},
-    {path:'/userprofile',component:userprofile}
+    {path:'/userprofile',component:userprofile},
+    {'path':'/submit',component:CreatePost}
 ]

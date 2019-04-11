@@ -40,13 +40,12 @@
                                <!-- <textarea class="form-control" rows="5" id="textsend" @keyup="Enable"></textarea> -->
                   
                               <ejs-richtexteditor ref="rteObj" :toolbarSettings="toolbarSettings" id="textsend" @keyup="Enable">
-                              <br>
-                              <br>
-                              <br>
-                              <br>
-                              <br>
-                              <br>
-                          
+                               <br>
+                               <br>
+                               <br>
+                               <br>
+                               <br>
+                                 
                               </ejs-richtexteditor> 
                     
   
@@ -170,7 +169,7 @@ export default {
             document.getElementById('button').disabled = true; 
         } else { 
             document.getElementById('button').disabled = false;
-             console.log(document.getElementById('textsend').value);
+             console.log(document.getElementById('text').value);
         }
     
     
