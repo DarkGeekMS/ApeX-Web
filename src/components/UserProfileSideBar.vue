@@ -28,6 +28,8 @@
 <script>
 import axios from 'axios'
 import {globalStore} from '../main.js'
+import {AllServices} from '../MimicServices/AllServices.js'
+
 export default {
   props:{
       userName:String,
@@ -57,39 +59,22 @@ export default {
   // },
 
     isAdmin:function(){
-      axios.get('http://localhost/me', {
-    params: {
-      Token:this.token
-    }
-  })
-  .then(function (response) {
-    if(response==1){
-      return false;
-    }
-    else{
-      return true;
-    }
-  })
-  .catch(function (error) {
-    console.log(error);
-  });
+     var data= AllServices.userType();
+        if(data ==1){
+          return true;
+          }
+        else{
+          return false;
+        }
     },
     deleteUser:function(){
-    axios.post('http://localhost/del_user', {
-      userID:this.userName,
-      Token:this.token
-  })
-  .then(function (response) {
-    if(response==1){
-      return false;
+      var response = AllServices.deleteUser(this.userName);
+      if(response){
+      alert('Done :)')
     }
     else{
-      return true;
+      alert('sorry something went wrong :)')
     }
-  })
-  .catch(function (error) {
-    console.log(error);
-  }); 
     },
   },
 }

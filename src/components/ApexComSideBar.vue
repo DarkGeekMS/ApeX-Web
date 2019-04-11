@@ -5,7 +5,7 @@
       <div class="content">
           <h3 id="Apex-com-name">
          <img class="image" src="../../public/Logo_small.png" >
-         r/{{apexComName}}</h3>
+         {{apexComName}}</h3>
        <p id="subscribers Count">{{subscribersCount}} subscribers</p>
        <p id="description">{{description}}</p>
        <button id="subscribebutton" v-bind:class="{button1:subscribed,button:!subscribed}" v-on:mouseover="changeState('unsubscribe')" v-on:mouseleave="changeState('subscribed')" type="button" v-on:click="subscribe()">
@@ -41,6 +41,7 @@
 <script>
 import {globalStore} from '../main.js'
 import axios from 'axios'
+import {AllServices} from '../MimicServices/AllServices.js'
 
 export default {
     props:{
@@ -48,15 +49,17 @@ export default {
        description:String,
        moderators:Array,
        rules:Array,
-       subscribersCount: String,
-       subscribers:Array,
-       subscribed:Boolean,
-       state:String,
+       subscribersCount: Number,
        },
     data(){
         return{
             token:this.$localStorage.get('token'),
+            subscribers:[],
+       subscribed:false,
+       state:'subscribe',
+       userName:this.$localStorage.get('userName'),
         }
+
     },
     methods:
     {
@@ -69,43 +72,49 @@ export default {
       },
       deleteAC:function()
       {
-         axios.post('http://localhost/del_ac', {
-         ApexCom_id:this.ApexComName,
-         Token:this.token
-        })
-          .then(function (response) {
-            if(response){
-          console.log('done :)');
-          }
-        else{
-          alert('something wrong happened try again later');
-          }
-          })
-      .catch(function (error) {
-      console.log(error);
-      });
+        var response = AllServices.deleteApexCom(this.apexComName);
+      if(response){
+      alert('Done :)')
+    }
+    else{
+      alert('sorry something went wrong :)')
+    }
       },
+      CheckUser:function(name)
+    {
+      if( name == this.userName){
+      return true;
+      }
+    },
+
+       getSubscribers(){
+      this.subscribers= AllServices.getSubscribers(this.apexComName);
+      var subscribe = this.subscribers.find(this.CheckUser);
+    if(subscribe == this.userName){
+      this.subscribed = true;
+      this.state='subscribed';
+    }
+    else{
+      this.subscribed=false;
+      this.state='subscribe';
+    }
+   },
 
       isAdmin:function()
       {
-         axios.get('http://localhost/me', {
-         Token:this.token
-        })
-          .then(function (response) {
-            if(response.ID ==1){
+        var data= AllServices.userType();
+        if(data ==1){
           return true;
           }
         else{
           return false;
-          }
-          })
-      .catch(function (error) {
-      console.log(error);
-      });
+        }
       },
 
     subscribe:function()
     {
+      var data = AllServices.subscribe(this.apexComName);
+      if(data){
       if(this.subscribed){
       this.subscribed = false;
       this.state='subscribe';
@@ -114,81 +123,16 @@ export default {
       this.subscribed=true;
       this.state='subscribed';
     }
-      axios.post('http://localhost/subscribe', {
-      ApexCom_id:this.ApexComName,
-      Token:this.token
-      })
-      .then(function (response) {
-        if(response){
-          
-          console.log('done :)');
-          }
-        else{
-          alert('something wrong happened try again later');
-          }
-          })
-      .catch(function (error) {
-      console.log(error);
-      });
-    },
-    CheckUser:function(name)
-    {
-      if( name == this.userName){
-      return true;}
+    }
+    else{
+      alert('something wrong happened try again later');
+    }
     },
   },
-//   created(){
-    // var subscribe = this.subscribers.find(this.CheckUser);
-    // if(subscribe == 'basmaa'){
-    //   this.subscribed = true;
-    //   this.state='subscribed';
-    //   console.log('calledif');
-    // }
-    // else{
-    //   this.subscribed=false;
-    //   this.state='subscribe';
-    //   console.log('calledelse');
-    // }
-// },
-  // mounted()
-  // {
-  //   axios.get('http://localhost/about', {
-  //   params: {
-  //     ApexCom_id :this.ApexComName,
-  //     Token:this.token
-  //   }
-  // })
-  // .then(function (response) {
-  //   this.rules = response.rules;
-  //   this.subscribersCount = response.subscribersCount;
-  //   this.description = response.description;
-  //   this.moderators=response.moderators;
-  // })
-  // .catch(function (error) {
-  //   console.log(error);
-  // });
-  // axios.get('http://localhost/get_subscribers', {
-  //   params: {
-  //     ApexCom_id :this.ApexComName,
-  //     token:this.token
-  //   }
-  // })
-  // .then(function (response) {
-  //   this.Subscribers=response.data;
-  //   var subscribe = this.subscribers.find(this.CheckUser);
-  //   if(subscribe == this.userName){
-  //     this.subscribed = true;
-  //     this.state='subscribed';
-  //   }
-  //   else{
-  //     this.subscribed=false;
-  //     this.state='subscribe';
-  //   }
-  // })
-  // .catch(function (error) {
-  //   console.log(error);
-  // });
-  // },
+ mounted(){
+   this.getSubscribers();
+ }
+ 
 }
 </script>
 
