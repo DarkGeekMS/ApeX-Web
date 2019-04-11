@@ -44,6 +44,10 @@ var vm = new Vue({
     emailVal:{
       type: String,
       default: ''
+    },
+    error:{
+      type: String,
+      default: ''
     }
   }
 })
