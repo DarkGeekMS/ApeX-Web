@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import axios from 'axios'
-export  const MimicPosts=new Vue({
-
+export  const MimicPost=new Vue({
 methods:{
 
     save:function(token,ID,mimic){
@@ -22,8 +21,8 @@ methods:{
                 axios.post( "http://localhost/save",
                 {
         
-                    ID:this.PostId ,
-                    token:this.$localStorage.get('token')
+                    ID:ID,
+                    token:token
         
         
                 }).then(response=>{
@@ -42,7 +41,7 @@ methods:{
             
                 },
 
-                deletePost(name,ID,mimic){
+                deletePost:function(name,ID,mimic){
                     if(mimic){
                         if(name=="1" && ID=="1"){
                 
@@ -59,8 +58,8 @@ methods:{
 
 
                 axios.post("http://localhost/DelComment",{
-                    ID    : this.PostId,
-                    token : this.$localStorage.get('token')
+                    ID    : name,
+                    token : ID
            
             }).then(response=>{
               if(response){
@@ -93,8 +92,8 @@ methods:{
 
                 axios.post("http://localhost/Hide",
                 {
-                    name    : this.PostId,
-                    ID : this.$localStorage.get('token')
+                    name    : name,
+                    ID : ID
         
         
                 }).then(response => {
@@ -122,9 +121,9 @@ methods:{
             axios.post("http://localhost/vote",
             {
 
-              ID       : this.$localStorage.get('token'),
-              name     : this.PostId,
-              direction:1
+              ID       : ID,
+              name     : name,
+              direction:direction
 
             }).then(response => {
               if(response){
@@ -155,9 +154,9 @@ methods:{
                    {
 
 
-                    ID:this.$localStorage.get('token'),
-                    name:this.PostId,
-                    direction:0
+                    ID:ID,
+                    name:name,
+                    direction:direction
 
                   }).then(function (response) {
                     return response
@@ -183,6 +182,37 @@ methods:{
 
 
 
+},
+defaultVote(name,ID,direction,mimic){
+  if(mimic){
+      if(name=="1"  && ID=="1"){
+  
+          if(direction==0){
+ 
+            return 200;
+         }
+
+}
+else{
+axios.post("http://localhost/vote",
+{
+
+ID       : ID,
+name     : name,
+direction:direction
+
+}).then(response => {
+if(response){
+   alert("upvote successfully");}
+
+}).catch(function ()
+{
+// console.log(error);
+
+});
+
+}
+}
 }
 
 

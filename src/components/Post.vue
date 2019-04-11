@@ -96,6 +96,7 @@ Comments</button>
 import axios from 'axios'
 import {globalStore} from '../main.js'
 import {MimicDisplayPosts} from '../MimicServices/DisplayPosts.js'
+import { AllServices } from '../MimicServices/AllServices';
 
 
 export default {
@@ -129,22 +130,23 @@ export default {
          if(this.ShowModalVar == true){
          this.ToggleShowModalVar();
        }
-         axios.post("http://localhost/DelComment",{
-         ID    : this.PostId,
-         token : this.$localStorage.get('token')
+       AllServices.deletePost(this.PostId,this.$localStorage.get('token'));
+//          axios.post("http://localhost/DelComment",{
+//          ID    : this.PostId,
+//          token : this.$localStorage.get('token')
 
- }).then(response=>{
-   if(response){
-     this.Deleted = true;
-     alert("Deleted successfully");
-   }
+//  }).then(response=>{
+//    if(response){
+//      this.Deleted = true;
+//      alert("Deleted successfully");
+//    }
 
- }).catch(function (error)
- {
-  //console.log(error);
+//  }).catch(function (error)
+//  {
+//   //console.log(error);
 
 
-   });
+//    });
    },
 
        Hide(){
@@ -158,20 +160,20 @@ export default {
             alert("Post hidden successfully.")
 
             }
+        AllServices.Hide(this.PostId,this.$localStorage.get('token'));
+        // axios.post("http://localhost/Hide",
+        // {
+        //     name    : this.PostId,
+        //     ID : this.$localStorage.get('token')
 
-        axios.post("http://localhost/Hide",
-        {
-            name    : this.PostId,
-            ID : this.$localStorage.get('token')
 
-
-        }).then(response => {
-          if(response){
-          alert("Hidden successfully");}
-        }).catch(function (error)
-        {
-           //console.log(error);
-        });
+        // }).then(response => {
+        //   if(response){
+        //   alert("Hidden successfully");}
+        // }).catch(function (error)
+        // {
+        //    //console.log(error);
+        // });
          },
     changeColor_up()
     {
@@ -192,39 +194,41 @@ export default {
                       this.pressed_up      =true;
 
                       this.votes          += 1;
-                      axios.post("http://localhost/vote",
-                      {
+                      AllServices.upvote(this.$localStorage.get('token'),this.PostId,1);
+                  //     axios.post("http://localhost/vote",
+                  //     {
 
-                        ID       : this.$localStorage.get('token'),
-                        name     : this.PostId,
-                        direction:1
+                  //       ID       : this.$localStorage.get('token'),
+                  //       name     : this.PostId,
+                  //       direction:1
 
-                      }).then(response => {
-                        if(response){
-                           alert("upvote successfully");}
+                  //     }).then(response => {
+                  //       if(response){
+                  //          alert("upvote successfully");}
 
-                      }).catch(function (error)
-                      {
-                    console.log(error);
+                  //     }).catch(function (error)
+                  //     {
+                  //   console.log(error);
 
-                  });
+                  // });
                 }
               else {
                     this.className_up = 'btn btn-light btn-sm is-gray';
                     this.votes     -= 1;
                     this.pressed_up = false;
-                    axios.post("http://localhost/vote",
-                   {
+                  AllServices.defaultVote(this.PostId,this.$localStorage.get('token'),0);
+                //     axios.post("http://localhost/vote",
+                //    {
 
 
-                    ID:this.$localStorage.get('token'),
-                    name:this.PostId,
-                    direction:0
+                //     ID:this.$localStorage.get('token'),
+                //     name:this.PostId,
+                //     direction:0
 
-                  }).then(response => {}).catch(function (error)
-                  {
-                   console.log(error);
-                 });
+                //   }).then(response => {}).catch(function (error)
+                //   {
+                //    console.log(error);
+                //  });
                }
 
 
@@ -247,23 +251,24 @@ export default {
                          this.pressed_down=true;
 
                          this.votes-=1;
-                         axios.post("http://localhost/vote",
-                     {
+                         AllServices.downvote(this.PostId,this.$localStorage.get('token'),-1);
+                    //      axios.post("http://localhost/vote",
+                    //  {
 
 
-                          ID      : this.$localStorage.get('token'),
-                          name    : this.PostId,
-                          direction: -1
+                    //       ID      : this.$localStorage.get('token'),
+                    //       name    : this.PostId,
+                    //       direction: -1
 
-                     }).then(response =>{
-                       if(response){
-                         alert("downvote successfully");
-                       }
-                     }).catch(function (error)
-                     {
-                      //console.log(error);
+                    //  }).then(response =>{
+                    //    if(response){
+                    //      alert("downvote successfully");
+                    //    }
+                    //  }).catch(function (error)
+                    //  {
+                    //   //console.log(error);
 
-                    });
+                    // });
                   }
               else {
                   this.className_down = 'btn btn-light btn-sm is-gray';
@@ -271,17 +276,18 @@ export default {
 
                    this.votes += 1;
                    this.pressed_down = false;
-                   axios.post("http://localhost/vote",
-                   {
+                   AllServices.defaultVote(this.PostId,this.$localStorage.get('token'),0);
+                  //  axios.post("http://localhost/vote",
+                  //  {
 
 
-                    ID:this.$localStorage.get('token'),
-                    name:this.PostId,
-                    direction:0
+                  //   ID:this.$localStorage.get('token'),
+                  //   name:this.PostId,
+                  //   direction:0
 
-                  }).then(response => {}).catch(function (error) {
-                     console.log(error);
-                   });
+                  // }).then(response => {}).catch(function (error) {
+                  //    console.log(error);
+                  //  });
 
 
                  }
@@ -294,40 +300,27 @@ export default {
         {
         //alert('Post saved successfully');
         this.Saved="unsave";
-        axios.post( "http://localhost/save",
-        {
+        AllServices.save(this.$localStorage.get('token'),this.PostId);
+        // axios.post( "http://localhost/save",
+        // {
 
-            ID:this.PostId ,
-            token:this.$localStorage.get('token')
+        //     ID:this.PostId ,
+        //     token:this.$localStorage.get('token')
 
 
-        }).then(response=>{
-          if(response){
-            alert('Post saved successfully');
-          }
-        } ).catch(function (error)
-        {
-            // console.log(error);
+        // }).then(response=>{
+        //   if(response){
+        //     alert('Post saved successfully');
+        //   }
+        // } ).catch(function (error)
+        // {
+        //     // console.log(error);
 
-        });
+        // });
       }
         else{
-          axios.post( "http://localhost/save",
-          {
-
-              ID:this.PostId ,
-              token:this.$localStorage.get('token')
-
-
-          }).then(response=>{
-            if(response){
-              alert('Post unsaved successfully');
-            }
-          } ).catch(function (error)
-          {
-               //console.log(error);
-
-          });
+          
+          AllServices.save(this.$localStorage.get('token'),this.PostId);
              //alert('Post unsaved successfully');
             this.Saved="Save";
 
