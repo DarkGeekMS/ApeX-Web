@@ -36,7 +36,6 @@
 <script>
 const MODAL_WIDTH = 656;
 import DemoSign2Modal  from './DemoSign2Modal.vue'
-import {globalStore} from '../main.js'
 export default {
   name: 'DemoSignModal',
   components:{
@@ -53,7 +52,7 @@ export default {
     this.modalWidth = window.innerWidth < MODAL_WIDTH ? MODAL_WIDTH / 2 : MODAL_WIDTH
   },
   updated(){
-    globalStore.Val = this.email;
+    this.$localStorage.set('emailVal', this.email) 
   },
   methods:{
     validateEmail: function(email) {

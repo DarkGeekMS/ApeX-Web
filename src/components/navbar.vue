@@ -1,12 +1,11 @@
-  <template>
-
+<template>
 <div>
 
  <demo-login-modal> </demo-login-modal>
  <demo-sign-modal> </demo-sign-modal>
  <nav class="navbar navbar-expand-lg navbar-light navbar-fixed-top" id="mainNav">
 
-    <a class="navbar-brand" href="#">
+    <a class="navbar-brand" href="/">
           <img style="margin-top:-8px" width="85"
           src="../../public/Logo_small.png" >
     </a>
@@ -17,21 +16,21 @@
               <option> All</option>
               <option>Original Content</option>
           </select>
-        </div>
+      </div>
 
 
       <div class="form-group has-feedback has-search" style="display:inline-block">
         <span class="glyphicon glyphicon-search form-control-feedback"></span>
-        <input type="text" class="form-control" placeholder="Search Reddit">
+        <input type="text" class="form-control" placeholder="Search Reddit" v-model="searchVal" v-on:keyup.enter="search()">
       </div>
 
 
-      <div v-show='!log' class="form-group log" style="display:inline-block">
+      <div v-show="!this.$localStorage.get('login')" class="form-group log" style="display:inline-block">
           <button id="LoginBTN" type="button" class="btn btn-info log1" @click="$modal.show('demo-login')"> LOG IN </button>
           <button id="SignUp" type="button" class="btn btn-primary log1" data-toggle="button" aria-pressed="false" autocomplete="off" @click="$modal.show('demo-sign')">SIGN UP</button>
       </div>
 
-      <div v-show='log' class="btn-group log" id="loggedDiv">
+      <div v-show="this.$localStorage.get('login')" class="btn-group log" id="loggedDiv">
         <button type="button" data-toggle="dropdown" class="btn btn-default dropdown-toggle" id="loggedbutton">
           <img id="logoutPic" width="20"
           src="../../public//Logo_X.png" > {{ userLog }}  <span class="caret"></span></button>
@@ -42,39 +41,36 @@
             <li class="divider"></li>
             <li><a class="logOut" href="#" @click="Logout()">Log Out</a></li>
         </ul>
-    </div>
+      </div>
     </div>
 
   </nav>
 </div>
-
 </template>
 
 <script>
   import axios from 'axios'
   import DemoLoginModal  from './DemoLoginModal.vue'
   import DemoSignModal  from './DemoSignModal.vue'
-  import {globalStore} from '../main.js'
   export default {
     components:{
       DemoLoginModal,
       DemoSignModal
     },
-
     data () {
       return {
         canBeShown: false,
-        log : false,
-        userLog: 'Ayat Mostafa'
+        userLog: '',
+        searchVal: '',
+        listOfUsers: [],
       }
     },
     created () {
       setInterval(() => {
-        this.log = globalStore.login;
-        this.userLog = globalStore.Username;
+        this.userLog = this.$localStorage.get('userName');
         this.canBeShown = !this.canBeShown
-      }, 5000)
-    },
+      }, 500)
+    }, 
     methods: {
       conditionalShow () {
         this.$modal.show('conditional-modal', {
@@ -83,15 +79,26 @@
       },
       Logout: function(){
         axios.post('http://127.0.0.1:8000/api/sign_out',{
-          token : globalStore.token
+          token : this.$localStorage.get('token')
         }).then(response => {
-          this.log = false;
-          globalStore.login = false;
-          globalStore.Username = '';
-          globalStore.token = '' ;
+          this.$localStorage.set('login', false);
+          this.$localStorage.set('token', '');
+          this.$localStorage.set('userName', '');
         })
+      }, 
+      search: function(){
+
+        if( this.searchVal != '')
+        {
+          axios.get('http://127.0.0.1:8000/api/search',{
+            query: this.searchVal
+          }).then(response => {
+            listOfUsers = response.data.query
+          }),
+          this.$router.push({ name:'search', params:{myProperty: this.searchVal}})
+        }
       }
-    }
+    },
 }
 </script>
 

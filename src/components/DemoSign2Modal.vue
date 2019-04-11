@@ -20,7 +20,7 @@
               <input id="SignUpUserName" type="text" class="form-control" name="username" 
                placeholder="CHOOSE A USERNAME" v-model="username" required autofocus>
 
-               <span class="lead" style = "fontSize:10px" v-show="invalidUser" >Enter a username of max length 50</span>
+               <span class="lead" style = "fontSize:10px" v-show="invalidUser" >Enter a username of max length 17 without spaces </span>
 
                <div style="margin-top: 20px"></div>
 
@@ -29,8 +29,8 @@
               <input id="password" type="password" class="form-control" name="password"
                 placeholder="PASSWORD"
                 v-model="pass" required autofocus>
-                <span class="lead" style = "fontSize:10px" v-show="invalidPass" >Enter a password of min length 6</span>
-                <span class="lead" style = "fontSize:10px" v-show="invalidUserAndPass" >Enter a password of min length 6 &  a username of max length 50</span>
+                <span class="lead" style = "fontSize:10px" v-show="invalidPass" >Password must be at least 6 characters long</span>
+                <span class="lead" style = "fontSize:10px" v-show="invalidUserAndPass" >Enter a password of min length 6 &  a username of max length 17</span>
 
             </div>
             <div style="margin-top: 80px"></div>
@@ -52,7 +52,6 @@
 import axios from 'axios'
 const MODAL_WIDTH = 656;
 import DemoSign3Modal  from './DemoSign3Modal.vue'
-import {globalStore} from '../main.js'
 import Authentication from '../MimicServices/Authentication.js'
 export default {
   name: 'DemoSign2Modal',
@@ -85,29 +84,30 @@ export default {
   },
   methods:{
     post: function(){
-        if (this.username.length <= 50 && this.pass.length >= 6)
+        if (this.username.length <= 17 && this.pass.length >= 6 && this.username.indexOf(' ') < 0)
         {
         axios.post('http://127.0.0.1:8000/api/sign_up', {
-            email: globalStore.Val,
+            email: this.$localStorage.get('emailVal'),
             username: this.username,
             password: this.pass
           }).then(response => {
-             globalStore.login = true;
-             globalStore.Username = this.username;
-             globalStore.token = response.data.token;
+             this.$localStorage.set('userName',this.username);
+             this.$localStorage.set('token', response.data.token);
+             this.$localStorage.set('login', true);
+
              this.$modal.show('demo-sign3');
              this.$modal.hide('demo-sign1');
           }).catch(function (error) {
              alert("Username or Email already exists");
           });
         }
-        else if (this.username.length > 50 && this.pass.length < 6){
+        else if (this.username.length > 17 && this.pass.length < 6){
         this.invalidUserAndPass=true;
         this.invalidUser=false;
         this.invalidPass=false;
 
         }
-        else if (this.username.length > 50)
+        else if (this.username.length > 17 || this.username.indexOf(' ') >= 0)
         {
         this.invalidUserAndPass=false;
         this.invalidUser=true;
@@ -118,7 +118,8 @@ export default {
         {
         this.invalidUserAndPass=false;
         this.invalidUser=false;
-        this.invalidPass=true;        }
+        this.invalidPass=true;      
+        }
       }
   }
 }

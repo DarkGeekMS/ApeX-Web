@@ -39,7 +39,6 @@
 <script>
 import axios from 'axios'
 const MODAL_WIDTH = 656;
-import {globalStore} from '../main.js'
 export default {
   name: 'DemoLoginModal',
   data(){
@@ -59,10 +58,11 @@ export default {
             username : this.username,
             password : this.pass
           }).then(response => {
-             globalStore.login = true;
-             globalStore.Username = this.username;
+             this.$localStorage.set('userName',this.username);
+             this.$localStorage.set('token', response.data.token);
+             this.$localStorage.set('login', true);
+
              this.$modal.hide('demo-login');
-             globalStore.token = response.data.token;
           }).catch(function (error) {
              alert("Username or Password is invalid");
           });
@@ -74,8 +74,7 @@ export default {
 <style lang="scss" scoped >
 body{
   display: grid;
-  font-family: Avenir;
-  -webkit-text-size-adjust: 100%;
+ // font-family: Avenirbvbvbv  -webkit-text-size-adjust: 100%;
   -webkit-font-smoothing: antialiased;
 }
 $background_color: #404142;
