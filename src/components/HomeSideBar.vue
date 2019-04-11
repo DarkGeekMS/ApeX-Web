@@ -80,11 +80,11 @@ button{
 #main{
   float:right;
   width:21%;
-  height: 85%;
+  max-height: 50%;
   color:black;
   background-color: white;
   border-radius: 5%;
-  margin-top: -1740px;
+  margin-top: -65%;  
   margin-right: 18%; 
 }
 @media(max-width:1300px){
