@@ -1,7 +1,7 @@
 <template>
   <div id="HomePage" >
-     <hotposts></hotposts>
-     <DisplayPosts></DisplayPosts>
+     <!-- <hotposts></hotposts> -->
+     <DisplayPosts :ApexComName="''"></DisplayPosts>
 
 
 

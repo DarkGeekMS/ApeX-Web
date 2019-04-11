@@ -8,13 +8,22 @@
     </div>
   
     <div class="navBar" id="navbar">
-        <router-link id="postslink" class="navbarLinks" to="/ApexCom/ApexComName">Posts</router-link>
-        <router-link  id="subscribersListlink" class="navbarLinks" to="/ApexCom/subscribersList">subscribers</router-link>
-        <router-link  id="reportlink" class="navbarLinks" to="/ApexCom/reports">view reports</router-link>
+        <router-link id="postslink" class="navbarLinks" :to="{name:'Posts'}">Posts</router-link>
+        <router-link  id="subscribersListlink" class="navbarLinks" :to="{name:'Subscribers'}">subscribers</router-link>
+        <router-link  id="reportlink" class="navbarLinks" :to="{name:'Reports'}">view reports</router-link>
+        <!-- v-show="isModerator()" -->
     </div>
 </div>
-    <SideBar class="sidebar" v-bind:apexComName="ApexComName"></SideBar> 
+    <SideBar class="sidebar" v-bind:apexComName="ApexComName"
+    v-bind:rules="rules"
+    v-bind:description="description"
+    v-bind:moderators="moderators"
+    v-bind:subscribersCount="subscribersCount"
+    v-bind:subscribed="subscribed"
+    v-bind:state="state"
+    ></SideBar> 
     <div class="routerview">
+
     <router-view></router-view>
     </div>
 </div>
@@ -24,16 +33,122 @@
 import axios from 'axios'
 import {globalStore} from '../main.js'
 import SideBar from './ApexComSideBar.vue'
+import {AllServices} from '../MimicServices/AllServices.js'
 
 export default {
+  props:['ApexComName'],
   components:{
     'SideBar':SideBar
   },
   data () {
     return {
-      ApexComName:'Apex-com name',
+      // ApexComName:'Apex-com name',
+      token:globalStore.token,
+      userName:globalStore.Username,
+      description:'',
+      moderators:[],
+      rules:[],
+      subscribersCount: '',
+      subscribers:[],
+      subscribed:true,
+      state:'subscribed',
     }
   },
+  methods:{
+    CheckUser:function(name)
+    {
+      if( name == this.userName){
+      return true;
+      }
+    },
+    CheckModerator:function(name)
+    {
+      if( name == this.userName){
+      return true;
+      }
+    },
+    isModerator:function(){
+      var moderator = this.moderators.find(this.CheckModerator);
+      if(moderator == this.userName){
+          return true;
+        }
+      else{
+          return false;
+        }
+    },
+     getAbout(){
+         var about= AllServices.getAbout(this.ApexComName);
+         this.description=about.description;
+         this.moderators=about.moderators;
+         this.rules=about.rules;
+         this.subscribersCount=about.subscribersCount;
+   },
+   getsubscribers(){
+      this.subscribers= AllServices.getSubscribers();
+      var subscribe = this.subscribers.find(this.CheckUser);
+    if(subscribe == this.userName){
+      this.subscribed = true;
+      this.state='subscribed';
+    }
+    else{
+      this.subscribed=false;
+      this.state='subscribe';
+    }
+   },
+
+  },
+  mounted()
+  {
+  //   axios.get('http://localhost/about', {
+  //   params: {
+  //     ApexCom_id :this.ApexComName,
+  //     Token:this.token
+  //   }
+  // })
+  // .then(function (response) {
+  //   this.rules = response.rules;
+  //   this.subscribersCount = response.subscribersCount;
+  //   this.description = response.description;
+  //   this.moderators=response.moderators;
+
+  //   var moderator = this.moderators.find(this.CheckModerator);
+  //   if(moderator == this.userName){
+  //     this.isModerator = true;
+  //   }
+  //   else{
+  //     this.isModerator=false;
+  //   }
+
+  // })
+  // .catch(function (error) {
+  //   console.log(error);
+  // });
+
+
+  // axios.get('http://localhost/get_subscribers', {
+  //   params: {
+  //     ApexCom_id :this.ApexComName,
+  //     token:this.token
+  //   }
+  // })
+  // .then(function (response) {
+  //   this.Subscribers=response.data;
+  //   var subscribe = this.subscribers.find(this.CheckUser);
+  //   if(subscribe == this.userName){
+  //     this.subscribed = true;
+  //     this.state='subscribed';
+  //   }
+  //   else{
+  //     this.subscribed=false;
+  //     this.state='subscribe';
+  //   }
+  // })
+  // .catch(function (error) {
+  //   console.log(error);
+  // });
+  this.getAbout();
+  this.getsubscribers();
+  }
 }
 </script>
 

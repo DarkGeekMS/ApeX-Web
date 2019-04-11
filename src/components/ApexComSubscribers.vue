@@ -1,28 +1,32 @@
 <template id="subscribers list design">
 <div class="list" id="subscribers list">
   <div id="subscribers box" class="box" v-for="(subscriber,index) in SubscribersList" :key="subscriber.id">
-    <a id="subscribers account link" class="accountLink" href="#userAccount">{{subscriber.userName}}</a>
-    <button id="remove button" class="removeButton" v-on:click="blockUser(subscriber.userName,index)">Remove</button>
+    <a id="subscribers account link" class="accountLink" href="#userAccount">{{subscriber}}</a>
+    <button id="remove button" class="removeButton" v-on:click="blockUser(subscriber,index)">Remove</button>
   </div>
+ 
 </div>
 </template>
 
 <script>
 import axios from 'axios'
 import {globalStore} from '../main.js'
+import {AllServices} from '../MimicServices/AllServices.js'
+
 export default {
+  props:['ApexComName'],
   data () {
     return {
-      ApexComName:'',
+
       token:globalStore.token,
-      SubscribersList:[{userName:'omar'},{userName:'omar'},{userName:'omar'}
-      ]
+      SubscribersList:[]
     }
   },
   methods:
   {
     blockUser:function(userName,index)
     {
+      this.SubscribersList.splice(index, 1);
       axios.post('http://localhost/block', {
         ApexCom_id:this.ApexComName,
         user_id:userName,
@@ -31,7 +35,7 @@ export default {
       .then(function (response) {
         if(response){
           alert('done :)');
-          this.SubscribersList.splice(index, 1);
+          
           }
         else{
           alert('something wrong happened try again later');
@@ -41,21 +45,26 @@ export default {
       console.log(error);
       });
     },
+      getsubscribers(){
+      this.SubscribersList= AllServices.getSubscribers(this.ApexComName);
+      }
   },
   mounted()
   {
-    axios.get('http://localhost/get_subscribers', {
-    params: {
-      ApexCom_id :this.ApexComName,
-      token:this.token
-    }
-  })
-  .then(function (response) {
-    this.SubscribersList=response.data;
-  })
-  .catch(function (error) {
-    console.log(error);
-  });
+  //   axios.get('http://localhost/get_subscribers', {
+  //   params: {
+  //     ApexCom_id :this.ApexComName,
+  //     token:this.token
+  //   }
+  // })
+  // .then(function (response) {
+  //   this.SubscribersList=response.data;
+  // })
+  // .catch(function (error) {
+  //   console.log(error);
+  // });
+
+  this.getsubscribers();
   }
 }
 </script>

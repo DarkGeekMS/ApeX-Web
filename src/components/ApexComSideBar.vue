@@ -18,8 +18,8 @@
        <div class="box" id="rules box">
       <h3 class="Header" id="rules box header">Rules</h3>
       <div class="content">
-      <ol id="rules list">
-        <li id="rules list item" v-for="rule in rules" :key="rule.id">{{rule}}</li>
+      <ol  id="ruleslist">
+        <li id="ruleslistitem" v-for="rule in rules" :key="rule.id">{{rule}}</li>
       </ol>
     </div>
     </div>
@@ -27,9 +27,9 @@
     <div  id="moderators box">
       <h3 class="Header" id="moderators box header">Moderators</h3>
       <div class="content" >
-      <ul style="list-style-type:none;" id="moderators list">
-        <li id="moderators list item" v-for="moderator in moderators" :key="moderator.id">
-          <a id="moderators account link" class="AccountLink" href="#link">{{moderator.userName}}</a>
+      <ul class="list" style="list-style-type:none;" id="moderatorslist">
+        <li  id="moderators list item" v-for="moderator in moderators" :key="moderator.id">
+          <a id="moderators account link" class="accountLink" href="#link">{{moderator}}</a>
         </li>
       </ul>
     </div>
@@ -40,21 +40,22 @@
 
 <script>
 import {globalStore} from '../main.js'
+import axios from 'axios'
+
 export default {
     props:{
-       apexComName:String
+       apexComName:String,
+       description:String,
+       moderators:Array,
+       rules:Array,
+       subscribersCount: String,
+       subscribers:Array,
+       subscribed:Boolean,
+       state:String,
        },
     data(){
         return{
             token:globalStore.token,
-            userName:globalStore.Username,
-            description:'',
-            moderators:[],
-            rules:[],
-            subscribersCount: '',
-            subscribers:[],
-            subscribed:true,
-            state:'subscribed'
         }
     },
     methods:
@@ -87,7 +88,7 @@ export default {
 
       isAdmin:function()
       {
-         axios.post('http://localhost/me', {
+         axios.get('http://localhost/me', {
          Token:this.token
         })
           .then(function (response) {
@@ -136,58 +137,6 @@ export default {
       return true;}
     },
   },
-//   created(){
-//     // var subscribe = this.subscribers.find(this.CheckUser);
-//     // if(subscribe == 'basmaa'){
-//     //   this.subscribed = true;
-//     //   this.state='subscribed';
-//     //   console.log('calledif');
-//     // }
-//     // else{
-//     //   this.subscribed=false;
-//     //   this.state='subscribe';
-//     //   console.log('calledelse');
-//     // }
-// },
-  mounted()
-  {
-    axios.get('http://localhost/about', {
-    params: {
-      ApexCom_id :this.ApexComName,
-      Token:this.token
-    }
-  })
-  .then(function (response) {
-    this.rules = response.rules;
-    this.subscribersCount = response.subscribersCount;
-    this.description = response.description;
-    this.moderators=response.moderators;
-  })
-  .catch(function (error) {
-    console.log(error);
-  });
-  axios.get('http://localhost/get_subscribers', {
-    params: {
-      ApexCom_id :this.ApexComName,
-      token:this.token
-    }
-  })
-  .then(function (response) {
-    this.Subscribers=response.data;
-    var subscribe = this.subscribers.find(this.CheckUser);
-    if(subscribe == this.userName){
-      this.subscribed = true;
-      this.state='subscribed';
-    }
-    else{
-      this.subscribed=false;
-      this.state='subscribe';
-    }
-  })
-  .catch(function (error) {
-    console.log(error);
-  });
-  },
 }
 </script>
 
@@ -203,7 +152,7 @@ export default {
 }
 #description{
   font-family: "Noto Sans", Arial, sans-serif;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 400;
   line-height: 21px;
   color: #1a1a1b;
@@ -263,5 +212,20 @@ export default {
   margin-left:0%;
   border-radius: 25px;
   box-sizing: border-box;
+}
+.accountLink{
+  text-decoration: none;
+  color: black;
+}
+.list{
+  padding-left: 0%;
+}
+#ruleslistitem{
+  font-size: 17px;
+font-weight: 500;
+line-height: 24px;
+}
+#ruleslist{
+  padding-left: 6%;
 }
 </style>
