@@ -240,10 +240,7 @@ addReply:function(cont,use,parent,parentLevel,parentID,currentID){
     -moz-osx-font-smoothing: grayscale;
     align-items: center;
     float: right;
-
-
 }
-
 
 .outer{
     position: relative;
