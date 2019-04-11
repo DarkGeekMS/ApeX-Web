@@ -1,12 +1,13 @@
 <template id="PostTemlate">
-<div id="PostItme"  >
+<div id="PostItme" class="postItem" >
 <DemoOnePost id="PostModal"></DemoOnePost>
 <div class="panel panel-default" style="width: 62rem;   "  @click="ShowModal()" v-show="Not_Hide" id="post">
-  <div class="row" id="postRow">
+  <!-- <div class="row" id="postRow"> -->
+    <div class="panel-body"  style="width: 62rem;" >
     <div class="panel2 panel-default" style="width: 3.7rem;" id="postSide">
 
 
-         <div class="column1" id="postCol1">
+          <div class="column1" id="postCol1">
 
 
 <button @click="changeColor_up" type="button" :class="className_up" id="up">
@@ -20,13 +21,13 @@
 </button>
 
 
-        </div>
+        </div> 
 
 
 
 
       </div>
-        <div class="column" id="postCol2">
+        <div class="column2" id="postCol2">
 
 <router-link class="fontUser" id="subred" :to="{name:'ApexCom' , params: {ApexComName:postdata.apex_id}}">{{postdata.apex_id}}</router-link>
     <!-- <a href="#" class="fontUser" id="subred"> {{postdata.apex_id}} </a> -->
@@ -36,7 +37,9 @@
 
       <font class="postby" id="fontpost"> </font>
       <a href="#" class="postby" id="timeAgo"> 15 hours ago </a>
-      <h3 id="postBody"> {{postdata.content}} </h3>
+      <p id="postBody" class="hPost"> 
+       
+        {{postdata.content}} </p>
 
 
       <!-- <a href="#" class="fontUser" id="subred"> apex_id </a>
@@ -45,7 +48,7 @@
         <font class="postby" id="fontpost"> </font>
         <a href="#" class="postby" id="timeAgo"> 15 hours ago </a>
         <h3 id="postBody">content </h3> -->
-
+</div>
 <footer>
 
 <div class="btn-group" role="group" aria-label="..." id="drop">
@@ -86,7 +89,7 @@ Comments</button>
 
    </div>
 
-</div>
+<!-- </div> -->
 
 </template>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
@@ -429,6 +432,7 @@ h5 {
     height: 30px;
     position: absolute;
     bottom: 0px;
+    margin-left: 1%;
       }
 .panel2{
     margin-bottom: 0px;
@@ -464,5 +468,21 @@ h5 {
 .postItem{
 width: 0%;
 
+}
+
+.hPost{
+   overflow: auto;
+   word-wrap: break-word;
+   margin-top:0%; 
+   font-family:Verdana, Geneva, Tahoma, sans-serif;
+   font-size: 130%;
+
+}
+.column2{
+width: 100%;
+
+}
+.panel-body {
+     padding: 2px; 
 }
 </style>
