@@ -11,7 +11,7 @@ export  const MimicDisplayPosts =new Vue({
               postedby:'Nada',
               apex_id:'555',
               title:'dj',
-              content:'Experience enjoyable JavaScript development with WebStorm. With smart code completion, safe refactoring, and first-class support for Node.js, Angular and React. Download free trial 😀 🍔😍',
+              content:'Experience enjoyable JavaScript development with WebStorm. With smart code completion, safe refactoring, and first-class support for Node.js, Angular and React. Download free trial 😀😂🍔😍',
               locked:false,
               commenetnum:5,
               votes:9
@@ -28,7 +28,7 @@ export  const MimicDisplayPosts =new Vue({
               postedby:'Ayat',
               apex_id:'333',
               title:'dj',
-              content:'I love javascript ,vue ,html ,css 😍😍'
+              content:'I love javascript ,vue ,html ,css 🐸🐸🐸'
             },{
               id:'222',
               postedby:'Double',
@@ -46,7 +46,7 @@ export  const MimicDisplayPosts =new Vue({
               postedby:'Nourhan',
               apex_id:'222',
               title:'anime',
-              content:'Software costs more to maintain than it does to develop. For systems with a long life, maintenance costs may be several times development costs🍔  '
+              content:'Software costs more to maintain than it does to develop. For systems with a long life, maintenance costs may be several times development costs🍔 😂 '
             },
           ]
 
