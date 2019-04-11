@@ -14,6 +14,9 @@ import DemoOnePost from './DisplayOnePost.vue'
 import {globalStore} from '../main.js'
 import {AllServices} from '../MimicServices/AllServices.js'
 export default {
+  props:{
+    ApexComName:String
+    },
 data(){
 return{
   postInfo:'',
@@ -36,7 +39,7 @@ methods:
     },
 
    getPosts(){
-         this.posts= AllServices.getPosts();
+         this.posts= AllServices.getPosts(this.ApexComName);
    }
 
 },
@@ -49,6 +52,4 @@ components:{
 </script>
 
 <style scoped>
-
-
 </style>

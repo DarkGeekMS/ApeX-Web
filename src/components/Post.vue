@@ -1,7 +1,7 @@
 <template id="PostTemlate">
-<div id="PostItme"  @click="ShowModal()" class="postItem">
+<div id="PostItme"  >
 <DemoOnePost id="PostModal"></DemoOnePost>
-<div class="panel panel-default" style="width: 62rem;   " v-show="Not_Hide" id="post">
+<div class="panel panel-default" style="width: 62rem;   "  @click="ShowModal()" v-show="Not_Hide" id="post">
   <div class="row" id="postRow">
     <div class="panel2 panel-default" style="width: 3.7rem;" id="postSide">
 
@@ -28,10 +28,12 @@
       </div>
         <div class="column" id="postCol2">
 
-
-    <a href="#" class="fontUser" id="subred"> {{postdata.apex_id}} </a>
+<router-link class="fontUser" id="subred" :to="{name:'ApexCom' , params: {ApexComName:postdata.apex_id}}">{{postdata.apex_id}}</router-link>
+    <!-- <a href="#" class="fontUser" id="subred"> {{postdata.apex_id}} </a> -->
       <font class="postby" id="fontPostby">. Posted by</font>
-      <a href="#" class="postby" id="user">{{postdata.postedby}}  </a>
+      <!-- <a href="#" class="postby" id="user">{{postdata.postedby}}  </a> -->
+      <router-link class="postby" id="user" :to="{name:'UserProfile' , params: {userName:postdata.postedby}}"> {{postdata.postedby}}</router-link>
+
       <font class="postby" id="fontpost"> </font>
       <a href="#" class="postby" id="timeAgo"> 15 hours ago </a>
       <h3 id="postBody"> {{postdata.content}} </h3>
@@ -358,7 +360,7 @@ export default {
 props: {
 postdata:{},
        },
-       created(){
+created(){
          axios.get("http://localhost/me",{token:this.token}).then(response=>{this.userId=response.userID}).catch(function (error)
          {
           //console.log(error);

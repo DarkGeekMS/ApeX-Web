@@ -2,16 +2,16 @@
 <div id='userprofile'>
     <div id='firstnavbar'>
         <a class="navbarlinks" href="#">posts</a>
-        <a class="navbarlinks" href="#">saved</a>
-        <a class="navbarlinks" href="#">hidden</a>
-        <a class="navbarlinks" href="#">report</a>
+        <a v-show="notGuest()" class="navbarlinks" href="#">saved</a>
+        <a v-show="notGuest()" class="navbarlinks" href="#">hidden</a>
+        <a v-show="isModerator" class="navbarlinks" href="#">report</a>
 
     </div> 
-        <SideBar v-bind:userName="userName"
-      v-bind:karmaCount="karmaCount"
-      v-bind:picture="picture"
-      v-bind:reports="reports" 
-      class="sidebar" ></SideBar>
+        <SideBar 
+        v-bind:userName="userName"
+        v-bind:karmaCount="karmaCount"
+        v-bind:picture="picture"
+                class="sidebar" ></SideBar>
 </div>
 </template>
 
@@ -19,17 +19,19 @@
 import axios from 'axios'
 import {globalStore} from '../main.js'
 import SideBar from './UserProfileSideBar.vue'
+import {AllServices} from '../MimicServices/AllServices.js'
 
 export default {
+  props:['userName'],
     components:{
     'SideBar':SideBar
   },
   data () {
     return {
       token:globalStore.token,
-      userName:'UserName',
+      loggeduser:globalStore.Username,
       karmaCount:1,
-      picture:'https://images.app.goo.gl/TfvYZgbpeD9ZveTC9.png',
+      picture:'https://images.app.goo.gl/BzmBcoc4giGqgSFV7.jpg',
       personalPosts:[],
       savedPosts:[],
       hiddenPosts:[],
@@ -38,38 +40,62 @@ export default {
   },
   methods:
   {
+    notGuest:function(){
+      if(this.userName != this.loggeduser){
+        return false;
+      }
+      else{
+        return true;
+      }
+    },
+    getUserProfile:function(){
+      var data= AllServices.getUserInfo();
+      this.karmaCount = data.karma;
+      this.picture = data.picture;
+      //this.userName = data.userName;
+      this.savedPosts = data.saved;
+      this.hiddenPosts = data.hidden;
+      this.personalPosts = data.personalPosts;
+      this.reports = data.reports;
+   },
+   getUserData:function(){
+      var data= AllServices.getUserInfoById(this.userName);
+      this.karmaCount = data.karma;
+      this.picture = data.picture;
+     // this.userName = data.userName;
+      this.personalPosts = data.personalPosts;
+
+      // var img =new Image();
+      // var reader = new filereader();
+      // var vm = this;
+      // reader.onload = function(e){
+      // vm.Image = e.target.result;
+      //}
+
+
+   },
+
   },
   mounted()
   {
-    axios.get('http://localhost/info', {
-    params: {
-      Token:this.token
+    if(this.userName == globalStore.Username){
+      this.getUserProfile();
     }
-  })
-  .then(function (response) {
-    this.karma = response.karmaCount;
-    this.picture = response.picture;
-    this.userName = response.userName;
-    this.saved = response.saved;
-    this.hidden = response.hidden;
-    this.personalPosts = response.personalPosts;
-    this.reports = response.reports;
-  })
-  .catch(function (error) {
-    console.log(error);
-  });
+    else{
+      this.getUserData();
+    }
   }
 }
 </script>
 
 <style scoped>
 #firstnavbar{
+    background-color: #eee;
     width:100%;
-    height: 50px;
-    text-transform: uppercase;
+    height: 60px;
+    text-transform: uppercase; 
     padding-top:2%;
     padding-bottom: 0%;
-    background-color:white;
     margin-top: 3%;
     margin-bottom: 0%;
     margin-left: 0%;

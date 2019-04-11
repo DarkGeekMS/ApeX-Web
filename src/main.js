@@ -21,7 +21,8 @@ const router = new VueRouter({
 export const globalStore = new Vue({
   data: {
     Val: '',
-    Username: '',
+    Username: 'Nourhan',
+    login:false,
     token: ''
   }
 })

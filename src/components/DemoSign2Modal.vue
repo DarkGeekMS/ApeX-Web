@@ -49,10 +49,9 @@
 </template>
 
 <script>
-import axios from 'axios'
 const MODAL_WIDTH = 656;
 import DemoSign3Modal  from './DemoSign3Modal.vue'
-import Authentication from '../MimicServices/Authentication.js'
+import {AllServices} from '../MimicServices/AllServices.js'
 export default {
   name: 'DemoSign2Modal',
   components:{
@@ -86,20 +85,14 @@ export default {
     post: function(){
         if (this.username.length <= 17 && this.pass.length >= 6 && this.username.indexOf(' ') < 0)
         {
-        axios.post('http://127.0.0.1:8000/api/sign_up', {
-            email: this.$localStorage.get('emailVal'),
-            username: this.username,
-            password: this.pass
-          }).then(response => {
-             this.$localStorage.set('userName',this.username);
-             this.$localStorage.set('token', response.data.token);
-             this.$localStorage.set('login', true);
-
-             this.$modal.show('demo-sign3');
-             this.$modal.hide('demo-sign1');
-          }).catch(function (error) {
-             alert("Username or Email already exists");
-          });
+          if( AllServices.signUp(this.username, this.pass) )
+          {
+            this.$modal.show('demo-sign3');
+            this.$modal.hide('demo-sign1');
+          }
+          else{
+            alert("Username or Email already exists");
+          }
         }
         else if (this.username.length > 17 && this.pass.length < 6){
         this.invalidUserAndPass=true;
