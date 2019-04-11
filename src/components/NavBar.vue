@@ -70,7 +70,7 @@
         this.userLog = this.$localStorage.get('userName');
         this.canBeShown = !this.canBeShown
       }, 500)
-    }, 
+    },
     methods: {
       conditionalShow () {
         this.$modal.show('conditional-modal', {
@@ -79,7 +79,7 @@
       },
       Logout: function(){
         AllServices.logOut()
-      }, 
+      },
       search: function(){
 
         if( this.searchVal != '')

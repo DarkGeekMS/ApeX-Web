@@ -2,7 +2,7 @@
 <template id="posts desing">
   <!-- class="postsBox" -->
    <div  id="postslist">
-    <DisplayPosts class="box" v-bind:ApexComName="ApexComName"></DisplayPosts>
+    <DisplayPosts class="box" v-bind:apexComName="ApexComName"></DisplayPosts>
   </div>
 </template>
 
