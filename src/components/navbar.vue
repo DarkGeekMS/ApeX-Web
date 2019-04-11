@@ -49,9 +49,9 @@
 </template>
 
 <script>
-  import axios from 'axios'
   import DemoLoginModal  from './DemoLoginModal.vue'
   import DemoSignModal  from './DemoSignModal.vue'
+  import {AllServices} from '../MimicServices/AllServices.js'
   export default {
     components:{
       DemoLoginModal,
@@ -78,13 +78,7 @@
         })
       },
       Logout: function(){
-        axios.post('http://127.0.0.1:8000/api/sign_out',{
-          token : this.$localStorage.get('token')
-        }).then(response => {
-          this.$localStorage.set('login', false);
-          this.$localStorage.set('token', '');
-          this.$localStorage.set('userName', '');
-        })
+        AllServices.logOut()
       }, 
       search: function(){
 
