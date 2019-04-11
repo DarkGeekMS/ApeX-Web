@@ -1,12 +1,13 @@
 <template id="PostTemlate">
-<div id="PostItme"  >
+<div id="PostItme" class="postItem" >
 <DemoOnePost id="PostModal"></DemoOnePost>
 <div class="panel panel-default" style="width: 62rem;   "  @click="ShowModal()" v-show="Not_Hide" id="post">
-  <div class="row" id="postRow">
+  <!-- <div class="row" id="postRow"> -->
+    <div class="panel-body"  style="width: 62rem;" >
     <div class="panel2 panel-default" style="width: 3.7rem;" id="postSide">
 
 
-         <div class="column1" id="postCol1">
+          <div class="column1" id="postCol1">
 
 
 <button @click="changeColor_up" type="button" :class="className_up" id="up">
@@ -20,13 +21,13 @@
 </button>
 
 
-        </div>
+        </div> 
 
 
 
 
       </div>
-        <div class="column" id="postCol2">
+        <div class="column2" id="postCol2">
 
 <router-link class="fontUser" id="subred" :to="{name:'ApexCom' , params: {ApexComName:postdata.apex_id}}">{{postdata.apex_id}}</router-link>
     <!-- <a href="#" class="fontUser" id="subred"> {{postdata.apex_id}} </a> -->
@@ -36,7 +37,9 @@
 
       <font class="postby" id="fontpost"> </font>
       <a href="#" class="postby" id="timeAgo"> 15 hours ago </a>
-      <h3 id="postBody"> {{postdata.content}} </h3>
+      <p id="postBody" class="hPost"> 
+       
+        {{postdata.content}} </p>
 
 
       <!-- <a href="#" class="fontUser" id="subred"> apex_id </a>
@@ -45,7 +48,7 @@
         <font class="postby" id="fontpost"> </font>
         <a href="#" class="postby" id="timeAgo"> 15 hours ago </a>
         <h3 id="postBody">content </h3> -->
-
+</div>
 <footer>
 
 <div class="btn-group" role="group" aria-label="..." id="drop">
@@ -86,7 +89,7 @@ Comments</button>
 
    </div>
 
-</div>
+<!-- </div> -->
 
 </template>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
@@ -131,7 +134,7 @@ export default {
        }
          axios.post("http://localhost/DelComment",{
          ID    : this.PostId,
-         token : this.token
+         token : this.$localStorage.get('token')
 
  }).then(response=>{
    if(response){
@@ -141,7 +144,7 @@ export default {
 
  }).catch(function (error)
  {
-  console.log(error);
+  //console.log(error);
 
 
    });
@@ -162,14 +165,15 @@ export default {
         axios.post("http://localhost/Hide",
         {
             name    : this.PostId,
-            ID : this.token
+            ID : this.$localStorage.get('token')
+
 
         }).then(response => {
           if(response){
           alert("Hidden successfully");}
         }).catch(function (error)
         {
-           console.log(error);
+           //console.log(error);
         });
          },
     changeColor_up()
@@ -194,7 +198,7 @@ export default {
                       axios.post("http://localhost/vote",
                       {
 
-                        ID       : this.token,
+                        ID       : this.$localStorage.get('token'),
                         name     : this.PostId,
                         direction:1
 
@@ -216,7 +220,7 @@ export default {
                    {
 
 
-                    ID:this.token,
+                    ID:this.$localStorage.get('token'),
                     name:this.PostId,
                     direction:0
 
@@ -250,7 +254,7 @@ export default {
                      {
 
 
-                          ID      : this.token,
+                          ID      : this.$localStorage.get('token'),
                           name    : this.PostId,
                           direction: -1
 
@@ -260,7 +264,7 @@ export default {
                        }
                      }).catch(function (error)
                      {
-                      console.log(error);
+                      //console.log(error);
 
                     });
                   }
@@ -274,7 +278,7 @@ export default {
                    {
 
 
-                    ID:this.token,
+                    ID:this.$localStorage.get('token'),
                     name:this.PostId,
                     direction:0
 
@@ -297,7 +301,7 @@ export default {
         {
 
             ID:this.PostId ,
-            token:this.token
+            token:this.$localStorage.get('token')
 
 
         }).then(response=>{
@@ -306,7 +310,7 @@ export default {
           }
         } ).catch(function (error)
         {
-             console.log(error);
+            // console.log(error);
 
         });
       }
@@ -315,7 +319,7 @@ export default {
           {
 
               ID:this.PostId ,
-              token:this.token
+              token:this.$localStorage.get('token')
 
 
           }).then(response=>{
@@ -324,7 +328,7 @@ export default {
             }
           } ).catch(function (error)
           {
-               console.log(error);
+               //console.log(error);
 
           });
              //alert('Post unsaved successfully');
@@ -362,7 +366,7 @@ postdata:{},
 created(){
          axios.get("http://localhost/me",{token:this.token}).then(response=>{this.userId=response.userID}).catch(function (error)
          {
-          console.log(error);
+          //console.log(error);
         });
 
 
@@ -428,6 +432,7 @@ h5 {
     height: 30px;
     position: absolute;
     bottom: 0px;
+    margin-left: 1%;
       }
 .panel2{
     margin-bottom: 0px;
@@ -460,5 +465,24 @@ h5 {
       background-color: #f4511e;
 /*      margin-left: 470px;*/
 } /* Red */
+.postItem{
+width: 0%;
 
+}
+
+.hPost{
+   overflow: auto;
+   word-wrap: break-word;
+   margin-top:0%; 
+   font-family:Verdana, Geneva, Tahoma, sans-serif;
+   font-size: 130%;
+
+}
+.column2{
+width: 100%;
+
+}
+.panel-body {
+     padding: 2px; 
+}
 </style>

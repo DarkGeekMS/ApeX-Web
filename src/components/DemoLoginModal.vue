@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import {AllServices} from '../MimicServices/AllServices.js'
 const MODAL_WIDTH = 656;
 export default {
   name: 'DemoLoginModal',
@@ -54,18 +54,14 @@ export default {
   methods:{
     post: function()
       {
-        axios.post('http://127.0.0.1:8000/api/Sign_in', {
-            username : this.username,
-            password : this.pass
-          }).then(response => {
-             this.$localStorage.set('userName',this.username);
-             this.$localStorage.set('token', response.data.token);
-             this.$localStorage.set('login', true);
+         if( AllServices.logIn(this.username, this.pass) )
+        {
+          this.$modal.hide('demo-login');
+        }
+        else{
+          alert("Username or Password is invalid");
+        }
 
-             this.$modal.hide('demo-login');
-          }).catch(function (error) {
-             alert("Username or Password is invalid");
-          });
       }
   }
 }
