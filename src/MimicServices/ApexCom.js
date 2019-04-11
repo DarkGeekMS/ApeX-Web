@@ -4,7 +4,7 @@ import axios from 'axios'
 export  const MimicApexCom =new Vue({
   methods:{
     getAbout: function(mimic,ApexComName){
-      
+
       if(mimic){
   var about={
     rules:['rule1','rule2','rule3'],
@@ -16,9 +16,9 @@ export  const MimicApexCom =new Vue({
     {userName:'moderator1'}],
   }
   return about
-}            
+}
 else {
-  axios.get('http://localhost/about', {
+  axios.get('http://34.66.175.211/about', {
     params: {
       ApexCom_id :ApexComName,
       Token:this.token
@@ -42,9 +42,9 @@ var subscribersList=[
   {userName:'subscriber4'}
 ]
 return subscribersList
-}            
+}
 else {
- axios.get('http://localhost/get_subscribers', {
+ axios.get('http://34.66.175.211/get_subscribers', {
     params: {
       ApexCom_id :ApexComName,
       Token:this.$localStorage.get('token')
@@ -63,7 +63,7 @@ deleteSubscriber: function(mimic,userName,ApexComName){
   if(mimic){
 
 return true;
-}            
+}
 else {
   axios.post('http://localhost/block', {
         ApexCom_id:ApexComName,
@@ -81,9 +81,9 @@ else {
 
 deleteApexCom: function(mimic,apexComName){
       if(mimic){
-    
+
     return true;
-    }            
+    }
     else {
       axios.post('http://localhost/del_ac', {
          ApexCom_id:apexComName,
@@ -100,7 +100,7 @@ deleteApexCom: function(mimic,apexComName){
 subscribe: function(mimic,apexComName){
       if(mimic){
         return true;
-    }            
+    }
     else {
       axios.post('http://localhost/subscribe', {
       ApexCom_id:apexComName,

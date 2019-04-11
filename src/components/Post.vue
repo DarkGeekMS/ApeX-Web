@@ -442,7 +442,7 @@ h5 {
     .panel {
         margin-bottom: 19px;
         margin-left: 100px;
-        margin-top: 50px;
+           margin-top: 73px;
         background-color: #fff;
         border: 1px solid transparent;
         border-radius: 4px;
