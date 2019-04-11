@@ -18,22 +18,24 @@
 
             <div class="add" >
               <input id="SignUpUserName" type="text" class="form-control" name="username" 
-               placeholder="CHOOSE A USERNAME" v-model="username" required autofocus>
+               placeholder="CHOOSE A USERNAME" v-model="username" v-on:keyup="restart()" required autofocus>
 
                <span class="lead" style = "fontSize:10px" v-show="invalidUser" >Enter a username of max length 17 without spaces </span>
+               <p class = "lead" style = "fontSize:15px; color:red" > {{ error }}  </p>
 
                <div style="margin-top: 20px"></div>
 
 
 
               <input id="password" type="password" class="form-control" name="password"
-                placeholder="PASSWORD"
+                placeholder="PASSWORD" v-on:keyup="restart()"
                 v-model="pass" required autofocus>
                 <span class="lead" style = "fontSize:10px" v-show="invalidPass" >Password must be at least 6 characters long</span>
                 <span class="lead" style = "fontSize:10px" v-show="invalidUserAndPass" >Enter a password of min length 6 &  a username of max length 17</span>
 
+
             </div>
-            <div style="margin-top: 80px"></div>
+            <div style="margin-top: 70px"></div>
             <div style="background_color:#eee;border-top:1.5px solid #eee; height:55px" >
               <a id="Back" class="btn blue" @click="$modal.hide('demo-sign2')">BACK</a>
               <button :disabled="check" class="btn blue" type="submit" style="margin-left:450px" @click.prevent="post()" id="SignUpFinish">SIGN UP</button>
@@ -64,7 +66,8 @@ export default {
           pass: "",
           invalidUser:false,
           invalidPass:false,
-          invalidUserAndPass:false
+          invalidUserAndPass:false,
+          error: ''
         }
   },
   created () {
@@ -91,7 +94,7 @@ export default {
             this.$modal.hide('demo-sign1');
           }
           else{
-            alert("Username or Email already exists");
+            this.error =  this.$localStorage.get('error');
           }
         }
         else if (this.username.length > 17 && this.pass.length < 6){
@@ -113,6 +116,13 @@ export default {
         this.invalidUser=false;
         this.invalidPass=true;      
         }
+      },
+      restart: function()
+      {
+        this.invalidUser = false,
+        this.invalidPass =false,
+        this.invalidUserAndPass =false,
+        this.error = ''
       }
   }
 }

@@ -1,12 +1,13 @@
 <template id="PostTemlate">
-<div id="PostItme"  >
+<div id="PostItme" class="postItem" >
 <DemoOnePost id="PostModal"></DemoOnePost>
 <div class="panel panel-default" style="width: 62rem;   "  @click="ShowModal()" v-show="Not_Hide" id="post">
-  <div class="row" id="postRow">
+  <!-- <div class="row" id="postRow"> -->
+    <div class="panel-body"  style="width: 62rem;" >
     <div class="panel2 panel-default" style="width: 3.7rem;" id="postSide">
 
 
-         <div class="column1" id="postCol1">
+          <div class="column1" id="postCol1">
 
 
 <button @click="changeColor_up" type="button" :class="className_up" id="up">
@@ -26,7 +27,7 @@
 
 
       </div>
-        <div class="column" id="postCol2">
+        <div class="column2" id="postCol2">
 
       <router-link class="fontUser" id="subred" :to="{name:'ApexCom' , params: {ApexComName:postData.apex_id}}">{{postData.apex_id}}</router-link>
       <font class="postby" id="fontPostby">. Posted by</font>
@@ -34,7 +35,9 @@
 
       <font class="postby" id="fontpost"> </font>
       <a href="#" class="postby" id="timeAgo"> 15 hours ago </a>
-      <h3 id="postBody"> {{postData.content}} </h3>
+      <p id="postBody" class="hPost">
+
+        {{postData.content}} </p>
 
 
       <!-- <a href="#" class="fontUser" id="subred"> apex_id </a>
@@ -43,7 +46,7 @@
         <font class="postby" id="fontpost"> </font>
         <a href="#" class="postby" id="timeAgo"> 15 hours ago </a>
         <h3 id="postBody">content </h3> -->
-
+</div>
 <footer>
 
 <div class="btn-group" role="group" aria-label="..." id="drop">
@@ -84,7 +87,7 @@ Comments</button>
 
    </div>
 
-</div>
+<!-- </div> -->
 
 </template>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
@@ -426,6 +429,7 @@ h5 {
     height: 30px;
     position: absolute;
     bottom: 0px;
+    margin-left: 1%;
       }
 .panel2{
     margin-bottom: 0px;
@@ -461,5 +465,21 @@ h5 {
 .postItem{
 width: 0%;
 
+}
+
+.hPost{
+   overflow: auto;
+   word-wrap: break-word;
+   margin-top:0%;
+   font-family:Verdana, Geneva, Tahoma, sans-serif;
+   font-size: 130%;
+
+}
+.column2{
+width: 100%;
+
+}
+.panel-body {
+     padding: 2px;
 }
 </style>

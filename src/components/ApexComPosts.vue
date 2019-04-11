@@ -27,7 +27,7 @@ export default {
 .box{
   width:100%;
   height:auto;
-  margin:5% 0%;
+  margin:-8% -11%;
   padding:4% 3%;
   border-radius: 8px;
 }
