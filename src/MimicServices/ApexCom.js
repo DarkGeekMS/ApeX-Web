@@ -10,7 +10,10 @@ export  const MimicApexCom =new Vue({
     rules:['rule1','rule2','rule3'],
     subscribersCount:78,
     description:'this is just the mimic server',
-    moderators:['moderator1','moderator2','moderator3'],
+    moderators:[{userName:'moderator1'},
+    {userName:'moderator1'},
+    {userName:'moderator1'},
+    {userName:'moderator1'}],
   }
   return about
 }            
@@ -33,7 +36,10 @@ return response;
   getSubscribers: function(mimic,ApexComName){
     if(mimic){
 var subscribersList=[
-  'subscriber1','subscriber2','subscriber3'
+  {userName:'subscriber1'},
+  {userName:'subscriber2'},
+  {userName:'subscriber3'},
+  {userName:'subscriber4'}
 ]
 return subscribersList
 }            

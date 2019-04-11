@@ -41,6 +41,7 @@ export default {
     return {
       token:this.$localStorage.get('token'),
       userName:this.$localStorage.get('userName'),
+      //userName:'moderator1',
       description:'',
       moderators:[],
       rules:[],
@@ -50,13 +51,15 @@ export default {
   methods:{
     CheckModerator:function(name)
     {
-      if( name == this.$localStorage.get('userName')){
+      console.log(name.userName);
+      if( name.userName == this.userName){
+        
       return true;
       }
     },
     isModerator:function(){
       var moderator = this.moderators.find(this.CheckModerator);
-      if(moderator == this.userName){
+      if(moderator !== undefined){
           return true;
         }
       else{
