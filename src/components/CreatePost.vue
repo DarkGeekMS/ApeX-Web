@@ -232,17 +232,18 @@ export default {
        this.apexComId='';//TODO 
        this.bodyPost=document.getElementById('textsend').value;
        this.imgName=document.getElementById('imgId').src;
-       console.log(this.bodyPost);
-       console.log('hello');
+      //  console.log(this.bodyPost);
+      //  console.log('hello');
        axios.post( "http://127.0.0.1:8000/api/submit_post"  ,{
 
         ApexCom_id:this.apexComId,
-        _token:this.token,
+        _token:this.$localStorage.get('token'),
         body:this.bodyPost,
         img_name:this.imgName,
         video_url:this.videoUrl,
         isLocked:this.isLocked
 
+ 
 
 
        }).then(function(response){

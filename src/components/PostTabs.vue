@@ -52,7 +52,7 @@ export default {
 .nav>li {
     position: relative;
     display: block;
-    width: 24%;
+    width: 33%;
 }
 </style>
 

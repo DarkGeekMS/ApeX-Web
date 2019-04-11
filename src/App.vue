@@ -13,7 +13,6 @@ import NavBar from "./components/NavBar.vue"
 export default {
   name: 'app',
   components:{
-
     'navbar':NavBar
   },
 
@@ -33,4 +32,6 @@ export default {
     width:100%;
     height:100%;
 }
+
+
 </style>

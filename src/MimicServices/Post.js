@@ -1,46 +1,71 @@
-function save(request){
-    if(request.token=="1" && request.ID=="1"){
+import Vue from 'vue'
+import axios from 'axios'
+export  const MimicPosts=new Vue({
 
-        return true;
+methods:{
+Post(mimic===true){
 
-    }
-    return false;
-
-
-}
+if(mimic)
 
 
-function Hide(request){
-    if(request.name=="1" && request.ID=="1"){
 
-        return true;
-    }
-    return false;
+
+
+
+
 
 }
-
-function vote(request){
-    if(request.name=="1"  && request.ID=="1"){
-
-        if(request.direction==1 || request.direction==-1 || request.direction==0){
-
-            return 200;
+     save(request){
+        if(request.token=="1" && request.ID=="1"){
+    
+            return true;
+    
         }
-
-
+        return false;
+    
+    
+    },
+    
+    
+     Hide(request){
+        if(request.name=="1" && request.ID=="1"){
+    
+            return true;
+        }
+        return false;
+    
+    },
+    
+     vote(request){
+        if(request.name=="1"  && request.ID=="1"){
+    
+            if(request.direction==1 || request.direction==-1 || request.direction==0){
+    
+                return 200;
+            }
+    
+    
+        }
+    
+    
+    },
+    
+    
+     deletePost(request){
+        if(request.name=="1" && request.ID=="1"){
+    
+            return true;
+    
+    
+        }
+    
+    
     }
+    
 
 
 }
 
-
-function deletePost(request){
-    if(request.name=="1" && request.ID=="1"){
-
-        return true;
+})
 
 
-    }
-
-
-}

@@ -129,7 +129,7 @@ export default {
        }
          axios.post("http://localhost/DelComment",{
          ID    : this.PostId,
-         token : this.token
+         token : this.$localStorage.get('token')
 
  }).then(response=>{
    if(response){
@@ -139,7 +139,7 @@ export default {
 
  }).catch(function (error)
  {
-  console.log(error);
+  //console.log(error);
 
 
    });
@@ -160,14 +160,15 @@ export default {
         axios.post("http://localhost/Hide",
         {
             name    : this.PostId,
-            ID : this.token
+            ID : this.$localStorage.get('token')
+
 
         }).then(response => {
           if(response){
           alert("Hidden successfully");}
         }).catch(function (error)
         {
-           console.log(error);
+           //console.log(error);
         });
          },
     changeColor_up()
@@ -192,7 +193,7 @@ export default {
                       axios.post("http://localhost/vote",
                       {
 
-                        ID       : this.token,
+                        ID       : this.$localStorage.get('token'),
                         name     : this.PostId,
                         direction:1
 
@@ -214,7 +215,7 @@ export default {
                    {
 
 
-                    ID:this.token,
+                    ID:this.$localStorage.get('token'),
                     name:this.PostId,
                     direction:0
 
@@ -248,7 +249,7 @@ export default {
                      {
 
 
-                          ID      : this.token,
+                          ID      : this.$localStorage.get('token'),
                           name    : this.PostId,
                           direction: -1
 
@@ -258,7 +259,7 @@ export default {
                        }
                      }).catch(function (error)
                      {
-                      console.log(error);
+                      //console.log(error);
 
                     });
                   }
@@ -272,7 +273,7 @@ export default {
                    {
 
 
-                    ID:this.token,
+                    ID:this.$localStorage.get('token'),
                     name:this.PostId,
                     direction:0
 
@@ -295,7 +296,7 @@ export default {
         {
 
             ID:this.PostId ,
-            token:this.token
+            token:this.$localStorage.get('token')
 
 
         }).then(response=>{
@@ -304,7 +305,7 @@ export default {
           }
         } ).catch(function (error)
         {
-             console.log(error);
+            // console.log(error);
 
         });
       }
@@ -313,7 +314,7 @@ export default {
           {
 
               ID:this.PostId ,
-              token:this.token
+              token:this.$localStorage.get('token')
 
 
           }).then(response=>{
@@ -322,7 +323,7 @@ export default {
             }
           } ).catch(function (error)
           {
-               console.log(error);
+               //console.log(error);
 
           });
              //alert('Post unsaved successfully');
@@ -360,7 +361,7 @@ postdata:{},
        created(){
          axios.get("http://localhost/me",{token:this.token}).then(response=>{this.userId=response.userID}).catch(function (error)
          {
-          console.log(error);
+          //console.log(error);
         });
 
 
