@@ -22,10 +22,6 @@ else {
     }
   })
   .then(function (response) {
-    // this.rules = response.rules;
-    // this.subscribersCount = response.subscribersCount;
-    // this.description = response.description;
-    // this.moderators=response.moderators;
 return response;
   })
   .catch(function (error) {
@@ -45,17 +41,72 @@ else {
  axios.get('http://34.66.175.211/get_subscribers', {
     params: {
       ApexCom_id :ApexComName,
-      token:this.token
+      Token:this.$localStorage.get('token')
     }
   })
   .then(function (response) {
-    this.Subscribers=response.data;
+    return response;
   })
   .catch(function (error) {
     // console.log(error);
   });
   }
-}
+},
 
+deleteSubscriber: function(mimic,userName,ApexComName){
+  if(mimic){
+
+return true;
 }
+else {
+  axios.post('http://localhost/block', {
+        ApexCom_id:ApexComName,
+        user_id:userName,
+        Token:this.$localStorage.get('token')
+      })
+      .then(function (response) {
+        return response
+          })
+      .catch(function (error) {
+      // console.log(error);
+      });
+    }
+    },
+
+deleteApexCom: function(mimic,apexComName){
+      if(mimic){
+
+    return true;
+    }
+    else {
+      axios.post('http://localhost/del_ac', {
+         ApexCom_id:apexComName,
+         Token:this.$localStorage.get('token')
+        })
+        .then(function (response) {
+          return response
+            })
+        .catch(function (error) {
+        // console.log(error);
+        });
+}
+    },
+subscribe: function(mimic,apexComName){
+      if(mimic){
+        return true;
+    }
+    else {
+      axios.post('http://localhost/subscribe', {
+      ApexCom_id:apexComName,
+      Token:this.$localStorage.get('token')
+      })
+      .then(function (response) {
+        return response
+      })
+      .catch(function (error) {
+      // console.log(error);
+      });
+}
+    },
+  }
 })

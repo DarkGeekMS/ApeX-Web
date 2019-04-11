@@ -4,7 +4,7 @@
         <a class="navbarlinks" href="#">posts</a>
         <a v-show="notGuest()" class="navbarlinks" href="#">saved</a>
         <a v-show="notGuest()" class="navbarlinks" href="#">hidden</a>
-        <a v-show="isModerator()" class="navbarlinks" href="#">report</a>
+        <a v-show="isModerator() && notGuest()" class="navbarlinks" href="#">report</a>
 
     </div> 
         <SideBar 
@@ -17,7 +17,6 @@
 
 <script>
 import axios from 'axios'
-import {globalStore} from '../main.js'
 import SideBar from './UserProfileSideBar.vue'
 import {AllServices} from '../MimicServices/AllServices.js'
 
@@ -42,20 +41,27 @@ export default {
   {
     isModerator:function()
       {
-         axios.get('http://localhost/me', {
-         Token:this.token
-        })
-          .then(function (response) {
-            if(response.ID ==2){
+        var data= AllServices.userType();
+        if(data ==2){
           return true;
           }
         else{
           return false;
           }
-          })
-      .catch(function (error) {
-      console.log(error);
-      });
+      //    axios.get('http://localhost/me', {
+      //    Token:this.token
+      //   })
+      //     .then(function (response) {
+      //       if(response.ID ==2){
+      //     return true;
+      //     }
+      //   else{
+      //     return false;
+      //     }
+      //     })
+      // .catch(function (error) {
+      // console.log(error);
+      // });
       },
 
     notGuest:function(){
@@ -88,7 +94,7 @@ export default {
   },
   mounted()
   {
-    if(this.userName == globalStore.Username){
+    if(this.userName == this.loggeduser){
       this.getUserProfile();
     }
     else{

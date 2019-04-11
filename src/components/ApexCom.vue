@@ -18,11 +18,9 @@
     v-bind:description="description"
     v-bind:moderators="moderators"
     v-bind:subscribersCount="subscribersCount"
-    v-bind:subscribed="subscribed"
-    v-bind:state="state"
+    
     ></SideBar> 
     <div class="routerview">
-
     <router-view></router-view>
     </div>
 </div>
@@ -41,28 +39,18 @@ export default {
   },
   data () {
     return {
-      // ApexComName:'Apex-com name',
       token:this.$localStorage.get('token'),
       userName:this.$localStorage.get('userName'),
       description:'',
       moderators:[],
       rules:[],
-      subscribersCount: '',
-      subscribers:[],
-      subscribed:true,
-      state:'subscribed',
+      subscribersCount: 0,
     }
   },
   methods:{
-    CheckUser:function(name)
-    {
-      if( name == this.userName){
-      return true;
-      }
-    },
     CheckModerator:function(name)
     {
-      if( name == this.userName){
+      if( name == this.$localStorage.get('userName')){
       return true;
       }
     },
@@ -82,71 +70,11 @@ export default {
          this.rules=about.rules;
          this.subscribersCount=about.subscribersCount;
    },
-   getsubscribers(){
-      this.subscribers= AllServices.getSubscribers();
-      var subscribe = this.subscribers.find(this.CheckUser);
-    if(subscribe == this.userName){
-      this.subscribed = true;
-      this.state='subscribed';
-    }
-    else{
-      this.subscribed=false;
-      this.state='subscribe';
-    }
-   },
 
   },
   mounted()
   {
-  //   axios.get('http://localhost/about', {
-  //   params: {
-  //     ApexCom_id :this.ApexComName,
-  //     Token:this.token
-  //   }
-  // })
-  // .then(function (response) {
-  //   this.rules = response.rules;
-  //   this.subscribersCount = response.subscribersCount;
-  //   this.description = response.description;
-  //   this.moderators=response.moderators;
-
-  //   var moderator = this.moderators.find(this.CheckModerator);
-  //   if(moderator == this.userName){
-  //     this.isModerator = true;
-  //   }
-  //   else{
-  //     this.isModerator=false;
-  //   }
-
-  // })
-  // .catch(function (error) {
-  //   console.log(error);
-  // });
-
-
-  // axios.get('http://localhost/get_subscribers', {
-  //   params: {
-  //     ApexCom_id :this.ApexComName,
-  //     token:this.token
-  //   }
-  // })
-  // .then(function (response) {
-  //   this.Subscribers=response.data;
-  //   var subscribe = this.subscribers.find(this.CheckUser);
-  //   if(subscribe == this.userName){
-  //     this.subscribed = true;
-  //     this.state='subscribed';
-  //   }
-  //   else{
-  //     this.subscribed=false;
-  //     this.state='subscribe';
-  //   }
-  // })
-  // .catch(function (error) {
-  //   console.log(error);
-  // });
   this.getAbout();
-  this.getsubscribers();
   }
 }
 </script>
