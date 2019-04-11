@@ -26,24 +26,31 @@ export default {
   {
     blockUser:function(userName,index)
     {
+      var data = AllServices.deleteSubscriber(userName,this.ApexComName);
+      if(data){
       this.SubscribersList.splice(index, 1);
-      axios.post('http://localhost/block', {
-        ApexCom_id:this.ApexComName,
-        user_id:userName,
-        token:this.token
-      })
-      .then(function (response) {
-        if(response){
-          alert('done :)');
+      }
+      else{
+        console.log(error);
+      }
+    
+    //   axios.post('http://localhost/block', {
+    //     ApexCom_id:this.ApexComName,
+    //     user_id:userName,
+    //     token:this.token
+    //   })
+    //   .then(function (response) {
+    //     if(response){
+    //       alert('done :)');
           
-          }
-        else{
-          alert('something wrong happened try again later');
-          }
-          })
-      .catch(function (error) {
-      console.log(error);
-      });
+    //       }
+    //     else{
+    //       alert('something wrong happened try again later');
+    //       }
+    //       })
+    //   .catch(function (error) {
+    //   console.log(error);
+    //   });
     },
       getsubscribers(){
       this.SubscribersList= AllServices.getSubscribers(this.ApexComName);
