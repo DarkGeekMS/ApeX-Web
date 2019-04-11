@@ -18,7 +18,7 @@ export  const MimicAuth =new Vue({
         {
           this.$localStorage.set('userName',user);
           this.$localStorage.set('token', this.token);
-          this.$localStorage.set('login', true); 
+          this.$localStorage.set('login', true);
           return true;
         }
         else
@@ -26,10 +26,10 @@ export  const MimicAuth =new Vue({
           this.$localStorage.set('error','That username is already taken');
           return false;
         }
-      }    
-      else 
+      }
+      else
       {
-        axios.post('http://127.0.0.1:8000/api/sign_up', {
+        axios.post('http://34.66.175.211/api/sign_up', {
             email: email,
             username: user,
             password: pass
@@ -54,13 +54,13 @@ export  const MimicAuth =new Vue({
             this.$localStorage.set('userName', '')
         }
         else{
-          axios.post('http://127.0.0.1:8000/api/sign_out',{
+          axios.post('http://34.66.175.211/api/sign_out',{
             token : this.$localStorage.get('token')
           }).then(response => {
             this.$localStorage.set('login', false);
             this.$localStorage.set('token', '');
             this.$localStorage.set('userName', '');
-          }) 
+          })
         }
     },
 
@@ -79,10 +79,10 @@ export  const MimicAuth =new Vue({
         {
           this.$localStorage.set('error','Incorrect username or password');
           return false;
-        } 
+        }
       }
       else{
-        axios.post('http://127.0.0.1:8000/api/Sign_in', {
+        axios.post('http://34.66.175.211/api/sign_in', {
             username : user,
             password : pass
           }).then(response => {
