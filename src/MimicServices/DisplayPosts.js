@@ -37,9 +37,9 @@ export  const MimicDisplayPosts =new Vue({
               content:`Partly cloudy in the evening, becoming cloudy overnight. Low around 55 F. Winds S at 5 to 10 mph
 
               Sun may give way to rain for this evening, with a 10 percent chance of precipitation and a low of 50 degrees. Winds are expected to remain calm at 9 mph
-              
+
               Clear with cloudy periods; a slight chance of showers or thundershowers
-              
+
               Mostly clear with showers likely. Slight chance of a thunderstorm. 3 to 6 mm of rain 🔥🔥`
             },{
               id:'111',
@@ -52,7 +52,7 @@ export  const MimicDisplayPosts =new Vue({
 
 return posts
                 }
-              
+
               else{
                  posts=[
                   {
@@ -76,7 +76,7 @@ return posts
               }
       }
 else {
-  axios.get('http://localhost/sort_posts',
+  axios.get('http://34.66.175.211/sort_posts',
  {
     apexCommID:ApexComName ,
     sortingParam: "date",

@@ -4,7 +4,7 @@ import axios from 'axios'
 export  const MimicApexCom =new Vue({
   methods:{
     getAbout: function(mimic,ApexComName){
-      
+
       if(mimic){
   var about={
     rules:['rule1','rule2','rule3'],
@@ -13,9 +13,9 @@ export  const MimicApexCom =new Vue({
     moderators:['moderator1','moderator2','moderator3'],
   }
   return about
-}            
+}
 else {
-  axios.get('http://localhost/about', {
+  axios.get('http://34.66.175.211/about', {
     params: {
       ApexCom_id :ApexComName,
       Token:this.token
@@ -40,9 +40,9 @@ var subscribersList=[
   'subscriber1','subscriber2','subscriber3'
 ]
 return subscribersList
-}            
+}
 else {
- axios.get('http://localhost/get_subscribers', {
+ axios.get('http://34.66.175.211/get_subscribers', {
     params: {
       ApexCom_id :ApexComName,
       token:this.token

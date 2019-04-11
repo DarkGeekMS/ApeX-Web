@@ -11,7 +11,7 @@ import { MimicPosts } from './Post.js';
 export  const AllServices =new Vue({
   data(){
     return{
-      mimic:true
+      mimic:false
     }
   },
   methods:{
@@ -64,7 +64,7 @@ export  const AllServices =new Vue({
   },
   save:function(token,ID){
     return MimicPosts.save(token,ID,this.mimic);
-    
+
   },
 Hide:function(name,ID){
 return MimicPost.Hide(name,ID,this.mimic);

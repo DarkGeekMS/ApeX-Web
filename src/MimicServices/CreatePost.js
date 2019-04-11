@@ -18,9 +18,9 @@ token:'1',
          }
             return false;
                 }
-               
+
 else {
-    axios.post( "http://127.0.0.1:8000/api/submit_post"  ,{
+    axios.post( "http://34.66.175.211/api/submit_post"  ,{
 
         ApexCom_id:apexComId,
         _token:token,
@@ -29,14 +29,14 @@ else {
         video_url:videoUrl,
         isLocked:isLocked
 
- 
+
 
 
        }).then(function(response){
 
          if(response){
-           //TODO it will  display your Post which you have created soon 
-          
+           //TODO it will  display your Post which you have created soon
+
          }
        })
  }

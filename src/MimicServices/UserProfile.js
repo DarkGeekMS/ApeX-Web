@@ -15,9 +15,9 @@ export  const MimicUserProfile =new Vue({
       personalPosts:[{},{}],
   }
   return profileInfo
-}            
+}
 else {
-    axios.get('http://localhost/info', {
+    axios.get('http://34.66.175.211/info', {
         params: {
           Token:this.token
         }
@@ -32,7 +32,7 @@ else {
     }
   },
   getUserInfoById: function(mimic,userName){
-      
+
     if(mimic){
 var profileInfo={
     userName:'historiaAckerman',
@@ -41,9 +41,9 @@ var profileInfo={
     personalPosts:[{},{}],
 }
 return profileInfo
-}            
+}
 else {
-    axios.get('http://localhost/user_data', {
+    axios.get('http://34.66.175.211/user_data', {
     params: {
       Token:this.token,
       userid:userName
