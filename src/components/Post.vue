@@ -1,5 +1,5 @@
 <template id="PostTemlate">
-<div id="PostItme"  @click="ShowModal()" >
+<div id="PostItme"  @click="ShowModal()" class="postItem">
 <DemoOnePost id="PostModal"></DemoOnePost>
 <div class="panel panel-default" style="width: 62rem;   " v-show="Not_Hide" id="post">
   <div class="row" id="postRow">
@@ -28,13 +28,13 @@
       </div>
         <div class="column" id="postCol2">
 
-<!--
+
     <a href="#" class="fontUser" id="subred"> {{postdata.apex_id}} </a>
       <font class="postby" id="fontPostby">. Posted by</font>
       <a href="#" class="postby" id="user">{{postdata.postedby}}  </a>
       <font class="postby" id="fontpost"> </font>
       <a href="#" class="postby" id="timeAgo"> 15 hours ago </a>
-      <h3 id="postBody"> {{postdata.content}} </h3>-->
+      <h3 id="postBody"> {{postdata.content}} </h3>
 
 
       <!-- <a href="#" class="fontUser" id="subred"> apex_id </a>
@@ -458,5 +458,8 @@ h5 {
       background-color: #f4511e;
 /*      margin-left: 470px;*/
 } /* Red */
+.postItem{
+width: 0%;
 
+}
 </style>

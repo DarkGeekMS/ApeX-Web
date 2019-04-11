@@ -4,7 +4,6 @@
      <DisplayPosts></DisplayPosts>
 
 
-
   </div>
 </template>
 
@@ -13,7 +12,6 @@
 
 import DisplayPosts from "./DisplayPosts.vue"
 import hotposts from './HotPosts.vue'
-
 
 export default {
   name: 'HomePage',
