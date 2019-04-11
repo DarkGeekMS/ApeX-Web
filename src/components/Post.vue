@@ -94,7 +94,7 @@ Comments</button>
 
 <script id="postScript">
 import axios from 'axios'
-import {globalStore} from '../main.js'
+
 import {MimicDisplayPosts} from '../MimicServices/DisplayPosts.js'
 import { AllServices } from '../MimicServices/AllServices';
 
@@ -116,7 +116,7 @@ export default {
              votes  :0,
              Saved  :"Save",
              PostId   :"",
-             token  :globalStore.token,
+             token  :this.$localStorage.get('token'),
 
              moderator:false,
              ShowModalVar:true,

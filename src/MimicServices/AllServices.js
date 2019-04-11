@@ -10,7 +10,7 @@ import { MimicPost } from './Post.js'
 export  const AllServices =new Vue({
   data(){
     return{
-      mimic:false
+      mimic:true
     }
   },
   methods:{
