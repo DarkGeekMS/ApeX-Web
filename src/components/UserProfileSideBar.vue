@@ -3,13 +3,13 @@
     <div class="box" id="infobox">
         <div class="bluebackgroung">
           <div class="img">
-             <!-- <img width="100" height="100" class="image" v-bind:src="picture" /> -->
+             <img width="100" height="100" class="image" src="../../public/AMFz23O.jpg" />
              <!-- <a :href="picture" download>
                     <img :src="picture" alt="image" width="100" height="100" class="image"/>
              </a> -->
 
-             <a @click.prevent="downloadItem(picture)" :href="picture" width="100" height="100" class="image">
-             </a>
+             <!-- <a @click.prevent="downloadItem(picture)" :href="picture" width="100" height="100" class="image">
+             </a> -->
 
           </div>
         </div> 
@@ -36,25 +36,25 @@ export default {
        },
   data () {
     return {
-      token:globalStore.token,
+      token:this.$localStorage.get('token'),
     }
   },
   methods:
   {
 
-     downloadItem (url) {
-    Axios.get(url, { responseType: 'blob' })
-      .then(({ data }) => {
-        let blob = new Blob([data], { type: 'image/png' })
-        let link = document.createElement('a')
-        link.href = window.URL.createObjectURL(blob)
-        link.download = 'image.png'
-        link.click()
-      .catch(error => {
-        console.error(error)
-      })
-    })
-  },
+  //   downloadItem (url) {
+  //   Axios.get(url, { responseType: 'blob' })
+  //     .then(({ data }) => {
+  //       let blob = new Blob([data], { type: 'image/png' })
+  //       let link = document.createElement('a')
+  //       link.href = window.URL.createObjectURL(blob)
+  //       link.download = 'image.png'
+  //       link.click()
+  //     .catch(error => {
+  //       console.error(error)
+  //     })
+  //   })
+  // },
 
     isAdmin:function(){
       axios.get('http://localhost/me', {
@@ -75,11 +75,9 @@ export default {
   });
     },
     deleteUser:function(){
-    axios.get('http://localhost/del_user', {
-    params: {
+    axios.post('http://localhost/del_user', {
       userID:this.userName,
       Token:this.token
-    }
   })
   .then(function (response) {
     if(response==1){

@@ -18,7 +18,7 @@ export default {
   data () {
     return {
 
-      token:globalStore.token,
+      token:this.$localStorage.get('token'),
       SubscribersList:[]
     }
   },

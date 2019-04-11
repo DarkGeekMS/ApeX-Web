@@ -55,15 +55,7 @@ export default {
        },
     data(){
         return{
-            token:globalStore.token,
-            //userName:globalStore.Username,
-            // description:'',
-            // moderators:[],
-            // rules:[],
-            // subscribersCount: '',
-            // subscribers:[],
-            // subscribed:true,
-            // state:'subscribed'
+            token:this.$localStorage.get('token'),
         }
     },
     methods:

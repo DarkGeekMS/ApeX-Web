@@ -23,6 +23,7 @@ export  const MimicAuth =new Vue({
         }
         else
         {
+          this.$localStorage.set('error','That username is already taken');
           return false;
         }
       }    
@@ -38,6 +39,7 @@ export  const MimicAuth =new Vue({
             this.$localStorage.set('login', true);
             return true;
           }).catch(function (error) {
+            this.$localStorage.set('error',error);
             return false;
           });
       }
@@ -75,6 +77,7 @@ export  const MimicAuth =new Vue({
         }
         else
         {
+          this.$localStorage.set('error','Incorrect username or password');
           return false;
         } 
       }
@@ -88,6 +91,7 @@ export  const MimicAuth =new Vue({
              this.$localStorage.set('login', true);
              return true
           }).catch(function (error) {
+            this.$localStorage.set('error',error);
              return false
           });
       }
