@@ -3,7 +3,7 @@
     <div id="PostContainer" v-for="onepost in posts">
      <post v-bind:postdata="onepost" v-on:showUp="showPost"></post>
     </div>
-    <DemoOnePost v-bind:style="{width: 80 +'%'}" id="PostModal" :onepostdata="postInfo" :style></DemoOnePost>
+    <DemoOnePost v-bind:style="{width: 50 +'%'}" id="PostModal" :onepostdata="postInfo" :style></DemoOnePost>
   </div>
 </template>
 

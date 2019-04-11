@@ -467,6 +467,10 @@ h5 {
 } /* Red */
 .postItem{
 width: 0%;
+margin-left:6%;
+padding-top:5%;
+margin-top: 0%;
+margin-bottom: -112px;
 
 }
 
