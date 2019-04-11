@@ -18,14 +18,6 @@ const router = new VueRouter({
   mode:'history'
 });
 
-export const globalStore = new Vue({
-  data: {
-    Val: '',
-    Username: 'Nourhan',
-    login:false,
-    token: ''
-  }
-})
 
 var vm = new Vue({
   localStorage: {

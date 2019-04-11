@@ -272,7 +272,7 @@ created(){
 
 // TODO here we get list of apexnames and display it at combox 
  ).then(function(response){
-    apexNames:repponse 
+    apexNames:response 
 
  })
  

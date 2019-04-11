@@ -18,12 +18,10 @@
 </template>
 
 <script>
-  import DemoLoginModal  from './DemoLoginModal.vue'
+ // import DemoLoginModal  from './DemoLoginModal.vue'
 
   export default {
-    components:{
-      DemoLoginModal
-    },
+    
     data () {
       return {
         login: false
@@ -87,7 +85,7 @@ button{
   background-color: white;
   border-radius: 5%;
   margin-top: -1740px;
-  margin-right: 18%;
+  margin-right: 18%; 
 }
 @media(max-width:1300px){
   #main{
