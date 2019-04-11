@@ -62,13 +62,8 @@ export  const AllServices =new Vue({
 	    return userInfo
   },
   save:function(token,ID){
-<<<<<<< HEAD
     return MimicPost.save(token,ID,this.mimic);
     
-=======
-    return MimicPosts.save(token,ID,this.mimic);
-
->>>>>>> 4ade68bf740a93cc796b63e6bd5e425923405eca
   },
 Hide:function(name,ID){
 return MimicPost.Hide(name,ID,this.mimic);
