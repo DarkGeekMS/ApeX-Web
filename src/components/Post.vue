@@ -1,6 +1,5 @@
 <template id="PostTemlate">
 <div id="PostItme" class="postItem" >
-<DemoOnePost id="PostModal"></DemoOnePost>
 <div class="panel panel-default" style="width: 62rem;   "  @click="ShowModal()" v-show="Not_Hide" id="post">
   <!-- <div class="row" id="postRow"> -->
     <div class="panel-body"  style="width: 62rem;" >
@@ -319,7 +318,7 @@ export default {
         // });
       }
         else{
-          
+
           AllServices.save(this.$localStorage.get('token'),this.PostId);
              //alert('Post unsaved successfully');
             this.Saved="Save";
@@ -435,7 +434,7 @@ h5 {
     .panel {
         margin-bottom: 19px;
         margin-left: 100px;
-        margin-top: 73px;
+           margin-top: 50px;
         background-color: #fff;
         border: 1px solid transparent;
         border-radius: 4px;
@@ -460,7 +459,7 @@ width: 0%;
 margin-left:6%;
 padding-top:3%;
 margin-top: 0%;
-margin-bottom: -112px;
+/* margin-bottom: -112px; */
 
 }
 

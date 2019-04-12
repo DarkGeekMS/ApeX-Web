@@ -47,7 +47,7 @@ width: 1300px;
 
 .cmt{
 // padding-top: 3%;
- padding-block-start: 8%;
+ padding-block-start: 0%;
  padding-left: 10%;
 }
 </style>

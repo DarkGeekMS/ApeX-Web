@@ -9,7 +9,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 import post from "./Post.vue"
 import DemoOnePost from './DisplayOnePost.vue'
 import {globalStore} from '../main.js'
@@ -53,4 +52,8 @@ components:{
 </script>
 
 <style scoped>
+#DisplayPosts{
+   width: 60%;
+  display: inline-block; 
+}
 </style>
