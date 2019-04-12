@@ -9,7 +9,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 import post from "./Post.vue"
 import DemoOnePost from './DisplayOnePost.vue'
 import {globalStore} from '../main.js'

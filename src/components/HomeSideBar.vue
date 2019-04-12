@@ -1,7 +1,7 @@
 <template>
   <div id="main">
      <img width="70px" src="../../public//AMFz23O.jpg" >
-    
+
      <h4 v-show="!login"> r/popular </h4>
      <h4 v-show="login"> Home </h4>
 
@@ -10,7 +10,7 @@
      <p v-show= "!login" > The best posts on Reddit for you, pulled from the most active communities on Reddit. Check here to see the most shared, upvoted, and commented content on the internet.
      </p>
      <p v-show="login"> Your personal Reddit frontpage. Come here to check in with your favorite communities. </p>
-     
+
 
      <button  type="button" class="btn btn-primary " data-toggle="button" aria-pressed="false" autocomplete="off" @click="post()">CREATE POST</button>
      <button v-show="login" style=" cursor: no-drop" type="button" class="btn btn-info" data-toggle="button" aria-pressed="false" autocomplete="off" @click="">CREATE COMMUNITY</button>
@@ -21,7 +21,7 @@
  // import DemoLoginModal  from './DemoLoginModal.vue'
 
   export default {
-    
+
     data () {
       return {
         login: false
@@ -31,12 +31,12 @@
       setInterval(() => {
         this.login = this.$localStorage.get('login')
       }, 1000)
-    }, 
+    },
     methods:{
       post: function(){
         if( this.$localStorage.get('login') )
         {
-          this.$router.push('/submit');
+          this.$router.push('/Submit');
         }
         else{
            this.$modal.show('demo-login');
@@ -84,8 +84,8 @@ button{
   color:black;
   background-color: white;
   border-radius: 5%;
-  margin-top: -65%;  
-  margin-right: 18%; 
+  margin-top: -65%;
+  margin-right: 18%;
 }
 @media(max-width:1300px){
   #main{

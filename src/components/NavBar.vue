@@ -4,16 +4,18 @@
  <demo-login-modal> </demo-login-modal>
  <demo-sign-modal> </demo-sign-modal>
  <nav class="navbar navbar-expand-lg navbar-light navbar-fixed-top" id="mainNav">
+    <router-link class="navbar-brand" :to="{ name:'HomePage'}">
+      <img style="margin-top:-8px" width="85"
+      src="../../public/Logo_small.png" >
+    </router-link>
 
-    <a class="navbar-brand" href="/">
-          <img style="margin-top:-8px" width="85"
-          src="../../public/Logo_small.png" >
-    </a>
+
+
     <div class="container-fluid">
        <div class="form-group drop" style="display:inline-block; margin:0.5% 0.5%">
           <select class="form-control" name="category">
-              <option>Popular</option>
-              <option> All</option>
+             <option> Popular</option>
+              <option> All </option>
               <option>Original Content</option>
           </select>
       </div>
@@ -36,7 +38,8 @@
           src="../../public//Logo_X.png" > {{ userLog }}  <span class="caret"></span></button>
         <ul class="dropdown-menu">
             <li class="dropdown-header">MY STUFF</li>
-            <li><a href="#">My Profile</a></li>
+            <!-- <router-link :to="{name:'ApexCom' , params: {ApexComName:postData.apex_id}}">{{postData.apex_id}}</router-link> -->
+            <li><router-link :to="{ name: 'UserProfile', params: {userName:userLog} } ">My Profile</router-link></li>
             <li><a href="#">User Settings</a></li>
             <li class="divider"></li>
             <li><a class="logOut" href="#" @click="Logout()">Log Out</a></li>
