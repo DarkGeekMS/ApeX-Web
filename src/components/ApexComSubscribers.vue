@@ -1,61 +1,45 @@
 <template id="subscribers list design">
 <div class="list" id="subscribers list">
   <div id="subscribers box" class="box" v-for="(subscriber,index) in SubscribersList" :key="subscriber.id">
-    <a id="subscribers account link" class="accountLink" href="#userAccount">{{subscriber.userName}}</a>
-    <button id="remove button" class="removeButton" v-on:click="blockUser(subscriber.userName,index)">Remove</button>
+    <router-link class="accountLink" :to="{name:'UserProfile' , params: {userName:subscriber.userName}}"> {{subscriber.userName}}</router-link>
+    <button id="remove button" class="removeButton" v-on:click="blockUser(subscriber,index)">Remove</button>
   </div>
+ 
 </div>
 </template>
 
 <script>
 import axios from 'axios'
 import {globalStore} from '../main.js'
+import {AllServices} from '../MimicServices/AllServices.js'
+
 export default {
+  props:['ApexComName'],
   data () {
     return {
-      ApexComName:'',
-      token:globalStore.token,
-      SubscribersList:[{userName:'omar'},{userName:'omar'},{userName:'omar'}
-      ]
+      token:this.$localStorage.get('token'),
+      SubscribersList:[]
     }
   },
   methods:
   {
     blockUser:function(userName,index)
     {
-      axios.post('http://localhost/block', {
-        ApexCom_id:this.ApexComName,
-        user_id:userName,
-        token:this.token
-      })
-      .then(function (response) {
-        if(response){
-          alert('done :)');
-          this.SubscribersList.splice(index, 1);
-          }
-        else{
-          alert('something wrong happened try again later');
-          }
-          })
-      .catch(function (error) {
-      console.log(error);
-      });
+      var data = AllServices.deleteSubscriber(userName,this.ApexComName);
+      if(data){
+      this.SubscribersList.splice(index, 1);
+      }
+      else{
+        console.log(error);
+      }
     },
+      getsubscribers(){
+      this.SubscribersList= AllServices.getSubscribers(this.ApexComName);
+      }
   },
   mounted()
   {
-    axios.get('http://localhost/get_subscribers', {
-    params: {
-      ApexCom_id :this.ApexComName,
-      token:this.token
-    }
-  })
-  .then(function (response) {
-    this.SubscribersList=response.data;
-  })
-  .catch(function (error) {
-    console.log(error);
-  });
+  this.getsubscribers();
   }
 }
 </script>
@@ -65,7 +49,7 @@ export default {
   width:100%;
   height:auto;
   background-color:white;
-  margin:5% 0%;
+  margin:1% 0%;
   padding:4% 3%;
   border-radius: 8px;
 }
@@ -78,7 +62,10 @@ export default {
   margin:-1% 2%;
   float:right;
   cursor:pointer;
+  color:white;
 }
+
+.removeButton:hover {opacity: 0.75}
 .accountLink{
   text-decoration: none;
 }

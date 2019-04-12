@@ -1,12 +1,12 @@
 <template id="PostTemlate">
-<div id="PostItme"  @click="ShowModal()" >
-<DemoOnePost id="PostModal"></DemoOnePost>
-<div class="panel panel-default" style="width: 62rem;   " v-show="Not_Hide" id="post">
-  <div class="row" id="postRow">
+<div id="PostItme" class="postItem" >
+<div class="panel panel-default" style="width: 62rem;   "  @click="ShowModal()" v-show="Not_Hide" id="post">
+  <!-- <div class="row" id="postRow"> -->
+    <div class="panel-body"  style="width: 62rem;" >
     <div class="panel2 panel-default" style="width: 3.7rem;" id="postSide">
 
 
-         <div class="column1" id="postCol1">
+          <div class="column1" id="postCol1">
 
 
 <button @click="changeColor_up" type="button" :class="className_up" id="up">
@@ -26,15 +26,17 @@
 
 
       </div>
-        <div class="column" id="postCol2">
+        <div class="column2" id="postCol2">
 
-<!--
-    <a href="#" class="fontUser" id="subred"> {{postdata.apex_id}} </a>
+      <router-link class="fontUser" id="subred" :to="{name:'ApexCom' , params: {ApexComName:postData.apex_id}}">{{postData.apex_id}}</router-link>
       <font class="postby" id="fontPostby">. Posted by</font>
-      <a href="#" class="postby" id="user">{{postdata.postedby}}  </a>
+      <router-link class="postby" id="user" :to="{name:'UserProfile' , params: {userName:postData.postedby}}"> {{postData.postedby}}</router-link>
+
       <font class="postby" id="fontpost"> </font>
       <a href="#" class="postby" id="timeAgo"> 15 hours ago </a>
-      <h3 id="postBody"> {{postdata.content}} </h3>-->
+      <p id="postBody" class="hPost">
+
+        {{postData.content}} </p>
 
 
       <!-- <a href="#" class="fontUser" id="subred"> apex_id </a>
@@ -43,7 +45,7 @@
         <font class="postby" id="fontpost"> </font>
         <a href="#" class="postby" id="timeAgo"> 15 hours ago </a>
         <h3 id="postBody">content </h3> -->
-
+</div>
 <footer>
 
 <div class="btn-group" role="group" aria-label="..." id="drop">
@@ -84,15 +86,16 @@ Comments</button>
 
    </div>
 
-</div>
+<!-- </div> -->
 
 </template>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
 <script id="postScript">
 import axios from 'axios'
-import {globalStore} from '../main.js'
+
 import {MimicDisplayPosts} from '../MimicServices/DisplayPosts.js'
+import { AllServices } from '../MimicServices/AllServices';
 
 
 export default {
@@ -100,7 +103,6 @@ export default {
   name: 'PostItem',
    data(){
        return{
-             postdata3:this.postdata,
              Not_Hide :true,
              is_Hide  :false,
 
@@ -113,7 +115,7 @@ export default {
              votes  :0,
              Saved  :"Save",
              PostId   :"",
-             token  :globalStore.token,
+             token  :this.$localStorage.get('token'),
 
              moderator:false,
              ShowModalVar:true,
@@ -127,22 +129,23 @@ export default {
          if(this.ShowModalVar == true){
          this.ToggleShowModalVar();
        }
-         axios.post("http://localhost/DelComment",{
-         ID    : this.PostId,
-         token : this.token
+       AllServices.deletePost(this.PostId,this.$localStorage.get('token'));
+//          axios.post("http://localhost/DelComment",{
+//          ID    : this.PostId,
+//          token : this.$localStorage.get('token')
 
- }).then(response=>{
-   if(response){
-     this.Deleted = true;
-     alert("Deleted successfully");
-   }
+//  }).then(response=>{
+//    if(response){
+//      this.Deleted = true;
+//      alert("Deleted successfully");
+//    }
 
- }).catch(function (error)
- {
-  console.log(error);
+//  }).catch(function (error)
+//  {
+//   //console.log(error);
 
 
-   });
+//    });
    },
 
        Hide(){
@@ -156,19 +159,20 @@ export default {
             alert("Post hidden successfully.")
 
             }
+        AllServices.Hide(this.PostId,this.$localStorage.get('token'));
+        // axios.post("http://localhost/Hide",
+        // {
+        //     name    : this.PostId,
+        //     ID : this.$localStorage.get('token')
 
-        axios.post("http://localhost/Hide",
-        {
-            name    : this.PostId,
-            ID : this.token
 
-        }).then(response => {
-          if(response){
-          alert("Hidden successfully");}
-        }).catch(function (error)
-        {
-           console.log(error);
-        });
+        // }).then(response => {
+        //   if(response){
+        //   alert("Hidden successfully");}
+        // }).catch(function (error)
+        // {
+        //    //console.log(error);
+        // });
          },
     changeColor_up()
     {
@@ -189,39 +193,41 @@ export default {
                       this.pressed_up      =true;
 
                       this.votes          += 1;
-                      axios.post("http://localhost/vote",
-                      {
+                      AllServices.upvote(this.$localStorage.get('token'),this.PostId,1);
+                  //     axios.post("http://localhost/vote",
+                  //     {
 
-                        ID       : this.token,
-                        name     : this.PostId,
-                        direction:1
+                  //       ID       : this.$localStorage.get('token'),
+                  //       name     : this.PostId,
+                  //       direction:1
 
-                      }).then(response => {
-                        if(response){
-                           alert("upvote successfully");}
+                  //     }).then(response => {
+                  //       if(response){
+                  //          alert("upvote successfully");}
 
-                      }).catch(function (error)
-                      {
-                    console.log(error);
+                  //     }).catch(function (error)
+                  //     {
+                  //   console.log(error);
 
-                  });
+                  // });
                 }
               else {
                     this.className_up = 'btn btn-light btn-sm is-gray';
                     this.votes     -= 1;
                     this.pressed_up = false;
-                    axios.post("http://localhost/vote",
-                   {
+                  AllServices.defaultVote(this.PostId,this.$localStorage.get('token'),0);
+                //     axios.post("http://localhost/vote",
+                //    {
 
 
-                    ID:this.token,
-                    name:this.PostId,
-                    direction:0
+                //     ID:this.$localStorage.get('token'),
+                //     name:this.PostId,
+                //     direction:0
 
-                  }).then(response => {}).catch(function (error)
-                  {
-                   console.log(error);
-                 });
+                //   }).then(response => {}).catch(function (error)
+                //   {
+                //    console.log(error);
+                //  });
                }
 
 
@@ -244,23 +250,24 @@ export default {
                          this.pressed_down=true;
 
                          this.votes-=1;
-                         axios.post("http://localhost/vote",
-                     {
+                         AllServices.downvote(this.PostId,this.$localStorage.get('token'),-1);
+                    //      axios.post("http://localhost/vote",
+                    //  {
 
 
-                          ID      : this.token,
-                          name    : this.PostId,
-                          direction: -1
+                    //       ID      : this.$localStorage.get('token'),
+                    //       name    : this.PostId,
+                    //       direction: -1
 
-                     }).then(response =>{
-                       if(response){
-                         alert("downvote successfully");
-                       }
-                     }).catch(function (error)
-                     {
-                      console.log(error);
+                    //  }).then(response =>{
+                    //    if(response){
+                    //      alert("downvote successfully");
+                    //    }
+                    //  }).catch(function (error)
+                    //  {
+                    //   //console.log(error);
 
-                    });
+                    // });
                   }
               else {
                   this.className_down = 'btn btn-light btn-sm is-gray';
@@ -268,17 +275,18 @@ export default {
 
                    this.votes += 1;
                    this.pressed_down = false;
-                   axios.post("http://localhost/vote",
-                   {
+                   AllServices.defaultVote(this.PostId,this.$localStorage.get('token'),0);
+                  //  axios.post("http://localhost/vote",
+                  //  {
 
 
-                    ID:this.token,
-                    name:this.PostId,
-                    direction:0
+                  //   ID:this.$localStorage.get('token'),
+                  //   name:this.PostId,
+                  //   direction:0
 
-                  }).then(response => {}).catch(function (error) {
-                     console.log(error);
-                   });
+                  // }).then(response => {}).catch(function (error) {
+                  //    console.log(error);
+                  //  });
 
 
                  }
@@ -291,40 +299,27 @@ export default {
         {
         //alert('Post saved successfully');
         this.Saved="unsave";
-        axios.post( "http://localhost/save",
-        {
+        AllServices.save(this.$localStorage.get('token'),this.PostId);
+        // axios.post( "http://localhost/save",
+        // {
 
-            ID:this.PostId ,
-            token:this.token
+        //     ID:this.PostId ,
+        //     token:this.$localStorage.get('token')
 
 
-        }).then(response=>{
-          if(response){
-            alert('Post saved successfully');
-          }
-        } ).catch(function (error)
-        {
-             console.log(error);
+        // }).then(response=>{
+        //   if(response){
+        //     alert('Post saved successfully');
+        //   }
+        // } ).catch(function (error)
+        // {
+        //     // console.log(error);
 
-        });
+        // });
       }
         else{
-          axios.post( "http://localhost/save",
-          {
 
-              ID:this.PostId ,
-              token:this.token
-
-
-          }).then(response=>{
-            if(response){
-              alert('Post unsaved successfully');
-            }
-          } ).catch(function (error)
-          {
-               console.log(error);
-
-          });
+          AllServices.save(this.$localStorage.get('token'),this.PostId);
              //alert('Post unsaved successfully');
             this.Saved="Save";
 
@@ -336,7 +331,7 @@ export default {
     },
       ShowModal(){
         if(this.ShowModalVar == true){
-          this.$emit('showUp',this.postdata);
+          this.$emit('showUp',this.postData);
           this.$modal.show('Demo-OnePost');
         }
           else {
@@ -355,12 +350,12 @@ export default {
 
 },
 props: {
-postdata:{},
+postData:{},
        },
-       created(){
+created(){
          axios.get("http://localhost/me",{token:this.token}).then(response=>{this.userId=response.userID}).catch(function (error)
          {
-          console.log(error);
+          //console.log(error);
         });
 
 
@@ -426,6 +421,7 @@ h5 {
     height: 30px;
     position: absolute;
     bottom: 0px;
+    margin-left: 1%;
       }
 .panel2{
     margin-bottom: 0px;
@@ -438,7 +434,7 @@ h5 {
     .panel {
         margin-bottom: 19px;
         margin-left: 100px;
-        margin-top: 50px;
+           margin-top: 50px;
         background-color: #fff;
         border: 1px solid transparent;
         border-radius: 4px;
@@ -458,5 +454,28 @@ h5 {
       background-color: #f4511e;
 /*      margin-left: 470px;*/
 } /* Red */
+.postItem{
+width: 0%;
+margin-left:6%;
+padding-top:3%;
+margin-top: 0%;
+/* margin-bottom: -112px; */
 
+}
+
+.hPost{
+   overflow: auto;
+   word-wrap: break-word;
+   margin-top:0%;
+   font-family:Verdana, Geneva, Tahoma, sans-serif;
+   font-size: 130%;
+
+}
+.column2{
+width: 100%;
+
+}
+.panel-body {
+     padding: 2px;
+}
 </style>

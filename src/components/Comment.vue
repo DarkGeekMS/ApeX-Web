@@ -91,7 +91,7 @@ retrieveWithNoEdit:function(){
 },
 Delete:function(){
   this.$emit('Delete',this.idx );
-  axios.delete('http://127.0.0.1:8000/api/delete', {
+  axios.delete('http://34.66.175.211/api/delete', {
       data : {
       name: this.ID,
       token: globalStore.token
@@ -109,7 +109,7 @@ Save:function(){
   else
     this.unSaved='Save';
 
-  axios.post('http://127.0.0.1:8000/api/save', {
+  axios.post('http://34.66.175.211/api/save', {
        ID: this.ID,
        token: globalStore.token
         })
@@ -122,7 +122,7 @@ Save:function(){
 Upvote:function(){
   this.upVoted = !this.upVoted;
   this.downVoted = false;
-  axios.post('http://127.0.0.1:8000/api/vote', {
+  axios.post('http://34.66.175.211/api/vote', {
        name: this.ID,
        dir: 1,
        token: globalStore.token
@@ -137,7 +137,7 @@ Upvote:function(){
 Downvote:function(){
   this.downVoted = !this.downVoted;
   this.upVoted = false;
-  axios.post('http://127.0.0.1:8000/api/vote', {
+  axios.post('http://34.66.175.211/api/vote', {
        name: this.ID,
        dir: -1,
        token: globalStore.token
@@ -275,10 +275,7 @@ this.time=fuzzy;
     -moz-osx-font-smoothing: grayscale;
     align-items: center;
     float: right;
-
-
 }
-
 
 .outer{
     position: relative;

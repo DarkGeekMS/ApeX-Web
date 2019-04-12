@@ -2,7 +2,7 @@
 <template id="posts desing">
   <!-- class="postsBox" -->
    <div  id="postslist">
-    <DisplayPosts class="box"></DisplayPosts>
+    <DisplayPosts class="box" v-bind:apexComName="ApexComName"></DisplayPosts>
   </div>
 </template>
 
@@ -11,6 +11,7 @@ import DisplayPosts from './DisplayPosts.vue'
 
 
 export default {
+  props:['ApexComName'],
   data () {
     return {
   }
@@ -26,9 +27,9 @@ export default {
 .box{
   width:100%;
   height:auto;
-  background-color:white;
-  margin:5% 0%;
+  margin:-8% -11%;
   padding:4% 3%;
   border-radius: 8px;
+  margin-top: 3%;
 }
 </style>

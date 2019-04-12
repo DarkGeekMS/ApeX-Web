@@ -18,22 +18,25 @@
 
             <div class="add" >
               <input id="SignUpUserName" type="text" class="form-control" name="username" 
-               placeholder="CHOOSE A USERNAME" v-model="username" required autofocus>
+               placeholder="CHOOSE A USERNAME" v-model="username" v-on:keyup="restart()" required autofocus>
 
-               <span class="lead" style = "fontSize:10px" v-show="invalidUser" >Enter a username of max length 50</span>
+               <span class="lead" style = "fontSize:10px" v-show="invalidUser" >Enter a username of max length 17 without spaces </span>
+               <p class = "lead" style = "fontSize:15px; color:red" > {{ error }}  </p>
 
                <div style="margin-top: 20px"></div>
 
 
 
               <input id="password" type="password" class="form-control" name="password"
-                placeholder="PASSWORD"
+                placeholder="PASSWORD" v-on:keyup="restart()"
                 v-model="pass" required autofocus>
-                <span class="lead" style = "fontSize:10px" v-show="invalidPass" >Enter a password of min length 6</span>
-                <span class="lead" style = "fontSize:10px" v-show="invalidUserAndPass" >Enter a password of min length 6 &  a username of max length 50</span>
+                <span class="lead" style = "fontSize:10px" v-show="invalidPass" >Password must be at least 6 characters long</span>
+                <span class="lead" style = "fontSize:10px" v-show="invalidUserAndPass" >Enter a password of min length 6 &  a username of max length 17</span>
+                <p class = "lead" style = "fontSize:15px; color:blue; padding-left:15px" > {{ congra }}  </p>
+
 
             </div>
-            <div style="margin-top: 80px"></div>
+            <div style="margin-top: 70px"></div>
             <div style="background_color:#eee;border-top:1.5px solid #eee; height:55px" >
               <a id="Back" class="btn blue" @click="$modal.hide('demo-sign2')">BACK</a>
               <button :disabled="check" class="btn blue" type="submit" style="margin-left:450px" @click.prevent="post()" id="SignUpFinish">SIGN UP</button>
@@ -49,11 +52,9 @@
 </template>
 
 <script>
-import axios from 'axios'
 const MODAL_WIDTH = 656;
 import DemoSign3Modal  from './DemoSign3Modal.vue'
-import {globalStore} from '../main.js'
-import Authentication from '../MimicServices/Authentication.js'
+import {AllServices} from '../MimicServices/AllServices.js'
 export default {
   name: 'DemoSign2Modal',
   components:{
@@ -66,7 +67,9 @@ export default {
           pass: "",
           invalidUser:false,
           invalidPass:false,
-          invalidUserAndPass:false
+          invalidUserAndPass:false,
+          error: '',
+          congra: ''
         }
   },
   created () {
@@ -85,29 +88,26 @@ export default {
   },
   methods:{
     post: function(){
-        if (this.username.length <= 50 && this.pass.length >= 6)
+        if (this.username.length <= 17 && this.pass.length >= 6 && this.username.indexOf(' ') < 0)
         {
-        axios.post('http://127.0.0.1:8000/api/sign_up', {
-            email: globalStore.Val,
-            username: this.username,
-            password: this.pass
-          }).then(response => {
-             globalStore.login = true;
-             globalStore.Username = this.username;
-             globalStore.token = response.data.token;
-             this.$modal.show('demo-sign3');
-             this.$modal.hide('demo-sign1');
-          }).catch(function (error) {
-             alert("Username or Email already exists");
-          });
+          if( AllServices.signUp(this.username, this.pass) )
+          {
+            
+            this.congra = 'Your account has been created. Welcome with us' ;
+            setTimeout(() =>{this.$modal.show('demo-sign3');
+               this.$modal.hide('demo-sign1')} , 1000)
+          }
+          else{
+            this.error =  this.$localStorage.get('error');
+          }
         }
-        else if (this.username.length > 50 && this.pass.length < 6){
+        else if (this.username.length > 17 && this.pass.length < 6){
         this.invalidUserAndPass=true;
         this.invalidUser=false;
         this.invalidPass=false;
 
         }
-        else if (this.username.length > 50)
+        else if (this.username.length > 17 || this.username.indexOf(' ') >= 0)
         {
         this.invalidUserAndPass=false;
         this.invalidUser=true;
@@ -118,7 +118,16 @@ export default {
         {
         this.invalidUserAndPass=false;
         this.invalidUser=false;
-        this.invalidPass=true;        }
+        this.invalidPass=true;      
+        }
+      },
+      restart: function()
+      {
+        this.invalidUser = false,
+        this.invalidPass =false,
+        this.invalidUserAndPass =false,
+        this.error = '',
+        this.congra = ''
       }
   }
 }

@@ -2,15 +2,24 @@
 <div id="all">
   <div class="Apexcom" id="Apexcom">
     <div class="apexcomName" id="apexcomName">
-      <h1 id="Name">{{ApexComName}}</h1>
+      <h1 id="Name">
+        <img class="image" src="../../public/Logo_small.png" >
+        {{ApexComName}}</h1>
     </div>
   
     <div class="navBar" id="navbar">
-        <router-link id="postslink" class="navbarLinks" to="/ApexCom/ApexComName">Posts</router-link>
-        <router-link  id="subscribersListlink" class="navbarLinks" to="/ApexCom/subscribersList">subscribers</router-link>
+        <router-link id="postslink" class="navbarLinks" :to="{name:'Posts'}">Posts</router-link>
+        <router-link v-show="isModerator()" id="subscribersListlink" class="navbarLinks" :to="{name:'Subscribers'}">subscribers</router-link>
+        <router-link v-show="isModerator()" id="reportlink" class="navbarLinks" :to="{name:'Reports'}">view reports</router-link>
     </div>
 </div>
-    <SideBar class="sidebar" v-bind:apexComName="ApexComName"></SideBar> 
+    <SideBar class="sidebar" v-bind:apexComName="ApexComName"
+    v-bind:rules="rules"
+    v-bind:description="description"
+    v-bind:moderators="moderators"
+    v-bind:subscribersCount="subscribersCount"
+    
+    ></SideBar> 
     <div class="routerview">
     <router-view></router-view>
     </div>
@@ -21,16 +30,55 @@
 import axios from 'axios'
 import {globalStore} from '../main.js'
 import SideBar from './ApexComSideBar.vue'
+import {AllServices} from '../MimicServices/AllServices.js'
 
 export default {
+  props:['ApexComName'],
   components:{
     'SideBar':SideBar
   },
   data () {
     return {
-      ApexComName:'Apex-com name',
+      token:this.$localStorage.get('token'),
+      userName:this.$localStorage.get('userName'),
+      //userName:'moderator1',
+      description:'',
+      moderators:[],
+      rules:[],
+      subscribersCount: 0,
     }
   },
+  methods:{
+    CheckModerator:function(name)
+    {
+      console.log(name.userName);
+      if( name.userName == this.userName){
+        
+      return true;
+      }
+    },
+    isModerator:function(){
+      var moderator = this.moderators.find(this.CheckModerator);
+      if(moderator !== undefined){
+          return true;
+        }
+      else{
+          return false;
+        }
+    },
+     getAbout(){
+         var about= AllServices.getAbout(this.ApexComName);
+         this.description=about.description;
+         this.moderators=about.moderators;
+         this.rules=about.rules;
+         this.subscribersCount=about.subscribersCount;
+   },
+
+  },
+  mounted()
+  {
+  this.getAbout();
+  }
 }
 </script>
 
@@ -39,7 +87,8 @@ export default {
 .Apexcom{
   width:auto;
   height:65px;
-  margin:4% 0%;
+  margin-top:3%;
+  margin-bottom:5%;
 }
 .apexcomName{
   background-color: deepSkyBlue;
@@ -87,5 +136,14 @@ export default {
 .router-link-active{
   border-bottom: 3px solid deepSkyBlue;
 }
-
+.image{
+  width:4%;
+  height:50px;
+  margin-top:0%;
+  margin-bottom:1%;
+  margin-right:0%;
+  margin-left:0%;
+  border-radius: 25px;
+  box-sizing: border-box;
+}
 </style>
