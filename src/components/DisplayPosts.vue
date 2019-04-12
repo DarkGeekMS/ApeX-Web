@@ -3,12 +3,8 @@
     <div id="PostContainer" v-for="onePost in posts">
      <post v-bind:postData="onePost" v-on:showUp="showPost"></post>
     </div>
-<<<<<<< HEAD
-    <DemoOnePost v-bind:style="{width: 50 +'%'}" id="PostModal" :onepostdata="postInfo" :style></DemoOnePost>
-=======
     <DemoOnePost  id="PostModal" :onePostData="postInfo" ></DemoOnePost>
     <!-- v-bind:style="{width: 80 +'%'}" -->
->>>>>>> 504959049e6a17a188166e5b50010e8a0f8860a4
   </div>
 </template>
 
