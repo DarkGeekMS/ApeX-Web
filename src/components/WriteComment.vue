@@ -17,6 +17,8 @@
 
 <script>
 import axios from 'axios'
+import {AllServices} from '../MimicServices/AllServices.js'
+
 
 export default {
   name: 'WriteCommentItem',
@@ -52,24 +54,20 @@ export default {
     },
     comment:function(){
 
-      var self = this;
        if (this.content!=null)
       {
       
       //TODO:send request and get currentID
-      
-      axios.post('http://127.0.0.1:8001/api/comment', {
-       content: this.content,
-       parent: this.parentID,
-       token: this.$localStorage.get('token')
-        })
-      .then(function (response) {
-      self.currentID = response.data.id;
-      self.$emit('Comment',self.content,this.$localStorage.get('token'),self.parentID,self.currentID );
-      })
-      .catch(function (error) {
-       alert("Something went wrong");
-       });
+
+      var Write = AllServices.WriteComment(this.content,this.parentID);
+      if (Write.done){
+        this.currentID = Write.CID;
+        this.$emit('Comment',this.content,this.$localStorage.get('token'),this.parentID,this.currentID );
+      }
+      else
+        alert("Log In First!!");
+
+
       //to test
       //this.currentID=this.parentID+1;
       
@@ -79,34 +77,32 @@ export default {
     }
     ,
     reply:function(){
-    var self = this;
-            this.replyClicked=!this.replyClicked;
-
+    
        if (this.content!=null)
       {
-        //TODO:send request and get currentID
-      axios.post('http://127.0.0.1:8001/api/comment', {
-       content: this.content,
-       parent: this.parentID,
-       token:this.$localStorage.get('token')
-        })
-      .then(function (response) {
-        console.log("done");
-       self.currentID = response.data.id;
-       self.$emit('Reply',self.content,this.$localStorage.get('token'),self.parentIdx,self.parentLevel,self.parentID,self.currentID );
-       })
-      .catch(function (error) {
-       alert("Something went wrong");
-       });
+      
+      //TODO:send request and get currentID
+
+      var Write = AllServices.WriteComment(this.content,this.parentID);
+      if (Write.done){
+        this.replyClicked=!this.replyClicked;
+        this.currentID = Write.CID;
+        this.$emit('Reply',this.content,this.$localStorage.get('token'),this.parentIdx,this.parentLevel,this.parentID,this.currentID );
+      }
+      else
+        alert("Log In First!!");
+
+
       //to test
       //this.currentID=this.parentID+1;
-      //
+      
       }
       else
       alert("Empty Text cannot be submitted!");
     }
   }
 }
+
 </script>
 
 <style scoped>

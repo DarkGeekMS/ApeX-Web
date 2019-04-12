@@ -18,7 +18,15 @@
       <div id = "secondLine">
         <button id ="Down" v-on:click="Downvote" v-show="!this.downVoted" class = "arrows,down"></button>
         <button id ="Down2" v-on:click="Downvote" v-show="this.downVoted" class = "arrows,down"></button>
-        <span  id="paragraphComment" >{{content}}</span>
+        <div class = "condiv" v-for = "part in con" :key="part.start">
+          <p class="content"  v-if = "!part.type" >{{part.c}}</p>
+          <router-link 
+          v-if = "part.type" 
+          :to="{name:'UserProfile' ,
+           params: {userName:part.c}}">
+            {{part.c}}
+          </router-link>
+        </div>
       </div>
 
       <br>
@@ -71,11 +79,44 @@ export default {
     showReplyBox:0,
     showEditBox:0,
     deleted:1,
-    unSaved:'Save'
+    unSaved:'Save',
+    con : []
+
     }
   },
   created(){
     setInterval(() => this.DateFormat(this.date), 1000);
+
+  /////
+  for (var i = 0;i<this.content.length;i++)
+          {
+              if (this.content[i]=='u' && this.content[i+1]=='/' && this.content[i+2]!=' ')
+              {
+                for (var x = i;x<this.content.length;x++)
+                {
+                    if (this.content[x+1]==' '|| x==this.content.length-1)
+                    {
+                    var str = this.content.slice(i,x+1);
+                    this.con.push({c:str , type:1});
+                    i=x+1;
+                    break;
+                    }
+                }
+              }
+             
+                    for (var x = i;x<this.content.length;x++)
+                    {
+                        if((this.content[x+1]=='u' && this.content[x+2]=='/' && this.content[x]==' ')||x==this.content.length-1)
+                        {
+                            var str = this.content.slice(i,x+1);
+                            this.con.push({c:str , type:0});
+                            i=x;
+                            break;
+                        }
+                    }   
+
+              
+          }
   },
   methods:{
 edit:function(updatedContent){
@@ -301,5 +342,8 @@ this.time=fuzzy;
   position:static;
   float:left;
 }
+.condiv ,.content, .user  { 
+display: inline;
+ }
 
 </style>
