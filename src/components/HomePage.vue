@@ -1,9 +1,8 @@
 <template>
   <div id="HomePage" >
      <!-- <hotposts></hotposts> -->
-     <DisplayPosts :apexComName="''"></DisplayPosts>
-
-
+     <DisplayPosts :ApexComName="''"></DisplayPosts>
+     <SideBar> </SideBar>
 
   </div>
 </template>
@@ -11,15 +10,14 @@
 <script>
 
 import DisplayPosts from "./DisplayPosts.vue"
-import hotposts from './HotPosts.vue'
+import HomeSideBar from "./HomeSideBar.vue"
 
 export default {
   name: 'HomePage',
   components:{
-    'hotposts':hotposts,
     'DisplayPosts':DisplayPosts,
+    'SideBar':HomeSideBar,
   },
-  name: 'app',
   data(){
     return{
       title:'title '

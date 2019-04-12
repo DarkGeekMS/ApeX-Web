@@ -29,7 +29,8 @@
       <div class="content" >
       <ul class="list" style="list-style-type:none;" id="moderatorslist">
         <li  id="moderators list item" v-for="moderator in moderators" :key="moderator.id">
-          <a id="moderators account link" class="accountLink" href="#link">{{moderator}}</a>
+          <!-- <a id="moderators account link" class="accountLink" href="#link">{{moderator.userName}}</a> -->
+          <router-link class="accountLink" :to="{name:'UserProfile' , params: {userName:moderator.userName}}"> {{moderator.userName}}</router-link>
         </li>
       </ul>
     </div>
@@ -55,9 +56,10 @@ export default {
         return{
             token:this.$localStorage.get('token'),
             subscribers:[],
-       subscribed:false,
-       state:'subscribe',
-       userName:this.$localStorage.get('userName'),
+            subscribed:false,
+            state:'subscribe',
+            userName:this.$localStorage.get('userName'),
+            //userName:'subscriber1',
         }
 
     },
@@ -82,21 +84,22 @@ export default {
       },
       CheckUser:function(name)
     {
-      if( name == this.userName){
+      console.log(this.userName);
+      if( name.userName == this.userName){
       return true;
       }
     },
-
-       getSubscribers(){
-      this.subscribers= AllServices.getSubscribers(this.apexComName);
-      var subscribe = this.subscribers.find(this.CheckUser);
-    if(subscribe == this.userName){
-      this.subscribed = true;
-      this.state='subscribed';
-    }
-    else{
-      this.subscribed=false;
-      this.state='subscribe';
+    getSubscribers(){
+        this.subscribers= AllServices.getSubscribers(this.apexComName);
+        var subscribe = this.subscribers.find(this.CheckUser);
+        console.log(subscribe);
+        if(subscribe !== undefined){
+          this.subscribed = true;
+          this.state='subscribed';
+        }
+        else{
+          this.subscribed=false;
+          this.state='subscribe';
     }
    },
 

@@ -32,6 +32,7 @@
                 v-model="pass" required autofocus>
                 <span class="lead" style = "fontSize:10px" v-show="invalidPass" >Password must be at least 6 characters long</span>
                 <span class="lead" style = "fontSize:10px" v-show="invalidUserAndPass" >Enter a password of min length 6 &  a username of max length 17</span>
+                <p class = "lead" style = "fontSize:15px; color:blue; padding-left:15px" > {{ congra }}  </p>
 
 
             </div>
@@ -67,7 +68,8 @@ export default {
           invalidUser:false,
           invalidPass:false,
           invalidUserAndPass:false,
-          error: ''
+          error: '',
+          congra: ''
         }
   },
   created () {
@@ -90,8 +92,10 @@ export default {
         {
           if( AllServices.signUp(this.username, this.pass) )
           {
-            this.$modal.show('demo-sign3');
-            this.$modal.hide('demo-sign1');
+            
+            this.congra = 'Your account has been created. Welcome with us' ;
+            setTimeout(() =>{this.$modal.show('demo-sign3');
+               this.$modal.hide('demo-sign1')} , 1000)
           }
           else{
             this.error =  this.$localStorage.get('error');
@@ -122,7 +126,8 @@ export default {
         this.invalidUser = false,
         this.invalidPass =false,
         this.invalidUserAndPass =false,
-        this.error = ''
+        this.error = '',
+        this.congra = ''
       }
   }
 }

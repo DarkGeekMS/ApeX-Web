@@ -1,31 +1,29 @@
 import Vue from 'vue'
 import axios from 'axios'
-export  const MimicPosts=new Vue({
-
+export  const MimicPost=new Vue({
 methods:{
 
     save:function(token,ID,mimic){
-      
+
         if(mimic){
-   
+
                 if(token=="1" && ID=="1"){
-            
+
                     return true;
-            
+
               }
                 return false;
-            
-            
+
+
              }
              else{
 
-                axios.post( "http://localhost/save",
+                axios.post( "http://34.66.175.211/save",
                 {
         
-                    ID:this.PostId ,
-                    token:this.$localStorage.get('token')
-        
-        
+                    ID:ID,
+                    token:token
+
                 }).then(response=>{
                   if(response){
                     alert('Post saved successfully');
@@ -33,57 +31,56 @@ methods:{
                 } ).catch(function ()
                 {
                     // console.log(error);
-        
+
                 });
              }
-            
-            
-        
-            
+
+
+
+
                 },
 
-                deletePost(name,ID,mimic){
+                deletePost:function(name,ID,mimic){
                     if(mimic){
                         if(name=="1" && ID=="1"){
-                
+
                             return true;
-                    
-                    
+
+
                         }
                         return false;
 
 
                     }
-                   
+
             else{
 
-
                 axios.post("http://localhost/DelComment",{
-                    ID    : this.PostId,
-                    token : this.$localStorage.get('token')
+                    ID    : name,
+                    token : ID
            
             }).then(response=>{
               if(response){
                 this.Deleted = true;
                 alert("Deleted successfully");
               }
-           
+
             }).catch(function ()
             {
              //console.log(error);
-           
-           
+
+
               });
             }
-            
-            
-    
-    
+
+
+
+
             },
                Hide(name,ID,mimic){
                    if(mimic===true){
                     if(name==="1" && ID==="1"){
-            
+
                         return true;
                     }
                     return false;
@@ -91,11 +88,10 @@ methods:{
                    }
               else{
 
-                axios.post("http://localhost/Hide",
+                axios.post("http://34.66.175.211/Hide",
                 {
-                    name    : this.PostId,
-                    ID : this.$localStorage.get('token')
-        
+                    name    : name,
+                    ID : ID
         
                 }).then(response => {
                   if(response){
@@ -106,25 +102,25 @@ methods:{
                 });
 
               }
-            
+
             },
             upvote(name,ID,direction,mimic){
                 if(mimic){
                     if(name=="1"  && ID=="1"){
-                
+
                         if(direction==1){
-               
+
                           return 200;
                        }
-           
+
            }
            else{
-            axios.post("http://localhost/vote",
+            axios.post("http://34.66.175.211/vote",
             {
 
-              ID       : this.$localStorage.get('token'),
-              name     : this.PostId,
-              direction:1
+              ID       : ID,
+              name     : name,
+              direction:direction
 
             }).then(response => {
               if(response){
@@ -143,21 +139,21 @@ methods:{
  downvote(name,ID,direction,mimic){
                 if(mimic){
                     if(name=="1"  && ID=="1"){
-                
+
                         if(direction==-1){
-               
+
                           return 200;
                        }
-           
+
            }
            else{
-            axios.post("http://localhost/vote",
+            axios.post("http://34.66.175.211/vote",
                    {
 
 
-                    ID:this.$localStorage.get('token'),
-                    name:this.PostId,
-                    direction:0
+                    ID:ID,
+                    name:name,
+                    direction:direction
 
                   }).then(function (response) {
                     return response
@@ -167,11 +163,11 @@ methods:{
                  });
 
               }
-            
-                
-            
-            
-          
+
+
+
+
+
 
 
     }
@@ -183,6 +179,37 @@ methods:{
 
 
 
+},
+defaultVote(name,ID,direction,mimic){
+  if(mimic){
+      if(name=="1"  && ID=="1"){
+  
+          if(direction==0){
+ 
+            return 200;
+         }
+
+}
+else{
+axios.post("http://localhost/vote",
+{
+
+ID       : ID,
+name     : name,
+direction:direction
+
+}).then(response => {
+if(response){
+   alert("upvote successfully");}
+
+}).catch(function ()
+{
+// console.log(error);
+
+});
+
+}
+}
 }
 
 

@@ -1,11 +1,10 @@
 import Vue from 'vue'
 import {MimicDisplayPosts} from './DisplayPosts.js'
 import {MimicCreatePosts} from './CreatePost.js'
-import {MimicPost} from './CreatePost.js'
 import {MimicAuth} from './Authentication.js'
 import {MimicApexCom} from './ApexCom.js'
 import {MimicUserProfile} from './UserProfile.js'
-import { MimicPosts } from './Post.js';
+import { MimicPost } from './Post.js'
 
 
 export  const AllServices =new Vue({
@@ -16,9 +15,9 @@ export  const AllServices =new Vue({
   },
   methods:{
     getPosts:function() {
-  var posts=MimicDisplayPosts.getPostsData(this.mimic);
-    return posts
-},
+      var posts=MimicDisplayPosts.getPostsData(this.mimic);
+        return posts
+   },
     submit:function(videoUrl,apexComId,bodyPost,imgName, isLocked,token){
       MimicCreatePosts.submitPost(videoUrl,apexComId,bodyPost,imgName,isLocked,token,this.mimic);
 
@@ -63,8 +62,7 @@ export  const AllServices =new Vue({
 	    return userInfo
   },
   save:function(token,ID){
-    return MimicPosts.save(token,ID,this.mimic);
-    
+    return MimicPost.save(token,ID,this.mimic);
   },
 Hide:function(name,ID){
 return MimicPost.Hide(name,ID,this.mimic);
@@ -77,6 +75,10 @@ downvote:function(name,ID,direction){
 
 return MimicPost.downvote(name,ID,direction,this.mimic);
 },
+defaultVote:function(name,ID,direction){
+
+  return MimicPost.defaultVote(name,ID,direction,this.mimic);
+  },
 deletePost:function(name,ID){
 
 
