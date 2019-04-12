@@ -97,7 +97,20 @@ import axios from 'axios'
 import {MimicDisplayPosts} from '../MimicServices/DisplayPosts.js'
 import { AllServices } from '../MimicServices/AllServices';
 
-
+/**
+ * @vue-data {string} [Save="Save"] Save value
+ * @vue-data {boolean} [Not_Hide=true]    check if post not hide
+ * @vue-data {boolean} [is_Hide=false]    check if post is hide
+ * @vue-data {boolean} [pressed_up=false]  check pressed uparrow
+ * @vue-data {boolean} [pressed_down=false]  check pressed downarrow
+ * @vue-data {integer} [votes=0] votes
+ * @vue-data {boolean} [Deleted=false] check deleted Post
+ * @vue-data {JWT} [token=''] userID
+ * @vue-data  {string} [PostId=''] postID
+ * @vue-data  {boolean} [moderator=false] check if the user is moderator
+ * @vue-data  {boolean} [Deleted=false] check if the post is Deleted
+ *@vue-prop {object} [postdata] the data of the post 
+ */
 export default {
 
   name: 'PostItem',
@@ -432,9 +445,10 @@ h5 {
     box-shadow: 0 1px 1px rgba(0,0,0,.05);}
 
     .panel {
-        margin-bottom: 19px;
+     
+        margin-bottom: 100%;
         margin-left: 100px;
-           margin-top: 50px;
+        margin-top: 60px;
         background-color: #fff;
         border: 1px solid transparent;
         border-radius: 4px;
