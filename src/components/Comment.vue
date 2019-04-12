@@ -1,12 +1,16 @@
 <template>
 
   <div id="Comment" v-show = "deleted"  v-bind:style="{marginLeft: level*2 +'%'}" >
+
+     <reportBox> </reportBox>
+
+
       <div id = "firstLine">
         <button id ="Up" v-on:click="Upvote" v-show="!this.upVoted" class = "arrows,up"></button>
         <button id ="Up2" v-on:click="Upvote" v-show="this.upVoted" class = "arrows,up"></button>
         <a class ="smallText" href="https://www.google.com/?hl=ar">{{ user }}</a>
         <b class = "smallText">{{points}} points</b>
-        <b class = "smallText">{{time}} hours</b>
+        <b class = "smallText">{{time}}</b>
         </div>
 
       <br>
@@ -23,7 +27,7 @@
       <div id = "thirdLine" v-show="!showEditBox">
         <button class = "buttons" v-on:click = "showReplyBox = !showReplyBox" id = "Reply">Reply</button>
         <span>|</span>
-        <button class = "buttons" id = "Report">Report</button>
+        <button class = "buttons" id = "Report" @click="$modal.show('reportBox')">Report</button>
         <span>|</span>
         <button class = "buttons" v-on:click="Save" id = "Save" >{{unSaved}}</button>
         <span>|</span>
@@ -54,8 +58,9 @@ export default {
     idx:Number,
     level:Number,
     parentIdx:Number,
-    parentID:Number,
-    ID:String
+    parentID:String,
+    ID:String,
+    date:Date
   },
   data(){
     return{
@@ -63,12 +68,15 @@ export default {
     upVoted:false,
     downVoted:false,
     points:0,
-    time:0,
+    time:'',
     showReplyBox:0,
     showEditBox:0,
     deleted:1,
     unSaved:'Save'
     }
+  },
+  created(){
+    setInterval(() => this.DateFormat(this.date), 1000);
   },
   methods:{
 edit:function(updatedContent){
@@ -145,10 +153,37 @@ addReply:function(cont,use,parent,parentLevel,parentID,currentID){
   this.$emit('Reply2',cont,parent,parentLevel+1,parentID,currentID );
 
 
+},
+DateFormat:function(date){
+  // Make a fuzzy time
+var delta = Math.round((+new Date - date) / 1000);
+
+var minute = 60,
+    hour = minute * 60,
+    day = hour * 24,
+    week = day * 7;
+
+var fuzzy;
+
+if (delta < 60) {
+    fuzzy = 'just now';
+}  else if (delta < 2 * minute) {
+    fuzzy = 'a minute ago.'
+} else if (delta < hour) {
+    fuzzy = Math.floor(delta / minute) + ' minutes ago.';
+} else if (Math.floor(delta / hour) == 1) {
+    fuzzy = '1 hour ago.'
+} else if (delta < day) {
+    fuzzy = Math.floor(delta / hour) + ' hours ago.';
+} else if (delta < day * 2) {
+    fuzzy = 'yesterday';
+}
+this.time=fuzzy;
 }
   },
 
   components: {
+    reportBox,
     WriteComment
   }
 

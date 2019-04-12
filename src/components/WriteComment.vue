@@ -1,7 +1,9 @@
 <template>
   <div id="WriteComment" v-show="!replyClicked && !editClicked">
     <div>
+      
       <textarea  id="CommentSpace" class="write" v-model="content"  cols="30" rows="10"></textarea>
+
     </div>
 
     <div id="Buttons">
@@ -32,6 +34,7 @@ export default {
       editClicked:false,
       replyClicked:false,
       currentID:''
+
     }
   },
   methods:{
@@ -53,9 +56,10 @@ export default {
       var self = this;
        if (this.content!=null)
       {
-
+      
       //TODO:send request and get currentID
-      axios.post('http://127.0.0.1:8000/api/comment', {
+      
+      axios.post('http://127.0.0.1:8001/api/comment', {
        content: this.content,
        parent: this.parentID,
        token: globalStore.token
@@ -69,10 +73,12 @@ export default {
        });
       //to test
       //this.currentID=this.parentID+1;
+      
       }
       else
       alert("Empty Text cannot be submitted!");
-    },
+    }
+    ,
     reply:function(){
     var self = this;
             this.replyClicked=!this.replyClicked;
@@ -80,12 +86,13 @@ export default {
        if (this.content!=null)
       {
         //TODO:send request and get currentID
-      axios.post('http://127.0.0.1:8000/api/comment', {
+      axios.post('http://127.0.0.1:8001/api/comment', {
        content: this.content,
        parent: this.parentID,
        token: globalStore.token
         })
       .then(function (response) {
+        console.log("done");
        self.currentID = response.data.id;
        self.$emit('Reply',self.content,globalStore.token,self.parentIdx,self.parentLevel,self.parentID,self.currentID );
        })
