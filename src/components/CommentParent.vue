@@ -10,7 +10,6 @@
 <script>
 import WriteComment from './WriteComment.vue'
 import Comment from './Comment.vue'
-import {globalStore} from '../main.js'
 
 
 
@@ -27,7 +26,7 @@ export default {
       return{
           comments:[
               /*{
-            user:globalStore.Username,
+            user:localStorage.Username,
             content:'',
             idx:-1,
             level,
@@ -41,7 +40,7 @@ export default {
   methods:{
       addComment:function(cont,use,pID,cID){
         if (cont!='')
-          this.comments.push({user:globalStore.Username, content:cont, idx:this.comments.length,level:0,parentIdx:-1,parentID:pID,currentID:cID, date:new Date()});
+          this.comments.push({user:this.$localStorage.get('userName'), content:cont, idx:this.comments.length,level:0,parentIdx:-1,parentID:pID,currentID:cID, date:new Date()});
           else
           alert("empty text not allowed!");
       },
@@ -49,7 +48,7 @@ export default {
         if (cont!='')
         {
           var i = parent+1;
-          this.comments.push({user:globalStore.Username, content:cont ,idx:i ,level:l,parentIdx:parent,parentID:pID,currentID:cID, date:new Date() });
+          this.comments.push({user:this.$localStorage.get('userName'), content:cont ,idx:i ,level:l,parentIdx:parent,parentID:pID,currentID:cID, date:new Date() });
           var rep = this.comments.pop();
           for (var x = this.comments.length;x>i;x--){
             this.comments[x]=this.comments[x-1];

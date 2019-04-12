@@ -10,7 +10,6 @@
 <script>
 import axios from 'axios'
 const MODAL_WIDTH = 656;
-import {globalStore} from '../main.js'
 export default {
   name: 'reportBox',
   data(){
@@ -33,20 +32,7 @@ export default {
     this.modalWidth = window.innerWidth < MODAL_WIDTH ? MODAL_WIDTH / 2 : MODAL_WIDTH
   },
   methods:{
-    post: function()
-      {
-        axios.post('http://127.0.0.1:8000/api/Sign_in', {
-            username : this.username,
-            password : this.pass
-          }).then(response => {
-             globalStore.login = true;
-             globalStore.Username = this.username;
-             this.$modal.hide('reportBox');
-             globalStore.token = response.data.token;
-          }).catch(function (error) {
-             alert("Username or Password is invalid");
-          });
-      }
+   
   }
 }
 </script>

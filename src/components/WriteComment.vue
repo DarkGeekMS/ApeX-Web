@@ -17,7 +17,6 @@
 
 <script>
 import axios from 'axios'
-import {globalStore} from '../main.js'
 
 export default {
   name: 'WriteCommentItem',
@@ -62,11 +61,11 @@ export default {
       axios.post('http://127.0.0.1:8001/api/comment', {
        content: this.content,
        parent: this.parentID,
-       token: globalStore.token
+       token: this.$localStorage.get('token')
         })
       .then(function (response) {
       self.currentID = response.data.id;
-      self.$emit('Comment',self.content,globalStore.token,self.parentID,self.currentID );
+      self.$emit('Comment',self.content,this.$localStorage.get('token'),self.parentID,self.currentID );
       })
       .catch(function (error) {
        alert("Something went wrong");
@@ -89,12 +88,12 @@ export default {
       axios.post('http://127.0.0.1:8001/api/comment', {
        content: this.content,
        parent: this.parentID,
-       token: globalStore.token
+       token:this.$localStorage.get('token')
         })
       .then(function (response) {
         console.log("done");
        self.currentID = response.data.id;
-       self.$emit('Reply',self.content,globalStore.token,self.parentIdx,self.parentLevel,self.parentID,self.currentID );
+       self.$emit('Reply',self.content,this.$localStorage.get('token'),self.parentIdx,self.parentLevel,self.parentID,self.currentID );
        })
       .catch(function (error) {
        alert("Something went wrong");

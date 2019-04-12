@@ -18,6 +18,7 @@ export default {
 
    
   },
+   
   data(){
     return{
    content : " Double's Profile is u/Double u/OKgjhj u/hhh hhh ",

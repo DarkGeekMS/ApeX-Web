@@ -47,8 +47,7 @@
 <script>
 import WriteComment from './WriteComment.vue'
 import axios from 'axios'
-import {globalStore} from '../main.js'
-
+import reportBox from './ReportModal'
 
 export default {
   name: 'CommentItem',
@@ -64,7 +63,7 @@ export default {
   },
   data(){
     return{
-    user:globalStore.Username,
+    user:this.$localStorage.get('userName'),
     upVoted:false,
     downVoted:false,
     points:0,
@@ -94,7 +93,7 @@ Delete:function(){
   axios.delete('http://34.66.175.211/api/delete', {
       data : {
       name: this.ID,
-      token: globalStore.token
+      token: this.$localStorage.get('token')
       }
         })
       .then(function (response) {
@@ -111,7 +110,7 @@ Save:function(){
 
   axios.post('http://34.66.175.211/api/save', {
        ID: this.ID,
-       token: globalStore.token
+       token:this.$localStorage.get('token')
         })
       .then(function (response) {
        })
@@ -125,7 +124,7 @@ Upvote:function(){
   axios.post('http://34.66.175.211/api/vote', {
        name: this.ID,
        dir: 1,
-       token: globalStore.token
+       token: this.$localStorage.get('token')
         })
       .then(function (response) {
        })
@@ -140,7 +139,7 @@ Downvote:function(){
   axios.post('http://34.66.175.211/api/vote', {
        name: this.ID,
        dir: -1,
-       token: globalStore.token
+       token: this.$localStorage.get('token')
         })
       .then(function (response) {
        })
