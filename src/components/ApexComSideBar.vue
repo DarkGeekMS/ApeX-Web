@@ -184,6 +184,9 @@ export default {
   text-transform: uppercase;
   height:38px;
 }
+.button:hover {opacity: 0.75}
+.button1:hover {opacity: 0.75}
+
 .button1{
   width:100%;
   margin:2% 0%;

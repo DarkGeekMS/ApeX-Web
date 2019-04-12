@@ -62,7 +62,10 @@ export default {
   margin:-1% 2%;
   float:right;
   cursor:pointer;
+  color:white;
 }
+
+.removeButton:hover {opacity: 0.75}
 .accountLink{
   text-decoration: none;
 }

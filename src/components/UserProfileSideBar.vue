@@ -140,6 +140,8 @@ export default {
   text-transform: uppercase;
   height:38px;
 }
+.button:hover {opacity: 0.75}
+
 #karmanumber{
   font-size: 12px;
   font-weight: 400;
