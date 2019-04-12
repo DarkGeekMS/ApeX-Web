@@ -3,7 +3,7 @@
 <modal id="PopupModal" name="Demo-OnePost" transition="pop-out" :width="1300" :height="700" >
   <div id="PostContent" class="postContent">
   <post v-bind:postData="onePostData"></post>
-  <CommentParent postID='t3_5' ></CommentParent>
+  <CommentParent postID='t3_5' class="cmt"></CommentParent>
 
 </div>
 </modal>
@@ -43,5 +43,11 @@ width: 1300px;
   width: 1300px;
   min-width: 1300px;
   min-height: 700px;
+}
+
+.cmt{
+// padding-top: 3%;
+ padding-block-start: 8%;
+ padding-left: 10%;
 }
 </style>

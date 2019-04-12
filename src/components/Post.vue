@@ -435,7 +435,7 @@ h5 {
     .panel {
         margin-bottom: 19px;
         margin-left: 100px;
-           margin-top: 73px;
+        margin-top: 73px;
         background-color: #fff;
         border: 1px solid transparent;
         border-radius: 4px;
@@ -458,7 +458,7 @@ h5 {
 .postItem{
 width: 0%;
 margin-left:6%;
-padding-top:5%;
+padding-top:3%;
 margin-top: 0%;
 margin-bottom: -112px;
 

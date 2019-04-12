@@ -4,7 +4,7 @@ export  const MimicDisplayPosts =new Vue({
   methods:{
     getPostsData: function(mimic,ApexComName){
       if(mimic==true){
-        if(ApexComName==""){
+        if(ApexComName!==""){
   var posts=[
             {
               id:'555',
