@@ -42,6 +42,14 @@
 <script>
 import {AllServices} from '../MimicServices/AllServices.js'
 const MODAL_WIDTH = 656;
+
+/**
+ * @vue-data {string} [username=""] name of user logged in
+ * @vue-data {string} [pass=""] password of user logged in
+ * @vue-data {integer} [modalWidth=656] width of modal
+ * @vue-data {string} [error=""] when username or password are invalid
+ * @vue-data {string} [congra=''] congratulation when user logged in
+ */
 export default {
   name: 'DemoLoginModal',
   data(){
@@ -58,24 +66,30 @@ export default {
     this.congra = ''
   },
   methods:{
+    /**
+     * axios post request to send username and password to the server to log in user 
+    */
     post: function()
-      {
+    {
 
-         if( AllServices.logIn(this.username, this.pass) )
-        {
-          this.congra = 'You are now logged in. You will soon be redirected' ;
-          setTimeout(() =>this.$modal.hide('demo-login') , 1000)
-        }
-        else{
-            this.error =  this.$localStorage.get('error');
-        }
-
-      },
-      restart: function()
+      if( AllServices.logIn(this.username, this.pass) )
       {
-        this.congra = ''
-        this.error = ''
+        this.congra = 'You are now logged in. You will soon be redirected' ;
+        setTimeout(() =>this.$modal.hide('demo-login') , 1000)
       }
+      else{
+        this.error =  this.$localStorage.get('error');
+      }
+
+    },
+    /**
+     * function to restart parameters every time
+    */
+    restart: function()
+    {
+      this.congra = ''
+      this.error = ''
+    }
   }
 }
 </script>

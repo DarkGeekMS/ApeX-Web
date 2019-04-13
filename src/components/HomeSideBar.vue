@@ -2,24 +2,25 @@
   <div id="main">
      <img width="70px" src="../../public//AMFz23O.jpg" >
 
-     <h4 v-show="!login"> r/popular </h4>
+     <h4 v-show="!login"> a/popular </h4>
      <h4 v-show="login"> Home </h4>
 
       </br>  </br>
 
-     <p v-show= "!login" > The best posts on Reddit for you, pulled from the most active communities on Reddit. Check here to see the most shared, upvoted, and commented content on the internet.
+     <p v-show= "!login" > The best posts on Apex for you, pulled from the most active communities on Apex. Check here to see the most shared, upvoted, and commented content on the internet.
      </p>
-     <p v-show="login"> Your personal Reddit frontpage. Come here to check in with your favorite communities. </p>
+     <p v-show="login"> Your personal Apex frontpage. Come here to check in with your favorite communities. </p>
 
 
      <button  type="button" class="btn btn-primary " data-toggle="button" aria-pressed="false" autocomplete="off" @click="post()">CREATE POST</button>
-     <button v-show="login" style=" cursor: no-drop" type="button" class="btn btn-info" data-toggle="button" aria-pressed="false" autocomplete="off" @click="">CREATE COMMUNITY</button>
+     <button v-show="login" style=" cursor: no-drop" type="button" class="btn btn-info" data-toggle="button" aria-pressed="false" autocomplete="off">CREATE COMMUNITY</button>
   </div>
 </template>
 
 <script>
- // import DemoLoginModal  from './DemoLoginModal.vue'
-
+  /**
+  * @vue-data {boolean} [login=false] if user is logged in 
+  */
   export default {
 
     data () {
@@ -33,6 +34,9 @@
       }, 1000)
     },
     methods:{
+      /**
+       * if user is logged in , can go to create post or create community   
+      */
       post: function(){
         if( this.$localStorage.get('login') )
         {

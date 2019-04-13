@@ -55,6 +55,17 @@
 const MODAL_WIDTH = 656;
 import DemoSign3Modal  from './DemoSign3Modal.vue'
 import {AllServices} from '../MimicServices/AllServices.js'
+
+/**
+ * @vue-data {string} [username=""] name of user sign up
+ * @vue-data {string} [pass=""] password of user sign up
+ * @vue-data {integer} [modalWidth=656] width of modal
+ * @vue-data {boolean} [invalidUser=false] invaliduser 
+ * @vue-data {boolean} [invalidPass=false] invalidPass
+ * @vue-data {boolean} [invalidUserAndPass=false] invalidUserAndPass
+ * @vue-data {string} [error=""] when username is already use
+ * @vue-data {string} [congra=''] congratulation when user sign up
+ */
 export default {
   name: 'DemoSign2Modal',
   components:{
@@ -76,6 +87,9 @@ export default {
     this.modalWidth = window.innerWidth < MODAL_WIDTH ? MODAL_WIDTH / 2 : MODAL_WIDTH
   },
   computed:{
+    /**
+     * check out username and password is empty or not  
+    */
     check:function(){
        if((this.username != '') && (this.pass != ''))
        {
@@ -87,6 +101,9 @@ export default {
     }
   },
   methods:{
+    /**
+     * axios post request to send username and password to the server to sign up user 
+    */
     post: function(){
         if (this.username.length <= 17 && this.pass.length >= 6 && this.username.indexOf(' ') < 0)
         {

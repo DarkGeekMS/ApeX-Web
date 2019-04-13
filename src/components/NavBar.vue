@@ -9,22 +9,20 @@
       src="../../public/Logo_small.png" >
     </router-link>
 
-
-
     <div class="container-fluid">
        <div class="form-group drop" style="display:inline-block; margin:0.5% 0.5%">
-          <select class="form-control" name="category">
+          <select class="form-control dropdown-primary" name="category">
               <option disabled> </option>
-              <optgroup style="font-size: 12px" label="REDDIT FEEDS">
-                <option>Popular</option>
-                <option> All</option>
-                <option>Original Content</option>
+              <optgroup style="font-size: 13px" label="REDDIT FEEDS">
+                <option> Popular</option>
+                <option>  All</option>
+                <option> Original Content</option>
               </optgroup>
               
               <option disabled>──────────</option>  
               
-              <optgroup style="font-size: 12px" label="MY COMMUNITIES" v-show="login" v-for="(apex, key) in apexs" >
-             <!--   <option> {{apex.name}} </option> -->
+              <optgroup style="font-size: 12px" label="MY COMMUNITIES" v-show="this.$localStorage.get('login')" >
+                <option v-for="(apex, key) in apexs" > {{apex.name}} </option> 
               </optgroup>
           </select>
       </div>
@@ -35,6 +33,21 @@
         <input type="text" class="form-control" placeholder="Search Reddit" v-model="searchVal" v-on:keyup.enter="search()">
       </div>
 
+      <div class="btn-toolbar" role="toolbar"> 
+		  <div class="btn-group">
+        <button type="button" class="btn btn-default" alt="popular"> 
+          <i class="glyphicon glyphicon-arrow-up"></i></span> 
+        </button> 
+		    <button type="button" class="btn btn-default"> 
+		      <i class="glyphicon glyphicon-stats"></i> 
+		    </button>
+		    <button type="button" class="btn btn-default last"> 
+		      <span style="background-color:black; color:white; padding-left:3px"> oc 
+		      </span> 
+		    </button>
+		  </div> 
+      </div> 
+
 
       <div v-show="!this.$localStorage.get('login')" class="form-group log" style="display:inline-block">
           <button id="LoginBTN" type="button" class="btn btn-info log1" @click="$modal.show('demo-login')"> LOG IN </button>
@@ -43,11 +56,10 @@
 
       <div v-show="this.$localStorage.get('login')" class="btn-group log" id="loggedDiv">
         <button type="button" data-toggle="dropdown" class="btn btn-default dropdown-toggle" id="loggedbutton">
-          <img  width="20"
+        <img  width="20"
           src="../../public//Logo_X.png" > {{ userLog }}  <span class="caret"></span></button>
         <ul class="dropdown-menu">
             <li class="dropdown-header">MY STUFF</li>
-            <!-- <router-link :to="{name:'ApexCom' , params: {ApexComName:postData.apex_id}}">{{postData.apex_id}}</router-link> -->
             <li><router-link :to="{ name: 'UserProfile', params: {userName:userLog} } ">My Profile</router-link></li>
             <li><a href="#">User Settings</a></li>
             <li class="divider"></li>
@@ -64,6 +76,14 @@
   import DemoLoginModal  from './DemoLoginModal.vue'
   import DemoSignModal  from './DemoSignModal.vue'
   import {AllServices} from '../MimicServices/AllServices.js'
+
+/**
+ * @vue-data {string} [userLog=""] name of user logged in
+ * @vue-data {string} [searchVal=""] search value  
+ * @vue-data {boolean} [canBeShown=false] check shownModal
+ * @vue-data {object} [apexs] names op apexComs
+*/
+
   export default {
     components:{
       DemoLoginModal,
@@ -74,33 +94,34 @@
         canBeShown: false,
         userLog: '',
         searchVal: '',
-        login:false,
         apexs:[]
       }
     },
     created () {
+      this.apexs = AllServices.getApexNames(),	
       setInterval(() => {
         this.userLog = this.$localStorage.get('userName');
         this.canBeShown = !this.canBeShown
       }, 500)
     },
-    updated()
-    {
-      if(this.$localStorage.get('login'))
-      {
-        this.login = this.$localStorage.get('login')
-     //   this.apexs = AllServices.getApexNames()
-      }
-    }, 
     methods: {
+      /**
+       * shown modal if canBeShown being true
+      */
       conditionalShow () {
         this.$modal.show('conditional-modal', {
           show: this.canBeShown
         })
       },
+      /**
+       * axios post request to log out the user through send user's token, delete it from data ,delete username and set login false 
+      */
       Logout: function(){
         AllServices.logOut()
       },
+      /**
+     * when search value isn't empty transfer to localStorage and go to route search
+     */
       search: function(){
         if( this.searchVal != '')
         {
@@ -113,17 +134,16 @@
 </script>
 
 <style scoped>
+
 #mainNav{
   background-color: white;
   max-height:3%;
   border:1px solid #eee
 }
-option{
-  color:black;
-}
+
 .drop
 {
-  width:10%
+  width:15%
 }
 input{
   width:100%;
@@ -131,7 +151,7 @@ input{
   display:inline-block;
 }
 .has-search{
-  width:35%;
+  width:40%;
   height:100%;
 }
 .has-search .form-control-feedback {
@@ -149,12 +169,19 @@ input{
   float:right;
   margin:0.5% 0.5%;
 }
-@media(max-width:768px){
-  .log,.log1{
-    display:none
-  }
+@media(max-width:887px){
   .has-search,.drop{
       width:30%;
+  }
+}
+@media(max-width:1186.4px){
+  .btn-toolbar, .btn-group{
+    display:none
+  }
+}
+@media(max-width:1414px){
+  .log,.log1{
+  	display: none
   }
 }
 button{
@@ -174,6 +201,19 @@ button{
 ul{
   width:200px;
   margin:2px 4px;
+}
+.btn-toolbar{
+	width:20%;
+	display: inline-block;
+    padding-left: 6%;
+}
+.btn-group button{
+	width:30%;
+    margin-bottom:-9%;
+    border :1px solid white;
+}
+button.last{
+	border-right: 1px solid #ccc;
 }
 
 </style>

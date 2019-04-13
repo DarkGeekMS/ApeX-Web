@@ -11,47 +11,60 @@
        <li><router-link to="/search/users" exact> Communities and users </router-link></li>
       </ul>
     </div>
-    <router-view></router-view>
+ <!--   <div v-if="this.$router.currentRoute == '/search'" id="DisplayPosts">  
+      <div id="PostContainer" v-for="onePost in posts">
+         <post :postData="onePost" v-on:showUp="showPost" ></post>
+      </div>
+    </div> --> 
+
+       <router-view></router-view>
+    
   </div>
 
 </template>
 
 <script>
-import axios from 'axios'
-
+import post from "./Post.vue"
+import {AllServices} from '../MimicServices/AllServices.js'
+/**
+ * @vue-data {string} [error=""] if there is no matching
+ * @vue-data {string} [searchVal=""] search value  
+ * @vue-data {object} [posts] posts that reflect with search value
+*/
 export default {
  /* props:{
     myProperty:{
       type: String
     }
   }, */
+  components:{
+    'post':post,
+  },
   data(){
     return{
       searchValue: '',
       posts: [],
-      apexComs: [],
-      users:[],
       error: ''
     }
   },
   created(){
-       setInterval(() => {
-          this.searchValue = this.$localStorage.get('search');
-       }, 2000)
-      
+    setInterval(() => {
+        this.searchValue = this.$localStorage.get('search');
+    }, 1000)
+    
   },
-  updated(){
-     axios.post('http://127.0.0.1:8000/api/search',{
-        query: this.searchValue,
-        token: this.$localStorage.get('token')
-      }).then(response => {
-        this.posts = response.data.posts,
-        this.apexComs = response.data.apexComs,
-        this.users = response.data.users
-      }).catch(error => {
-        this.error = error
-      }) 
-  },
+  mounted()
+  {
+    var result = AllServices.searchPosts();
+    if( typeof result === 'string')
+    {
+        this.exist = false,
+        this.error = result
+    }
+    else{
+      this.posts= result
+    }
+  }
 }
 </script>
 
@@ -101,4 +114,14 @@ export default {
     color: black;
     border-bottom: 4px solid #337ab7
 }
+
+#PostContainer{
+  margin-top: -7%;
+
+}
+#DisplayPosts{
+  width:60%;
+  display:inline-block;
+}
+
 </style>

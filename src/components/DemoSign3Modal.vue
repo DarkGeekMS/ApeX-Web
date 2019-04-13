@@ -13,20 +13,26 @@
 <script>
 const MODAL_WIDTH = 656;
 import DemoSignModal  from './DemoSignModal.vue'
+/**
+ * @vue-data {integer} [modalWidth=656] width of modal
+ */
 export default {
   name: 'DemoSign3Modal',
   components:{
       DemoSignModal
   },
   data(){
-        return{
-          modalWidth: MODAL_WIDTH
-        }
+    return{
+      modalWidth: MODAL_WIDTH
+    }
   },
   created () {
     this.modalWidth = window.innerWidth < MODAL_WIDTH ? MODAL_WIDTH / 2 : MODAL_WIDTH
   },
   methods:{
+    /**
+      * close all Modals
+    */
     action: function(){
       this.$modal.hide('demo-sign3'),
       this.$modal.hide('demo-sign2'),
