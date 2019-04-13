@@ -30,7 +30,7 @@
 
       <router-link class="fontUser" id="subred" :to="{name:'ApexCom' , params: {ApexComName:postData.apex_id}}">{{postData.apex_id}}</router-link>
       <font class="postby" id="fontPostby">. Posted by</font>
-      <router-link class="postby" id="user" :to="{name:'UserProfile' , params: {userName:postData.postedby}}"> {{postData.postedby}}</router-link>
+      <router-link class="postby" id="user" :to="{name:'UserProfile' , params: {userName:postData.posted_by}}"> {{postData.posted_by}}</router-link>
 
       <font class="postby" id="fontpost"> </font>
       <a href="#" class="postby" id="timeAgo"> 15 hours ago </a>
@@ -295,39 +295,16 @@ export default {
       if(this.ShowModalVar == true){
       this.ToggleShowModalVar();
     }
-        if(this.Saved=="Save")
+      if(this.Saved=="Save")
         {
-        //alert('Post saved successfully');
         this.Saved="unsave";
         AllServices.save(this.$localStorage.get('token'),this.PostId);
-        // axios.post( "http://localhost/save",
-        // {
-
-        //     ID:this.PostId ,
-        //     token:this.$localStorage.get('token')
-
-
-        // }).then(response=>{
-        //   if(response){
-        //     alert('Post saved successfully');
-        //   }
-        // } ).catch(function (error)
-        // {
-        //     // console.log(error);
-
-        // });
       }
-        else{
+      else{
+        AllServices.save(this.$localStorage.get('token'),this.PostId);
+        this.Saved="Save";
 
-          AllServices.save(this.$localStorage.get('token'),this.PostId);
-             //alert('Post unsaved successfully');
-            this.Saved="Save";
-
-           }
-
-
-
-
+         }
     },
       ShowModal(){
         if(this.ShowModalVar == true){

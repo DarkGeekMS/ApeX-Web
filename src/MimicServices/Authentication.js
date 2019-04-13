@@ -11,7 +11,7 @@ export  const MimicAuth =new Vue({
     }
   },
   methods:{
-    SignUp: function(user,pass,mimic){
+    SignUp: function(email,user,pass,mimic){
       if(mimic == true){
 
         if( user == this.username && pass == this.password && this.email == this.$localStorage.get('emailVal'))
@@ -29,7 +29,8 @@ export  const MimicAuth =new Vue({
       }
       else
       {
-        axios.post('http://34.66.175.211/api/sign_up', {
+        var self = this;
+        return axios.post('http://127.0.0.1:8000/api/sign_up', {
             email: email,
             username: user,
             password: pass
@@ -39,7 +40,7 @@ export  const MimicAuth =new Vue({
             this.$localStorage.set('login', true);
             return true;
           }).catch(function (error) {
-            this.$localStorage.set('error',error);
+            self.$localStorage.set('error','That username is already taken');
             return false;
           });
       }
@@ -55,15 +56,14 @@ export  const MimicAuth =new Vue({
             this.$router.replace('/HomePage');
         }
         else{
-          axios.post('http://34.66.175.211/api/sign_out',{
+          return axios.post('http://127.0.0.1:8000/api/sign_out',{
             token : this.$localStorage.get('token')
           }).then(response => {
             this.$localStorage.set('login', false);
             this.$localStorage.set('token', '');
             this.$localStorage.set('userName', '');
             this.$router.replace('/');
-          }) 
-
+          })
         }
     },
 
@@ -85,20 +85,20 @@ export  const MimicAuth =new Vue({
         }
       }
       else{
-        axios.post('http://34.66.175.211/api/sign_in', {
+        var self = this;
+        return axios.post('http://127.0.0.1:8000/api/sign_in', {
             username : user,
             password : pass
           }).then(response => {
              this.$localStorage.set('userName',user);
              this.$localStorage.set('token', response.data.token);
              this.$localStorage.set('login', true);
-             return true
+             return true;
           }).catch(function (error) {
-            this.$localStorage.set('error',error);
-             return false
+            self.$localStorage.set('error','Incorrect username or password');
+             return false;
           });
       }
     }
-
   }
 })

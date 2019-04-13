@@ -17,7 +17,7 @@
           <form>
 
             <div class="add" >
-              <input id="SignUpUserName" type="text" class="form-control" name="username" 
+              <input id="SignUpUserName" type="text" class="form-control" name="username"
                placeholder="CHOOSE A USERNAME" v-model="username" v-on:keyup="restart()" required autofocus>
 
                <span class="lead" style = "fontSize:10px" v-show="invalidUser" >Enter a username of max length 17 without spaces </span>
@@ -56,6 +56,9 @@ const MODAL_WIDTH = 656;
 import DemoSign3Modal  from './DemoSign3Modal.vue'
 import {AllServices} from '../MimicServices/AllServices.js'
 export default {
+props:{
+email:''
+},
   name: 'DemoSign2Modal',
   components:{
       DemoSign3Modal
@@ -90,9 +93,11 @@ export default {
     post: function(){
         if (this.username.length <= 17 && this.pass.length >= 6 && this.username.indexOf(' ') < 0)
         {
-          if( AllServices.signUp(this.username, this.pass) )
+          AllServices.signUp(this.email, this.username, this.pass).then((data) =>
           {
-            
+          if( data )
+          {
+
             this.congra = 'Your account has been created. Welcome with us' ;
             setTimeout(() =>{this.$modal.show('demo-sign3');
                this.$modal.hide('demo-sign1')} , 1000)
@@ -100,6 +105,7 @@ export default {
           else{
             this.error =  this.$localStorage.get('error');
           }
+          })
         }
         else if (this.username.length > 17 && this.pass.length < 6){
         this.invalidUserAndPass=true;
@@ -114,11 +120,11 @@ export default {
         this.invalidPass=false;
 
         }
-        else 
+        else
         {
         this.invalidUserAndPass=false;
         this.invalidUser=false;
-        this.invalidPass=true;      
+        this.invalidPass=true;
         }
       },
       restart: function()
