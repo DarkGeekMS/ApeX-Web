@@ -1,10 +1,10 @@
 <template id="profiledesign">
 <div id='userprofile'>
     <div id='firstnavbar'>
-        <a class="navbarlinks" href="#">posts</a>
-        <a v-show="notGuest()" class="navbarlinks" href="#">saved</a>
-        <a v-show="notGuest()" class="navbarlinks" href="#">hidden</a>
-        <a v-show="isModerator() && notGuest()" class="navbarlinks" href="#">report</a>
+        <a id="posttab" class="navbarlinks" href="#">posts</a>
+        <a id="savedtab" v-show="notGuest()" class="navbarlinks" href="#">saved</a>
+        <a id="hiddentab" v-show="notGuest()" class="navbarlinks" href="#">hidden</a>
+        <a id="reporttab" v-show="isModerator() && notGuest()" class="navbarlinks" href="#">report</a>
 
     </div> 
         <SideBar 
@@ -40,16 +40,16 @@ export default {
   },
   data () {
     return {
-      token:this.$localStorage.get('token'),
-      loggeduser:this.$localStorage.get('userName'),
-      loggedIn:this.$localStorage.get('login'),
+      //token:this.$localStorage.get('token'),
+      //loggeduser:this.$localStorage.get('userName'),
+      //loggedIn:this.$localStorage.get('login'),
       karmaCount:1,
       image:'',
       personalPosts:[],
       savedPosts:[],
       hiddenPosts:[],
       reports:[],
-      cakeDay:'March 15, 2019',
+      cakeDay:'',
     }
   },
   methods:
@@ -59,6 +59,7 @@ export default {
     */
     isModerator:function()
       {
+        if(this.loggedIn){
         var data= AllServices.userType();
         if(data ==2){
           return true;
@@ -66,30 +67,21 @@ export default {
         else{
           return false;
           }
-      //    axios.get('http://localhost/me', {
-      //    Token:this.token
-      //   })
-      //     .then(function (response) {
-      //       if(response.ID ==2){
-      //     return true;
-      //     }
-      //   else{
-      //     return false;
-      //     }
-      //     })
-      // .catch(function (error) {
-      // console.log(error);
-      // });
+        }
       },
     /**
     * check if the user requesting his profile or other user profile 
     */
     notGuest:function(){
+      if(this.loggedIn){
       if(this.userName != this.loggeduser){
         return false;
       }
       else{
         return true;
+      }
+      }else{
+        return false;
       }
     },
     /**
