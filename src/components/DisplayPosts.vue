@@ -1,7 +1,7 @@
 <template>
   <div id="DisplayPosts">
     <div id="PostContainer" v-for="onePost in posts">
-     <post v-bind:postData="onePost" v-on:showUp="showPost"></post>
+     <post v-bind:postData="onePost" v-on:showUp="showPost" ></post>
     </div>
     <DemoOnePost  id="PostModal" :onePostData="postInfo" ></DemoOnePost>
     <!-- v-bind:style="{width: 80 +'%'}" -->
@@ -11,7 +11,6 @@
 <script>
 import post from "./Post.vue"
 import DemoOnePost from './DisplayOnePost.vue'
-import {globalStore} from '../main.js'
 import {AllServices} from '../MimicServices/AllServices.js'
 export default {
   props:{
@@ -58,4 +57,5 @@ components:{
    width: 60%;
   display: inline-block;
 }
+
 </style>

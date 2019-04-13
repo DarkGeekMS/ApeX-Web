@@ -97,7 +97,20 @@ import axios from 'axios'
 import {MimicDisplayPosts} from '../MimicServices/DisplayPosts.js'
 import { AllServices } from '../MimicServices/AllServices';
 
-
+/**
+ * @vue-data {string} [Save="Save"] Save value
+ * @vue-data {boolean} [Not_Hide=true]    check if post not hide
+ * @vue-data {boolean} [is_Hide=false]    check if post is hide
+ * @vue-data {boolean} [pressed_up=false]  check pressed uparrow
+ * @vue-data {boolean} [pressed_down=false]  check pressed downarrow
+ * @vue-data {integer} [votes=0] votes
+ * @vue-data {boolean} [Deleted=false] check deleted Post
+ * @vue-data {JWT} [token=''] userID
+ * @vue-data  {string} [PostId=''] postID
+ * @vue-data  {boolean} [moderator=false] check if the user is moderator
+ * @vue-data  {boolean} [Deleted=false] check if the post is Deleted
+ *@vue-prop {object} [postdata] the data of the post
+ */
 export default {
 
   name: 'PostItem',
@@ -129,6 +142,7 @@ export default {
          if(this.ShowModalVar == true){
          this.ToggleShowModalVar();
        }
+        this.PostId=postData.id;
        AllServices.deletePost(this.PostId,this.$localStorage.get('token'));
 //          axios.post("http://localhost/DelComment",{
 //          ID    : this.PostId,
@@ -159,6 +173,7 @@ export default {
             alert("Post hidden successfully.")
 
             }
+             this.PostId=postData.id;
         AllServices.Hide(this.PostId,this.$localStorage.get('token'));
         // axios.post("http://localhost/Hide",
         // {
@@ -193,6 +208,7 @@ export default {
                       this.pressed_up      =true;
 
                       this.votes          += 1;
+                       this.PostId=postData.id;
                       AllServices.upvote(this.$localStorage.get('token'),this.PostId,1);
                   //     axios.post("http://localhost/vote",
                   //     {
@@ -215,6 +231,7 @@ export default {
                     this.className_up = 'btn btn-light btn-sm is-gray';
                     this.votes     -= 1;
                     this.pressed_up = false;
+                     this.PostId=postData.id;
                   AllServices.defaultVote(this.PostId,this.$localStorage.get('token'),0);
                 //     axios.post("http://localhost/vote",
                 //    {
@@ -250,6 +267,7 @@ export default {
                          this.pressed_down=true;
 
                          this.votes-=1;
+                          this.PostId=postData.id;
                          AllServices.downvote(this.PostId,this.$localStorage.get('token'),-1);
                     //      axios.post("http://localhost/vote",
                     //  {
@@ -275,6 +293,7 @@ export default {
 
                    this.votes += 1;
                    this.pressed_down = false;
+                    this.PostId=postData.id;
                    AllServices.defaultVote(this.PostId,this.$localStorage.get('token'),0);
                   //  axios.post("http://localhost/vote",
                   //  {
@@ -298,11 +317,20 @@ export default {
       if(this.Saved=="Save")
         {
         this.Saved="unsave";
+         this.PostId=postData.id;
         AllServices.save(this.$localStorage.get('token'),this.PostId);
       }
-      else{
-        AllServices.save(this.$localStorage.get('token'),this.PostId);
-        this.Saved="Save";
+        else{
+          this.PostId=postData.id;
+
+          AllServices.save(this.$localStorage.get('token'),this.PostId);
+             //alert('Post unsaved successfully');
+            this.Saved="Save";
+
+           }
+
+
+
 
          }
     },
@@ -330,6 +358,9 @@ props: {
 postData:{},
        },
 created(){
+
+
+
          axios.get("http://localhost/me",{token:this.token}).then(response=>{this.userId=response.userID}).catch(function (error)
          {
           //console.log(error);
@@ -343,6 +374,7 @@ created(){
        }
 
 },
+
 }
 
 
@@ -409,9 +441,10 @@ h5 {
     box-shadow: 0 1px 1px rgba(0,0,0,.05);}
 
     .panel {
-        margin-bottom: 19px;
+
+        margin-bottom: 100%;
         margin-left: 100px;
-           margin-top: 50px;
+        margin-top: 60px;
         background-color: #fff;
         border: 1px solid transparent;
         border-radius: 4px;

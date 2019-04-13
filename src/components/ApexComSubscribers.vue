@@ -10,7 +10,6 @@
 
 <script>
 import axios from 'axios'
-import {globalStore} from '../main.js'
 import {AllServices} from '../MimicServices/AllServices.js'
 
 export default {
@@ -62,7 +61,10 @@ export default {
   margin:-1% 2%;
   float:right;
   cursor:pointer;
+  color:white;
 }
+
+.removeButton:hover {opacity: 0.75}
 .accountLink{
   text-decoration: none;
 }

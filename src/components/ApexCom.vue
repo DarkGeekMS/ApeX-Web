@@ -28,7 +28,6 @@
 
 <script>
 import axios from 'axios'
-import {globalStore} from '../main.js'
 import SideBar from './ApexComSideBar.vue'
 import {AllServices} from '../MimicServices/AllServices.js'
 

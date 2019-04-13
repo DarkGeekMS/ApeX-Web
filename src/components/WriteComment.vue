@@ -1,7 +1,9 @@
 <template>
   <div id="WriteComment" v-show="!replyClicked && !editClicked">
     <div>
+      
       <textarea  id="CommentSpace" class="write" v-model="content"  cols="30" rows="10"></textarea>
+
     </div>
 
     <div id="Buttons">
@@ -15,7 +17,8 @@
 
 <script>
 import axios from 'axios'
-import {globalStore} from '../main.js'
+import {AllServices} from '../MimicServices/AllServices.js'
+
 
 export default {
   name: 'WriteCommentItem',
@@ -32,6 +35,7 @@ export default {
       editClicked:false,
       replyClicked:false,
       currentID:''
+
     }
   },
   methods:{
@@ -50,57 +54,55 @@ export default {
     },
     comment:function(){
 
-      var self = this;
        if (this.content!=null)
       {
-
+      
       //TODO:send request and get currentID
-      axios.post('http://127.0.0.1:8000/api/comment', {
-       content: this.content,
-       parent: this.parentID,
-       token: globalStore.token
-        })
-      .then(function (response) {
-      self.currentID = response.data.id;
-      self.$emit('Comment',self.content,globalStore.token,self.parentID,self.currentID );
-      })
-      .catch(function (error) {
-       alert("Something went wrong");
-       });
+
+      var Write = AllServices.WriteComment(this.content,this.parentID);
+      if (Write.done){
+        this.currentID = Write.CID;
+        this.$emit('Comment',this.content,this.$localStorage.get('token'),this.parentID,this.currentID );
+      }
+      else
+        alert("Log In First!!");
+
+
       //to test
       //this.currentID=this.parentID+1;
+      
       }
       else
       alert("Empty Text cannot be submitted!");
-    },
+    }
+    ,
     reply:function(){
-    var self = this;
-            this.replyClicked=!this.replyClicked;
-
+    
        if (this.content!=null)
       {
-        //TODO:send request and get currentID
-      axios.post('http://127.0.0.1:8000/api/comment', {
-       content: this.content,
-       parent: this.parentID,
-       token: globalStore.token
-        })
-      .then(function (response) {
-       self.currentID = response.data.id;
-       self.$emit('Reply',self.content,globalStore.token,self.parentIdx,self.parentLevel,self.parentID,self.currentID );
-       })
-      .catch(function (error) {
-       alert("Something went wrong");
-       });
+      
+      //TODO:send request and get currentID
+
+      var Write = AllServices.WriteComment(this.content,this.parentID);
+      if (Write.done){
+        this.replyClicked=!this.replyClicked;
+        this.currentID = Write.CID;
+        this.$emit('Reply',this.content,this.$localStorage.get('token'),this.parentIdx,this.parentLevel,this.parentID,this.currentID );
+      }
+      else
+        alert("Log In First!!");
+
+
       //to test
       //this.currentID=this.parentID+1;
-      //
+      
       }
       else
       alert("Empty Text cannot be submitted!");
     }
   }
 }
+
 </script>
 
 <style scoped>

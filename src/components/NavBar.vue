@@ -14,9 +14,18 @@
     <div class="container-fluid">
        <div class="form-group drop" style="display:inline-block; margin:0.5% 0.5%">
           <select class="form-control" name="category">
-             <option> Popular</option>
-              <option> All </option>
-              <option>Original Content</option>
+              <option disabled> </option>
+              <optgroup style="font-size: 12px" label="REDDIT FEEDS">
+                <option>Popular</option>
+                <option> All</option>
+                <option>Original Content</option>
+              </optgroup>
+              
+              <option disabled>──────────</option>  
+              
+              <optgroup style="font-size: 12px" label="MY COMMUNITIES" v-show="login" v-for="(apex, key) in apexs" >
+             <!--   <option> {{apex.name}} </option> -->
+              </optgroup>
           </select>
       </div>
 
@@ -34,7 +43,7 @@
 
       <div v-show="this.$localStorage.get('login')" class="btn-group log" id="loggedDiv">
         <button type="button" data-toggle="dropdown" class="btn btn-default dropdown-toggle" id="loggedbutton">
-          <img id="logoutPic" width="20"
+          <img  width="20"
           src="../../public//Logo_X.png" > {{ userLog }}  <span class="caret"></span></button>
         <ul class="dropdown-menu">
             <li class="dropdown-header">MY STUFF</li>
@@ -42,7 +51,7 @@
             <li><router-link :to="{ name: 'UserProfile', params: {userName:userLog} } ">My Profile</router-link></li>
             <li><a href="#">User Settings</a></li>
             <li class="divider"></li>
-            <li><a class="logOut" href="#" @click="Logout()">Log Out</a></li>
+            <li><a class="logOut" href="/" @click="Logout()">Log Out</a></li>
         </ul>
       </div>
     </div>
@@ -65,7 +74,8 @@
         canBeShown: false,
         userLog: '',
         searchVal: '',
-        listOfUsers: [],
+        login:false,
+        apexs:[]
       }
     },
     created () {
@@ -74,6 +84,14 @@
         this.canBeShown = !this.canBeShown
       }, 500)
     },
+    updated()
+    {
+      if(this.$localStorage.get('login'))
+      {
+        this.login = this.$localStorage.get('login')
+     //   this.apexs = AllServices.getApexNames()
+      }
+    }, 
     methods: {
       conditionalShow () {
         this.$modal.show('conditional-modal', {
@@ -84,15 +102,10 @@
         AllServices.logOut()
       },
       search: function(){
-
         if( this.searchVal != '')
         {
-          axios.get('http://127.0.0.1:8000/api/search',{
-            query: this.searchVal
-          }).then(response => {
-            listOfUsers = response.data.query
-          }),
-          this.$router.push({ name:'search', params:{myProperty: this.searchVal}})
+          this.$localStorage.set('search' , this.searchVal),
+          this.$router.push({ name:'Search'} )
         }
       }
     },
@@ -104,6 +117,9 @@
   background-color: white;
   max-height:3%;
   border:1px solid #eee
+}
+option{
+  color:black;
 }
 .drop
 {
@@ -124,7 +140,6 @@ input{
     color: #ccc;
     margin-top:1.3%
 }
-
 .has-search .form-control {
     padding-right: 12px;
     padding-left: 34px;
@@ -146,7 +161,6 @@ button{
   width:100px;
   margin:0 5px;
 }
-
 #loggedbutton{
   width:200px;
   height:40px;
@@ -154,11 +168,9 @@ button{
   font-size:17px;
   color:#999999;
 }
-
 #loggedbutton:hover {
   background: #fff;
 }
-
 ul{
   width:200px;
   margin:2px 4px;

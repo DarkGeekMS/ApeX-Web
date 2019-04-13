@@ -40,7 +40,6 @@
 
 
 <script>
-import {globalStore} from '../main.js'
 import axios from 'axios'
 import {AllServices} from '../MimicServices/AllServices.js'
 
@@ -59,6 +58,7 @@ export default {
             subscribed:false,
             state:'subscribe',
             userName:this.$localStorage.get('userName'),
+            loggedIn:this.$localStorage.get('login'),
             //userName:'subscriber1',
         }
 
@@ -74,6 +74,7 @@ export default {
       },
       deleteAC:function()
       {
+
         var response = AllServices.deleteApexCom(this.apexComName);
       if(response){
       alert('Done :)')
@@ -105,6 +106,7 @@ export default {
 
       isAdmin:function()
       {
+        if(this.loggedIn){
         var data= AllServices.userType();
         if(data ==1){
           return true;
@@ -112,10 +114,12 @@ export default {
         else{
           return false;
         }
+        }
       },
 
     subscribe:function()
     {
+      if(this.loggedIn){
       var data = AllServices.subscribe(this.apexComName);
       if(data){
       if(this.subscribed){
@@ -130,10 +134,16 @@ export default {
     else{
       alert('something wrong happened try again later');
     }
+      }
+      else{
+        alert('login first,please');
+      }
     },
   },
  mounted(){
+   if(this.loggedIn){
    this.getSubscribers();
+   }
  }
  
 }
@@ -184,6 +194,9 @@ export default {
   text-transform: uppercase;
   height:38px;
 }
+.button:hover {opacity: 0.75}
+.button1:hover {opacity: 0.75}
+
 .button1{
   width:100%;
   margin:2% 0%;

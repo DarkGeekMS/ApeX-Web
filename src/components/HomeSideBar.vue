@@ -86,7 +86,8 @@ button{
   border-radius: 5%;
   margin-top: 6%;
   margin-right: 18%;
-}
+} 
+
 @media(max-width:1300px){
   #main{
     display:none
