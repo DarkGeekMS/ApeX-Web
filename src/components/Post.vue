@@ -137,6 +137,9 @@ export default {
          },
 
   methods: {
+     /**
+     * delete post if the moderator press delete button.
+     */
     deletePost()
        {
          if(this.ShowModalVar == true){
@@ -161,7 +164,9 @@ export default {
 
 //    });
    },
-
+  /**
+    * Hide post if the User press Hide button.
+    */
        Hide(){
          if(this.ShowModalVar == true){
          this.ToggleShowModalVar();
@@ -310,6 +315,9 @@ export default {
 
                  }
               },
+               /**
+    * Save post if the User press Hide button.
+    */
     Save(){
       if(this.ShowModalVar == true){
       this.ToggleShowModalVar();
