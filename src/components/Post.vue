@@ -142,6 +142,7 @@ export default {
          if(this.ShowModalVar == true){
          this.ToggleShowModalVar();
        }
+        this.PostId=postData.id;
        AllServices.deletePost(this.PostId,this.$localStorage.get('token'));
 //          axios.post("http://localhost/DelComment",{
 //          ID    : this.PostId,
@@ -172,6 +173,7 @@ export default {
             alert("Post hidden successfully.")
 
             }
+             this.PostId=postData.id;
         AllServices.Hide(this.PostId,this.$localStorage.get('token'));
         // axios.post("http://localhost/Hide",
         // {
@@ -206,6 +208,7 @@ export default {
                       this.pressed_up      =true;
 
                       this.votes          += 1;
+                       this.PostId=postData.id;
                       AllServices.upvote(this.$localStorage.get('token'),this.PostId,1);
                   //     axios.post("http://localhost/vote",
                   //     {
@@ -228,6 +231,7 @@ export default {
                     this.className_up = 'btn btn-light btn-sm is-gray';
                     this.votes     -= 1;
                     this.pressed_up = false;
+                     this.PostId=postData.id;
                   AllServices.defaultVote(this.PostId,this.$localStorage.get('token'),0);
                 //     axios.post("http://localhost/vote",
                 //    {
@@ -263,6 +267,7 @@ export default {
                          this.pressed_down=true;
 
                          this.votes-=1;
+                          this.PostId=postData.id;
                          AllServices.downvote(this.PostId,this.$localStorage.get('token'),-1);
                     //      axios.post("http://localhost/vote",
                     //  {
@@ -288,6 +293,7 @@ export default {
 
                    this.votes += 1;
                    this.pressed_down = false;
+                    this.PostId=postData.id;
                    AllServices.defaultVote(this.PostId,this.$localStorage.get('token'),0);
                   //  axios.post("http://localhost/vote",
                   //  {
@@ -312,6 +318,7 @@ export default {
         {
         //alert('Post saved successfully');
         this.Saved="unsave";
+         this.PostId=postData.id;
         AllServices.save(this.$localStorage.get('token'),this.PostId);
         // axios.post( "http://localhost/save",
         // {
@@ -331,7 +338,8 @@ export default {
         // });
       }
         else{
-
+          this.PostId=postData.id;
+         
           AllServices.save(this.$localStorage.get('token'),this.PostId);
              //alert('Post unsaved successfully');
             this.Saved="Save";
@@ -366,6 +374,9 @@ props: {
 postData:{},
        },
 created(){
+      
+         
+
          axios.get("http://localhost/me",{token:this.token}).then(response=>{this.userId=response.userID}).catch(function (error)
          {
           //console.log(error);
@@ -379,6 +390,7 @@ created(){
        }
 
 },
+
 }
 
 
