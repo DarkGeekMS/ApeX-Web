@@ -1,119 +1,167 @@
-<template>
-   <div>
-     <div class="a">
-     
-       <h4 class="Cpost">Create a post
-    
-     </h4>
-      
-    </div>
-   
-      <div class="form-group dropApex" >
-        <select class="form-control" name="category">
-          <option>choose a community</option>
-                      <!-- TODO HERE ARE APEXNAMES WHICH I WILL LOOP THROUGH THEM  -->
-                  
-                       <!-- just dummy option for display  -->
-                      
-                      <option>apexname 1</option>
-                      <option>apexname 2</option>
-                      <option>apexname 3</option>
-                      <option>apexname 3</option>
-                   
-          </select>
-       </div>
-      <body class="panel bodyPost">
-          <form>
 
-            <div class="form-group">
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Source: CreatePost.vue | Source: CreatePost.vue</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-jsdoc.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/tui-doc.css">
+
+    
+</head>
+<body>
+<nav class="lnb" id="lnb">
+    <div class="logo" style="">
+        
+            <img src="img/toast-ui.png" width="100%" height="100%">
+        
+    </div>
+    <div class="title">
+        <h1><a href="index.html" class="link">Source: CreatePost.vue</a></h1>
+        
+    </div>
+    <div class="search-container" id="search-container">
+        <input type="text" placeholder="Search">
+        <ul></ul>
+    </div>
+    
+    <div class="lnb-api hidden"><h3>Modules</h3><ul><li><a href="module-CreatePost.html">CreatePost</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:CreatePost_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-CreatePost.html#createFile">createFile</a></li><li><a href="module-CreatePost.html#Enable">Enable</a></li><li><a href="module-CreatePost.html#onChange">onChange</a></li><li><a href="module-CreatePost.html#onDrop">onDrop</a></li><li><a href="module-CreatePost.html#removeFile">removeFile</a></li><li><a href="module-CreatePost.html#submitPost">submitPost</a></li></ul></div></li><li><a href="module-Post.html">Post</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:Post_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-Post.html#deletePost">deletePost</a></li><li><a href="module-Post.html#Hide">Hide</a></li><li><a href="module-Post.html#Save">Save</a></li></ul></div></li><li><a href="module-test.html">test</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:test_sub"></div></li></ul></div>
+</nav>
+<div id="resizer"></div>
+
+<div class="main" id="main">
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>&lt;template>
+   &lt;div>
+     &lt;div class="a">
+     
+       &lt;h4 class="Cpost">Create a post
+    
+     &lt;/h4>
+      
+    &lt;/div>
+   
+      &lt;div class="form-group dropApex" >
+        &lt;select class="form-control" name="category">
+          &lt;option>choose a community&lt;/option>
+                      &lt;!-- TODO HERE ARE APEXNAMES WHICH I WILL LOOP THROUGH THEM  -->
+                  
+                       &lt;!-- just dummy option for display  -->
+                      
+                      &lt;option>apexname 1&lt;/option>
+                      &lt;option>apexname 2&lt;/option>
+                      &lt;option>apexname 3&lt;/option>
+                      &lt;option>apexname 3&lt;/option>
+                   
+          &lt;/select>
+       &lt;/div>
+      &lt;body class="panel bodyPost">
+          &lt;form>
+
+            &lt;div class="form-group">
    
 
   
-                  <div id="root" class="container">
-                    <tabs>
-                       <tab  name="Post" :selected="true">
+                  &lt;div id="root" class="container">
+                    &lt;tabs>
+                       &lt;tab  name="Post" :selected="true">
             
-                          <div class="form-group">
+                          &lt;div class="form-group">
                   
-                             <input type="text" class="form-control" id="usr" placeholder="title" @keyup="Enable">
-                           </div>
-                               <!-- <textarea class="form-control" rows="5" id="textsend" @keyup="Enable"></textarea> -->
+                             &lt;input type="text" class="form-control" id="usr" placeholder="title" @keyup="Enable">
+                           &lt;/div>
+                               &lt;!-- &lt;textarea class="form-control" rows="5" id="textsend" @keyup="Enable">&lt;/textarea> -->
                   
-                              <ejs-richtexteditor ref="rteObj" :toolbarSettings="toolbarSettings" id="textsend" @keyup="Enable">
-                               <br>
-                               <br>
-                               <br>
-                               <br>
-                               <br>
+                              &lt;ejs-richtexteditor ref="rteObj" :toolbarSettings="toolbarSettings" id="textsend" @keyup="Enable">
+                               &lt;br>
+                               &lt;br>
+                               &lt;br>
+                               &lt;br>
+                               &lt;br>
                                  
-                              </ejs-richtexteditor> 
+                              &lt;/ejs-richtexteditor> 
                     
   
-                          <button  class="btn btn-primary postButton" @click="submitPost"  disabled  id="button">POST</button>
-                       </tab>
+                          &lt;button  class="btn btn-primary postButton" @click="submitPost"  disabled  id="button">POST&lt;/button>
+                       &lt;/tab>
 
-                       <tab name="Image" >
-                          <div class="form-group ">
+                       &lt;tab name="Image" >
+                          &lt;div class="form-group ">
                                         
-                           <input type="text" class="form-control" id="usr2" placeholder="title" @keyup="Enable">
-                          </div>
-                          <div class="panel imgBox"> 
+                           &lt;input type="text" class="form-control" id="usr2" placeholder="title" @keyup="Enable">
+                          &lt;/div>
+                          &lt;div class="panel imgBox"> 
          
-                             <div class="helper">
+                             &lt;div class="helper">
 
-                             </div>
-                              <div class="drop1 display-inline align-center" @dragover.prevent @drop="onDrop">
+                             &lt;/div>
+                              &lt;div class="drop1 display-inline align-center" @dragover.prevent @drop="onDrop">
                                             
-                                <div class="helper">
+                                &lt;div class="helper">
 
-                                 </div>
+                                 &lt;/div>
                                             
-                                <label v-if="!image" class="btn display-inline btnImage">
+                                &lt;label v-if="!image" class="btn display-inline btnImage">
                                                 
                                        Drag and Drop or Upload
-                                 <input type="file" name="image" @change="onChange">
-                                 </label>
-                                    <div class="hidden display-inline align-center" v-else v-bind:class="{ 'image': true }">
-                                        <img :src="image" alt="" class="img" id="imgId"/>
-                                         <br>
-                                         <br>
-                                        <button class="btnImage" @click="removeFile">REMOVE</button>
-                                      </div>
+                                 &lt;input type="file" name="image" @change="onChange">
+                                 &lt;/label>
+                                    &lt;div class="hidden display-inline align-center" v-else v-bind:class="{ 'image': true }">
+                                        &lt;img :src="image" alt="" class="img" id="imgId"/>
+                                         &lt;br>
+                                         &lt;br>
+                                        &lt;button class="btnImage" @click="removeFile">REMOVE&lt;/button>
+                                      &lt;/div>
                                                                     
-                               </div> 
-                            </div>
-                                                            <button  class="btn btn-primary postButton" @click="submitPost"  disabled  id="button2" >POST</button>
+                               &lt;/div> 
+                            &lt;/div>
+                                                            &lt;button  class="btn btn-primary postButton" @click="submitPost"  disabled  id="button2" >POST&lt;/button>
                                                         
-                          </tab>
+                          &lt;/tab>
 
-                          <tab name="Link" >
-                               <div class="form-group">
+                          &lt;tab name="Link" >
+                               &lt;div class="form-group">
                                                                       
-                                  <input type="text" class="form-control" id="usr3" placeholder="title" @keyup="Enable">
-                                </div>
-                                <textarea class="form-control" rows="3" id="textsend3" placeholder="Url" @keyup="Enable"></textarea>
-                               <button  class="btn btn-primary postButton" @click="submitPost"  disabled  id="button3">POST</button>
-                           </tab>
-                     </tabs>
+                                  &lt;input type="text" class="form-control" id="usr3" placeholder="title" @keyup="Enable">
+                                &lt;/div>
+                                &lt;textarea class="form-control" rows="3" id="textsend3" placeholder="Url" @keyup="Enable">&lt;/textarea>
+                               &lt;button  class="btn btn-primary postButton" @click="submitPost"  disabled  id="button3">POST&lt;/button>
+                           &lt;/tab>
+                     &lt;/tabs>
         
        
          
        
 
-    </div>
+    &lt;/div>
 
-  <input type="checkbox" class="form-check-input check" id="exampleCheck1">
-    <label class="form-check-label checkB" for="exampleCheck1">Send me post reply notifications
-    </label></div>
+  &lt;input type="checkbox" class="form-check-input check" id="exampleCheck1">
+    &lt;label class="form-check-label checkB" for="exampleCheck1">Send me post reply notifications
+    &lt;/label>&lt;/div>
 
-       </form>
+       &lt;/form>
 
 
-    </body>
-  </div>
-</template>
+    &lt;/body>
+  &lt;/div>
+&lt;/template>
 
-<script>
+&lt;script>
 import tab from './PostTab.vue'
 import tabs from './PostTabs.vue'
 import axios from 'axios';
@@ -315,9 +363,9 @@ created(){
 
 
 }
-</script>
+&lt;/script>
 
-<style scoped>
+&lt;style scoped>
 
 
 .Cpost{
@@ -559,6 +607,36 @@ display:inline-block;
 margin-top: 5%;
 height: 30%;
 }
-</style>
+&lt;/style>
 
 
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<footer>
+    <img class="logo" src="img/toast-ui.png" style="">
+    <div class="footer-text">NHN Entertainment. Frontend Development Lab</div>
+</footer>
+<script>prettyPrint();</script>
+<script src="scripts/jquery.min.js"></script>
+<script src="scripts/tui-doc.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+    <script>
+        var id = '_sub'.replace(/"/g, '_');
+        var selectedApi = document.getElementById(id); // do not use jquery selector
+        var $selectedApi = $(selectedApi);
+
+        $selectedApi.removeClass('hidden');
+        $selectedApi.parent().find('.glyphicon').removeClass('glyphicon-plus').addClass('glyphicon-minus');
+        showLnbApi();
+    </script>
+
+</body>
+</html>
