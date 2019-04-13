@@ -9,6 +9,9 @@
 <script>
 import DisplayPosts from './DisplayPosts.vue'
 
+/**
+ * @vue-prop  {string} apexComName - community name
+ */
 
 export default {
   props:['ApexComName'],

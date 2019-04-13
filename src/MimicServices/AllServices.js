@@ -112,6 +112,10 @@ subscribe:function(apexComName){
 WriteComment: function(content,parentID){
   var data=MimicComment.WriteComment(content,parentID,this.mimic);
   return data;
+},
+getUserInfoByIdforGuest:function(userName){
+  var data=MimicUserProfile.getUserInfoByIdforGuest(this.mimic,userName);
+  return data
 }
 
   }

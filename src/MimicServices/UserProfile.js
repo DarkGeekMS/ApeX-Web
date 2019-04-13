@@ -6,8 +6,8 @@ export  const MimicUserProfile =new Vue({
     getUserInfo: function(mimic){
       if(mimic){
   var profileInfo={
-      userName:'historiaAckerman',
-      picture:'',
+      userName:'',
+      image:'',
       karma:9,
       saved:[{},{}],
       hidden:[{},{}],
@@ -35,8 +35,8 @@ else {
 
     if(mimic){
 var profileInfo={
-    userName:'historiaAckerman',
-    picture:'',
+    userName:'',
+    image:'',
     karma:9,
     personalPosts:[{},{}],
 }
@@ -95,6 +95,31 @@ else {
 });
 }
 },
+getUserInfoByIdforGuest:function(userName){
+  if(mimic){
+    var profileInfo={
+        userName:'',
+        image:'',
+        karma:9,
+        personalPosts:[{},{}],
+    }
+    return profileInfo;
+    }
+    else {
+        axios.get('http://localhost/user_data', {
+        params: {
+          userid:userName
+        }
+      })
+      .then(function (response) {
+          return response;
+      })
+      .catch(function (error) {
+        // console.log(error);
+      });
+      }
+    },
+}
 
   }
 })

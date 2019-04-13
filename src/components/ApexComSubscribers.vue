@@ -12,6 +12,12 @@
 import axios from 'axios'
 import {AllServices} from '../MimicServices/AllServices.js'
 
+/**
+ * @vue-data {JWT} [token='']  user Token
+ * @vue-data {array}   subscribers - list of community subscribers
+ * @vue-prop  {string} apexComName - community name
+ */
+
 export default {
   props:['ApexComName'],
   data () {
@@ -22,6 +28,9 @@ export default {
   },
   methods:
   {
+    /**
+      *send request to delete certain user from certain community
+      */
     blockUser:function(userName,index)
     {
       var data = AllServices.deleteSubscriber(userName,this.ApexComName);

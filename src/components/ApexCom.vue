@@ -31,6 +31,15 @@ import axios from 'axios'
 import SideBar from './ApexComSideBar.vue'
 import {AllServices} from '../MimicServices/AllServices.js'
 
+/**
+ * @vue-data {JWT} [token='']  user Token
+ * @vue-data {string} [loggeduser='']  name of logged in user
+ * @vue-data {number} subscribersCount - Number of subscribers for certain community
+ * @vue-data {string} description - community description
+ * @vue-data {array} moderators - moderators for certain community
+ * @vue-data  {array} rules - rules of certain community
+ */
+
 export default {
   props:['ApexComName'],
   components:{
@@ -48,6 +57,10 @@ export default {
     }
   },
   methods:{
+
+    /**
+    * check if the user is moderator
+    */
     CheckModerator:function(name)
     {
       console.log(name.userName);
@@ -56,6 +69,9 @@ export default {
       return true;
       }
     },
+    /**
+    * loop on moderators to check if user is moderator of this community 
+    */
     isModerator:function(){
       var moderator = this.moderators.find(this.CheckModerator);
       if(moderator !== undefined){
@@ -65,6 +81,9 @@ export default {
           return false;
         }
     },
+    /**
+    * request the data for certain community
+    */
      getAbout(){
          var about= AllServices.getAbout(this.ApexComName);
          this.description=about.description;

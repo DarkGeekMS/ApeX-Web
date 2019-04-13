@@ -1,0 +1,158 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Source: ApexComSubscribers.vue | Source: ApexComSubscribers.vue</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-jsdoc.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/tui-doc.css">
+
+    
+</head>
+<body>
+<nav class="lnb" id="lnb">
+    <div class="logo" style="">
+        
+            <img src="img/toast-ui.png" width="100%" height="100%">
+        
+    </div>
+    <div class="title">
+        <h1><a href="index.html" class="link">Source: ApexComSubscribers.vue</a></h1>
+        
+    </div>
+    <div class="search-container" id="search-container">
+        <input type="text" placeholder="Search">
+        <ul></ul>
+    </div>
+    
+    <div class="lnb-api hidden"><h3>Modules</h3><ul><li><a href="module-ApexCom.html">ApexCom</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:ApexCom_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-ApexCom.html#CheckModerator">CheckModerator</a></li><li><a href="module-ApexCom.html#getAbout">getAbout</a></li><li><a href="module-ApexCom.html#isModerator">isModerator</a></li></ul></div></li><li><a href="module-ApexComPosts.html">ApexComPosts</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:ApexComPosts_sub"></div></li><li><a href="module-ApexComSideBar.html">ApexComSideBar</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:ApexComSideBar_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-ApexComSideBar.html#changeState">changeState</a></li><li><a href="module-ApexComSideBar.html#CheckUser">CheckUser</a></li><li><a href="module-ApexComSideBar.html#deleteAC">deleteAC</a></li><li><a href="module-ApexComSideBar.html#getSubscribers">getSubscribers</a></li><li><a href="module-ApexComSideBar.html#isAdmin">isAdmin</a></li><li><a href="module-ApexComSideBar.html#subscribe">subscribe</a></li></ul></div></li><li><a href="module-ApexComSubscribers.html">ApexComSubscribers</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:ApexComSubscribers_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-ApexComSubscribers.html#blockUser">blockUser</a></li></ul></div></li><li><a href="module-Post.html">Post</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:Post_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-Post.html#deletePost">deletePost</a></li><li><a href="module-Post.html#Hide">Hide</a></li><li><a href="module-Post.html#Save">Save</a></li></ul></div></li><li><a href="module-test.html">test</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:test_sub"></div></li><li><a href="module-UserProfile.html">UserProfile</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:UserProfile_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-UserProfile.html#getUserData">getUserData</a></li><li><a href="module-UserProfile.html#getUserDataForGuest">getUserDataForGuest</a></li><li><a href="module-UserProfile.html#getUserProfile">getUserProfile</a></li><li><a href="module-UserProfile.html#isModerator">isModerator</a></li><li><a href="module-UserProfile.html#notGuest">notGuest</a></li></ul></div></li><li><a href="module-UserProfileSideBar.html">UserProfileSideBar</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:UserProfileSideBar_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-UserProfileSideBar.html#deleteUser">deleteUser</a></li><li><a href="module-UserProfileSideBar.html#isAdmin">isAdmin</a></li></ul></div></li></ul></div>
+</nav>
+<div id="resizer"></div>
+
+<div class="main" id="main">
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>&lt;template id="subscribers list design">
+&lt;div class="list" id="subscribers list">
+  &lt;div id="subscribers box" class="box" v-for="(subscriber,index) in SubscribersList" :key="subscriber.id">
+    &lt;router-link class="accountLink" :to="{name:'UserProfile' , params: {userName:subscriber.userName}}"> {{subscriber.userName}}&lt;/router-link>
+    &lt;button id="remove button" class="removeButton" v-on:click="blockUser(subscriber,index)">Remove&lt;/button>
+  &lt;/div>
+ 
+&lt;/div>
+&lt;/template>
+
+&lt;script>
+import axios from 'axios'
+import {AllServices} from '../MimicServices/AllServices.js'
+
+/**
+ * @vue-data {JWT} [token='']  user Token
+ * @vue-data {array}   subscribers - list of community subscribers
+ * @vue-prop  {string} apexComName - community name
+ */
+
+export default {
+  props:['ApexComName'],
+  data () {
+    return {
+      token:this.$localStorage.get('token'),
+      SubscribersList:[]
+    }
+  },
+  methods:
+  {
+    /**
+      *send request to delete certain user from certain community
+      */
+    blockUser:function(userName,index)
+    {
+      var data = AllServices.deleteSubscriber(userName,this.ApexComName);
+      if(data){
+      this.SubscribersList.splice(index, 1);
+      }
+      else{
+        console.log(error);
+      }
+    },
+      getsubscribers(){
+      this.SubscribersList= AllServices.getSubscribers(this.ApexComName);
+      }
+  },
+  mounted()
+  {
+  this.getsubscribers();
+  }
+}
+&lt;/script>
+
+&lt;style scoped>
+.box{
+  width:100%;
+  height:auto;
+  background-color:white;
+  margin:1% 0%;
+  padding:4% 3%;
+  border-radius: 8px;
+}
+.removeButton{
+  background-color:skyBlue;
+  width:auto;
+  height:auto;
+  border-radius: 8px;
+  padding:1% 1%;
+  margin:-1% 2%;
+  float:right;
+  cursor:pointer;
+  color:white;
+}
+
+.removeButton:hover {opacity: 0.75}
+.accountLink{
+  text-decoration: none;
+}
+&lt;/style>
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<footer>
+    <img class="logo" src="img/toast-ui.png" style="">
+    <div class="footer-text">NHN Entertainment. Frontend Development Lab</div>
+</footer>
+<script>prettyPrint();</script>
+<script src="scripts/jquery.min.js"></script>
+<script src="scripts/tui-doc.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+    <script>
+        var id = '_sub'.replace(/"/g, '_');
+        var selectedApi = document.getElementById(id); // do not use jquery selector
+        var $selectedApi = $(selectedApi);
+
+        $selectedApi.removeClass('hidden');
+        $selectedApi.parent().find('.glyphicon').removeClass('glyphicon-plus').addClass('glyphicon-minus');
+        showLnbApi();
+    </script>
+
+</body>
+</html>
