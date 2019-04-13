@@ -12,9 +12,19 @@
     <div class="container-fluid">
        <div class="form-group drop" style="display:inline-block; margin:0.5% 0.5%">
           <select class="form-control" name="category">
-              <option>Popular</option>
-              <option> All</option>
-              <option>Original Content</option>
+              <option disabled> </option>
+              <optgroup style="font-size: 12px" label="REDDIT FEEDS">
+                <option>Popular</option>
+                <option> All</option>
+                <option>Original Content</option>
+              </optgroup>
+              
+              <option disabled>──────────</option>  
+              
+              <optgroup style="font-size: 12px" label="MY COMMUNITIES" v-show="login" v-for="(apex, key) in apexs" >
+             <!--   <option> {{apex.name}} </option> -->
+              </optgroup>
+            
           </select>
       </div>
 
@@ -39,7 +49,7 @@
             <li><a href="#">My Profile</a></li>
             <li><a href="#">User Settings</a></li>
             <li class="divider"></li>
-            <li><a class="logOut" href="#" @click="Logout()">Log Out</a></li>
+            <li><a class="logOut" href="/" @click="Logout()">Log Out</a></li>
         </ul>
       </div>
     </div>
@@ -62,7 +72,8 @@
         canBeShown: false,
         userLog: '',
         searchVal: '',
-        listOfUsers: [],
+        login:false,
+        apexs:[]
       }
     },
     created () {
@@ -71,6 +82,14 @@
         this.canBeShown = !this.canBeShown
       }, 500)
     },
+    updated()
+    {
+      if(this.$localStorage.get('login'))
+      {
+        this.login = this.$localStorage.get('login')
+     //   this.apexs = AllServices.getApexNames()
+      }
+    }, 
     methods: {
       conditionalShow () {
         this.$modal.show('conditional-modal', {
@@ -81,15 +100,10 @@
         AllServices.logOut()
       },
       search: function(){
-
         if( this.searchVal != '')
         {
-          axios.get('http://127.0.0.1:8000/api/search',{
-            query: this.searchVal
-          }).then(response => {
-            listOfUsers = response.data.query
-          }),
-          this.$router.push({ name:'search', params:{myProperty: this.searchVal}})
+          this.$localStorage.set('search' , this.searchVal),
+          this.$router.push({ name:'search'} )
         }
       }
     },
@@ -101,6 +115,9 @@
   background-color: white;
   max-height:3%;
   border:1px solid #eee
+}
+option{
+  color:black;
 }
 .drop
 {

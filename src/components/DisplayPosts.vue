@@ -12,7 +12,6 @@
 import axios from 'axios'
 import post from "./Post.vue"
 import DemoOnePost from './DisplayOnePost.vue'
-import {globalStore} from '../main.js'
 import {AllServices} from '../MimicServices/AllServices.js'
 export default {
   props:{
@@ -53,4 +52,8 @@ components:{
 </script>
 
 <style scoped>
+#DisplayPosts{
+  width:60%;
+  display:inline-block;
+}
 </style>

@@ -26,6 +26,10 @@ export  const AllServices =new Vue({
       MimicPost.Post(this.mimic);
 
     },
+    getApexNames:function()
+    {
+      return MimicAuth.getApex(this.mimic)
+    },
 
     signUp: function(user,pass)
     {

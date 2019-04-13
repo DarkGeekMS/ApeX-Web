@@ -40,7 +40,6 @@
 
 
 <script>
-import {globalStore} from '../main.js'
 import axios from 'axios'
 import {AllServices} from '../MimicServices/AllServices.js'
 

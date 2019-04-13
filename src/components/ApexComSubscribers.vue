@@ -10,7 +10,6 @@
 
 <script>
 import axios from 'axios'
-import {globalStore} from '../main.js'
 import {AllServices} from '../MimicServices/AllServices.js'
 
 export default {

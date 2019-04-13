@@ -84,7 +84,7 @@ button{
   color:black;
   background-color: white;
   border-radius: 5%;
-  margin-top: -65%;  
+  margin-top: 6%;
   margin-right: 18%; 
 }
 @media(max-width:1300px){

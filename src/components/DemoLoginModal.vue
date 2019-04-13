@@ -45,13 +45,13 @@ const MODAL_WIDTH = 656;
 export default {
   name: 'DemoLoginModal',
   data(){
-        return{
-          modalWidth: MODAL_WIDTH,
-          username: '',
-          pass: '',
-          error: '',
-          congra: ''
-        }
+    return{
+      modalWidth: MODAL_WIDTH,
+      username: '',
+      pass: '',
+      error: '',
+      congra: ''
+    }
   },
   created () {
     this.modalWidth = window.innerWidth < MODAL_WIDTH ? MODAL_WIDTH / 2 : MODAL_WIDTH,
