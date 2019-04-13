@@ -30,7 +30,7 @@
 
       <router-link class="fontUser" id="subred" :to="{name:'ApexCom' , params: {ApexComName:postData.apex_id}}">{{postData.apex_id}}</router-link>
       <font class="postby" id="fontPostby">. Posted by</font>
-      <router-link class="postby" id="user" :to="{name:'UserProfile' , params: {userName:postData.posted_by}}"> {{postData.posted_by}}</router-link>
+      <router-link class="postby" id="user" :to="{name:'UserProfile' , params: {userName:postData.postedby}}"> {{postData.postedby}}</router-link>
 
       <font class="postby" id="fontpost"> </font>
       <a href="#" class="postby" id="timeAgo"> 15 hours ago </a>
@@ -109,7 +109,7 @@ import { AllServices } from '../MimicServices/AllServices';
  * @vue-data  {string} [PostId=''] postID
  * @vue-data  {boolean} [moderator=false] check if the user is moderator
  * @vue-data  {boolean} [Deleted=false] check if the post is Deleted
- *@vue-prop {object} [postdata] the data of the post
+ *@vue-prop {object} [postdata] the data of the post 
  */
 export default {
 
@@ -173,7 +173,7 @@ export default {
             alert("Post hidden successfully.")
 
             }
-             this.PostId=postData.id;
+        this.PostId=postData.id;
         AllServices.Hide(this.PostId,this.$localStorage.get('token'));
         // axios.post("http://localhost/Hide",
         // {
@@ -314,15 +314,32 @@ export default {
       if(this.ShowModalVar == true){
       this.ToggleShowModalVar();
     }
-      if(this.Saved=="Save")
+        if(this.Saved=="Save")
         {
+        //alert('Post saved successfully');
         this.Saved="unsave";
          this.PostId=postData.id;
         AllServices.save(this.$localStorage.get('token'),this.PostId);
+        // axios.post( "http://localhost/save",
+        // {
+
+        //     ID:this.PostId ,
+        //     token:this.$localStorage.get('token')
+
+
+        // }).then(response=>{
+        //   if(response){
+        //     alert('Post saved successfully');
+        //   }
+        // } ).catch(function (error)
+        // {
+        //     // console.log(error);
+
+        // });
       }
         else{
           this.PostId=postData.id;
-
+         
           AllServices.save(this.$localStorage.get('token'),this.PostId);
              //alert('Post unsaved successfully');
             this.Saved="Save";
@@ -332,7 +349,6 @@ export default {
 
 
 
-         }
     },
       ShowModal(){
         if(this.ShowModalVar == true){
@@ -358,8 +374,8 @@ props: {
 postData:{},
        },
 created(){
-
-
+      
+         
 
          axios.get("http://localhost/me",{token:this.token}).then(response=>{this.userId=response.userID}).catch(function (error)
          {
@@ -441,7 +457,7 @@ h5 {
     box-shadow: 0 1px 1px rgba(0,0,0,.05);}
 
     .panel {
-
+     
         margin-bottom: 100%;
         margin-left: 100px;
         margin-top: 60px;
