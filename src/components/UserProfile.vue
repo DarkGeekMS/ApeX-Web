@@ -10,7 +10,7 @@
         <SideBar 
         v-bind:userName="userName"
         v-bind:karmaCount="karmaCount"
-        v-bind:picture="picture"
+        v-bind:image="image"
                 class="sidebar" ></SideBar>
 </div>
 </template>
