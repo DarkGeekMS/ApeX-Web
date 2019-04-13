@@ -1,8 +1,10 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Home | Home</title>
+    <title>Source: UserProfileSideBar.vue | Source: UserProfileSideBar.vue</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -24,7 +26,7 @@
         
     </div>
     <div class="title">
-        <h1><a href="index.html" class="link">Home</a></h1>
+        <h1><a href="index.html" class="link">Source: UserProfileSideBar.vue</a></h1>
         
     </div>
     <div class="search-container" id="search-container">
@@ -42,23 +44,191 @@
 
 
     
-
-
-
-
-
-
-
-
-
-    
-
-
     <section>
-        <article class="readme"><p>Demo for <a href="https://github.com/Kocal/jsdoc-vuejs">jsdoc-vuejs</a>.</p></article>
+        <article>
+            <pre class="prettyprint source linenums"><code>&lt;template id="profilesidebardesign">
+&lt;div id='sidebar'>
+    &lt;div class="box" id="infobox">
+        &lt;div class="bluebackgroung">
+          &lt;div class="img">
+             &lt;img width="100" height="100" class="image" src="../../public/AMFz23O.jpg" />
+             &lt;!-- &lt;a :href="picture" download>
+                    &lt;img :src="picture" alt="image" width="100" height="100" class="image"/>
+             &lt;/a> -->
+
+             &lt;!-- &lt;a @click.prevent="downloadItem(picture)" :href="picture" width="100" height="100" class="image">
+             &lt;/a> -->
+
+          &lt;/div>
+        &lt;/div> 
+        &lt;div class="content">
+          &lt;a class="link" href="#account" > {{userName}} &lt;/a>
+          &lt;!-- chaaange routes -->
+          &lt;h5 id="karma">Karma&lt;/h5>
+          &lt;h5 id="karmanumber"> {{karmaCount}} &lt;/h5>
+          &lt;button id="createpostbutton" class="button" type="button">new post&lt;/button>
+          &lt;button v-show="isAdmin()" v-on:click="deleteUser()" id="deletebutton" class="button" type="button">delete user&lt;/button>
+        &lt;/div>       
+    &lt;/div> 
+&lt;/div>
+&lt;/template>
+
+&lt;script>
+import axios from 'axios'
+import {AllServices} from '../MimicServices/AllServices.js'
+
+
+/**
+ * @vue-data {JWT} [token='']  user Token
+ * @vue-prop  {string} image - Url of user profile image 
+ * @vue-prop  {number} KarmaCount - Number of karma
+ *@vue-prop {string} UserName - Name of user 
+ */
+
+export default {
+  props:{
+      userName:String,
+      karmaCount:Number,
+      image:String,
+       },
+  data () {
+    return {
+      token:this.$localStorage.get('token'),
+
+    }
+  },
+  methods:
+  {
+
+  //   downloadItem (url) {
+  //   Axios.get(url, { responseType: 'blob' })
+  //     .then(({ data }) => {
+  //       let blob = new Blob([data], { type: 'image/png' })
+  //       let link = document.createElement('a')
+  //       link.href = window.URL.createObjectURL(blob)
+  //       link.download = 'image.png'
+  //       link.click()
+  //     .catch(error => {
+  //       console.error(error)
+  //     })
+  //   })
+  // },
+
+  /**
+    * check if the user if Admin
+    */
+    isAdmin:function(){
+     var data= AllServices.userType();
+        if(data ==1){
+          return true;
+          }
+        else{
+          return false;
+        }
+    },
+    /**
+    * send request to delete user
+    */
+    deleteUser:function(){
+      var response = AllServices.deleteUser(this.userName);
+      if(response){
+      alert('Done :)')
+    }
+    else{
+      alert('sorry something went wrong :)')
+    }
+    },
+  },
+}
+&lt;/script>
+
+&lt;style scoped>
+.bluebackgroung{
+  background-color: deepskyblue;
+  padding-top: 12%;
+  padding-bottom:0%;
+  padding-left:4%;
+  padding-right:65%;
+  height: 94px;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+.image{
+  border-radius: 4px;
+}
+.img{ 
+  padding:3px;
+  background-color: #eee;
+  box-sizing: border-box;
+  border-radius: 4px;
+  margin-bottom:10%;
+}
+.content{
+  background-color: #eee;
+  height: auto;
+  padding-top: 20%;
+  padding-bottom:5%;
+  padding-left:8%;
+  padding-right:8%;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+.name{
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16px;
+  color: rgb(34, 34, 34);
+  margin-top: 4%;
+}
+.link{
+  text-decoration: none;
+  color: black;
+}
+.button{
+  width:100%;
+  margin:2% 0%;
+  background-color:skyBlue;
+  color: #eee;
+  padding: 0%;
+  border-width: 3px;
+  border-radius: 8px;
+  cursor:pointer;
+  border-color: skyblue;
+  border-style: solid;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  line-height: 32px;
+  text-transform: uppercase;
+  height:38px;
+}
+.button:hover {opacity: 0.75}
+
+#karmanumber{
+  font-size: 12px;
+  font-weight: 400;
+}
+.Header{
+  background-color: skyBlue;
+  padding:12px;
+  margin-top: 10%;
+  margin-bottom: 0%;
+  height:auto;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+#apexcomlistbox{
+  background-color: #eee;
+  height: auto;
+  padding: 4%;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+&lt;/style>
+</code></pre>
+        </article>
     </section>
-
-
 
 
 
@@ -75,7 +245,7 @@
 <script src="scripts/linenumber.js"></script>
 
     <script>
-        var id = 'package:undefined_sub'.replace(/"/g, '_');
+        var id = '_sub'.replace(/"/g, '_');
         var selectedApi = document.getElementById(id); // do not use jquery selector
         var $selectedApi = $(selectedApi);
 

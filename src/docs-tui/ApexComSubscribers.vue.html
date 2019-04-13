@@ -1,8 +1,10 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Home | Home</title>
+    <title>Source: ApexComSubscribers.vue | Source: ApexComSubscribers.vue</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -24,7 +26,7 @@
         
     </div>
     <div class="title">
-        <h1><a href="index.html" class="link">Home</a></h1>
+        <h1><a href="index.html" class="link">Source: ApexComSubscribers.vue</a></h1>
         
     </div>
     <div class="search-container" id="search-container">
@@ -42,23 +44,91 @@
 
 
     
-
-
-
-
-
-
-
-
-
-    
-
-
     <section>
-        <article class="readme"><p>Demo for <a href="https://github.com/Kocal/jsdoc-vuejs">jsdoc-vuejs</a>.</p></article>
+        <article>
+            <pre class="prettyprint source linenums"><code>&lt;template id="subscribers list design">
+&lt;div class="list" id="subscribers list">
+  &lt;div id="subscribers box" class="box" v-for="(subscriber,index) in SubscribersList" :key="subscriber.id">
+    &lt;router-link class="accountLink" :to="{name:'UserProfile' , params: {userName:subscriber.userName}}"> {{subscriber.userName}}&lt;/router-link>
+    &lt;button id="remove button" class="removeButton" v-on:click="blockUser(subscriber,index)">BLOCK&lt;/button>
+  &lt;/div>
+ 
+&lt;/div>
+&lt;/template>
+
+&lt;script>
+import axios from 'axios'
+import {AllServices} from '../MimicServices/AllServices.js'
+
+/**
+ * @vue-data {JWT} [token='']  user Token
+ * @vue-data {array}   subscribers - list of community subscribers
+ * @vue-prop  {string} apexComName - community name
+ */
+
+export default {
+  props:['ApexComName'],
+  data () {
+    return {
+      token:this.$localStorage.get('token'),
+      SubscribersList:[]
+    }
+  },
+  methods:
+  {
+    /**
+      *send request to block certain user from certain community
+      */
+    blockUser:function(userName,index)
+    {
+      var data = AllServices.blockSubscriber(userName,this.ApexComName);
+      if(data){
+      this.SubscribersList.splice(index, 1);
+      }
+      else{
+        console.log(error);
+      }
+    },
+      getsubscribers(){
+      this.SubscribersList= AllServices.getSubscribers(this.ApexComName);
+      }
+  },
+  mounted()
+  {
+  this.getsubscribers();
+  }
+}
+&lt;/script>
+
+&lt;style scoped>
+.box{
+  width:100%;
+  height:auto;
+  background-color:white;
+  margin:1% 0%;
+  padding:4% 3%;
+  border-radius: 8px;
+}
+.removeButton{
+  background-color:skyBlue;
+  width:auto;
+  height:auto;
+  border-radius: 8px;
+  padding:1% 1%;
+  margin:-1% 2%;
+  float:right;
+  cursor:pointer;
+  color:white;
+}
+
+.removeButton:hover {opacity: 0.75}
+.accountLink{
+  text-decoration: none;
+}
+&lt;/style>
+</code></pre>
+        </article>
     </section>
-
-
 
 
 
@@ -75,7 +145,7 @@
 <script src="scripts/linenumber.js"></script>
 
     <script>
-        var id = 'package:undefined_sub'.replace(/"/g, '_');
+        var id = '_sub'.replace(/"/g, '_');
         var selectedApi = document.getElementById(id); // do not use jquery selector
         var $selectedApi = $(selectedApi);
 

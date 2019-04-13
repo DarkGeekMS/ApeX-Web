@@ -1,0 +1,351 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Source: ApexComSideBar.vue | Source: ApexComSideBar.vue</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-jsdoc.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/tui-doc.css">
+
+    
+</head>
+<body>
+<nav class="lnb" id="lnb">
+    <div class="logo" style="">
+        
+            <img src="img/toast-ui.png" width="100%" height="100%">
+        
+    </div>
+    <div class="title">
+        <h1><a href="index.html" class="link">Source: ApexComSideBar.vue</a></h1>
+        
+    </div>
+    <div class="search-container" id="search-container">
+        <input type="text" placeholder="Search">
+        <ul></ul>
+    </div>
+    
+    <div class="lnb-api hidden"><h3>Modules</h3><ul><li><a href="module-ApexCom.html">ApexCom</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:ApexCom_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-ApexCom.html#CheckModerator">CheckModerator</a></li><li><a href="module-ApexCom.html#getAbout">getAbout</a></li><li><a href="module-ApexCom.html#isModerator">isModerator</a></li></ul></div></li><li><a href="module-ApexComPosts.html">ApexComPosts</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:ApexComPosts_sub"></div></li><li><a href="module-ApexComSideBar.html">ApexComSideBar</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:ApexComSideBar_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-ApexComSideBar.html#changeState">changeState</a></li><li><a href="module-ApexComSideBar.html#CheckUser">CheckUser</a></li><li><a href="module-ApexComSideBar.html#deleteAC">deleteAC</a></li><li><a href="module-ApexComSideBar.html#getSubscribers">getSubscribers</a></li><li><a href="module-ApexComSideBar.html#isAdmin">isAdmin</a></li><li><a href="module-ApexComSideBar.html#subscribe">subscribe</a></li></ul></div></li><li><a href="module-ApexComSubscribers.html">ApexComSubscribers</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:ApexComSubscribers_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-ApexComSubscribers.html#blockUser">blockUser</a></li></ul></div></li><li><a href="module-CreatePost.html">CreatePost</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:CreatePost_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-CreatePost.html#createFile">createFile</a></li><li><a href="module-CreatePost.html#Enable">Enable</a></li><li><a href="module-CreatePost.html#onChange">onChange</a></li><li><a href="module-CreatePost.html#onDrop">onDrop</a></li><li><a href="module-CreatePost.html#removeFile">removeFile</a></li><li><a href="module-CreatePost.html#submitPost">submitPost</a></li></ul></div></li><li><a href="module-Post.html">Post</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:Post_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-Post.html#deletePost">deletePost</a></li><li><a href="module-Post.html#Hide">Hide</a></li><li><a href="module-Post.html#Save">Save</a></li></ul></div></li><li><a href="module-test.html">test</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:test_sub"></div></li><li><a href="module-UserProfile.html">UserProfile</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:UserProfile_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-UserProfile.html#getUserData">getUserData</a></li><li><a href="module-UserProfile.html#getUserDataForGuest">getUserDataForGuest</a></li><li><a href="module-UserProfile.html#getUserProfile">getUserProfile</a></li><li><a href="module-UserProfile.html#isModerator">isModerator</a></li><li><a href="module-UserProfile.html#notGuest">notGuest</a></li></ul></div></li><li><a href="module-UserProfileSideBar.html">UserProfileSideBar</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:UserProfileSideBar_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-UserProfileSideBar.html#deleteUser">deleteUser</a></li><li><a href="module-UserProfileSideBar.html#isAdmin">isAdmin</a></li></ul></div></li></ul></div>
+</nav>
+<div id="resizer"></div>
+
+<div class="main" id="main">
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>&lt;template>
+    &lt;div class="sidebar" >
+      &lt;div class="box" id="descroption box">
+       &lt;h3 class="Header" id="descroption box header">Community Details&lt;/h3>
+      &lt;div class="content">
+          &lt;h3 id="Apex-com-name">
+         &lt;img class="image" src="../../public/Logo_small.png" >
+         {{apexComName}}&lt;/h3>
+       &lt;p id="subscribers Count">{{subscribersCount}} subscribers&lt;/p>
+       &lt;p id="description">{{description}}&lt;/p>
+       &lt;button id="subscribebutton" v-bind:class="{button1:subscribed,button:!subscribed}" v-on:mouseover="changeState('unsubscribe')" v-on:mouseleave="changeState('subscribed')" type="button" v-on:click="subscribe()">
+       &lt;span> {{state}} &lt;/span> &lt;/button>
+       &lt;button id="create post button" class="button" type="button">create post&lt;/button>
+       &lt;button id="deteteApexCom" v-show="isAdmin()" class="button" type="button" v-on:click="deleteAC()">delete&lt;/button>
+       &lt;/div>
+       &lt;/div>
+
+       &lt;div class="box" id="rules box">
+      &lt;h3 class="Header" id="rules box header">Rules&lt;/h3>
+      &lt;div class="content">
+      &lt;ol  id="ruleslist">
+        &lt;li id="ruleslistitem" v-for="rule in rules" :key="rule.id">{{rule}}&lt;/li>
+      &lt;/ol>
+    &lt;/div>
+    &lt;/div>
+    
+    &lt;div  id="moderators box">
+      &lt;h3 class="Header" id="moderators box header">Moderators&lt;/h3>
+      &lt;div class="content" >
+      &lt;ul class="list" style="list-style-type:none;" id="moderatorslist">
+        &lt;li  id="moderators list item" v-for="moderator in moderators" :key="moderator.id">
+          &lt;!-- &lt;a id="moderators account link" class="accountLink" href="#link">{{moderator.userName}}&lt;/a> -->
+          &lt;router-link class="accountLink" :to="{name:'UserProfile' , params: {userName:moderator.userName}}"> {{moderator.userName}}&lt;/router-link>
+        &lt;/li>
+      &lt;/ul>
+    &lt;/div>
+    &lt;/div>
+      &lt;/div>
+&lt;/template>
+
+
+&lt;script>
+import axios from 'axios'
+import {AllServices} from '../MimicServices/AllServices.js'
+
+/**
+ * @vue-data {JWT} [token='']  user Token
+ * @vue-data {string} [loggeduser='']  name of logged in user
+ * @vue-data {boolean} [loggedIn='']  check if user is logged in
+ * @vue-data {array}   subscribers - list of community subscribers
+ * @vue-data {string}   [state='subscribe'] - user state subsribed or not
+ * @vue-data {boolean}   [subscribed=false] - check if user is subscriber or not
+ * @vue-prop {number} subscribersCount - Number of subscribers for certain community
+ * @vue-prop {string} description - community description
+ * @vue-prop {array} moderators - moderators for certain community
+ * @vue-prop  {array} rules - rules of certain community
+ * @vue-prop  {string} apexComName - community name
+ */
+
+export default {
+    props:{
+       apexComName:String,
+       description:String,
+       moderators:Array,
+       rules:Array,
+       subscribersCount: Number,
+       },
+    data(){
+        return{
+            token:this.$localStorage.get('token'),
+            subscribers:[],
+            subscribed:false,
+            state:'subscribe',
+            userName:this.$localStorage.get('userName'),
+            loggedIn:this.$localStorage.get('login'),
+            //userName:'subscriber1',
+        }
+
+    },
+    methods:
+    {
+      /**
+      *change the state from subscribed to unsubscribed
+      */
+      changeState:function(state)
+      {
+        if(this.subscribed)
+        {
+          this.state=state;
+        }
+      },
+      /**
+      *send request to delete certain community
+      */
+      deleteAC:function()
+      {
+
+        var response = AllServices.deleteApexCom(this.apexComName);
+      if(response){
+      alert('Done :)')
+    }
+    else{
+      alert('sorry something went wrong :)')
+    }
+      },
+      /**
+      *check if user is subscribed or not
+      */
+      CheckUser:function(name)
+    {
+      console.log(this.userName);
+      if( name.userName == this.userName){
+      return true;
+      }
+    },
+    /**
+    * get the list of subscribers to this community
+    */
+    getSubscribers(){
+        this.subscribers= AllServices.getSubscribers(this.apexComName);
+        var subscribe = this.subscribers.find(this.CheckUser);
+        console.log(subscribe);
+        if(subscribe !== undefined){
+          this.subscribed = true;
+          this.state='subscribed';
+        }
+        else{
+          this.subscribed=false;
+          this.state='subscribe';
+    }
+   },
+      /**
+      *check if user is an admin
+      */
+      isAdmin:function()
+      {
+        if(this.loggedIn){
+        var data= AllServices.userType();
+        if(data ==1){
+          return true;
+          }
+        else{
+          return false;
+        }
+        }
+      },
+      /**
+      *send request to subscribe or unsubsribe certain community
+      */
+    subscribe:function()
+    {
+      if(this.loggedIn){
+      var data = AllServices.subscribe(this.apexComName);
+      if(data){
+      if(this.subscribed){
+      this.subscribed = false;
+      this.state='subscribe';
+    }
+    else{
+      this.subscribed=true;
+      this.state='subscribed';
+    }
+    }
+    else{
+      alert('something wrong happened try again later');
+    }
+      }
+      else{
+        alert('login first,please');
+      }
+    },
+  },
+ mounted(){
+   if(this.loggedIn){
+   this.getSubscribers();
+   }
+ }
+ 
+}
+&lt;/script>
+
+&lt;style scoped>
+
+.Header{
+  background-color: skyBlue;
+  padding:12px;
+  margin: 0%;
+  height:auto;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+#description{
+  font-family: "Noto Sans", Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 21px;
+  color: #1a1a1b;
+  overflow-wrap: break-word;
+}
+
+.content{
+  margin-top:0%;
+  margin-bottom: 8%;
+  background-color:#eee;
+  border-bottom-left-radius:8px; 
+  border-bottom-right-radius:8px;
+  padding:5%;
+}
+.button{
+  width:100%;
+  margin:2% 0%;
+  background-color:skyBlue;
+  color: #eee;
+  padding: 0%;
+  border-width: 3px;
+  border-radius: 8px;
+  cursor:pointer;
+  border-color: skyblue;
+  border-style: solid;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  line-height: 32px;
+  text-transform: uppercase;
+  height:38px;
+}
+.button:hover {opacity: 0.75}
+.button1:hover {opacity: 0.75}
+
+.button1{
+  width:100%;
+  margin:2% 0%;
+  color:skyBlue;
+  background-color: #eee;
+  padding: 0%;
+  border-width: 3px;
+  border-radius: 8px;
+  cursor:pointer;
+  border-color: skyblue;
+  border-style: solid;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  line-height: 32px;
+  text-transform: uppercase;
+  height:38px;
+}
+.image{
+  width:16%;
+  height:50px;
+  margin-top:0%;
+  margin-bottom:0%;
+  margin-right:0%;
+  margin-left:0%;
+  border-radius: 25px;
+  box-sizing: border-box;
+}
+.accountLink{
+  text-decoration: none;
+  color: black;
+}
+.list{
+  padding-left: 0%;
+}
+#ruleslistitem{
+  font-size: 17px;
+font-weight: 500;
+line-height: 24px;
+}
+#ruleslist{
+  padding-left: 6%;
+}
+&lt;/style>
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<footer>
+    <img class="logo" src="img/toast-ui.png" style="">
+    <div class="footer-text">NHN Entertainment. Frontend Development Lab</div>
+</footer>
+<script>prettyPrint();</script>
+<script src="scripts/jquery.min.js"></script>
+<script src="scripts/tui-doc.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+    <script>
+        var id = '_sub'.replace(/"/g, '_');
+        var selectedApi = document.getElementById(id); // do not use jquery selector
+        var $selectedApi = $(selectedApi);
+
+        $selectedApi.removeClass('hidden');
+        $selectedApi.parent().find('.glyphicon').removeClass('glyphicon-plus').addClass('glyphicon-minus');
+        showLnbApi();
+    </script>
+
+</body>
+</html>

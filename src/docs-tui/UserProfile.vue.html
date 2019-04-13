@@ -1,8 +1,10 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Home | Home</title>
+    <title>Source: UserProfile.vue | Source: UserProfile.vue</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -24,7 +26,7 @@
         
     </div>
     <div class="title">
-        <h1><a href="index.html" class="link">Home</a></h1>
+        <h1><a href="index.html" class="link">Source: UserProfile.vue</a></h1>
         
     </div>
     <div class="search-container" id="search-container">
@@ -42,23 +44,193 @@
 
 
     
-
-
-
-
-
-
-
-
-
-    
-
-
     <section>
-        <article class="readme"><p>Demo for <a href="https://github.com/Kocal/jsdoc-vuejs">jsdoc-vuejs</a>.</p></article>
+        <article>
+            <pre class="prettyprint source linenums"><code>&lt;template id="profiledesign">
+&lt;div id='userprofile'>
+    &lt;div id='firstnavbar'>
+        &lt;a class="navbarlinks" href="#">posts&lt;/a>
+        &lt;a v-show="notGuest()" class="navbarlinks" href="#">saved&lt;/a>
+        &lt;a v-show="notGuest()" class="navbarlinks" href="#">hidden&lt;/a>
+        &lt;a v-show="isModerator() &amp;&amp; notGuest()" class="navbarlinks" href="#">report&lt;/a>
+
+    &lt;/div> 
+        &lt;SideBar 
+        v-bind:userName="userName"
+        v-bind:karmaCount="karmaCount"
+        v-bind:image="image"
+                class="sidebar" >&lt;/SideBar>
+&lt;/div>
+&lt;/template>
+
+&lt;script>
+import axios from 'axios'
+import SideBar from './UserProfileSideBar.vue'
+import {AllServices} from '../MimicServices/AllServices.js'
+
+/**
+ * @vue-data {JWT} [token='']  user Token
+ * @vue-data {string} [loggeduser='']  name of logged in user
+ * @vue-data {boolean} [loggedIn='']  check if user is logged in
+ * @vue-data {number} karmaCount - Number of karma
+ * @vue-data {string} [image]  Url of user profile image 
+ * @vue-data {array} personalPosts - user personal posts
+ * @vue-data  {array} savedPosts - user saved posts
+ * @vue-data  {array} hiddenPosts - user hidden posts
+ * @vue-data  {array} reports - reports of communities that the user is moderator of
+ */
+
+export default {
+  props:['userName'],
+    components:{
+    'SideBar':SideBar
+  },
+  data () {
+    return {
+      token:this.$localStorage.get('token'),
+      loggeduser:this.$localStorage.get('userName'),
+      loggedIn:this.$localStorage.get('login'),
+      karmaCount:1,
+      image:'../../public/AMFz23O.jpg',
+      personalPosts:[],
+      savedPosts:[],
+      hiddenPosts:[],
+      reports:[],
+    }
+  },
+  methods:
+  {
+    /**
+     *check if user is moderator 
+    */
+    isModerator:function()
+      {
+        var data= AllServices.userType();
+        if(data ==2){
+          return true;
+          }
+        else{
+          return false;
+          }
+      //    axios.get('http://localhost/me', {
+      //    Token:this.token
+      //   })
+      //     .then(function (response) {
+      //       if(response.ID ==2){
+      //     return true;
+      //     }
+      //   else{
+      //     return false;
+      //     }
+      //     })
+      // .catch(function (error) {
+      // console.log(error);
+      // });
+      },
+    /**
+    * check if the user requesting his profile or other user profile 
+    */
+    notGuest:function(){
+      if(this.userName != this.loggeduser){
+        return false;
+      }
+      else{
+        return true;
+      }
+    },
+    /**
+    * get user profile info 
+    */
+    getUserProfile:function(){
+      var data= AllServices.getUserInfo();
+      this.karmaCount = data.karma;
+      // this.image = data.image;
+      //this.userName = data.userName;
+      this.savedPosts = data.saved;
+      this.hiddenPosts = data.hidden;
+      this.personalPosts = data.personalPosts;
+      this.reports = data.reports;
+   },
+    /**
+    * get user account data for another user
+    */
+   getUserData:function(){
+      var data= AllServices.getUserInfoById(this.userName);
+      this.karmaCount = data.karma;
+      // this.image = data.image;
+     // this.userName = data.userName;
+      this.personalPosts = data.personalPosts;
+   },
+   /**
+    * get user account data for a guset
+    */
+   getUserDataForGuest:function(){
+     var data= AllServices.getUserInfoByIdforGuest(this.userName);
+      this.karmaCount = data.karma;
+      // this.image = data.image;
+     // this.userName = data.userName;
+      this.personalPosts = data.personalPosts;
+   }
+
+  },
+  mounted()
+  {
+    if(this.loggedIn){
+    if(this.userName == this.loggeduser){
+      this.getUserProfile();
+    }
+    else{
+      this.getUserData();
+    }
+    }
+    else{
+      this.getUserDataForGuest();
+    }
+  }
+}
+&lt;/script>
+
+&lt;style scoped>
+#firstnavbar{
+    background-color: #eee;
+    width:100%;
+    height: 60px;
+    text-transform: uppercase; 
+    padding-top:2%;
+    padding-bottom: 0%;
+    margin-top: 3%;
+    margin-bottom: 0%;
+    margin-left: 0%;
+}
+.navbarlinks{
+    padding-top: 0%;
+    padding-bottom: 0%;
+    padding-right: 1%;
+    padding-left: 2%;
+    text-decoration: none;
+    color: black;
+    margin-top: 0%;
+    margin-bottom: 0%;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 18px;
+    
+}
+.navbarlinks:hover{
+    color:deepskyblue;
+}
+#sidebar{
+    width:25%;
+    height: auto;
+    margin:8%;
+    margin-left: 3%;
+    margin-right: 6%;
+    float:right;
+}
+&lt;/style>
+</code></pre>
+        </article>
     </section>
-
-
 
 
 
@@ -75,7 +247,7 @@
 <script src="scripts/linenumber.js"></script>
 
     <script>
-        var id = 'package:undefined_sub'.replace(/"/g, '_');
+        var id = '_sub'.replace(/"/g, '_');
         var selectedApi = document.getElementById(id); // do not use jquery selector
         var $selectedApi = $(selectedApi);
 

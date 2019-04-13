@@ -10,7 +10,7 @@
         <SideBar 
         v-bind:userName="userName"
         v-bind:karmaCount="karmaCount"
-        v-bind:picture="picture"
+        v-bind:image="image"
                 class="sidebar" ></SideBar>
 </div>
 </template>
@@ -19,6 +19,18 @@
 import axios from 'axios'
 import SideBar from './UserProfileSideBar.vue'
 import {AllServices} from '../MimicServices/AllServices.js'
+
+/**
+ * @vue-data {JWT} [token='']  user Token
+ * @vue-data {string} [loggeduser='']  name of logged in user
+ * @vue-data {boolean} [loggedIn='']  check if user is logged in
+ * @vue-data {number} karmaCount - Number of karma
+ * @vue-data {string} [image]  Url of user profile image 
+ * @vue-data {array} personalPosts - user personal posts
+ * @vue-data  {array} savedPosts - user saved posts
+ * @vue-data  {array} hiddenPosts - user hidden posts
+ * @vue-data  {array} reports - reports of communities that the user is moderator of
+ */
 
 export default {
   props:['userName'],
@@ -29,8 +41,9 @@ export default {
     return {
       token:this.$localStorage.get('token'),
       loggeduser:this.$localStorage.get('userName'),
+      loggedIn:this.$localStorage.get('login'),
       karmaCount:1,
-      picture:'../../public/AMFz23O.jpg',
+      image:'../../public/AMFz23O.jpg',
       personalPosts:[],
       savedPosts:[],
       hiddenPosts:[],
@@ -39,6 +52,9 @@ export default {
   },
   methods:
   {
+    /**
+     *check if user is moderator 
+    */
     isModerator:function()
       {
         var data= AllServices.userType();
@@ -63,7 +79,9 @@ export default {
       // console.log(error);
       // });
       },
-
+    /**
+    * check if the user requesting his profile or other user profile 
+    */
     notGuest:function(){
       if(this.userName != this.loggeduser){
         return false;
@@ -72,33 +90,53 @@ export default {
         return true;
       }
     },
+    /**
+    * get user profile info 
+    */
     getUserProfile:function(){
       var data= AllServices.getUserInfo();
       this.karmaCount = data.karma;
-      // this.picture = data.picture;
+      // this.image = data.image;
       //this.userName = data.userName;
       this.savedPosts = data.saved;
       this.hiddenPosts = data.hidden;
       this.personalPosts = data.personalPosts;
       this.reports = data.reports;
    },
+    /**
+    * get user account data for another user
+    */
    getUserData:function(){
       var data= AllServices.getUserInfoById(this.userName);
       this.karmaCount = data.karma;
-      // this.picture = data.picture;
+      // this.image = data.image;
      // this.userName = data.userName;
       this.personalPosts = data.personalPosts;
-
    },
+   /**
+    * get user account data for a guset
+    */
+   getUserDataForGuest:function(){
+     var data= AllServices.getUserInfoByIdforGuest(this.userName);
+      this.karmaCount = data.karma;
+      // this.image = data.image;
+     // this.userName = data.userName;
+      this.personalPosts = data.personalPosts;
+   }
 
   },
   mounted()
   {
+    if(this.loggedIn){
     if(this.userName == this.loggeduser){
       this.getUserProfile();
     }
     else{
       this.getUserData();
+    }
+    }
+    else{
+      this.getUserDataForGuest();
     }
   }
 }
@@ -139,7 +177,6 @@ export default {
     margin:8%;
     margin-left: 3%;
     margin-right: 6%;
-    background-color:white;
     float:right;
 }
 </style>
