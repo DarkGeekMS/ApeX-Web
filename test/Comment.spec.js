@@ -3,7 +3,6 @@ import Comment from '../src/components/Comment.vue';
 import WriteComment from '../src/components/WriteComment.vue';
 import expect from 'expect';
 import moxios from 'moxios'
-import {globalStore} from '../src/main.js'
 
 
 describe ('Comment' , () =>{
@@ -21,7 +20,7 @@ describe ('Comment' , () =>{
     });
 
     it('default' , () =>{
- 		expect(wrapper.vm.user).toBe(globalStore.Username);
+ 		expect(wrapper.vm.user).toBe(this.$localStorage.userName);
         expect(wrapper.vm.upVoted).toBe(false);
         expect(wrapper.vm.downVoted).toBe(false);
         expect(wrapper.vm.points).toBe(0);

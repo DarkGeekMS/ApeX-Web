@@ -18,7 +18,7 @@ export  const MimicApexCom =new Vue({
   return about
 }
 else {
-  axios.post('http://34.66.175.211/about', {
+  axios.post('http://35.232.3.8/api/about', {
       ApexCom_id :ApexComName,
       Token:this.token
   })
@@ -42,11 +42,11 @@ var subscribersList=[
 return subscribersList
 }
 else {
- axios.post('http://34.66.175.211/get_subscribers', {
-    
+ axios.post('http://35.232.3.8/api/get_subscribers', {
+
       ApexCom_id :ApexComName,
       Token:this.$localStorage.get('token')
-    
+
   })
   .then(function (response) {
     return response;
@@ -63,7 +63,7 @@ BlockSubscriber: function(mimic,userName,ApexComName){
 return true;
 }
 else {
-  axios.post('http://localhost/block', {
+  axios.post('http://35.232.3.8/api/block', {
         ApexCom_id:ApexComName,
         user_id:userName,
         Token:this.$localStorage.get('token')
@@ -83,7 +83,7 @@ deleteApexCom: function(mimic,apexComName){
     return true;
     }
     else {
-      axios.delete('http://localhost/del_ac',{params: {
+      axios.delete('http://35.232.3.8/api/del_ac',{params: {
          ApexCom_id:apexComName,
          Token:this.$localStorage.get('token')
     }
@@ -101,7 +101,7 @@ subscribe: function(mimic,apexComName){
         return true;
     }
     else {
-      axios.post('http://localhost/subscribe', {
+      axios.post('http://35.232.3.8/api/subscribe', {
       ApexCom_id:apexComName,
       Token:this.$localStorage.get('token')
       })
