@@ -13,6 +13,7 @@ export  const MimicUserProfile =new Vue({
       hidden:[{},{}],
       reports:[{},{}],
       personalPosts:[{},{}],
+      cakeDay:'March 15, 2019',
   }
   return profileInfo;
 }
@@ -37,6 +38,7 @@ var profileInfo={
     image:'',
     karma:9,
     personalPosts:[{},{}],
+    cakeDay:'March 15, 2019',
 }
 return profileInfo;
 }
@@ -97,6 +99,7 @@ getUserInfoByIdforGuest:function(mimic,userName){
         image:'',
         karma:9,
         personalPosts:[{},{}],
+        cakeDay:'March 15, 2019',
     }
     return profileInfo;
     }

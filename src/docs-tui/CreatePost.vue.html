@@ -1,0 +1,642 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Source: CreatePost.vue | Source: CreatePost.vue</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-jsdoc.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/tui-doc.css">
+
+    
+</head>
+<body>
+<nav class="lnb" id="lnb">
+    <div class="logo" style="">
+        
+            <img src="img/toast-ui.png" width="100%" height="100%">
+        
+    </div>
+    <div class="title">
+        <h1><a href="index.html" class="link">Source: CreatePost.vue</a></h1>
+        
+    </div>
+    <div class="search-container" id="search-container">
+        <input type="text" placeholder="Search">
+        <ul></ul>
+    </div>
+    
+    <div class="lnb-api hidden"><h3>Modules</h3><ul><li><a href="module-ApexCom.html">ApexCom</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:ApexCom_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-ApexCom.html#CheckModerator">CheckModerator</a></li><li><a href="module-ApexCom.html#getAbout">getAbout</a></li><li><a href="module-ApexCom.html#isModerator">isModerator</a></li></ul></div></li><li><a href="module-ApexComPosts.html">ApexComPosts</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:ApexComPosts_sub"></div></li><li><a href="module-ApexComSideBar.html">ApexComSideBar</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:ApexComSideBar_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-ApexComSideBar.html#changeState">changeState</a></li><li><a href="module-ApexComSideBar.html#CheckUser">CheckUser</a></li><li><a href="module-ApexComSideBar.html#deleteAC">deleteAC</a></li><li><a href="module-ApexComSideBar.html#getSubscribers">getSubscribers</a></li><li><a href="module-ApexComSideBar.html#isAdmin">isAdmin</a></li><li><a href="module-ApexComSideBar.html#subscribe">subscribe</a></li></ul></div></li><li><a href="module-ApexComSubscribers.html">ApexComSubscribers</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:ApexComSubscribers_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-ApexComSubscribers.html#blockUser">blockUser</a></li></ul></div></li><li><a href="module-CreatePost.html">CreatePost</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:CreatePost_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-CreatePost.html#createFile">createFile</a></li><li><a href="module-CreatePost.html#Enable">Enable</a></li><li><a href="module-CreatePost.html#onChange">onChange</a></li><li><a href="module-CreatePost.html#onDrop">onDrop</a></li><li><a href="module-CreatePost.html#removeFile">removeFile</a></li><li><a href="module-CreatePost.html#submitPost">submitPost</a></li></ul></div></li><li><a href="module-Post.html">Post</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:Post_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-Post.html#deletePost">deletePost</a></li><li><a href="module-Post.html#Hide">Hide</a></li><li><a href="module-Post.html#Save">Save</a></li></ul></div></li><li><a href="module-test.html">test</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:test_sub"></div></li><li><a href="module-UserProfile.html">UserProfile</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:UserProfile_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-UserProfile.html#getUserData">getUserData</a></li><li><a href="module-UserProfile.html#getUserDataForGuest">getUserDataForGuest</a></li><li><a href="module-UserProfile.html#getUserProfile">getUserProfile</a></li><li><a href="module-UserProfile.html#isModerator">isModerator</a></li><li><a href="module-UserProfile.html#notGuest">notGuest</a></li></ul></div></li><li><a href="module-UserProfileSideBar.html">UserProfileSideBar</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:UserProfileSideBar_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-UserProfileSideBar.html#deleteUser">deleteUser</a></li><li><a href="module-UserProfileSideBar.html#isAdmin">isAdmin</a></li></ul></div></li></ul></div>
+</nav>
+<div id="resizer"></div>
+
+<div class="main" id="main">
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>&lt;template>
+   &lt;div>
+     &lt;div class="a">
+     
+       &lt;h4 class="Cpost">Create a post
+    
+     &lt;/h4>
+      
+    &lt;/div>
+   
+      &lt;div class="form-group dropApex" >
+        &lt;select class="form-control" name="category">
+          &lt;option>choose a community&lt;/option>
+                      &lt;!-- TODO HERE ARE APEXNAMES WHICH I WILL LOOP THROUGH THEM  -->
+                  
+                       &lt;!-- just dummy option for display  -->
+                      
+                      &lt;option>apexname 1&lt;/option>
+                      &lt;option>apexname 2&lt;/option>
+                      &lt;option>apexname 3&lt;/option>
+                      &lt;option>apexname 3&lt;/option>
+                   
+          &lt;/select>
+       &lt;/div>
+      &lt;body class="panel bodyPost">
+          &lt;form>
+
+            &lt;div class="form-group">
+   
+
+  
+                  &lt;div id="root" class="container">
+                    &lt;tabs>
+                       &lt;tab  name="Post" :selected="true">
+            
+                          &lt;div class="form-group">
+                  
+                             &lt;input type="text" class="form-control" id="usr" placeholder="title" @keyup="Enable">
+                           &lt;/div>
+                               &lt;!-- &lt;textarea class="form-control" rows="5" id="textsend" @keyup="Enable">&lt;/textarea> -->
+                  
+                              &lt;ejs-richtexteditor ref="rteObj" :toolbarSettings="toolbarSettings" id="textsend" @keyup="Enable">
+                               &lt;br>
+                               &lt;br>
+                               &lt;br>
+                               &lt;br>
+                               &lt;br>
+                                 
+                              &lt;/ejs-richtexteditor> 
+                    
+  
+                          &lt;button  class="btn btn-primary postButton" @click="submitPost"  disabled  id="button">POST&lt;/button>
+                       &lt;/tab>
+
+                       &lt;tab name="Image" >
+                          &lt;div class="form-group ">
+                                        
+                           &lt;input type="text" class="form-control" id="usr2" placeholder="title" @keyup="Enable">
+                          &lt;/div>
+                          &lt;div class="panel imgBox"> 
+         
+                             &lt;div class="helper">
+
+                             &lt;/div>
+                              &lt;div class="drop1 display-inline align-center" @dragover.prevent @drop="onDrop">
+                                            
+                                &lt;div class="helper">
+
+                                 &lt;/div>
+                                            
+                                &lt;label v-if="!image" class="btn display-inline btnImage">
+                                                
+                                       Drag and Drop or Upload
+                                 &lt;input type="file" name="image" @change="onChange">
+                                 &lt;/label>
+                                    &lt;div class="hidden display-inline align-center" v-else v-bind:class="{ 'image': true }">
+                                        &lt;img :src="image" alt="" class="img" id="imgId"/>
+                                         &lt;br>
+                                         &lt;br>
+                                        &lt;button class="btnImage" @click="removeFile">REMOVE&lt;/button>
+                                      &lt;/div>
+                                                                    
+                               &lt;/div> 
+                            &lt;/div>
+                                                            &lt;button  class="btn btn-primary postButton" @click="submitPost"  disabled  id="button2" >POST&lt;/button>
+                                                        
+                          &lt;/tab>
+
+                          &lt;tab name="Link" >
+                               &lt;div class="form-group">
+                                                                      
+                                  &lt;input type="text" class="form-control" id="usr3" placeholder="title" @keyup="Enable">
+                                &lt;/div>
+                                &lt;textarea class="form-control" rows="3" id="textsend3" placeholder="Url" @keyup="Enable">&lt;/textarea>
+                               &lt;button  class="btn btn-primary postButton" @click="submitPost"  disabled  id="button3">POST&lt;/button>
+                           &lt;/tab>
+                     &lt;/tabs>
+        
+       
+         
+       
+
+    &lt;/div>
+
+  &lt;input type="checkbox" class="form-check-input check" id="exampleCheck1">
+    &lt;label class="form-check-label checkB" for="exampleCheck1">Send me post reply notifications
+    &lt;/label>&lt;/div>
+
+       &lt;/form>
+
+
+    &lt;/body>
+  &lt;/div>
+&lt;/template>
+
+&lt;script>
+import tab from './PostTab.vue'
+import tabs from './PostTabs.vue'
+import axios from 'axios';
+import Vue from "vue";
+import {AllServices} from '../MimicServices/AllServices.js'
+import { RichTextEditorPlugin, Toolbar, HtmlEditor } from "@syncfusion/ej2-vue-richtexteditor";
+Vue.use(RichTextEditorPlugin);
+
+/**
+ * @vue-data {string} [apexComId=''] Id of apexcom which post will be created in 
+ * @vue-data {boolean} [enable=true]    check if post button is enable or not
+ * @vue-data {string} [bodyPost='']    the content of the post 
+ * @vue-data {string} [imgName='']  the img src which the user upload from browser
+ * @vue-data {array} [apexNames=[]]  include the apexnames which you want to choose from 
+ * @vue-data {string} [videoUrl=''] the url of the video from the youtube
+ * @vue-data {boolean} [isLocked=false] 
+ * @vue-data {JWT} [token=''] userID
+ * @vue-data  {boolean} [imagable=false] check if the user upload image or not 
+
+
+ */
+
+export default {
+    data(){
+      return {
+    
+       items: [
+       {
+         image: false,
+       }
+     
+        ],
+        enable:true,
+        token:'',
+        apexComId:'',
+        bodyPost:'',
+        imgName:'',
+        apexNames:[],
+        image: '',
+        videoUrl:'',
+        isLocked:false,
+        imagable:false,
+        toolbarSettings: {
+            type: 'Expand',
+            items: ['Bold', 'Italic', 'Underline', 'StrikeThrough',
+            'FontName', 'FontSize', 'FontColor', 'BackgroundColor',
+            'LowerCase', 'UpperCase', '|',
+            'Formats', 'Alignments', 'OrderedList', 'UnorderedList',
+            'Outdent', 'Indent', '|',
+            'CreateLink', 'Image', '|', 'ClearFormat', 'Print',
+            'SourceCode', 'FullScreen', '|', 'Undo', 'Redo'
+          ]
+         },
+
+      }
+       
+    },
+    provide:{
+        richtexteditor:[Toolbar, HtmlEditor]
+    },
+    methods:{
+
+     /**
+     * it check if the user insert the title of the post and insert the content or not and it will enable 
+     * the post button to be submitted if and only if the user insert all required content 
+     */
+
+         Enable(){
+         
+	 if(document.getElementById("textsend").value==="" || document.getElementById("usr").value==="")  { 
+            document.getElementById('button').disabled = true; 
+        } else { 
+            document.getElementById('button').disabled = false;
+             console.log(document.getElementById('text').value);
+        }
+    
+    
+
+         	 if(document.getElementById("textsend3").value==="" || document.getElementById("usr3").value==="")  { 
+            document.getElementById('button3').disabled = true; 
+        } else { 
+            document.getElementById('button3').disabled = false;
+        }
+
+
+        if(this.imagable===false|| document.getElementById("usr2").value==="")  { 
+            document.getElementById('button2').disabled = true; 
+        } else { 
+            document.getElementById('button2').disabled = false;
+        }
+    
+    
+    },
+     /**
+     * it take the src of the img which the user drop it from the browser 
+     */
+   onDrop: function(e) {
+        e.stopPropagation();
+        e.preventDefault();
+        var files = e.dataTransfer.files;
+        this.createFile(files[0]);
+      },
+       /**
+     * when the user upload the img it enable the post button and store the img src 
+     */
+      onChange(e) {
+         
+        var files = e.target.files;
+        this.createFile(files[0]);
+         this.imagable=true;
+         this.Enable();
+      
+      },
+       /**
+     * it create file to be stored in img src 
+     */
+      createFile(file) {
+        if (!file.type.match('image.*')) {
+          alert('Select an image');
+          return;
+        }
+        var img = new Image();
+        var reader = new FileReader();
+        var vm = this;
+
+        reader.onload = function(e) {
+          vm.image = e.target.result;
+         this.imgName=vm.image; // NOT SURE YET IF THIS WHAT THE API DOC WANT 
+          //console.log(this.imgName);
+        }
+        reader.readAsDataURL(file);
+       
+      },
+       /**
+     * it remove the img if the user upload an img from browser and want to remove it so it make the src empty.
+     */
+      removeFile() {
+        this.image = '';
+        this.imagable=false;
+        this.Enable();
+      },
+     /**
+     * this function send request of submit post which send all content of the post videour,imgurl, title ,token
+     * all required data .
+     */
+
+    submitPost(){
+       this.videoUrl=document.getElementById('textsend3').value;
+       this.apexComId='';//TODO 
+       this.bodyPost=document.getElementById('textsend').value;
+       this.imgName=document.getElementById('imgId').src;
+
+     AllServices.submit(this.videoUrl,this.apexComId,this.bodyPost,this.imgName,this.isLocked,this.$localStorage.get('token'));
+      //  console.log(this.bodyPost);
+      //  console.log('hello');
+      //  axios.post( "http://127.0.0.1:8000/api/submit_post"  ,{
+
+      //   ApexCom_id:this.apexComId,
+      //   _token:this.$localStorage.get('token'),
+      //   body:this.bodyPost,
+      //   img_name:this.imgName,
+      //   video_url:this.videoUrl,
+      //   isLocked:this.isLocked
+
+ 
+
+
+      //  }).then(function(response){
+
+      //    if(response){
+      //      //TODO it will  display your Post which you have created soon 
+          
+      //    }
+    }
+
+    },
+    
+
+    
+
+    components:{
+     'tab':tab,
+     'tabs':tabs
+     },
+ /**
+     * it return all apexnames to be displayed in listbox .
+     */
+created(){
+ axios.get("http://localhost/Apex_names"
+
+// TODO here we get list of apexnames and display it at combox 
+ ).then(function(response){
+    apexNames:response 
+
+ })
+ 
+
+}
+
+
+}
+&lt;/script>
+
+&lt;style scoped>
+
+
+.Cpost{
+
+    width: 30%;
+    margin-block-end: -3%;
+    margin-top: 6.5%;
+    margin-left: 5.5%;
+
+}
+
+.a{
+
+    margin-bottom: 5%;
+
+}
+
+.form-control{
+
+    width: 100%
+}
+
+.btn2 {
+
+  margin-left:45%;
+  margin-top: 20%; 
+  border-color: rgb(0, 121, 211);
+  color: rgb(0, 121, 211);
+
+}
+
+.btn3 {
+
+  margin-left:50%;
+
+}
+
+.panel{
+
+  width:50%;
+  height:150%;
+
+}
+
+#app { 
+
+  text-align: center;
+
+}
+
+.postDisable{
+
+  background-color:rgb(0, 121, 211);
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.65;
+  filter: alpha(opacity=65);
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  font-family: sans-serif;
+  font-style: normal;
+  margin-left:64%;
+
+}
+.postEnable{
+
+  background-color:rgb(0, 121, 211);
+  margin-left:64%;
+
+}
+
+.bodyPost{
+
+   width:90%;
+   margin-bottom: 100%;
+   margin-left: 5.5%;
+   margin-top:0.5%;
+
+}
+.post2{
+
+  background-color:rgb(0255, 255, 255);
+  color:rgb(0, 121, 211);
+ 
+}
+
+.row{
+
+  margin-left:65%;
+  margin-top:1%;
+  margin-right: 0%;
+
+}
+
+.disabled{
+
+  pointer-events: none;
+
+}
+.comu{
+
+margin-top: 5.5%;
+width: 20%;
+margin-left: 5.5%;
+
+}
+
+.custom-select {
+
+  position: relative;
+  font-family: Arial;
+
+}
+
+.custom-select select {
+
+  display: none; 
+
+}
+
+.checkB{
+
+  font-family:'Arial, sans-serif';
+
+}
+
+.imgBox{
+
+     height: 300px;
+     width: 70%;
+     
+
+}
+.remv{
+
+  margin-left: 75%;
+  margin-top: 0%;
+
+}
+
+.btnImage {
+
+  cursor: pointer;
+  display: inline-block;
+  font-weight: bold;
+  padding: 10px 25px;
+  position: relative;
+   border-color: rgb(0, 121, 211);
+   color: rgb(0, 121, 211);
+  
+}
+
+
+
+input[type="file"] {
+
+  position: absolute;
+  opacity: 0;
+  z-index: -1;
+
+}
+
+.align-center {
+
+  text-align: center;
+
+}
+
+.helper {
+  height: 100%;
+  display: inline-block;
+  vertical-align: middle;
+  width: 0;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.hidden.image {
+  display: inline-block !important;
+}
+
+.display-inline {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.img {
+  border: 1px solid #f6f6f6;
+  display: inline-block;
+  height: auto;
+  max-height: 80%;
+  max-width: 80%;
+  width: auto;
+}
+
+.drop1 {
+  background-color: #f2f2f2;
+  border: 4px dashed #ccc;
+  background-color: #f6f6f6;
+  border-radius: 2px;
+  height: 100%;
+  max-height: 400px;
+  max-width: 600px;
+  width: 100%;
+  margin-left: 20%;
+  align:center;
+}
+.check{
+
+margin-left: 2%
+
+}
+
+.postButton{
+
+  margin-left: 94%;
+}
+
+.dropApex{
+display:inline-block;
+ margin:0.5% 5% ;
+ width: 30%;
+}
+
+
+@import "../../node_modules/@syncfusion/ej2-base/styles/material.css";
+@import "../../node_modules/@syncfusion/ej2-vue-richtexteditor/styles/material.css";
+@import "../../node_modules/@syncfusion/ej2-vue-lists/styles/material.css";
+@import "../../node_modules/@syncfusion/ej2-vue-navigations/styles/material.css";
+@import "../../node_modules/@syncfusion/ej2-vue-popups/styles/material.css";
+@import "../../node_modules/@syncfusion/ej2-vue-splitbuttons/styles/material.css";
+@import "../../node_modules/@syncfusion/ej2-vue-buttons/styles/material.css";
+@import "../../node_modules/@syncfusion/ej2-vue-inputs/styles/material.css";
+
+
+.markdown{
+margin-top: 5%;
+height: 30%;
+}
+&lt;/style>
+
+
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<footer>
+    <img class="logo" src="img/toast-ui.png" style="">
+    <div class="footer-text">NHN Entertainment. Frontend Development Lab</div>
+</footer>
+<script>prettyPrint();</script>
+<script src="scripts/jquery.min.js"></script>
+<script src="scripts/tui-doc.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+    <script>
+        var id = '_sub'.replace(/"/g, '_');
+        var selectedApi = document.getElementById(id); // do not use jquery selector
+        var $selectedApi = $(selectedApi);
+
+        $selectedApi.removeClass('hidden');
+        $selectedApi.parent().find('.glyphicon').removeClass('glyphicon-plus').addClass('glyphicon-minus');
+        showLnbApi();
+    </script>
+
+</body>
+</html>
