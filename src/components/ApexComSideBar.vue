@@ -40,9 +40,22 @@
 
 
 <script>
-import {globalStore} from '../main.js'
 import axios from 'axios'
 import {AllServices} from '../MimicServices/AllServices.js'
+
+/**
+ * @vue-data {JWT} [token='']  user Token
+ * @vue-data {string} [loggeduser='']  name of logged in user
+ * @vue-data {boolean} [loggedIn='']  check if user is logged in
+ * @vue-data {array}   subscribers - list of community subscribers
+ * @vue-data {string}   [state='subscribe'] - user state subsribed or not
+ * @vue-data {boolean}   [subscribed=false] - check if user is subscriber or not
+ * @vue-prop {number} subscribersCount - Number of subscribers for certain community
+ * @vue-prop {string} description - community description
+ * @vue-prop {array} moderators - moderators for certain community
+ * @vue-prop  {array} rules - rules of certain community
+ * @vue-prop  {string} apexComName - community name
+ */
 
 export default {
     props:{
@@ -59,12 +72,16 @@ export default {
             subscribed:false,
             state:'subscribe',
             userName:this.$localStorage.get('userName'),
+            loggedIn:this.$localStorage.get('login'),
             //userName:'subscriber1',
         }
 
     },
     methods:
     {
+      /**
+      *change the state from subscribed to unsubscribed
+      */
       changeState:function(state)
       {
         if(this.subscribed)
@@ -72,8 +89,12 @@ export default {
           this.state=state;
         }
       },
+      /**
+      *send request to delete certain community
+      */
       deleteAC:function()
       {
+
         var response = AllServices.deleteApexCom(this.apexComName);
       if(response){
       alert('Done :)')
@@ -82,6 +103,9 @@ export default {
       alert('sorry something went wrong :)')
     }
       },
+      /**
+      *check if user is subscribed or not
+      */
       CheckUser:function(name)
     {
       console.log(this.userName);
@@ -89,6 +113,9 @@ export default {
       return true;
       }
     },
+    /**
+    * get the list of subscribers to this community
+    */
     getSubscribers(){
         this.subscribers= AllServices.getSubscribers(this.apexComName);
         var subscribe = this.subscribers.find(this.CheckUser);
@@ -102,9 +129,12 @@ export default {
           this.state='subscribe';
     }
    },
-
+      /**
+      *check if user is an admin
+      */
       isAdmin:function()
       {
+        if(this.loggedIn){
         var data= AllServices.userType();
         if(data ==1){
           return true;
@@ -112,10 +142,14 @@ export default {
         else{
           return false;
         }
+        }
       },
-
+      /**
+      *send request to subscribe or unsubsribe certain community
+      */
     subscribe:function()
     {
+      if(this.loggedIn){
       var data = AllServices.subscribe(this.apexComName);
       if(data){
       if(this.subscribed){
@@ -130,10 +164,16 @@ export default {
     else{
       alert('something wrong happened try again later');
     }
+      }
+      else{
+        alert('login first,please');
+      }
     },
   },
  mounted(){
+   if(this.loggedIn){
    this.getSubscribers();
+   }
  }
  
 }

@@ -6,39 +6,23 @@ methods:{
     save:function(token,ID,mimic){
 
         if(mimic){
-
-                if(token=="1" && ID=="1"){
-
-                    return true;
-
+             if(token=="1" && ID=="1"){
+                return true;
               }
                 return false;
-
-
              }
-             else{
-
-                axios.post( "http://34.66.175.211/save",
-                {
-        
-                    ID:ID,
-                    token:token
-
-                }).then(response=>{
-                  if(response){
-                    alert('Post saved successfully');
-                  }
-                } ).catch(function ()
-                {
-                    // console.log(error);
-
-                });
+             else {
+                axios.post( "http://127.0.0.1:8000/api/save",
+             {
+                ID:ID,
+                token:token
+            }).then(response => {
+              if(response){
+                alert('Post saved successfully');
+              }
+            })
              }
-
-
-
-
-                },
+              },
 
                 deletePost:function(name,ID,mimic){
                     if(mimic){
@@ -58,7 +42,7 @@ methods:{
                 axios.post("http://localhost/DelComment",{
                     ID    : name,
                     token : ID
-           
+
             }).then(response=>{
               if(response){
                 this.Deleted = true;
@@ -92,7 +76,7 @@ methods:{
                 {
                     name    : name,
                     ID : ID
-        
+
                 }).then(response => {
                   if(response){
                   alert("Hidden successfully");}
@@ -183,9 +167,9 @@ methods:{
 defaultVote(name,ID,direction,mimic){
   if(mimic){
       if(name=="1"  && ID=="1"){
-  
+
           if(direction==0){
- 
+
             return 200;
          }
 

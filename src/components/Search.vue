@@ -7,7 +7,7 @@
     </div>
     <div class="body">
       <ul>
-       <li><router-link to="/" exact > Posts </router-link></li>
+       <li><router-link to="/search" exact > Posts </router-link></li>
        <li><router-link to="/search/users" exact> Communities and users </router-link></li>
       </ul>
     </div>
@@ -17,21 +17,41 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
-  props:{
+ /* props:{
     myProperty:{
       type: String
     }
-  },
+  }, */
   data(){
     return{
-      searchValue: ''
+      searchValue: '',
+      posts: [],
+      apexComs: [],
+      users:[],
+      error: ''
     }
   },
   created(){
-       this.searchValue = this.myProperty 
+       setInterval(() => {
+          this.searchValue = this.$localStorage.get('search');
+       }, 2000)
+      
   },
-
+  updated(){
+     axios.post('http://127.0.0.1:8000/api/search',{
+        query: this.searchValue,
+        token: this.$localStorage.get('token')
+      }).then(response => {
+        this.posts = response.data.posts,
+        this.apexComs = response.data.apexComs,
+        this.users = response.data.users
+      }).catch(error => {
+        this.error = error
+      }) 
+  },
 }
 </script>
 
@@ -69,17 +89,16 @@ export default {
 }
 .body li{
     display: inline-block;
-    margin: 0 10px;
+    margin: 0 15px;
 }
 .body a{
     text-decoration: none;
-    padding: 6px 8px;
+    padding: 13px 8px;
     color:#777777f2;
    background-color: white
 }
 .router-link-active{
     color: black;
-    text-decoration: underline overline double blue
-
+    border-bottom: 4px solid #337ab7
 }
 </style>

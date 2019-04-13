@@ -40,6 +40,10 @@ var vm = new Vue({
     error:{
       type: String,
       default: ''
+    },
+    search:{
+      type: String,
+      default: ''
     }
   }
 })

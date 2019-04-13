@@ -27,18 +27,26 @@
 
 <script>
 import axios from 'axios'
-import {globalStore} from '../main.js'
 import {AllServices} from '../MimicServices/AllServices.js'
+
+
+/**
+ * @vue-data {JWT} [token='']  user Token
+ * @vue-prop  {string} image - Url of user profile image 
+ * @vue-prop  {number} KarmaCount - Number of karma
+ *@vue-prop {string} UserName - Name of user 
+ */
 
 export default {
   props:{
       userName:String,
       karmaCount:Number,
-      picture:String,
+      image:String,
        },
   data () {
     return {
       token:this.$localStorage.get('token'),
+
     }
   },
   methods:
@@ -58,6 +66,9 @@ export default {
   //   })
   // },
 
+  /**
+    * check if the user if Admin
+    */
     isAdmin:function(){
      var data= AllServices.userType();
         if(data ==1){
@@ -67,6 +78,9 @@ export default {
           return false;
         }
     },
+    /**
+    * send request to delete user
+    */
     deleteUser:function(){
       var response = AllServices.deleteUser(this.userName);
       if(response){

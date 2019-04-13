@@ -12,7 +12,7 @@
         <div class="partition-form">
 
           <form>
-            <input id="usernamextxt" type="text" 
+            <input id="usernamextxt" type="text"
              placeholder="Username" v-model="username" v-on:keyup="restart()" required autofocus>
 
              <div style="margin-top: 42px"></div>
@@ -45,13 +45,13 @@ const MODAL_WIDTH = 656;
 export default {
   name: 'DemoLoginModal',
   data(){
-        return{
-          modalWidth: MODAL_WIDTH,
-          username: '',
-          pass: '',
-          error: '',
-          congra: ''
-        }
+    return{
+      modalWidth: MODAL_WIDTH,
+      username: '',
+      pass: '',
+      error: '',
+      congra: ''
+    }
   },
   created () {
     this.modalWidth = window.innerWidth < MODAL_WIDTH ? MODAL_WIDTH / 2 : MODAL_WIDTH,
@@ -60,16 +60,16 @@ export default {
   methods:{
     post: function()
       {
-
-         if( AllServices.logIn(this.username, this.pass) )
-        {
-          this.congra = 'You are now logged in. You will soon be redirected' ;
-          setTimeout(() =>this.$modal.hide('demo-login') , 1000)
-        }
-        else{
-            this.error =  this.$localStorage.get('error');
-        }
-
+         AllServices.logIn(this.username, this.pass).then((data) => {
+         if(data)
+          {
+            this.congra = 'You are now logged in. You will soon be redirected' ;
+            setTimeout(() =>this.$modal.hide('demo-login') , 1000)
+          }
+          else{
+              this.error =  this.$localStorage.get('error');
+          }
+         })
       },
       restart: function()
       {

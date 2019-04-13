@@ -11,7 +11,7 @@ import { MimicComment } from './Comments.js'
 export  const AllServices =new Vue({
   data(){
     return{
-      mimic:true
+      mimic:false
     }
   },
   methods:{
@@ -27,10 +27,14 @@ export  const AllServices =new Vue({
       MimicPost.Post(this.mimic);
 
     },
-
-    signUp: function(user,pass)
+    getApexNames:function()
     {
-       return MimicAuth.SignUp(user,pass,this.mimic);
+      return MimicAuth.getApex(this.mimic)
+    },
+
+    signUp: function(email, user,pass)
+    {
+       return MimicAuth.SignUp(email, user,pass,this.mimic);
     },
 
     logOut: function()
@@ -43,8 +47,7 @@ export  const AllServices =new Vue({
     	return MimicAuth.LogIn(user,pass,this.mimic);
     },
     getPosts:function(ApexComName) {
- 	   var posts=MimicDisplayPosts.getPostsData(this.mimic,ApexComName);
-       return posts
+       return MimicDisplayPosts.getPostsData(this.mimic,ApexComName);
     },
 	getAbout:function(ApexComName) {
     var about=MimicApexCom.getAbout(this.mimic,ApexComName);
@@ -104,7 +107,7 @@ deleteApexCom:function(apexComName){
 },
 subscribe:function(apexComName){
   var data=MimicApexCom.subscribe(this.mimic,apexComName);
-  return data 
+  return data
 },
 WriteComment: function(content,parentID){
   var data=MimicComment.WriteComment(content,parentID,this.mimic);
@@ -129,6 +132,10 @@ DownVoteComment: function(ID,points,downVoted,upState){
 EditComment: function(ID,content){
   var data=MimicComment.EditComment(ID,content,this.mimic);
   return data;
+=======
+getUserInfoByIdforGuest:function(userName){
+  var data=MimicUserProfile.getUserInfoByIdforGuest(this.mimic,userName);
+  return data
 }
 
   }

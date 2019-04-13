@@ -11,7 +11,6 @@
 <script>
 import post from "./Post.vue"
 import DemoOnePost from './DisplayOnePost.vue'
-import {globalStore} from '../main.js'
 import {AllServices} from '../MimicServices/AllServices.js'
 export default {
   props:{
@@ -39,7 +38,9 @@ methods:
     },
 
    getPosts(){
-         this.posts= AllServices.getPosts(this.apexComName);
+         AllServices.getPosts(this.apexComName).then((data) => {
+          this.posts= data;
+         })
    }
 
 },
@@ -54,8 +55,7 @@ components:{
 <style scoped>
 #DisplayPosts{
    width: 60%;
-  display: inline-block; 
+  display: inline-block;
 }
-
 
 </style>

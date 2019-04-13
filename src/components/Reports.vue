@@ -10,7 +10,6 @@
 <script>
 import axios from 'axios'
 import post from "./Post.vue"
-import {globalStore} from '../main.js'
 import CommentParent from "./CommentParent.vue"
 
 export default {
