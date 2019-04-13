@@ -132,7 +132,7 @@ DownVoteComment: function(ID,points,downVoted,upState){
 EditComment: function(ID,content){
   var data=MimicComment.EditComment(ID,content,this.mimic);
   return data;
-=======
+},
 getUserInfoByIdforGuest:function(userName){
   var data=MimicUserProfile.getUserInfoByIdforGuest(this.mimic,userName);
   return data

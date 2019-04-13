@@ -208,39 +208,6 @@ export  const MimicComment =new Vue({
         }
        });
         }
-    },
-
-    LogIn: function(user,pass,mimic)
-    {
-      if(mimic == true)
-      {
-        if( user == this.username && pass == this.password)
-        {
-          this.$localStorage.set('userName',user);
-          this.$localStorage.set('token', this.token);
-          this.$localStorage.set('login', true);
-          return true;
-        }
-        else
-        {
-          this.$localStorage.set('error','Incorrect username or password');
-          return false;
-        }
-      }
-      else{
-        axios.post('http://34.66.175.211/api/sign_in', {
-            username : user,
-            password : pass
-          }).then(response => {
-             this.$localStorage.set('userName',user);
-             this.$localStorage.set('token', response.data.token);
-             this.$localStorage.set('login', true);
-             return true
-          }).catch(function (error) {
-            this.$localStorage.set('error',error);
-             return false
-          });
-      }
     }
 
   }

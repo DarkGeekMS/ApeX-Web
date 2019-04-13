@@ -51,7 +51,7 @@
             <li><router-link :to="{ name: 'UserProfile', params: {userName:userLog} } ">My Profile</router-link></li>
             <li><a href="#">User Settings</a></li>
             <li class="divider"></li>
-            <li><a class="logOut" href="/" @click="Logout()">Log Out</a></li>
+            <li><a class="logOut" href="/" @click="Logout">Log Out</a></li>
         </ul>
       </div>
     </div>

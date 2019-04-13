@@ -58,7 +58,7 @@
 <script>
 import WriteComment from './WriteComment.vue'
 import axios from 'axios'
-import reportBox from './ReportModal'
+import reportBox from './ReportModal.vue'
 import {AllServices} from '../MimicServices/AllServices.js'
 
 
