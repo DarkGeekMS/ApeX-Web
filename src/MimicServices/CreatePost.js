@@ -20,7 +20,7 @@ token:'1',
                 }
 
 else {
-    axios.post( "http://34.66.175.211/api/submit_post"  ,{
+    axios.post( "http://35.232.3.8/api/submit_post"  ,{
 
         ApexCom_id:apexComId,
         _token:token,

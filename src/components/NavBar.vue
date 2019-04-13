@@ -20,9 +20,9 @@
                 <option> All</option>
                 <option>Original Content</option>
               </optgroup>
-              
-              <option disabled>──────────</option>  
-              
+
+              <option disabled>──────────</option>
+
               <optgroup style="font-size: 12px" label="MY COMMUNITIES" v-show="login" v-for="(apex, key) in apexs" >
              <!--   <option> {{apex.name}} </option> -->
               </optgroup>
@@ -51,7 +51,7 @@
             <li><router-link :to="{ name: 'UserProfile', params: {userName:userLog} } ">My Profile</router-link></li>
             <li><a href="#">User Settings</a></li>
             <li class="divider"></li>
-            <li><a class="logOut" href="/" @click="Logout()">Log Out</a></li>
+            <li><a class="logOut" href="#" @click="Logout()">Log Out</a></li>
         </ul>
       </div>
     </div>
@@ -91,7 +91,7 @@
         this.login = this.$localStorage.get('login')
      //   this.apexs = AllServices.getApexNames()
       }
-    }, 
+    },
     methods: {
       conditionalShow () {
         this.$modal.show('conditional-modal', {
@@ -100,6 +100,10 @@
       },
       Logout: function(){
         AllServices.logOut()
+        this.$localStorage.set('login', false);
+        this.$localStorage.set('token', '');
+        this.$localStorage.set('userName', '');
+        this.$router.replace('/');
       },
       search: function(){
         if( this.searchVal != '')

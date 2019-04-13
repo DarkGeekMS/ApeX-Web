@@ -17,7 +17,7 @@ export  const MimicUserProfile =new Vue({
   return profileInfo;
 }
 else {
-    axios.post('http://34.66.175.211/info',{
+    axios.post('http://35.232.3.8/api/info',{
           Token:this.$localStorage.get('token')
       })
       .then(function (response) {
@@ -41,7 +41,7 @@ var profileInfo={
 return profileInfo;
 }
 else {
-    axios.post('http://34.66.175.211/user_data',  {
+    axios.post('http://35.232.3.8/api/user_data',  {
       Token:this.$localStorage.get('token'),
       userid:userName
   })
@@ -60,7 +60,7 @@ getUserType: function(mimic){
 return 1;
 }
 else {
-    axios.post('http://localhost/me', {
+    axios.post('http://35.232.3.8/api/me', {
              Token:this.$localStorage.get('token')
             })
               .then(function (response) {
@@ -78,7 +78,7 @@ deleteUser: function(mimic,userName){
 return true;
 }
 else {
-  axios.delete('http://localhost/del_user',{params: {
+  axios.delete('http://35.232.3.8/api/del_user',{params: {
     userID:userName,
     Token:this.$localStorage.get('token')}
 })
@@ -101,7 +101,7 @@ getUserInfoByIdforGuest:function(mimic,userName){
     return profileInfo;
     }
     else {
-        axios.get('http://localhost/user_data', {
+        axios.get('http://35.232.3.8/api/user_data', {
         params: {
           userid:userName
         }
@@ -117,4 +117,3 @@ getUserInfoByIdforGuest:function(mimic,userName){
 
   }
 });
-
