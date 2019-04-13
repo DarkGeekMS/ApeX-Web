@@ -3,12 +3,15 @@
   <div id="Comment" v-show = "deleted"  v-bind:style="{marginLeft: level*2 +'%'}" >
 
      <reportBox> </reportBox>
-
-
       <div id = "firstLine">
         <button id ="Up" v-on:click="Upvote" v-show="!this.upVoted" class = "arrows,up"></button>
         <button id ="Up2" v-on:click="Upvote" v-show="this.upVoted" class = "arrows,up"></button>
-        <a class ="smallText" href="https://www.google.com/?hl=ar">{{ user }}</a>
+        <router-link 
+          class ="smallText"
+          :to="{name:'UserProfile' ,
+           params: {userName:this.user}}">
+            {{user}}
+          </router-link>
         <b class = "smallText">{{points}} points</b>
         <b class = "smallText">{{time}}</b>
         </div>
@@ -55,7 +58,9 @@
 <script>
 import WriteComment from './WriteComment.vue'
 import axios from 'axios'
-import reportBox from './ReportModal'
+import reportBox from './ReportModal.vue'
+import {AllServices} from '../MimicServices/AllServices.js'
+
 
 export default {
   name: 'CommentItem',
@@ -88,7 +93,32 @@ export default {
     setInterval(() => this.DateFormat(this.date), 1000);
 
   /////
-  for (var i = 0;i<this.content.length;i++)
+  this.OpString();
+  },
+  methods:{
+edit:function(updatedContent){
+  this.content=updatedContent;
+  this.showEditBox =0;
+  //EMIT EVENT TO COMMENT PARENT TO EDIT THE CONTENT OF THE IDX = idx  by updatedContent
+  this.$emit('Edit',updatedContent,this.idx );
+  this.con=[];
+  this.OpString();
+
+
+},
+retrieveWithNoEdit:function(){
+  this.showEditBox =0;
+},
+Delete:function(){
+  var Write = AllServices.DeleteComment(this.ID);
+  if(Write)
+      this.$emit('Delete',this.idx );
+
+
+  
+},
+OpString:function(){
+   for (var i = 0;i<this.content.length;i++)
           {
               if (this.content[i]=='u' && this.content[i+1]=='/' && this.content[i+2]!=' ')
               {
@@ -117,31 +147,6 @@ export default {
 
               
           }
-  },
-  methods:{
-edit:function(updatedContent){
-  this.content=updatedContent;
-  this.showEditBox =0;
-  //EMIT EVENT TO COMMENT PARENT TO EDIT THE CONTENT OF THE IDX = idx  by updatedContent
-  this.$emit('Edit',updatedContent,this.idx );
-
-},
-retrieveWithNoEdit:function(){
-  this.showEditBox =0;
-},
-Delete:function(){
-  this.$emit('Delete',this.idx );
-  axios.delete('http://34.66.175.211/api/delete', {
-      data : {
-      name: this.ID,
-      token: this.$localStorage.get('token')
-      }
-        })
-      .then(function (response) {
-       })
-      .catch(function (error) {
-       alert("Something went wrong");
-       });
 },
 Save:function(){
   if(this.unSaved=='Save')
@@ -149,44 +154,32 @@ Save:function(){
   else
     this.unSaved='Save';
 
-  axios.post('http://34.66.175.211/api/save', {
-       ID: this.ID,
-       token:this.$localStorage.get('token')
-        })
-      .then(function (response) {
-       })
-      .catch(function (error) {
-       alert("Something went wrong");
-       });
+  if(!AllServices.SaveComment(this.ID))
+    alert("Log In First!!");
 },
 Upvote:function(){
   this.upVoted = !this.upVoted;
+  var downState = this.downVoted;
   this.downVoted = false;
-  axios.post('http://34.66.175.211/api/vote', {
-       name: this.ID,
-       dir: 1,
-       token: this.$localStorage.get('token')
-        })
-      .then(function (response) {
-       })
-      .catch(function (error)
-      {
-       alert("Something went wrong");
-       });
+  var Write = AllServices.UpVoteComment(this.ID,this.points,this.upVoted,downState);
+      if (Write.done){
+        this.points=Write.points;
+      }
+      else
+        alert("Log In First!!");
+
 },
 Downvote:function(){
   this.downVoted = !this.downVoted;
+  var upState = this.upVoted;
   this.upVoted = false;
-  axios.post('http://34.66.175.211/api/vote', {
-       name: this.ID,
-       dir: -1,
-       token: this.$localStorage.get('token')
-        })
-      .then(function (response) {
-       })
-      .catch(function (error) {
-       alert("Something went wrong");
-       });
+  var Write = AllServices.DownVoteComment(this.ID,this.points,this.downVoted,upState);
+      if (Write.done){
+        this.points=Write.points;
+      }
+      else
+        alert("Log In First!!");
+
 },
 addReply:function(cont,use,parent,parentLevel,parentID,currentID){
   // send to comment parent to push in the array!!!!!

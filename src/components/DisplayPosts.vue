@@ -38,7 +38,9 @@ methods:
     },
 
    getPosts(){
-         this.posts= AllServices.getPosts(this.apexComName);
+         AllServices.getPosts(this.apexComName).then((data) => {
+          this.posts= data;
+         })
    }
 
 },
@@ -52,8 +54,8 @@ components:{
 
 <style scoped>
 #DisplayPosts{
-  width:60%;
-  display:inline-block;
+   width: 60%;
+  display: inline-block;
 }
 
 </style>

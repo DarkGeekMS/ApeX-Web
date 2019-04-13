@@ -1,20 +1,20 @@
 <template>
 <modal name="demo-sign" transition="pop-out" :width="modalWidth" :height="400">
-  <demo-sign2-modal> </demo-sign2-modal>
+  <demo-sign2-modal v-bind:email="this.email"> </demo-sign2-modal>
   <div class="box">
     <div class="box-part" id="bp-left">
       <div class="partition" id="partition-register">
 
         <div class="partition-title">
         <h1> Join the worldwide conversation. </h1>
-        <p> 
+        <p>
             By having a Reddit account, you can subscribe, vote, and  comment on all your favorite Reddit content. </br>
             Sign up in just seconds.
         </p>
         </div>
 
         <div class="partition-form">
-          
+
             <input id="Email" type="email" class="form-control" name="email"
               placeholder="EMAIL"
               v-model="email"
@@ -57,7 +57,7 @@ export default {
     this.modalWidth = window.innerWidth < MODAL_WIDTH ? MODAL_WIDTH / 2 : MODAL_WIDTH
   },
   updated(){
-    this.$localStorage.set('emailVal', this.email) 
+    this.$localStorage.set('emailVal', this.email)
   },
   methods:{
     /**
@@ -117,7 +117,7 @@ $background_color: #404142;
       border-left: 1px solid #eee;
     }
     &#bp-left{
-      
+
     }
   }
   .partition {
@@ -148,7 +148,7 @@ $background_color: #404142;
       margin-left:15px
     }
   }
-  
+
   .autocomplete-fix {
     position: absolute;
     visibility: hidden;
@@ -177,7 +177,7 @@ button.btn {
   padding: 10px 18px;
   cursor: pointer;
   border-radius: 3px;
-  color: white;  
+  color: white;
   box-shadow: 0 4px 8px rgba(#20a0ff, .3);
   background: #4db3ff;
   font-weight: 600;

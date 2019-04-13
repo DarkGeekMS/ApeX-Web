@@ -9,6 +9,9 @@
 <script>
 import DisplayPosts from './DisplayPosts.vue'
 
+/**
+ * @vue-prop  {string} apexComName - community name
+ */
 
 export default {
   props:['ApexComName'],
@@ -28,7 +31,7 @@ export default {
   width:100%;
   height:auto;
   margin:-8% -11%;
-  padding:4% 3%;
+  padding:0% 0%;
   border-radius: 8px;
   margin-top: 3%;
 }

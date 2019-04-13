@@ -63,7 +63,7 @@
             <li><router-link :to="{ name: 'UserProfile', params: {userName:userLog} } ">My Profile</router-link></li>
             <li><a href="#">User Settings</a></li>
             <li class="divider"></li>
-            <li><a class="logOut" href="/" @click="Logout()">Log Out</a></li>
+            <li><a class="logOut" href="#" @click="Logout()">Log Out</a></li>
         </ul>
       </div>
     </div>
@@ -104,6 +104,7 @@
         this.canBeShown = !this.canBeShown
       }, 500)
     },
+
     methods: {
       /**
        * shown modal if canBeShown being true
@@ -118,6 +119,10 @@
       */
       Logout: function(){
         AllServices.logOut()
+        this.$localStorage.set('login', false);
+        this.$localStorage.set('token', '');
+        this.$localStorage.set('userName', '');
+        this.$router.replace('/');
       },
       /**
      * when search value isn't empty transfer to localStorage and go to route search

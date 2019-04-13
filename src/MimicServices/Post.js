@@ -6,39 +6,23 @@ methods:{
     save:function(token,ID,mimic){
 
         if(mimic){
-
-                if(token=="1" && ID=="1"){
-
-                    return true;
-
+             if(token=="1" && ID=="1"){
+                return true;
               }
                 return false;
-
-
              }
-             else{
-
-                axios.post( "http://34.66.175.211/save",
-                {
-        
-                    ID:ID,
-                    token:token
-
-                }).then(response=>{
-                  if(response){
-                    alert('Post saved successfully');
-                  }
-                } ).catch(function ()
-                {
-                    // console.log(error);
-
-                });
+             else {
+                axios.post( "http://35.232.3.8/api/save",
+             {
+                ID:ID,
+                token:token
+            }).then(response => {
+              if(response){
+                alert('Post saved successfully');
+              }
+            })
              }
-
-
-
-
-                },
+              },
 
                 deletePost:function(name,ID,mimic){
                     if(mimic){
@@ -55,10 +39,10 @@ methods:{
 
             else{
 
-                axios.post("http://localhost/DelComment",{
+                axios.post("http://35.232.3.8/api/DelComment",{
                     ID    : name,
                     token : ID
-           
+
             }).then(response=>{
               if(response){
                 this.Deleted = true;
@@ -88,11 +72,11 @@ methods:{
                    }
               else{
 
-                axios.post("http://34.66.175.211/Hide",
+                axios.post("http://35.232.3.8/api/Hide",
                 {
                     name    : name,
                     ID : ID
-        
+
                 }).then(response => {
                   if(response){
                   alert("Hidden successfully");}
@@ -115,7 +99,7 @@ methods:{
 
            }
            else{
-            axios.post("http://34.66.175.211/vote",
+            axios.post("http://35.232.3.8/api/vote",
             {
 
               ID       : ID,
@@ -147,7 +131,7 @@ methods:{
 
            }
            else{
-            axios.post("http://34.66.175.211/vote",
+            axios.post("http://35.232.3.8/api/vote",
                    {
 
 
@@ -183,15 +167,15 @@ methods:{
 defaultVote(name,ID,direction,mimic){
   if(mimic){
       if(name=="1"  && ID=="1"){
-  
+
           if(direction==0){
- 
+
             return 200;
          }
 
 }
 else{
-axios.post("http://localhost/vote",
+axios.post("http://35.232.3.8/api/vote",
 {
 
 ID       : ID,

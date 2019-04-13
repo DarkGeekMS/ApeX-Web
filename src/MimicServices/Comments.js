@@ -2,7 +2,7 @@ import Vue from 'vue'
 import axios from 'axios'
 import App from '../App.vue'
 export  const MimicComment =new Vue({
-  
+
   methods:{
     WriteComment: function(content,parentID,mimic){
       if(mimic == true){
@@ -22,7 +22,7 @@ export  const MimicComment =new Vue({
       }
       else
       {
-        axios.post('http://127.0.0.1:8001/api/comment', {
+        axios.post('http://35.232.3.8/api/comment', {
             content: content,
             parent: parentID,
             token: this.$localStorage.get('token')
@@ -40,110 +40,174 @@ export  const MimicComment =new Vue({
                 done:false
               };
 
-            });     
+            });
          }
     },
-    
 
-    LogOut: function(mimic){
+
+    DeleteComment: function(ID,mimic){
         if( mimic == true)
         {
-          if( this.$localStorage.get('token') )
-            this.$localStorage.set('login', false);
-            this.$localStorage.set('token', '');
-            this.$localStorage.set('userName', '');
-            this.$router.replace('/HomePage');
-        }
-        else{
-          axios.post('http://34.66.175.211/api/sign_out',{
-            token : this.$localStorage.get('token')
-          }).then(response => {
-            this.$localStorage.set('login', false);
-            this.$localStorage.set('token', '');
-            this.$localStorage.set('userName', '');
-            this.$router.replace('/');
-          }) 
-
-        }
-    },
-
-    LogIn: function(user,pass,mimic)
-    {
-      if(mimic == true)
-      {
-        if( user == this.username && pass == this.password)
-        {
-          this.$localStorage.set('userName',user);
-          this.$localStorage.set('token', this.token);
-          this.$localStorage.set('login', true);
-          return true;
+            if(this.$localStorage.login)
+                return true;
+            return false;
         }
         else
         {
-          this.$localStorage.set('error','Incorrect username or password');
-          return false;
+            axios.delete('http://35.232.3.8/api/delete', {
+                data : {
+                name: ID,
+                token: this.$localStorage.get('token')
+                }
+                  })
+                .then(function (response) {
+                    return true;
+                 })
+                .catch(function (error) {
+                    return false;
+                 });
         }
-      }
-      else{
-        axios.post('http://34.66.175.211/api/sign_in', {
-            username : user,
-            password : pass
-          }).then(response => {
-             this.$localStorage.set('userName',user);
-             this.$localStorage.set('token', response.data.token);
-             this.$localStorage.set('login', true);
-             return true
-          }).catch(function (error) {
-            this.$localStorage.set('error',error);
-             return false
-          });
-      }
-    }
+    },
+    SaveComment: function(ID,mimic){
+        if( mimic == true)
+        {
+            if(this.$localStorage.login)
+                return true;
+            return false;
+        }
+        else
+        {
+            axios.post('http://35.232.3.8/api/save', {
+            ID: ID,
+            token:this.$localStorage.get('token')
+             })
+           .then(function (response) {
+               return true;
+            })
+           .catch(function (error) {
+               return false;
+            });
+        }
+    },
+    EditComment: function(ID,content,mimic){
+        if( mimic == true)
+        {
+            if(this.$localStorage.login)
+                return true;
+            return false;
+        }
+        else
+        {
+            axios.post('http://35.232.3.8/api/edit', {
+                name: ID,
+                content: content,
+                ID: this.$localStorage.get('userName')
 
+             })
+           .then(function (response) {
+               return true;
+            })
+           .catch(function (error) {
+               return false;
+            });
+        }
+    },
+    UpVoteComment:function(ID,points,upVoted,downVoted,mimic){
+        if( mimic == true)
+        {
+            var p;
+            p = points;
+
+            if(upVoted)
+            {
+                if(downVoted)
+                {
+                    p++;
+                }
+                p++;
+
+            }
+            else
+                p--;
+            if(this.$localStorage.login)
+                return {
+                    done:true,
+                    points:p
+                }
+
+                return {
+                    done:false,
+                    points:points
+                }
+        }
+        else
+        {
+       axios.post('http://35.232.3.8/api/vote', {
+       name: ID,
+       dir: 1,
+       token: this.$localStorage.get('token')
+        })
+      .then(function (response) {
+        return {
+            done:true,
+            points:response.data.points
+        }
+       })
+      .catch(function (error)
+      {
+        return {
+            done:false,
+            points:points
+        }
+       });
+        }
+    },
+    DownVoteComment:function(ID,points,downVoted,upVoted,mimic){
+        if( mimic == true)
+        {
+            var p = points;
+            if(downVoted)
+            {
+                if(upVoted)
+                {
+                    p--;
+                }
+                p--;
+            }
+            else
+                p++;
+            if(this.$localStorage.login)
+                return {
+                    done:true,
+                    points:p
+                }
+
+                return {
+                    done:false,
+                    points:points
+                }
+        }
+        else
+        {
+       axios.post('http://35.232.3.8/api/vote', {
+       name: ID,
+       dir: -1,
+       token: this.$localStorage.get('token')
+        })
+      .then(function (response) {
+        return {
+            done:true,
+            points:response.data.points
+        }
+       })
+      .catch(function (error)
+      {
+        return {
+            done:false,
+            points:points
+        }
+       });
+        }
+    }
   }
 })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-///////////////////////////////////////////////////////
-function addComment(commentParent){
-    return commentParent+"_Child";
-}
-
-function vote(comment,type,current){
-    if(type=='Up' && current == 0)
-        return 1;
-    if(type=='Up' && current == 1)
-        return 0;
-     if(type=='Up' && current == -1)
-        return 1;
-    if(type=='Down' && current == 0)
-        return -1;
-    if(type=='Down' && current == 1)
-        return -1;
-     if(type=='Down' && current == -1)
-        return 0;
-    
-}

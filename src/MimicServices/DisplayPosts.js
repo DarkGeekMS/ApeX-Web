@@ -4,7 +4,7 @@ export  const MimicDisplayPosts =new Vue({
   methods:{
     getPostsData: function(mimic,ApexComName){
       if(mimic==true){
-        if(ApexComName!==""){
+        if(ApexComName==""){
   var posts=[
             {
               id:'555',
@@ -78,22 +78,29 @@ return posts
               }
       }
 else {
-  axios.get('http://34.66.175.211/sort_posts',
- {
-    apexCommID:ApexComName ,
-    sortingParam: "date",
-    token:this.$localStorage.get('token')
-  })
-  .then(function (response) {
-    return response.data.posts
-    // console.log(response);
-   })
-  .catch(function (error) {
-   // console.log(error);
-   });
+  if (this.$localStorage.get('token') == null)
+  {
+    return axios.get('http://127.0.0.1:8001/api/sort_posts',
+   {
+      apexComID:ApexComName ,
+      sortingParam: "date"
+    }).then(response => {
+        return response.data.posts;
+      })
+  }
+  else {
+    {
+      return axios.post('http://127.0.0.1:8001/api/sort_posts',
+     {
+        apexCommID:ApexComName ,
+        sortingParam: "date",
+        token:this.$localStorage.get('token')
+      }).then(response => {
+          return response.data.posts;
+        })
+    }
+  }
  }
     }
   }
-
-
 })

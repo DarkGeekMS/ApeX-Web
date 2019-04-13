@@ -11,7 +11,7 @@ import { MimicSearch } from './Search.js'
 export  const AllServices =new Vue({
   data(){
     return{
-      mimic:true
+      mimic:false
     }
   },
   methods:{
@@ -40,9 +40,9 @@ export  const AllServices =new Vue({
       return MimicSearch.searchPost(this.mimic)
     },
 
-    signUp: function(user,pass)
+    signUp: function(email, user,pass)
     {
-       return MimicAuth.SignUp(user,pass,this.mimic);
+       return MimicAuth.SignUp(email, user,pass,this.mimic);
     },
 
     logOut: function()
@@ -55,8 +55,7 @@ export  const AllServices =new Vue({
     	return MimicAuth.LogIn(user,pass,this.mimic);
     },
     getPosts:function(ApexComName) {
- 	   var posts=MimicDisplayPosts.getPostsData(this.mimic,ApexComName);
-       return posts
+       return MimicDisplayPosts.getPostsData(this.mimic,ApexComName);
     },
 	getAbout:function(ApexComName) {
     var about=MimicApexCom.getAbout(this.mimic,ApexComName);
@@ -67,12 +66,12 @@ export  const AllServices =new Vue({
     return SubscribersList
 	},
 	getUserInfo:function() {
-	  var profileInfo=MimicUserProfile.getUserInfo(this.mimic);
-	    return profileInfo
+    var profileInfo=MimicUserProfile.getUserInfo(this.mimic);
+      return profileInfo
 	},
 	getUserInfoById:function(userName) {
-	  var userInfo=MimicUserProfile.getUserInfoById(this.mimic,userName);
-	    return userInfo
+    var userInfo=MimicUserProfile.getUserInfoById(this.mimic,userName);
+    return userInfo;
   },
   save:function(token,ID){
     return MimicPost.save(token,ID,this.mimic);
@@ -100,29 +99,53 @@ deletePost:function(name,ID){
 
 userType:function(){
   var data=MimicUserProfile.getUserType(this.mimic);
-  return data
+  return data;
 },
-deleteSubscriber:function(userName,ApexComName){
-  var data=MimicApexCom.deleteSubscriber(this.mimic,userName,ApexComName);
-  return data
+blockSubscriber:function(userName,ApexComName){
+  var data=MimicApexCom.blockSubscriber(this.mimic,userName,ApexComName);
+  return data;
 },
 deleteUser:function(userName){
   var data=MimicUserProfile.deleteUser(this.mimic,userName);
-  return data
+  return data;
 },
 deleteApexCom:function(apexComName){
   var data=MimicApexCom.deleteApexCom(this.mimic,apexComName);
-  return data
+  return data;
 },
 subscribe:function(apexComName){
   var data=MimicApexCom.subscribe(this.mimic,apexComName);
-  return data 
+  return data;
 },
 WriteComment: function(content,parentID){
   var data=MimicComment.WriteComment(content,parentID,this.mimic);
+  return data;
+},
+DeleteComment: function(ID){
+  var data=MimicComment.DeleteComment(ID,this.mimic);
+  return data;
+},
+SaveComment: function(ID){
+  var data=MimicComment.SaveComment(ID,this.mimic);
+  return data;
+},
+UpVoteComment: function(ID,points,upVoted,downState){
+  var data=MimicComment.UpVoteComment(ID,points,upVoted,downState,this.mimic);
+  return data;
+},
+DownVoteComment: function(ID,points,downVoted,upState){
+  var data=MimicComment.DownVoteComment(ID,points,downVoted,upState,this.mimic);
+  return data;
+},
+EditComment: function(ID,content){
+  var data=MimicComment.EditComment(ID,content,this.mimic);
+  return data;
+},
+getUserInfoByIdforGuest:function(userName){
+  var data=MimicUserProfile.getUserInfoByIdforGuest(this.mimic,userName);
   return data;
 }
 
   }
 
-})
+});
