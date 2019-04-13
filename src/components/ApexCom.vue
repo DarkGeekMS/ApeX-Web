@@ -148,7 +148,7 @@ export default {
   margin:8%;
   margin-left: 3%;
   margin-right: 6%;
-  background-color:white;
+  /* background-color:white; */
   float:right;
 }
 .router-link-active{

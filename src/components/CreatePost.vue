@@ -122,13 +122,24 @@ import {AllServices} from '../MimicServices/AllServices.js'
 import { RichTextEditorPlugin, Toolbar, HtmlEditor } from "@syncfusion/ej2-vue-richtexteditor";
 Vue.use(RichTextEditorPlugin);
 
+/**
+ * @vue-data {string} [apexComId=''] Id of apexcom which post will be created in 
+ * @vue-data {boolean} [enable=true]    check if post button is enable or not
+ * @vue-data {string} [bodyPost='']    the content of the post 
+ * @vue-data {string} [imgName='']  the img src which the user upload from browser
+ * @vue-data {array} [apexNames=[]]  include the apexnames which you want to choose from 
+ * @vue-data {string} [videoUrl=''] the url of the video from the youtube
+ * @vue-data {boolean} [isLocked=false] 
+ * @vue-data {JWT} [token=''] userID
+ * @vue-data  {boolean} [imagable=false] check if the user upload image or not 
 
+
+ */
 
 export default {
     data(){
       return {
-       imagePreview: '',
-       showPreview : false,
+    
        items: [
        {
          image: false,
@@ -164,6 +175,12 @@ export default {
         richtexteditor:[Toolbar, HtmlEditor]
     },
     methods:{
+
+     /**
+     * it check if the user insert the title of the post and insert the content or not and it will enable 
+     * the post button to be submitted if and only if the user insert all required content 
+     */
+
          Enable(){
          
 	 if(document.getElementById("textsend").value==="" || document.getElementById("usr").value==="")  { 
@@ -190,12 +207,18 @@ export default {
     
     
     },
+     /**
+     * it take the src of the img which the user drop it from the browser 
+     */
    onDrop: function(e) {
         e.stopPropagation();
         e.preventDefault();
         var files = e.dataTransfer.files;
         this.createFile(files[0]);
       },
+       /**
+     * when the user upload the img it enable the post button and store the img src 
+     */
       onChange(e) {
          
         var files = e.target.files;
@@ -204,6 +227,9 @@ export default {
          this.Enable();
       
       },
+       /**
+     * it create file to be stored in img src 
+     */
       createFile(file) {
         if (!file.type.match('image.*')) {
           alert('Select an image');
@@ -221,12 +247,18 @@ export default {
         reader.readAsDataURL(file);
        
       },
+       /**
+     * it remove the img if the user upload an img from browser and want to remove it so it make the src empty.
+     */
       removeFile() {
         this.image = '';
         this.imagable=false;
         this.Enable();
       },
-    
+     /**
+     * this function send request of submit post which send all content of the post videour,imgurl, title ,token
+     * all required data .
+     */
 
     submitPost(){
        this.videoUrl=document.getElementById('textsend3').value;
@@ -266,7 +298,9 @@ export default {
      'tab':tab,
      'tabs':tabs
      },
-
+ /**
+     * it return all apexnames to be displayed in listbox .
+     */
 created(){
  axios.get("http://localhost/Apex_names"
 

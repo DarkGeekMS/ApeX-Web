@@ -10,7 +10,8 @@
         <SideBar 
         v-bind:userName="userName"
         v-bind:karmaCount="karmaCount"
-        v-bind:picture="picture"
+        v-bind:image="image"
+        v-bind:cakeDay="cakeDay"
                 class="sidebar" ></SideBar>
 </div>
 </template>
@@ -43,11 +44,12 @@ export default {
       loggeduser:this.$localStorage.get('userName'),
       loggedIn:this.$localStorage.get('login'),
       karmaCount:1,
-      image:'../../public/AMFz23O.jpg',
+      image:'',
       personalPosts:[],
       savedPosts:[],
       hiddenPosts:[],
       reports:[],
+      cakeDay:'March 15, 2019',
     }
   },
   methods:
@@ -102,6 +104,7 @@ export default {
       this.hiddenPosts = data.hidden;
       this.personalPosts = data.personalPosts;
       this.reports = data.reports;
+      this.cakeDay = data.cakeDay;
    },
     /**
     * get user account data for another user
@@ -112,6 +115,7 @@ export default {
       // this.image = data.image;
      // this.userName = data.userName;
       this.personalPosts = data.personalPosts;
+      this.cakeDay = data.cakeDay;
    },
    /**
     * get user account data for a guset
@@ -122,6 +126,7 @@ export default {
       // this.image = data.image;
      // this.userName = data.userName;
       this.personalPosts = data.personalPosts;
+      this.cakeDay = data.cakeDay;
    }
 
   },
@@ -177,7 +182,6 @@ export default {
     margin:8%;
     margin-left: 3%;
     margin-right: 6%;
-    background-color:white;
     float:right;
 }
 </style>

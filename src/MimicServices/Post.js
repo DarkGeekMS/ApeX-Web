@@ -12,7 +12,7 @@ methods:{
                 return false;
              }
              else {
-                axios.post( "http://127.0.0.1:8000/api/save",
+                axios.post( "http://35.232.3.8/api/save",
              {
                 ID:ID,
                 token:token
@@ -39,7 +39,7 @@ methods:{
 
             else{
 
-                axios.post("http://localhost/DelComment",{
+                axios.post("http://35.232.3.8/api/DelComment",{
                     ID    : name,
                     token : ID
 
@@ -72,7 +72,7 @@ methods:{
                    }
               else{
 
-                axios.post("http://34.66.175.211/Hide",
+                axios.post("http://35.232.3.8/api/Hide",
                 {
                     name    : name,
                     ID : ID
@@ -99,7 +99,7 @@ methods:{
 
            }
            else{
-            axios.post("http://34.66.175.211/vote",
+            axios.post("http://35.232.3.8/api/vote",
             {
 
               ID       : ID,
@@ -131,7 +131,7 @@ methods:{
 
            }
            else{
-            axios.post("http://34.66.175.211/vote",
+            axios.post("http://35.232.3.8/api/vote",
                    {
 
 
@@ -175,7 +175,7 @@ defaultVote(name,ID,direction,mimic){
 
 }
 else{
-axios.post("http://localhost/vote",
+axios.post("http://35.232.3.8/api/vote",
 {
 
 ID       : ID,

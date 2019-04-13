@@ -2,7 +2,7 @@ import Vue from 'vue'
 import axios from 'axios'
 import App from '../App.vue'
 export  const MimicComment =new Vue({
-  
+
   methods:{
     WriteComment: function(content,parentID,mimic){
       if(mimic == true){
@@ -22,7 +22,7 @@ export  const MimicComment =new Vue({
       }
       else
       {
-        axios.post('http://34.66.175.211/api/comment', {
+        axios.post('http://35.232.3.8/api/comment', {
             content: content,
             parent: parentID,
             token: this.$localStorage.get('token')
@@ -40,10 +40,10 @@ export  const MimicComment =new Vue({
                 done:false
               };
 
-            });     
+            });
          }
     },
-    
+
 
     DeleteComment: function(ID,mimic){
         if( mimic == true)
@@ -54,7 +54,7 @@ export  const MimicComment =new Vue({
         }
         else
         {
-            axios.delete('http://34.66.175.211/api/delete', {
+            axios.delete('http://35.232.3.8/api/delete', {
                 data : {
                 name: ID,
                 token: this.$localStorage.get('token')
@@ -65,7 +65,7 @@ export  const MimicComment =new Vue({
                  })
                 .catch(function (error) {
                     return false;
-                 });  
+                 });
         }
     },
     SaveComment: function(ID,mimic){
@@ -77,7 +77,7 @@ export  const MimicComment =new Vue({
         }
         else
         {
-            axios.post('http://34.66.175.211/api/save', {
+            axios.post('http://35.232.3.8/api/save', {
             ID: ID,
             token:this.$localStorage.get('token')
              })
@@ -98,7 +98,7 @@ export  const MimicComment =new Vue({
         }
         else
         {
-            axios.post('http://34.66.175.211/api/edit', {
+            axios.post('http://35.232.3.8/api/edit', {
                 name: ID,
                 content: content,
                 ID: this.$localStorage.get('userName')
@@ -117,7 +117,7 @@ export  const MimicComment =new Vue({
         {
             var p;
             p = points;
-            
+
             if(upVoted)
             {
                 if(downVoted)
@@ -134,7 +134,7 @@ export  const MimicComment =new Vue({
                     done:true,
                     points:p
                 }
-                
+
                 return {
                     done:false,
                     points:points
@@ -142,7 +142,7 @@ export  const MimicComment =new Vue({
         }
         else
         {
-       axios.post('http://34.66.175.211/api/vote', {
+       axios.post('http://35.232.3.8/api/vote', {
        name: ID,
        dir: 1,
        token: this.$localStorage.get('token')
@@ -181,7 +181,7 @@ export  const MimicComment =new Vue({
                     done:true,
                     points:p
                 }
-                
+
                 return {
                     done:false,
                     points:points
@@ -189,7 +189,7 @@ export  const MimicComment =new Vue({
         }
         else
         {
-       axios.post('http://34.66.175.211/api/vote', {
+       axios.post('http://35.232.3.8/api/vote', {
        name: ID,
        dir: -1,
        token: this.$localStorage.get('token')
@@ -209,6 +209,5 @@ export  const MimicComment =new Vue({
        });
         }
     }
-
   }
 })
