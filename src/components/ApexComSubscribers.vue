@@ -2,7 +2,7 @@
 <div class="list" id="subscribers list">
   <div id="subscribers box" class="box" v-for="(subscriber,index) in SubscribersList" :key="subscriber.id">
     <router-link class="accountLink" :to="{name:'UserProfile' , params: {userName:subscriber.userName}}"> {{subscriber.userName}}</router-link>
-    <button id="remove button" class="removeButton" v-on:click="blockUser(subscriber,index)">Remove</button>
+    <button id="remove button" class="removeButton" v-on:click="blockUser(subscriber,index)">BLOCK</button>
   </div>
  
 </div>
@@ -29,11 +29,11 @@ export default {
   methods:
   {
     /**
-      *send request to delete certain user from certain community
+      *send request to block certain user from certain community
       */
     blockUser:function(userName,index)
     {
-      var data = AllServices.deleteSubscriber(userName,this.ApexComName);
+      var data = AllServices.blockSubscriber(userName,this.ApexComName);
       if(data){
       this.SubscribersList.splice(index, 1);
       }

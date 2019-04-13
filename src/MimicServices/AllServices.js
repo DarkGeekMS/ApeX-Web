@@ -93,8 +93,8 @@ userType:function(){
   var data=MimicUserProfile.getUserType(this.mimic);
   return data
 },
-deleteSubscriber:function(userName,ApexComName){
-  var data=MimicApexCom.deleteSubscriber(this.mimic,userName,ApexComName);
+blockSubscriber:function(userName,ApexComName){
+  var data=MimicApexCom.blockSubscriber(this.mimic,userName,ApexComName);
   return data
 },
 deleteUser:function(userName){
