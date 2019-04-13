@@ -58,12 +58,12 @@ export  const AllServices =new Vue({
     return SubscribersList
 	},
 	getUserInfo:function() {
-	  var profileInfo=MimicUserProfile.getUserInfo(this.mimic);
-	    return profileInfo
+    var profileInfo=MimicUserProfile.getUserInfo(this.mimic);
+      return profileInfo
 	},
 	getUserInfoById:function(userName) {
-	  var userInfo=MimicUserProfile.getUserInfoById(this.mimic,userName);
-	    return userInfo
+    var userInfo=MimicUserProfile.getUserInfoById(this.mimic,userName);
+    return userInfo;
   },
   save:function(token,ID){
     return MimicPost.save(token,ID,this.mimic);
@@ -91,23 +91,23 @@ deletePost:function(name,ID){
 
 userType:function(){
   var data=MimicUserProfile.getUserType(this.mimic);
-  return data
+  return data;
 },
 blockSubscriber:function(userName,ApexComName){
   var data=MimicApexCom.blockSubscriber(this.mimic,userName,ApexComName);
-  return data
+  return data;
 },
 deleteUser:function(userName){
   var data=MimicUserProfile.deleteUser(this.mimic,userName);
-  return data
+  return data;
 },
 deleteApexCom:function(apexComName){
   var data=MimicApexCom.deleteApexCom(this.mimic,apexComName);
-  return data
+  return data;
 },
 subscribe:function(apexComName){
   var data=MimicApexCom.subscribe(this.mimic,apexComName);
-  return data
+  return data;
 },
 WriteComment: function(content,parentID){
   var data=MimicComment.WriteComment(content,parentID,this.mimic);
@@ -132,12 +132,12 @@ DownVoteComment: function(ID,points,downVoted,upState){
 EditComment: function(ID,content){
   var data=MimicComment.EditComment(ID,content,this.mimic);
   return data;
-=======
+},
 getUserInfoByIdforGuest:function(userName){
   var data=MimicUserProfile.getUserInfoByIdforGuest(this.mimic,userName);
-  return data
+  return data;
 }
 
   }
 
-})
+});
