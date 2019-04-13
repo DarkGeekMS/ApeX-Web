@@ -80,7 +80,7 @@ return posts
 else {
   if (this.$localStorage.get('token') == null)
   {
-    return axios.get('http://127.0.0.1:8000/api/sort_posts',
+    return axios.get('http://127.0.0.1:8001/api/sort_posts',
    {
       apexComID:ApexComName ,
       sortingParam: "date"
@@ -90,7 +90,7 @@ else {
   }
   else {
     {
-      return axios.post('http://127.0.0.1:8000/api/sort_posts',
+      return axios.post('http://127.0.0.1:8001/api/sort_posts',
      {
         apexCommID:ApexComName ,
         sortingParam: "date",

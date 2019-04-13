@@ -30,7 +30,7 @@ export  const MimicAuth =new Vue({
       else
       {
         var self = this;
-        return axios.post('http://127.0.0.1:8000/api/sign_up', {
+        return axios.post('http://127.0.0.1:8001/api/sign_up', {
             email: email,
             username: user,
             password: pass
@@ -55,7 +55,7 @@ export  const MimicAuth =new Vue({
             this.$localStorage.set('userName', '');
         }
         else{
-          return axios.post('http://127.0.0.1:8000/api/sign_out',{
+          return axios.post('http://127.0.0.1:8001/api/sign_out',{
             token : this.$localStorage.get('token')
           }).then(response => {
             this.$localStorage.set('login', false);
@@ -85,7 +85,7 @@ export  const MimicAuth =new Vue({
       }
       else{
         var self = this;
-        return axios.post('http://127.0.0.1:8000/api/sign_in', {
+        return axios.post('http://127.0.0.1:8001/api/sign_in', {
             username : user,
             password : pass
           }).then(response => {
