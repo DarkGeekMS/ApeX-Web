@@ -7,7 +7,7 @@ import userprofile from './components/UserProfile.vue'
 import CreatePost from './components/CreatePost.vue'
 import Reports from './components/Reports.vue'
 import Search from './components/Search.vue'
-import Users from './components/CommuntAndUsers.vue'
+import Users from './components/CommunitiesAndUsers.vue'
 export default[
       {path:'/ApexCom/:ApexComName',name:'ApexCom',props:true,component:ApexCom , children :
       [

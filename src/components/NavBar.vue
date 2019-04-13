@@ -105,7 +105,7 @@
         if( this.searchVal != '')
         {
           this.$localStorage.set('search' , this.searchVal),
-          this.$router.push({ name:'search'} )
+          this.$router.push({ name:'Search'} )
         }
       }
     },
