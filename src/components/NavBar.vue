@@ -4,11 +4,13 @@
  <demo-login-modal> </demo-login-modal>
  <demo-sign-modal> </demo-sign-modal>
  <nav class="navbar navbar-expand-lg navbar-light navbar-fixed-top" id="mainNav">
+    <router-link class="navbar-brand" :to="{ name:'HomePage'}">
+      <img style="margin-top:-8px" width="85"
+      src="../../public/Logo_small.png" >
+    </router-link>
 
-    <a class="navbar-brand" href="/">
-          <img style="margin-top:-8px" width="85"
-          src="../../public/Logo_small.png" >
-    </a>
+
+
     <div class="container-fluid">
        <div class="form-group drop" style="display:inline-block; margin:0.5% 0.5%">
           <select class="form-control" name="category">
@@ -24,7 +26,6 @@
               <optgroup style="font-size: 12px" label="MY COMMUNITIES" v-show="login" v-for="(apex, key) in apexs" >
              <!--   <option> {{apex.name}} </option> -->
               </optgroup>
-            
           </select>
       </div>
 
@@ -42,11 +43,12 @@
 
       <div v-show="this.$localStorage.get('login')" class="btn-group log" id="loggedDiv">
         <button type="button" data-toggle="dropdown" class="btn btn-default dropdown-toggle" id="loggedbutton">
-          <img id="logoutPic" width="20"
+          <img  width="20"
           src="../../public//Logo_X.png" > {{ userLog }}  <span class="caret"></span></button>
         <ul class="dropdown-menu">
             <li class="dropdown-header">MY STUFF</li>
-            <li><a href="#">My Profile</a></li>
+            <!-- <router-link :to="{name:'ApexCom' , params: {ApexComName:postData.apex_id}}">{{postData.apex_id}}</router-link> -->
+            <li><router-link :to="{ name: 'UserProfile', params: {userName:userLog} } ">My Profile</router-link></li>
             <li><a href="#">User Settings</a></li>
             <li class="divider"></li>
             <li><a class="logOut" href="/" @click="Logout()">Log Out</a></li>
@@ -138,7 +140,6 @@ input{
     color: #ccc;
     margin-top:1.3%
 }
-
 .has-search .form-control {
     padding-right: 12px;
     padding-left: 34px;
@@ -160,7 +161,6 @@ button{
   width:100px;
   margin:0 5px;
 }
-
 #loggedbutton{
   width:200px;
   height:40px;
@@ -168,11 +168,9 @@ button{
   font-size:17px;
   color:#999999;
 }
-
 #loggedbutton:hover {
   background: #fff;
 }
-
 ul{
   width:200px;
   margin:2px 4px;

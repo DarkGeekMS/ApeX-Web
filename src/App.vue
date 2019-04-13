@@ -6,7 +6,6 @@
 </template>
 
 <script>
-
 import Vue from 'vue'
 import NavBar from "./components/NavBar.vue"
 
@@ -17,12 +16,10 @@ export default {
     'navbar':NavBar,
 
   },
-
 }
 </script>
 
 <style scoped>
-
 #app {
   margin-top: 0px;
   min-width: 1200px;

@@ -5,6 +5,7 @@ import {MimicAuth} from './Authentication.js'
 import {MimicApexCom} from './ApexCom.js'
 import {MimicUserProfile} from './UserProfile.js'
 import { MimicPost } from './Post.js'
+import { MimicComment } from './Comments.js'
 
 
 export  const AllServices =new Vue({
@@ -109,9 +110,10 @@ subscribe:function(apexComName){
   var data=MimicApexCom.subscribe(this.mimic,apexComName);
   return data 
 },
-
-
-
+WriteComment: function(content,parentID){
+  var data=MimicComment.WriteComment(content,parentID,this.mimic);
+  return data;
+}
 
   }
 

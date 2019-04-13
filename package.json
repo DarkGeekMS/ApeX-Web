@@ -22,6 +22,7 @@
     "css-loader": "^2.1.1",
     "npm": "^6.9.0",
     "postcss-loader": "^3.0.0",
+    "request": "^2.88.0",
     "ui": "^0.2.4",
     "vee-validate": "^2.2.2",
     "vue": "^2.6.10",

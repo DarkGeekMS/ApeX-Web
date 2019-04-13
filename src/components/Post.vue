@@ -1,6 +1,5 @@
 <template id="PostTemlate">
 <div id="PostItme" class="postItem" >
-<DemoOnePost id="PostModal"></DemoOnePost>
 <div class="panel panel-default" style="width: 62rem;   "  @click="ShowModal()" v-show="Not_Hide" id="post">
   <!-- <div class="row" id="postRow"> -->
     <div class="panel-body"  style="width: 62rem;" >
@@ -98,7 +97,20 @@ import axios from 'axios'
 import {MimicDisplayPosts} from '../MimicServices/DisplayPosts.js'
 import { AllServices } from '../MimicServices/AllServices';
 
-
+/**
+ * @vue-data {string} [Save="Save"] Save value
+ * @vue-data {boolean} [Not_Hide=true]    check if post not hide
+ * @vue-data {boolean} [is_Hide=false]    check if post is hide
+ * @vue-data {boolean} [pressed_up=false]  check pressed uparrow
+ * @vue-data {boolean} [pressed_down=false]  check pressed downarrow
+ * @vue-data {integer} [votes=0] votes
+ * @vue-data {boolean} [Deleted=false] check deleted Post
+ * @vue-data {JWT} [token=''] userID
+ * @vue-data  {string} [PostId=''] postID
+ * @vue-data  {boolean} [moderator=false] check if the user is moderator
+ * @vue-data  {boolean} [Deleted=false] check if the post is Deleted
+ *@vue-prop {object} [postdata] the data of the post 
+ */
 export default {
 
   name: 'PostItem',
@@ -319,7 +331,7 @@ export default {
         // });
       }
         else{
-          
+
           AllServices.save(this.$localStorage.get('token'),this.PostId);
              //alert('Post unsaved successfully');
             this.Saved="Save";
@@ -433,9 +445,10 @@ h5 {
     box-shadow: 0 1px 1px rgba(0,0,0,.05);}
 
     .panel {
-        margin-bottom: 19px;
+     
+        margin-bottom: 100%;
         margin-left: 100px;
-           margin-top: 73px;
+        margin-top: 60px;
         background-color: #fff;
         border: 1px solid transparent;
         border-radius: 4px;
@@ -458,9 +471,9 @@ h5 {
 .postItem{
 width: 0%;
 margin-left:6%;
-padding-top:5%;
+padding-top:3%;
 margin-top: 0%;
-margin-bottom: -112px;
+/* margin-bottom: -112px; */
 
 }
 

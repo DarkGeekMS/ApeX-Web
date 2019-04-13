@@ -4,7 +4,7 @@ export  const MimicDisplayPosts =new Vue({
   methods:{
     getPostsData: function(mimic,ApexComName){
       if(mimic==true){
-        if(ApexComName==""){
+        if(ApexComName!==""){
   var posts=[
             {
               id:'555',
@@ -15,7 +15,8 @@ export  const MimicDisplayPosts =new Vue({
               locked:false,
               commenetnum:5,
               votes:9
-            },{
+            }
+            ,{
               id:'444',
               postedby:'marc',
               apex_id:'444',
@@ -61,7 +62,7 @@ return posts
                     apex_id:'555',
                     title:'dj',
               content:'Experience enjoyable JavaScript development with WebStorm. With smart code completion, safe refactoring, and first-class support for Node.js, Angular and React. Download free trial 😀😂🍔😍',
-        
+
                     locked:false,
                     commenetnum:5,
                     votes:9
