@@ -109,6 +109,26 @@ subscribe:function(apexComName){
 WriteComment: function(content,parentID){
   var data=MimicComment.WriteComment(content,parentID,this.mimic);
   return data;
+},
+DeleteComment: function(ID){
+  var data=MimicComment.DeleteComment(ID,this.mimic);
+  return data;
+},
+SaveComment: function(ID){
+  var data=MimicComment.SaveComment(ID,this.mimic);
+  return data;
+},
+UpVoteComment: function(ID,points,upVoted,downState){
+  var data=MimicComment.UpVoteComment(ID,points,upVoted,downState,this.mimic);
+  return data;
+},
+DownVoteComment: function(ID,points,downVoted,upState){
+  var data=MimicComment.DownVoteComment(ID,points,downVoted,upState,this.mimic);
+  return data;
+},
+EditComment: function(ID,content){
+  var data=MimicComment.EditComment(ID,content,this.mimic);
+  return data;
 }
 
   }

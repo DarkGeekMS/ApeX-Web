@@ -44,7 +44,14 @@ export default {
 
       if (this.content!='')
       {
-      this.$emit('editParent',this.content);
+      var Write = AllServices.EditComment(this.content,this.parentID);
+      if (Write){
+        this.$emit('editParent',this.content);
+      }
+      else
+        alert("Log In First!!");
+
+      
       }
       else
       {
