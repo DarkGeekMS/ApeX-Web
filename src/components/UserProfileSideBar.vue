@@ -89,7 +89,7 @@
 
           
           
-          <button id="createpostbutton" class="button" type="button">new post</button>
+          <button v-show="notGuest()" id="createpostbutton" class="button" type="button">new post</button>
           <button v-show="isAdmin()" v-on:click="deleteUser()" id="deletebutton" class="button" type="button">delete user</button>
         </div>       
     </div> 
@@ -117,7 +117,7 @@ export default {
        },
   data () {
     return {
-      token:this.$localStorage.get('token'),
+      //token:this.$localStorage.get('token'),
 
     }
   },
@@ -142,6 +142,7 @@ export default {
     * check if the user if Admin
     */
     isAdmin:function(){
+      if(this.loggedIn){
      var data= AllServices.userType();
         if(data ==1){
           return true;
@@ -149,6 +150,22 @@ export default {
         else{
           return false;
         }
+      }
+    },
+    /**
+    * check if the user requesting his profile or other user profile 
+    */
+    notGuest:function(){
+      if(this.loggedIn){
+      if(this.userName != this.loggeduser){
+        return false;
+      }
+      else{
+        return true;
+      }
+      }else{
+        return false;
+      }
     },
     /**
     * send request to delete user
@@ -268,7 +285,7 @@ export default {
 .svg2{
   width:30px;
   height:30px;
-  margin-top:0%;
+  margin-top:-1%;
   margin-left:0%;
   margin-right:0%;
   margin-bottom:-3%;
@@ -280,7 +297,7 @@ export default {
 }
 #cakeday{
   float: right;;
-  margin-top:0%;
+  margin-top:-2%;
   margin-left:0%;
   margin-right:17%;
   margin-bottom:-3%;

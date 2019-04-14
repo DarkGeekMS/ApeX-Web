@@ -10,7 +10,7 @@
        <p id="description">{{description}}</p>
        <button id="subscribebutton" v-bind:class="{button1:subscribed,button:!subscribed}" v-on:mouseover="changeState('unsubscribe')" v-on:mouseleave="changeState('subscribed')" type="button" v-on:click="subscribe()">
        <span> {{state}} </span> </button>
-       <button id="create post button" class="button" type="button">create post</button>
+       <button id="createpostbutton" class="button" type="button">create post</button>
        <button id="deteteApexCom" v-show="isAdmin()" class="button" type="button" v-on:click="deleteAC()">delete</button>
        </div>
        </div>
@@ -23,7 +23,7 @@
       </ol>
     </div>
     </div>
-    
+
     <div  id="moderators box">
       <h3 class="Header" id="moderators box header">Moderators</h3>
       <div class="content" >
@@ -117,6 +117,7 @@ export default {
     * get the list of subscribers to this community
     */
     getSubscribers(){
+      if(this.loggedIn){
         this.subscribers= AllServices.getSubscribers(this.apexComName);
         var subscribe = this.subscribers.find(this.CheckUser);
         console.log(subscribe);
@@ -125,6 +126,11 @@ export default {
           this.state='subscribed';
         }
         else{
+          this.subscribed=false;
+          this.state='subscribe';
+    }
+      }
+      else{
           this.subscribed=false;
           this.state='subscribe';
     }
@@ -175,7 +181,7 @@ export default {
    this.getSubscribers();
    }
  }
- 
+
 }
 </script>
 
@@ -202,7 +208,7 @@ export default {
   margin-top:0%;
   margin-bottom: 8%;
   background-color:#eee;
-  border-bottom-left-radius:8px; 
+  border-bottom-left-radius:8px;
   border-bottom-right-radius:8px;
   padding:5%;
 }

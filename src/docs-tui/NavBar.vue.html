@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Source: UserProfile.vue | Source: UserProfile.vue</title>
+    <title>Source: NavBar.vue | Source: NavBar.vue</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -26,7 +26,7 @@
         
     </div>
     <div class="title">
-        <h1><a href="index.html" class="link">Source: UserProfile.vue</a></h1>
+        <h1><a href="index.html" class="link">Source: NavBar.vue</a></h1>
         
     </div>
     <div class="search-container" id="search-container">
@@ -46,184 +46,229 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>&lt;template id="profiledesign">
-&lt;div id='userprofile'>
-    &lt;div id='firstnavbar'>
-        &lt;a id="posttab" class="navbarlinks" href="#">posts&lt;/a>
-        &lt;a id="savedtab" v-show="notGuest()" class="navbarlinks" href="#">saved&lt;/a>
-        &lt;a id="hiddentab" v-show="notGuest()" class="navbarlinks" href="#">hidden&lt;/a>
-        &lt;a id="reporttab" v-show="isModerator() &amp;&amp; notGuest()" class="navbarlinks" href="#">report&lt;/a>
+            <pre class="prettyprint source linenums"><code>&lt;template>
+&lt;div>
 
-    &lt;/div> 
-        &lt;SideBar 
-        v-bind:userName="userName"
-        v-bind:karmaCount="karmaCount"
-        v-bind:image="image"
-        v-bind:cakeDay="cakeDay"
-                class="sidebar" >&lt;/SideBar>
+ &lt;demo-login-modal> &lt;/demo-login-modal>
+ &lt;demo-sign-modal> &lt;/demo-sign-modal>
+ &lt;nav class="navbar navbar-expand-lg navbar-light navbar-fixed-top" id="mainNav">
+    &lt;router-link class="navbar-brand" :to="{ name:'HomePage'}">
+      &lt;img style="margin-top:-8px" width="85"
+      src="../../public/Logo_small.png" >
+    &lt;/router-link>
+
+    &lt;div class="container-fluid">
+       &lt;div class="form-group drop" style="display:inline-block; margin:0.5% 0.5%">
+          &lt;select class="form-control dropdown-primary" name="category">
+              &lt;option disabled> &lt;/option>
+              &lt;optgroup style="font-size: 13px" label="REDDIT FEEDS">
+                &lt;option> Popular&lt;/option>
+                &lt;option>  All&lt;/option>
+                &lt;option> Original Content&lt;/option>
+              &lt;/optgroup>
+              
+              &lt;option disabled>──────────&lt;/option>  
+              
+              &lt;optgroup style="font-size: 12px" label="MY COMMUNITIES" v-show="this.$localStorage.get('login')" >
+                &lt;option v-for="(apex, key) in apexs" > {{apex.name}} &lt;/option> 
+              &lt;/optgroup>
+          &lt;/select>
+      &lt;/div>
+
+
+      &lt;div class="form-group has-feedback has-search" style="display:inline-block">
+        &lt;span class="glyphicon glyphicon-search form-control-feedback">&lt;/span>
+        &lt;input type="text" class="form-control" placeholder="Search Reddit" v-model="searchVal" v-on:keyup.enter="search()">
+      &lt;/div>
+
+      &lt;div class="btn-toolbar" role="toolbar"> 
+		  &lt;div class="btn-group">
+        &lt;button type="button" class="btn btn-default" alt="popular"> 
+          &lt;i class="glyphicon glyphicon-arrow-up">&lt;/i>&lt;/span> 
+        &lt;/button> 
+		    &lt;button type="button" class="btn btn-default"> 
+		      &lt;i class="glyphicon glyphicon-stats">&lt;/i> 
+		    &lt;/button>
+		    &lt;button type="button" class="btn btn-default last"> 
+		      &lt;span style="background-color:black; color:white; padding-left:3px"> oc 
+		      &lt;/span> 
+		    &lt;/button>
+		  &lt;/div> 
+      &lt;/div> 
+
+
+      &lt;div v-show="!this.$localStorage.get('login')" class="form-group log" style="display:inline-block">
+          &lt;button id="LoginBTN" type="button" class="btn btn-info log1" @click="$modal.show('demo-login')"> LOG IN &lt;/button>
+          &lt;button id="SignUp" type="button" class="btn btn-primary log1" data-toggle="button" aria-pressed="false" autocomplete="off" @click="$modal.show('demo-sign')">SIGN UP&lt;/button>
+      &lt;/div>
+
+      &lt;div v-show="this.$localStorage.get('login')" class="btn-group log" id="loggedDiv">
+        &lt;button type="button" data-toggle="dropdown" class="btn btn-default dropdown-toggle" id="loggedbutton">
+        &lt;img  width="20"
+          src="../../public//Logo_X.png" > {{ userLog }}  &lt;span class="caret">&lt;/span>&lt;/button>
+        &lt;ul class="dropdown-menu">
+            &lt;li class="dropdown-header">MY STUFF&lt;/li>
+            &lt;li>&lt;router-link :to="{ name: 'UserProfile', params: {userName:userLog} } ">My Profile&lt;/router-link>&lt;/li>
+            &lt;li>&lt;a href="#">User Settings&lt;/a>&lt;/li>
+            &lt;li class="divider">&lt;/li>
+            &lt;li>&lt;a class="logOut" href="#" @click="Logout()">Log Out&lt;/a>&lt;/li>
+        &lt;/ul>
+      &lt;/div>
+    &lt;/div>
+
+  &lt;/nav>
 &lt;/div>
 &lt;/template>
 
 &lt;script>
-import axios from 'axios'
-import SideBar from './UserProfileSideBar.vue'
-import {AllServices} from '../MimicServices/AllServices.js'
+  import DemoLoginModal  from './DemoLoginModal.vue'
+  import DemoSignModal  from './DemoSignModal.vue'
+  import {AllServices} from '../MimicServices/AllServices.js'
 
 /**
- * @vue-data {JWT} [token='']  user Token
- * @vue-data {string} [loggeduser='']  name of logged in user
- * @vue-data {boolean} [loggedIn='']  check if user is logged in
- * @vue-data {number} karmaCount - Number of karma
- * @vue-data {string} [image]  Url of user profile image 
- * @vue-data {array} personalPosts - user personal posts
- * @vue-data  {array} savedPosts - user saved posts
- * @vue-data  {array} hiddenPosts - user hidden posts
- * @vue-data  {array} reports - reports of communities that the user is moderator of
- */
+ * @vue-data {string} [userLog=""] name of user logged in
+ * @vue-data {string} [searchVal=""] search value  
+ * @vue-data {boolean} [canBeShown=false] check shownModal
+ * @vue-data {object} [apexs] names op apexComs
+*/
 
-export default {
-  props:['userName'],
+  export default {
     components:{
-    'SideBar':SideBar
-  },
-  data () {
-    return {
-      //token:this.$localStorage.get('token'),
-      //loggeduser:this.$localStorage.get('userName'),
-      //loggedIn:this.$localStorage.get('login'),
-      karmaCount:1,
-      image:'',
-      personalPosts:[],
-      savedPosts:[],
-      hiddenPosts:[],
-      reports:[],
-      cakeDay:'',
-    }
-  },
-  methods:
-  {
-    /**
-     *check if user is moderator 
-    */
-    isModerator:function()
-      {
-        if(this.loggedIn){
-        var data= AllServices.userType();
-        if(data ==2){
-          return true;
-          }
-        else{
-          return false;
-          }
-        }
-      },
-    /**
-    * check if the user requesting his profile or other user profile 
-    */
-    notGuest:function(){
-      if(this.loggedIn){
-      if(this.userName != this.loggeduser){
-        return false;
-      }
-      else{
-        return true;
-      }
-      }else{
-        return false;
+      DemoLoginModal,
+      DemoSignModal
+    },
+    data () {
+      return {
+        canBeShown: false,
+        userLog: '',
+        searchVal: '',
+        apexs:[]
       }
     },
-    /**
-    * get user profile info 
-    */
-    getUserProfile:function(){
-      var data= AllServices.getUserInfo();
-      this.karmaCount = data.karma;
-      // this.image = data.image;
-      //this.userName = data.userName;
-      this.savedPosts = data.saved;
-      this.hiddenPosts = data.hidden;
-      this.personalPosts = data.personalPosts;
-      this.reports = data.reports;
-      this.cakeDay = data.cakeDay;
-   },
-    /**
-    * get user account data for another user
-    */
-   getUserData:function(){
-      var data= AllServices.getUserInfoById(this.userName);
-      this.karmaCount = data.karma;
-      // this.image = data.image;
-     // this.userName = data.userName;
-      this.personalPosts = data.personalPosts;
-      this.cakeDay = data.cakeDay;
-   },
-   /**
-    * get user account data for a guset
-    */
-   getUserDataForGuest:function(){
-     var data= AllServices.getUserInfoByIdforGuest(this.userName);
-      this.karmaCount = data.karma;
-      // this.image = data.image;
-     // this.userName = data.userName;
-      this.personalPosts = data.personalPosts;
-      this.cakeDay = data.cakeDay;
-   }
+    created () {
+      this.apexs = AllServices.getApexNames(),	
+      setInterval(() => {
+        this.userLog = this.$localStorage.get('userName');
+        this.canBeShown = !this.canBeShown
+      }, 500)
+    },
 
-  },
-  mounted()
-  {
-    if(this.loggedIn){
-    if(this.userName == this.loggeduser){
-      this.getUserProfile();
-    }
-    else{
-      this.getUserData();
-    }
-    }
-    else{
-      this.getUserDataForGuest();
-    }
-  }
+    methods: {
+      /**
+       * shown modal if canBeShown being true
+      */
+      conditionalShow () {
+        this.$modal.show('conditional-modal', {
+          show: this.canBeShown
+        })
+      },
+      /**
+       * axios post request to log out the user through send user's token, delete it from data ,delete username and set login false 
+      */
+      Logout: function(){
+        AllServices.logOut()
+        this.$localStorage.set('login', false);
+        this.$localStorage.set('token', '');
+        this.$localStorage.set('userName', '');
+        this.$router.replace('/');
+      },
+      /**
+     * when search value isn't empty transfer to localStorage and go to route search
+     */
+      search: function(){
+        if( this.searchVal != '')
+        {
+          this.$localStorage.set('search' , this.searchVal),
+          this.$router.push({ name:'Search'} )
+        }
+      }
+    },
 }
 &lt;/script>
 
 &lt;style scoped>
-#firstnavbar{
-    background-color: #eee;
-    width:100%;
-    height: 60px;
-    text-transform: uppercase; 
-    padding-top:2%;
-    padding-bottom: 0%;
-    margin-top: 3%;
-    margin-bottom: 0%;
-    margin-left: 0%;
+
+#mainNav{
+  background-color: white;
+  max-height:3%;
+  border:1px solid #eee
 }
-.navbarlinks{
-    padding-top: 0%;
-    padding-bottom: 0%;
-    padding-right: 1%;
-    padding-left: 2%;
-    text-decoration: none;
-    color: black;
-    margin-top: 0%;
-    margin-bottom: 0%;
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 18px;
-    
+
+.drop
+{
+  width:15%
 }
-.navbarlinks:hover{
-    color:deepskyblue;
+input{
+  width:100%;
+  margin-top:1.2%;
+  display:inline-block;
 }
-#sidebar{
-    width:25%;
-    height: auto;
-    margin:8%;
-    margin-left: 3%;
-    margin-right: 6%;
-    float:right;
+.has-search{
+  width:40%;
+  height:100%;
 }
+.has-search .form-control-feedback {
+    right: initial;
+    left: 0;
+    color: #ccc;
+    margin-top:1.3%
+}
+.has-search .form-control {
+    padding-right: 12px;
+    padding-left: 34px;
+}
+.log{
+  height:100%;
+  float:right;
+  margin:0.5% 0.5%;
+}
+@media(max-width:887px){
+  .has-search,.drop{
+      width:30%;
+  }
+}
+@media(max-width:1186.4px){
+  .btn-toolbar, .btn-group{
+    display:none
+  }
+}
+@media(max-width:1414px){
+  .log,.log1{
+  	display: none
+  }
+}
+button{
+  width:100px;
+  margin:0 5px;
+}
+#loggedbutton{
+  width:200px;
+  height:40px;
+  margin:-3px 4px;
+  font-size:17px;
+  color:#999999;
+}
+#loggedbutton:hover {
+  background: #fff;
+}
+ul{
+  width:200px;
+  margin:2px 4px;
+}
+.btn-toolbar{
+	width:20%;
+	display: inline-block;
+    padding-left: 6%;
+}
+.btn-group button{
+	width:30%;
+    margin-bottom:-9%;
+    border :1px solid white;
+}
+button.last{
+	border-right: 1px solid #ccc;
+}
+
 &lt;/style>
 </code></pre>
         </article>

@@ -22,7 +22,7 @@ export default {
 <style scoped>
 #app {
   margin-top: 0px;
-  min-width: 1200px;
+  min-width: 100%;
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

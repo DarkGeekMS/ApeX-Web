@@ -1,6 +1,7 @@
 {
   "scripts": {
     "docs": "jsdoc -d docs -c .jsdoc.js",
+    "test": "mocha",
     "docs:docstrap": "jsdoc -c .jsdoc-docstrap.js",
     "docs:minami": "jsdoc -c .jsdoc-minami.js",
     "docs:tui": "jsdoc -c .jsdoc-tui.js",

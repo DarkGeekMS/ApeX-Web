@@ -14,7 +14,9 @@
 <script>
 import post from "./Post.vue"
 import CommentParent from "./CommentParent.vue"
-
+/**
+ * @vue-prop  {object} onePostData - the data of the post in the modal
+ */
 export default {
 name: 'DemoOnePost',
 props:{

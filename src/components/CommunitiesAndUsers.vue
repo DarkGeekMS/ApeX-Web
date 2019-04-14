@@ -1,39 +1,67 @@
 <template>
   <div id="mainDiv" >
-    <a href="" id="subDiv" v-for='apex in apexs' > 
+    <a href="" id="subDiv" v-show="exist" v-for='apex in apexs' > 
       <div id="sub1">
-         <img width="20%" src="../../public//AMFz23O.jpg" >
+         <img width="20%" :src="'../../public/'+apex.avatar"/>
          <a class="name"> {{apex.name}} </a>
          <div class="memb"> {{apex.numOfMeb}} Member </div>
        </div> 
        <div id="sub2">
          <div class="about" style="display:inline-block">{{apex.description}} </div>
-         <button class="btn btn-primary log" style="display:inline-block" type="button"> SUBSCIBE</button> 
+         <button class="btn btn-primary log" style="display:inline-block; width:15%" type="button"> JOIN</button>  
        </div>
        
        </br></br>
     </a>
+    <a href="" id="subDiv" v-show="exist" v-for='user in users' > 
+      <div id="sub1">
+         <img width="20%" :src="'../../public/'+user.avatar"/>
+         <a class="name"> {{user.name}} </a>
+       </br>
+         <div class="memb"> {{user.karma}} karma </div>
+       </div> 
+       <div id="sub2">
+         <button class="btn btn-primary log" style="display:inline-block; width:15%" type="button"> FOLLOW</button>  
+       </div>
+       
+       </br></br>
+    </a>
+    <div id="subDiv" style="text-align:center;font-size: 17px;font-weight: 600; " v-show="!exist"> {{error}} ''{{this.$localStorage.get('search')}}'' 
+    </div>
   </div>
 </template>
 
 <script>
+import {AllServices} from '../MimicServices/AllServices.js'
+/**
+ * @vue-data {string} [apexs=""] apexComs that reflect with search value
+ * @vue-data {string} [users=""] users that reflect with search value  
+ * @vue-data {boolean} [exist=true] if there is matching
+ * @vue-data {string} [error=''] if there is no matching
+*/
+
 export default {
   data(){
     return{
-      apexs:[
-      {
-         name:'AyatMostafa',
-         numOfMeb: 0,
-         description: "Aww, cripes. I didn't know I'd have to write a description. How many words is that so far, like a hundred? Soooo, yeah. Mildly interesting stuff.",
-      },
-      {
-         name:'AyatMostafa',
-         numOfMeb: 0,
-         description: "Aww, cripes. I didn't knowterests you. Mildly. It's in the name, ffs.hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh",
-      },
-
-      ]
+      exist:true,
+      error:'',
+      apexs:[],
+      users:[]
     }
+  },
+  mounted () {
+    var result = AllServices.searchApexAndUser();
+    if( typeof result === 'string')
+    {
+        this.exist = false,
+        this.error = result
+    }
+    else{
+      this.apexs = result[0],
+      this.users = result[1]
+
+    }
+   
   },
 
 }
@@ -61,7 +89,8 @@ export default {
   text-decoration: none;
   box-sizing: border-box;
   margin: 3% auto;
-  padding-left:1% 
+  padding-left:1% ;
+
 }
 #sub1{
   width:20%;

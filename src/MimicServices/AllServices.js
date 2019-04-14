@@ -6,7 +6,7 @@ import {MimicApexCom} from './ApexCom.js'
 import {MimicUserProfile} from './UserProfile.js'
 import { MimicPost } from './Post.js'
 import { MimicComment } from './Comments.js'
-
+import { MimicSearch } from './Search.js'
 
 export  const AllServices =new Vue({
   data(){
@@ -15,6 +15,9 @@ export  const AllServices =new Vue({
     }
   },
   methods:{
+    getState(){
+      return this.mimic
+    },
     getPosts:function() {
       var posts=MimicDisplayPosts.getPostsData(this.mimic);
         return posts
@@ -30,6 +33,14 @@ export  const AllServices =new Vue({
     getApexNames:function()
     {
       return MimicAuth.getApex(this.mimic)
+    },
+    searchApexAndUser:function()
+    {
+      return MimicSearch.searchApex(this.mimic)
+    },
+    searchPosts:function()
+    {
+      return MimicSearch.searchPost(this.mimic)
     },
 
     signUp: function(email, user,pass)

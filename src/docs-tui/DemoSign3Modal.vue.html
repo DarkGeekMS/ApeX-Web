@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Source: UserProfile.vue | Source: UserProfile.vue</title>
+    <title>Source: DemoSign3Modal.vue | Source: DemoSign3Modal.vue</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -26,7 +26,7 @@
         
     </div>
     <div class="title">
-        <h1><a href="index.html" class="link">Source: UserProfile.vue</a></h1>
+        <h1><a href="index.html" class="link">Source: DemoSign3Modal.vue</a></h1>
         
     </div>
     <div class="search-container" id="search-container">
@@ -46,183 +46,69 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>&lt;template id="profiledesign">
-&lt;div id='userprofile'>
-    &lt;div id='firstnavbar'>
-        &lt;a id="posttab" class="navbarlinks" href="#">posts&lt;/a>
-        &lt;a id="savedtab" v-show="notGuest()" class="navbarlinks" href="#">saved&lt;/a>
-        &lt;a id="hiddentab" v-show="notGuest()" class="navbarlinks" href="#">hidden&lt;/a>
-        &lt;a id="reporttab" v-show="isModerator() &amp;&amp; notGuest()" class="navbarlinks" href="#">report&lt;/a>
+            <pre class="prettyprint source linenums"><code>&lt;template>
+&lt;modal name="demo-sign3" transition="pop-out" :width="modalWidth" :height="450">
+  &lt;div class="box">
 
-    &lt;/div> 
-        &lt;SideBar 
-        v-bind:userName="userName"
-        v-bind:karmaCount="karmaCount"
-        v-bind:image="image"
-        v-bind:cakeDay="cakeDay"
-                class="sidebar" >&lt;/SideBar>
-&lt;/div>
+    &lt;button class="btn-primary" style="margin:0px 631px" @click="action()"  > X &lt;/button>
+    &lt;img id="SignUpSucces" width="650" height="450"
+     src="../../public/Logo.png" >
+
+  &lt;/div>
+&lt;/modal>
 &lt;/template>
 
 &lt;script>
-import axios from 'axios'
-import SideBar from './UserProfileSideBar.vue'
-import {AllServices} from '../MimicServices/AllServices.js'
-
+const MODAL_WIDTH = 656;
+import DemoSignModal  from './DemoSignModal.vue'
 /**
- * @vue-data {JWT} [token='']  user Token
- * @vue-data {string} [loggeduser='']  name of logged in user
- * @vue-data {boolean} [loggedIn='']  check if user is logged in
- * @vue-data {number} karmaCount - Number of karma
- * @vue-data {string} [image]  Url of user profile image 
- * @vue-data {array} personalPosts - user personal posts
- * @vue-data  {array} savedPosts - user saved posts
- * @vue-data  {array} hiddenPosts - user hidden posts
- * @vue-data  {array} reports - reports of communities that the user is moderator of
+ * @vue-data {integer} [modalWidth=656] width of modal
  */
-
 export default {
-  props:['userName'],
-    components:{
-    'SideBar':SideBar
+  name: 'DemoSign3Modal',
+  components:{
+      DemoSignModal
   },
-  data () {
-    return {
-      //token:this.$localStorage.get('token'),
-      //loggeduser:this.$localStorage.get('userName'),
-      //loggedIn:this.$localStorage.get('login'),
-      karmaCount:1,
-      image:'',
-      personalPosts:[],
-      savedPosts:[],
-      hiddenPosts:[],
-      reports:[],
-      cakeDay:'',
+  data(){
+    return{
+      modalWidth: MODAL_WIDTH
     }
   },
-  methods:
-  {
-    /**
-     *check if user is moderator 
-    */
-    isModerator:function()
-      {
-        if(this.loggedIn){
-        var data= AllServices.userType();
-        if(data ==2){
-          return true;
-          }
-        else{
-          return false;
-          }
-        }
-      },
-    /**
-    * check if the user requesting his profile or other user profile 
-    */
-    notGuest:function(){
-      if(this.loggedIn){
-      if(this.userName != this.loggeduser){
-        return false;
-      }
-      else{
-        return true;
-      }
-      }else{
-        return false;
-      }
-    },
-    /**
-    * get user profile info 
-    */
-    getUserProfile:function(){
-      var data= AllServices.getUserInfo();
-      this.karmaCount = data.karma;
-      // this.image = data.image;
-      //this.userName = data.userName;
-      this.savedPosts = data.saved;
-      this.hiddenPosts = data.hidden;
-      this.personalPosts = data.personalPosts;
-      this.reports = data.reports;
-      this.cakeDay = data.cakeDay;
-   },
-    /**
-    * get user account data for another user
-    */
-   getUserData:function(){
-      var data= AllServices.getUserInfoById(this.userName);
-      this.karmaCount = data.karma;
-      // this.image = data.image;
-     // this.userName = data.userName;
-      this.personalPosts = data.personalPosts;
-      this.cakeDay = data.cakeDay;
-   },
-   /**
-    * get user account data for a guset
-    */
-   getUserDataForGuest:function(){
-     var data= AllServices.getUserInfoByIdforGuest(this.userName);
-      this.karmaCount = data.karma;
-      // this.image = data.image;
-     // this.userName = data.userName;
-      this.personalPosts = data.personalPosts;
-      this.cakeDay = data.cakeDay;
-   }
-
+  created () {
+    this.modalWidth = window.innerWidth &lt; MODAL_WIDTH ? MODAL_WIDTH / 2 : MODAL_WIDTH
   },
-  mounted()
-  {
-    if(this.loggedIn){
-    if(this.userName == this.loggeduser){
-      this.getUserProfile();
-    }
-    else{
-      this.getUserData();
-    }
-    }
-    else{
-      this.getUserDataForGuest();
+  methods:{
+    /**
+      * close all Modals
+    */
+    action: function(){
+      this.$modal.hide('demo-sign3'),
+      this.$modal.hide('demo-sign2'),
+      this.$modal.hide('demo-sign')
     }
   }
 }
 &lt;/script>
 
-&lt;style scoped>
-#firstnavbar{
-    background-color: #eee;
-    width:100%;
-    height: 60px;
-    text-transform: uppercase; 
-    padding-top:2%;
-    padding-bottom: 0%;
-    margin-top: 3%;
-    margin-bottom: 0%;
-    margin-left: 0%;
-}
-.navbarlinks{
-    padding-top: 0%;
-    padding-bottom: 0%;
-    padding-right: 1%;
-    padding-left: 2%;
-    text-decoration: none;
-    color: black;
-    margin-top: 0%;
-    margin-bottom: 0%;
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 18px;
-    
-}
-.navbarlinks:hover{
-    color:deepskyblue;
-}
-#sidebar{
-    width:25%;
-    height: auto;
-    margin:8%;
-    margin-left: 3%;
-    margin-right: 6%;
-    float:right;
+&lt;style lang="scss" scoped >
+$background_color: #404142;
+.box {
+  overflow: hidden;
+  width: 1000px;
+  height: 450px;
+  border-radius: 40px;
+  box-sizing: border-box;
+  box-shadow: 0 0 40px black;
+  .box-part {
+    text-align:right;
+    margin:17px;
+    display: inline-block;
+    position: relative;
+    vertical-align: top;
+    box-sizing: border-box;
+    height: 100%;
+    width: 60%;
+  }
 }
 &lt;/style>
 </code></pre>

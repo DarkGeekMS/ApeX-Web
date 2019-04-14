@@ -36,6 +36,11 @@
 <script>
 const MODAL_WIDTH = 656;
 import DemoSign2Modal  from './DemoSign2Modal.vue'
+/**
+ * @vue-data {string} [email=""] Email value
+ * @vue-data {string} [error=""] error value
+ * @vue-data {integer} [modalWidth=656] width of modal
+ */
 export default {
   name: 'DemoSignModal',
   components:{
@@ -55,10 +60,17 @@ export default {
     this.$localStorage.set('emailVal', this.email)
   },
   methods:{
+    /**
+     * check out if the email is valid or not
+     * @param {string} [email] - email value of the user   
+    */
     validateEmail: function(email) {
       var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       return re.test(String(email).toLowerCase());
     },
+    /**
+     * check out the value of email is empty or invalid, and generate an error in this case, if not show the second modal and send value   
+    */
     checkEmail: function(){
       if(this.email == '')
       {
