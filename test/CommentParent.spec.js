@@ -2,7 +2,6 @@ import { mount } from '@vue/test-utils'
 import CommentParent from '../src/components/CommentParent.vue';
 import expect from 'expect';
 import moxios from 'moxios'
-import {globalStore} from '../src/main.js'
 
 
 describe ('Comment' , () =>{
@@ -40,7 +39,7 @@ describe ('Comment' , () =>{
         wrapper.vm.addReply('Reply to comment 2',1,1,'parentID_2','currentID_4');
         expect(wrapper.vm.comments[2]).toEqual(
             {
-                user:globalStore.Username,
+                user:this.$localStorage.userName,
                 content:'Reply to comment 2',
                 idx:2,
                 level:1,
@@ -64,7 +63,7 @@ describe ('Comment' , () =>{
 
         expect(wrapper.vm.comments[0]).toEqual(
             {
-                user:globalStore.Username,
+                user:this.$localStorage.userName,
                 content:'content1_updated',
                 idx:0,
                 level:0,
@@ -89,7 +88,7 @@ describe ('Comment' , () =>{
         wrapper.vm.deleteComment(0);
         expect(wrapper.vm.comments[0]).toEqual(
             {
-                user:globalStore.Username,
+                user:this.$localStorage.userName,
                 content:'content2',
                 idx:0,
                 level:0,

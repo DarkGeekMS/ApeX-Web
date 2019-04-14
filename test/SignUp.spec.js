@@ -11,7 +11,7 @@ describe ('SignUp' , () =>{
     });
 
     it('default email equal to null' , () =>{
- 		expect(wrapper.vm.Value).toBe('');
+ 		expect(wrapper.vm.email).toBe('');
     });
 
     it('check value from input to variables' , () =>{
@@ -19,7 +19,7 @@ describe ('SignUp' , () =>{
         inputUser.element.value ='myEmail' ;
         inputUser.trigger('input');
 
- 		expect(wrapper.vm.Value).toBe('myEmail');
+ 		expect(wrapper.vm.email).toBe('myEmail');
     });
 
 

@@ -1,37 +1,33 @@
 <template>
   <div id="HomePage" >
-     <nav-bar></nav-bar>
-     <hotposts></hotposts>
-     <DisplayPosts></DisplayPosts>
-
-
+     <!-- <HotPosts></HotPosts> -->
+     <DisplayPosts :apexComName="''"></DisplayPosts>
+     <SideBar> </SideBar>
 
   </div>
 </template>
 
 <script>
 
-
 import DisplayPosts from "./DisplayPosts.vue"
-import NavBar from './NavBar.vue'
-import hotposts from './HotPosts.vue'
-
-
+import HomeSideBar from "./HomeSideBar.vue"
+import RecentPosts from "./RecentPosts.vue"
 export default {
   name: 'HomePage',
   components:{
-
-    'navBar': NavBar,
-    'hotposts':hotposts,
     'DisplayPosts':DisplayPosts,
-
+    'SideBar':HomeSideBar,
+    'recentPost':RecentPosts,
   },
-
+  data(){
+    return{
+      title:'title '
+    }
   }
+}
 
 </script>
 
 <style scoped>
-
 
 </style>

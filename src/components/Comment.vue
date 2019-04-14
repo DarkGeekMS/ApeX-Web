@@ -1,12 +1,19 @@
 <template>
 
   <div id="Comment" v-show = "deleted"  v-bind:style="{marginLeft: level*2 +'%'}" >
+
+     <reportBox> </reportBox>
       <div id = "firstLine">
         <button id ="Up" v-on:click="Upvote" v-show="!this.upVoted" class = "arrows,up"></button>
         <button id ="Up2" v-on:click="Upvote" v-show="this.upVoted" class = "arrows,up"></button>
-        <a class ="smallText" href="https://www.google.com/?hl=ar">{{ user }}</a>
+        <router-link 
+          class ="smallText"
+          :to="{name:'UserProfile' ,
+           params: {userName:this.user}}">
+            {{user}}
+          </router-link>
         <b class = "smallText">{{points}} points</b>
-        <b class = "smallText">{{time}} hours</b>
+        <b class = "smallText">{{time}}</b>
         </div>
 
       <br>
@@ -14,7 +21,15 @@
       <div id = "secondLine">
         <button id ="Down" v-on:click="Downvote" v-show="!this.downVoted" class = "arrows,down"></button>
         <button id ="Down2" v-on:click="Downvote" v-show="this.downVoted" class = "arrows,down"></button>
-        <span  id="paragraphComment" >{{content}}</span>
+        <div class = "condiv" v-for = "part in con" :key="part.start">
+          <p class="content"  v-if = "!part.type" >{{part.c}}</p>
+          <router-link 
+          v-if = "part.type" 
+          :to="{name:'UserProfile' ,
+           params: {userName:part.c}}">
+            {{part.c}}
+          </router-link>
+        </div>
       </div>
 
       <br>
@@ -23,7 +38,7 @@
       <div id = "thirdLine" v-show="!showEditBox">
         <button class = "buttons" v-on:click = "showReplyBox = !showReplyBox" id = "Reply">Reply</button>
         <span>|</span>
-        <button class = "buttons" id = "Report">Report</button>
+        <button class = "buttons" id = "Report" @click="$modal.show('reportBox')">Report</button>
         <span>|</span>
         <button class = "buttons" v-on:click="Save" id = "Save" >{{unSaved}}</button>
         <span>|</span>
@@ -43,7 +58,8 @@
 <script>
 import WriteComment from './WriteComment.vue'
 import axios from 'axios'
-import {globalStore} from '../main.js'
+import reportBox from './ReportModal.vue'
+import {AllServices} from '../MimicServices/AllServices.js'
 
 
 export default {
@@ -54,21 +70,30 @@ export default {
     idx:Number,
     level:Number,
     parentIdx:Number,
-    parentID:Number,
-    ID:String
+    parentID:String,
+    ID:String,
+    date:Date
   },
   data(){
     return{
-    user:globalStore.Username,
+    user:this.$localStorage.get('userName'),
     upVoted:false,
     downVoted:false,
     points:0,
-    time:0,
+    time:'',
     showReplyBox:0,
     showEditBox:0,
     deleted:1,
-    unSaved:'Save'
+    unSaved:'Save',
+    con : []
+
     }
+  },
+  created(){
+    setInterval(() => this.DateFormat(this.date), 1000);
+
+  /////
+  this.OpString();
   },
   methods:{
 edit:function(updatedContent){
@@ -76,24 +101,52 @@ edit:function(updatedContent){
   this.showEditBox =0;
   //EMIT EVENT TO COMMENT PARENT TO EDIT THE CONTENT OF THE IDX = idx  by updatedContent
   this.$emit('Edit',updatedContent,this.idx );
+  this.con=[];
+  this.OpString();
+
 
 },
 retrieveWithNoEdit:function(){
   this.showEditBox =0;
 },
 Delete:function(){
-  this.$emit('Delete',this.idx );
-  axios.delete('http://127.0.0.1:8000/api/delete', {
-      data : {
-      name: this.ID,
-      token: globalStore.token
-      }
-        })
-      .then(function (response) {
-       })
-      .catch(function (error) {
-       alert("Something went wrong");
-       });
+  var Write = AllServices.DeleteComment(this.ID);
+  if(Write)
+      this.$emit('Delete',this.idx );
+
+
+  
+},
+OpString:function(){
+   for (var i = 0;i<this.content.length;i++)
+          {
+              if (this.content[i]=='u' && this.content[i+1]=='/' && this.content[i+2]!=' ')
+              {
+                for (var x = i;x<this.content.length;x++)
+                {
+                    if (this.content[x+1]==' '|| x==this.content.length-1)
+                    {
+                    var str = this.content.slice(i,x+1);
+                    this.con.push({c:str , type:1});
+                    i=x+1;
+                    break;
+                    }
+                }
+              }
+             
+                    for (var x = i;x<this.content.length;x++)
+                    {
+                        if((this.content[x+1]=='u' && this.content[x+2]=='/' && this.content[x]==' ')||x==this.content.length-1)
+                        {
+                            var str = this.content.slice(i,x+1);
+                            this.con.push({c:str , type:0});
+                            i=x;
+                            break;
+                        }
+                    }   
+
+              
+          }
 },
 Save:function(){
   if(this.unSaved=='Save')
@@ -101,54 +154,69 @@ Save:function(){
   else
     this.unSaved='Save';
 
-  axios.post('http://127.0.0.1:8000/api/save', {
-       ID: this.ID,
-       token: globalStore.token
-        })
-      .then(function (response) {
-       })
-      .catch(function (error) {
-       alert("Something went wrong");
-       });
+  if(!AllServices.SaveComment(this.ID))
+    alert("Log In First!!");
 },
 Upvote:function(){
   this.upVoted = !this.upVoted;
+  var downState = this.downVoted;
   this.downVoted = false;
-  axios.post('http://127.0.0.1:8000/api/vote', {
-       name: this.ID,
-       dir: 1,
-       token: globalStore.token
-        })
-      .then(function (response) {
-       })
-      .catch(function (error)
-      {
-       alert("Something went wrong");
-       });
+  var Write = AllServices.UpVoteComment(this.ID,this.points,this.upVoted,downState);
+      if (Write.done){
+        this.points=Write.points;
+      }
+      else
+        alert("Log In First!!");
+
 },
 Downvote:function(){
   this.downVoted = !this.downVoted;
+  var upState = this.upVoted;
   this.upVoted = false;
-  axios.post('http://127.0.0.1:8000/api/vote', {
-       name: this.ID,
-       dir: -1,
-       token: globalStore.token
-        })
-      .then(function (response) {
-       })
-      .catch(function (error) {
-       alert("Something went wrong");
-       });
+  var Write = AllServices.DownVoteComment(this.ID,this.points,this.downVoted,upState);
+      if (Write.done){
+        this.points=Write.points;
+      }
+      else
+        alert("Log In First!!");
+
 },
 addReply:function(cont,use,parent,parentLevel,parentID,currentID){
   // send to comment parent to push in the array!!!!!
   this.$emit('Reply2',cont,parent,parentLevel+1,parentID,currentID );
 
 
+},
+DateFormat:function(date){
+  // Make a fuzzy time
+var delta = Math.round((+new Date - date) / 1000);
+
+var minute = 60,
+    hour = minute * 60,
+    day = hour * 24,
+    week = day * 7;
+
+var fuzzy;
+
+if (delta < 60) {
+    fuzzy = 'just now';
+}  else if (delta < 2 * minute) {
+    fuzzy = 'a minute ago.'
+} else if (delta < hour) {
+    fuzzy = Math.floor(delta / minute) + ' minutes ago.';
+} else if (Math.floor(delta / hour) == 1) {
+    fuzzy = '1 hour ago.'
+} else if (delta < day) {
+    fuzzy = Math.floor(delta / hour) + ' hours ago.';
+} else if (delta < day * 2) {
+    fuzzy = 'yesterday';
+}
+this.time=fuzzy;
 }
   },
 
   components: {
+    reportBox,
     WriteComment
   }
 
@@ -240,10 +308,7 @@ addReply:function(cont,use,parent,parentLevel,parentID,currentID){
     -moz-osx-font-smoothing: grayscale;
     align-items: center;
     float: right;
-
-
 }
-
 
 .outer{
     position: relative;
@@ -270,5 +335,8 @@ addReply:function(cont,use,parent,parentLevel,parentID,currentID){
   position:static;
   float:left;
 }
+.condiv ,.content, .user  { 
+display: inline;
+ }
 
 </style>

@@ -1,19 +1,21 @@
 <template>
   <div id="DisplayPosts">
-    <div id="PostContainer" v-for="onepost in posts">
-     <post v-bind:postdata="onepost" v-on:showUp="showPost"></post>
+    <div id="PostContainer" v-for="onePost in posts">
+     <post v-bind:postData="onePost" v-on:showUp="showPost" ></post>
     </div>
-    <DemoOnePost v-bind:style="{width: 80 +'%'}" id="PostModal" :onepostdata="postInfo" :style></DemoOnePost>
+    <DemoOnePost  id="PostModal" :onePostData="postInfo" ></DemoOnePost>
+    <!-- v-bind:style="{width: 80 +'%'}" -->
   </div>
 </template>
 
 <script>
-import axios from 'axios'
 import post from "./Post.vue"
 import DemoOnePost from './DisplayOnePost.vue'
-import {globalStore} from '../main.js'
-import {MimicDisplayPosts} from '../MimicServices/DisplayPosts.js'
+import {AllServices} from '../MimicServices/AllServices.js'
 export default {
+  props:{
+    apexComName:String
+    },
 data(){
 return{
   postInfo:'',
@@ -24,8 +26,7 @@ return{
 },
 mounted:function () {
   this.getPosts();
-  this.mimicgetPosts();
-},
+  },
 
 
 methods:
@@ -36,25 +37,12 @@ methods:
     this.postInfo=post;
     },
 
-  mimicgetPosts()
-    {
-    this.posts= MimicDisplayPosts.getPostsData();
-    },
+   getPosts(){
+         AllServices.getPosts(this.apexComName).then((data) => {
+          this.posts= data;
+         })
+   }
 
-   getPosts()
-    {
-      axios.get('http://localhost/sort_posts',
-      {
-        ApexCommID: "YNL2AYkKaW4mwaE8",
-        SortingParam: "date"
-      })
-      .then(function (response) {
-        // console.log(response);
-       })
-      .catch(function (error) {
-       // console.log(error);
-       });
-     }
 },
 components:{
   'post':post,
@@ -65,6 +53,9 @@ components:{
 </script>
 
 <style scoped>
-
+#DisplayPosts{
+   width: 60%;
+  display: inline-block;
+}
 
 </style>

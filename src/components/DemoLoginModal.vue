@@ -12,17 +12,20 @@
         <div class="partition-form">
 
           <form>
-            <input id="usernamextxt" type="text" 
-             placeholder="Username" v-model="username" required autofocus>
+            <input id="usernamextxt" type="text"
+             placeholder="Username" v-model="username" v-on:keyup="restart()" required autofocus>
 
              <div style="margin-top: 42px"></div>
 
             <input id="password" type="password"
              placeholder="Password"
-             v-model="pass" name="password" required>
+             v-model="pass" name="password" v-on:keyup="restart()" required>
+
+            <p class = "lead" style = "fontSize:15px; color:red; padding-left:15px" > {{ error }}  </p>
+            <p class = "lead" style = "fontSize:15px; color:blue; padding-left:15px" > {{ congra }}  </p>
 
             <div style="margin-top: 32px"></div>
-            <button class="btn blue" type="submit" @click.prevent="post()" style="display:block" id="submit">Sign In</button>
+            <button class="btn blue" type="submit" @click.prevent="post()" style="display:block" id="LoginButton">Sign In</button>
           </form>
 
            <a id="forgetname" class="btn btn-link"  href="#" > Forgot username </a>
@@ -37,36 +40,56 @@
 </template>
 
 <script>
-import axios from 'axios'
+import {AllServices} from '../MimicServices/AllServices.js'
 const MODAL_WIDTH = 656;
-import {globalStore} from '../main.js'
+
+/**
+ * @vue-data {string} [username=""] name of user logged in
+ * @vue-data {string} [pass=""] password of user logged in
+ * @vue-data {integer} [modalWidth=656] width of modal
+ * @vue-data {string} [error=""] when username or password are invalid
+ * @vue-data {string} [congra=''] congratulation when user logged in
+ */
 export default {
   name: 'DemoLoginModal',
   data(){
-        return{
-          modalWidth: MODAL_WIDTH,
-          username: '',
-          pass: ''
-        }
+    return{
+      modalWidth: MODAL_WIDTH,
+      username: '',
+      pass: '',
+      error: '',
+      congra: ''
+    }
   },
   created () {
-    this.modalWidth = window.innerWidth < MODAL_WIDTH ? MODAL_WIDTH / 2 : MODAL_WIDTH
+    this.modalWidth = window.innerWidth < MODAL_WIDTH ? MODAL_WIDTH / 2 : MODAL_WIDTH,
+    this.congra = ''
   },
   methods:{
+    /**
+     * axios post request to send username and password to the server to log in user 
+    */
     post: function()
-      {
-        axios.post('http://127.0.0.1:8000/api/Sign_in', {
-            username : this.username,
-            password : this.pass
-          }).then(response => {
-             globalStore.login = true;
-             globalStore.Username = this.username;
-             this.$modal.hide('demo-login');
-             globalStore.token = response.data.token;
-          }).catch(function (error) {
-             alert("Username or Password is invalid");
-          });
-      }
+    {
+         AllServices.logIn(this.username, this.pass).then((data) => {
+         if(data)
+          {
+            this.congra = 'You are now logged in. You will soon be redirected' ;
+            setTimeout(() =>this.$modal.hide('demo-login') , 1000)
+          }
+          else{
+              this.error =  this.$localStorage.get('error');
+          }
+         })
+    },
+    /**
+     * function to restart parameters every time
+    */
+    restart: function()
+    {
+      this.congra = ''
+      this.error = ''
+    }
   }
 }
 </script>
@@ -74,8 +97,7 @@ export default {
 <style lang="scss" scoped >
 body{
   display: grid;
-  font-family: Avenir;
-  -webkit-text-size-adjust: 100%;
+ // font-family: Avenirbvbvbv  -webkit-text-size-adjust: 100%;
   -webkit-font-smoothing: antialiased;
 }
 $background_color: #404142;
