@@ -49,9 +49,13 @@ export  const MimicDisplayPosts =new Vue({
               title:'anime',
               content:'Software costs more to maintain than it does to develop. For systems with a long life, maintenance costs may be several times development costs🍔 😂 '
             },
-          ]
-
-return posts
+          ];
+          var promise1 = new Promise(function(resolve, reject) {
+            setTimeout(function() {
+              resolve(posts);
+            }, 300);
+          });
+return promise1;
                 }
 
               else{
@@ -73,14 +77,14 @@ return posts
                     title:'dj',
                     content:'I love javascript ,vue ,html ,css 🐸🐸🐸'
                   }
-                ]
+                ];
                 return posts;
               }
       }
 else {
   if (this.$localStorage.get('token') == null)
   {
-    return axios.get('http://127.0.0.1:8001/api/sort_posts',
+    return axios.get('http://35.232.3.8/api/sort_posts',
    {
       apexComID:ApexComName ,
       sortingParam: "date"
@@ -90,7 +94,7 @@ else {
   }
   else {
     {
-      return axios.post('http://127.0.0.1:8001/api/sort_posts',
+      return axios.post('http://35.232.3.8/api/sort_posts',
      {
         apexCommID:ApexComName ,
         sortingParam: "date",

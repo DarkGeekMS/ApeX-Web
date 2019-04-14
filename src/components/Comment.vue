@@ -1,7 +1,6 @@
 <template>
 
   <div id="Comment" v-show = "deleted"  v-bind:style="{marginLeft: level*2 +'%'}" >
-
      <reportBox> </reportBox>
       <div id = "firstLine">
         <button id ="Up" v-on:click="Upvote" v-show="!this.upVoted" class = "arrows,up"></button>
@@ -50,7 +49,7 @@
       <br>
 
       <WriteComment buttonType="1" v-bind:parentLevel=level  v-bind:parentID=ID v-bind:parentIdx=idx v-on:Reply="addReply"  v-show = "showReplyBox && !showEditBox"  class="Reply"></WriteComment>
-      <WriteComment id="EditBox" buttonType="2" v-on:noEdit="retrieveWithNoEdit" v-on:editParent="edit($event)" :content=content v-show = "showEditBox" class="Reply"></WriteComment>
+      <WriteComment id="EditBox" buttonType="2" v-on:noEdit="retrieveWithNoEdit" v-bind:parentID=ID v-on:editParent="edit($event)" :content=content v-show = "showEditBox" class="Reply"></WriteComment>
 
   </div>
 </template>
@@ -110,11 +109,14 @@ retrieveWithNoEdit:function(){
   this.showEditBox =0;
 },
 Delete:function(){
-  var Write = AllServices.DeleteComment(this.ID);
-  if(Write)
+ 
+
+
+  if(AllServices.DeleteComment(this.ID))
+    alert("Log In First!!");
+    else{
       this.$emit('Delete',this.idx );
-
-
+    }
   
 },
 OpString:function(){
@@ -154,32 +156,26 @@ Save:function(){
   else
     this.unSaved='Save';
 
-  if(!AllServices.SaveComment(this.ID))
+  if(AllServices.SaveComment(this.ID))
     alert("Log In First!!");
 },
 Upvote:function(){
   this.upVoted = !this.upVoted;
   var downState = this.downVoted;
   this.downVoted = false;
-  var Write = AllServices.UpVoteComment(this.ID,this.points,this.upVoted,downState);
-      if (Write.done){
-        this.points=Write.points;
-      }
-      else
-        alert("Log In First!!");
-
+  AllServices.UpVoteComment(this.ID,this.points,this.upVoted,downState).then((data) => {
+       if(data){
+          this.points=data.votes;
+        }});
 },
 Downvote:function(){
   this.downVoted = !this.downVoted;
   var upState = this.upVoted;
   this.upVoted = false;
-  var Write = AllServices.DownVoteComment(this.ID,this.points,this.downVoted,upState);
-      if (Write.done){
-        this.points=Write.points;
-      }
-      else
-        alert("Log In First!!");
-
+  AllServices.DownVoteComment(this.ID,this.points,this.downVoted,upState).then((data) => {
+        if(data){
+          this.points=data.votes;
+        }});
 },
 addReply:function(cont,use,parent,parentLevel,parentID,currentID){
   // send to comment parent to push in the array!!!!!

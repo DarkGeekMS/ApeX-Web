@@ -109,7 +109,7 @@ import { AllServices } from '../MimicServices/AllServices';
  * @vue-data  {string} [PostId=''] postID
  * @vue-data  {boolean} [moderator=false] check if the user is moderator
  * @vue-data  {boolean} [Deleted=false] check if the post is Deleted
- *@vue-prop {object} [postdata] the data of the post 
+ *@vue-prop {object} [postdata] the data of the post
  */
 export default {
 
@@ -347,7 +347,7 @@ export default {
       }
         else{
           this.PostId=postData.id;
-         
+
           AllServices.save(this.$localStorage.get('token'),this.PostId);
              //alert('Post unsaved successfully');
             this.Saved="Save";
@@ -382,8 +382,8 @@ props: {
 postData:{},
        },
 created(){
-      
-         
+
+
 
          axios.get("http://localhost/me",{token:this.token}).then(response=>{this.userId=response.userID}).catch(function (error)
          {
@@ -465,7 +465,7 @@ h5 {
     box-shadow: 0 1px 1px rgba(0,0,0,.05);}
 
     .panel {
-     
+
         margin-bottom: 100%;
         margin-left: 100px;
         margin-top: 60px;

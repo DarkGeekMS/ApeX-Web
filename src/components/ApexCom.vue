@@ -6,7 +6,7 @@
         <img class="image" src="../../public/Logo_small.png" >
         {{ApexComName}}</h1>
     </div>
-  
+
     <div class="navBar" id="navbar">
         <router-link id="postslink" class="navbarLinks" :to="{name:'Posts'}">Posts</router-link>
         <router-link v-show="isModerator() || isAdmin()" id="subscribersListlink" class="navbarLinks" :to="{name:'Subscribers'}">subscribers</router-link>
@@ -18,8 +18,8 @@
     v-bind:description="description"
     v-bind:moderators="moderators"
     v-bind:subscribersCount="subscribersCount"
-    
-    ></SideBar> 
+
+    ></SideBar>
     <div class="routerview">
     <router-view></router-view>
     </div>
@@ -47,8 +47,8 @@ export default {
   },
   data () {
     return {
-      //token:this.$localStorage.get('token'),
-      //userName:this.$localStorage.get('userName'),
+      token:this.$localStorage.get('token'),
+      userName:this.$localStorage.get('userName'),
       //userName:'moderator1',
       description:'',
       moderators:[],
@@ -65,12 +65,12 @@ export default {
     {
       console.log(name.userName);
       if( name.userName == this.userName){
-        
+
       return true;
       }
     },
     /**
-    * loop on moderators to check if user is moderator of this community 
+    * loop on moderators to check if user is moderator of this community
     */
     isModerator:function(){
       if(this.loggedIn){

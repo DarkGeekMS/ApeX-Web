@@ -15,6 +15,9 @@ export  const AllServices =new Vue({
     }
   },
   methods:{
+    getState(){
+      return this.mimic
+    },
     getPosts:function() {
       var posts=MimicDisplayPosts.getPostsData(this.mimic);
         return posts
