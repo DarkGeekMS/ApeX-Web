@@ -10,7 +10,7 @@
        <p id="description">{{description}}</p>
        <button id="subscribebutton" v-bind:class="{button1:subscribed,button:!subscribed}" v-on:mouseover="changeState('unsubscribe')" v-on:mouseleave="changeState('subscribed')" type="button" v-on:click="subscribe()">
        <span> {{state}} </span> </button>
-       <button id="create post button" class="button" type="button">create post</button>
+       <button id="createpostbutton" class="button" type="button">create post</button>
        <button id="deteteApexCom" v-show="isAdmin()" class="button" type="button" v-on:click="deleteAC()">delete</button>
        </div>
        </div>
@@ -67,12 +67,12 @@ export default {
        },
     data(){
         return{
-            token:this.$localStorage.get('token'),
+            //token:this.$localStorage.get('token'),
             subscribers:[],
             subscribed:false,
             state:'subscribe',
-            userName:this.$localStorage.get('userName'),
-            loggedIn:this.$localStorage.get('login'),
+            //userName:this.$localStorage.get('userName'),
+            //loggedIn:this.$localStorage.get('login'),
             //userName:'subscriber1',
         }
 
@@ -117,6 +117,7 @@ export default {
     * get the list of subscribers to this community
     */
     getSubscribers(){
+      if(this.loggedIn){
         this.subscribers= AllServices.getSubscribers(this.apexComName);
         var subscribe = this.subscribers.find(this.CheckUser);
         console.log(subscribe);
@@ -125,6 +126,11 @@ export default {
           this.state='subscribed';
         }
         else{
+          this.subscribed=false;
+          this.state='subscribe';
+    }
+      }
+      else{
           this.subscribed=false;
           this.state='subscribe';
     }

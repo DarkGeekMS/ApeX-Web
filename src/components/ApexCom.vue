@@ -9,8 +9,8 @@
   
     <div class="navBar" id="navbar">
         <router-link id="postslink" class="navbarLinks" :to="{name:'Posts'}">Posts</router-link>
-        <router-link v-show="isModerator()" id="subscribersListlink" class="navbarLinks" :to="{name:'Subscribers'}">subscribers</router-link>
-        <router-link v-show="isModerator()" id="reportlink" class="navbarLinks" :to="{name:'Reports'}">view reports</router-link>
+        <router-link v-show="isModerator() || isAdmin()" id="subscribersListlink" class="navbarLinks" :to="{name:'Subscribers'}">subscribers</router-link>
+        <router-link v-show="isModerator() || isAdmin()" id="reportlink" class="navbarLinks" :to="{name:'Reports'}">view reports</router-link>
     </div>
 </div>
     <SideBar class="sidebar" v-bind:apexComName="ApexComName"
@@ -47,8 +47,8 @@ export default {
   },
   data () {
     return {
-      token:this.$localStorage.get('token'),
-      userName:this.$localStorage.get('userName'),
+      //token:this.$localStorage.get('token'),
+      //userName:this.$localStorage.get('userName'),
       //userName:'moderator1',
       description:'',
       moderators:[],
@@ -73,6 +73,7 @@ export default {
     * loop on moderators to check if user is moderator of this community 
     */
     isModerator:function(){
+      if(this.loggedIn){
       var moderator = this.moderators.find(this.CheckModerator);
       if(moderator !== undefined){
           return true;
@@ -80,7 +81,23 @@ export default {
       else{
           return false;
         }
+      }
     },
+    /**
+      *check if user is an admin
+      */
+      isAdmin:function()
+      {
+        if(this.loggedIn){
+        var data= AllServices.userType();
+        if(data ==1){
+          return true;
+          }
+        else{
+          return false;
+        }
+        }
+      },
     /**
     * request the data for certain community
     */
