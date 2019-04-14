@@ -23,7 +23,7 @@
       </ol>
     </div>
     </div>
-    
+
     <div  id="moderators box">
       <h3 class="Header" id="moderators box header">Moderators</h3>
       <div class="content" >
@@ -67,12 +67,12 @@ export default {
        },
     data(){
         return{
-            //token:this.$localStorage.get('token'),
+            token:this.$localStorage.get('token'),
             subscribers:[],
             subscribed:false,
             state:'subscribe',
-            //userName:this.$localStorage.get('userName'),
-            //loggedIn:this.$localStorage.get('login'),
+            userName:this.$localStorage.get('userName'),
+            loggedIn:this.$localStorage.get('login'),
             //userName:'subscriber1',
         }
 
@@ -181,7 +181,7 @@ export default {
    this.getSubscribers();
    }
  }
- 
+
 }
 </script>
 
@@ -208,7 +208,7 @@ export default {
   margin-top:0%;
   margin-bottom: 8%;
   background-color:#eee;
-  border-bottom-left-radius:8px; 
+  border-bottom-left-radius:8px;
   border-bottom-right-radius:8px;
   padding:5%;
 }

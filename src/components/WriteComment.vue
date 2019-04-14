@@ -44,14 +44,16 @@ export default {
 
       if (this.content!='')
       {
-      var Write = AllServices.EditComment(this.content,this.parentID);
-      if (Write){
+        console.log('pp',this.parentID);
+AllServices.EditComment(this.parentID,this.content).then((data) => {
+        if(data){
         this.$emit('editParent',this.content);
-      }
-      else
-        alert("Log In First!!");
+        }
+        else
+          alert("Log In First!!");
 
-      
+      });
+
       }
       else
       {
@@ -66,15 +68,13 @@ export default {
       
       //TODO:send request and get currentID
 
-      var Write = AllServices.WriteComment(this.content,this.parentID);
-      if (Write.done){
-        this.currentID = Write.CID;
-        this.$emit('Comment',this.content,this.$localStorage.get('token'),this.parentID,this.currentID );
-      }
-      else
-        alert("Log In First!!");
-
-
+      AllServices.WriteComment(this.content,this.parentID).then((data) => {
+        if(data){
+        console.log(data);
+         this.currentID=data.comment;
+         this.$emit('Comment',this.content,this.$localStorage.get('token'),this.parentID,this.currentID );
+        }
+      });
       //to test
       //this.currentID=this.parentID+1;
       
@@ -89,16 +89,18 @@ export default {
       {
       
       //TODO:send request and get currentID
-
-      var Write = AllServices.WriteComment(this.content,this.parentID);
-      if (Write.done){
+      AllServices.WriteComment(this.content,this.parentID).then((data) => {
+        if(data){
+        console.log(data);
         this.replyClicked=!this.replyClicked;
-        this.currentID = Write.CID;
+        this.currentID=data.reply;
         this.$emit('Reply',this.content,this.$localStorage.get('token'),this.parentIdx,this.parentLevel,this.parentID,this.currentID );
-      }
-      else
-        alert("Log In First!!");
+        }
+      });
 
+//        this.replyClicked=!this.replyClicked;
+
+//        this.$emit('Reply',this.content,this.$localStorage.get('token'),this.parentIdx,this.parentLevel,this.parentID,this.currentID );
 
       //to test
       //this.currentID=this.parentID+1;

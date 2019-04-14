@@ -67,11 +67,24 @@ export default {
   },
   methods:{
     /**
-     * axios post request to send username and password to the server to log in user 
+     * axios post request to send username and password to the server to log in user
     */
     post: function()
     {
-         AllServices.logIn(this.username, this.pass).then((data) => {
+        if(AllServices.getState()){
+          var check=AllServices.logIn(this.username, this.pass);
+          if(check)
+          {
+            this.congra = 'You are now logged in. You will soon be redirected' ;
+            setTimeout(() =>this.$modal.hide('demo-login') , 1000)
+          }
+          else{
+              this.error =  this.$localStorage.get('error');
+          }
+        }
+        else {
+
+           AllServices.logIn(this.username, this.pass).then((data) => {
          if(data)
           {
             this.congra = 'You are now logged in. You will soon be redirected' ;
@@ -81,6 +94,7 @@ export default {
               this.error =  this.$localStorage.get('error');
           }
          })
+       }
     },
     /**
      * function to restart parameters every time

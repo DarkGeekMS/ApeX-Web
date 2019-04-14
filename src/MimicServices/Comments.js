@@ -4,41 +4,34 @@ import App from '../App.vue'
 export  const MimicComment =new Vue({
 
   methods:{
-    WriteComment: function(content,parentID,mimic){
+    WriteComment: function(cont,parentID,mimic){
       if(mimic == true){
 
           if(this.$localStorage.login)
           {
-
-              return {
-                  CID:parentID+"_Child",
-                  done:true
-                };
+            var promise1 = new Promise(function(resolve, reject) {
+                setTimeout(function() {
+                  resolve(parentID+"_Child");
+                }, 300);
+              });
+    return promise1;
           }
-          return{
-            CID:'',
-            done:false
-          };
+          alert("Log In First!!");
+          return false;
       }
       else
       {
-        axios.post('http://35.232.3.8/api/comment', {
-            content: content,
+        return axios.post('http://35.232.3.8/api/comment', {
+            content: cont,
             parent: parentID,
-            token: this.$localStorage.get('token')
-             })
-           .then(function (response) {
-            return {
-                CID:response.data.id,
-                done:true
-              };
-
+            token:this.$localStorage.get('token')
+        })
+           .then(response=> {
+            return response.data;
            })
            .catch(function (error) {
-            return{
-                CID:'',
-                done:false
-              };
+            alert("Log In First!!");
+            return false;
 
             });
          }
@@ -49,21 +42,23 @@ export  const MimicComment =new Vue({
         if( mimic == true)
         {
             if(this.$localStorage.login)
-                return true;
-            return false;
+                return false;
+            return true;
         }
         else
         {
+            var self = this;
             axios.delete('http://35.232.3.8/api/delete', {
                 data : {
                 name: ID,
-                token: this.$localStorage.get('token')
+                token: self.$localStorage.get('token')
                 }
                   })
                 .then(function (response) {
                     return true;
                  })
                 .catch(function (error) {
+                    console.log(ID,self.$localStorage.get('token'));
                     return false;
                  });
         }
@@ -72,8 +67,8 @@ export  const MimicComment =new Vue({
         if( mimic == true)
         {
             if(this.$localStorage.login)
-                return true;
-            return false;
+                return false;
+            return true;
         }
         else
         {
@@ -89,19 +84,32 @@ export  const MimicComment =new Vue({
             });
         }
     },
-    EditComment: function(ID,content,mimic){
+    EditComment: function(ID,cont,mimic){
         if( mimic == true)
         {
             if(this.$localStorage.login)
-                return true;
-            return false;
+            {
+            var promise1 = new Promise(function(resolve, reject) {
+                setTimeout(function() {
+                  resolve(true);
+                }, 300);
+              });
+    return promise1;
+            }
+            var promise1 = new Promise(function(resolve, reject) {
+                setTimeout(function() {
+                  resolve(false);
+                }, 300);
+              });
+    return promise1;
         }
         else
         {
-            axios.post('http://35.232.3.8/api/edit', {
+            var self = this;
+            return axios.patch('http://35.232.3.8/api/edit', {
                 name: ID,
-                content: content,
-                ID: this.$localStorage.get('userName')
+                content: cont,
+                token: this.$localStorage.get('token')
 
              })
            .then(function (response) {
@@ -130,28 +138,28 @@ export  const MimicComment =new Vue({
             else
                 p--;
             if(this.$localStorage.login)
-                return {
-                    done:true,
-                    points:p
-                }
+            {
+            var promise1 = new Promise(function(resolve, reject) {
+                setTimeout(function() {
+                  resolve({votes:p});
+                }, 300);
+              });
+            
+    return promise1;
+            }
 
-                return {
-                    done:false,
-                    points:points
-                }
+                return false;
         }
         else
         {
-       axios.post('http://35.232.3.8/api/vote', {
+       return axios.post('http://35.232.3.8/api/vote', {
        name: ID,
        dir: 1,
        token: this.$localStorage.get('token')
         })
       .then(function (response) {
-        return {
-            done:true,
-            points:response.data.points
-        }
+        return response.data;
+        
        })
       .catch(function (error)
       {
@@ -176,36 +184,33 @@ export  const MimicComment =new Vue({
             }
             else
                 p++;
-            if(this.$localStorage.login)
-                return {
-                    done:true,
-                    points:p
+                if(this.$localStorage.login)
+                {
+                var promise1 = new Promise(function(resolve, reject) {
+                    setTimeout(function() {
+                      resolve({votes:p});
+                    }, 300);
+                  });
+                
+        return promise1;
                 }
-
-                return {
-                    done:false,
-                    points:points
-                }
+    
+                    return false;
         }
         else
         {
-       axios.post('http://35.232.3.8/api/vote', {
+       return axios.post('http://35.232.3.8/api/vote', {
        name: ID,
        dir: -1,
        token: this.$localStorage.get('token')
         })
       .then(function (response) {
-        return {
-            done:true,
-            points:response.data.points
-        }
+        return response.data;
+        
        })
       .catch(function (error)
       {
-        return {
-            done:false,
-            points:points
-        }
+        return false;
        });
         }
     }
