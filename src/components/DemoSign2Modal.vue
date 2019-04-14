@@ -67,9 +67,6 @@ import {AllServices} from '../MimicServices/AllServices.js'
  * @vue-data {string} [congra=''] congratulation when user sign up
  */
 export default {
-props:{
-email:''
-},
   name: 'DemoSign2Modal',
   components:{
       DemoSign3Modal

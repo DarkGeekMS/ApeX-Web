@@ -1,8 +1,10 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Module: ApexComPosts | Module: ApexComPosts</title>
+    <title>Source: HomeSideBar.vue | Source: HomeSideBar.vue</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -24,7 +26,7 @@
         
     </div>
     <div class="title">
-        <h1><a href="index.html" class="link">Module: ApexComPosts</a></h1>
+        <h1><a href="index.html" class="link">Source: HomeSideBar.vue</a></h1>
         
     </div>
     <div class="search-container" id="search-container">
@@ -41,172 +43,112 @@
 
 
 
-
-<section>
-
-<header>
     
-        <h2>ApexComPosts</h2>
-        
-            
-        
-    
-</header>
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>&lt;template>
+  &lt;div id="main">
+     &lt;img width="70px" src="../../public//AMFz23O.jpg" >
 
-<article>
-    
-        <div class="container-overview">
-        
-            
-                <div class="description"><p></p></div></div> </p>
-<style>
-.container-overview {
-    display: none;
+     &lt;h4 v-show="!login"> a/popular &lt;/h4>
+     &lt;h4 v-show="login"> Home &lt;/h4>
+
+      &lt;/br>  &lt;/br>
+
+     &lt;p v-show= "!login" > The best posts on Apex for you, pulled from the most active communities on Apex. Check here to see the most shared, upvoted, and commented content on the internet.
+     &lt;/p>
+     &lt;p v-show="login"> Your personal Apex frontpage. Come here to check in with your favorite communities. &lt;/p>
+
+
+     &lt;button  type="button" class="btn btn-primary " data-toggle="button" aria-pressed="false" autocomplete="off" @click="post()">CREATE POST&lt;/button>
+     &lt;button v-show="login" style=" cursor: no-drop" type="button" class="btn btn-info" data-toggle="button" aria-pressed="false" autocomplete="off">CREATE COMMUNITY&lt;/button>
+  &lt;/div>
+&lt;/template>
+
+&lt;script>
+  /**
+  * @vue-data {boolean} [login=false] if user is logged in 
+  */
+  export default {
+
+    data () {
+      return {
+        login: false
+      }
+    },
+    created () {
+      setInterval(() => {
+        this.login = this.$localStorage.get('login')
+      }, 1000)
+    },
+    methods:{
+      /**
+       * if user is logged in , can go to create post or create community   
+      */
+      post: function(){
+        if( this.$localStorage.get('login') )
+        {
+          this.$router.push('/Submit');
+        }
+        else{
+           this.$modal.show('demo-login');
+        }
+      }
+    }
+}
+&lt;/script>
+
+&lt;style scoped>
+*{
+  padding:0.7%;
+  box-sizing: border-box
+}
+img{
+  border-radius:50%
+}
+h4{
+  display: inline-block;
+  padding-left: 4%;
+  font-size:25px;
+}
+p{
+  color:#7c7c7c;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 21px;
+  overflow-wrap: break-word;
+
+}
+button{
+  width:80%;
+  height:40px;
+  font-weight: 500;
+  font-size: 17px;
+  margin-left: 9%;
+  margin-top:5%;
+  border-radius: 20%;
 }
 
-.main section article table td.name,
-.main section article table td.type,
-.main section article table td.attributes,
-.main section article table td.default {
-    max-width: none;
+#main{
+  float:right;
+  width:21%;
+  max-height: 50%;
+  color:black;
+  background-color: white;
+  border-radius: 5%;
+  margin-top: 6%;
+  margin-right: 18%;
+} 
+
+@media(max-width:1300px){
+  #main{
+    display:none
+  }
 }
-</style>
-
-
-<p><h3 class="subsection-title" style="margin-top: 1em" data-jsdoc-vuejs="section-props">Props</h3></p>
-<div class="container-params">
-    <table class="params" data-jsdoc-vuejs="table-props">
-        <thead>
-        <tr>
-            <th>Name</th>
-            <th>Type</th>
-            <th>Default value</th>
-            <th>Required?</th>
-            <th class="last">Description</th>
-        </tr>
-        </thead>
-        <tbody>
-
-        <tr>
-            <td class="name"><code>apexComName</code></td>
-            <td class="type"><span class="param-type">string</span></td>
-            <td class="description">-</td>
-            <td class="description"><b>Yes</b></td>
-            <td class="description last">community name</td>
-        </tr>
-
-        </tbody>
-    </table>
-</div>
-
-
-
-
-
-
-
-
-<p><div class="container-overview"><div><p> </p></div>
-            
-
-            
-                
-
-<dt>
-    
-</dt>
-<dd>
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-    
-
-</dd>
-
-            
-        
-        </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</article>
-
-</section>
+ &lt;/style>
+</code></pre>
+        </article>
+    </section>
 
 
 
@@ -223,7 +165,7 @@
 <script src="scripts/linenumber.js"></script>
 
     <script>
-        var id = 'module:ApexComPosts_sub'.replace(/"/g, '_');
+        var id = '_sub'.replace(/"/g, '_');
         var selectedApi = document.getElementById(id); // do not use jquery selector
         var $selectedApi = $(selectedApi);
 

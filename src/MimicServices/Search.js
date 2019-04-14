@@ -27,13 +27,13 @@ export  const MimicSearch =new Vue({
                id:1,
                name:'AyatMostafa',
                numOfMeb: 0,
-               avatar:'AMFz23O.jpg',
+               avatar:'../../public/AMFz23O.jpg',
                description: "Aww, cripes. I didn't know I'd have to write a description. How many words is that so far, like a hundred? Soooo, yeah. Mildly interesting stuff.",
              },{
                id:1,
                name:'AyatMostafa',
                numOfMeb: 0,
-               avatar:'Logo_X.png',
+               avatar:'../../public/Logo_X.png',
                description: "Aww, cripes. I didn't know I'd have to write a description. How many words is that so far, like a hundred? Soooo, yeah. Mildly interesting stuff.",
              },
              {

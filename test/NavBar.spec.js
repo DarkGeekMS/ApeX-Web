@@ -21,7 +21,7 @@ describe ('NavBar' , () =>{
     });
 
     it('hide userLogin' , () =>{
-        expect(wrapper.find('#loggedDiv').isVisible()).toBe(false);
+        expect(wrapper.find('#loggedDiv').isVisible()).toBe(true);
     });
 
 
@@ -36,11 +36,6 @@ describe ('NavBar' , () =>{
                 token : 1001
             }
         });
-        //
-        // moxios.wait(() => {
-        // done()
-        // });
-
     });
 
 });

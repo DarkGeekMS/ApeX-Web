@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Module: ApexComPosts | Module: ApexComPosts</title>
+    <title>Module: Search | Module: Search</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -24,7 +24,7 @@
         
     </div>
     <div class="title">
-        <h1><a href="index.html" class="link">Module: ApexComPosts</a></h1>
+        <h1><a href="index.html" class="link">Module: Search</a></h1>
         
     </div>
     <div class="search-container" id="search-container">
@@ -46,7 +46,7 @@
 
 <header>
     
-        <h2>ApexComPosts</h2>
+        <h2>Search</h2>
         
             
         
@@ -73,33 +73,45 @@
 </style>
 
 
-<p><h3 class="subsection-title" style="margin-top: 1em" data-jsdoc-vuejs="section-props">Props</h3></p>
+
+
+<p><h3 class="subsection-title" style="margin-top: 1em" data-jsdoc-vuejs="section-data">Data</h3></p>
 <div class="container-params">
-    <table class="params" data-jsdoc-vuejs="table-props">
+    <table class="params" data-jsdoc-vuejs="table-data">
         <thead>
         <tr>
             <th>Name</th>
             <th>Type</th>
             <th>Default value</th>
-            <th>Required?</th>
             <th class="last">Description</th>
         </tr>
         </thead>
         <tbody>
 
         <tr>
-            <td class="name"><code>apexComName</code></td>
+            <td class="name"><code>error</code></td>
             <td class="type"><span class="param-type">string</span></td>
+            <td class="description"><code>&quot;&quot;</code></td>
+            <td class="description last">if there is no matching</td>
+        </tr>
+
+        <tr>
+            <td class="name"><code>searchVal</code></td>
+            <td class="type"><span class="param-type">string</span></td>
+            <td class="description"><code>&quot;&quot;</code></td>
+            <td class="description last">search value</td>
+        </tr>
+
+        <tr>
+            <td class="name"><code>posts</code></td>
+            <td class="type"><span class="param-type">object</span></td>
             <td class="description">-</td>
-            <td class="description"><b>Yes</b></td>
-            <td class="description last">community name</td>
+            <td class="description last">posts that reflect with search value</td>
         </tr>
 
         </tbody>
     </table>
 </div>
-
-
 
 
 
@@ -223,7 +235,7 @@
 <script src="scripts/linenumber.js"></script>
 
     <script>
-        var id = 'module:ApexComPosts_sub'.replace(/"/g, '_');
+        var id = 'module:Search_sub'.replace(/"/g, '_');
         var selectedApi = document.getElementById(id); // do not use jquery selector
         var $selectedApi = $(selectedApi);
 

@@ -1,6 +1,6 @@
 <template>
   <div id="main">
-     <img width="70px" src="../../public//AMFz23O.jpg" >
+     <img width="70px" src="../../public/AMFz23O.jpg" >
 
      <h4 v-show="!login"> a/popular </h4>
      <h4 v-show="login"> Home </h4>

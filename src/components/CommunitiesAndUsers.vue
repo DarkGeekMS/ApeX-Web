@@ -2,7 +2,7 @@
   <div id="mainDiv" >
     <a href="" id="subDiv" v-show="exist" v-for='apex in apexs' > 
       <div id="sub1">
-         <img width="20%" v-bind:src="'../../public/'+apex.avatar"/>
+         <img width="20%" :src="'../../public/'+apex.avatar"/>
          <a class="name"> {{apex.name}} </a>
          <div class="memb"> {{apex.numOfMeb}} Member </div>
        </div> 
@@ -15,7 +15,7 @@
     </a>
     <a href="" id="subDiv" v-show="exist" v-for='user in users' > 
       <div id="sub1">
-         <img width="20%" v-bind:src="'../../public/'+user.avatar"/>
+         <img width="20%" :src="'../../public/'+user.avatar"/>
          <a class="name"> {{user.name}} </a>
        </br>
          <div class="memb"> {{user.karma}} karma </div>
@@ -47,7 +47,6 @@ export default {
       error:'',
       apexs:[],
       users:[]
-
     }
   },
   mounted () {
@@ -60,6 +59,7 @@ export default {
     else{
       this.apexs = result[0],
       this.users = result[1]
+
     }
    
   },

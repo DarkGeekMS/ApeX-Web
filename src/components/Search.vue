@@ -7,15 +7,15 @@
     </div>
     <div class="body">
       <ul>
-       <li><router-link to="/search" exact > Posts </router-link></li>
-       <li><router-link to="/search/users" exact> Communities and users </router-link></li>
+       <li><router-link to="/Search" exact > Posts </router-link></li>
+       <li><router-link to="/Search/users" exact> Communities and users </router-link></li>
       </ul>
     </div>
- <!--   <div v-if="this.$router.currentRoute == '/search'" id="DisplayPosts">  
+   <div v-if="this.$route.name == 'Search'" id="DisplayPosts">  
       <div id="PostContainer" v-for="onePost in posts">
          <post :postData="onePost" v-on:showUp="showPost" ></post>
       </div>
-    </div> --> 
+    </div>  
 
        <router-view></router-view>
     
@@ -116,12 +116,11 @@ export default {
 }
 
 #PostContainer{
-  margin-top: -7%;
+  margin-top: -8%;
 
 }
 #DisplayPosts{
   width:60%;
-  display:inline-block;
 }
 
 </style>
