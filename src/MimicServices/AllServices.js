@@ -11,7 +11,7 @@ import { MimicComment } from './Comments.js'
 export  const AllServices =new Vue({
   data(){
     return{
-      mimic:false
+      mimic:true
     }
   },
   methods:{
