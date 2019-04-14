@@ -3,8 +3,8 @@
     <div class="box" id="infobox">
         <div class="bluebackgroung">
           <div class="img">
-             <img width="100" height="100" class="image" src="../../public/AMFz23O.jpg" />
-
+             <!-- <img width="100" height="100" class="image" src="../../public/AMFz23O.jpg" /> -->
+             <img width="100" height="100" class="image" :src="image" />
 
              <!-- <object type="image/svg+xml" data="../../public/karma.svg" class="logo"></object> -->
              <!-- <img src="../../public/karma.svg" class="karma" alt="Breaking Borders Logo" height="65" width="68"> -->

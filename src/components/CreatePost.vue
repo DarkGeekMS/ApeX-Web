@@ -266,7 +266,7 @@ export default {
        this.bodyPost=document.getElementById('textsend').value;
        this.imgName=document.getElementById('imgId').src;
 
-     AllServices.submit(this.videoUrl,this.apexComId,this.bodyPost,this.imgName,this.isLocked,this.$localStorage.get('token'));
+    //  AllServices.submit(this.videoUrl,this.apexComId,this.bodyPost,this.imgName,this.isLocked,this.$localStorage.get('token'));
       //  console.log(this.bodyPost);
       //  console.log('hello');
       //  axios.post( "http://127.0.0.1:8000/api/submit_post"  ,{

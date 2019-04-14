@@ -90,7 +90,7 @@ export default {
     getUserProfile:function(){
       var data= AllServices.getUserInfo();
       this.karmaCount = data.karma;
-      // this.image = data.image;
+      this.image = data.image;
       //this.userName = data.userName;
       this.savedPosts = data.saved;
       this.hiddenPosts = data.hidden;
@@ -104,7 +104,7 @@ export default {
    getUserData:function(){
       var data= AllServices.getUserInfoById(this.userName);
       this.karmaCount = data.karma;
-      // this.image = data.image;
+      this.image = data.image;
      // this.userName = data.userName;
       this.personalPosts = data.personalPosts;
       this.cakeDay = data.cakeDay;
@@ -115,7 +115,7 @@ export default {
    getUserDataForGuest:function(){
      var data= AllServices.getUserInfoByIdforGuest(this.userName);
       this.karmaCount = data.karma;
-      // this.image = data.image;
+      this.image = data.image;
      // this.userName = data.userName;
       this.personalPosts = data.personalPosts;
       this.cakeDay = data.cakeDay;
