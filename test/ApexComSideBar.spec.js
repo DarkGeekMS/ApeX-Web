@@ -36,5 +36,3 @@ describe('ApexComSideBar test',()=>{
         expect(wrapper.vm.state).toBe('subscribed');
     });
 });
-
-

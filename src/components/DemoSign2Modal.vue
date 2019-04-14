@@ -60,7 +60,7 @@ import {AllServices} from '../MimicServices/AllServices.js'
  * @vue-data {string} [username=""] name of user sign up
  * @vue-data {string} [pass=""] password of user sign up
  * @vue-data {integer} [modalWidth=656] width of modal
- * @vue-data {boolean} [invalidUser=false] invaliduser 
+ * @vue-data {boolean} [invalidUser=false] invaliduser
  * @vue-data {boolean} [invalidPass=false] invalidPass
  * @vue-data {boolean} [invalidUserAndPass=false] invalidUserAndPass
  * @vue-data {string} [error=""] when username is already use
@@ -88,7 +88,7 @@ export default {
   },
   computed:{
     /**
-     * check out username and password is empty or not  
+     * check out username and password is empty or not
     */
     check:function(){
        if((this.username != '') && (this.pass != ''))
@@ -102,12 +102,26 @@ export default {
   },
   methods:{
     /**
-     * axios post request to send username and password to the server to sign up user 
+     * axios post request to send username and password to the server to sign up user
     */
     post: function(){
         if (this.username.length <= 17 && this.pass.length >= 6 && this.username.indexOf(' ') < 0)
         {
-          AllServices.signUp(this.email, this.username, this.pass).then((data) =>
+          if(AllServices.getState()){
+            var check=  AllServices.signUp(this.email, this.username, this.pass)
+            if(check)
+            {
+              this.congra = 'Your account has been created. Welcome with us' ;
+              setTimeout(() =>{this.$modal.show('demo-sign3');
+                 this.$modal.hide('demo-sign1')} , 1000)
+            }
+            else{
+                this.error =  this.$localStorage.get('error');
+            }
+          }
+
+        else{
+            AllServices.signUp(this.email, this.username, this.pass).then((data) =>
           {
           if( data )
           {
@@ -120,6 +134,7 @@ export default {
             this.error =  this.$localStorage.get('error');
           }
           })
+        }
         }
         else if (this.username.length > 17 && this.pass.length < 6){
         this.invalidUserAndPass=true;

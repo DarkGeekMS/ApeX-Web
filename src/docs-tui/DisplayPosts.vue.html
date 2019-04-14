@@ -1,8 +1,10 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Module: DemoSign3Modal | Module: DemoSign3Modal</title>
+    <title>Source: DisplayPosts.vue | Source: DisplayPosts.vue</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -24,7 +26,7 @@
         
     </div>
     <div class="title">
-        <h1><a href="index.html" class="link">Module: DemoSign3Modal</a></h1>
+        <h1><a href="index.html" class="link">Source: DisplayPosts.vue</a></h1>
         
     </div>
     <div class="search-container" id="search-container">
@@ -41,263 +43,86 @@
 
 
 
-
-<section>
-
-<header>
     
-        <h2>DemoSign3Modal</h2>
-        
-            
-        
-    
-</header>
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>&lt;template>
+  &lt;div id="DisplayPosts">
+    &lt;div id="PostContainer" v-for="onePost in posts">
+     &lt;post v-bind:postData="onePost" v-on:showUp="showPost" >&lt;/post>
+    &lt;/div>
+    &lt;DemoOnePost  id="PostModal" :onePostData="postInfo" >&lt;/DemoOnePost>
+    &lt;!-- v-bind:style="{width: 80 +'%'}" -->
+  &lt;/div>
+&lt;/template>
 
-<article>
-    
-        <div class="container-overview">
-        
-            
-                <div class="description"><p></p></div></div> </p>
-<style>
-.container-overview {
-    display: none;
+&lt;script>
+import post from "./Post.vue"
+import DemoOnePost from './DisplayOnePost.vue'
+import {AllServices} from '../MimicServices/AllServices.js'
+/**
+ * @vue-data {object} [postInfo='']  the content of the post to be displayed on the modal
+ * @vue-data {objects} [posts=''] the content of all the posts taken from the server
+ * @vue-prop  {string} apexComName -community name to be sent to the server to get posts posted in it
+ */
+export default {
+  props:{
+    apexComName:String
+    },
+data(){
+return{
+  postInfo:'',
+  posts:'',
+
+
+     }
+},
+mounted:function () {
+  this.getPosts();
+  },
+
+
+methods:
+{
+  /**
+  * assign the post to be shown in the modal
+  */
+  showPost:function(post)
+    {
+    this.postInfo=post;
+    },
+    /**
+    * request gets posts from a certain ApexCom
+    */
+   getPosts(){
+     if(AllServices.getState()){
+       this.posts= AllServices.getPosts(this.apexComName);
+     }
+     else{
+         AllServices.getPosts(this.apexComName).then((data) => {
+          this.posts= data;
+         })
+   }
+}
+},
+components:{
+  'post':post,
+  'DemoOnePost':DemoOnePost
 }
 
-.main section article table td.name,
-.main section article table td.type,
-.main section article table td.attributes,
-.main section article table td.default {
-    max-width: none;
 }
-</style>
-
-
-
-
-<p><h3 class="subsection-title" style="margin-top: 1em" data-jsdoc-vuejs="section-data">Data</h3></p>
-<div class="container-params">
-    <table class="params" data-jsdoc-vuejs="table-data">
-        <thead>
-        <tr>
-            <th>Name</th>
-            <th>Type</th>
-            <th>Default value</th>
-            <th class="last">Description</th>
-        </tr>
-        </thead>
-        <tbody>
-
-        <tr>
-            <td class="name"><code>modalWidth</code></td>
-            <td class="type"><span class="param-type">integer</span></td>
-            <td class="description"><code>656</code></td>
-            <td class="description last">width of modal</td>
-        </tr>
-
-        </tbody>
-    </table>
-</div>
-
-
-
-
-
-
-<p><div class="container-overview"><div><p> </p></div>
-            
-
-            
-                
-
-<dt>
-    
-</dt>
-<dd>
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-    
-
-</dd>
-
-            
-        
-        </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-        <h3 class="subsection-title">Methods</h3>
-
-        <dl>
-                
-
-<dt>
-    
-        <h4 class="name" id="action">
-            
-                <span class="type-signature"></span>action<span class="signature">()</span><span class="type-signature"></span>
-                
-            
-            <div class="container-source members">
-                <code><a href="DemoSign3Modal.vue.html">DemoSign3Modal.vue</a></code>,
-                <code><a href="DemoSign3Modal.vue.html#line36">line 36</a></code>
-            </div>
-            
-        </h4>
-
-        
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        <p>close all Modals</p>
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-    
-
-</dd>
-
-            </dl>
-    
-
-    
-
-    
-</article>
-
-</section>
+&lt;/script>
+
+&lt;style scoped>
+#DisplayPosts{
+   width: 60%;
+  display: inline-block;
+}
+
+&lt;/style>
+</code></pre>
+        </article>
+    </section>
 
 
 
@@ -314,7 +139,7 @@
 <script src="scripts/linenumber.js"></script>
 
     <script>
-        var id = 'module:DemoSign3Modal_sub'.replace(/"/g, '_');
+        var id = '_sub'.replace(/"/g, '_');
         var selectedApi = document.getElementById(id); // do not use jquery selector
         var $selectedApi = $(selectedApi);
 

@@ -17,13 +17,8 @@ export default {
   components:{
     'DisplayPosts':DisplayPosts,
     'SideBar':HomeSideBar,
-    'recentPost':RecentPosts,
+    'RecentPosts':RecentPosts,
   },
-  data(){
-    return{
-      title:'title '
-    }
-  }
 }
 
 </script>
