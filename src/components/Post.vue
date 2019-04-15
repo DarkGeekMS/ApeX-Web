@@ -1,9 +1,8 @@
 <template id="PostTemlate">
 <div id="PostItme" class="postItem" >
-<div class="panel panel-default" style="width: 62rem;   "  @click="ShowModal()" v-show="Not_Hide" id="post">
-  <!-- <div class="row" id="postRow"> -->
-    <div class="panel-body"  style="width: 62rem;" >
-    <div class="panel2 panel-default" style="width: 3.7rem;" id="postSide">
+<div class="panel panel-default"  @click="ShowModal()" v-show="Not_Hide" id="post">
+    <div class="panel-body">
+    <div class="panel2 panel-default"  id="postSide">
 
 
           <div class="column1" id="postCol1">
@@ -38,13 +37,7 @@
 
         {{postData.content}} </p>
 
-
-      <!-- <a href="#" class="fontUser" id="subred"> apex_id </a>
-        <font class="postby" id="fontPostby">. Posted by</font>
-        <a href="#" class="postby" id="user"> username</a>
-        <font class="postby" id="fontpost"> </font>
-        <a href="#" class="postby" id="timeAgo"> 15 hours ago </a>
-        <h3 id="postBody">content </h3> -->
+>
 </div>
 <footer>
 
@@ -79,14 +72,13 @@ Comments</button>
 </footer>
 
 
-
           </div>
 
        </div>
 
    </div>
 
-<!-- </div> -->
+
 
 </template>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
@@ -147,22 +139,7 @@ export default {
        }
         this.PostId=postData.id;
        AllServices.deletePost(this.PostId,this.$localStorage.get('token'));
-//          axios.post("http://localhost/DelComment",{
-//          ID    : this.PostId,
-//          token : this.$localStorage.get('token')
 
-//  }).then(response=>{
-//    if(response){
-//      this.Deleted = true;
-//      alert("Deleted successfully");
-//    }
-
-//  }).catch(function (error)
-//  {
-//   //console.log(error);
-
-
-//    });
    },
   /**
     * Hide post if the User press Hide button.
@@ -180,19 +157,7 @@ export default {
             }
         this.PostId=postData.id;
         AllServices.Hide(this.PostId,this.$localStorage.get('token'));
-        // axios.post("http://localhost/Hide",
-        // {
-        //     name    : this.PostId,
-        //     ID : this.$localStorage.get('token')
-
-
-        // }).then(response => {
-        //   if(response){
-        //   alert("Hidden successfully");}
-        // }).catch(function (error)
-        // {
-        //    //console.log(error);
-        // });
+   
          },
     changeColor_up()
     {
@@ -215,22 +180,7 @@ export default {
                       this.votes          += 1;
                        this.PostId=postData.id;
                       AllServices.upvote(this.$localStorage.get('token'),this.PostId,1);
-                  //     axios.post("http://localhost/vote",
-                  //     {
-
-                  //       ID       : this.$localStorage.get('token'),
-                  //       name     : this.PostId,
-                  //       direction:1
-
-                  //     }).then(response => {
-                  //       if(response){
-                  //          alert("upvote successfully");}
-
-                  //     }).catch(function (error)
-                  //     {
-                  //   console.log(error);
-
-                  // });
+                
                 }
               else {
                     this.className_up = 'btn btn-light btn-sm is-gray';
@@ -238,18 +188,7 @@ export default {
                     this.pressed_up = false;
                      this.PostId=postData.id;
                   AllServices.defaultVote(this.PostId,this.$localStorage.get('token'),0);
-                //     axios.post("http://localhost/vote",
-                //    {
-
-
-                //     ID:this.$localStorage.get('token'),
-                //     name:this.PostId,
-                //     direction:0
-
-                //   }).then(response => {}).catch(function (error)
-                //   {
-                //    console.log(error);
-                //  });
+              
                }
 
 
@@ -274,23 +213,7 @@ export default {
                          this.votes-=1;
                           this.PostId=postData.id;
                          AllServices.downvote(this.PostId,this.$localStorage.get('token'),-1);
-                    //      axios.post("http://localhost/vote",
-                    //  {
-
-
-                    //       ID      : this.$localStorage.get('token'),
-                    //       name    : this.PostId,
-                    //       direction: -1
-
-                    //  }).then(response =>{
-                    //    if(response){
-                    //      alert("downvote successfully");
-                    //    }
-                    //  }).catch(function (error)
-                    //  {
-                    //   //console.log(error);
-
-                    // });
+                 
                   }
               else {
                   this.className_down = 'btn btn-light btn-sm is-gray';
@@ -300,18 +223,7 @@ export default {
                    this.pressed_down = false;
                     this.PostId=postData.id;
                    AllServices.defaultVote(this.PostId,this.$localStorage.get('token'),0);
-                  //  axios.post("http://localhost/vote",
-                  //  {
-
-
-                  //   ID:this.$localStorage.get('token'),
-                  //   name:this.PostId,
-                  //   direction:0
-
-                  // }).then(response => {}).catch(function (error) {
-                  //    console.log(error);
-                  //  });
-
+              
 
                  }
               },
@@ -328,22 +240,7 @@ export default {
         this.Saved="unsave";
          this.PostId=postData.id;
         AllServices.save(this.$localStorage.get('token'),this.PostId);
-        // axios.post( "http://localhost/save",
-        // {
-
-        //     ID:this.PostId ,
-        //     token:this.$localStorage.get('token')
-
-
-        // }).then(response=>{
-        //   if(response){
-        //     alert('Post saved successfully');
-        //   }
-        // } ).catch(function (error)
-        // {
-        //     // console.log(error);
-
-        // });
+        
       }
         else{
           this.PostId=postData.id;
@@ -428,7 +325,7 @@ created(){
             }
 .column1 {
             float: left;
-            column-rule-width: 1px;
+            column-rule-width: 10%;
          }
  #post:hover{
             border-color:rgb(135, 138, 140);
@@ -444,20 +341,20 @@ h5 {
     display: flex;
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
-    margin-right: -15px;
-    margin-left: 0;
+    margin-right: -5%;
+    margin-left: 0%;
      }
 
 
 #footer{
     width: 100%;
-    height: 30px;
+    height: 100%;
     position: absolute;
-    bottom: 0px;
+    bottom: 0%;
     margin-left: 1%;
       }
 .panel2{
-    margin-bottom: 0px;
+    margin-bottom: 0%;
     background-color: #fff;
     border: 1px solid transparent;
     border-radius: 4px;
@@ -467,8 +364,8 @@ h5 {
     .panel {
 
         margin-bottom: 100%;
-        margin-left: 100px;
-        margin-top: 60px;
+        margin-left: 10%;
+        margin-top: 20%;
         background-color: #fff;
         border: 1px solid transparent;
         border-radius: 4px;
@@ -489,7 +386,7 @@ h5 {
 /*      margin-left: 470px;*/
 } /* Red */
 .postItem{
-width: 0%;
+width: 250%;
 margin-left:6%;
 padding-top:3%;
 margin-top: 0%;
@@ -511,5 +408,20 @@ width: 100%;
 }
 .panel-body {
      padding: 2px;
+}
+
+#post{
+
+  width: 30%;
+}
+
+.panel-body{
+
+  width: 100%;
+}
+
+#postSide{
+width: 30%;
+
 }
 </style>

@@ -267,26 +267,7 @@ export default {
        this.imgName=document.getElementById('imgId').src;
 
     //  AllServices.submit(this.videoUrl,this.apexComId,this.bodyPost,this.imgName,this.isLocked,this.$localStorage.get('token'));
-      //  console.log(this.bodyPost);
-      //  console.log('hello');
-      //  axios.post( "http://127.0.0.1:8000/api/submit_post"  ,{
-
-      //   ApexCom_id:this.apexComId,
-      //   _token:this.$localStorage.get('token'),
-      //   body:this.bodyPost,
-      //   img_name:this.imgName,
-      //   video_url:this.videoUrl,
-      //   isLocked:this.isLocked
-
- 
-
-
-      //  }).then(function(response){
-
-      //    if(response){
-      //      //TODO it will  display your Post which you have created soon 
-          
-      //    }
+  
     }
 
     },
