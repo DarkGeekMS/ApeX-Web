@@ -40,8 +40,8 @@
 <!-- <iframe v-show="video" width="100%" height="400px" src="https://www.youtube.com/embed/tgbNymZ7vqY?autoplay=1">
 </iframe>  -->
  <!-- <iframe  width ="100%" class="resp-iframe" src="https://www.youtube.com/embed/dQw4w9WgXcQ" gesture="media"  allow="encrypted-media" allowfullscreen></iframe> -->
-<!-- <iframe width="100%" height="315" src="https://www.youtube.com/embed/Va0Rq147SRU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
-<iframe  width="100%" height="315" src="https://www.youtube.com/embed/GY4rEmG2Rh0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="100%" height="315" src="https://www.youtube.com/embed/Va0Rq147SRU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<!-- <iframe  width="100%" height="315" src="https://www.youtube.com/embed/GY4rEmG2Rh0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
 <!-- <iframe  width="100%" height="315" src="https://www.youtube.com/embed/3OvDP5_2XIo" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
  <!-- <iframe  width="100%" height="400px" src="https://www.youtube.com/embed/3lW5XQsw42c" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>  -->
 <!-- <img src="smiley.gif"  height="42" width="42"> -->
@@ -374,10 +374,10 @@ h5 {
     box-shadow: 0 1px 1px rgba(0,0,0,.05);}
 
     .panel {
-
-        margin-bottom: 100%;
-        margin-left: 10%;
-        margin-top: 20%;
+         width:100%;
+        margin-bottom: 0%;
+        margin-left: 5%;
+        margin-top: 3%;
         background-color: #fff;
         border: 1px solid transparent;
         border-radius: 4px;
@@ -399,8 +399,8 @@ h5 {
 } /* Red */
 .postItem{
 width: 250%;
-margin-left:6%;
-padding-top:3%;
+margin-left:0.5%;
+padding-top:0.5%;
 margin-top: 0%;
 min-width: 50%;
 height: 100%;
