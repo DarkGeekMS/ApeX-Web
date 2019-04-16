@@ -36,8 +36,15 @@
       <p id="postBody" class="hPost">
 
         {{postData.content}} </p>
-
->
+       
+<!-- <iframe v-show="video" width="100%" height="400px" src="https://www.youtube.com/embed/tgbNymZ7vqY?autoplay=1">
+</iframe>  -->
+ <!-- <iframe  width ="100%" class="resp-iframe" src="https://www.youtube.com/embed/dQw4w9WgXcQ" gesture="media"  allow="encrypted-media" allowfullscreen></iframe> -->
+<!-- <iframe width="100%" height="315" src="https://www.youtube.com/embed/Va0Rq147SRU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
+<iframe  width="100%" height="315" src="https://www.youtube.com/embed/GY4rEmG2Rh0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<!-- <iframe  width="100%" height="315" src="https://www.youtube.com/embed/3OvDP5_2XIo" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
+ <!-- <iframe  width="100%" height="400px" src="https://www.youtube.com/embed/3lW5XQsw42c" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>  -->
+<!-- <img src="smiley.gif"  height="42" width="42"> -->
 </div>
 <footer>
 
@@ -62,6 +69,7 @@ Comments</button>
     <ul class="dropdown-menu" id="dropMenu">
       <li ><a href="#"  @click="Hide" class="HIDE"><i class="fa fa-ban" id="HideIcon"></i>Hide</a></li>
       <li><a href="#"><i class="glyphicon glyphicon-flag" id="ReportIcon"></i>Report</a></li>
+      <li><a href="#"><i class="glyphicon glyphicon-flag" id="ReportIcon"></i>edit</a></li>
     </ul>
   </div>
 
@@ -124,7 +132,8 @@ export default {
 
              moderator:false,
              ShowModalVar:true,
-             Deleted:false
+             Deleted:false,
+             video:true
             };
          },
 
@@ -390,7 +399,8 @@ width: 250%;
 margin-left:6%;
 padding-top:3%;
 margin-top: 0%;
-/* margin-bottom: -112px; */
+min-width: 50%;
+height: 100%;
 
 }
 

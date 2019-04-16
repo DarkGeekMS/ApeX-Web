@@ -14,7 +14,9 @@ export  const MimicDisplayPosts =new Vue({
               content:'Experience enjoyable JavaScript development with WebStorm. With smart code completion, safe refactoring, and first-class support for Node.js, Angular and React. Download free trial 😀😂🍔😍',
               locked:false,
               commenetnum:5,
-              votes:9
+              votes:9,
+              
+          
             }
             ,{
               id:'444',
