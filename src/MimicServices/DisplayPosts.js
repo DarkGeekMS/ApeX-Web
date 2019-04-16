@@ -8,7 +8,7 @@ export  const MimicDisplayPosts =new Vue({
   var posts=[
             {
               id:'555',
-              postedby:'Nada',
+              posted_by:'Nada',
               apex_id:'555',
               title:'dj',
               content:'Experience enjoyable JavaScript development with WebStorm. With smart code completion, safe refactoring, and first-class support for Node.js, Angular and React. Download free trial 😀😂🍔😍',
@@ -18,7 +18,7 @@ export  const MimicDisplayPosts =new Vue({
             }
             ,{
               id:'444',
-              postedby:'marc',
+              posted_by:'marc',
               apex_id:'444',
               title:'dj',
               content:`Software engineering is concerned with theories, methods and tools for professional software development.
@@ -26,13 +26,13 @@ export  const MimicDisplayPosts =new Vue({
 `
             },{
               id:'333',
-              postedby:'Ayat',
+              posted_by:'Ayat',
               apex_id:'333',
               title:'dj',
               content:'I love javascript ,vue ,html ,css 🐸🐸🐸'
             },{
               id:'222',
-              postedby:'Double',
+              posted_by:'Double',
               apex_id:'weather forecast',
               title:'dj',
               content:`Partly cloudy in the evening, becoming cloudy overnight. Low around 55 F. Winds S at 5 to 10 mph
@@ -44,7 +44,7 @@ export  const MimicDisplayPosts =new Vue({
               Mostly clear with showers likely. Slight chance of a thunderstorm. 3 to 6 mm of rain 🔥🔥`
             },{
               id:'111',
-              postedby:'Nourhan',
+              posted_by:'Nourhan',
               apex_id:'222',
               title:'anime',
               content:'Software costs more to maintain than it does to develop. For systems with a long life, maintenance costs may be several times development costs🍔 😂 '
@@ -62,7 +62,7 @@ return promise1;
                  posts=[
                   {
                     id:'555',
-                    postedby:'Nada',
+                    posted_by:'Nada',
                     apex_id:'555',
                     title:'dj',
               content:'Experience enjoyable JavaScript development with WebStorm. With smart code completion, safe refactoring, and first-class support for Node.js, Angular and React. Download free trial 😀😂🍔😍',
@@ -72,13 +72,18 @@ return promise1;
                     votes:9
                   },{
                     id:'444',
-                    postedby:'marc',
+                    posted_by:'marc',
                     apex_id:'444',
                     title:'dj',
                     content:'I love javascript ,vue ,html ,css 🐸🐸🐸'
                   }
                 ];
-                return posts;
+                var promise1 = new Promise(function(resolve, reject) {
+                  setTimeout(function() {
+                    resolve(posts);
+                  }, 300);
+                });
+      return promise1;
               }
       }
 else {
