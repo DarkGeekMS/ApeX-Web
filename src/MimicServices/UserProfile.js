@@ -15,22 +15,27 @@ export  const MimicUserProfile =new Vue({
       personalPosts:[{},{}],
       cakeDay:'March 15, 2019',
   }
-  return profileInfo;
+    var promise = new Promise(function(resolve) {
+        setTimeout(function() {
+          resolve(profileInfo);
+        }, 300);
+      });
+return promise;
 }
 else {
-    axios.post('http://35.232.3.8/api/info',{
+    return axios.post('http://35.232.3.8/api/info',{
           Token:this.$localStorage.get('token')
       })
-      .then(function (response) {
-          return response;
+      .then(response=> {
+        return response.data;
+       })
+      .catch(function (error) {
+        alert(error)
+        // console.log(error);
       });
-      // .catch(function (error) {
-      //   //   alert('sorry something went wrong')
-      //   // console.log(error);
-      // });
     }
   },
-  getUserInfoById: function(mimic,userName){
+getUserInfoById: function(mimic,userName){
 
     if(mimic){
 var profileInfo={
@@ -40,56 +45,83 @@ var profileInfo={
     personalPosts:[{},{}],
     cakeDay:'March 15, 2019',
 }
-return profileInfo;
+var promise = new Promise(function(resolve) {
+  setTimeout(function() {
+    resolve(profileInfo);
+  }, 300);
+  
+});
+return promise;
 }
 else {
-    axios.post('http://35.232.3.8/api/user_data',  {
+    return axios.post('http://35.232.3.8/api/user_data',  {
       Token:this.$localStorage.get('token'),
       userid:userName
   })
-  .then(function (response) {
-      return response;
+  .then(response=> {
+    return response.data;
+   })
+  .catch(function (error) {
+    alert(error)
+    // console.log(error);
   });
-  // .catch(function (error) {
-  //   // console.log(error);
-  // });
   }
 },
 
 getUserType: function(mimic){
 
   if(mimic){
-return 1;
+  var info={
+      id: "t2_2",
+        fullname: null,
+        email: "111@gmail.com",
+        username: "MohamedRamzy123",
+        avatar: " ",
+        karma: 1,
+        notification: 1,
+        type: 1,
+        created_at: "2019-03-18 09:36:09",
+        updated_at: "2019-03-18 09:36:09"
+    }
+
+    var promise = new Promise(function(resolve) {
+      setTimeout(function() {
+        resolve(info);
+      }, 300);
+    });
+    return promise;
 }
 else {
-    axios.post('http://35.232.3.8/api/me', {
+    return axios.post('http://35.232.3.8/api/me', {
              Token:this.$localStorage.get('token')
             })
-              .then(function (response) {
-                return response;
-              });
-          // .catch(function (error) {
-          // // console.log(error);
-          // });
+            .then(response=> {
+              return response.data;
+             })
+            .catch(function (error) {
+              alert(error);
+              // console.log(error);
+            });
 }
 },
 
 deleteUser: function(mimic,userName){
 
   if(mimic){
-return true;
+    return true;
 }
 else {
-  axios.delete('http://35.232.3.8/api/del_user',{params: {
+    axios.delete('http://35.232.3.8/api/del_user',{params: {
     userID:userName,
     Token:this.$localStorage.get('token')}
 })
 .then(function (response) {
   return response;
+})
+.catch(function (error) {
+  alert(error);
+  // console.log(error);
 });
-// .catch(function (error) {
-//   // console.log(error);
-// });
 }
 },
 getUserInfoByIdforGuest:function(mimic,userName){
@@ -101,38 +133,49 @@ getUserInfoByIdforGuest:function(mimic,userName){
         personalPosts:[{},{}],
         cakeDay:'ِjune 15, 2019',
     }
-    return profileInfo;
+    var promise = new Promise(function(resolve) {
+      setTimeout(function() {
+        resolve(profileInfo);
+      }, 300);
+    });
+    return promise;
     }
     else {
-        axios.get('http://35.232.3.8/api/user_data', {
+        return axios.get('http://35.232.3.8/api/user_data', {
         params: {
           userid:userName
         }
       })
-      .then(function (response) {
-          return response;
+      .then(response=> {
+        return response.data;
+       })
+      .catch(function (error) {
+        alert(error);
+        // console.log(error);
       });
-      // .catch(function (error) {
-      //   // console.log(error);
-      // });
       }
     },
 blockUser:function(mimic,userName){
   if(mimic){
-    var response=true;
-    return response;
+    var promise = new Promise(function(resolve) {
+      setTimeout(function() {
+        resolve('The user has been blocked successfully');
+      }, 300);
+    });
+      return promise;
     }
     else {
-      axios.post('http://localhost/api/block_user', {
+      return axios.post('http://localhost/api/block_user', {
         userid:userName,
         Token:this.$localStorage.get('token')
     })
-    .then(function (response) {
-        return response;
+    .then(response=> {
+      return response.data;
+     })
+    .catch(function (error) {
+      alert(error);
+      // console.log(error);
     });
-    // .catch(function (error) {
-    //   // console.log(error);
-    // });
     }
 }
 

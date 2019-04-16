@@ -117,6 +117,7 @@ export default {
   data () {
     return {
       token:this.$localStorage.get('token'),
+      loggedIn:this.$localStorage.get('login'),
       
     }
   },
@@ -127,27 +128,30 @@ export default {
     */
     isAdmin:function(){
       if(this.loggedIn){
-      var data= AllServices.userType();
-        if(data ==1){
+      var data= AllServices.userType().then((data) =>{
+        if(data.type ==1){
           return true;
           }
         else{
           return false;
         }
+      })
       }
     },
     blockUser:function(userName,index){
     if(this.loggedIn){
-     var data= AllServices.blockUser(userName);
+     var data= AllServices.blockUser(userName).then((data) =>{
      if(data){
        if(index!==-1)
        {
          this.blockList.splice(index, 1);
+         alert('this user have been blocked successfully');
        }
        }
        else{
-         alert('you have to log in first');
+         alert('this user have been blocked successfully');
        }
+       })
        }
       else{
         alert('you have to log in first');
@@ -325,8 +329,9 @@ export default {
   cursor:pointer;
   border-color: skyblue;
   border-style: solid;
-  height:auto;
+  /* height:auto; */
   text-transform: uppercase;
+  height:38px;
 }
 .unblockButton:hover {opacity: 0.75}
 .Header{

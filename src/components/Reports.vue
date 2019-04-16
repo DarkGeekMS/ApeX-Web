@@ -1,8 +1,6 @@
 <template id="reportspagedesign">
 <div>
 <div id='report' v-for="report in reports" :key="report.id">
-    <post v-bind:postdata="getPostData(report.postID)"></post>
-    <CommentParent v-bind:postdata="getPostData(report.postID,report.commentID)" ></CommentParent>
 </div>
 </div>
 </template>
@@ -18,32 +16,17 @@ export default {
   'Post':post,
   'CommentParent':CommentParent
 },
+props:['apexComName'],
   props:{
-      reports:Array,
+      reports:Array,   
     },
   data () {  
     return {
-      token:globalStore.token,
-      ApexComName:'',//must be send
+      token:this.$localStorage.get('token'),
     }
   },
   methods:
   {
-    getPostData:function(postid){
-      axios.get('http://localhost/post_by_id', {
-    params: {
-      Token:this.token,
-      postid:this.postid,
-    }
-  })
-  .then(function (response) {
-      return response; //////////make sure of this
-  })
-  .catch(function (error) {
-    console.log(error);
-  });
-
-    },
   },
   mounted()
   {
@@ -51,7 +34,7 @@ export default {
     axios.get('http://localhost/review_reports', {
     params: {
       Token:this.token,
-      ApexCom_id:this.ApexComName,
+      ApexCom_id:this.apexComName,
     }
   })
   .then(function (response) {

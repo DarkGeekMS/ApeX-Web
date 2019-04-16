@@ -15,23 +15,29 @@ export  const MimicApexCom =new Vue({
     {userName:'moderator1'},
     {userName:'moderator1'}],
   }
-  return about
+  var promise = new Promise(function(resolve) {
+    setTimeout(function() {
+      resolve(about);
+    }, 300);
+  });
+return promise;
 }
 else {
-  axios.post('http://35.232.3.8/api/about', {
+  return axios.post('http://35.232.3.8/api/about', {
       ApexCom_id :ApexComName,
       Token:this.token
   })
-  .then(function (response) {
-return response;
+  .then(response=> {
+    return response.data;
+   })
+  .catch(function (error) {
+    alert(error)
+    // console.log(error);
   });
-  // .catch(function (error) {
-  //  // console.log(error);
-  // });
     }
   },
 
-  getSubscribers: function(mimic,ApexComName){
+getSubscribers: function(mimic,ApexComName){
     if(mimic){
 var subscribersList=[
   {userName:'subscriber1'},
@@ -39,7 +45,7 @@ var subscribersList=[
   {userName:'subscriber3'},
   {userName:'subscriber4'}
 ]
-return subscribersList
+return subscribersList;
 }
 else {
  axios.post('http://35.232.3.8/api/get_subscribers', {
@@ -48,12 +54,13 @@ else {
       Token:this.$localStorage.get('token')
 
   })
-  .then(function (response) {
-    return response;
+  .then(response=> {
+    return response.data;
+   })
+  .catch(function (error) {
+    alert(error)
+    // console.log(error);
   });
-  // .catch(function (error) {
-  //   // console.log(error);
-  // });
   }
 },
 

@@ -14,11 +14,6 @@
     </div>
 </div>
     <SideBar class="sidebar" v-bind:apexComName="ApexComName"
-    v-bind:rules="rules"
-    v-bind:description="description"
-    v-bind:moderators="moderators"
-    v-bind:subscribersCount="subscribersCount"
-
     ></SideBar>
     <div class="routerview">
     <router-view></router-view>
@@ -74,7 +69,7 @@ export default {
     */
     isModerator:function(){
       if(this.loggedIn){
-      var moderator = this.moderators.find(this.CheckModerator);
+      var moderator = this.moderators.find(this.CheckModerator)
       if(moderator !== undefined){
           return true;
         }
@@ -89,24 +84,26 @@ export default {
       isAdmin:function()
       {
         if(this.loggedIn){
-        var data= AllServices.userType();
-        if(data ==1){
+        var data= AllServices.userType().then((data) =>{
+        if(data.type ==1){
           return true;
           }
         else{
           return false;
         }
+        })
         }
       },
     /**
     * request the data for certain community
     */
      getAbout(){
-         var about= AllServices.getAbout(this.ApexComName);
+         var about= AllServices.getAbout(this.ApexComName).then((data) =>{
          this.description=about.description;
          this.moderators=about.moderators;
          this.rules=about.rules;
          this.subscribersCount=about.subscribersCount;
+         })
    },
 
   },
@@ -165,7 +162,6 @@ export default {
   margin:8%;
   margin-left: 3%;
   margin-right: 6%;
-  /* background-color:white; */
   float:right;
 }
 .router-link-active{
