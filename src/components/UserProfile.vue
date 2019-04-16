@@ -12,6 +12,7 @@
         v-bind:karmaCount="karmaCount"
         v-bind:image="image"
         v-bind:cakeDay="cakeDay"
+        v-bind:blockList ="blockList"
                 class="sidebar" ></SideBar>
 </div>
 </template>
@@ -50,6 +51,7 @@ export default {
       hiddenPosts:[],
       reports:[],
       cakeDay:'',
+      blockList:[],
     }
   },
   methods:
@@ -97,6 +99,7 @@ export default {
       this.personalPosts = data.personalPosts;
       this.reports = data.reports;
       this.cakeDay = data.cakeDay;
+      this.blockList = data.blockList;
    },
     /**
     * get user account data for another user
