@@ -12,7 +12,8 @@
         v-bind:karmaCount="karmaCount"
         v-bind:image="image"
         v-bind:cakeDay="cakeDay"
-                class="sidebar" ></SideBar>
+        v-bind:blockList ="blockList"
+        class="sidebar" ></SideBar>
 </div>
 </template>
 
@@ -50,6 +51,7 @@ export default {
       hiddenPosts:[],
       reports:[],
       cakeDay:'',
+      blockList:[],
     }
   },
   methods:
@@ -60,13 +62,14 @@ export default {
     isModerator:function()
       {
         if(this.loggedIn){
-        var data= AllServices.userType();
-        if(data ==2){
+        var data= AllServices.userType().then((data) =>{
+        if(data.type ==2){
           return true;
           }
         else{
           return false;
           }
+        })
         }
       },
     /**
@@ -88,7 +91,7 @@ export default {
     * get user profile info 
     */
     getUserProfile:function(){
-      var data= AllServices.getUserInfo();
+      var data= AllServices.getUserInfo().then((data) =>{
       this.karmaCount = data.karma;
       this.image = data.image;
       //this.userName = data.userName;
@@ -97,28 +100,32 @@ export default {
       this.personalPosts = data.personalPosts;
       this.reports = data.reports;
       this.cakeDay = data.cakeDay;
+      this.blockList = data.blockList;
+      })
    },
     /**
     * get user account data for another user
     */
    getUserData:function(){
-      var data= AllServices.getUserInfoById(this.userName);
+      var data= AllServices.getUserInfoById(this.userName).then((data) =>{
       this.karmaCount = data.karma;
       this.image = data.image;
      // this.userName = data.userName;
       this.personalPosts = data.personalPosts;
       this.cakeDay = data.cakeDay;
+      })
    },
    /**
     * get user account data for a guset
     */
    getUserDataForGuest:function(){
-     var data= AllServices.getUserInfoByIdforGuest(this.userName);
+     var data= AllServices.getUserInfoByIdforGuest(this.userName).then((data) =>{
       this.karmaCount = data.karma;
       this.image = data.image;
      // this.userName = data.userName;
       this.personalPosts = data.personalPosts;
       this.cakeDay = data.cakeDay;
+     })
    }
 
   },

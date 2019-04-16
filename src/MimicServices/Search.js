@@ -8,14 +8,14 @@ export  const MimicSearch =new Vue({
     }
   },
   methods:{
-    
+
     searchApex: function(mimic)
     {
       if(mimic ==  true)
       {
         if(this.$localStorage.get('search') == this.searchValue )
         {
-           var result = [        
+           var result = [
              [{
                id:1,
                name:'AyatMostafa',
@@ -50,7 +50,7 @@ export  const MimicSearch =new Vue({
                 karma:10
               }]
           ]
-          return result   
+          return result
         }
         else{
           return 'Sorry, there were no community results for'
@@ -58,7 +58,7 @@ export  const MimicSearch =new Vue({
       }
       else
       {
-        axios.post('http://127.0.0.1:8000/api/search',{
+        axios.post('http://35.232.3.8/api/search',{
         query: this.$localStorage.get('search'),
         token: this.$localStorage.get('token')
         }).then(response => {
@@ -68,7 +68,7 @@ export  const MimicSearch =new Vue({
           return result
         }).catch(error => {
           return error
-        }) 
+        })
       }
     },
 
@@ -79,7 +79,7 @@ export  const MimicSearch =new Vue({
          if(this.$localStorage.get('search') == this.searchValue)
          {
             var posts = [
-             { 
+             {
               apex_id:1,
               content:'Experience enjoyable JavaScript development with WebStorm. With smart code completion, safe refactoring, and first-class support for Node.js, Angular and React. Download free trial 😀😂🍔😍',
               id:1,
@@ -87,7 +87,7 @@ export  const MimicSearch =new Vue({
               title:'posttitle',
               votes:150
             },
-            { 
+            {
               apex_id:1,
               content:'Experience enjoyable JavaScript development with WebStorm. With smart code completion, safe refactoring, and first-class support for Node.js, Angular and React. Download free trial 😀😂🍔😍',
               id:1,
@@ -103,7 +103,7 @@ export  const MimicSearch =new Vue({
       }
       else
       {
-        axios.get('http://34.66.175.211/api/Apex_names', {
+        axios.get('http://35.232.3.8/Apex_names', {
           }).then(response => {
              return response.data
           }).catch(function (error) {

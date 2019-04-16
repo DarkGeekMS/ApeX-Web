@@ -3,31 +3,16 @@
     <div class="box" id="infobox">
         <div class="bluebackgroung">
           <div class="img">
-             <!-- <img width="100" height="100" class="image" src="../../public/AMFz23O.jpg" /> -->
-             <img width="100" height="100" class="image" :src="image" />
-
-             <!-- <object type="image/svg+xml" data="../../public/karma.svg" class="logo"></object> -->
-             <!-- <img src="../../public/karma.svg" class="karma" alt="Breaking Borders Logo" height="65" width="68"> -->
-             <!-- <object type="image/svg+xml" data="../../public/karma.svg" class="karma"></object> -->
-             <!-- <a :href="picture" download>
-                    <img :src="picture" alt="image" width="100" height="100" class="image"/>
-             </a> -->
-
-             <!-- <a @click.prevent="downloadItem(picture)" :href="picture" width="100" height="100" class="image">
-             </a> -->
-
+             <img width="100%" height="100%" class="image" :src="image" />
           </div>
         </div> 
         <div class="content">
-          <a class="link" href="#account" > {{userName}} </a>
-          <!-- chaaange routes -->
-          <div class="info">
-          <h5 class="font" style="display:inline;" id="karmacount">karma</h5>
-          <h5 class="font" style="display:inline;" id="cakeday">cake day</h5>
-          </div>              
-            <div class="images" >
-              
-             <svg class="svg" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+          <h4 class="link" href="#account" > {{userName}} </h4>
+
+<div class="info">
+  <div style="display:inline; float:left; width:50%;">
+    <h5 class="font"  id="karmacount">karma</h5>
+    <svg style="display:inline;" class="svg" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 viewBox="0 0 20 20"  xml:space="preserve">
    
 <path class="karma" d="M7.509604,9.809682c0.092814-1.228464,1.071614-2.207275,2.30009-2.300069
@@ -53,9 +38,13 @@
 	c0.258138,0.852885,0.719604,1.657298,1.393799,2.331503L10,16.666666l0.039998-0.039997
 	c0.674194-0.674215,1.135661-1.478618,1.393799-2.331503C10.901387,13.962443,10.417033,13.54601,10,13.051686z"/>
 </svg>
-<h5 id="karmanumber" style="display:inline;"> {{karmaCount}} </h5>
-<h5 id="cakedaynumber" style="display:inline; float:right;"> {{cakeDay}} </h5>
-<svg class="svg2" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+<h5 style="display:inline;" id="karmanumber" > {{karmaCount}} </h5>
+
+  </div>
+  <div style="display:inline; float:right; width:50%;">
+    <h5 class="font"  id="cakeday">cake day</h5>
+    
+<svg style="display:inline;" class="svg2" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 width="512px" height="512px" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve">
 <g>
 	<path class="karma" d="M454.928,237.161l-32.273-89.114c-5.769-15.921-22.479-25.068-38.994-21.332l-51.145,11.539
@@ -83,16 +72,25 @@
 		/>
 </g>
 </svg>
-
-</div>
-
-
-          
-          
+<h5 style="display:inline;" id="cakedaynumber" > {{cakeDay}} </h5>
+  </div>
+</div>       
           <button v-show="notGuest()" id="createpostbutton" class="button" type="button">new post</button>
+          <button v-show="!notGuest()" v-on:click="blockUser(this.userName,-1)" id="blocktbutton" class="button" type="button">block</button>
           <button v-show="isAdmin()" v-on:click="deleteUser()" id="deletebutton" class="button" type="button">delete user</button>
         </div>       
     </div> 
+
+<div v-show="notGuest()" id="blocklistbox">
+      <h3 class="Header" id="blocklistheader">Block list</h3>
+      <div class="contentblocklist" >
+      <div id="blocklistitam" v-for="blockedUser in blockList" :key="blockedUser.id">
+    <h5 > {{blockedUser.userName}}</h5>
+    <button id="unblockbutton" class="unblockButton" v-on:click="blockUser(blockedUser.userName,index)">unblock</button>
+  
+  </div>
+    </div>
+    </div>
 </div>
 </template>
 
@@ -114,42 +112,49 @@ export default {
       karmaCount:Number,
       image:String,
       cakeDay:String,
+      blockList:Array,
        },
   data () {
     return {
-      //token:this.$localStorage.get('token'),
-
+      token:this.$localStorage.get('token'),
+      loggedIn:this.$localStorage.get('login'),
+      
     }
   },
   methods:
   {
-
-  //   downloadItem (url) {
-  //   Axios.get(url, { responseType: 'blob' })
-  //     .then(({ data }) => {
-  //       let blob = new Blob([data], { type: 'image/png' })
-  //       let link = document.createElement('a')
-  //       link.href = window.URL.createObjectURL(blob)
-  //       link.download = 'image.png'
-  //       link.click()
-  //     .catch(error => {
-  //       console.error(error)
-  //     })
-  //   })
-  // },
-
   /**
     * check if the user if Admin
     */
     isAdmin:function(){
       if(this.loggedIn){
-     var data= AllServices.userType();
-        if(data ==1){
+      var data= AllServices.userType().then((data) =>{
+        if(data.type ==1){
           return true;
           }
         else{
           return false;
         }
+      })
+      }
+    },
+    blockUser:function(userName,index){
+    if(this.loggedIn){
+     var data= AllServices.blockUser(userName).then((data) =>{
+     if(data){
+       if(index!==-1)
+       {
+         this.blockList.splice(index, 1);
+         alert('this user have been blocked successfully');
+       }
+       }
+       else{
+         alert('this user have been blocked successfully');
+       }
+       })
+       }
+      else{
+        alert('you have to log in first');
       }
     },
     /**
@@ -271,35 +276,23 @@ export default {
   height:14px;
 }
 .svg{
-  width:30px;
+  width:18%;
   height:30px;
   margin-top:0%;
   margin-left:0%;
-  margin-right:-2%;
-  margin-bottom:-3%;
+  margin-right:0%;
+  margin-bottom:-7%;
   padding-left:0%;
   padding-right:0%;
   padding-top:2%;
-  padding-bottom:1%;
+  padding-bottom:2%;
 }
 .svg2{
-  width:30px;
-  height:30px;
-  margin-top:-1%;
+  width:14%;
+  height:25px;
+  margin-top:0%;
   margin-left:0%;
   margin-right:0%;
-  margin-bottom:-3%;
-  padding-left:0%;
-  padding-right:0%;
-  padding-top:2%;
-  padding-bottom:1%;
-  float: right;;
-}
-#cakeday{
-  float: right;;
-  margin-top:-2%;
-  margin-left:0%;
-  margin-right:17%;
   margin-bottom:-3%;
   padding-left:0%;
   padding-right:0%;
@@ -309,6 +302,8 @@ export default {
 .info{
   margin-top: 3%;
   margin-bottom: 3%;
+  display: inline-block;
+  width: 100%;
 }
 .font{
   font-size: 18px;
@@ -318,5 +313,53 @@ export default {
 .images{
   margin-top: 3%;
   margin-bottom: 3%;
+}
+.unblockButton{
+  width:30%;
+  margin-top:-11%;
+  margin-left:0%;
+  margin-right: 0%; 
+  margin-bottom: 0%;
+  color:skyBlue;
+  background-color: #eee;
+  padding: 0%;
+  float:right;
+  border-width: 3px;
+  border-radius: 8px;
+  cursor:pointer;
+  border-color: skyblue;
+  border-style: solid;
+  /* height:auto; */
+  text-transform: uppercase;
+  height:38px;
+}
+.unblockButton:hover {opacity: 0.75}
+.Header{
+  background-color: skyBlue;
+  padding:12px;
+  margin: 0%;
+  height:auto;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+#blocklistbox{
+  margin-top: 5%;
+}
+.contentblocklist{
+  background-color: #eee;
+  height: auto;
+  padding-top: 5%;
+  padding-bottom:5%;
+  padding-left:8%;
+  padding-right:8%;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+#blocklistitam{
+  width:100%;
+  height: auto;
+  display:inline-block;
+  padding: 0%;
+  margin:3%;
 }
 </style>

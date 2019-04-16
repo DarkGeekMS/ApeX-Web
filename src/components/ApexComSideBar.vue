@@ -60,10 +60,10 @@ import {AllServices} from '../MimicServices/AllServices.js'
 export default {
     props:{
        apexComName:String,
-       description:String,
-       moderators:Array,
-       rules:Array,
-       subscribersCount: Number,
+      //  description:String,
+      //  moderators:Array,
+      //  rules:Array,
+      //  subscribersCount: Number,
        },
     data(){
         return{
@@ -74,6 +74,11 @@ export default {
             userName:this.$localStorage.get('userName'),
             loggedIn:this.$localStorage.get('login'),
             //userName:'subscriber1',
+            // apexComName:'',
+            description:'',
+            moderators:[],
+            rules:[],
+            subscribersCount:0,
         }
 
     },
@@ -118,9 +123,8 @@ export default {
     */
     getSubscribers(){
       if(this.loggedIn){
-        this.subscribers= AllServices.getSubscribers(this.apexComName);
+        this.subscribers= AllServices.getSubscribers(this.apexComName).then((data) =>{
         var subscribe = this.subscribers.find(this.CheckUser);
-        console.log(subscribe);
         if(subscribe !== undefined){
           this.subscribed = true;
           this.state='subscribed';
@@ -129,6 +133,7 @@ export default {
           this.subscribed=false;
           this.state='subscribe';
     }
+    })
       }
       else{
           this.subscribed=false;
@@ -141,13 +146,14 @@ export default {
       isAdmin:function()
       {
         if(this.loggedIn){
-        var data= AllServices.userType();
-        if(data ==1){
+        var data= AllServices.userType().then((data) =>{
+        if(data.type ==1){
           return true;
           }
         else{
           return false;
         }
+        })
         }
       },
       /**
@@ -156,7 +162,7 @@ export default {
     subscribe:function()
     {
       if(this.loggedIn){
-      var data = AllServices.subscribe(this.apexComName);
+      var data = AllServices.subscribe(this.apexComName).then((data) =>{
       if(data){
       if(this.subscribed){
       this.subscribed = false;
@@ -166,20 +172,31 @@ export default {
       this.subscribed=true;
       this.state='subscribed';
     }
-    }
+    }  
     else{
       alert('something wrong happened try again later');
     }
+    })
       }
       else{
         alert('login first,please');
       }
     },
+    getAbout(){
+         var about= AllServices.getAbout(this.ApexComName).then((data) =>{
+         this.description=about.description;
+         this.moderators=about.moderators;
+         this.rules=about.rules;
+         this.subscribersCount=about.subscribersCount;
+         })
+   },
+    
   },
  mounted(){
    if(this.loggedIn){
    this.getSubscribers();
    }
+   this.getAbout();
  }
 
 }
@@ -216,7 +233,7 @@ export default {
   width:100%;
   margin:2% 0%;
   background-color:skyBlue;
-  color: #eee;
+  color: white;
   padding: 0%;
   border-width: 3px;
   border-radius: 8px;
@@ -237,7 +254,7 @@ export default {
   width:100%;
   margin:2% 0%;
   color:skyBlue;
-  background-color: #eee;
+  background-color: white;
   padding: 0%;
   border-width: 3px;
   border-radius: 8px;
