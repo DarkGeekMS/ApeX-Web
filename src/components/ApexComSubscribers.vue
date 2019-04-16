@@ -1,6 +1,8 @@
 <template id="subscribers list design">
 <div class="list" id="subscribers list">
-  <div id="subscribers box" class="box" v-for="(subscriber,index) in SubscribersList" :key="subscriber.id">
+  <!-- <h3 v-if="this.subscribersList==0" >there is nothing to show </h3> -->
+  <div id="subscribers box" class="box" v-for="(subscriber,index) in subscribersList" :key="subscriber.id">
+    <!-- <img width="100%" height="100%" class="image" :src="image" /> -->
     <router-link class="accountLink" :to="{name:'UserProfile' , params: {userName:subscriber.userName}}"> {{subscriber.userName}}</router-link>
     <button id="remove button" class="removeButton" v-on:click="blockUser(subscriber,index)">BLOCK</button>
   </div>
@@ -23,7 +25,7 @@ export default {
   data () {
     return {
       token:this.$localStorage.get('token'),
-      SubscribersList:[]
+      subscribersList:[]
     }
   },
   methods:
@@ -35,14 +37,14 @@ export default {
     {
       var data = AllServices.blockSubscriber(userName,this.ApexComName);
       if(data){
-      this.SubscribersList.splice(index, 1);
+      this.subscribersList.splice(index, 1);
       }
       else{
         console.log(error);
       }
     },
       getsubscribers(){
-      this.SubscribersList= AllServices.getSubscribers(this.ApexComName);
+      this.subscribersList= AllServices.getSubscribers(this.ApexComName);
       }
   },
   mounted()
@@ -60,17 +62,27 @@ export default {
   margin:1% 0%;
   padding:4% 3%;
   border-radius: 8px;
+  display:inline-block;
 }
 .removeButton{
   background-color:skyBlue;
   width:auto;
   height:auto;
-  border-radius: 8px;
   padding:1% 1%;
   margin:-1% 2%;
   float:right;
   cursor:pointer;
   color:white;
+  border-width: 3px;
+  border-radius: 8px;
+  cursor:pointer;
+  border-color: skyblue;
+  border-style: solid;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  line-height: 32px;
+  text-transform: uppercase;
 }
 
 .removeButton:hover {opacity: 0.75}

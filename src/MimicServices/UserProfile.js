@@ -7,7 +7,7 @@ export  const MimicUserProfile =new Vue({
       if(mimic){
   var profileInfo={
       userName:'',
-      image:'',
+      image:'https://i.imgur.com/AMFz23O.jpg',
       karma:9,
       saved:[{},{}],
       hidden:[{},{}],
@@ -35,7 +35,7 @@ else {
     if(mimic){
 var profileInfo={
     userName:'',
-    image:'',
+    image:'https://i.imgur.com/AMFz23O.jpg',
     karma:9,
     personalPosts:[{},{}],
     cakeDay:'March 15, 2019',
@@ -96,10 +96,10 @@ getUserInfoByIdforGuest:function(mimic,userName){
   if(mimic){
     var profileInfo={
         userName:'',
-        image:'',
+        image:'https://i.imgur.com/AMFz23O.jpg',
         karma:9,
         personalPosts:[{},{}],
-        cakeDay:'ِAugeust 15, 2019',
+        cakeDay:'ِjune 15, 2019',
     }
     return profileInfo;
     }
@@ -116,7 +116,25 @@ getUserInfoByIdforGuest:function(mimic,userName){
       //   // console.log(error);
       // });
       }
+    },
+blockUser:function(mimic,userName){
+  if(mimic){
+    var response=true;
+    return response;
     }
+    else {
+      axios.post('http://localhost/api/block_user', {
+        userid:userName,
+        Token:this.$localStorage.get('token')
+    })
+    .then(function (response) {
+        return response;
+    });
+    // .catch(function (error) {
+    //   // console.log(error);
+    // });
+    }
+}
 
   }
 });

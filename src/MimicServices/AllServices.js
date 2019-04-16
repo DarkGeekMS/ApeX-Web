@@ -147,6 +147,10 @@ EditComment: function(ID,content){
 getUserInfoByIdforGuest:function(userName){
   var data=MimicUserProfile.getUserInfoByIdforGuest(this.mimic,userName);
   return data;
+},
+blockUser:function(userName){
+  var data=MimicUserProfile.getUserInfoByIdforGuest(this.mimic,userName);
+  return data;
 }
 
   }

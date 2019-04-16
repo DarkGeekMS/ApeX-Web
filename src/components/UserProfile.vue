@@ -12,6 +12,7 @@
         v-bind:karmaCount="karmaCount"
         v-bind:image="image"
         v-bind:cakeDay="cakeDay"
+        v-bind:blockList ="blockList"
                 class="sidebar" ></SideBar>
 </div>
 </template>
@@ -50,6 +51,7 @@ export default {
       hiddenPosts:[],
       reports:[],
       cakeDay:'',
+      blockList:[],
     }
   },
   methods:
@@ -90,13 +92,14 @@ export default {
     getUserProfile:function(){
       var data= AllServices.getUserInfo();
       this.karmaCount = data.karma;
-      // this.image = data.image;
+      this.image = data.image;
       //this.userName = data.userName;
       this.savedPosts = data.saved;
       this.hiddenPosts = data.hidden;
       this.personalPosts = data.personalPosts;
       this.reports = data.reports;
       this.cakeDay = data.cakeDay;
+      this.blockList = data.blockList;
    },
     /**
     * get user account data for another user
@@ -104,7 +107,7 @@ export default {
    getUserData:function(){
       var data= AllServices.getUserInfoById(this.userName);
       this.karmaCount = data.karma;
-      // this.image = data.image;
+      this.image = data.image;
      // this.userName = data.userName;
       this.personalPosts = data.personalPosts;
       this.cakeDay = data.cakeDay;
@@ -115,7 +118,7 @@ export default {
    getUserDataForGuest:function(){
      var data= AllServices.getUserInfoByIdforGuest(this.userName);
       this.karmaCount = data.karma;
-      // this.image = data.image;
+      this.image = data.image;
      // this.userName = data.userName;
       this.personalPosts = data.personalPosts;
       this.cakeDay = data.cakeDay;
