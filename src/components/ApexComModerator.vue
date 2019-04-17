@@ -1,10 +1,5 @@
 <template id="addmoderatorpagedesign">
 <div>
-<ApexComDeleteModerators 
-    v-bind:apexComName="apexComName"
-    class="moderatorcomponent"
-></ApexComDeleteModerators>
-
 <div class="form-group has-feedback has-search" style="display:inline-block">
         <span class="glyphicon glyphicon-search form-control-feedback"></span>
         <input type="text" class="form-control" placeholder="Search for user to Add as moderator" v-model="searchVal" v-on:keyup.enter="search()">
@@ -18,13 +13,11 @@
 
 <script>
 import axios from 'axios'
-import ApexComDeleteModerators from './ApexComDeleteModerators.vue'
 import {AllServices} from '../MimicServices/AllServices.js'
 
 export default {
 props:['apexComName'],
 components:{
-    'ApexComDeleteModerators':ApexComDeleteModerators
 },
   data () {  
     return {
@@ -40,7 +33,7 @@ components:{
         if( this.searchVal != '')
         {
           this.$localStorage.set('search' , this.searchVal),
-          this.$router.push({ name:'AddModerators'} )
+          this.$router.push({ name:'Moderators'} )
         }
       }
   },
