@@ -42,7 +42,7 @@
 
 <iframe  v-show ="postData.video_url!==''" width="100%" height="315"  :src=postData.video_url frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-<img v-show="postData.img_name!==''" :src=postData.img_name  height="100%" width="100%">
+<img v-show="postData.img_name!==''" :src=postData.img_name  height="100%" width="100%" id="imgId">
 </div>
     <!-- </div> -->
 <footer>
@@ -68,7 +68,8 @@ Comments</button>
     <ul class="dropdown-menu" id="dropMenu">
       <li ><a href="#"  @click="Hide" class="HIDE"><i class="fa fa-ban" id="HideIcon"></i>Hide</a></li>
       <li><a href="#"><i class="glyphicon glyphicon-flag" id="ReportIcon"></i>Report</a></li>
-      <li><a href="#"><i class="glyphicon glyphicon-flag" id="ReportIcon"></i>edit</a></li>
+      <li><a href="#"><i class="glyphicon glyphicon-pencil" id="ReportIcon"></i>edit</a></li>
+      <li><a href="#" @click="isLocked"><i class="fa fa-lock" id="ReportIcon"></i>{{this.locked}}</a></li>
     </ul>
   </div>
 
@@ -133,12 +134,20 @@ export default {
              ShowModalVar:true,
              Deleted:false,
              video:true ,
-             image:false             
+             image:false ,
+             locked:'Lock'            
             };
          },
 
   methods: {
+    isLocked(){
+     if(this.locked=='Lock'){
 
+       this.locked='unlock';
+     }
+      AllServices.isLocked(this.PostId,this.$localStorage.get('token'));
+
+    },
     editText(){
 
 
@@ -349,7 +358,15 @@ created(){
             border-color:rgb(135, 138, 140);
 
             }
+ #postBody:hover{
+             cursor:pointer
+               }
 
+  #imgId{
+         cursor: pointer;
+     
+        }
+  
 h5 {
     text-align: center;
    }
@@ -399,6 +416,7 @@ h5 {
 .postby{
     font-size: 12px;
     color: rgb(120, 124, 126);
+    cursor: pointer;
 }
 .buttonDelete{
       background-color: #f4511e;
@@ -426,6 +444,7 @@ height:100%;
    margin-top:0%;
    font-family:Verdana, Geneva, Tahoma, sans-serif;
    font-size: 130%;
+  
 
 }
 .column2{
@@ -434,6 +453,7 @@ width: 100%;
 }
 .panel-body {
      padding: 2px;
+     cursor: pointer;
 }
 
 #post{

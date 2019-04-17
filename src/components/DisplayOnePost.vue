@@ -7,7 +7,7 @@
   </div>
  <ApexComSideBar class="sidebar"></ApexComSideBar>
    
-      <CommentParent postID='t3_10' class="cmt"></CommentParent>
+      <CommentParent postID='t3_10' class="cmt" v-show="post.locked =='lock'"></CommentParent>
 
 </div>
 </modal>
