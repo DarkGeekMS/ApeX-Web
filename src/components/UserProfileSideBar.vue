@@ -81,7 +81,7 @@
         </div>       
     </div> 
 
-<div  id="blocklistbox" v-show="notGuest()" v-if="blockList.length">
+<div  id="blocklistbox" v-show="notGuest() && blockList.length !==0">
       <h3 class="Header" id="blocklistheader">Block list</h3>
       <div class="contentblocklist" >
       <div id="blocklistitam" v-for="(blockedUser,index) in blockList" :key="blockedUser.id">
@@ -128,7 +128,7 @@ export default {
     */
     isAdmin:function(){
       if(this.loggedIn){
-      var data= AllServices.userType().then((data) =>{
+      AllServices.userType().then((data) =>{
         if(data.type ==1){
           return true;
           }
@@ -139,7 +139,7 @@ export default {
       }
     },
     unblockUser:function(userName,index){
-     var data= AllServices.blockUser(userName).then((data) =>{
+     AllServices.blockUser(userName).then((data) =>{
      if(data){
          this.blockList.splice(index, 1);
          alert('this user have been blocked successfully');
@@ -153,7 +153,7 @@ export default {
     blockUser:function(){
       console.log(this.userName);
     if(this.loggedIn){
-     var data= AllServices.blockUser(this.userName).then((data) =>{
+     AllServices.blockUser(this.userName).then((data) =>{
      if(data){
          alert('this user have been blocked successfully');
        }
@@ -207,7 +207,7 @@ export default {
   padding-bottom:0%;
   padding-left:4%;
   padding-right:65%;
-  height: 94px;
+  height: auto;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
 }
@@ -215,11 +215,11 @@ export default {
   border-radius: 4px;
 }
 .img{ 
-  padding:3px;
+  padding:2%;
   background-color: #eee;
   box-sizing: border-box;
   border-radius: 4px;
-  margin-bottom:10%;
+  margin-bottom:-36%;
 }
 .content{
   background-color: #eee;
@@ -257,7 +257,7 @@ export default {
   letter-spacing: 0.5px;
   line-height: 32px;
   text-transform: uppercase;
-  height:38px;
+  height:auto;
 }
 .button:hover {opacity: 0.75}
 
@@ -267,7 +267,7 @@ export default {
 }
 .Header{
   background-color: skyBlue;
-  padding:12px;
+  padding:4%;
   margin-top: 10%;
   margin-bottom: 0%;
   height:auto;
@@ -288,7 +288,7 @@ export default {
 }
 .svg{
   width:18%;
-  height:30px;
+  height:auto;
   margin-top:0%;
   margin-left:0%;
   margin-right:0%;
@@ -300,7 +300,7 @@ export default {
 }
 .svg2{
   width:14%;
-  height:25px;
+  height:auto;
   margin-top:0%;
   margin-left:0%;
   margin-right:0%;

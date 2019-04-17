@@ -10,14 +10,16 @@ import Search from './components/Search.vue'
 import Users from './components/CommunitiesAndUsers.vue'
 import ApexComModerator from './components/ApexComModerator.vue'
 import ApexComAddModerator from './components/ApexComAddModerator.vue'
+import ApexComDeleteModerator from './components/ApexComDeleteModerators.vue'
 
 export default[
       {path:'/ApexCom/:apexComName',name:'ApexCom',props:true,component:ApexCom , children :
       [
         {path:'/' ,component:ApexComPosts},
-        {path:'ApexModerators',name:'Moderators',component:ApexComModerator,props:true ,children :[
-          {path:'AddModerator',name:'AddModerators', component:ApexComAddModerator,props:true },
+        {path:'AddModerators',name:'AddModerators',component:ApexComModerator,props:true ,children :[
+          {path:'search',name:'Moderators', component:ApexComAddModerator,props:true },
         ]},
+        {path:'deletemoderator',name:'DeleteModerators',component:ApexComDeleteModerator},
         {path:'ApexPosts',name:'Posts',component:ApexComPosts},
         {path:'ApexSubscribers',name:'Subscribers',component:ApexComSubscribers,props:true},
         {path:'ApexReports',name:'Reports',component:Reports,props:true},
