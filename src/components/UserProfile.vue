@@ -69,7 +69,7 @@ export default {
     isModerator:function()
       {
         if(this.loggedIn){
-        var data= AllServices.userType().then((data) =>{
+        AllServices.userType().then((data) =>{
         if(data.type ==2){
           return true;
           }
@@ -98,7 +98,7 @@ export default {
     * get user profile info 
     */
     getUserProfile:function(){
-      var data= AllServices.getUserInfo().then((data) =>{
+      AllServices.getUserInfo().then((data) =>{
       this.karmaCount = data.karma;
       this.image = data.image;
       //this.userName = data.userName;
@@ -114,7 +114,7 @@ export default {
     * get user account data for another user
     */
    getUserData:function(){
-      var data= AllServices.getUserInfoById(this.userName).then((data) =>{
+      AllServices.getUserInfoById(this.userName).then((data) =>{
       this.karmaCount = data.karma;
       this.image = data.image;
      // this.userName = data.userName;
@@ -126,7 +126,7 @@ export default {
     * get user account data for a guset
     */
    getUserDataForGuest:function(){
-     var data= AllServices.getUserInfoByIdforGuest(this.userName).then((data) =>{
+     AllServices.getUserInfoByIdforGuest(this.userName).then((data) =>{
        console.log(data);
       this.karmaCount = data.karma;
       this.image = data.image;

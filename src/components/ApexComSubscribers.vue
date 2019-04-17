@@ -1,6 +1,6 @@
 <template id="subscribers list design">
 <div class="list" id="subscribers list">
-  <h4 v-if="!subscribersList.lenght" >there is nothing to show </h4>
+  <h4 v-if="subscribersList.length ==0" >there is nothing to show </h4>
   <div id="subscribers box" class="box" v-for="(subscriber,index) in subscribersList" :key="subscriber.id">
     <!-- <img width="100%" height="100%" class="image" :src="image" /> -->
     <router-link class="accountLink" :to="{name:'UserProfile' , params: {userName:subscriber.userName}}"> {{subscriber.userName}}</router-link>
@@ -43,8 +43,11 @@ export default {
       }
     },
       getsubscribers(){
-      this.subscribersList= AllServices.getSubscribers(this.apexComName);
-      }
+        AllServices.getSubscribers(this.apexComName).then((data) =>{
+          console.log(data);
+        this.subscribersList=data;
+      })
+    }
   },
   mounted()
   {
@@ -65,10 +68,10 @@ export default {
 }
 .removeButton{
   background-color:skyBlue;
-  width:auto;
+  width:20%;
   height:auto;
-  padding:1% 1%;
-  margin:-1% 2%;
+  padding:0% 1%;
+  margin:0% 2%;
   float:right;
   cursor:pointer;
   color:white;
