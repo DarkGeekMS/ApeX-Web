@@ -37,24 +37,24 @@ else {
     }
   },
 
-getSubscribers: function(mimic,ApexComName){
+getSubscribers: function(mimic,apexComName){
     if(mimic){
 var subscribersList=[
-  {userName:'subscriber1'},
-  {userName:'subscriber2'},
-  {userName:'subscriber3'},
-  {userName:'subscriber4'}
+  // {userName:'subscriber1'},
+  // {userName:'subscriber2'},
+  // {userName:'subscriber3'},
+  // {userName:'subscriber4'}
 ]
 return subscribersList;
 }
 else {
  axios.post('http://35.232.3.8/api/get_subscribers', {
 
-      ApexCom_id :ApexComName,
+      ApexCom_id :apexComName,
       Token:this.$localStorage.get('token')
 
   })
-  .then(response=> {
+  .then(response => {
     return response.data;
    })
   .catch(function (error) {
@@ -64,19 +64,19 @@ else {
   }
 },
 
-BlockSubscriber: function(mimic,userName,ApexComName){
+blockSubscriber: function(mimic,userName,apexComName){
   if(mimic){
 
 return true;
 }
 else {
   axios.post('http://35.232.3.8/api/block', {
-        ApexCom_id:ApexComName,
+        ApexCom_id:apexComName,
         user_id:userName,
         Token:this.$localStorage.get('token')
       })
       .then(function (response) {
-        return response
+        return response;
           });
       // .catch(function (error) {
       // // console.log(error);
@@ -113,12 +113,30 @@ subscribe: function(mimic,apexComName){
       Token:this.$localStorage.get('token')
       })
       .then(function (response) {
-        return response
+        return response;
       });
       // .catch(function (error) {
       // // console.log(error);
       // });
 }
+},
+addOrDeleteModerator: function(mimic,userName,apexComName){
+  if(mimic){
+    return true;
+  }
+else {
+  axios.post('http://localhost/api/add_moderator', {
+        ApexCom_id:apexComName,
+        user_id:userName,
+        Token:this.$localStorage.get('token')
+      })
+      .then(function (response) {
+        return response;
+          });
+      // .catch(function (error) {
+      // // console.log(error);
+      // });
+    }
     },
   }
 })

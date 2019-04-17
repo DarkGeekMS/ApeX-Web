@@ -1,6 +1,7 @@
 <template id="profiledesign">
 <div id='userprofile'>
     <div id='firstnavbar'>
+      
         <a id="posttab" class="navbarlinks" href="#">posts</a>
         <a id="savedtab" v-show="notGuest()" class="navbarlinks" href="#">saved</a>
         <a id="hiddentab" v-show="notGuest()" class="navbarlinks" href="#">hidden</a>
@@ -41,9 +42,9 @@ export default {
   },
   data () {
     return {
-      //token:this.$localStorage.get('token'),
-      //loggeduser:this.$localStorage.get('userName'),
-      //loggedIn:this.$localStorage.get('login'),
+      token:this.$localStorage.get('token'),
+      loggeduser:this.$localStorage.get('userName'),
+      loggedIn:this.$localStorage.get('login'),
       karmaCount:1,
       image:'',
       personalPosts:[],
@@ -52,6 +53,12 @@ export default {
       reports:[],
       cakeDay:'',
       blockList:[],
+    //   blockList:[
+    //       {userName:'user1'},
+    // {userName:'user2'},
+    // {userName:'user3'},
+    // {userName:'user4'}
+    //     ],
     }
   },
   methods:
@@ -120,6 +127,7 @@ export default {
     */
    getUserDataForGuest:function(){
      var data= AllServices.getUserInfoByIdforGuest(this.userName).then((data) =>{
+       console.log(data);
       this.karmaCount = data.karma;
       this.image = data.image;
      // this.userName = data.userName;

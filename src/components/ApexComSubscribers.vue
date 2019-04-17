@@ -1,12 +1,11 @@
 <template id="subscribers list design">
 <div class="list" id="subscribers list">
-  <!-- <h3 v-if="this.subscribersList==0" >there is nothing to show </h3> -->
+  <h4 v-if="!subscribersList.lenght" >there is nothing to show </h4>
   <div id="subscribers box" class="box" v-for="(subscriber,index) in subscribersList" :key="subscriber.id">
     <!-- <img width="100%" height="100%" class="image" :src="image" /> -->
     <router-link class="accountLink" :to="{name:'UserProfile' , params: {userName:subscriber.userName}}"> {{subscriber.userName}}</router-link>
-    <button id="remove button" class="removeButton" v-on:click="blockUser(subscriber,index)">BLOCK</button>
+    <button id="remove button" class="removeButton" v-on:click="blockUser(subscriber.userName,index)">block</button>
   </div>
- 
 </div>
 </template>
 
@@ -21,7 +20,7 @@ import {AllServices} from '../MimicServices/AllServices.js'
  */
 
 export default {
-  props:['ApexComName'],
+  props:['apexComName'],
   data () {
     return {
       token:this.$localStorage.get('token'),
@@ -35,7 +34,7 @@ export default {
       */
     blockUser:function(userName,index)
     {
-      var data = AllServices.blockSubscriber(userName,this.ApexComName);
+      var data = AllServices.blockSubscriber(userName,this.apexComName);
       if(data){
       this.subscribersList.splice(index, 1);
       }
@@ -44,7 +43,7 @@ export default {
       }
     },
       getsubscribers(){
-      this.subscribersList= AllServices.getSubscribers(this.ApexComName);
+      this.subscribersList= AllServices.getSubscribers(this.apexComName);
       }
   },
   mounted()
@@ -88,5 +87,6 @@ export default {
 .removeButton:hover {opacity: 0.75}
 .accountLink{
   text-decoration: none;
+  color:black;
 }
 </style>

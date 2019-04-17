@@ -15,7 +15,7 @@
        </div>
        </div>
 
-       <div class="box" id="rules box">
+       <div class="box" id="rules box" >
       <h3 class="Header" id="rules box header">Rules</h3>
       <div class="content">
       <ol  id="ruleslist">
@@ -24,12 +24,11 @@
     </div>
     </div>
 
-    <div  id="moderators box">
+    <div  id="moderators box" >
       <h3 class="Header" id="moderators box header">Moderators</h3>
       <div class="content" >
       <ul class="list" style="list-style-type:none;" id="moderatorslist">
-        <li  id="moderators list item" v-for="moderator in moderators" :key="moderator.id">
-          <!-- <a id="moderators account link" class="accountLink" href="#link">{{moderator.userName}}</a> -->
+        <li  id="moderatorslistitem" v-for="moderator in moderators" :key="moderator.id">
           <router-link class="accountLink" :to="{name:'UserProfile' , params: {userName:moderator.userName}}"> {{moderator.userName}}</router-link>
         </li>
       </ul>
@@ -183,12 +182,12 @@ export default {
       }
     },
     getAbout(){
-         var about= AllServices.getAbout(this.ApexComName).then((data) =>{
+         var about= AllServices.getAbout(this.ApexComName).then((about) =>{
          this.description=about.description;
          this.moderators=about.moderators;
          this.rules=about.rules;
          this.subscribersCount=about.subscribersCount;
-         })
+         });
    },
     
   },
@@ -292,5 +291,9 @@ line-height: 24px;
 }
 #ruleslist{
   padding-left: 6%;
+}
+#moderatorslistitem{
+  margin-bottom: 2%;
+  font-size: 15px;
 }
 </style>

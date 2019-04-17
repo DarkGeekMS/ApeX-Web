@@ -4,16 +4,18 @@
     <div class="apexcomName" id="apexcomName">
       <h1 id="Name">
         <img class="image" src="../../public/Logo_small.png" >
-        {{ApexComName}}</h1>
+        {{apexComName}}</h1>
     </div>
 
     <div class="navBar" id="navbar">
         <router-link id="postslink" class="navbarLinks" :to="{name:'Posts'}">Posts</router-link>
-        <router-link v-show="isModerator() || isAdmin()" id="subscribersListlink" class="navbarLinks" :to="{name:'Subscribers'}">subscribers</router-link>
+        <router-link  id="subscribersListlink" class="navbarLinks" :to="{name:'Subscribers'}">subscribers</router-link>
         <router-link v-show="isModerator() || isAdmin()" id="reportlink" class="navbarLinks" :to="{name:'Reports'}">view reports</router-link>
+        <router-link  id="addmoderatorlink" class="navbarLinks" :to="{name:'Moderators'}">add moderator</router-link>
+    <!-- v-show="isAdmin()" -->
     </div>
 </div>
-    <SideBar class="sidebar" v-bind:apexComName="ApexComName"
+    <SideBar class="sidebar" v-bind:apexComName="apexComName"
     ></SideBar>
     <div class="routerview">
     <router-view></router-view>
@@ -36,7 +38,7 @@ import {AllServices} from '../MimicServices/AllServices.js'
  */
 
 export default {
-  props:['ApexComName'],
+  props:['apexComName'],
   components:{
     'SideBar':SideBar
   },
@@ -98,7 +100,7 @@ export default {
     * request the data for certain community
     */
      getAbout(){
-         var about= AllServices.getAbout(this.ApexComName).then((data) =>{
+         var about= AllServices.getAbout(this.apexComName).then((about) =>{
          this.description=about.description;
          this.moderators=about.moderators;
          this.rules=about.rules;

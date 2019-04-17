@@ -1,6 +1,11 @@
 <template id="reportspagedesign">
 <div>
 <div id='report' v-for="report in reports" :key="report.id">
+  <post
+  v-bind:postData="reports.postData"
+  ></post>
+  <comment></comment>
+
 </div>
 </div>
 </template>
@@ -8,13 +13,13 @@
 <script>
 import axios from 'axios'
 import post from "./Post.vue"
-import CommentParent from "./CommentParent.vue"
+import Comment from "./Comment.vue"
 
 export default {
   components:
 {
   'Post':post,
-  'CommentParent':CommentParent
+  'Comment':Comment
 },
 props:['apexComName'],
   props:{

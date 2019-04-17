@@ -7,7 +7,7 @@
           </div>
         </div> 
         <div class="content">
-          <h4 class="link" href="#account" > {{userName}} </h4>
+          <h4 class="username" > {{userName}} </h4>
 
 <div class="info">
   <div style="display:inline; float:left; width:50%;">
@@ -76,17 +76,17 @@
   </div>
 </div>       
           <button v-show="notGuest()" id="createpostbutton" class="button" type="button">new post</button>
-          <button v-show="!notGuest()" v-on:click="blockUser(this.userName,-1)" id="blocktbutton" class="button" type="button">block</button>
+          <button v-show="!notGuest()" v-on:click="blockUser()" id="blocktbutton" class="button" type="button">block</button>
           <button v-show="isAdmin()" v-on:click="deleteUser()" id="deletebutton" class="button" type="button">delete user</button>
         </div>       
     </div> 
 
-<div v-show="notGuest()" id="blocklistbox">
+<div  id="blocklistbox" v-show="notGuest()" v-if="blockList.length">
       <h3 class="Header" id="blocklistheader">Block list</h3>
       <div class="contentblocklist" >
-      <div id="blocklistitam" v-for="blockedUser in blockList" :key="blockedUser.id">
+      <div id="blocklistitam" v-for="(blockedUser,index) in blockList" :key="blockedUser.id">
     <h5 > {{blockedUser.userName}}</h5>
-    <button id="unblockbutton" class="unblockButton" v-on:click="blockUser(blockedUser.userName,index)">unblock</button>
+    <button id="unblockbutton" class="unblockButton" v-on:click="unblockUser(blockedUser.userName,index)">unblock</button>
   
   </div>
     </div>
@@ -138,18 +138,27 @@ export default {
       })
       }
     },
-    blockUser:function(userName,index){
-    if(this.loggedIn){
+    unblockUser:function(userName,index){
      var data= AllServices.blockUser(userName).then((data) =>{
      if(data){
-       if(index!==-1)
-       {
          this.blockList.splice(index, 1);
          alert('this user have been blocked successfully');
        }
+       else{
+         alert('sorry something worng happend');
+       }
+       })
+    },
+
+    blockUser:function(){
+      console.log(this.userName);
+    if(this.loggedIn){
+     var data= AllServices.blockUser(this.userName).then((data) =>{
+     if(data){
+         alert('this user have been blocked successfully');
        }
        else{
-         alert('this user have been blocked successfully');
+         alert('sorry something worng happend');
        }
        })
        }
@@ -185,6 +194,9 @@ export default {
     }
     },
   },
+  mounted(){
+    console.log(this.userName);
+  }
 }
 </script>
 
@@ -226,8 +238,7 @@ export default {
   color: rgb(34, 34, 34);
   margin-top: 4%;
 }
-.link{
-  text-decoration: none;
+.username{
   color: black;
 }
 .button{
@@ -329,7 +340,6 @@ export default {
   cursor:pointer;
   border-color: skyblue;
   border-style: solid;
-  /* height:auto; */
   text-transform: uppercase;
   height:38px;
 }

@@ -57,15 +57,15 @@ export  const AllServices =new Vue({
     {
     	return MimicAuth.LogIn(user,pass,this.mimic);
     },
-    getPosts:function(ApexComName) {
-       return MimicDisplayPosts.getPostsData(this.mimic,ApexComName);
+    getPosts:function(apexComName) {
+       return MimicDisplayPosts.getPostsData(this.mimic,apexComName);
     },
-	getAbout:function(ApexComName) {
-    var about=MimicApexCom.getAbout(this.mimic,ApexComName);
-    return about
+	getAbout:function(apexComName) {
+    var about=MimicApexCom.getAbout(this.mimic,apexComName);
+    return about;
 	},
-	getSubscribers:function(ApexComName) {
-    var SubscribersList=MimicApexCom.getSubscribers(this.mimic,ApexComName);
+	getSubscribers:function(apexComName) {
+    var SubscribersList=MimicApexCom.getSubscribers(this.mimic,apexComName);
     return SubscribersList
 	},
 	getUserInfo:function() {
@@ -104,8 +104,8 @@ userType:function(){
   var data=MimicUserProfile.getUserType(this.mimic);
   return data;
 },
-blockSubscriber:function(userName,ApexComName){
-  var data=MimicApexCom.blockSubscriber(this.mimic,userName,ApexComName);
+blockSubscriber:function(userName,apexComName){
+  var data=MimicApexCom.blockSubscriber(this.mimic,userName,apexComName);
   return data;
 },
 deleteUser:function(userName){
@@ -151,7 +151,11 @@ getUserInfoByIdforGuest:function(userName){
 blockUser:function(userName){
   var data=MimicUserProfile.getUserInfoByIdforGuest(this.mimic,userName);
   return data;
-}
+},
+addOrDeleteModerator:function(userName,apexComName){
+  var data=MimicApexCom.addOrDeleteModerator(this.mimic,userName,apexComName);
+  return data;
+},
 
   }
 

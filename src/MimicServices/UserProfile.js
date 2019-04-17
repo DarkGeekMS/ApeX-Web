@@ -13,6 +13,12 @@ export  const MimicUserProfile =new Vue({
       hidden:[{},{}],
       reports:[{},{}],
       personalPosts:[{},{}],
+      blockList:[
+        {userName:'user1'},
+  {userName:'user2'},
+  {userName:'user3'},
+  {userName:'user4'}
+      ],
       cakeDay:'March 15, 2019',
   }
     var promise = new Promise(function(resolve) {
