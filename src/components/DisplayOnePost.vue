@@ -1,10 +1,14 @@
 <template>
 <div id="DisplayOnePost" class="modalview">
-<modal id="PopupModal" name="Demo-OnePost" :scrollable="true"  transition="pop-out"  width="80%" height="80%" >
+<modal id="PopupModal" name="Demo-OnePost" :scrollable="true"  transition="pop-out"  width="90%" height="90%" >
   <div id="PostContent" class="postContent">
-  <post class="mainpost" v-bind:postData="onePostData"></post>
-  <CommentParent postID='t3_10' class="cmt"></CommentParent>
+    <div >
+  <post v-bind:postData="onePostData" class="mainpost" id="postModal"></post>
+  </div>
  <ApexComSideBar class="sidebar"></ApexComSideBar>
+   
+      <CommentParent postID='t3_10' class="cmt"></CommentParent>
+
 </div>
 </modal>
 </div>
@@ -47,6 +51,8 @@ width: 100%;
 // padding-top: 3%;
  padding-block-start: 0%;
  padding-left: 10%;
+ margin-top: 23%;
+ width: 100%;
 }
 .sidebar{
   width:25%;
@@ -55,10 +61,23 @@ width: 100%;
   margin-left: 3%;
   margin-right: 6%;
   /* background-color:white; */
-  float:right;
+   float:right;
+  padding-top: 0%;
+   display: inline-block;
+ 
 }
-.mainpost
+
+#postModal
 {
-  
+  width: 65%;
+  margin-left: 0%;
+  margin-right: 0%;
+  padding-top: 3%;
+  margin-top: 0%;
+  float:left;
+   display: inline-block;
+
 }
+
+
 </style>
