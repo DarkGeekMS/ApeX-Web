@@ -28,9 +28,9 @@
       </div>
 
 <!-- <div class="column"> -->
-      <router-link class="fontUser" id="subred" :to="{name:'ApexCom' , params: {ApexComName:postData.apex_id}}">{{postData.apex_id}}</router-link>
+      <router-link class="fontUser" id="subred" :to="{name:'ApexCom' , params: {ApexComName:postData.apex_com_name}}">{{postData.apex_com_name}}</router-link>
       <font class="postby" id="fontPostby">. Posted by</font>
-      <router-link class="postby" id="user" :to="{name:'UserProfile' , params: {userName:postData.posted_by}}"> {{postData.posted_by}}</router-link>
+      <router-link class="postby" id="user" :to="{name:'UserProfile' , params: {userName:postData.post_writer_user}}"> {{postData.post_writer_user}}</router-link>
 
       <font class="postby" id="fontpost"> </font>
       <a href="#" class="postby" id="timeAgo"> 15 hours ago </a>
@@ -40,9 +40,9 @@
          </p>
 
 
-<iframe  v-show ="postData.video_url!==''" width="100%" height="315"  :src=postData.video_url frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe  v-show ="postData.videolink!==''" width="100%" height="315"  :src=postData.videolink frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-<img v-show="postData.img_name!==''" :src=postData.img_name  height="100%" width="100%">
+<img v-show="postData.img!==''" :src=postData.img  height="100%" width="100%">
 </div>
     <!-- </div> -->
 <footer>
