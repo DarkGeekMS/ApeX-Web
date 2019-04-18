@@ -2,7 +2,7 @@
 <div >
 <h4 v-if="!moderatorsList.length" >there is nothing to show </h4>
   <div id="moderatorsbox" class="box" v-for="(moderator,index) in moderatorsList" :key="moderator.id">
-    <router-link class="accountLink" :to="{name:'UserProfile' , params: {userName:moderator.userName}}"> {{moderator.userName}}</router-link>
+    <router-link style="font-size: 1.2vw;" class="accountLink" :to="{name:'UserProfile' , params: {userName:moderator.userName}}"> {{moderator.userName}}</router-link>
     <button id="remove button" class="button" v-on:click="deleteModerator(moderator.userName,index)">delete</button>
   </div>
 </div>
@@ -58,12 +58,15 @@ props:['apexComName'],
   padding: 0%;
   float:right;
   border-width: 3px;
-  border-radius: 8px;
+  border-radius: 20%;
+  font-size: 1.2vw;
+  font-weight: 700;
+  letter-spacing: 0.5px;
   cursor:pointer;
   border-color: skyblue;
   border-style: solid;
   text-transform: uppercase;
-  height:38px;
+  height:auto;
 }
 .button:hover {opacity: 0.75}
 .box{
@@ -72,7 +75,7 @@ props:['apexComName'],
   background-color:white;
   margin:1% 0%;
   padding:4% 3%;
-  border-radius: 8px;
+  border-radius: 20%;
   display:inline-block;
 }
 .accountLink{

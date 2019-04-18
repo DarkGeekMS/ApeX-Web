@@ -72,7 +72,7 @@
 		/>
 </g>
 </svg>
-<h5 style="display:inline;" id="cakedaynumber" > {{cakeDay}} </h5>
+<h5 style="display:inline; font-size: 1vw;" id="cakedaynumber" > {{cakeDay}} </h5>
   </div>
 </div>       
           <button v-show="notGuest()" id="createpostbutton" class="button" type="button">new post</button>
@@ -82,6 +82,7 @@
     </div> 
 
 <div  id="blocklistbox" v-show="notGuest() && blockList.length !==0">
+  <!-- <div  id="blocklistbox"> -->
       <h3 class="Header" id="blocklistheader">Block list</h3>
       <div class="contentblocklist" >
       <div id="blocklistitam" v-for="(blockedUser,index) in blockList" :key="blockedUser.id">
@@ -208,11 +209,11 @@ export default {
   padding-left:4%;
   padding-right:65%;
   height: auto;
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
+  border-top-left-radius: 20%;
+  border-top-right-radius: 20%;
 }
 .image{
-  border-radius: 4px;
+  border-radius: 10%;
 }
 .img{ 
   padding:2%;
@@ -228,41 +229,40 @@ export default {
   padding-bottom:5%;
   padding-left:8%;
   padding-right:8%;
-  border-bottom-left-radius: 8px;
-  border-bottom-right-radius: 8px;
+  border-bottom-left-radius: 20%;
+  border-bottom-right-radius: 20%;
 }
 .name{
-  font-size: 12px;
+  font-size: 1vw;
   font-weight: 500;
-  line-height: 16px;
   color: rgb(34, 34, 34);
   margin-top: 4%;
 }
 .username{
   color: black;
+  font-size: 1.2vw;
 }
 .button{
   width:100%;
   margin:2% 0%;
   background-color:skyBlue;
-  color: #eee;
+  color:white;
   padding: 0%;
   border-width: 3px;
-  border-radius: 8px;
+  border-radius: 20%;
   cursor:pointer;
   border-color: skyblue;
   border-style: solid;
-  font-size: 14px;
+  font-size: 1.2vw;
   font-weight: 700;
   letter-spacing: 0.5px;
-  line-height: 32px;
   text-transform: uppercase;
   height:auto;
 }
 .button:hover {opacity: 0.75}
 
 #karmanumber{
-  font-size: 12px;
+  font-size: 1vw;
   font-weight: 400;
 }
 .Header{
@@ -271,15 +271,16 @@ export default {
   margin-top: 10%;
   margin-bottom: 0%;
   height:auto;
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
+  border-top-left-radius: 20%;
+  border-top-right-radius: 20%;
+  font-size: 2vw;
 }
 #apexcomlistbox{
   background-color: #eee;
   height: auto;
   padding: 4%;
-  border-bottom-left-radius: 8px;
-  border-bottom-right-radius: 8px;
+  border-bottom-left-radius: 20%;
+  border-bottom-right-radius: 20%;
 }
 .karma{
   fill: skyBlue;
@@ -317,9 +318,8 @@ export default {
   width: 100%;
 }
 .font{
-  font-size: 18px;
+  font-size: 1.3vw;
   font-weight: 500;
-  line-height: 18px;
 }
 .images{
   margin-top: 3%;
@@ -332,25 +332,27 @@ export default {
   margin-right: 0%; 
   margin-bottom: 0%;
   color:skyBlue;
-  background-color: #eee;
   padding: 0%;
   float:right;
   border-width: 3px;
-  border-radius: 8px;
+  border-radius: 20%;
+  font-size: 1.2vw;
+  font-weight: 700;
+  letter-spacing: 0.5px;
   cursor:pointer;
   border-color: skyblue;
   border-style: solid;
   text-transform: uppercase;
-  height:38px;
+  height:auto;
 }
 .unblockButton:hover {opacity: 0.75}
 .Header{
   background-color: skyBlue;
-  padding:12px;
+  padding:4%;
   margin: 0%;
   height:auto;
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
+  border-top-left-radius: 20%;
+  border-top-right-radius: 20%;
 }
 #blocklistbox{
   margin-top: 5%;
@@ -362,8 +364,8 @@ export default {
   padding-bottom:5%;
   padding-left:8%;
   padding-right:8%;
-  border-bottom-left-radius: 8px;
-  border-bottom-right-radius: 8px;
+  border-bottom-left-radius: 20%;
+  border-bottom-right-radius: 20%;
 }
 #blocklistitam{
   width:100%;

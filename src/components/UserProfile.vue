@@ -2,10 +2,10 @@
 <div id='userprofile'>
     <div id='firstnavbar'>
       
-        <a id="posttab" class="navbarlinks" href="#">posts</a>
-        <a id="savedtab" v-show="notGuest()" class="navbarlinks" href="#">saved</a>
-        <a id="hiddentab" v-show="notGuest()" class="navbarlinks" href="#">hidden</a>
-        <a id="reporttab" v-show="isModerator() && notGuest()" class="navbarlinks" href="#">report</a>
+        <a style="font-size: 1.2vw;"  id="posttab" class="navbarlinks" href="#">posts</a>
+        <a style="font-size: 1.2vw;"  id="savedtab" v-show="notGuest()" class="navbarlinks" href="#">saved</a>
+        <a style="font-size: 1.2vw;"  id="hiddentab" v-show="notGuest()" class="navbarlinks" href="#">hidden</a>
+        <a style="font-size: 1.2vw;"  id="reporttab" v-show="isModerator() && notGuest()" class="navbarlinks" href="#">report</a>
 
     </div> 
         <SideBar 
@@ -156,7 +156,6 @@ export default {
 
 <style scoped>
 #firstnavbar{
-    background-color: #eee;
     width:100%;
     height: 60px;
     text-transform: uppercase; 
@@ -175,9 +174,8 @@ export default {
     color: black;
     margin-top: 0%;
     margin-bottom: 0%;
-    font-size: 14px;
+    font-size: 1vw;
     font-weight: 500;
-    line-height: 18px;
     
 }
 .navbarlinks:hover{

@@ -38,9 +38,6 @@ export default {
       if(data){
       this.subscribersList.splice(index, 1);
       }
-      else{
-        console.log(error);
-      }
     },
       getsubscribers(){
         AllServices.getSubscribers(this.apexComName).then((data) =>{
@@ -63,7 +60,7 @@ export default {
   background-color:white;
   margin:1% 0%;
   padding:4% 3%;
-  border-radius: 8px;
+  border-radius: 20%;
   display:inline-block;
 }
 .removeButton{
@@ -76,20 +73,21 @@ export default {
   cursor:pointer;
   color:white;
   border-width: 3px;
-  border-radius: 8px;
+  border-radius: 20%;
   cursor:pointer;
   border-color: skyblue;
   border-style: solid;
-  font-size: 14px;
+  font-size: 1.2vw;
   font-weight: 700;
   letter-spacing: 0.5px;
-  line-height: 32px;
   text-transform: uppercase;
+  height: auto;
 }
 
 .removeButton:hover {opacity: 0.75}
 .accountLink{
   text-decoration: none;
   color:black;
+  font-size: 1.2vw
 }
 </style>

@@ -4,7 +4,7 @@
 <a href="#" id="subDiv" v-show="exist" v-for='user in users' :key="user.id" > 
       <div id="sub1">
          <img width="20%" :src="'../../public/'+user.avatar"/>
-         <a class="name"> {{user.name}} </a>
+         <a style="font-size: 1.2vw;"  class="name"> {{user.name}} </a>
        </br>
          <div class="memb"> {{user.karma}} karma </div>
        </div> 
@@ -75,12 +75,15 @@ props:['apexComName'],
   padding: 0%;
   float:right;
   border-width: 3px;
-  border-radius: 8px;
+  border-radius: 20%;
+  font-size: 1.2vw;
+  font-weight: 700;
+  letter-spacing: 0.5px;
   cursor:pointer;
   border-color: skyblue;
   border-style: solid;
   text-transform: uppercase;
-  height:38px;
+  height:auto;
 }
 .button:hover {opacity: 0.7}
 
@@ -94,9 +97,8 @@ img{
   text-decoration: none;
 }
 .memb{
-    font-size: 13px;
+    font-size: 1vw;
     font-weight: 400;
-    line-height: 16px;
     color: rgb(135, 138, 140);
     text-overflow: ellipsis;
     overflow: hidden;
