@@ -6,7 +6,7 @@
   <post v-bind:postData="onePostData" class="mainpost" id="postModal"></post>
   </div>
  <ApexComSideBar class="sidebar"></ApexComSideBar>
-   
+
       <CommentParent postID='t3_10' class="cmt"></CommentParent>
 
 </div>
@@ -64,7 +64,7 @@ width: 100%;
    float:right;
   padding-top: 0%;
    display: inline-block;
- 
+
 }
 
 #postModal

@@ -43,7 +43,6 @@
 
 
 <script>
-import axios from 'axios'
 import {AllServices} from '../MimicServices/AllServices.js'
 
 /**
@@ -127,7 +126,7 @@ export default {
     getSubscribers(){
       if(this.loggedIn){
         AllServices.getSubscribers(this.apexComName).then((data) =>{
-        this.subscribers=data.subscribersList;
+          this.subscribers=data.subscribers;
         var subscribe = this.subscribers.find(this.CheckUser);
         if(subscribe !== undefined){
           this.subscribed = true;
@@ -176,7 +175,7 @@ export default {
       this.subscribed=true;
       this.state='subscribed';
     }
-    }  
+    }
     else{
       alert('something wrong happened try again later');
     }
@@ -195,7 +194,7 @@ export default {
          this.subscribersCount=about.subscribersCount;
          });
    },
-    
+
   },
  mounted(){
    this.getSubscribers();
@@ -284,7 +283,7 @@ img{
   margin-right:4%;
   margin-left:0%;
   float: left;
-  
+
 }
 .accountLink{
   text-decoration: none;

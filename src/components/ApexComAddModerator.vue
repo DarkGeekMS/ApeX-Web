@@ -1,33 +1,32 @@
 <template id="addmoderatorpagedesign">
 <div>
 
-<a href="#" id="subDiv" v-show="exist" v-for='user in users' :key="user.id" > 
+<a href="#" id="subDiv" v-show="exist" v-for='user in users' :key="user.id" >
       <div id="sub1">
          <img width="20%" :src="'../../public/'+user.avatar"/>
          <a style="font-size: 1.2vw;"  class="name"> {{user.name}} </a>
        </br>
          <div class="memb"> {{user.karma}} karma </div>
-       </div> 
-       <div id="sub2">
-         <button class="button" style="display:inline-block;" type="button" v-on:click="addModerator(user.userName)"> add moderator</button>  
        </div>
-       
+       <div id="sub2">
+         <button class="button" style="display:inline-block;" type="button" v-on:click="addModerator(user.userName)"> add moderator</button>
+       </div>
+
        </br></br>
     </a>
-    <div id="subDiv" style="text-align:center;font-size: 17px;font-weight: 600; " v-show="!exist"> {{error}} ''{{this.$localStorage.get('search')}}'' 
+    <div id="subDiv" style="text-align:center;font-size: 17px;font-weight: 600; " v-show="!exist"> {{error}} ''{{this.$localStorage.get('search')}}''
     </div>
 
 </div>
 </template>
 
 <script>
-import axios from 'axios'
 import ApexComDeleteModerators from './ApexComDeleteModerators.vue'
 import {AllServices} from '../MimicServices/AllServices.js'
 
 export default {
 props:['apexComName'],
-  data () {  
+  data () {
     return {
       exist:true,
       error:'',
@@ -58,7 +57,7 @@ props:['apexComName'],
       this.users = result[1]
 
     }
-    
+
   }
 }
 </script>
@@ -68,7 +67,7 @@ props:['apexComName'],
   width:30%;
   margin-top:0%;
   margin-left:0%;
-  margin-right: 2%; 
+  margin-right: 2%;
   margin-bottom: 0%;
   color:white;
   background-color:skyblue;
@@ -88,7 +87,7 @@ props:['apexComName'],
 .button:hover {opacity: 0.7}
 
 img{
-  border-radius:50%; 
+  border-radius:50%;
 
 }
 .name{

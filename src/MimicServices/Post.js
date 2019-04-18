@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import axios from 'axios'
+
 export  const MimicPost=new Vue({
 methods:{
 
@@ -12,7 +13,7 @@ methods:{
                 return false;
              }
              else {
-                axios.post( "http://35.232.3.8/api/save",
+                axios.post( this.$localStorage.get('baseUrl') + "api/save",
              {
                 ID:ID,
                 token:token
@@ -39,7 +40,7 @@ methods:{
 
             else{
 
-                axios.post("http://35.232.3.8/api/DelComment",{
+                axios.post(this.$localStorage.get('baseUrl') + "api/DelComment",{
                     ID    : name,
                     token : ID
 
@@ -72,7 +73,7 @@ methods:{
                    }
               else{
 
-                axios.post("http://35.232.3.8/api/Hide",
+                axios.post(this.$localStorage.get('baseUrl') + "api/Hide",
                 {
                     name    : name,
                     ID : ID
@@ -99,7 +100,7 @@ methods:{
 
            }
            else{
-            axios.post("http://35.232.3.8/api/vote",
+            axios.post(this.$localStorage.get('baseUrl') + "api/vote",
             {
 
               ID       : ID,
@@ -131,7 +132,7 @@ methods:{
 
            }
            else{
-            axios.post("http://35.232.3.8/api/vote",
+            axios.post(this.$localStorage.get('baseUrl') + "api/vote",
                    {
 
 
@@ -175,7 +176,7 @@ defaultVote(name,ID,direction,mimic){
 
 }
 else{
-axios.post("http://35.232.3.8/api/vote",
+axios.post(this.$localStorage.get('baseUrl') + "api/vote",
 {
 
 ID       : ID,

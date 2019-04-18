@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import axios from 'axios'
+
 export  const MimicDisplayPosts =new Vue({
   methods:{
     getPostsData: function(mimic,ApexComName){
@@ -13,31 +14,40 @@ export  const MimicDisplayPosts =new Vue({
               title:'dj',
               content:'Experience enjoyable JavaScript development with WebStorm. With smart code completion, safe refactoring, and first-class support for Node.js, Angular and React. Download free trial 😀😂🍔😍',
               locked:false,
-              commenetnum:5,
+              commenets_count:5,
               votes:9,
-              img_name:'',
-              video_url:'https://www.youtube.com/embed/Va0Rq147SRU'
-          
+              img:'',
+              videolink:'https://www.youtube.com/embed/Va0Rq147SRU',
+              created_at:"2019-03-23 17:20:45",
+              updates_at:null,
+              apex_com_name:"health care",
+              post_writer_user:"double"
+
             }
             ,{
               id:'444',
               posted_by:'marc',
               apex_id:'444',
               title:'dj',
-              content:`Software engineering is concerned with theories, methods and tools for professional software development.
-              Software costs often dominate computer system costs. The costs of software on a PC are often greater than the hardware cost 🤔.
-`,
-              video_url:"" ,
-              img_name:'http://bashkatibnews.com/contents/article/515_lybfjrmf.jpg'
+              content:"Software engineering is concerned with theories, methods and tools for professional software development.software costs often dominate computer system costs. the costs of software on a PC are often greater than the hardware cost 🤔.",
+              created_at:"2019-03-23 17:20:45",
+              updates_at:null,
+              apex_com_name:"take care",
+              post_writer_user:"marc",
+              videolink:"" ,
+              img:'http://bashkatibnews.com/contents/article/515_lybfjrmf.jpg'
             },{
               id:'333',
               posted_by:'Ayat',
               apex_id:'333',
               title:'dj',
               content:'I love javascript ,vue ,html ,css 🐸🐸🐸',
-              video_url:'',
-              img_name:'https://i.ytimg.com/vi/inYarqDCCGA/maxresdefault.jpg'
-                  
+              videolink:'',
+              img:'https://i.ytimg.com/vi/inYarqDCCGA/maxresdefault.jpg',
+              created_at:"2019-03-23 17:20:45",
+              updates_at:null,
+              apex_com_name:"health aware",
+              post_writer_user:"Nada"
             },{
               id:'222',
               posted_by:'Double',
@@ -50,8 +60,12 @@ export  const MimicDisplayPosts =new Vue({
               Clear with cloudy periods; a slight chance of showers or thundershowers
 
               Mostly clear with showers likely. Slight chance of a thunderstorm. 3 to 6 mm of rain 🔥🔥`,
-              video_url:'https://www.youtube.com/embed/W_5rTUqwRVs',
-              img_name:''
+              videolimk:'https://www.youtube.com/embed/W_5rTUqwRVs',
+              img:'',
+              created_at:"2019-03-23 17:20:45",
+              updates_at:null,
+              apex_com_name:"leader care",
+              post_writer_user:"SHAWKY"
             },{
               id:'111',
               posted_by:'Nourhan',
@@ -101,7 +115,7 @@ return promise1;
 else {
   if (this.$localStorage.get('token') == null)
   {
-    return axios.get('http://35.232.3.8/api/sort_posts',
+    return axios.get(this.$localStorage.get('baseUrl') + 'api/sort_posts',
    {
       apexComID:ApexComName ,
       sortingParam: "date"
@@ -111,7 +125,7 @@ else {
   }
   else {
     {
-      return axios.post('http://35.232.3.8/api/sort_posts',
+      return axios.post(this.$localStorage.get('baseUrl') + 'api/sort_posts',
      {
         apexCommID:ApexComName ,
         sortingParam: "date",

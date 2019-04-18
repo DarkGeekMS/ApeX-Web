@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import axios from 'axios'
 import App from '../App.vue'
+
 export  const MimicAuth =new Vue({
   data(){
     return {
@@ -30,7 +31,7 @@ export  const MimicAuth =new Vue({
       else
       {
         var self = this;
-        return axios.post('http://35.232.3.8/api/sign_up', {
+        return axios.post(this.$localStorage.get('baseUrl') + 'api/sign_up', {
             email: email,
             username: user,
             password: pass
@@ -55,7 +56,7 @@ export  const MimicAuth =new Vue({
             this.$localStorage.set('userName', '');
         }
         else{
-          return axios.post('http://35.232.3.8/api/sign_out',{
+          return axios.post(this.$localStorage.get('baseUrl') + 'api/sign_out',{
             token : this.$localStorage.get('token')
           })
         }
@@ -80,7 +81,7 @@ export  const MimicAuth =new Vue({
       }
       else{
         var self = this;
-        return axios.post('http://35.232.3.8/api/sign_in', {
+        return axios.post(this.$localStorage.get('baseUrl') + 'api/sign_in', {
             username : user,
             password : pass
           }).then(response => {
@@ -111,7 +112,7 @@ export  const MimicAuth =new Vue({
       }
       else
       {
-        axios.get('http://35.232.3.8/Apex_names', {
+        axios.get(this.$localStorage.get('baseUrl') + 'api/Apex_names', {
           }).then(response => {
              return response.data
           }).catch(function (error) {

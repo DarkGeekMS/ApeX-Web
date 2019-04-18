@@ -19,7 +19,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 import post from "./Post.vue"
 import Comment from "./Comment.vue"
 import {AllServices} from '../MimicServices/AllServices.js'

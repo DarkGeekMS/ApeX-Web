@@ -44,6 +44,10 @@ var vm = new Vue({
     search:{
       type: String,
       default: ''
+    },
+    baseUrl:{
+      type:String,
+      default:'http://35.232.3.8/'
     }
   }
 })

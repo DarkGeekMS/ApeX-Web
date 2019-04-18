@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import axios from 'axios'
+
 export  const MimicCreatePosts =new Vue({
   data(){
 return {
@@ -20,7 +21,7 @@ token:'1',
                 }
 
 else {
-    axios.post( "http://35.232.3.8/api/submit_post"  ,{
+    axios.post( this.$localStorage.get('baseUrl') + "api/submit_post"  ,{
 
         ApexCom_id:apexComId,
         _token:token,

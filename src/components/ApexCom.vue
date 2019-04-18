@@ -31,7 +31,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 import SideBar from './ApexComSideBar.vue'
 import {AllServices} from '../MimicServices/AllServices.js'
 

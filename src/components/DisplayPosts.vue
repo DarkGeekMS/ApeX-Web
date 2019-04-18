@@ -79,7 +79,7 @@ components:{
  
 }
 #DisplayPosts{
-   width: 60%;
+   /* width: 100%; */
   display: inline-block;
   padding-top: 5%;
 }

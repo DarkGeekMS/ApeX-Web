@@ -2,13 +2,12 @@
 <modal name="reportBox" transition="pop-out" :width="modalWidth" :height="400">
   <div class = "loop" v-for = "reason in reasons" >
      <input class = "radio" type="radio" name="gender" value="male">
-     <label>{{reason}}</label> 
+     <label>{{reason}}</label>
   </div>
 </modal>
 </template>
 
 <script>
-import axios from 'axios'
 const MODAL_WIDTH = 656;
 export default {
   name: 'reportBox',
@@ -25,14 +24,14 @@ export default {
               "It's a transaction for prohibited goods or services",
               "It's threatening self-harm or suicide"
           ]
-          
+
         }
   },
   created () {
     this.modalWidth = window.innerWidth < MODAL_WIDTH ? MODAL_WIDTH / 2 : MODAL_WIDTH
   },
   methods:{
-   
+
   }
 }
 </script>

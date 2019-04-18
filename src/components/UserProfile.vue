@@ -7,8 +7,8 @@
         <a style="font-size: 1.2vw;"  id="hiddentab" v-show="notGuest()" class="navbarlinks" href="#">hidden</a>
         <a style="font-size: 1.2vw;"  id="reporttab" v-show="isModerator() && notGuest()" class="navbarlinks" href="#">report</a>
 
-    </div> 
-        <SideBar 
+    </div>
+        <SideBar
         v-bind:userName="userName"
         v-bind:karmaCount="karmaCount"
         v-bind:image="image"
@@ -19,7 +19,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 import SideBar from './UserProfileSideBar.vue'
 import {AllServices} from '../MimicServices/AllServices.js'
 
@@ -28,7 +27,7 @@ import {AllServices} from '../MimicServices/AllServices.js'
  * @vue-data {string} [loggeduser='']  name of logged in user
  * @vue-data {boolean} [loggedIn='']  check if user is logged in
  * @vue-data {number} karmaCount - Number of karma
- * @vue-data {string} [image]  Url of user profile image 
+ * @vue-data {string} [image]  Url of user profile image
  * @vue-data {array} personalPosts - user personal posts
  * @vue-data  {array} savedPosts - user saved posts
  * @vue-data  {array} hiddenPosts - user hidden posts
@@ -64,7 +63,7 @@ export default {
   methods:
   {
     /**
-     *check if user is moderator 
+     *check if user is moderator
     */
     isModerator:function()
       {
@@ -80,7 +79,7 @@ export default {
         }
       },
     /**
-    * check if the user requesting his profile or other user profile 
+    * check if the user requesting his profile or other user profile
     */
     notGuest:function(){
       if(this.loggedIn){
@@ -95,7 +94,7 @@ export default {
       }
     },
     /**
-    * get user profile info 
+    * get user profile info
     */
     getUserProfile:function(){
       AllServices.getUserInfo().then((data) =>{
@@ -158,7 +157,7 @@ export default {
 #firstnavbar{
     width:100%;
     height: 60px;
-    text-transform: uppercase; 
+    text-transform: uppercase;
     padding-top:2%;
     padding-bottom: 0%;
     margin-top: 3%;

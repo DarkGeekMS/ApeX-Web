@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import axios from 'axios'
 import App from '../App.vue'
+
 export  const MimicSearch =new Vue({
   data(){
     return {
@@ -58,7 +59,7 @@ export  const MimicSearch =new Vue({
       }
       else
       {
-        axios.post('http://35.232.3.8/api/search',{
+        axios.post(this.$localStorage.get('baseUrl') + 'api/search',{
         query: this.$localStorage.get('search'),
         token: this.$localStorage.get('token')
         }).then(response => {
@@ -103,7 +104,7 @@ export  const MimicSearch =new Vue({
       }
       else
       {
-        axios.get('http://35.232.3.8/Apex_names', {
+        axios.get(this.$localStorage.get('baseUrl') + 'api/Apex_names', {
           }).then(response => {
              return response.data
           }).catch(function (error) {

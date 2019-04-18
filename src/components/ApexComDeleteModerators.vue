@@ -9,12 +9,11 @@
 </template>
 
 <script>
-import axios from 'axios'
 import {AllServices} from '../MimicServices/AllServices.js'
 
 export default {
 props:['apexComName'],
-  data () {  
+  data () {
     return {
         moderatorsList:[],
     }
@@ -51,7 +50,7 @@ props:['apexComName'],
   width:25%;
   margin-top:0%;
   margin-left:0%;
-  margin-right: 0%; 
+  margin-right: 0%;
   margin-bottom: 0%;
   color:skyBlue;
   background-color:white;
