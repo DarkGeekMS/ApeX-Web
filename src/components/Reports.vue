@@ -11,7 +11,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 import post from "./Post.vue"
 import Comment from "./Comment.vue"
 
@@ -23,9 +22,9 @@ export default {
 },
 props:['apexComName'],
   props:{
-      reports:Array,   
+      reports:Array,
     },
-  data () {  
+  data () {
     return {
       token:this.$localStorage.get('token'),
     }
@@ -36,6 +35,7 @@ props:['apexComName'],
   mounted()
   {
     if(this.report == 0){
+    /*
     axios.get('http://localhost/review_reports', {
     params: {
       Token:this.token,
@@ -47,7 +47,9 @@ props:['apexComName'],
   })
   .catch(function (error) {
     console.log(error);
-  });}
+  });
+  */
+  }
   }
 }
 </script>

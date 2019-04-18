@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import axios from 'axios'
+
 export  const MimicDisplayPosts =new Vue({
   methods:{
     getPostsData: function(mimic,ApexComName){
@@ -17,7 +18,7 @@ export  const MimicDisplayPosts =new Vue({
               votes:9,
               img_name:'',
               video_url:'https://www.youtube.com/embed/Va0Rq147SRU'
-          
+
             }
             ,{
               id:'444',
@@ -37,7 +38,7 @@ export  const MimicDisplayPosts =new Vue({
               content:'I love javascript ,vue ,html ,css 🐸🐸🐸',
               video_url:'',
               img_name:'https://i.ytimg.com/vi/inYarqDCCGA/maxresdefault.jpg'
-                  
+
             },{
               id:'222',
               posted_by:'Double',
@@ -101,7 +102,7 @@ return promise1;
 else {
   if (this.$localStorage.get('token') == null)
   {
-    return axios.get('http://35.232.3.8/api/sort_posts',
+    return axios.get(this.$localStorage.get('baseUrl') + 'api/sort_posts',
    {
       apexComID:ApexComName ,
       sortingParam: "date"
@@ -111,7 +112,7 @@ else {
   }
   else {
     {
-      return axios.post('http://35.232.3.8/api/sort_posts',
+      return axios.post(this.$localStorage.get('baseUrl') + 'api/sort_posts',
      {
         apexCommID:ApexComName ,
         sortingParam: "date",

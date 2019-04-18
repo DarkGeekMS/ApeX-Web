@@ -91,7 +91,6 @@ Comments</button>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
 <script id="postScript">
-import axios from 'axios'
 
 import {MimicDisplayPosts} from '../MimicServices/DisplayPosts.js'
 import { AllServices } from '../MimicServices/AllServices';
@@ -287,31 +286,22 @@ export default {
       ToggleShowModalVar(){
         this.ShowModalVar=!this.ShowModalVar;
               },
-//       getUserId(){
-// //axios.get("http://localhost/me",{token:this.token}).then(response=>{this.userId=response.userID});
-// }
-
-
 },
 props: {
 postData:{},
        },
 created(){
 
-
-
-         axios.get("http://localhost/me",{token:this.token}).then(response=>{this.userId=response.userID}).catch(function (error)
-         {
-          //console.log(error);
-        });
-
-
+      /*
+      axios.get("http://localhost/me",{token:this.token}).then(response=>{this.userId=response.userID}).catch(function (error)
+       {
+        console.log(error);
+      });
+      */
 
        if(this.userId==2){
         this.moderator=true;
-
        }
-
 },
 
 }

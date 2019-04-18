@@ -47,7 +47,6 @@
 
 
 <script>
-import axios from 'axios'
 import {AllServices} from '../MimicServices/AllServices.js'
 
 /**

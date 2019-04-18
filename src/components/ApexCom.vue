@@ -6,9 +6,9 @@
       <h1 id="Name">{{apexComName}}</h1>
       <div class="img">
         <img style="box-sizing: border-box; border-radius: 50%;" width="100%" height="100%" class="image" src="../../public/Logo_small.png" >
-      
+
       </div>
-      
+
       </div>
     </div>
 
@@ -30,7 +30,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 import SideBar from './ApexComSideBar.vue'
 import {AllServices} from '../MimicServices/AllServices.js'
 
@@ -186,7 +185,7 @@ export default {
   float: left;
 }
 .image{
-  
+
   vertical-align: middle;
 }
 .imagediv{
