@@ -5,7 +5,7 @@
           <div class="img">
              <img width="100%" height="100%" class="image" :src="image" />
           </div>
-        </div> 
+        </div>
         <div class="content">
           <h4 class="username" > {{userName}} </h4>
 
@@ -14,7 +14,7 @@
     <h5 class="font"  id="karmacount">karma</h5>
     <svg style="display:inline;" class="svg" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 viewBox="0 0 20 20"  xml:space="preserve">
-   
+
 <path class="karma" d="M7.509604,9.809682c0.092814-1.228464,1.071614-2.207275,2.30009-2.300069
 	C8.787232,6.158976,7.167115,5.28595,5.34253,5.28595h-0.0566v0.05657C5.28593,7.167094,6.158977,8.787262,7.509604,9.809682z"/>
 <path class="karma" d="M7.509604,10.190318c-1.350626,1.02242-2.223673,2.642588-2.223673,4.467163v0.056569h0.0566
@@ -43,7 +43,7 @@
   </div>
   <div style="display:inline; float:right; width:50%;">
     <h5 class="font"  id="cakeday">cake day</h5>
-    
+
 <svg style="display:inline;" class="svg2" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 width="512px" height="512px" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve">
 <g>
@@ -72,22 +72,23 @@
 		/>
 </g>
 </svg>
-<h5 style="display:inline;" id="cakedaynumber" > {{cakeDay}} </h5>
+<h5 style="display:inline; font-size: 1vw;" id="cakedaynumber" > {{cakeDay}} </h5>
   </div>
-</div>       
+</div>
           <button v-show="notGuest()" id="createpostbutton" class="button" type="button">new post</button>
           <button v-show="!notGuest()" v-on:click="blockUser()" id="blocktbutton" class="button" type="button">block</button>
           <button v-show="isAdmin()" v-on:click="deleteUser()" id="deletebutton" class="button" type="button">delete user</button>
-        </div>       
-    </div> 
+        </div>
+    </div>
 
 <div  id="blocklistbox" v-show="notGuest() && blockList.length !==0">
+  <!-- <div  id="blocklistbox"> -->
       <h3 class="Header" id="blocklistheader">Block list</h3>
       <div class="contentblocklist" >
       <div id="blocklistitam" v-for="(blockedUser,index) in blockList" :key="blockedUser.id">
     <h5 > {{blockedUser.userName}}</h5>
     <button id="unblockbutton" class="unblockButton" v-on:click="unblockUser(blockedUser.userName,index)">unblock</button>
-  
+
   </div>
     </div>
     </div>
@@ -95,15 +96,14 @@
 </template>
 
 <script>
-import axios from 'axios'
 import {AllServices} from '../MimicServices/AllServices.js'
 
 
 /**
  * @vue-data {JWT} [token='']  user Token
- * @vue-prop  {string} image - Url of user profile image 
+ * @vue-prop  {string} image - Url of user profile image
  * @vue-prop  {number} KarmaCount - Number of karma
- *@vue-prop {string} UserName - Name of user 
+ *@vue-prop {string} UserName - Name of user
  */
 
 export default {
@@ -118,7 +118,7 @@ export default {
     return {
       token:this.$localStorage.get('token'),
       loggedIn:this.$localStorage.get('login'),
-      
+
     }
   },
   methods:
@@ -167,7 +167,7 @@ export default {
       }
     },
     /**
-    * check if the user requesting his profile or other user profile 
+    * check if the user requesting his profile or other user profile
     */
     notGuest:function(){
       if(this.loggedIn){
@@ -208,13 +208,13 @@ export default {
   padding-left:4%;
   padding-right:65%;
   height: auto;
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
+  border-top-left-radius: 20%;
+  border-top-right-radius: 20%;
 }
 .image{
-  border-radius: 4px;
+  border-radius: 10%;
 }
-.img{ 
+.img{
   padding:2%;
   background-color: #eee;
   box-sizing: border-box;
@@ -228,41 +228,40 @@ export default {
   padding-bottom:5%;
   padding-left:8%;
   padding-right:8%;
-  border-bottom-left-radius: 8px;
-  border-bottom-right-radius: 8px;
+  border-bottom-left-radius: 20%;
+  border-bottom-right-radius: 20%;
 }
 .name{
-  font-size: 12px;
+  font-size: 1vw;
   font-weight: 500;
-  line-height: 16px;
   color: rgb(34, 34, 34);
   margin-top: 4%;
 }
 .username{
   color: black;
+  font-size: 1.2vw;
 }
 .button{
   width:100%;
   margin:2% 0%;
   background-color:skyBlue;
-  color: #eee;
+  color:white;
   padding: 0%;
   border-width: 3px;
-  border-radius: 8px;
+  border-radius: 20%;
   cursor:pointer;
   border-color: skyblue;
   border-style: solid;
-  font-size: 14px;
+  font-size: 1.2vw;
   font-weight: 700;
   letter-spacing: 0.5px;
-  line-height: 32px;
   text-transform: uppercase;
   height:auto;
 }
 .button:hover {opacity: 0.75}
 
 #karmanumber{
-  font-size: 12px;
+  font-size: 1vw;
   font-weight: 400;
 }
 .Header{
@@ -271,15 +270,16 @@ export default {
   margin-top: 10%;
   margin-bottom: 0%;
   height:auto;
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
+  border-top-left-radius: 20%;
+  border-top-right-radius: 20%;
+  font-size: 2vw;
 }
 #apexcomlistbox{
   background-color: #eee;
   height: auto;
   padding: 4%;
-  border-bottom-left-radius: 8px;
-  border-bottom-right-radius: 8px;
+  border-bottom-left-radius: 20%;
+  border-bottom-right-radius: 20%;
 }
 .karma{
   fill: skyBlue;
@@ -317,9 +317,8 @@ export default {
   width: 100%;
 }
 .font{
-  font-size: 18px;
+  font-size: 1.3vw;
   font-weight: 500;
-  line-height: 18px;
 }
 .images{
   margin-top: 3%;
@@ -329,28 +328,30 @@ export default {
   width:30%;
   margin-top:-11%;
   margin-left:0%;
-  margin-right: 0%; 
+  margin-right: 0%;
   margin-bottom: 0%;
   color:skyBlue;
-  background-color: #eee;
   padding: 0%;
   float:right;
   border-width: 3px;
-  border-radius: 8px;
+  border-radius: 20%;
+  font-size: 1.2vw;
+  font-weight: 700;
+  letter-spacing: 0.5px;
   cursor:pointer;
   border-color: skyblue;
   border-style: solid;
   text-transform: uppercase;
-  height:38px;
+  height:auto;
 }
 .unblockButton:hover {opacity: 0.75}
 .Header{
   background-color: skyBlue;
-  padding:12px;
+  padding:4%;
   margin: 0%;
   height:auto;
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
+  border-top-left-radius: 20%;
+  border-top-right-radius: 20%;
 }
 #blocklistbox{
   margin-top: 5%;
@@ -362,8 +363,8 @@ export default {
   padding-bottom:5%;
   padding-left:8%;
   padding-right:8%;
-  border-bottom-left-radius: 8px;
-  border-bottom-right-radius: 8px;
+  border-bottom-left-radius: 20%;
+  border-bottom-right-radius: 20%;
 }
 #blocklistitam{
   width:100%;

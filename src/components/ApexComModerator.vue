@@ -12,14 +12,13 @@
 </template>
 
 <script>
-import axios from 'axios'
 import {AllServices} from '../MimicServices/AllServices.js'
 
 export default {
 props:['apexComName'],
 components:{
 },
-  data () {  
+  data () {
     return {
       searchVal:''
     }
@@ -39,7 +38,7 @@ components:{
   },
   mounted()
   {
-    
+
   }
 }
 </script>

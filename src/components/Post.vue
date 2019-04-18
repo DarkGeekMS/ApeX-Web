@@ -26,23 +26,23 @@
 
 
       </div>
-       
+
 <!-- <div class="column"> -->
-      <router-link class="fontUser" id="subred" :to="{name:'ApexCom' , params: {ApexComName:postData.apex_id}}">{{postData.apex_id}}</router-link>
+      <router-link class="fontUser" id="subred" :to="{name:'ApexCom' , params: {ApexComName:postData.apex_com_name}}">{{postData.apex_com_name}}</router-link>
       <font class="postby" id="fontPostby">. Posted by</font>
-      <router-link class="postby" id="user" :to="{name:'UserProfile' , params: {userName:postData.posted_by}}"> {{postData.posted_by}}</router-link> 
+      <router-link class="postby" id="user" :to="{name:'UserProfile' , params: {userName:postData.post_writer_user}}"> {{postData.post_writer_user}}</router-link>
 
       <font class="postby" id="fontpost"> </font>
       <a href="#" class="postby" id="timeAgo"> 15 hours ago </a>
       <p id="postBody" class="hPost">
-           
+
         {{postData.content}}
-         </p> 
-        
+         </p>
 
-<iframe  v-show ="postData.video_url!==''" width="100%" height="315"  :src=postData.video_url frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-<img v-show="postData.img_name!==''" :src=postData.img_name  height="100%" width="100%" id="imgId">
+<iframe  v-show ="postData.videolink!==''" width="100%" height="315"  :src=postData.videolink frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<img v-show="postData.img!==''" :src=postData.img  height="100%" width="100%">
 </div>
     <!-- </div> -->
 <footer>
@@ -96,7 +96,6 @@ Comments</button>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
 <script id="postScript">
-import axios from 'axios'
 
 import {MimicDisplayPosts} from '../MimicServices/DisplayPosts.js'
 import { AllServices } from '../MimicServices/AllServices';
@@ -194,7 +193,7 @@ export default {
             }
         this.PostId=postData.id;
         AllServices.Hide(this.PostId,this.$localStorage.get('token'));
-   
+
          },
     changeColor_up()
     {
@@ -217,7 +216,7 @@ export default {
                       this.votes          += 1;
                        this.PostId=postData.id;
                       AllServices.upvote(this.$localStorage.get('token'),this.PostId,1);
-                
+
                 }
               else {
                     this.className_up = 'btn btn-light btn-sm is-gray';
@@ -225,7 +224,7 @@ export default {
                     this.pressed_up = false;
                      this.PostId=postData.id;
                   AllServices.defaultVote(this.PostId,this.$localStorage.get('token'),0);
-              
+
                }
 
 
@@ -250,7 +249,7 @@ export default {
                          this.votes-=1;
                           this.PostId=postData.id;
                          AllServices.downvote(this.PostId,this.$localStorage.get('token'),-1);
-                 
+
                   }
               else {
                   this.className_down = 'btn btn-light btn-sm is-gray';
@@ -260,7 +259,7 @@ export default {
                    this.pressed_down = false;
                     this.PostId=postData.id;
                    AllServices.defaultVote(this.PostId,this.$localStorage.get('token'),0);
-              
+
 
                  }
               },
@@ -278,7 +277,7 @@ export default {
         this.Saved="unsave";
         this.PostId=postData.id;
         AllServices.save(this.$localStorage.get('token'),this.PostId);
-        
+
       }
         else if(this.Saved=="unsave"){
             this.Saved="Save";
@@ -311,31 +310,22 @@ export default {
       ToggleShowModalVar(){
         this.ShowModalVar=!this.ShowModalVar;
               },
-//       getUserId(){
-// //axios.get("http://localhost/me",{token:this.token}).then(response=>{this.userId=response.userID});
-// }
-
-
 },
 props: {
 postData:{},
        },
 created(){
 
-
-
-         axios.get("http://localhost/me",{token:this.token}).then(response=>{this.userId=response.userID}).catch(function (error)
-         {
-          //console.log(error);
-        });
-
-
+      /*
+      axios.get("http://localhost/me",{token:this.token}).then(response=>{this.userId=response.userID}).catch(function (error)
+       {
+        console.log(error);
+      });
+      */
 
        if(this.userId==2){
         this.moderator=true;
-
        }
-
 },
 
 }
@@ -422,7 +412,7 @@ h5 {
         border-radius: 4px;
         -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05);
         box-shadow: 0 1px 1px rgba(0,0,0,.05);
-    } 
+    }
 .fontUser{
     font-size: 12px;
     font-weight: 700;
@@ -438,7 +428,7 @@ h5 {
 /*      margin-left: 470px;*/
 } /* Red */
 /* .postItem{
-    box-sizing: border-box;  
+    box-sizing: border-box;
     width: 250%;
     margin-left: 9.5%;
     padding-top: 2%;
@@ -472,9 +462,9 @@ width: 100%;
 }
 
 #post{
-   
+
     width: 80%;
-   box-sizing: border-box;  
+   box-sizing: border-box;
     /* width: 250%; */
     margin-left: 23%;
     margin-top: 2%;
@@ -493,7 +483,7 @@ width: 100%;
 width: 30%;
 
 }
-/* 
+/*
 @media(max-width:1000px){
   .postItem{
       width:170%;

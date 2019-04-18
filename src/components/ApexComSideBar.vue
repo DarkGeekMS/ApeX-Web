@@ -3,17 +3,13 @@
       <div class="box" id="descroption box">
        <h3 class="Header" id="descroption box header">Community Details</h3>
       <div class="content">
-        <div class="imagediv">
-          <h3 style="display:inline; " id="Apexcomname">{{apexComName}}</h3>
-          <div  class="img">
+          <h3 style="display:inline; font-size: 2vw;" id="Apexcomname">{{apexComName}}</h3>
          <img style="box-sizing: border-box; border-radius: 50%;" width="100%" height="100%" class="image" src="../../public/Logo_small.png" >
-         </div>
-         </div>
-         <p style="font-size: 16px;
-    font-weight: 500;
-    line-height: 20px;">subscribers</p>
+
+         <p style="font-size: 1.5vw;
+    font-weight: 500;  margin-top: 4%;">subscribers</p>
          
-       <p style="font-size: 16px;
+       <p style="font-size: 1.3vw;
     font-weight: 500; margin-left:12%;" id="subscribers Count">{{subscribersCount}}</p>
        <p id="description">{{description}}</p>
        <button id="subscribebutton" v-bind:class="{button1:subscribed,button:!subscribed}" v-on:mouseover="changeState('unsubscribe')" v-on:mouseleave="changeState('subscribed')" type="button" v-on:click="subscribe()">
@@ -32,7 +28,7 @@
     </div>
     </div>
 
-    <div  id="moderators box" v-show="moderators.length !==0">
+    <div class="box" id="moderators box" v-show="moderators.length !==0">
       <h3 class="Header" id="moderators box header">Moderators</h3>
       <div class="content" >
       <ul class="list" style="list-style-type:none;" id="moderatorslist">
@@ -47,7 +43,6 @@
 
 
 <script>
-import axios from 'axios'
 import {AllServices} from '../MimicServices/AllServices.js'
 
 /**
@@ -131,7 +126,7 @@ export default {
     getSubscribers(){
       if(this.loggedIn){
         AllServices.getSubscribers(this.apexComName).then((data) =>{
-        this.subscribers=data.subscribersList;
+          this.subscribers=data.subscribers;
         var subscribe = this.subscribers.find(this.CheckUser);
         if(subscribe !== undefined){
           this.subscribed = true;
@@ -180,7 +175,7 @@ export default {
       this.subscribed=true;
       this.state='subscribed';
     }
-    }  
+    }
     else{
       alert('something wrong happened try again later');
     }
@@ -199,7 +194,7 @@ export default {
          this.subscribersCount=about.subscribersCount;
          });
    },
-    
+
   },
  mounted(){
    this.getSubscribers();
@@ -218,19 +213,23 @@ export default {
   height:auto;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
+  font-size: 2vw;
 }
 #description{
   font-family: "Noto Sans", Arial, sans-serif;
-  font-size: 16px;
+  font-size: 1.28vw;
   font-weight: 400;
-  line-height: 21px;
   color: #1a1a1b;
   overflow-wrap: break-word;
+}
+.box{
+  margin-top: 5%;
+  margin-bottom: 0%;
 }
 
 .content{
   margin-top:0%;
-  margin-bottom: 8%;
+  margin-bottom: 0%;
   background-color:#eee;
   border-bottom-left-radius:8px;
   border-bottom-right-radius:8px;
@@ -250,12 +249,11 @@ export default {
   cursor:pointer;
   border-color: skyblue;
   border-style: solid;
-  font-size: 14px;
+  font-size: 1.2vw;
   font-weight: 700;
   letter-spacing: 0.5px;
-  line-height: 32px;
   text-transform: uppercase;
-  height:38px;
+  height:auto;
 }
 .button:hover {opacity: 0.75}
 .button1:hover {opacity: 0.75}
@@ -271,22 +269,21 @@ export default {
   cursor:pointer;
   border-color: skyblue;
   border-style: solid;
-  font-size: 14px;
+  font-size: 1.2vw;
   font-weight: 700;
   letter-spacing: 0.5px;
-  line-height: 32px;
   text-transform: uppercase;
-  height:38px;
+  height:auto;
 }
-.img{
-  width:16%;
-  height:50px;
-  margin-top:-4%;
+img{
+  width:20%;
+  height:auto;
+  margin-top:0%;
   margin-bottom:0%;
   margin-right:4%;
   margin-left:0%;
   float: left;
-  
+
 }
 .accountLink{
   text-decoration: none;
@@ -296,20 +293,31 @@ export default {
   padding-left: 0%;
 }
 #ruleslistitem{
-  font-size: 17px;
+  font-size: 1.4vw;
 font-weight: 500;
-line-height: 24px;
 }
 #ruleslist{
   padding-left: 6%;
 }
 #moderatorslistitem{
   margin-bottom: 2%;
-  font-size: 15px;
+  font-size: 1.2vw;
 }
 .imagediv{
-  width:100%;
-  height:50px;
+  display: inline;
+}
+img{
+  max-width: 100px;
+}
+@media (max-width: 605px){
+img{
+  margin-top:4px;
+}
+}
+@media (max-width: 529px){
+img{
+  margin-top:8px;
+}
 }
 
 </style>

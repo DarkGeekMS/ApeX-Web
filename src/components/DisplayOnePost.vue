@@ -84,7 +84,7 @@ width: 100%;
    float:right;
   padding-top: 0%;
    display: inline-block;
- 
+
 }
 
 #postModal

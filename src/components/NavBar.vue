@@ -18,11 +18,11 @@
                 <option>  All</option>
                 <option> Original Content</option>
               </optgroup>
-              
-              <option disabled>──────────</option>  
-              
+
+              <option disabled>──────────</option>
+
               <optgroup style="font-size: 12px" label="MY COMMUNITIES" v-show="this.$localStorage.get('login')" >
-                <option v-for="(apex, key) in apexs" > {{apex.name}} </option> 
+                <option v-for="(apex, key) in apexs" > {{apex.name}} </option>
               </optgroup>
           </select>
       </div>
@@ -33,20 +33,20 @@
         <input type="text" class="form-control" placeholder="Search Reddit" v-model="searchVal" v-on:keyup.enter="search()">
       </div>
 
-      <div class="btn-toolbar" role="toolbar"> 
+      <div class="btn-toolbar" role="toolbar">
 		  <div class="btn-group">
-        <button type="button" class="btn btn-default" alt="popular"> 
-          <i class="glyphicon glyphicon-arrow-up"></i></span> 
-        </button> 
-		    <button type="button" class="btn btn-default"> 
-		      <i class="glyphicon glyphicon-stats"></i> 
+        <button type="button" class="btn btn-default" alt="popular">
+          <i class="glyphicon glyphicon-arrow-up"></i></span>
+        </button>
+		    <button type="button" class="btn btn-default">
+		      <i class="glyphicon glyphicon-stats"></i>
 		    </button>
-		    <button type="button" class="btn btn-default last"> 
-		      <span style="background-color:black; color:white; padding-left:3px"> oc 
-		      </span> 
+		    <button type="button" class="btn btn-default last">
+		      <span style="background-color:black; color:white; padding-left:3px"> oc
+		      </span>
 		    </button>
-		  </div> 
-      </div> 
+		  </div>
+      </div>
 
 
       <div v-show="!this.$localStorage.get('login')" class="form-group log" style="display:inline-block">
@@ -61,7 +61,7 @@
         <ul class="dropdown-menu">
             <li class="dropdown-header">MY STUFF</li>
             <li><router-link :to="{ name: 'UserProfile', params: {userName:userLog} } ">My Profile</router-link></li>
-            <li><a href="#">User Settings</a></li>
+            <li><router-link :to="{ name: 'UserSettings'} ">User Settings</router-link></li>
             <li class="divider"></li>
             <li><a class="logOut" href="#" @click="Logout()">Log Out</a></li>
         </ul>
@@ -79,7 +79,7 @@
 
 /**
  * @vue-data {string} [userLog=""] name of user logged in
- * @vue-data {string} [searchVal=""] search value  
+ * @vue-data {string} [searchVal=""] search value
  * @vue-data {boolean} [canBeShown=false] check shownModal
  * @vue-data {object} [apexs] names op apexComs
 */
@@ -98,7 +98,7 @@
       }
     },
     created () {
-      this.apexs = AllServices.getApexNames(),	
+      this.apexs = AllServices.getApexNames(),
       setInterval(() => {
         this.userLog = this.$localStorage.get('userName');
         this.canBeShown = !this.canBeShown
@@ -115,7 +115,7 @@
         })
       },
       /**
-       * axios post request to log out the user through send user's token, delete it from data ,delete username and set login false 
+       * axios post request to log out the user through send user's token, delete it from data ,delete username and set login false
       */
       Logout: function(){
         AllServices.logOut()

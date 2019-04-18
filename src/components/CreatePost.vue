@@ -1,13 +1,13 @@
 <template>
    <div id="create">
      <div class="a">
-     
+
        <h4 class="Cpost">Create a post
-    
+
      </h4>
-      
+
     </div>
-   
+
       <div class="form-group dropApex" >
         <select class="form-control" name="category">
           <option>choose a community</option>
@@ -19,7 +19,6 @@
           <form>
 
             <div class="form-group">
-   
 
   
                   <div id="root" class="container" >
@@ -48,22 +47,22 @@
 
                        <tab name="Image" >
                           <div class="form-group ">
-                                        
+
                            <input type="text" class="form-control" id="usr2" placeholder="title" @keyup="Enable">
                           </div>
-                          <div class="panel imgBox"> 
-         
+                          <div class="panel imgBox">
+
                              <div class="helper">
 
                              </div>
                               <div class="drop1 display-inline align-center" @dragover.prevent @drop="onDrop">
-                                            
+
                                 <div class="helper">
 
                                  </div>
-                                            
+
                                 <label v-if="!image" class="btn display-inline btnImage">
-                                                
+
                                        Drag and Drop or Upload
                                  <input type="file" name="image" @change="onChange">
                                  </label>
@@ -73,26 +72,26 @@
                                          <br>
                                         <button class="btnImage" @click="removeFile">REMOVE</button>
                                       </div>
-                                                                    
-                               </div> 
+
+                               </div>
                             </div>
                                                             <button  class="btn btn-primary postButton" @click="submitPost"  disabled  id="button2" >POST</button>
-                                                        
+
                           </tab>
 
                           <tab name="Link" >
                                <div class="form-group">
-                                                                      
+
                                   <input type="text" class="form-control" id="usr3" placeholder="title" @keyup="Enable">
                                 </div>
                                 <textarea class="form-control" rows="3" id="textsend3" placeholder="Url" @keyup="Enable"></textarea>
                                <button  class="btn btn-primary postButton" @click="submitPost"  disabled  id="button3">POST</button>
                            </tab>
                      </tabs>
-        
-       
-         
-       
+
+
+
+
 
     </div>
 
@@ -110,22 +109,21 @@
 <script>
 import tab from './PostTab.vue'
 import tabs from './PostTabs.vue'
-import axios from 'axios';
 import Vue from "vue";
 import {AllServices} from '../MimicServices/AllServices.js'
 import { RichTextEditorPlugin, Toolbar, HtmlEditor } from "@syncfusion/ej2-vue-richtexteditor";
 Vue.use(RichTextEditorPlugin);
 
 /**
- * @vue-data {string} [apexComId=''] Id of apexcom which post will be created in 
+ * @vue-data {string} [apexComId=''] Id of apexcom which post will be created in
  * @vue-data {boolean} [enable=true]    check if post button is enable or not
- * @vue-data {string} [bodyPost='']    the content of the post 
+ * @vue-data {string} [bodyPost='']    the content of the post
  * @vue-data {string} [imgName='']  the img src which the user upload from browser
- * @vue-data {array} [apexNames=[]]  include the apexnames which you want to choose from 
+ * @vue-data {array} [apexNames=[]]  include the apexnames which you want to choose from
  * @vue-data {string} [videoUrl=''] the url of the video from the youtube
- * @vue-data {boolean} [isLocked=false] 
+ * @vue-data {boolean} [isLocked=false]
  * @vue-data {JWT} [token=''] userID
- * @vue-data  {boolean} [imagable=false] check if the user upload image or not 
+ * @vue-data  {boolean} [imagable=false] check if the user upload image or not
 
 
  */
@@ -133,12 +131,12 @@ Vue.use(RichTextEditorPlugin);
 export default {
     data(){
       return {
-    
+
        items: [
        {
          image: false,
        }
-     
+
         ],
         enable:true,
         token:'',
@@ -163,7 +161,7 @@ export default {
          },
 
       }
-       
+
     },
     provide:{
         richtexteditor:[Toolbar, HtmlEditor]
@@ -171,38 +169,38 @@ export default {
     methods:{
 
      /**
-     * it check if the user insert the title of the post and insert the content or not and it will enable 
-     * the post button to be submitted if and only if the user insert all required content 
+     * it check if the user insert the title of the post and insert the content or not and it will enable
+     * the post button to be submitted if and only if the user insert all required content
      */
 
          Enable(){
-         
-	 if(document.getElementById("textsend").value==="" || document.getElementById("usr").value==="")  { 
-            document.getElementById('button').disabled = true; 
-        } else { 
+
+	 if(document.getElementById("textsend").value==="" || document.getElementById("usr").value==="")  {
+            document.getElementById('button').disabled = true;
+        } else {
             document.getElementById('button').disabled = false;
              console.log(document.getElementById('text').value);
         }
-    
-    
 
-         	 if(document.getElementById("textsend3").value==="" || document.getElementById("usr3").value==="")  { 
-            document.getElementById('button3').disabled = true; 
-        } else { 
+
+
+         	 if(document.getElementById("textsend3").value==="" || document.getElementById("usr3").value==="")  {
+            document.getElementById('button3').disabled = true;
+        } else {
             document.getElementById('button3').disabled = false;
         }
 
 
-        if(this.imagable===false|| document.getElementById("usr2").value==="")  { 
-            document.getElementById('button2').disabled = true; 
-        } else { 
+        if(this.imagable===false|| document.getElementById("usr2").value==="")  {
+            document.getElementById('button2').disabled = true;
+        } else {
             document.getElementById('button2').disabled = false;
         }
-    
-    
+
+
     },
      /**
-     * it take the src of the img which the user drop it from the browser 
+     * it take the src of the img which the user drop it from the browser
      */
    onDrop: function(e) {
         e.stopPropagation();
@@ -211,18 +209,18 @@ export default {
         this.createFile(files[0]);
       },
        /**
-     * when the user upload the img it enable the post button and store the img src 
+     * when the user upload the img it enable the post button and store the img src
      */
       onChange(e) {
-         
+
         var files = e.target.files;
         this.createFile(files[0]);
          this.imagable=true;
          this.Enable();
-      
+
       },
        /**
-     * it create file to be stored in img src 
+     * it create file to be stored in img src
      */
       createFile(file) {
         if (!file.type.match('image.*')) {
@@ -235,11 +233,11 @@ export default {
 
         reader.onload = function(e) {
           vm.image = e.target.result;
-         this.imgName=vm.image; // NOT SURE YET IF THIS WHAT THE API DOC WANT 
+         this.imgName=vm.image; // NOT SURE YET IF THIS WHAT THE API DOC WANT
           //console.log(this.imgName);
         }
         reader.readAsDataURL(file);
-       
+
       },
        /**
      * it remove the img if the user upload an img from browser and want to remove it so it make the src empty.
@@ -256,18 +254,18 @@ export default {
 
     submitPost(){
        this.videoUrl=document.getElementById('textsend3').value;
-       this.apexComId='';//TODO 
+       this.apexComId='';//TODO
        this.bodyPost=document.getElementById('textsend').value;
        this.imgName=document.getElementById('imgId').src;
 
     //  AllServices.submit(this.videoUrl,this.apexComId,this.bodyPost,this.imgName,this.isLocked,this.$localStorage.get('token'));
-  
+
     }
 
     },
-    
 
-    
+
+
 
     components:{
      'tab':tab,
@@ -312,7 +310,7 @@ created(){
 .btn2 {
 
   margin-left:45%;
-  margin-top: 20%; 
+  margin-top: 20%;
   border-color: rgb(0, 121, 211);
   color: rgb(0, 121, 211);
 
@@ -331,7 +329,7 @@ created(){
 
 }
 
-#app { 
+#app {
 
   text-align: center;
 
@@ -371,7 +369,7 @@ created(){
 
   background-color:rgb(0255, 255, 255);
   color:rgb(0, 121, 211);
- 
+
 }
 
 .row{
@@ -404,7 +402,7 @@ margin-left: 5.5%;
 
 .custom-select select {
 
-  display: none; 
+  display: none;
 
 }
 
@@ -418,7 +416,7 @@ margin-left: 5.5%;
 
      height: 300px;
      width: 70%;
-     
+
 
 }
 .remv{
@@ -437,7 +435,7 @@ margin-left: 5.5%;
   position: relative;
    border-color: rgb(0, 121, 211);
    color: rgb(0, 121, 211);
-  
+
 }
 
 
@@ -549,5 +547,3 @@ height: 30%;
 }
 
 </style>
-
-
