@@ -1,5 +1,6 @@
 <template id="PostTemlate">
-<div id="PostItme" class="postItem" >
+<!-- <div id="PostItme" class="postItem" > -->
+  <div class="postMod">
 <div class="panel panel-default"  @click="ShowModal()" v-show="Not_Hide" id="post">
     <div class="panel-body">
     <div class="panel2 panel-default"  id="postSide">
@@ -25,8 +26,8 @@
 
 
       </div>
-        <div class="column2" id="postCol2">
 
+<!-- <div class="column"> -->
       <router-link class="fontUser" id="subred" :to="{name:'ApexCom' , params: {ApexComName:postData.apex_id}}">{{postData.apex_id}}</router-link>
       <font class="postby" id="fontPostby">. Posted by</font>
       <router-link class="postby" id="user" :to="{name:'UserProfile' , params: {userName:postData.posted_by}}"> {{postData.posted_by}}</router-link>
@@ -35,17 +36,15 @@
       <a href="#" class="postby" id="timeAgo"> 15 hours ago </a>
       <p id="postBody" class="hPost">
 
-        {{postData.content}} </p>
+        {{postData.content}}
+         </p>
 
-<!-- <iframe v-show="video" width="100%" height="400px" src="https://www.youtube.com/embed/tgbNymZ7vqY?autoplay=1">
-</iframe>  -->
- <!-- <iframe  width ="100%" class="resp-iframe" src="https://www.youtube.com/embed/dQw4w9WgXcQ" gesture="media"  allow="encrypted-media" allowfullscreen></iframe> -->
-<iframe width="100%" height="315" src="https://www.youtube.com/embed/Va0Rq147SRU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-<!-- <iframe  width="100%" height="315" src="https://www.youtube.com/embed/GY4rEmG2Rh0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
-<!-- <iframe  width="100%" height="315" src="https://www.youtube.com/embed/3OvDP5_2XIo" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
- <!-- <iframe  width="100%" height="400px" src="https://www.youtube.com/embed/3lW5XQsw42c" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>  -->
-<!-- <img src="smiley.gif"  height="42" width="42"> -->
+
+<iframe  v-show ="postData.video_url!==''" width="100%" height="315"  :src=postData.video_url frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<img v-show="postData.img_name!==''" :src=postData.img_name  height="100%" width="100%">
 </div>
+    <!-- </div> -->
 <footer>
 
 <div class="btn-group" role="group" aria-label="..." id="drop">
@@ -84,7 +83,7 @@ Comments</button>
 
        </div>
 
-   </div>
+
 
 
 
@@ -133,11 +132,18 @@ export default {
              moderator:false,
              ShowModalVar:true,
              Deleted:false,
-             video:true
+             video:true ,
+             image:false
             };
          },
 
   methods: {
+
+    editText(){
+
+
+
+    },
      /**
      * delete post if the moderator press delete button.
      */
@@ -374,9 +380,10 @@ h5 {
     box-shadow: 0 1px 1px rgba(0,0,0,.05);}
 
     .panel {
-         width:100%;
+        width:100%;
         margin-bottom: 0%;
         margin-left: 5%;
+        margin-right: unset;
         margin-top: 3%;
         background-color: #fff;
         border: 1px solid transparent;
@@ -397,16 +404,22 @@ h5 {
       background-color: #f4511e;
 /*      margin-left: 470px;*/
 } /* Red */
-.postItem{
-width: 100%;
-margin-left:0.5%;
-padding-top:0.5%;
-margin-top: 0%;
-min-width: 50%;
-height: 100%;
+/* .postItem{
+    box-sizing: border-box;
+    width: 250%;
+    margin-left: 9.5%;
+    padding-top: 2%;
+    margin-top: 0%;
+    min-width: 50%;
+    height: 100%;
+   margin-right: 0%;
+
+} */
+#postCol1{
+
+height:100%;
 
 }
-
 .hPost{
    overflow: auto;
    word-wrap: break-word;
@@ -425,7 +438,15 @@ width: 100%;
 
 #post{
 
-  width: 30%;
+    width: 80%;
+   box-sizing: border-box;
+    /* width: 250%; */
+    margin-left: 23%;
+    margin-top: 2%;
+    min-width: 50%;
+    height: 100%;
+   margin-right: 0%;
+
 }
 
 .panel-body{
@@ -437,4 +458,10 @@ width: 100%;
 width: 30%;
 
 }
+/*
+@media(max-width:1000px){
+  .postItem{
+      width:170%;
+  }
+}  */
 </style>

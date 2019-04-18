@@ -2,9 +2,14 @@
 <div id="all">
   <div class="Apexcom" id="Apexcom">
     <div class="apexcomName" id="apexcomName">
-      <h1 id="Name">
-        <img class="image" src="../../public/Logo_small.png" >
-        {{apexComName}}</h1>
+      <div class="imagediv">
+      <h1 id="Name">{{apexComName}}</h1>
+      <div class="img">
+        <img style="box-sizing: border-box; border-radius: 50%;" width="100%" height="100%" class="image" src="../../public/Logo_small.png" >
+      
+      </div>
+      
+      </div>
     </div>
 
     <div class="navBar" id="navbar">
@@ -12,6 +17,7 @@
         <router-link  id="subscribersListlink" class="navbarLinks" :to="{name:'Subscribers'}">subscribers</router-link>
         <router-link v-show="isModerator() || isAdmin()" id="reportlink" class="navbarLinks" :to="{name:'Reports'}">view reports</router-link>
         <router-link  id="addmoderatorlink" class="navbarLinks" :to="{name:'Moderators'}">add moderator</router-link>
+         <router-link  id="deletemoderatorlink" class="navbarLinks" :to="{name:'DeleteModerators'}">delete moderator</router-link>
     <!-- v-show="isAdmin()" -->
     </div>
 </div>
@@ -86,7 +92,7 @@ export default {
       isAdmin:function()
       {
         if(this.loggedIn){
-        var data= AllServices.userType().then((data) =>{
+        AllServices.userType().then((data) =>{
         if(data.type ==1){
           return true;
           }
@@ -100,7 +106,7 @@ export default {
     * request the data for certain community
     */
      getAbout(){
-         var about= AllServices.getAbout(this.apexComName).then((about) =>{
+         AllServices.getAbout(this.apexComName).then((about) =>{
          this.description=about.description;
          this.moderators=about.moderators;
          this.rules=about.rules;
@@ -128,11 +134,12 @@ export default {
   background-color: deepSkyBlue;
   width:auto;
   height: 85px;
-  padding:1px;
-  color: #eee;
+  padding-top:3%;
+  color: white;
 }
 #Name{
-  padding-left: 8%;
+  padding-left: 1%;
+  display:inline;
 }
 .navBar{
   background-color: rgb(219, 240, 255);
@@ -169,14 +176,24 @@ export default {
 .router-link-active{
   border-bottom: 3px solid deepSkyBlue;
 }
-.image{
+.img{
   width:4%;
   height:50px;
-  margin-top:0%;
-  margin-bottom:1%;
+  margin-top:-1%;
+  margin-bottom:0%;
   margin-right:0%;
+  margin-left:3%;
+  float: left;
+}
+.image{
+  
+  vertical-align: middle;
+}
+.imagediv{
+  margin-right:4%;
   margin-left:0%;
-  border-radius: 25px;
-  box-sizing: border-box;
+  /* display: inline; */
+  width:100%;
+  height:50px;
 }
 </style>

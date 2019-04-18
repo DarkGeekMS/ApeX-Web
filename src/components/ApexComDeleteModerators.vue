@@ -1,6 +1,6 @@
 <template id="showmoderaorspagedesign">
 <div >
-<!-- <h4 v-if="!moderatorsList.lenght" >there is nothing to show </h4> -->
+<h4 v-if="!moderatorsList.length" >there is nothing to show </h4>
   <div id="moderatorsbox" class="box" v-for="(moderator,index) in moderatorsList" :key="moderator.id">
     <router-link class="accountLink" :to="{name:'UserProfile' , params: {userName:moderator.userName}}"> {{moderator.userName}}</router-link>
     <button id="remove button" class="button" v-on:click="deleteModerator(moderator.userName,index)">delete</button>
@@ -13,9 +13,7 @@ import axios from 'axios'
 import {AllServices} from '../MimicServices/AllServices.js'
 
 export default {
-props:{
-    apexComName:String
-},
+props:['apexComName'],
   data () {  
     return {
         moderatorsList:[],

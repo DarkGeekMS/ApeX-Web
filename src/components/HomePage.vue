@@ -10,6 +10,7 @@
 <script>
 
 import DisplayPosts from "./DisplayPosts.vue"
+import post from "./Post.vue"
 import HomeSideBar from "./HomeSideBar.vue"
 import RecentPosts from "./RecentPosts.vue"
 export default {
@@ -18,6 +19,7 @@ export default {
     'DisplayPosts':DisplayPosts,
     'SideBar':HomeSideBar,
     'RecentPosts':RecentPosts,
+    'post':post
   },
 }
 

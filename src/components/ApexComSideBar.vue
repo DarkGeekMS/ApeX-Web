@@ -3,10 +3,18 @@
       <div class="box" id="descroption box">
        <h3 class="Header" id="descroption box header">Community Details</h3>
       <div class="content">
-          <h3 id="Apex-com-name">
-         <img class="image" src="../../public/Logo_small.png" >
-         {{apexComName}}</h3>
-       <p id="subscribers Count">{{subscribersCount}} subscribers</p>
+        <div class="imagediv">
+          <h3 style="display:inline; " id="Apexcomname">{{apexComName}}</h3>
+          <div  class="img">
+         <img style="box-sizing: border-box; border-radius: 50%;" width="100%" height="100%" class="image" src="../../public/Logo_small.png" >
+         </div>
+         </div>
+         <p style="font-size: 16px;
+    font-weight: 500;
+    line-height: 20px;">subscribers</p>
+
+       <p style="font-size: 16px;
+    font-weight: 500; margin-left:12%;" id="subscribers Count">{{subscribersCount}}</p>
        <p id="description">{{description}}</p>
        <button id="subscribebutton" v-bind:class="{button1:subscribed,button:!subscribed}" v-on:mouseover="changeState('unsubscribe')" v-on:mouseleave="changeState('subscribed')" type="button" v-on:click="subscribe()">
        <span> {{state}} </span> </button>
@@ -15,7 +23,7 @@
        </div>
        </div>
 
-       <div class="box" id="rules box" >
+       <div class="box" id="rules box" v-show="rules.length !==0">
       <h3 class="Header" id="rules box header">Rules</h3>
       <div class="content">
       <ol  id="ruleslist">
@@ -24,7 +32,7 @@
     </div>
     </div>
 
-    <div  id="moderators box" >
+    <div  id="moderators box" v-show="moderators.length !==0">
       <h3 class="Header" id="moderators box header">Moderators</h3>
       <div class="content" >
       <ul class="list" style="list-style-type:none;" id="moderatorslist">
@@ -146,7 +154,7 @@ export default {
       isAdmin:function()
       {
         if(this.loggedIn){
-        var data= AllServices.userType().then((data) =>{
+        AllServices.userType().then((data) =>{
         if(data.type ==1){
           return true;
           }
@@ -162,7 +170,7 @@ export default {
     subscribe:function()
     {
       if(this.loggedIn){
-      var data = AllServices.subscribe(this.apexComName).then((data) =>{
+      AllServices.subscribe(this.apexComName).then((data) =>{
       if(data){
       if(this.subscribed){
       this.subscribed = false;
@@ -183,9 +191,10 @@ export default {
       }
     },
     getAbout(){
-         var about= AllServices.getAbout(this.ApexComName).then((about) =>{
+         AllServices.getAbout(this.ApexComName).then((about) =>{
          this.description=about.description;
          this.moderators=about.moderators;
+         console.log(this.moderators.length);
          this.rules=about.rules;
          this.subscribersCount=about.subscribersCount;
          });
@@ -193,9 +202,7 @@ export default {
 
   },
  mounted(){
-   if(this.loggedIn){
    this.getSubscribers();
-   }
    this.getAbout();
  }
 
@@ -206,7 +213,7 @@ export default {
 
 .Header{
   background-color: skyBlue;
-  padding:12px;
+  padding:4%;
   margin: 0%;
   height:auto;
   border-top-left-radius: 8px;
@@ -227,7 +234,10 @@ export default {
   background-color:#eee;
   border-bottom-left-radius:8px;
   border-bottom-right-radius:8px;
-  padding:5%;
+  padding-top:8%;
+  padding-bottom:5%;
+  padding-left:5%;
+  padding-right:5%;
 }
 .button{
   width:100%;
@@ -268,15 +278,15 @@ export default {
   text-transform: uppercase;
   height:38px;
 }
-.image{
+.img{
   width:16%;
   height:50px;
-  margin-top:0%;
+  margin-top:-4%;
   margin-bottom:0%;
-  margin-right:0%;
+  margin-right:4%;
   margin-left:0%;
-  border-radius: 25px;
-  box-sizing: border-box;
+  float: left;
+
 }
 .accountLink{
   text-decoration: none;
@@ -297,4 +307,9 @@ line-height: 24px;
   margin-bottom: 2%;
   font-size: 15px;
 }
+.imagediv{
+  width:100%;
+  height:50px;
+}
+
 </style>

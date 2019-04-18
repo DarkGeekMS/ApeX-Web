@@ -10,10 +10,12 @@ export  const MimicApexCom =new Vue({
     rules:['rule1','rule2','rule3'],
     subscribersCount:78,
     description:'this is just the mimic server',
-    moderators:[{userName:'moderator1'},
+    moderators:[
+      {userName:'moderator1'},
     {userName:'moderator1'},
     {userName:'moderator1'},
-    {userName:'moderator1'}],
+    {userName:'moderator1'}
+  ],
   }
   var promise = new Promise(function(resolve) {
     setTimeout(function() {
@@ -45,7 +47,12 @@ var subscribersList=[
   {userName:'subscriber3'},
   {userName:'subscriber4'}
 ]
-return subscribersList;
+var promise = new Promise(function(resolve) {
+  setTimeout(function() {
+    resolve(subscribersList);
+  }, 300);
+});
+return promise;
 }
 else {
  return axios.post('http://35.232.3.8/api/get_subscribers', {
@@ -77,10 +84,11 @@ else {
       })
       .then(function (response) {
         return response;
+          })
+          .catch(function (error) {
+            alert(error)
+            // console.log(error);
           });
-      // .catch(function (error) {
-      // // console.log(error);
-      // });
     }
     },
 
@@ -97,10 +105,11 @@ deleteApexCom: function(mimic,apexComName){
         })
         .then(function (response) {
           return response;
+            })
+            .catch(function (error) {
+              alert(error)
+              // console.log(error);
             });
-        // .catch(function (error) {
-        // // console.log(error);
-        // });
 }
     },
 subscribe: function(mimic,apexComName){
@@ -114,10 +123,11 @@ subscribe: function(mimic,apexComName){
       })
       .then(function (response) {
         return response;
+      })
+      .catch(function (error) {
+        alert(error)
+        // console.log(error);
       });
-      // .catch(function (error) {
-      // // console.log(error);
-      // });
 }
 },
 addOrDeleteModerator: function(mimic,userName,apexComName){
@@ -125,17 +135,18 @@ addOrDeleteModerator: function(mimic,userName,apexComName){
     return true;
   }
 else {
-  axios.post('http://localhost/api/add_moderator', {
+   axios.post('http://localhost/api/add_moderator', {
         ApexCom_id:apexComName,
         user_id:userName,
         Token:this.$localStorage.get('token')
       })
       .then(function (response) {
         return response;
+          })
+          .catch(function (error) {
+            alert(error)
+            // console.log(error);
           });
-      // .catch(function (error) {
-      // // console.log(error);
-      // });
     }
     },
   }

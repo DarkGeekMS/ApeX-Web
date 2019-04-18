@@ -66,14 +66,22 @@ components:{
 </script>
 
 <style scoped>
+
+#PostContainer{
+
+
+
+}
 #PostModal{
   width: 10%;
   height: 10%;
   background: red;
+ 
 }
 #DisplayPosts{
    /* width: 100%; */
   display: inline-block;
+  padding-top: 5%;
 }
 
 </style>

@@ -15,7 +15,8 @@ export  const MimicDisplayPosts =new Vue({
               locked:false,
               commenetnum:5,
               votes:9,
-              
+              img_name:'',
+              video_url:'https://www.youtube.com/embed/Va0Rq147SRU'
           
             }
             ,{
@@ -25,13 +26,18 @@ export  const MimicDisplayPosts =new Vue({
               title:'dj',
               content:`Software engineering is concerned with theories, methods and tools for professional software development.
               Software costs often dominate computer system costs. The costs of software on a PC are often greater than the hardware cost 🤔.
-`
+`,
+              video_url:"" ,
+              img_name:'http://bashkatibnews.com/contents/article/515_lybfjrmf.jpg'
             },{
               id:'333',
               posted_by:'Ayat',
               apex_id:'333',
               title:'dj',
-              content:'I love javascript ,vue ,html ,css 🐸🐸🐸'
+              content:'I love javascript ,vue ,html ,css 🐸🐸🐸',
+              video_url:'',
+              img_name:'https://i.ytimg.com/vi/inYarqDCCGA/maxresdefault.jpg'
+                  
             },{
               id:'222',
               posted_by:'Double',
@@ -43,13 +49,17 @@ export  const MimicDisplayPosts =new Vue({
 
               Clear with cloudy periods; a slight chance of showers or thundershowers
 
-              Mostly clear with showers likely. Slight chance of a thunderstorm. 3 to 6 mm of rain 🔥🔥`
+              Mostly clear with showers likely. Slight chance of a thunderstorm. 3 to 6 mm of rain 🔥🔥`,
+              video_url:'https://www.youtube.com/embed/W_5rTUqwRVs',
+              img_name:''
             },{
               id:'111',
               posted_by:'Nourhan',
               apex_id:'222',
               title:'anime',
-              content:'Software costs more to maintain than it does to develop. For systems with a long life, maintenance costs may be several times development costs🍔 😂 '
+              content:'Software costs more to maintain than it does to develop. For systems with a long life, maintenance costs may be several times development costs🍔 😂 ',
+              video_url:'',
+              img_name:''
             },
           ];
           var promise1 = new Promise(function(resolve, reject) {
