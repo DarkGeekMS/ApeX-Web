@@ -99,6 +99,9 @@ deletePost:function(name,ID){
 
   return MimicPost.deletePost(name,ID,this.mimic);
 },
+getApexNames:function(){
+  return MimicCreatePosts.getApexNames();
+},
 
 userType:function(){
   var data=MimicUserProfile.getUserType(this.mimic);

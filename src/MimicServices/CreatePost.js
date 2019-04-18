@@ -12,7 +12,8 @@ token:'1',
   },
   methods:{
     submitPost: function(videoUrl,apexComId,bodyPost,imgName,token,isLocked,mimic){
-      if(mimic===true){
+      
+      if(true){
          if(token=='1' && apexComId=='1'){
             return true;
          }
@@ -40,6 +41,25 @@ else {
          }
        })
  }
+    },
+    getApexNames:function(){
+    if(mimic==true){
+        var names=["apexname1","apexname2","apexname3","apexname4"];
+     
+        var promise = new Promise(function(resolve) {
+          setTimeout(function() {
+            resolve(names);
+          }, 300);
+        });
+      return promise;
+      
+    }
+    else{
+     // axios.get();
+      
+///TODO COMPLETE THE REQUEST 
+    }
+
     }
   }
 

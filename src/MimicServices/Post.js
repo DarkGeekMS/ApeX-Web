@@ -6,6 +6,7 @@ methods:{
     save:function(token,ID,mimic){
 
         if(mimic){
+          
              if(token=="1" && ID=="1"){
                 return true;
               }
@@ -17,9 +18,10 @@ methods:{
                 ID:ID,
                 token:token
             }).then(response => {
-              if(response){
-                alert('Post saved successfully');
-              }
+            return true;
+            }).catch(function(error){
+
+              return false;
             })
              }
               },
@@ -44,14 +46,14 @@ methods:{
                     token : ID
 
             }).then(response=>{
-              if(response){
+              
                 this.Deleted = true;
-                alert("Deleted successfully");
-              }
+                return true;
+              
 
-            }).catch(function ()
+            }).catch(function (error)
             {
-             //console.log(error);
+             return false;
 
 
               });
@@ -78,11 +80,10 @@ methods:{
                     ID : ID
 
                 }).then(response => {
-                  if(response){
-                  alert("Hidden successfully");}
-                }).catch(function ()
+                 return true;
+                }).catch(function (error)
                 {
-                   //console.log(error);
+                   return false;
                 });
 
               }
@@ -107,12 +108,11 @@ methods:{
               direction:direction
 
             }).then(response => {
-              if(response){
-                 alert("upvote successfully");}
+              return response.data;
 
             }).catch(function ()
             {
-         // console.log(error);
+        return false;
 
         });
 
@@ -139,8 +139,8 @@ methods:{
                     name:name,
                     direction:direction
 
-                  }).then(function (response) {
-                    return response
+                  }).then(response=> {
+                    return response.data;
                 }).catch(function ()
                   {
                   // console.log(error);

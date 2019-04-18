@@ -69,7 +69,11 @@ Comments</button>
       <li ><a href="#"  @click="Hide" class="HIDE"><i class="fa fa-ban" id="HideIcon"></i>Hide</a></li>
       <li><a href="#"><i class="glyphicon glyphicon-flag" id="ReportIcon"></i>Report</a></li>
       <li><a href="#"><i class="glyphicon glyphicon-pencil" id="ReportIcon"></i>edit</a></li>
-      <li><a href="#" @click="isLocked"><i class="fa fa-lock" id="ReportIcon"></i>{{this.locked}}</a></li>
+      <li><a href="#" @click="isLocked">
+        
+        <i v-if="Locked=='unlock'" class="fa fa-lock" id="ReportIcon"></i>
+        <i v-if="Locked=='Lock'" class="fa fa-unlock" id="ReportIcon"></i>
+          {{this.Locked}}</a></li>
     </ul>
   </div>
 
@@ -114,6 +118,7 @@ import { AllServices } from '../MimicServices/AllServices';
 export default {
 
   name: 'PostItem',
+
    data(){
        return{
              Not_Hide :true,
@@ -135,16 +140,24 @@ export default {
              Deleted:false,
              video:true ,
              image:false ,
-             locked:'Lock'            
+             Locked:'Lock'      
             };
          },
 
   methods: {
     isLocked(){
-     if(this.locked=='Lock'){
+        if(this.ShowModalVar == true){
+      this.ToggleShowModalVar();
+    }
+     // alert('lock successfully');
+     
+     if(this.Locked=='Lock'){
 
-       this.locked='unlock';
+       this.Locked='unlock';
+        this.$emit('lockComment',this.Locked);
      }
+     else{this.Locked='Lock';
+      this.$emit('lockComment',this.Locked);}
       AllServices.isLocked(this.PostId,this.$localStorage.get('token'));
 
     },
@@ -255,6 +268,7 @@ export default {
     * Save post if the User press Hide button.
     */
     Save(){
+      
       if(this.ShowModalVar == true){
       this.ToggleShowModalVar();
     }
@@ -262,17 +276,18 @@ export default {
         {
         //alert('Post saved successfully');
         this.Saved="unsave";
-         this.PostId=postData.id;
+        this.PostId=postData.id;
         AllServices.save(this.$localStorage.get('token'),this.PostId);
         
       }
-        else{
-          this.PostId=postData.id;
-
-          AllServices.save(this.$localStorage.get('token'),this.PostId);
-             //alert('Post unsaved successfully');
+        else if(this.Saved=="unsave"){
             this.Saved="Save";
+            this.PostId=postData.id;
 
+         
+         //   alert(postData.apex_id);
+           
+             AllServices.save(this.$localStorage.get('token'),this.PostId);
            }
 
 

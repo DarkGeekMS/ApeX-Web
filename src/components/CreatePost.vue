@@ -1,5 +1,5 @@
 <template>
-   <div>
+   <div id="create">
      <div class="a">
      
        <h4 class="Cpost">Create a post
@@ -11,14 +11,7 @@
       <div class="form-group dropApex" >
         <select class="form-control" name="category">
           <option>choose a community</option>
-                      <!-- TODO HERE ARE APEXNAMES WHICH I WILL LOOP THROUGH THEM  -->
-                  
-                       <!-- just dummy option for display  -->
-                      
-                      <option>apexname 1</option>
-                      <option>apexname 2</option>
-                      <option>apexname 3</option>
-                      <option>apexname 3</option>
+           <option v-for="name in apexNames">{{name}}</option>         
                    
           </select>
        </div>
@@ -29,25 +22,26 @@
    
 
   
-                  <div id="root" class="container">
+                  <div id="root" class="container" >
+                   
                     <tabs>
+                      
                        <tab  name="Post" :selected="true">
-            
+                         
+            <div id="fancy">
+              
                           <div class="form-group">
-                  
+                      
                              <input type="text" class="form-control" id="usr" placeholder="title" @keyup="Enable">
                            </div>
                                <!-- <textarea class="form-control" rows="5" id="textsend" @keyup="Enable"></textarea> -->
-                  
+              
                               <ejs-richtexteditor ref="rteObj" :toolbarSettings="toolbarSettings" id="textsend" @keyup="Enable">
-                               <br>
-                               <br>
-                               <br>
-                               <br>
-                               <br>
-                                 
-                              </ejs-richtexteditor> 
+                              
                     
+                              </ejs-richtexteditor> 
+                  </div>
+            
   
                           <button  class="btn btn-primary postButton" @click="submitPost"  disabled  id="button">POST</button>
                        </tab>
@@ -283,14 +277,8 @@ export default {
      * it return all apexnames to be displayed in listbox .
      */
 created(){
- axios.get("http://localhost/Apex_names"
-
-// TODO here we get list of apexnames and display it at combox 
- ).then(function(response){
-    apexNames:response 
-
- })
  
+ apexNames=AllServices.getApexNames();
 
 }
 
@@ -372,10 +360,11 @@ created(){
 
 .bodyPost{
 
-   width:90%;
+   width:64%;
    margin-bottom: 100%;
    margin-left: 5.5%;
    margin-top:0.5%;
+   
 
 }
 .post2{
@@ -524,7 +513,9 @@ display:inline-block;
  margin:0.5% 5% ;
  width: 30%;
 }
-
+#textsend{
+  width: 50%;
+}
 
 @import "../../node_modules/@syncfusion/ej2-base/styles/material.css";
 @import "../../node_modules/@syncfusion/ej2-vue-richtexteditor/styles/material.css";
@@ -540,6 +531,23 @@ display:inline-block;
 margin-top: 5%;
 height: 30%;
 }
+#fancy{
+  width: 100%;
+}
+
+
+.e-richtexteditor.e-rte-tb-expand {
+    border: 1px solid rgba(0, 0, 0, 0.12);
+     width: 70% !important;
+    
+   
+}
+.e-richtexteditor .e-rte-toolbar.e-control[class*='e-toolbar'], .e-richtexteditor .e-rte-toolbar.e-toolbar.e-extended-toolbar.e-control[class*='e-toolbar'] {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    width:70% !important;
+}
+
 </style>
 
 
