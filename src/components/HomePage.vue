@@ -1,7 +1,7 @@
 <template>
   <div id="HomePage" >
      <!-- <HotPosts></HotPosts> -->
-     <DisplayPosts :apexComName="''"></DisplayPosts>
+     <DisplayPosts class="ds" :apexComName="''"></DisplayPosts>
      <SideBar> </SideBar>
 
   </div>
@@ -24,5 +24,7 @@ export default {
 </script>
 
 <style scoped>
-
+.ds{
+  width: 60%
+}
 </style>

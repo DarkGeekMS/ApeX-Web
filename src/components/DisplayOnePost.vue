@@ -1,6 +1,6 @@
 <template>
 <div id="DisplayOnePost" class="modalview">
-<modal id="PopupModal" name="Demo-OnePost" :scrollable="true"  transition="pop-out"  width="80%" height="80%" >
+<modal id="PopupModal" name="Demo-OnePost" :scrollable="true"  transition="pop-out"  width="90%" height="90%" >
   <div id="PostContent" class="postContent">
   <post class="mainpost" v-bind:postData="onePostData"></post>
   <CommentParent postID='t3_10' class="cmt"></CommentParent>
@@ -59,6 +59,6 @@ width: 100%;
 }
 .mainpost
 {
-  
+  // width: 100%
 }
 </style>

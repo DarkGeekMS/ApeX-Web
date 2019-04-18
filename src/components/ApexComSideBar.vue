@@ -122,7 +122,8 @@ export default {
     */
     getSubscribers(){
       if(this.loggedIn){
-        this.subscribers= AllServices.getSubscribers(this.apexComName).then((data) =>{
+        AllServices.getSubscribers(this.apexComName).then((data) =>{
+          this.subscribers=data.subscribers;
         var subscribe = this.subscribers.find(this.CheckUser);
         if(subscribe !== undefined){
           this.subscribed = true;
@@ -171,7 +172,7 @@ export default {
       this.subscribed=true;
       this.state='subscribed';
     }
-    }  
+    }
     else{
       alert('something wrong happened try again later');
     }
@@ -189,7 +190,7 @@ export default {
          this.subscribersCount=about.subscribersCount;
          });
    },
-    
+
   },
  mounted(){
    if(this.loggedIn){

@@ -40,15 +40,15 @@ else {
 getSubscribers: function(mimic,apexComName){
     if(mimic){
 var subscribersList=[
-  // {userName:'subscriber1'},
-  // {userName:'subscriber2'},
-  // {userName:'subscriber3'},
-  // {userName:'subscriber4'}
+  {userName:'subscriber1'},
+  {userName:'subscriber2'},
+  {userName:'subscriber3'},
+  {userName:'subscriber4'}
 ]
 return subscribersList;
 }
 else {
- axios.post('http://35.232.3.8/api/get_subscribers', {
+ return axios.post('http://35.232.3.8/api/get_subscribers', {
 
       ApexCom_id :apexComName,
       Token:this.$localStorage.get('token')

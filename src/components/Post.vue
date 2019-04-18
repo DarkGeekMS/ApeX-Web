@@ -36,7 +36,7 @@
       <p id="postBody" class="hPost">
 
         {{postData.content}} </p>
-       
+
 <!-- <iframe v-show="video" width="100%" height="400px" src="https://www.youtube.com/embed/tgbNymZ7vqY?autoplay=1">
 </iframe>  -->
  <!-- <iframe  width ="100%" class="resp-iframe" src="https://www.youtube.com/embed/dQw4w9WgXcQ" gesture="media"  allow="encrypted-media" allowfullscreen></iframe> -->
@@ -166,7 +166,7 @@ export default {
             }
         this.PostId=postData.id;
         AllServices.Hide(this.PostId,this.$localStorage.get('token'));
-   
+
          },
     changeColor_up()
     {
@@ -189,7 +189,7 @@ export default {
                       this.votes          += 1;
                        this.PostId=postData.id;
                       AllServices.upvote(this.$localStorage.get('token'),this.PostId,1);
-                
+
                 }
               else {
                     this.className_up = 'btn btn-light btn-sm is-gray';
@@ -197,7 +197,7 @@ export default {
                     this.pressed_up = false;
                      this.PostId=postData.id;
                   AllServices.defaultVote(this.PostId,this.$localStorage.get('token'),0);
-              
+
                }
 
 
@@ -222,7 +222,7 @@ export default {
                          this.votes-=1;
                           this.PostId=postData.id;
                          AllServices.downvote(this.PostId,this.$localStorage.get('token'),-1);
-                 
+
                   }
               else {
                   this.className_down = 'btn btn-light btn-sm is-gray';
@@ -232,7 +232,7 @@ export default {
                    this.pressed_down = false;
                     this.PostId=postData.id;
                    AllServices.defaultVote(this.PostId,this.$localStorage.get('token'),0);
-              
+
 
                  }
               },
@@ -249,7 +249,7 @@ export default {
         this.Saved="unsave";
          this.PostId=postData.id;
         AllServices.save(this.$localStorage.get('token'),this.PostId);
-        
+
       }
         else{
           this.PostId=postData.id;
@@ -398,7 +398,7 @@ h5 {
 /*      margin-left: 470px;*/
 } /* Red */
 .postItem{
-width: 250%;
+width: 100%;
 margin-left:0.5%;
 padding-top:0.5%;
 margin-top: 0%;
