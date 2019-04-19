@@ -1,5 +1,8 @@
 <template>
-<modal name="demo-login" transition="pop-out" :width="modalWidth" :height="400">
+
+<modal name="demo-login" transition="pop-out" :width="modalWidth" :height="450">
+  <ForgetPass/>
+
   <div class="box">
     <div class="box-part" id="bp-left">
       <div class="partition" id="partition-register">
@@ -28,18 +31,19 @@
             <button class="btn blue" type="submit" @click.prevent="post()" style="display:block" id="LoginButton">Sign In</button>
           </form>
 
-           <a id="forgetname" class="btn btn-link"  href="#" > Forgot username </a>
-           <a id="forgetpass" class="btn btn-link"  href="#" > Forgot password </a>
+           <a id="forgetname" class="btn btn-link"  href="#"  style="text-decoration:none"> Forgot username </a>
+           <a id="forgetpass" class="btn btn-link"  href="#" @click="$modal.show('ForgetPass')" style="text-decoration:none"> Forgot password </a>
 
         </div>
       </div>
     </div>
-    <div class="box-part" id="bp-right"> </div>
+    <div class="box-part" id="bp-right"> <img src="../../public/form.jpg" height="100%"></div>
   </div>
 </modal>
 </template>
 
 <script>
+import ForgetPass from './ForgetPass.vue'
 import {AllServices} from '../MimicServices/AllServices.js'
 const MODAL_WIDTH = 656;
 
@@ -52,6 +56,9 @@ const MODAL_WIDTH = 656;
  */
 export default {
   name: 'DemoLoginModal',
+  components:{
+    ForgetPass
+  },
   data(){
     return{
       modalWidth: MODAL_WIDTH,
@@ -111,7 +118,6 @@ export default {
 <style lang="scss" scoped >
 body{
   display: grid;
- // font-family: Avenirbvbvbv  -webkit-text-size-adjust: 100%;
   -webkit-font-smoothing: antialiased;
 }
 $background_color: #404142;
@@ -119,7 +125,7 @@ $background_color: #404142;
   background: white;
   overflow: hidden;
   width: 1000px;
-  height: 400px;
+  height: 450px;
   border-radius: 2px;
   box-sizing: border-box;
   box-shadow: 0 0 40px black;
@@ -133,7 +139,6 @@ $background_color: #404142;
     height: 100%;
     width: 50%;
     &#bp-right {
-      background: url("../../public/form.jpg") no-repeat top left;
       border-left: 1px solid #eee;
     }
     &#bp-left{
@@ -277,4 +282,7 @@ input{
           transform: scaleX(1);
         }
   }
+  
+    
+  
 </style>

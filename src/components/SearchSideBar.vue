@@ -1,19 +1,12 @@
 <template>
   <div id="main">
-     <img width="70px" src="../../public/AMFz23O.jpg" >
+    <img width="100%" style="padding:0" src="../../public/searchBanner.png" >
+    
+    <img  class="think" src="../../public/thinking.png" >
+      <br/>  <br/>  
+     <p > Have an idea for a new community? </p>
 
-     <h4 v-show="!login"> a/popular </h4>
-     <h4 v-show="login"> Home </h4>
-
-      <br/>  <br/>
-
-     <p v-show= "!login" > The best posts on Apex for you, pulled from the most active communities on Apex. Check here to see the most shared, upvoted, and commented content on the internet.
-     </p>
-     <p v-show="login"> Your personal Apex frontpage. Come here to check in with your favorite communities. </p>
-
-
-     <button  type="button" class="btn btn-primary " data-toggle="button" aria-pressed="false" autocomplete="off" @click="post()">CREATE POST</button>
-     <button v-show="login" style=" cursor: no-drop" type="button" class="btn btn-info" data-toggle="button" aria-pressed="false" autocomplete="off">CREATE COMMUNITY</button>
+     <button  style=" cursor: no-drop" type="button" class="btn btn-info" data-toggle="button" aria-pressed="false" autocomplete="off">CREATE COMMUNITY</button>
   </div>
 </template>
 
@@ -52,26 +45,21 @@
 
 <style scoped>
 *{
-  padding:0.7%;
   box-sizing: border-box
 }
-img{
-  border-radius:50%
-}
-h4{
-  display: inline-block;
-  padding-left: 4%;
-  font-size:25px;
-}
+
 p{
+  padding:0.7%;
   color:#7c7c7c;
   font-size: 14px;
   font-weight: 400;
   line-height: 21px;
+  text-align: center;
   overflow-wrap: break-word;
 
 }
 button{
+  padding:0.7%;
   width:80%;
   height:40px;
   font-weight: 500;
@@ -80,16 +68,21 @@ button{
   margin-top:5%;
   border-radius: 20%;
 }
+.think{
+  width:20%;
+  margin-left: 35%;
+  margin-top: -20%;
+}
 
 #main{
   float:right;
-  width:21%;
+  width:20%;
   max-height: 50%;
   color:black;
   background-color: white;
   border-radius: 5%;
-  margin-top: 4%;
-  margin-right: 14%;
+  margin-top: 2.2%;
+  margin-right: 15px;
 } 
 
 @media(max-width:960px){

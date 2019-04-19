@@ -53,7 +53,7 @@
 
 <script>
 const MODAL_WIDTH = 656;
-import DemoSign3Modal  from './DemoSign3Modal.vue'
+import DemoSign3Modal  from './Sign3Modal.vue'
 import {AllServices} from '../MimicServices/AllServices.js'
 
 /**

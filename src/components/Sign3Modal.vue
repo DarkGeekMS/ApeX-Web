@@ -12,15 +12,11 @@
 
 <script>
 const MODAL_WIDTH = 656;
-import DemoSignModal  from './DemoSignModal.vue'
 /**
  * @vue-data {integer} [modalWidth=656] width of modal
  */
 export default {
   name: 'DemoSign3Modal',
-  components:{
-      DemoSignModal
-  },
   data(){
     return{
       modalWidth: MODAL_WIDTH

@@ -1,7 +1,5 @@
 import Vue from 'vue'
 import axios from 'axios'
-import App from '../App.vue'
-
 export  const MimicAuth =new Vue({
   data(){
     return {
@@ -20,7 +18,7 @@ export  const MimicAuth =new Vue({
           this.$localStorage.set('userName',user);
           this.$localStorage.set('token', this.token);
           this.$localStorage.set('login', true);
-          return true;
+          return true;            
         }
         else
         {
@@ -31,7 +29,7 @@ export  const MimicAuth =new Vue({
       else
       {
         var self = this;
-        return axios.post(this.$localStorage.get('baseUrl') + 'api/sign_up', {
+        return axios.post('http://127.0.0.1:8001/api/sign_up', {
             email: email,
             username: user,
             password: pass
@@ -40,7 +38,7 @@ export  const MimicAuth =new Vue({
             this.$localStorage.set('token', response.data.token);
             this.$localStorage.set('login', true);
             return true;
-          }).catch(function (error) {
+          }).catch(function () {
             self.$localStorage.set('error','That username is already taken');
             return false;
           });
@@ -56,7 +54,7 @@ export  const MimicAuth =new Vue({
             this.$localStorage.set('userName', '');
         }
         else{
-          return axios.post(this.$localStorage.get('baseUrl') + 'api/sign_out',{
+          return axios.post('http://127.0.0.1:8001/api/sign_out',{
             token : this.$localStorage.get('token')
           })
         }
@@ -64,24 +62,27 @@ export  const MimicAuth =new Vue({
 
     LogIn: function(user,pass,mimic)
     {
+      var self = this;
+
       if(mimic == true)
       {
+
         if( user == this.username && pass == this.password)
         {
-          this.$localStorage.set('userName',user);
-          this.$localStorage.set('token', this.token);
-          this.$localStorage.set('login', true);
+          self.$localStorage.set('userName',user);
+          self.$localStorage.set('token', this.token);
+          self.$localStorage.set('login', true);
           return true;
         }
         else
         {
-          this.$localStorage.set('error','Incorrect username or password');
+          self.$localStorage.set('error','Incorrect username or password');
           return false;
         }
       }
       else{
-        var self = this;
-        return axios.post(this.$localStorage.get('baseUrl') + 'api/sign_in', {
+      //  var self = this;
+        return axios.post('http://127.0.0.1:8001/api/sign_in', {
             username : user,
             password : pass
           }).then(response => {
@@ -89,8 +90,36 @@ export  const MimicAuth =new Vue({
              this.$localStorage.set('token', response.data.token);
              this.$localStorage.set('login', true);
              return true;
-          }).catch(function (error) {
+          }).catch(function () {
             self.$localStorage.set('error','Incorrect username or password');
+             return false;
+          });
+      }
+    },
+
+    ForgetPass: function(user,email,mimic)
+    {
+      if(mimic == true)
+      {
+        if( user == this.username && email == this.email)
+        {
+          return true;
+        }
+        else
+        {
+          this.$localStorage.set('error','Incorrect username or email');
+          return false;
+        }
+      }
+      else{
+        var self = this;
+        return axios.post('http://127.0.0.1:8001/api/mail_verify', {
+            username : user,
+            email : email
+          }).then(response => {
+             return true;
+          }).catch(function () {
+            self.$localStorage.set('error','Username is not found');
              return false;
           });
       }
@@ -99,7 +128,7 @@ export  const MimicAuth =new Vue({
     {
       if(mimic ==  true)
       {
-         var names = [
+        var names = [
           {
             id : 1,
             name : 'apex1'
@@ -108,17 +137,22 @@ export  const MimicAuth =new Vue({
             id : 2,
             name : 'apex2'
           }];
-          return names
+        var promise1 = new Promise(function(resolve){
+            setTimeout(function() {
+              resolve(names);
+            }, 300)
+        });
+        return promise1
       }
       else
       {
-        axios.get(this.$localStorage.get('baseUrl') + 'api/Apex_names', {
-          }).then(response => {
-             return response.data
-          }).catch(function (error) {
-            this.$localStorage.set('error',error);
-             return false
-          });
+        return axios.get('http://35.232.3.8/Apex_names', {
+        }).then(response => {
+          return response.data
+        }).catch(function (error) {
+          this.$localStorage.set('error',error);
+          return false
+        });
       }
     }
   }

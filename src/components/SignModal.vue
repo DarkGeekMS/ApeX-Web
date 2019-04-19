@@ -35,7 +35,7 @@
 
 <script>
 const MODAL_WIDTH = 656;
-import DemoSign2Modal  from './DemoSign2Modal.vue'
+import DemoSign2Modal  from './Sign2Modal.vue'
 /**
  * @vue-data {string} [email=""] Email value
  * @vue-data {string} [error=""] error value
