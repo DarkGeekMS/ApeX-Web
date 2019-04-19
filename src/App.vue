@@ -1,7 +1,7 @@
 <template>
   <div id="app" >
     <navbar></navbar>
-    <button  @click="topFunction()" id="myBtn" class="btn blue">Back to top </button> 
+    <button  @click="topFunction()" id="myBtn" class="btn blue">BACK TO TOP </button> 
     <router-view></router-view>
     <!-- <us></us> -->
  </div>
@@ -9,6 +9,8 @@
 
 <script>
 import NavBar from "./components/NavBar.vue"
+import $ from'jquery/dist/jquery.min.js'
+
 //import us from "./components/UserSettings.vue"
 
 
@@ -59,20 +61,27 @@ button.btn {
   border: 0;
   z-index:1;
   background: white;
-  padding: 10px 18px;
+  padding: 3px 16px;
   cursor: pointer;
   border-radius: 3px;
   color: white;
   box-shadow: 0 4px 8px rgba(#20a0ff, .3);
-  background: #4db3ff;
+  background: rgb(0, 121, 211);
   font-weight: 600;
   border-radius: 3px;
-  min-width: 90px;
+  min-width: 128px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  line-height: 24px;
+  text-transform: uppercase;
   margin-left: 80%;
   margin-top: 40%;
   position: fixed;
   display: none
-  
+  &:hover {
+    background: #20a0ff;
+  }
 }
 
 
