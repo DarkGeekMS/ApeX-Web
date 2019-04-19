@@ -4,13 +4,15 @@
        <h3 class="Header" id="descroption box header">Community Details</h3>
       <div class="content">
           <h3 style="display:inline; font-size: 2vw;" id="Apexcomname">{{apexComName}}</h3>
-         <img style="box-sizing: border-box; border-radius: 50%;" width="100%" height="100%" class="image" src="../../public/Logo_small.png" >
+          <div class="img">
+        <img style="box-sizing: border-box; border-radius: 50%;" class="image" :src="image" > 
+      </div>
 
-         <p style="font-size: 1.5vw;
-    font-weight: 500;  margin-top: 4%;">subscribers</p>
+         <p style="font-size: 1.2vw;
+    font-weight: 550;  margin-top: 8%;">Members</p>
          
        <p style="font-size: 1.3vw;
-    font-weight: 500; margin-left:12%;" id="subscribers Count">{{subscribersCount}}</p>
+    font-weight: 500; margin-left:8%;" id="subscribers Count">{{subscribersCount}}</p>
        <p id="description">{{description}}</p>
        <button id="subscribebutton" v-bind:class="{button1:subscribed,button:!subscribed}" v-on:mouseover="changeState('unsubscribe')" v-on:mouseleave="changeState('subscribed')" type="button" v-on:click="subscribe()">
        <span> {{state}} </span> </button>
@@ -81,6 +83,7 @@ export default {
             moderators:[],
             rules:[],
             subscribersCount:0,
+            image:''
         }
 
     },
@@ -191,6 +194,7 @@ export default {
          this.moderators=about.moderators;
          console.log(this.moderators.length);
          this.rules=about.rules;
+         this.image=about.image;
          this.subscribersCount=about.subscribersCount;
          });
    },
@@ -205,14 +209,31 @@ export default {
 </script>
 
 <style scoped>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 
+  /* padding: 0;
+  margin: 0;
+  list-style: none;
+  
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  
+  -webkit-flex-flow: row wrap;
+  justify-content: space-around; */
+}
 .Header{
   background-color: skyBlue;
   padding:4%;
   margin: 0%;
   height:auto;
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
+  border-top-left-radius: 20%;
+  border-top-right-radius: 20%;
   font-size: 2vw;
 }
 #description{
@@ -225,14 +246,15 @@ export default {
 .box{
   margin-top: 5%;
   margin-bottom: 0%;
+  color: black;
 }
 
 .content{
   margin-top:0%;
   margin-bottom: 0%;
   background-color:#eee;
-  border-bottom-left-radius:8px;
-  border-bottom-right-radius:8px;
+  border-bottom-left-radius:20%;
+  border-bottom-right-radius:20%;
   padding-top:8%;
   padding-bottom:5%;
   padding-left:5%;
@@ -243,9 +265,9 @@ export default {
   margin:2% 0%;
   background-color:skyBlue;
   color: white;
-  padding: 0%;
+  padding: 1%;
   border-width: 3px;
-  border-radius: 8px;
+  border-radius: 20%;
   cursor:pointer;
   border-color: skyblue;
   border-style: solid;
@@ -253,7 +275,7 @@ export default {
   font-weight: 700;
   letter-spacing: 0.5px;
   text-transform: uppercase;
-  height:auto;
+  /* height:auto; */
 }
 .button:hover {opacity: 0.75}
 .button1:hover {opacity: 0.75}
@@ -263,9 +285,9 @@ export default {
   margin:2% 0%;
   color:skyBlue;
   background-color: white;
-  padding: 0%;
+  padding: 1%;
   border-width: 3px;
-  border-radius: 8px;
+  border-radius: 20%;
   cursor:pointer;
   border-color: skyblue;
   border-style: solid;
@@ -273,17 +295,21 @@ export default {
   font-weight: 700;
   letter-spacing: 0.5px;
   text-transform: uppercase;
-  height:auto;
+  /* height:auto; */
+  margin-left:5%;
+  margin-right:5%;
 }
 img{
-  width:20%;
-  height:auto;
-  margin-top:0%;
+  width: 100%;
+}
+.img{
+  width: 15%;
+  display:inline;
+  margin-top:-3%;
   margin-bottom:0%;
-  margin-right:4%;
+  margin-right:3%;
   margin-left:0%;
   float: left;
-
 }
 .accountLink{
   text-decoration: none;
@@ -306,10 +332,8 @@ font-weight: 500;
 .imagediv{
   display: inline;
 }
-img{
-  max-width: 100px;
-}
-@media (max-width: 605px){
+
+/* @media (max-width: 605px){
 img{
   margin-top:4px;
 }
@@ -318,6 +342,6 @@ img{
 img{
   margin-top:8px;
 }
-}
+} */
 
 </style>

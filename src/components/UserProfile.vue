@@ -6,7 +6,7 @@
         <a style="font-size: 1.2vw;"  id="savedtab" v-show="notGuest()" class="navbarlinks" href="#">saved</a>
         <a style="font-size: 1.2vw;"  id="hiddentab" v-show="notGuest()" class="navbarlinks" href="#">hidden</a>
         <a style="font-size: 1.2vw;"  id="reporttab" v-show="isModerator() && notGuest()" class="navbarlinks" href="#">report</a>
-
+        <!-- <router-link style="font-size: 1.2vw;" id="reportlink" class="navbarlinks" :to="{name:'Reportsprofile',params: {reports:reports}}">view reports</router-link> -->
     </div>
         <SideBar
         v-bind:userName="userName"
@@ -154,6 +154,24 @@ export default {
 </script>
 
 <style scoped>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+
+  /* padding: 0;
+  margin: 0;
+  list-style: none;
+  
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  
+  -webkit-flex-flow: row wrap;
+  justify-content: space-around; */
+}
 #firstnavbar{
     width:100%;
     height: 60px;
@@ -181,11 +199,11 @@ export default {
     color:deepskyblue;
 }
 #sidebar{
-    width:25%;
+    width:23%;
     height: auto;
     margin:8%;
     margin-left: 3%;
-    margin-right: 6%;
+    margin-right: 4%;
     float:right;
 }
 </style>

@@ -16,6 +16,7 @@ export  const MimicApexCom =new Vue({
     {userName:'moderator1'},
     {userName:'moderator1'}
   ],
+  image:'https://i.imgur.com/AMFz23O.jpg',
   }
   var promise = new Promise(function(resolve) {
     setTimeout(function() {
@@ -42,10 +43,12 @@ else {
 getSubscribers: function(mimic,apexComName){
     if(mimic){
 var subscribersList=[
-  {userName:'subscriber1'},
-  {userName:'subscriber2'},
-  {userName:'subscriber3'},
-  {userName:'subscriber4'}
+  {userName:'subscriber1',
+  image:'https://i.imgur.com/AMFz23O.jpg'},
+  {userName:'subscriber2',
+  image:'https://i.imgur.com/AMFz23O.jpg'},
+  {userName:'subscriber3',image:'https://i.imgur.com/AMFz23O.jpg'},
+  {userName:'subscriber4',image:'https://i.imgur.com/AMFz23O.jpg'}
 ]
 var promise = new Promise(function(resolve) {
   setTimeout(function() {
@@ -153,30 +156,33 @@ reviewReports: function(mimic,apexComName){
       if(mimic){
         var report=[
           {post:{
-          id:'555',
-          posted_by:'Nourhan',
-          apex_id:'555',
-          title:'dj',
-          content:'Experience enjoyable JavaScript development with WebStorm. With smart code completion, safe refactoring, and first-class support for Node.js, Angular and React. Download free trial 😀😂🍔😍',
-          locked:false,
-          commenetnum:5,
-          votes:9,
-          img_name:'',
-          video_url:'https://www.youtube.com/embed/Va0Rq147SRU'},
+            id:'333',
+            posted_by:'Nourhan',
+            apex_id:'333',
+            title:'dj',
+            content:'I love javascript ,vue ,html ,css 🐸🐸🐸',
+            videolink:'',
+            img:'https://i.ytimg.com/vi/inYarqDCCGA/maxresdefault.jpg',
+            created_at:"2019-03-23 17:20:45",
+            updates_at:null,
+            apex_com_name:"health aware",
+            post_writer_user:"Nada"},
           reason:"It's threatening self-harm or suicide",
           id:8099,
         },
-        // {comment:{
-        //   content:'this is the review report mimic service',
-        //   idx:9,
-        //   level:1,
-        //   parentIdx:67,
-        //   parentID:9,
-        //   ID:9,
-        //   date:'march 9 2019'
-        //   },
-        //   reason:"It's personal and confidential information",
-        // },
+        {comment:{
+          user:'nourhan',
+          content:'this is the review report mimic service',
+          idx:9,
+          level:1,
+          parentIdx:67,
+          parentID:9,
+          ID:9,
+          date:'march 9 2019'
+          },
+          reason:"It's personal and confidential information",
+          id:809,
+        },
         ];
       
       var promise = new Promise(function(resolve) {

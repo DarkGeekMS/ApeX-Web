@@ -41,7 +41,7 @@ export default {
 
 }
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 $background_color: #404142;
 .box {
   background: white;

@@ -2,8 +2,12 @@
 <div class="list" id="subscribers list">
   <h4 v-if="subscribersList.length ==0" >there is nothing to show </h4>
   <div id="subscribers box" class="box" v-for="(subscriber,index) in subscribersList" :key="subscriber.id">
-    <!-- <img width="100%" height="100%" class="image" :src="image" /> -->
+    <div class="name">
     <router-link class="accountLink" :to="{name:'UserProfile' , params: {userName:subscriber.userName}}"> {{subscriber.userName}}</router-link>
+    <div class="img">
+        <img style="box-sizing: border-box; border-radius: 50%;" class="image" :src="subscriber.image" > 
+      </div>
+      </div>
     <button id="remove button" class="removeButton" v-on:click="blockUser(subscriber.userName,index)">block</button>
   </div>
 </div>
@@ -53,10 +57,28 @@ export default {
 </script>
 
 <style scoped>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+
+  /* padding: 0;
+  margin: 0;
+  list-style: none;
+  
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  
+  -webkit-flex-flow: row wrap;
+  justify-content: space-around; */
+}
 .box{
   width:100%;
   height:auto;
-  background-color:white;
+  background-color:#eee;
   margin:1% 0%;
   padding:4% 3%;
   border-radius: 20%;
@@ -66,8 +88,8 @@ export default {
   background-color:skyBlue;
   width:20%;
   height:auto;
-  padding:0% 1%;
-  margin:0% 2%;
+  padding:1%;
+  margin:2% 2%;
   float:right;
   cursor:pointer;
   color:white;
@@ -80,13 +102,33 @@ export default {
   font-weight: 700;
   letter-spacing: 0.5px;
   text-transform: uppercase;
-  height: auto;
+  /* height: auto; */
 }
 
-.removeButton:hover {opacity: 0.75}
+.removeButton:hover {opacity: 0.75;}
 .accountLink{
   text-decoration: none;
   color:black;
-  font-size: 1.2vw
+  font-size: 1.2vw;
+  
+}
+img{
+  width: 100%;
+}
+.img{
+  width: 10%;
+  display:inline;
+  margin-top:-2%;
+  margin-bottom:0%;
+  margin-right:2%;
+  margin-left:0%;
+  float: left;
+}
+.name{
+  width:50%;
+  margin:0% 0%;
+  padding: 3% 0%;
+  float:left;
+  display: inline;
 }
 </style>

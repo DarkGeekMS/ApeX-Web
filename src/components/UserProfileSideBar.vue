@@ -201,6 +201,25 @@ export default {
 </script>
 
 <style scoped>
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+    /* box-sizing: border-box;
+
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  
+  -webkit-flex-flow: row wrap;
+  justify-content: space-around; */
+}
 .bluebackgroung{
   background-color: deepskyblue;
   padding-top: 12%;
@@ -246,7 +265,7 @@ export default {
   margin:2% 0%;
   background-color:skyBlue;
   color:white;
-  padding: 0%;
+  padding: 1%;
   border-width: 3px;
   border-radius: 20%;
   cursor:pointer;
@@ -283,8 +302,6 @@ export default {
 }
 .karma{
   fill: skyBlue;
-  width:14px;
-  height:14px;
 }
 .svg{
   width:18%;
@@ -331,7 +348,7 @@ export default {
   margin-right: 0%;
   margin-bottom: 0%;
   color:skyBlue;
-  padding: 0%;
+  padding: 1%;
   float:right;
   border-width: 3px;
   border-radius: 20%;
