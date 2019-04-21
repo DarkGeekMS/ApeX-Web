@@ -4,10 +4,9 @@
     <div class="apexcomName" id="apexcomName">
       <div class="imagediv">
       <h1 style=" font-size: 2.7vw; display:inline;" id="Name">{{apexComName}}</h1>
-      <!-- <div class="img"> -->
-        <img style="box-sizing: border-box; border-radius: 50%;" width="60px" height="60px" class="image" src="../../public/Logo_small.png" >
-      
-      <!-- </div> -->
+      <div class="img">
+        <img style="box-sizing: border-box; border-radius: 50%;" class="image" :src="image" > 
+      </div>
       
       </div>
     </div>
@@ -53,10 +52,11 @@ export default {
       token:this.$localStorage.get('token'),
       userName:this.$localStorage.get('userName'),
       //userName:'moderator1',
-      description:'',
+      // description:'',
       moderators:[],
-      rules:[],
-      subscribersCount: 0,
+      // rules:[],
+      // subscribersCount: 0,
+      image:''
     }
   },
   methods:{
@@ -107,10 +107,11 @@ export default {
     */
      getAbout(){
          AllServices.getAbout(this.apexComName).then((about) =>{
-         this.description=about.description;
+        //  this.description=about.description;
          this.moderators=about.moderators;
-         this.rules=about.rules;
-         this.subscribersCount=about.subscribersCount;
+        //  this.rules=about.rules;
+        //  this.subscribersCount=about.subscribersCount;
+         this.image=about.image;
          })
    },
 
@@ -123,22 +124,24 @@ export default {
 </script>
 
 <style scoped>
-#all{
-  height:100%;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 .Apexcom{
   width:100%;
   height: 50%;
   margin-top:4%;
   margin-bottom:2%;
-  height: auto;
+  /* height: auto; */
 }
 .apexcomName{
   background-color: deepSkyBlue;
   width:auto;
   padding-top:3%;
   color: white;
-  height: auto;
+  /* height: auto; */
 }
 #Name{
   padding-left: 1%;
@@ -148,14 +151,14 @@ export default {
 .navBar{
   background-color: rgb(219, 240, 255);
   width:100%;
-  height:auto;
+  /* height:auto; */
   margin-bottom:1%;
   padding:1%;
   padding-left: 7%;
 }
 .navbarLinks{
   color: deepSkyBlue;
-  padding: 0px 1%;
+  padding: 0% 1%;
   padding-bottom: 1%;
   text-decoration: none;
   margin:1%;
@@ -170,34 +173,43 @@ export default {
   float:left;
 }
 .sidebar{
-  width:25%;
+  width:23%;
   height: auto;
   margin-top:4%;
   margin-bottom: 0%;
   margin-left: 3%;
-  margin-right: 6%;
+  margin-right: 4%;
   float:right;
 }
 .router-link-active{
   border-bottom: 3px solid deepSkyBlue;
 }
 img{
-  width:50px;
-  height:50px;
+  width:100%;
+  /* height:4; */
+  /* display: flex; */
+  /* margin-top:0%;
+  margin-bottom:0%;
+  margin-right:0%;
+  margin-left:3%; */
+  /* float: left; */
+}
+.imagediv{
+  margin-top:0%;
+  margin-bottom:2%;
+  width:100%;
+  display:inline-block;
+}
+.img{
+  width: 3%;
+  display:inline;
   margin-top:0%;
   margin-bottom:0%;
   margin-right:0%;
   margin-left:3%;
   float: left;
 }
-.imagediv{
-  margin-top:0%;
-  margin-bottom:2%;
-  width:100%;
-  height:auto;
-  display:inline-block;
-}
-@media (max-width: 1024px){
+/* @media (max-width: 1024px){
 .Apexcom{
   margin-top:40px;
   
@@ -211,8 +223,8 @@ img{
 @media (max-width: 313px){
 img{
   margin-top:8px;
-}
-}
+} */
+/* } */
 
 
 

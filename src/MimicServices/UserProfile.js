@@ -11,7 +11,7 @@ export  const MimicUserProfile =new Vue({
       karma:9,
       saved:[{},{}],
       hidden:[{},{}],
-      reports:[{},{}],
+      // reports:[{},{}],
       personalPosts:[{},{}],
       blockList:[
         {userName:'user1'},
@@ -20,6 +20,33 @@ export  const MimicUserProfile =new Vue({
   {userName:'user4'}
       ],
       cakeDay:'March 15, 2019',
+      reports:[
+        {post:{
+        id:'555',
+        posted_by:'Nourhan',
+        apex_id:'555',
+        title:'dj',
+        content:'Experience enjoyable JavaScript development with WebStorm. With smart code completion, safe refactoring, and first-class support for Node.js, Angular and React. Download free trial 😀😂🍔😍',
+        locked:false,
+        commenetnum:5,
+        votes:9,
+        img_name:'',
+        video_url:'https://www.youtube.com/embed/Va0Rq147SRU'},
+        reason:"It's threatening self-harm or suicide",
+        id:8099,
+      },
+      // {comment:{
+      //   content:'this is the review report mimic service',
+      //   idx:9,
+      //   level:1,
+      //   parentIdx:67,
+      //   parentID:9,
+      //   ID:9,
+      //   date:'march 9 2019'
+      //   },
+      //   reason:"It's personal and confidential information",
+      // },
+      ],
   }
     var promise = new Promise(function(resolve) {
         setTimeout(function() {

@@ -2,6 +2,13 @@
 <div>
 <div id='report' v-for="(report,index) in reports" :key="report.id">
   <post v-bind:postData="report.post" ></post>
+  <!-- <Comment v-bind:level= "report.comment.level" 
+  v-bind:content= "report.comment.content" 
+  v-bind:idx= "report.comment.idx" 
+  v-bind:parentIdx= "report.comment.parentIdx" 
+  v-bind:parentID= "report.comment.parentID"
+  v-bind:ID= "report.comment.currentID" 
+  v-bind:date= "report.comment.date"></Comment> -->
   <!-- <comment
     v-bind:content="report.comment.content"
     v-bind:idx="report.comment.idx"
@@ -11,6 +18,7 @@
     v-bind:ID="report.comment.ID"
     v-bind:date="report.comment.date"
   ></comment> -->
+
 
 <h4>Reason:</h4> <h4>{{report.reason}}</h4>
 <button id="ignorebutton" class="button" type="button" v-on:click="ignoreReport(report.id,index)">ignore report</button>
@@ -42,6 +50,8 @@ props:['apexComName'],
     reviewReports(){
          AllServices.reviewReports(this.apexComName).then((data) =>{
          this.reports=data;
+         console.log(this.reports.comment);
+         console.log(this.reports.post);
          });
    },
    ignoreReport(id,index){
@@ -59,6 +69,24 @@ props:['apexComName'],
 </script>
 
 <style scoped>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+
+  /* padding: 0;
+  margin: 0;
+  list-style: none;
+  
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  
+  -webkit-flex-flow: row wrap;
+  justify-content: space-around; */
+}
 #report{
   width:100%;
   height:auto;
@@ -76,7 +104,7 @@ props:['apexComName'],
   margin-bottom: 0%;
   color:skyBlue;
   background-color: white;
-  padding: 0%;
+  padding: 1%;
   float:right;
   border-width: 3px;
   border-radius: 20%;

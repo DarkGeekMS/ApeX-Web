@@ -7,7 +7,9 @@ import VModal from 'vue-js-modal'
 import VueRouter from 'vue-router'
 import Routes from './routes'
 import VueLocalStorage from 'vue-localstorage'
+import vuejquery from 'vue-jquery'
 
+Vue.use(vuejquery);
 Vue.use(VueLocalStorage)
 Vue.use(VueResource);
 Vue.use(VueRouter);
@@ -19,7 +21,7 @@ const router = new VueRouter({
 });
 
 
-var vm = new Vue({
+new Vue({
   localStorage: {
     login:{
       type: Boolean,

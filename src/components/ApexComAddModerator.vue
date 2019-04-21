@@ -63,6 +63,24 @@ props:['apexComName'],
 </script>
 
 <style scoped>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+
+  /* padding: 0;
+  margin: 0;
+  list-style: none;
+  
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  
+  -webkit-flex-flow: row wrap;
+  justify-content: space-around; */
+}
 .button{
   width:30%;
   margin-top:0%;
@@ -71,7 +89,7 @@ props:['apexComName'],
   margin-bottom: 0%;
   color:white;
   background-color:skyblue;
-  padding: 0%;
+  padding: 1%;
   float:right;
   border-width: 3px;
   border-radius: 20%;

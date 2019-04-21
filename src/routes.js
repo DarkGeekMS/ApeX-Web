@@ -32,5 +32,6 @@ export default[
     {path:'/Search', name:'Search' , component:Search, props:true, children :[
         {path:'users', component:Users },]},
     {path:'/userprofile/:userName',name:'UserProfile',component:userprofile,props:true},
+
     {path:'/UserSettings',name:'UserSettings',component:UserSettings}
 ]
