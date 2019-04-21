@@ -304,7 +304,7 @@ created(){
 
 .form-control{
 
-    width: 100%
+    width: 70%
 }
 
 .btn2 {
@@ -503,7 +503,7 @@ margin-left: 2%
 
 .postButton{
 
-  margin-left: 94%;
+  margin-left: 64.5%;
 }
 
 .dropApex{

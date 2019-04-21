@@ -33,7 +33,7 @@
       <router-link class="postby" id="user" :to="{name:'UserProfile' , params: {userName:postData.post_writer_user}}"> {{postData.post_writer_user}}</router-link>
 
       <font class="postby" id="fontpost"> </font>
-      <a href="#" class="postby" id="timeAgo"> 15 hours ago </a>
+      <a href="#" class="postby" id="timeAgo">  </a>
       <p id="postBody" class="hPost">
 
         {{postData.content}}
@@ -139,7 +139,8 @@ export default {
              Deleted:false,
              video:true ,
              image:false ,
-             Locked:'Lock'      
+             Locked:'Lock',
+             ago:''      
             };
          },
 
@@ -293,6 +294,65 @@ export default {
 
 
     },
+    
+ timeSince(date) {
+   var delta = Math.round((+new Date - date) / 1000);
+
+var minute = 60,
+    hour = minute * 60,
+    day = hour * 24,
+    week = day * 7;
+
+var fuzzy;
+
+if (delta < 60) {
+    fuzzy = 'just now';
+}  else if (delta < 2 * minute) {
+    fuzzy = 'a minute ago.'
+} else if (delta < hour) {
+    fuzzy = Math.floor(delta / minute) + ' minutes ago.';
+} else if (Math.floor(delta / hour) == 1) {
+    fuzzy = '1 hour ago.'
+} else if (delta < day) {
+    fuzzy = Math.floor(delta / hour) + ' hours ago.';
+} else if (delta < day * 2) {
+    fuzzy = 'yesterday';
+}
+this.time=fuzzy;
+//  var d = new Date(date),
+//         month = '' + (d.getMonth() + 1),
+//         day = '' + d.getDate(),
+//         year = d.getFullYear();
+
+//     if (month.length < 2) month = '0' + month;
+//     if (day.length < 2) day = '0' + day;
+
+//     return [year, month, day].join('-');
+  // var seconds = Math.floor((new Date() - date) / 1000);
+
+  // var interval = Math.floor(seconds / 31536000);
+
+  // if (interval > 1) {
+  //   return interval + " years";
+  // }
+  // interval = Math.floor(seconds / 2592000);
+  // if (interval > 1) {
+  //   return interval + " months";
+  // }
+  // interval = Math.floor(seconds / 86400);
+  // if (interval > 1) {
+  //   return interval + " days";
+  // }
+  // interval = Math.floor(seconds / 3600);
+  // if (interval > 1) {
+  //   return interval + " hours";
+  // }
+  // interval = Math.floor(seconds / 60);
+  // if (interval > 1) {
+  //   return interval + " minutes";
+  // }
+  // return Math.floor(seconds) + " seconds";
+},
     /**
 * show the clicked post on the modal.
 */
@@ -327,8 +387,11 @@ created(){
         this.moderator=true;
        }
 },
-
-}
+computed :{
+        createdDate : function(){
+          //  return moment().format('dddd');
+        }
+}}
 
 
 </script>

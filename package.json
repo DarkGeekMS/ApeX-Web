@@ -20,6 +20,7 @@
     "@syncfusion/ej2-vue-splitbuttons": "^17.1.38",
     "axios": "^0.18.0",
     "css-loader": "^2.1.1",
+    "moment": "^2.24.0",
     "npm": "^6.9.0",
     "postcss-loader": "^3.0.0",
     "request": "^2.88.0",

@@ -195,6 +195,10 @@ if(response){
 
 }
 }
+},
+isLocked(){
+
+  
 }
 
 

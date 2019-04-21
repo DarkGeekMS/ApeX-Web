@@ -15,6 +15,7 @@ export  const AllServices =new Vue({
     }
   },
   methods:{
+   
     getState(){
       return this.mimic
     },
@@ -102,7 +103,10 @@ deletePost:function(name,ID){
 getApexNames:function(){
   return MimicCreatePosts.getApexNames();
 },
+// isLocked:function(){
+//        return MimicPost
 
+// },
 userType:function(){
   var data=MimicUserProfile.getUserType(this.mimic);
   return data;
