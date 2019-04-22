@@ -184,7 +184,7 @@ reviewReports: function(mimic,apexComName){
           id:809,
         },
         ];
-      
+
       var promise = new Promise(function(resolve) {
         setTimeout(function() {
           resolve(report);
@@ -193,7 +193,7 @@ reviewReports: function(mimic,apexComName){
       return promise;
     }
     else {
-       return axios.post('http://localhost/api/report_action', {
+       return axios.post(this.$localStorage.get('baseUrl') + 'api/report_action', {
             ApexCom_id:apexComName,
             Token:this.$localStorage.get('token')
           })
@@ -211,7 +211,7 @@ ignoreReport:function(mimic,apexComName){
     return true;
   }
   else{
-            axios.post('http://localhost/api/report_action', {
+            axios.post(this.$localStorage.get('baseUrl') + 'api/report_action', {
             ApexCom_id:apexComName,
             Token:this.$localStorage.get('token')
           })
