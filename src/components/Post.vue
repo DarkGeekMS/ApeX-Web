@@ -1,5 +1,4 @@
 <template id="PostTemlate">
-<!-- <div id="PostItme" class="postItem" > -->
   <div class="postMod">
 <div class="panel panel-default"  @click="ShowModal()" v-show="Not_Hide" id="post">
     <div class="panel-body">
@@ -27,13 +26,13 @@
 
       </div>
 
-<!-- <div class="column"> -->
-      <router-link class="fontUser" id="subred" :to="{name:'ApexCom' , params: {apexComName:postData.apex_com_name}}">{{postData.apex_com_name}}</router-link>
+
+      <router-link class="fontUser" id="subred" :to="{name:'ApexCom' , params: {apexComName:postData.apex_id}}">{{postData.apex_id}}</router-link>
       <font class="postby" id="fontPostby">. Posted by</font>
-      <router-link class="postby" id="user" :to="{name:'UserProfile' , params: {userName:postData.post_writer_user}}"> {{postData.post_writer_user}}</router-link>
+      <router-link class="postby" id="user" :to="{name:'UserProfile' , params: {userName:postData.posted_by}}"> {{postData.posted_by}}</router-link>
 
       <font class="postby" id="fontpost"> </font>
-      <a href="#" class="postby" id="timeAgo"> 15 hours ago </a>
+      <a href="#" class="postby" id="timeAgo">  </a>
       <p id="postBody" class="hPost">
 
         {{postData.content}}
@@ -44,7 +43,7 @@
 
 <img v-show="postData.img!==''" :src=postData.img  height="100%" width="100%">
 </div>
-    <!-- </div> -->
+   
 <footer>
 
 <div class="btn-group" role="group" aria-label="..." id="drop">
@@ -68,7 +67,12 @@ Comments</button>
     <ul class="dropdown-menu" id="dropMenu">
       <li ><a href="#"  @click="Hide" class="HIDE"><i class="fa fa-ban" id="HideIcon"></i>Hide</a></li>
       <li><a href="#"><i class="glyphicon glyphicon-flag" id="ReportIcon"></i>Report</a></li>
-      <li><a href="#"><i class="glyphicon glyphicon-flag" id="ReportIcon"></i>edit</a></li>
+      <li><a href="#"><i class="glyphicon glyphicon-pencil" id="ReportIcon"></i>edit</a></li>
+      <li><a href="#" @click="isLocked">
+        
+        <i v-if="Locked=='unlock'" class="fa fa-lock" id="ReportIcon"></i>
+        <i v-if="Locked=='Lock'" class="fa fa-unlock" id="ReportIcon"></i>
+          {{this.Locked}}</a></li>
     </ul>
   </div>
 
@@ -112,6 +116,7 @@ import { AllServices } from '../MimicServices/AllServices';
 export default {
 
   name: 'PostItem',
+
    data(){
        return{
              Not_Hide :true,
@@ -132,12 +137,29 @@ export default {
              ShowModalVar:true,
              Deleted:false,
              video:true ,
-             image:false
+             image:false ,
+             Locked:'Lock',
+             ago:''      
             };
          },
 
   methods: {
+    isLocked(){
+        if(this.ShowModalVar == true){
+      this.ToggleShowModalVar();
+    }
+     // alert('lock successfully');
+     
+     if(this.Locked=='Lock'){
 
+       this.Locked='unlock';
+        this.$emit('lockComment',this.Locked);
+     }
+     else{this.Locked='Lock';
+      this.$emit('lockComment',this.Locked);}
+      AllServices.isLocked(this.PostId,this.$localStorage.get('token'));
+
+    },
     editText(){
 
 
@@ -245,6 +267,7 @@ export default {
     * Save post if the User press Hide button.
     */
     Save(){
+      
       if(this.ShowModalVar == true){
       this.ToggleShowModalVar();
     }
@@ -252,29 +275,90 @@ export default {
         {
         //alert('Post saved successfully');
         this.Saved="unsave";
-         this.PostId=postData.id;
+        this.PostId=postData.id;
         AllServices.save(this.$localStorage.get('token'),this.PostId);
 
       }
-        else{
-          this.PostId=postData.id;
-
-          AllServices.save(this.$localStorage.get('token'),this.PostId);
-             //alert('Post unsaved successfully');
+        else if(this.Saved=="unsave"){
             this.Saved="Save";
+            this.PostId=postData.id;
 
+         
+         //   alert(postData.apex_id);
+           
+             AllServices.save(this.$localStorage.get('token'),this.PostId);
            }
 
 
 
 
     },
+    
+ timeSince(date) {
+   var delta = Math.round((+new Date - date) / 1000);
+
+var minute = 60,
+    hour = minute * 60,
+    day = hour * 24,
+    week = day * 7;
+
+var fuzzy;
+
+if (delta < 60) {
+    fuzzy = 'just now';
+}  else if (delta < 2 * minute) {
+    fuzzy = 'a minute ago.'
+} else if (delta < hour) {
+    fuzzy = Math.floor(delta / minute) + ' minutes ago.';
+} else if (Math.floor(delta / hour) == 1) {
+    fuzzy = '1 hour ago.'
+} else if (delta < day) {
+    fuzzy = Math.floor(delta / hour) + ' hours ago.';
+} else if (delta < day * 2) {
+    fuzzy = 'yesterday';
+}
+this.time=fuzzy;
+//  var d = new Date(date),
+//         month = '' + (d.getMonth() + 1),
+//         day = '' + d.getDate(),
+//         year = d.getFullYear();
+
+//     if (month.length < 2) month = '0' + month;
+//     if (day.length < 2) day = '0' + day;
+
+//     return [year, month, day].join('-');
+  // var seconds = Math.floor((new Date() - date) / 1000);
+
+  // var interval = Math.floor(seconds / 31536000);
+
+  // if (interval > 1) {
+  //   return interval + " years";
+  // }
+  // interval = Math.floor(seconds / 2592000);
+  // if (interval > 1) {
+  //   return interval + " months";
+  // }
+  // interval = Math.floor(seconds / 86400);
+  // if (interval > 1) {
+  //   return interval + " days";
+  // }
+  // interval = Math.floor(seconds / 3600);
+  // if (interval > 1) {
+  //   return interval + " hours";
+  // }
+  // interval = Math.floor(seconds / 60);
+  // if (interval > 1) {
+  //   return interval + " minutes";
+  // }
+  // return Math.floor(seconds) + " seconds";
+},
     /**
 * show the clicked post on the modal.
 */
       ShowModal(){
         if(this.ShowModalVar == true){
           this.$emit('showUp',this.postData);
+   
           this.$modal.show('Demo-OnePost');
         }
           else {
@@ -303,8 +387,11 @@ created(){
         this.moderator=true;
        }
 },
-
-}
+computed :{
+        createdDate : function(){
+          //  return moment().format('dddd');
+        }
+}}
 
 
 </script>
@@ -339,7 +426,15 @@ created(){
             border-color:rgb(135, 138, 140);
 
             }
+ #postBody:hover{
+             cursor:pointer
+               }
 
+  #imgId{
+         cursor: pointer;
+     
+        }
+  
 h5 {
     text-align: center;
    }
@@ -389,6 +484,7 @@ h5 {
 .postby{
     font-size: 12px;
     color: rgb(120, 124, 126);
+    cursor: pointer;
 }
 .buttonDelete{
       background-color: #f4511e;
@@ -405,6 +501,16 @@ h5 {
    margin-right: 0%;
 
 } */
+@media(max-width:1054px){
+  div .panel 
+  {
+    width: 80%;
+
+      }
+  div .panel{
+    margin-left: 4%
+  }
+}
 #postCol1{
 
 height:100%;
@@ -416,6 +522,7 @@ height:100%;
    margin-top:0%;
    font-family:Verdana, Geneva, Tahoma, sans-serif;
    font-size: 130%;
+  
 
 }
 .column2{
@@ -424,6 +531,7 @@ width: 100%;
 }
 .panel-body {
      padding: 2px;
+     cursor: pointer;
 }
 
 #post{

@@ -3,24 +3,65 @@ import axios from 'axios'
 
 export  const MimicPost=new Vue({
 methods:{
+  EditPost: function(ID,cont,mimic){
+    if( mimic == true)
+    {
+        if(this.$localStorage.login)
+        {
+        var promise1 = new Promise(function(resolve, reject) {
+            setTimeout(function() {
+              resolve(true);
+            }, 300);
+          });
+return promise1;
+        }
+        var promise1 = new Promise(function(resolve, reject) {
+            setTimeout(function() {
+              resolve(false);
+            }, 300);
+          });
+return promise1;
+    }
+    else
+    {
+        var self = this;
+        return axios.patch(this.$localStorage.get('baseUrl') + 'api/edit', {
+            name: ID,
+            content: cont,
+            token: this.$localStorage.get('token')
 
+         })
+       .then(function (response) {
+           return true;
+        })
+       .catch(function (error) {
+           return false;
+        });
+    }
+},
     save:function(token,ID,mimic){
 
         if(mimic){
+          if(this.$localStorage.login){
              if(token=="1" && ID=="1"){
                 return true;
               }
+              
+                alert("Log In First!!");
                 return false;
              }
+            }
+          
              else {
                 axios.post( this.$localStorage.get('baseUrl') + "api/save",
              {
                 ID:ID,
                 token:token
             }).then(response => {
-              if(response){
-                alert('Post saved successfully');
-              }
+            return true;
+            }).catch(function(error){
+
+              return false;
             })
              }
               },
@@ -45,14 +86,14 @@ methods:{
                     token : ID
 
             }).then(response=>{
-              if(response){
+              
                 this.Deleted = true;
-                alert("Deleted successfully");
-              }
+                return true;
+              
 
-            }).catch(function ()
+            }).catch(function (error)
             {
-             //console.log(error);
+             return false;
 
 
               });
@@ -64,6 +105,7 @@ methods:{
             },
                Hide(name,ID,mimic){
                    if(mimic===true){
+                     
                     if(name==="1" && ID==="1"){
 
                         return true;
@@ -79,11 +121,10 @@ methods:{
                     ID : ID
 
                 }).then(response => {
-                  if(response){
-                  alert("Hidden successfully");}
-                }).catch(function ()
+                 return true;
+                }).catch(function (error)
                 {
-                   //console.log(error);
+                   return false;
                 });
 
               }
@@ -91,6 +132,7 @@ methods:{
             },
             upvote(name,ID,direction,mimic){
                 if(mimic){
+                  if(this.$localStorage.login){
                     if(name=="1"  && ID=="1"){
 
                         if(direction==1){
@@ -99,6 +141,11 @@ methods:{
                        }
 
            }
+           
+                  }
+                  alert("Log In First!!");
+                  return false;}
+
            else{
             axios.post(this.$localStorage.get('baseUrl') + "api/vote",
             {
@@ -108,28 +155,29 @@ methods:{
               direction:direction
 
             }).then(response => {
-              if(response){
-                 alert("upvote successfully");}
+              return response.data;
 
             }).catch(function ()
             {
-         // console.log(error);
+        return false;
 
         });
 
               }
             }
-            },
+            ,
 
  downvote(name,ID,direction,mimic){
                 if(mimic){
+                  if(this.$localStorage.login){
                     if(name=="1"  && ID=="1"){
 
                         if(direction==-1){
 
                           return 200;
                        }
-
+                      }
+                      return false;
            }
            else{
             axios.post(this.$localStorage.get('baseUrl') + "api/vote",
@@ -140,8 +188,8 @@ methods:{
                     name:name,
                     direction:direction
 
-                  }).then(function (response) {
-                    return response
+                  }).then(response=> {
+                    return response.data;
                 }).catch(function ()
                   {
                   // console.log(error);
@@ -195,6 +243,10 @@ if(response){
 
 }
 }
+},
+isLocked(){
+
+  
 }
 
 

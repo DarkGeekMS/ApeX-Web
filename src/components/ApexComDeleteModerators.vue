@@ -1,8 +1,8 @@
 <template id="showmoderaorspagedesign">
-<div >
+<div id="main">
 <h4 v-if="!moderatorsList.length" >there is nothing to show </h4>
   <div id="moderatorsbox" class="box" v-for="(moderator,index) in moderatorsList" :key="moderator.id">
-    <router-link style="font-size: 1.2vw;" class="accountLink" :to="{name:'UserProfile' , params: {userName:moderator.userName}}"> {{moderator.userName}}</router-link>
+    <router-link style="font-size: 14px;" class="accountLink" :to="{name:'UserProfile' , params: {userName:moderator.userName}}"> {{moderator.userName}}</router-link>
     <button id="remove button" class="button" v-on:click="deleteModerator(moderator.userName,index)">delete</button>
   </div>
 </div>
@@ -46,24 +46,7 @@ props:['apexComName'],
 </script>
 
 <style scoped>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
 
-  /* padding: 0;
-  margin: 0;
-  list-style: none;
-  
-  display: -webkit-box;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
-  
-  -webkit-flex-flow: row wrap;
-  justify-content: space-around; */
-}
 .button{
   width:25%;
   margin-top:0%;
@@ -76,14 +59,15 @@ props:['apexComName'],
   float:right;
   border-width: 3px;
   border-radius: 20%;
-  font-size: 1.2vw;
-  font-weight: 700;
+  font-size: 14px;
+  font-weight: 500;
   letter-spacing: 0.5px;
   cursor:pointer;
   border-color: skyblue;
   border-style: solid;
   text-transform: uppercase;
   height:auto;
+  overflow: hidden;
 }
 .button:hover {opacity: 0.75}
 .box{
@@ -97,6 +81,5 @@ props:['apexComName'],
 }
 .accountLink{
   text-decoration: none;
-  color:black;
 }
 </style>

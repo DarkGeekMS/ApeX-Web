@@ -7,6 +7,8 @@ import {MimicUserProfile} from './UserProfile.js'
 import { MimicPost } from './Post.js'
 import { MimicComment } from './Comments.js'
 import { MimicSearch } from './Search.js'
+import { MimicMessage } from './Messages.js'
+
 
 export  const AllServices =new Vue({
   data(){
@@ -15,6 +17,7 @@ export  const AllServices =new Vue({
     }
   },
   methods:{
+   
     getState(){
       return this.mimic
     },
@@ -44,8 +47,8 @@ export  const AllServices =new Vue({
     },
 
     signUp: function(email, user,pass)
-    {
-       return MimicAuth.SignUp(email, user,pass,this.mimic);
+    {       
+      return MimicAuth.SignUp(email, user,pass,this.mimic);
     },
 
     logOut: function()
@@ -112,6 +115,11 @@ deletePost:function(name,ID){
   return MimicPost.deletePost(name,ID,this.mimic);
 },
 
+EditPost: function(ID,content){
+  var data=MimicPost.EditPost(ID,content,this.mimic);
+  return data;
+},
+
 userType:function(){
   var data=MimicUserProfile.getUserType(this.mimic);
   return data;
@@ -156,8 +164,28 @@ EditComment: function(ID,content){
   var data=MimicComment.EditComment(ID,content,this.mimic);
   return data;
 },
+sendMessage: function(rec,title,cont){
+  var data=MimicMessage.sendMessage(rec,title,cont,this.mimic);
+  return data;
+},
+deleteMessage: function(ID){
+  var data=MimicMessage.deleteMessage(ID,this.mimic);
+  return data;
+},
+blockSender:function(ID){
+  var data=MimicMessage.blockUser(ID,this.mimic);
+  return data;
+},
+getAllMessages:function(){
+  var data=MimicMessage.getAllMessages(this.mimic);
+  return data;
+},
 getUserInfoByIdforGuest:function(userName){
   var data=MimicUserProfile.getUserInfoByIdforGuest(this.mimic,userName);
+  return data;
+},
+getReplies: function(ID){
+  var data=MimicMessage.getReplies(ID,this.mimic);
   return data;
 },
 blockUser:function(userName){

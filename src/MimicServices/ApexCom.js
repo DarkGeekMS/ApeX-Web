@@ -154,10 +154,10 @@ else {
     },
 reviewReports: function(mimic,apexComName){
       if(mimic){
-        var report=[
-          {post:{
+        var report={
+          reportedComment:[{post:{
             id:'333',
-            posted_by:'Nourhan',
+            posted_by:'Nada',
             apex_id:'333',
             title:'dj',
             content:'I love javascript ,vue ,html ,css 🐸🐸🐸',
@@ -167,24 +167,60 @@ reviewReports: function(mimic,apexComName){
             updates_at:null,
             apex_com_name:"health aware",
             post_writer_user:"Nada"},
+            reason:"It's threatening self-harm or suicide",
+          id:8099,
+          comment:{
+            user:'double',
+            content:'this is the review report mimic service',
+            idx:0,
+            level:1,
+            parentIdx:0,
+            parentID:'o0',
+            ID:'0-',
+            // date:'march 9 2019'
+            },
+            userName:'nourhan'
+        }],
+        reportedpost:[
+          {post:{
+            id:'333',
+            posted_by:'Nada',
+            apex_id:'333',
+            title:'dj',
+            content:'I love javascript ,vue ,html ,css 🐸🐸🐸',
+            videolink:'',
+            img:'https://i.ytimg.com/vi/inYarqDCCGA/maxresdefault.jpg',
+            created_at:"2019-03-23 17:20:45",
+            updates_at:null,
+            apex_com_name:"health aware",
+            post_writer_user:"Nada"},
+            reason:"It's threatening self-harm or suicide",
+            id:8099,
+            userName:'nourhan'
+        },
+        {post:{
+          id:'555',
+          posted_by:'Nada',
+          apex_id:'555',
+          title:'dj',
+          content:'Experience enjoyable JavaScript development with WebStorm. With smart code completion, safe refactoring, and first-class support for Node.js, Angular and React. Download free trial 😀😂🍔😍',
+          locked:false,
+          commenets_count:5,
+          votes:9,
+          img:'',
+          videolink:'https://www.youtube.com/embed/Va0Rq147SRU',
+          created_at:"2019-03-23 17:20:45",
+          updates_at:null,
+          apex_com_name:"health care",
+          post_writer_user:"double"
+
+        },
           reason:"It's threatening self-harm or suicide",
           id:8099,
-        },
-        {comment:{
-          user:'nourhan',
-          content:'this is the review report mimic service',
-          idx:9,
-          level:1,
-          parentIdx:67,
-          parentID:9,
-          ID:9,
-          date:'march 9 2019'
-          },
-          reason:"It's personal and confidential information",
-          id:809,
-        },
-        ];
-      
+          userName:'nourhan'
+      }
+        ]};
+
       var promise = new Promise(function(resolve) {
         setTimeout(function() {
           resolve(report);
@@ -193,7 +229,7 @@ reviewReports: function(mimic,apexComName){
       return promise;
     }
     else {
-       return axios.post('http://localhost/api/report_action', {
+       return axios.post(this.$localStorage.get('baseUrl') + 'api/report_action', {
             ApexCom_id:apexComName,
             Token:this.$localStorage.get('token')
           })
@@ -211,7 +247,7 @@ ignoreReport:function(mimic,apexComName){
     return true;
   }
   else{
-            axios.post('http://localhost/api/report_action', {
+            axios.post(this.$localStorage.get('baseUrl') + 'api/report_action', {
             ApexCom_id:apexComName,
             Token:this.$localStorage.get('token')
           })

@@ -19,7 +19,7 @@ export  const MimicAuth =new Vue({
           this.$localStorage.set('userName',user);
           this.$localStorage.set('token', this.token);
           this.$localStorage.set('login', true);
-          return true;            
+          return true;
         }
         else
         {
@@ -30,7 +30,7 @@ export  const MimicAuth =new Vue({
       else
       {
         var self = this;
-        return axios.post('http://127.0.0.1:8001/api/sign_up', {
+        return axios.post(this.$localStorage.get('baseUrl') + 'api/sign_up', {
             email: email,
             username: user,
             password: pass
@@ -55,7 +55,7 @@ export  const MimicAuth =new Vue({
             this.$localStorage.set('userName', '');
         }
         else{
-          return axios.post('http://127.0.0.1:8001/api/sign_out',{
+          return axios.post(this.$localStorage.get('baseUrl') + 'api/sign_out',{
             token : this.$localStorage.get('token')
           })
         }
@@ -83,7 +83,7 @@ export  const MimicAuth =new Vue({
       }
       else{
       //  var self = this;
-        return axios.post('http://127.0.0.1:8001/api/sign_in', {
+        return axios.post(this.$localStorage.get('baseUrl') + 'api/sign_in', {
             username : user,
             password : pass
           }).then(response => {
@@ -114,7 +114,7 @@ export  const MimicAuth =new Vue({
       }
       else{
         var self = this;
-        return axios.post('http://127.0.0.1:8001/api/mail_verify', {
+        return axios.post(this.$localStorage.get('baseUrl') + 'api/mail_verify', {
             username : user,
             email : email
           }).then(response => {
@@ -191,7 +191,7 @@ export  const MimicAuth =new Vue({
       }
       else
       {
-        return axios.get('http://35.232.3.8/Apex_names', {
+        return axios.get(this.$localStorage.get('baseUrl') + 'api/Apex_names', {
         }).then(response => {
           return response.data
         }).catch(function (error) {

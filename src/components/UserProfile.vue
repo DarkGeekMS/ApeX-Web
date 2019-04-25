@@ -2,24 +2,27 @@
 <div id='userprofile'>
     <div id='firstnavbar'>
       
-        <a style="font-size: 1.2vw;"  id="posttab" class="navbarlinks" href="#">posts</a>
-        <a style="font-size: 1.2vw;"  id="savedtab" v-show="notGuest()" class="navbarlinks" href="#">saved</a>
-        <a style="font-size: 1.2vw;"  id="hiddentab" v-show="notGuest()" class="navbarlinks" href="#">hidden</a>
-        <a style="font-size: 1.2vw;"  id="reporttab" v-show="isModerator() && notGuest()" class="navbarlinks" href="#">report</a>
-        <!-- <router-link style="font-size: 1.2vw;" id="reportlink" class="navbarlinks" :to="{name:'Reportsprofile',params: {reports:reports}}">view reports</router-link> -->
+        <a style="font-size: 16px;"  id="posttab" class="navbarlinks" href="#">posts</a>
+        <a style="font-size: 16px;"  id="savedtab" v-show="notGuest()" class="navbarlinks" href="#">saved</a>
+        <a style="font-size: 16px;"  id="hiddentab" v-show="notGuest()" class="navbarlinks" href="#">hidden</a>
+        <!-- <a style="font-size: 16px;"  id="reporttab" v-show="isModerator() && notGuest()" class="navbarlinks" href="#">report</a> -->
+        <router-link style="font-size: 16px;" id="reportlink" class="navbarlinks" :to="{name:'Report'}">view reports</router-link>
+        
     </div>
+    <div class="sort">
+    <Sort ></Sort>
+  </div>
         <SideBar
+        v-bind:settings="true"
         v-bind:userName="userName"
-        v-bind:karmaCount="karmaCount"
-        v-bind:image="image"
-        v-bind:cakeDay="cakeDay"
-        v-bind:blockList ="blockList"
         class="sidebar" ></SideBar>
+    <router-view class="routerview"></router-view>
 </div>
 </template>
 
 <script>
 import SideBar from './UserProfileSideBar.vue'
+import Sort from './Sort.vue'
 import {AllServices} from '../MimicServices/AllServices.js'
 
 /**
@@ -37,7 +40,8 @@ import {AllServices} from '../MimicServices/AllServices.js'
 export default {
   props:['userName'],
     components:{
-    'SideBar':SideBar
+    'SideBar':SideBar,
+    'Sort':Sort
   },
   data () {
     return {
@@ -126,7 +130,6 @@ export default {
     */
    getUserDataForGuest:function(){
      AllServices.getUserInfoByIdforGuest(this.userName).then((data) =>{
-       console.log(data);
       this.karmaCount = data.karma;
       this.image = data.image;
      // this.userName = data.userName;
@@ -155,9 +158,7 @@ export default {
 
 <style scoped>
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+  /* box-sizing: border-box; */
 
   /* padding: 0;
   margin: 0;
@@ -172,38 +173,53 @@ export default {
   -webkit-flex-flow: row wrap;
   justify-content: space-around; */
 }
+#userprofile{
+  margin-top:50px;
+}
 #firstnavbar{
     width:100%;
-    height: 60px;
+    /* height: 60px; */
     text-transform: uppercase;
-    padding-top:2%;
-    padding-bottom: 0%;
-    margin-top: 3%;
+    background-color: white;
+    padding-top:18px;
+    padding-bottom: 10px;
     margin-bottom: 0%;
     margin-left: 0%;
 }
 .navbarlinks{
     padding-top: 0%;
-    padding-bottom: 0%;
-    padding-right: 1%;
-    padding-left: 2%;
+    padding-bottom: 10px;
+    margin-right: 3%;
+    margin-left: 3%;
     text-decoration: none;
     color: black;
-    margin-top: 0%;
-    margin-bottom: 0%;
-    font-size: 1vw;
     font-weight: 500;
-    
 }
 .navbarlinks:hover{
     color:deepskyblue;
 }
-#sidebar{
-    width:23%;
+.sort{
+  margin-top:-57px;
+  /* margin-right:0%; */
+  /* height:30px; */
+}
+.sidebar{
+  margin-top:4%;
+    /* width:23%;
     height: auto;
     margin:8%;
     margin-left: 3%;
     margin-right: 4%;
-    float:right;
+    float:right; */
+}
+.routerview{
+  margin-top: 0%;
+  margin-bottom: 0%;
+  margin-left: 4%;
+  border-radius:20%;
+}
+.router-link-active{
+  border-bottom: 3px solid deepSkyBlue;
+  color: deepskyblue;
 }
 </style>
