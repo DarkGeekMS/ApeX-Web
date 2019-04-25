@@ -28,9 +28,6 @@ export default {
 
 <style scoped>
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
 
   /* padding: 0;
   margin: 0;
@@ -52,5 +49,8 @@ export default {
   padding:0% 0%;
   border-radius: 8px;
   margin-top: 3%;
+}
+#postslist{
+  margin-top:-2%;
 }
 </style>

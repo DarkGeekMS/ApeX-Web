@@ -34,6 +34,7 @@ export  const MimicUserProfile =new Vue({
         video_url:'https://www.youtube.com/embed/Va0Rq147SRU'},
         reason:"It's threatening self-harm or suicide",
         id:8099,
+        fullName:'nourhan'
       },
       // {comment:{
       //   content:'this is the review report mimic service',
@@ -77,6 +78,7 @@ var profileInfo={
     karma:9,
     personalPosts:[{},{}],
     cakeDay:'March 15, 2019',
+    fullName:'nourhan'
 }
 var promise = new Promise(function(resolve) {
   setTimeout(function() {
@@ -165,6 +167,7 @@ getUserInfoByIdforGuest:function(mimic,userName){
         karma:9,
         personalPosts:[{},{}],
         cakeDay:'ِjune 15, 2019',
+        fullName:null
     }
     var promise = new Promise(function(resolve) {
       setTimeout(function() {
