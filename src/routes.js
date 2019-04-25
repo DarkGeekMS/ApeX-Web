@@ -8,6 +8,7 @@ import CreatePost from './components/CreatePost.vue'
 import Reports from './components/Reports.vue'
 import Search from './components/Search.vue'
 import Users from './components/CommunitiesAndUsers.vue'
+import MessageBar from './components/MessageBar.vue'
 export default[
       {path:'/ApexCom/:ApexComName',name:'ApexCom',props:true,component:ApexCom , children :
       [
@@ -22,5 +23,6 @@ export default[
     {path:'/Submit',name:'CreatePost',component:CreatePost},
     {path:'/Search', name:'Search' , component:Search, props:true, children :[
         {path:'users', component:Users },]},
-    {path:'/userprofile/:userName',name:'UserProfile',component:userprofile,props:true}
+    {path:'/userprofile/:userName',name:'UserProfile',component:userprofile,props:true},
+    {path:'/Messages' ,name:'Messages',component:MessageBar}
 ]
