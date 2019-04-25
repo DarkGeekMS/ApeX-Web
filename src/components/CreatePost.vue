@@ -118,12 +118,11 @@
 <script>
 import tab from './PostTab.vue'
 import tabs from './PostTabs.vue'
-import Vue from "vue";
+import Vue from "vue"
 import {AllServices} from '../MimicServices/AllServices.js'
 import { RichTextEditorPlugin, Toolbar, HtmlEditor } from "@syncfusion/ej2-vue-richtexteditor";
 import HomeSideBar from "./HomeSideBar.vue"
 Vue.use(RichTextEditorPlugin);
-
 /**
  * @vue-data {string} [apexComId=''] Id of apexcom which post will be created in
  * @vue-data {boolean} [enable=true]    check if post button is enable or not
@@ -161,7 +160,7 @@ export default {
         token:'',
         apexComId:'',
         bodyPost:'',
-        imgName:'',
+        avatar:'',
         title:'',
         apexs:[],
         image: '',
@@ -274,8 +273,9 @@ console.log(this.indx);
 
         reader.onload = function(e) {
           vm.image = e.target.result;
-          this.imgName=vm.image; // NOT SURE YET IF THIS WHAT THE API DOC WANT
-          console.log(this.imgName);
+          this.avatar=vm.image; 
+          this.imagable=false;
+         // console.log(this.imgName);
         }
         reader.readAsDataURL(file);
 
@@ -295,22 +295,20 @@ console.log(this.indx);
 
     submitPost(){
 
-     
       this.bodyPost=document.getElementById('textsendnormal').value;
+      this.imgName=document.getElementById('imgId').src;
+      this.$emit('PostEmit',this.bodyPost,this.imgName);
+      this.$router.push('/ShowCreatedPost');
       
-       this.$emit('PostEmit',this.bodyPost);
-        this.$router.push('/ShowCreatedPost');
-      
-       this.videoUrl=document.getElementById('textsend3').value;
-       this.apexComId=apexs[this.indx].id;
+      this.videoUrl=document.getElementById('textsend3').value;
+      this.apexComId=apexs[this.indx].id;
       // this.bodyPost=document.getElementById('textsendnormal').value;
-       this.imgName=document.getElementById('imgId').src;
+      
        this.title=document.getElementById("usr").value;
-      //  this.$emit('Post',this.title,this.bodyPost,this.$localStorage.get('token'));
-       
-       // this.$router.push('/ShowCreatedPost');
-        
+      //  this.$emit('Post',this.title,this.bodyPost,this.$localStorage.get('token'))
      
+      
+
       AllServices.submit(this.videoUrl,this.apexComId,this.bodyPost,this.imgName,this.isLocked,this.$localStorage.get('token'));
   
     }
@@ -333,7 +331,8 @@ created(){
       {
         if(data)
         {
-          this.apexs = data
+          this.apexs = data;
+          
         }
       });
   

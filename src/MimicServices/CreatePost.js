@@ -29,14 +29,19 @@ else {
         ApexCom_id:apexComId,
         _token:token,
         body:bodyPost,
-        img_name:imgName,
+        avatar:imgName,
         video_url:videoUrl,
         isLocked:isLocked
 
 
 
 
-       }).then(function(response){
+       },{
+       headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+
+      }}
+       ).then(function(response){
 
          if(response){
            //TODO it will  display your Post which you have created soon

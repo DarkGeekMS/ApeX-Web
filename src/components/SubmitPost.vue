@@ -1,21 +1,21 @@
 <template>
   <div id="submitPage" >  
-
-<Post  v-on:PostEmit="getData($event)"  v-bind:postData="createPostData" class="postStyle" > </Post>
-
-
+<Post v-bind:postData="createPostData" class="postStyle" v-if="isCreated"> </Post>
+<CreatePost v-on:PostEmit="getData($event)" v-if="!isCreated"></CreatePost>
 
 
   </div>
 </template>
 
 <script>
+
 import Post from './Post.vue'
 import CreatePost from './CreatePost.vue'
+
 export default {
     data(){
      return{
-
+         isCreated:false,
          showCreatePost:true,
          postInfo:'',
          posts:'',
@@ -45,7 +45,7 @@ export default {
     },
   name: 'submitPage',
  props:{
-
+ Data:{}
   
 
 },
@@ -54,19 +54,22 @@ export default {
     'CreatePost':CreatePost,
   
   },
+
   methods:{
-  
     getData(e){
-   this.createPostData.content=e;
-        alert('hello');
+     
+    
+        if(e.bodyPost){
+          this.isCreated=true;
+        }
+        alert(e.bodyPost);
+     
+       this.createPostData.content=e;
+       //this.createPostData.img=e.imgName;
+   
     }
-
-
-  },
-  created(){
-//this.getData();
-    //  this.createPostData.content="hello";
   }
+
 }
 
 </script>
