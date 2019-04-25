@@ -124,7 +124,7 @@ blockButton:function(){
     this.block=!this.block;
 },
 blockUser:function(){
-    AllServices.blockUser(this.ID).then((data) => {
+    AllServices.blockSender(this.ID).then((data) => {
    
       });
 },
