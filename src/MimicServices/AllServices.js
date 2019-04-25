@@ -7,11 +7,11 @@ import {MimicUserProfile} from './UserProfile.js'
 import { MimicPost } from './Post.js'
 import { MimicComment } from './Comments.js'
 import { MimicSearch } from './Search.js'
-
+import {MimicCreateApexCom} from './CreateApexCom.js'
 export  const AllServices =new Vue({
   data(){
     return{
-      mimic:false
+      mimic:true
     }
   },
   methods:{
@@ -168,7 +168,9 @@ ignoreReport:function(id){
   var data=MimicApexCom.ignoreReport(this.mimic,id);
   return data;
 },
-
+CreateApexCom:function(Name,Description,Rules,Avatar,Banner) {
+return MimicCreateApexCom.CreateApexCom(this.mimic,Name,Description,Rules,Avatar,Banner);
+}
   }
 
 });
