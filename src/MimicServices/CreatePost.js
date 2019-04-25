@@ -43,7 +43,7 @@ else {
        })
  }
     },
-    getApexNames:function(){
+    getApexNames:function(mimic){
     if(mimic==true){
         var names=["apexname1","apexname2","apexname3","apexname4"];
      

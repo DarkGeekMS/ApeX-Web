@@ -9,12 +9,13 @@
     </div>
 
       <div class="form-group dropApex" >
-        <select class="form-control" name="category">
+        <select class="form-control" name="category" @change="handleChange">
           <option>choose a community</option>
            <option v-for="name in apexNames">{{name}}</option>         
                    
           </select>
        </div>
+       
       <body class="panel bodyPost">
           <form>
 
@@ -33,12 +34,15 @@
                       
                              <input type="text" class="form-control" id="usr" placeholder="title" @keyup="Enable">
                            </div>
-                               <!-- <textarea class="form-control" rows="5" id="textsend" @keyup="Enable"></textarea> -->
-              
-                              <ejs-richtexteditor ref="rteObj" :toolbarSettings="toolbarSettings" id="textsend" @keyup="Enable">
+     
+                          <a  id="switchId"  @click="switchM" >{{this.switchTo}} </a>
+                              <ejs-richtexteditor ref="rteObj" :toolbarSettings="toolbarSettings" id="textsend" @keyup="Enable" v-if="normal==false">
                               
                     
                               </ejs-richtexteditor> 
+                              <textarea class="form-control" rows="5" id="textsendnormal" @keyup="Enable" v-else>
+                    
+                              </textarea>
                   </div>
             
   
@@ -101,9 +105,10 @@
 
        </form>
 
-
+ 
     </body>
   </div>
+
 </template>
 
 <script>
@@ -112,6 +117,7 @@ import tabs from './PostTabs.vue'
 import Vue from "vue";
 import {AllServices} from '../MimicServices/AllServices.js'
 import { RichTextEditorPlugin, Toolbar, HtmlEditor } from "@syncfusion/ej2-vue-richtexteditor";
+import HomeSideBar from "./HomeSideBar.vue"
 Vue.use(RichTextEditorPlugin);
 
 /**
@@ -129,6 +135,11 @@ Vue.use(RichTextEditorPlugin);
  */
 
 export default {
+   components:{
+
+    'SideBar':HomeSideBar,
+    
+  },
     data(){
       return {
 
@@ -138,6 +149,8 @@ export default {
        }
 
         ],
+        switchTo:'Switch to Fancy Pants Editor',
+        normal:true,
         enable:true,
         token:'',
         apexComId:'',
@@ -160,6 +173,7 @@ export default {
           ]
          },
 
+
       }
 
     },
@@ -167,7 +181,24 @@ export default {
         richtexteditor:[Toolbar, HtmlEditor]
     },
     methods:{
+      switchM(){
+      this.normal=!(this.normal);
+      if( this.normal){
+      this.switchTo='Switch to markdown';
+      }
+      else{
+        this.switchTo='Switch to Fancy Pants Editor';
+      }
+   console.log(this.normal);
+   console.log(this.switchTo);
+      },
+handleChange(e){
 
+if(e.target.options.selectedIndex > -1) {
+            console.log(e.target.options[e.target.options.selectedIndex].dataset.foo)
+        }
+
+},
      /**
      * it check if the user insert the title of the post and insert the content or not and it will enable
      * the post button to be submitted if and only if the user insert all required content
@@ -233,8 +264,8 @@ export default {
 
         reader.onload = function(e) {
           vm.image = e.target.result;
-         this.imgName=vm.image; // NOT SURE YET IF THIS WHAT THE API DOC WANT
-          //console.log(this.imgName);
+          this.imgName=vm.image; // NOT SURE YET IF THIS WHAT THE API DOC WANT
+          console.log(this.imgName);
         }
         reader.readAsDataURL(file);
 
@@ -285,8 +316,14 @@ created(){
 </script>
 
 <style scoped>
+#switchId{
 
+margin-left:55%;
+}
+.form-group{
 
+  width:100%;
+}
 .Cpost{
 
     width: 30%;
@@ -334,7 +371,9 @@ created(){
   text-align: center;
 
 }
-
+ #switchId:hover{
+             cursor:pointer
+               }
 .postDisable{
 
   background-color:rgb(0, 121, 211);
@@ -537,13 +576,29 @@ height: 30%;
 .e-richtexteditor.e-rte-tb-expand {
     border: 1px solid rgba(0, 0, 0, 0.12);
      width: 70% !important;
+  
     
    
 }
-.e-richtexteditor .e-rte-toolbar.e-control[class*='e-toolbar'], .e-richtexteditor .e-rte-toolbar.e-toolbar.e-extended-toolbar.e-control[class*='e-toolbar'] {
+/* .e-richtexteditor .e-rte-toolbar.e-control[class*='e-toolbar'], .e-richtexteditor .e-rte-toolbar.e-toolbar.e-extended-toolbar.e-control[class*='e-toolbar'] {
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
     width:70% !important;
+    max-width: 70%;
+} */
+/* .e-richtexteditor .e-rte-toolbar, .e-richtexteditor .e-rte-toolbar.e-toolbar.e-extended-toolbar{
+
+ width:70% !important;
+
 }
+.e-toolbar{
+  width: 70% !important;
+
+}
+#textsend_toolbar .e-rte-toolbar .e-control .e-toolbar .e-lib .e-extended-toolbar .e-keyboard{
+
+  width: 70% !important;
+} */
+
 
 </style>

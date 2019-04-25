@@ -7,12 +7,16 @@ methods:{
     save:function(token,ID,mimic){
 
         if(mimic){
-          
+          if(this.$localStorage.login){
              if(token=="1" && ID=="1"){
                 return true;
               }
+              
+                alert("Log In First!!");
                 return false;
              }
+            }
+          
              else {
                 axios.post( this.$localStorage.get('baseUrl') + "api/save",
              {
@@ -66,6 +70,7 @@ methods:{
             },
                Hide(name,ID,mimic){
                    if(mimic===true){
+                     
                     if(name==="1" && ID==="1"){
 
                         return true;
@@ -92,6 +97,7 @@ methods:{
             },
             upvote(name,ID,direction,mimic){
                 if(mimic){
+                  if(this.$localStorage.login){
                     if(name=="1"  && ID=="1"){
 
                         if(direction==1){
@@ -100,6 +106,11 @@ methods:{
                        }
 
            }
+           
+                  }
+                  alert("Log In First!!");
+                  return false;}
+
            else{
             axios.post(this.$localStorage.get('baseUrl') + "api/vote",
             {
@@ -119,17 +130,19 @@ methods:{
 
               }
             }
-            },
+            ,
 
  downvote(name,ID,direction,mimic){
                 if(mimic){
+                  if(this.$localStorage.login){
                     if(name=="1"  && ID=="1"){
 
                         if(direction==-1){
 
                           return 200;
                        }
-
+                      }
+                      return false;
            }
            else{
             axios.post(this.$localStorage.get('baseUrl') + "api/vote",

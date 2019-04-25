@@ -31,7 +31,7 @@ export  const AllServices =new Vue({
       MimicPost.Post(this.mimic);
 
     },
-    getApexNames:function()
+    getApexNames:function(mimic)
     {
       return MimicAuth.getApex(this.mimic)
     },
