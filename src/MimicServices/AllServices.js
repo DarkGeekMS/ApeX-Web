@@ -15,6 +15,7 @@ export  const AllServices =new Vue({
     }
   },
   methods:{
+   
     getState(){
       return this.mimic
     },
@@ -102,6 +103,11 @@ deletePost:function(name,ID){
 
 
   return MimicPost.deletePost(name,ID,this.mimic);
+},
+
+EditPost: function(ID,content){
+  var data=MimicPost.EditPost(ID,content,this.mimic);
+  return data;
 },
 
 userType:function(){

@@ -1,5 +1,5 @@
 <template>
-   <div>
+   <div id="create">
      <div class="a">
 
        <h4 class="Cpost">Create a post
@@ -9,46 +9,47 @@
     </div>
 
       <div class="form-group dropApex" >
-        <select class="form-control" name="category">
-          <option>choose a community</option>
-                      <!-- TODO HERE ARE APEXNAMES WHICH I WILL LOOP THROUGH THEM  -->
-
-                       <!-- just dummy option for display  -->
-
-                      <option>apexname 1</option>
-                      <option>apexname 2</option>
-                      <option>apexname 3</option>
-                      <option>apexname 3</option>
-
+        <select id="selectList" class="form-control" name="category" @change="handleChange">
+          <!-- <option>choose a community</option> -->
+     
+         <option v-for="apex in apexs" :key="apex.id"> 
+               {{apex.name}}
+         
+             </option>        
+         
           </select>
        </div>
+       
       <body class="panel bodyPost">
           <form>
 
             <div class="form-group">
 
-
-
-                  <div id="root" class="container">
+  
+                  <div id="root" class="container" >
+                   
                     <tabs>
+                      
                        <tab  name="Post" :selected="true">
-
+                         
+            <div id="fancy">
+              
                           <div class="form-group">
-
+                      
                              <input type="text" class="form-control" id="usr" placeholder="title" @keyup="Enable">
                            </div>
-                               <!-- <textarea class="form-control" rows="5" id="textsend" @keyup="Enable"></textarea> -->
-
-                              <ejs-richtexteditor ref="rteObj" :toolbarSettings="toolbarSettings" id="textsend" @keyup="Enable">
-                               <br>
-                               <br>
-                               <br>
-                               <br>
-                               <br>
-
-                              </ejs-richtexteditor>
-
-
+     
+                          <a  id="switchId"  @click="switchM" >{{this.switchTo}} </a>
+                              <ejs-richtexteditor ref="rteObj" :toolbarSettings="toolbarSettings" id="textsend" @keyup="Enable" v-if="normal==false">
+                              
+                    
+                              </ejs-richtexteditor> 
+                              <textarea class="form-control" rows="5" id="textsendnormal" @keyup="Enable" v-else>
+                    
+                              </textarea>
+                  </div>
+            
+  
                           <button  class="btn btn-primary postButton" @click="submitPost"  disabled  id="button">POST</button>
                        </tab>
 
@@ -108,9 +109,10 @@
 
        </form>
 
-
+ 
     </body>
   </div>
+
 </template>
 
 <script>
@@ -119,6 +121,7 @@ import tabs from './PostTabs.vue'
 import Vue from "vue";
 import {AllServices} from '../MimicServices/AllServices.js'
 import { RichTextEditorPlugin, Toolbar, HtmlEditor } from "@syncfusion/ej2-vue-richtexteditor";
+import HomeSideBar from "./HomeSideBar.vue"
 Vue.use(RichTextEditorPlugin);
 
 /**
@@ -136,6 +139,11 @@ Vue.use(RichTextEditorPlugin);
  */
 
 export default {
+   components:{
+
+    'SideBar':HomeSideBar,
+    
+  },
     data(){
       return {
 
@@ -145,12 +153,17 @@ export default {
        }
 
         ],
+        switchTo:'Switch to Fancy Pants Editor',
+        normal:true,
+        isCreated:false,
+        indx:null,
         enable:true,
         token:'',
         apexComId:'',
         bodyPost:'',
         imgName:'',
-        apexNames:[],
+        title:'',
+        apexs:[],
         image: '',
         videoUrl:'',
         isLocked:false,
@@ -167,6 +180,7 @@ export default {
           ]
          },
 
+
       }
 
     },
@@ -174,7 +188,27 @@ export default {
         richtexteditor:[Toolbar, HtmlEditor]
     },
     methods:{
+      switchM(){
+      this.normal=!(this.normal);
+      if( this.normal){
+      this.switchTo='Switch to markdown';
+      }
+      else{
+        this.switchTo='Switch to Fancy Pants Editor';
+      }
+  /* console.log(this.normal);
+   console.log(this.switchTo);*/
+      },
+handleChange(){
 
+var sel = document.getElementById('selectList');
+
+var opt = sel.options[sel.selectedIndex];
+this.indx=sel.selectedIndex;
+// display value property of select list (from selected option)
+console.log(this.indx);
+
+},
      /**
      * it check if the user insert the title of the post and insert the content or not and it will enable
      * the post button to be submitted if and only if the user insert all required content
@@ -182,7 +216,7 @@ export default {
 
          Enable(){
 
-	 if(document.getElementById("textsend").value==="" || document.getElementById("usr").value==="")  {
+	 if(document.getElementById("textsendnormal").value==="" || document.getElementById("usr").value==="")  {
             document.getElementById('button').disabled = true;
         } else {
             document.getElementById('button').disabled = false;
@@ -240,8 +274,8 @@ export default {
 
         reader.onload = function(e) {
           vm.image = e.target.result;
-         this.imgName=vm.image; // NOT SURE YET IF THIS WHAT THE API DOC WANT
-          //console.log(this.imgName);
+          this.imgName=vm.image; // NOT SURE YET IF THIS WHAT THE API DOC WANT
+          console.log(this.imgName);
         }
         reader.readAsDataURL(file);
 
@@ -260,13 +294,25 @@ export default {
      */
 
     submitPost(){
+
+     
+      this.bodyPost=document.getElementById('textsendnormal').value;
+      
+       this.$emit('PostEmit',this.bodyPost);
+        this.$router.push('/ShowCreatedPost');
+      
        this.videoUrl=document.getElementById('textsend3').value;
-       this.apexComId='';//TODO
-       this.bodyPost=document.getElementById('textsend').value;
+       this.apexComId=apexs[this.indx].id;
+      // this.bodyPost=document.getElementById('textsendnormal').value;
        this.imgName=document.getElementById('imgId').src;
-
-    //  AllServices.submit(this.videoUrl,this.apexComId,this.bodyPost,this.imgName,this.isLocked,this.$localStorage.get('token'));
-
+       this.title=document.getElementById("usr").value;
+      //  this.$emit('Post',this.title,this.bodyPost,this.$localStorage.get('token'));
+       
+       // this.$router.push('/ShowCreatedPost');
+        
+     
+      AllServices.submit(this.videoUrl,this.apexComId,this.bodyPost,this.imgName,this.isLocked,this.$localStorage.get('token'));
+  
     }
 
     },
@@ -283,6 +329,14 @@ export default {
      */
 created(){
 
+  AllServices.getApexNames().then((data) =>
+      {
+        if(data)
+        {
+          this.apexs = data
+        }
+      });
+  
 }
 
 
@@ -290,8 +344,14 @@ created(){
 </script>
 
 <style scoped>
+#switchId{
 
+margin-left:55%;
+}
+.form-group{
 
+  width:100%;
+}
 .Cpost{
 
     width: 30%;
@@ -309,7 +369,7 @@ created(){
 
 .form-control{
 
-    width: 100%
+    width: 70%
 }
 
 .btn2 {
@@ -339,7 +399,9 @@ created(){
   text-align: center;
 
 }
-
+ #switchId:hover{
+             cursor:pointer
+               }
 .postDisable{
 
   background-color:rgb(0, 121, 211);
@@ -363,10 +425,11 @@ created(){
 
 .bodyPost{
 
-   width:90%;
+   width:64%;
    margin-bottom: 100%;
    margin-left: 5.5%;
    margin-top:0.5%;
+   
 
 }
 .post2{
@@ -507,7 +570,7 @@ margin-left: 2%
 
 .postButton{
 
-  margin-left: 94%;
+  margin-left: 64.5%;
 }
 
 .dropApex{
@@ -515,7 +578,9 @@ display:inline-block;
  margin:0.5% 5% ;
  width: 30%;
 }
-
+#textsend{
+  width: 50%;
+}
 
 @import "../../node_modules/@syncfusion/ej2-base/styles/material.css";
 @import "../../node_modules/@syncfusion/ej2-vue-richtexteditor/styles/material.css";
@@ -531,4 +596,37 @@ display:inline-block;
 margin-top: 5%;
 height: 30%;
 }
+#fancy{
+  width: 100%;
+}
+
+
+.e-richtexteditor.e-rte-tb-expand {
+    border: 1px solid rgba(0, 0, 0, 0.12);
+     width: 70% !important;
+  
+    
+   
+}
+/* .e-richtexteditor .e-rte-toolbar.e-control[class*='e-toolbar'], .e-richtexteditor .e-rte-toolbar.e-toolbar.e-extended-toolbar.e-control[class*='e-toolbar'] {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    width:70% !important;
+    max-width: 70%;
+} */
+/* .e-richtexteditor .e-rte-toolbar, .e-richtexteditor .e-rte-toolbar.e-toolbar.e-extended-toolbar{
+
+ width:70% !important;
+
+}
+.e-toolbar{
+  width: 70% !important;
+
+}
+#textsend_toolbar .e-rte-toolbar .e-control .e-toolbar .e-lib .e-extended-toolbar .e-keyboard{
+
+  width: 70% !important;
+} */
+
+
 </style>
