@@ -12,9 +12,8 @@ import MessageBar from './components/MessageBar.vue'
 import ApexComModerator from './components/ApexComModerator.vue'
 import ApexComAddModerator from './components/ApexComAddModerator.vue'
 import UserSettings from './components/UserSettings.vue'
-import ApexComDeleteModerator from './components/ApexComDeleteModerators.vue'
+import CreateApexCom from './components/CreateApexCom.vue'
 import SubmitPost from './components/SubmitPost.vue'
-
 export default[
       {path:'/ApexCom/:apexComName',name:'ApexCom',props:true,component:ApexCom , children :
       [
@@ -22,7 +21,6 @@ export default[
         {path:'AddModerators',name:'AddModerators',component:ApexComModerator,props:true ,children :[
           {path:'search',name:'Moderators', component:ApexComAddModerator,props:true },
         ]},
-        {path:'deletemoderator',name:'DeleteModerators',component:ApexComDeleteModerator},
         {path:'ApexPosts',name:'Posts',component:ApexComPosts},
         {path:'ApexSubscribers',name:'Subscribers',component:ApexComSubscribers,props:true},
         {path:'ApexReports',name:'Reports',component:Reports,props:true},
@@ -41,5 +39,6 @@ export default[
   },
 
     {path:'/UserSettings',name:'UserSettings',component:UserSettings},
+    {path:'/CreateApexCom',name:'CreateApexCom',component:CreateApexCom},
     {path:'/ShowCreatedPost',name:'SubmitPost',component:SubmitPost}
 ]

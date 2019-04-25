@@ -76,7 +76,7 @@
 <h5 style="display:inline; font-size: 14px; color:#7c7c7c;" id="cakedaynumber" > {{cakeDay}} </h5>
   </div>
 </div>
-          <button v-show="notGuest()&&settings" id="createpostbutton" class="button" type="button">new post</button>
+          <button v-show="notGuest()&&settings" id="createpostbutton" class="button" type="button" v-on:click="createPost()">new post</button>
           <button v-show="!notGuest()&&settings" v-on:click="blockUser()" id="blocktbutton" class="button" type="button">block</button>
           <button v-show="isAdmin()&&settings" v-on:click="deleteUser()" id="deletebutton" class="button" type="button">delete user</button>
         </div>
@@ -170,7 +170,7 @@ export default {
        })
        }
       else{
-        alert('you have to log in first');
+        this.$modal.show('demo-login');
       }
     },
     /**
@@ -200,6 +200,18 @@ export default {
       alert('sorry something went wrong :)')
     }
     },
+    /**
+       * if user is logged in , can go to create post or create community   
+      */
+      createPost: function(){
+        if( this.loggedIn )
+        {
+          this.$router.push('/Submit');
+        }
+        else{
+           this.$modal.show('demo-login');
+        }
+      },
     /**
     * get user profile info
     */

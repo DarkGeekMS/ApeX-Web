@@ -1,7 +1,7 @@
 <template>
   <div id="app" >
     <navbar></navbar>
-    <button  @click="topFunction()" id="myBtn" class="btn blue" v-show="top()">BACK TO TOP </button> 
+    <button  @click="topFunction()" id="myBtn" class="btn blue" v-show="top()">BACK TO TOP </button>
     <router-view></router-view>
     <!-- <us></us> -->
  </div>
@@ -47,7 +47,7 @@ export default {
       }
     }
   }
-  
+
 }
 </script>
 
@@ -59,7 +59,7 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
-  background-color: #DAE0E6; 
+  /* background-color: #DAE0E6;  */
   min-height:1000px;
 }
 

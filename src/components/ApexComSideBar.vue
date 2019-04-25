@@ -16,7 +16,7 @@
        <p id="description">{{description}}</p>
        <button id="subscribebutton" v-bind:class="{button1:subscribed,button:!subscribed}" v-on:mouseover="changeState('unsubscribe')" v-on:mouseleave="changeState('subscribed')" type="button" v-on:click="subscribe()">
        <span> {{state}} </span> </button>
-       <button id="createpostbutton" class="button" type="button">create post</button>
+       <button id="createpostbutton" class="button" type="button" v-on:click="createPost()">create post</button>
        <button id="deteteApexCom" v-show="isAdmin()" class="button" type="button" v-on:click="deleteAC()">delete</button>
        </div>
        </div>
@@ -33,11 +33,11 @@
     <div class="box" id="moderators box" v-show="moderators.length !==0">
       <h3 class="Header" id="moderators box header">Moderators</h3>
       <div class="content" >
-      <ul class="list" style="list-style-type:none;" id="moderatorslist">
-        <li  id="moderatorslistitem" v-for="moderator in moderators" :key="moderator.id">
-          <router-link class="accountLink" :to="{name:'UserProfile' , params: {userName:moderator.userName}}"> {{moderator.userName}}</router-link>
-        </li>
-      </ul>
+        <div id="moderatorsbox" class="box2" v-for="(moderator,index) in moderators" :key="moderator.id">
+          <router-link style="font-size: 14px;" class="accountLink" :to="{name:'UserProfile' , params: {userName:moderator.userName}}"> {{moderator.userName}}</router-link>
+          <button v-show="isAdmin()" style="width:35%; float: right; margin:0%" id="remove button" class="button1" v-on:click="deleteModerator(moderator.userName,index)">delete</button>
+        </div>
+      
     </div>
     </div>
       </div>
@@ -147,6 +147,18 @@ export default {
           this.state='subscribe';
     }
    },
+   /**
+       * if user is logged in , can go to create post or create community   
+      */
+      createPost: function(){
+        if( this.loggedIn )
+        {
+          this.$router.push('/Submit');
+        }
+        else{
+           this.$modal.show('demo-login');
+        }
+      },
       /**
       *check if user is an admin
       */
@@ -186,9 +198,18 @@ export default {
     })
       }
       else{
-        alert('login first,please');
+        this.$modal.show('demo-login');
       }
     },
+    deleteModerator:function(userName,index){
+          var data = AllServices.addOrDeleteModerator(userName,this.apexComName);
+          if(data){
+          this.moderators.splice(index, 1);
+          }
+          else{
+              alert('sorry something went wrong');
+              }
+      },
     getAbout(){
          AllServices.getAbout(this.ApexComName).then((about) =>{
          this.description=about.description;
@@ -262,8 +283,14 @@ export default {
 .box{
   margin-top: 0%;
   margin-bottom: 5%;
+  /* display:flow-root; */
+  display:block;
 }
-
+.box2{
+  margin-top: 0%;
+  margin-bottom: 7%;
+  display: block;
+}
 .content{
   margin-top:0%;
   margin-bottom: 0%;
@@ -358,6 +385,10 @@ color:#1a1a1b;
   #main{
     display:none
   }
+}
+#remove-button{
+  float: right;
+  /* display: inline; */
 }
 p{
   /* color:#7c7c7c;
