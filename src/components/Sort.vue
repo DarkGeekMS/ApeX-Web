@@ -110,5 +110,11 @@ li a:hover{
   color:black;
   background-color:#33a8ff2b; 
 }
+@media(max-width:71.5px){
+  div .list {
+    display: none
+  }
+  
+}
 </style>
 

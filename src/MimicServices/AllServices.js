@@ -59,10 +59,18 @@ export  const AllServices =new Vue({
     },
     forgetPass: function(user,email)
     {
-    return MimicAuth.ForgetPass(user,email,this.mimic);
+      return MimicAuth.ForgetPass(user,email,this.mimic);
+    },
+    setCode: function(code)
+    {
+      return MimicAuth.forgetPass2(code,this.mimic);
+    },
+    setPass: function(pass)
+    {
+      return MimicAuth.forgetPass3(pass,this.mimic);
     },
     getPosts:function(apexComName) {
-       return MimicDisplayPosts.getPostsData(this.mimic,apexComName);
+      return MimicDisplayPosts.getPostsData(this.mimic,apexComName);
     },
 	getAbout:function(apexComName) {
     var about=MimicApexCom.getAbout(this.mimic,apexComName);

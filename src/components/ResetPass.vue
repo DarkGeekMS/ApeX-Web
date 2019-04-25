@@ -1,32 +1,30 @@
 <template>
-<modal name="demo-sign" transition="pop-out" width="50%" height="70%" :clickToClose="false">
-  <demo-sign2-modal v-bind:email="this.email"> </demo-sign2-modal>
+<modal name="ResetPass" transition="pop-out" width="50%" height="70%" :clickToClose="false">
   <div class="box">
     <div class="box-part" id="bp-right"></div>
 
     <div class="box-part" id="bp-left">
       <div class="partition" id="partition-register">
+
         <button class="lead" id="closebtn" @click="close()"> X</button>
-       
+
         <div class="partition-title">
-        <h1> Join the worldwide conversation. </h1>
-        <p>
-            By having a Apex account, you can subscribe, vote, and  comment on all your favorite Apex content. <br/>
-            Sign up in just seconds.
-        </p>
+        <h1> Reset your new password here </h1>
         </div>
 
         <div class="partition-form">
 
-            <input id="Email" type="email" class="form-control" name="email"
-              placeholder="EMAIL"
-              v-model="email"
-              required autofocus>
-            <span id="EmailError" class="lead"> {{error}}  </span>
+             <input id="password" type="password"
+             placeholder="Password" class="form-control"
+             v-model="pass" name="password" v-on:keyup="restart()" required>
 
-            <div style="margin-top: 32px"></div>
-            <button id="Next" class="btn blue" style="display:block" @click.prevent="checkEmail()">NEXT</button>
+            <button id="Next" class="btn blue" style="display:block" @click.prevent="post()">RESET</button>
 
+            <span class="lead"> {{error}}  </span>
+            <p class = "lead" style = "fontSize:15px; color:blue;" > {{ congra }}  </p>
+
+            
+            
         </div>
 
       </div>
@@ -36,58 +34,75 @@
 </template>
 
 <script>
-import DemoSign2Modal  from './Sign2Modal.vue'
+import {AllServices} from '../MimicServices/AllServices.js'
+
 /**
  * @vue-data {string} [email=""] Email value
  * @vue-data {string} [error=""] error value
  */
 export default {
-  name: 'DemoSignModal',
-  components:{
-      DemoSign2Modal
-  },
+  name: 'ResetPass',
   data(){
       return{
-        email: '',
-        error: ''
+        pass:'',
+        error:'',
+        congra:''
       }
-  },
-  updated(){
-    this.$localStorage.set('emailVal', this.email)
   },
   methods:{
     /**
-     * check out if the email is valid or not
-     * @param {string} [email] - email value of the user   
-    */
-    validateEmail: function(email) {
-      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-    },
-    /**
      * check out the value of email is empty or invalid, and generate an error in this case, if not show the second modal and send value   
     */
-    checkEmail: function(){
-      if(this.email == '')
+    post: function(){
+      if(this.pass == '')
       {
-         this.error = 'Email is required'
+        this.error = 'Please enter your new password'
       }
-      else if(!(this.validateEmail(this.email)))
+      else if(this.pass.length < 6)
       {
-         this.error = 'please fix your email to continue'
+        this.error = 'Password must be at least 6 characters long'
       }
-      else{
-        this.$modal.show('demo-sign2');
-        this.error = ''
+      else
+      {
+        if(AllServices.getState()){
+          var check = AllServices.setPass(this.pass);
+          if(check)
+          {
+            this.congra = 'Now you can log in with your password ' ;
+            setTimeout(() =>this.close() , 1000)
+
+          }
+          else{
+            this.error =  this.$localStorage.get('error');
+          }
+        }
+        else {
+
+         AllServices.setPass(this.pass).then((data) => {
+         if(data)
+          {
+            this.congra = 'Now you can log in with your password ' ;
+            setTimeout(() =>this.close() , 1000)     
+          }
+          else{
+            this.error =  this.$localStorage.get('error');
+          }
+         })
+        }
       }
     },
-    close:function(){
-      this.$modal.hide('demo-sign');
-      this.$modal.hide('demo-login');
-      this.$modal.hide('ForgetUser');
+    restart: function()
+    {
+      this.error = '',
+      this.congra=''
+    },
+    close: function(){
+      this.$modal.hide('ResetPass');
+      this.$modal.hide('ResetCode');
       this.$modal.hide('ForgetPass');
-
+      this.$modal.hide('demo-login');
     }
-  }
+  },
 }
 </script>
 
@@ -96,6 +111,12 @@ body{
   display: grid;
   font-family: IBMPlexSans,sans-serif;
 }
+.box a{
+  text-decoration:none;
+  font-weight:500;
+  font-size:14px
+}
+$background_color: #404142;
 #closebtn
 {
   float:right;
@@ -146,8 +167,8 @@ body{
       line-height: 21px;
     }
     .partition-title h1{
-        font-size: 20px;
-        color:black
+      font-size: 20px;
+      color:black
     }
     .partition-form {
       padding: 0 20px;
@@ -160,8 +181,8 @@ body{
       margin-left:15px
     }
   }
-}
 
+}
 button.btn {
   outline: none;
   border: 0;
@@ -182,19 +203,20 @@ button.btn {
   
 }
 
-input[type=password],
-input[type=text] {
+input {
 display: block;
 box-sizing: border-box;
-margin-bottom: 4px;
-width: 100%;
+margin: 5px;
+width: 90%;
 font-size: 12px;
 line-height: 2;
-border: 0;
-border-bottom: 1px solid #DDDEDF;
 padding: 4px 8px;
 font-family: inherit;
 transition: 0.5s all;
-outline: none;
+}
+@media(max-width:750px){
+  div .partition-title p{
+    display: none
+  }
 }
 </style>

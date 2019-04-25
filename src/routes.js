@@ -29,8 +29,8 @@ export default[
     {path:'/',component:HomePage},
     {path:'/HomePage',name:'HomePage',component:HomePage},
     {path:'/Submit',name:'CreatePost',component:CreatePost},
-    {path:'/Search', name:'Search' , component:Search, props:true, children :[
-        {path:'users', component:Users },]},
+    {path:'/Search', name:'Search' , component:Search, children :[
+        {path:'users', component:Users } ]},
     {path:'/userprofile/:userName',name:'UserProfile',component:userprofile,props:true},
 
     {path:'/UserSettings',name:'UserSettings',component:UserSettings}

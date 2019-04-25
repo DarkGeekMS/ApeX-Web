@@ -1,6 +1,5 @@
 <template>
 <div>
-
  <demo-login-modal> </demo-login-modal>
  <demo-sign-modal> </demo-sign-modal>
  <nav class="navbar navbar-expand-lg navbar-light navbar-fixed-top" id="mainNav">
@@ -112,7 +111,7 @@ import $ from'jquery/dist/jquery.min.js'
   export default {
     components:{
       DemoLoginModal,
-      DemoSignModal
+      DemoSignModal,
     },
     data () {
       return {
@@ -255,25 +254,23 @@ input{
 }
 .log1{
   width:45%;
-  padding-left: 5px;
+  padding-right: -5px;
   margin:4px 1%;
 
 }
-/*@media(max-width:887px){
-  .has-search, div.sel{
-    width:30%;
-  }
-} */
-@media(max-width:57px){
-  div input,.has-search .form-control-feedback {
-    display: none
-  }
-  div .sel .caret {
+@media(max-width:106px){
+  div .sel{
     display: none
   }
 }
-@media(max-width:100px){
-  div .log {
+@media(max-width:232px){
+  div input,.has-search .form-control-feedback {
+    display: none
+  }
+  
+}
+@media(max-width:319px){
+  div .log, div .sel .caret {
     display: none
   }
 }

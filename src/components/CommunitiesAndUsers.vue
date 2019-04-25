@@ -1,6 +1,6 @@
 <template>
   <div id="mainDiv" >
-    <a href="" id="subDiv" v-show="exist" v-for='apex in apexs' :key="apex.id" > 
+    <a href="" id="subDiv" v-show="exist" v-for='(apex,index) in apexs' :key="index" > 
       <div id="sub1">
          <img width="20%" :src="'../../public/'+apex.avatar"/>
          <a class="name"> {{apex.name}} </a>
@@ -13,7 +13,7 @@
        
        <br/><br/>
     </a>
-    <a href="" id="subDiv" v-show="exist" v-for='user in users' :key="user.id" > 
+    <a href="" id="subDiv" v-show="exist" v-for='(user,index) in users' :key="'A'+index" > 
       <div id="sub1">
          <img width="20%" :src="'../../public/'+user.avatar"/>
          <a class="name"> {{user.name}} </a>
@@ -41,6 +41,11 @@ import {AllServices} from '../MimicServices/AllServices.js'
 */
 
 export default {
+ /* props:{
+    myProperty:{
+      type: Object
+    }
+  }, */
   data(){
     return{
       exist:true,
@@ -58,7 +63,8 @@ export default {
     }
     else{
       this.apexs = result[0],
-      this.users = result[1]
+      this.users = result[1],
+      this.exist = true
 
     }
    
@@ -70,24 +76,22 @@ export default {
 <style scoped>
 *{
   display: inline-block;
+  box-sizing: border-box; 
+  text-decoration: none;
   margin:0%;
 }
 #mainDiv{
-    margin:2% 3%;
-    width: 73%;
+    margin:2%;
+    width: 70%;
     height:100%;
     background-color: white;
-    height:100%;
-    border-radius:7%;
-    box-sizing: border-box; 
+    border-radius:15px;
 }
 
 #subDiv{
   display: block;
   width:100%;
   height:100%;
-  text-decoration: none;
-  box-sizing: border-box;
   margin: 3% auto;
   padding-left:1% ;
 
@@ -105,7 +109,6 @@ img{
 .name{
   color:black;
   margin-left:2%;
-  text-decoration: none;
 }
 .memb{
     font-size: 13px;
@@ -130,41 +133,36 @@ img{
   overflow-wrap: break-word;
   overflow: hidden;
   margin-left: 5%;
-  width:60%;
-  box-sizing: border-box;
-  
+  width:60%;  
 }
 .log{
   float:right;
   margin-right: 1%;
 }
-@media(max-width:1050px){
+@media(max-width:1250px){
   #mainDiv{
-    width:60%;
-  }
-}
-@media(max-width:964.7px){
-  #mainDiv{
-    width:50%;
-  }
-}
-@media(max-width:800px){
-  #mainDiv{
-    width:40%;
-  }
-  .about{
-    width:30%;
+    width:61%;
   }
 }
 
-@media(max-width:529px){
+@media(max-width:945px){
   #mainDiv{
-    width:30%;
-  }
-  #sub1{
-    display: none
+    width:95%;
   }
 }
+
+@media(max-width:800px){
+  div .about{
+    width:40%;
+  }
+}
+ 
+@media(max-width:529px){
+  div .about{
+    display: none
+  }
+} 
+
 
 
 </style>

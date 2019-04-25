@@ -6,7 +6,8 @@ export  const MimicAuth =new Vue({
       email: 'ayat.mostafa998@gmail.com',
       username: 'ayatmostafa',
       password: '0000000',
-      token: '01'
+      token: '01',
+      code: '1234'
     }
   },
   methods:{
@@ -120,6 +121,50 @@ export  const MimicAuth =new Vue({
              return true;
           }).catch(function () {
             self.$localStorage.set('error','Username is not found');
+             return false;
+          });
+      }
+    },
+    forgetPass2: function(code,mimic)
+    {
+      if(mimic == true)
+      {
+        if( code == this.code )
+        {
+          return true;
+        }
+        else
+        {
+          this.$localStorage.set('error','Invalid code');
+          return false;
+        }
+      }
+      else{
+        var self = this;
+        return axios.post('http://127.0.0.1:8001/api/mail_verify', {
+            username : code
+          }).then(response => {
+             return true;
+          }).catch(function () {
+            self.$localStorage.set('error','Invalid code');
+             return false;
+          });
+      }
+    },
+    forgetPass3: function(pass,mimic)
+    {
+      if(mimic == true)
+      {
+        return true;
+      }
+      else{
+        var self = this;
+        return axios.post('http://127.0.0.1:8001/api/mail_verify', {
+            password : pass
+          }).then(response => {
+             return true;
+          }).catch(function () {
+            self.$localStorage.set('error','Invalid password');
              return false;
           });
       }
