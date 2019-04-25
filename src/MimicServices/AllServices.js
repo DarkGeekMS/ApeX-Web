@@ -8,6 +8,7 @@ import { MimicPost } from './Post.js'
 import { MimicComment } from './Comments.js'
 import { MimicSearch } from './Search.js'
 import {MimicCreateApexCom} from './CreateApexCom.js'
+import { MimicMessage } from './Messages.js'
 export  const AllServices =new Vue({
   data(){
     return{
@@ -15,6 +16,7 @@ export  const AllServices =new Vue({
     }
   },
   methods:{
+
     getState(){
       return this.mimic
     },
@@ -45,7 +47,7 @@ export  const AllServices =new Vue({
 
     signUp: function(email, user,pass)
     {
-       return MimicAuth.SignUp(email, user,pass,this.mimic);
+      return MimicAuth.SignUp(email, user,pass,this.mimic);
     },
 
     logOut: function()
@@ -59,10 +61,18 @@ export  const AllServices =new Vue({
     },
     forgetPass: function(user,email)
     {
-    return MimicAuth.ForgetPass(user,email,this.mimic);
+      return MimicAuth.ForgetPass(user,email,this.mimic);
+    },
+    setCode: function(code)
+    {
+      return MimicAuth.forgetPass2(code,this.mimic);
+    },
+    setPass: function(pass)
+    {
+      return MimicAuth.forgetPass3(pass,this.mimic);
     },
     getPosts:function(apexComName) {
-       return MimicDisplayPosts.getPostsData(this.mimic,apexComName);
+      return MimicDisplayPosts.getPostsData(this.mimic,apexComName);
     },
 	getAbout:function(apexComName) {
     var about=MimicApexCom.getAbout(this.mimic,apexComName);
@@ -102,6 +112,11 @@ deletePost:function(name,ID){
 
 
   return MimicPost.deletePost(name,ID,this.mimic);
+},
+
+EditPost: function(ID,content){
+  var data=MimicPost.EditPost(ID,content,this.mimic);
+  return data;
 },
 
 userType:function(){
@@ -148,8 +163,28 @@ EditComment: function(ID,content){
   var data=MimicComment.EditComment(ID,content,this.mimic);
   return data;
 },
+sendMessage: function(rec,title,cont){
+  var data=MimicMessage.sendMessage(rec,title,cont,this.mimic);
+  return data;
+},
+deleteMessage: function(ID){
+  var data=MimicMessage.deleteMessage(ID,this.mimic);
+  return data;
+},
+blockSender:function(ID){
+  var data=MimicMessage.blockUser(ID,this.mimic);
+  return data;
+},
+getAllMessages:function(){
+  var data=MimicMessage.getAllMessages(this.mimic);
+  return data;
+},
 getUserInfoByIdforGuest:function(userName){
   var data=MimicUserProfile.getUserInfoByIdforGuest(this.mimic,userName);
+  return data;
+},
+getReplies: function(ID){
+  var data=MimicMessage.getReplies(ID,this.mimic);
   return data;
 },
 blockUser:function(userName){

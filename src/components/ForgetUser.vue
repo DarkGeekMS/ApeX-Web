@@ -1,31 +1,35 @@
 <template>
-<modal name="demo-sign" transition="pop-out" width="50%" height="70%" :clickToClose="false">
-  <demo-sign2-modal v-bind:email="this.email"> </demo-sign2-modal>
+<modal name="ForgetUser" transition="pop-out" width="50%" height="70%" id="demo1" :clickToClose="false">
+ <!-- <demo-login-modal> </demo-login-modal> -->
+ 
   <div class="box">
     <div class="box-part" id="bp-right"></div>
 
     <div class="box-part" id="bp-left">
       <div class="partition" id="partition-register">
+        
         <button class="lead" id="closebtn" @click="close()"> X</button>
-       
         <div class="partition-title">
-        <h1> Join the worldwide conversation. </h1>
+        <h1> Recover your username </h1>
         <p>
-            By having a Apex account, you can subscribe, vote, and  comment on all your favorite Apex content. <br/>
-            Sign up in just seconds.
+            Don't worry! You may have forgotten your username, but we can help you out. Enter your email address below and we'll email you your username.
         </p>
         </div>
 
         <div class="partition-form">
 
             <input id="Email" type="email" class="form-control" name="email"
-              placeholder="EMAIL"
-              v-model="email"
-              required autofocus>
-            <span id="EmailError" class="lead"> {{error}}  </span>
-
+              placeholder="EMAIL" v-model="email" v-on:keyup="restart()" required autofocus>
+            
             <div style="margin-top: 32px"></div>
-            <button id="Next" class="btn blue" style="display:block" @click.prevent="checkEmail()">NEXT</button>
+            <button id="Next" class="btn blue" style="display:block" @click.prevent="post()">EMAIL ME</button>
+            <span class="lead"> {{validate}}  </span>
+            
+            <span id="EmailError" class="lead"> {{errorE}}  </span>
+
+            <p class = "lead" style = "fontSize:15px; color:blue;" > {{ congra }}  </p>
+            <a id="forgetname" class="btn btn-link" @click="$modal.show('demo-login')"> LOG IN  </a>
+           <a id="forgetpass" class="btn btn-link" @click="$modal.show('demo-sign')"> SIGN UP </a>
 
         </div>
 
@@ -36,21 +40,32 @@
 </template>
 
 <script>
-import DemoSign2Modal  from './Sign2Modal.vue'
+//import DemoLoginModal  from './LoginModal.vue'
+import {AllServices} from '../MimicServices/AllServices.js'
 /**
  * @vue-data {string} [email=""] Email value
  * @vue-data {string} [error=""] error value
  */
 export default {
-  name: 'DemoSignModal',
+  name: 'ForgetUser',
   components:{
-      DemoSign2Modal
+  //   DemoLoginModal
   },
   data(){
       return{
+        username:'',
         email: '',
-        error: ''
+        errorE: '',
+        errorU:'',
+        validate:'',
+        congra:''
       }
+    },
+  created () {
+    this.errorU = '',
+    this.errorE ='',
+    this.validate='',
+    this.congra=''
   },
   updated(){
     this.$localStorage.set('emailVal', this.email)
@@ -61,33 +76,59 @@ export default {
      * @param {string} [email] - email value of the user   
     */
     validateEmail: function(email) {
-      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
     },
     /**
      * check out the value of email is empty or invalid, and generate an error in this case, if not show the second modal and send value   
     */
-    checkEmail: function(){
+    post: function(){
       if(this.email == '')
       {
-         this.error = 'Email is required'
+        this.errorE = 'Please enter an email address'
       }
       else if(!(this.validateEmail(this.email)))
       {
-         this.error = 'please fix your email to continue'
+        this.errorE = 'That email is invalid'
       }
-      else{
-        this.$modal.show('demo-sign2');
-        this.error = ''
+      else
+      {
+          this.validate =  this.$localStorage.get('error');
+        if(AllServices.getState()){
+          var check = AllServices.forgetPass(this.username, this.email);
+          if(check)
+          {
+            this.congra = "If the provided email address matches that account's verified email address, you'll receive an email with the reset link shortly." ;
+          }
+          else{
+            this.validate =  this.$localStorage.get('error');
+          }
+        }
+        else {
+
+         AllServices.forgetPass(this.username, this.email).then((data) => {
+         if(data)
+          {
+            this.congra = "If the provided email address matches that account's verified email address, you'll receive an email with the reset link shortly." ;
+          }
+          else{
+            this.validate =  this.$localStorage.get('error');
+          }
+         }) 
+        } 
       }
     },
-    close:function(){
-      this.$modal.hide('demo-sign');
-      this.$modal.hide('demo-login');
+    restart: function()
+    {
+      this.errorU = '',
+      this.errorE ='',
+      this.validate='',
+      this.congra=''
+    },
+    close: function(){
       this.$modal.hide('ForgetUser');
-      this.$modal.hide('ForgetPass');
-
+      this.$modal.hide('demo-login');
     }
-  }
+  },
 }
 </script>
 
@@ -95,6 +136,12 @@ export default {
 body{
   display: grid;
   font-family: IBMPlexSans,sans-serif;
+}
+$background_color: #404142;
+.box a{
+  text-decoration:none;
+  font-weight:500;
+  font-size:14px
 }
 #closebtn
 {
@@ -146,8 +193,8 @@ body{
       line-height: 21px;
     }
     .partition-title h1{
-        font-size: 20px;
-        color:black
+      font-size: 20px;
+      color:black
     }
     .partition-form {
       padding: 0 20px;
@@ -160,8 +207,8 @@ body{
       margin-left:15px
     }
   }
-}
 
+}
 button.btn {
   outline: none;
   border: 0;
@@ -174,27 +221,29 @@ button.btn {
   font-weight: 600;
   min-width: 25%;
   margin-bottom: 5%;
-  margin-top: 10%;
-  margin-left:10px;
+  margin-top: 8%;
+  margin-left:5px;
   &:hover {
     background: #20a0ff;
   }
   
 }
 
-input[type=password],
-input[type=text] {
+input {
 display: block;
 box-sizing: border-box;
 margin-bottom: 4px;
-width: 100%;
+width: 90%;
 font-size: 12px;
 line-height: 2;
-border: 0;
-border-bottom: 1px solid #DDDEDF;
-padding: 4px 8px;
+padding: 3.5% 4%;
 font-family: inherit;
 transition: 0.5s all;
-outline: none;
+}
+
+@media(max-width:595px){
+  div .partition-title p{
+    display: none
+  }
 }
 </style>

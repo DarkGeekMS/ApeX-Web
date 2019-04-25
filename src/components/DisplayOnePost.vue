@@ -6,8 +6,8 @@
   <post v-bind:postData="onePostData" class="mainpost" id="postModal"></post>
   </div>
  <ApexComSideBar class="sidebar"></ApexComSideBar>
-
-      <CommentParent postID='t3_10' class="cmt"></CommentParent>
+   
+      <CommentParent v-show="!this.locked" postID='t3_10' class="cmt"  v-on:lockComment="lock($event)"></CommentParent>
 
 </div>
 </modal>
@@ -26,6 +26,8 @@ export default {
 name: 'DemoOnePost',
 props:{
   onePostData:{},
+  
+
 },
 components:
 {
@@ -33,8 +35,26 @@ components:
   'CommentParent':CommentParent,
   'ApexComSideBar':ApexComSideBar
 },
+methods:{
+  lock:function(event){
+    this.locked=true;
+    alert('done');
+if(event==='Lock'){
+     this.locked=false;
+     alert(this.locked);
+}
+else{this.locked=true;
+     }
+  }
 
+},
+  data(){
+    return{
 
+      locked:false
+    };
+      }
+      
 }
 </script>
 

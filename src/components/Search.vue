@@ -11,13 +11,15 @@
        <li><router-link to="/Search/users" exact> Communities and users </router-link></li>
       </ul>
     </div>
-    <div v-if="this.$route.name == 'Search'" id="DisplayPosts">  
+    <div v-if="this.$route.name == 'Search'" v-show="exist" id="DisplayPosts">  
       <div id="PostContainer" v-for="onePost in posts" :key="onePost.name">
          <post :postData="onePost" v-on:showUp="showPost"></post>
       </div>
-      <DemoOnePost  id="PostModal" :onePostData="postInfo" ></DemoOnePost>
-    </div>  
-    <SearchSideBar></SearchSideBar>
+      <DemoOnePost id="PostModal" :onePostData="postInfo" ></DemoOnePost>
+    </div> 
+    <div v-if="this.$route.name == 'Search'" v-show="!exist" id="subDiv"> {{error}} ''{{this.$localStorage.get('search')}}'' 
+    </div> 
+    <SearchSideBar v-show="login"></SearchSideBar>
     <router-view></router-view>
     
   </div>
@@ -35,11 +37,6 @@ import {AllServices} from '../MimicServices/AllServices.js'
  * @vue-data {object} [posts] posts that reflect with search value
 */
 export default {
- /* props:{
-    myProperty:{
-      type: String
-    }
-  }, */
   components:{
     'post':post,
     'DemoOnePost':DemoOnePost,
@@ -49,8 +46,10 @@ export default {
   data(){
     return{
       searchValue: '',
+      login:false,
       posts: [],
       error: '',
+      exist:true,
       postInfo:'',
 
     }
@@ -58,10 +57,11 @@ export default {
   created(){
     setInterval(() => {
         this.searchValue = this.$localStorage.get('search');
+        this.login = this.$localStorage.get('login');
     }, 1000)
     
   },
-  mounted()
+  beforeUpdate()
   {
     var result = AllServices.searchPosts();
     if( typeof result === 'string')
@@ -70,7 +70,8 @@ export default {
         this.error = result
     }
     else{
-      this.posts= result
+      this.posts= result,
+      this.exist = true
     }
   },
   methods:{
@@ -79,7 +80,7 @@ export default {
   */
   showPost:function(post)
   {
-  this.postInfo=post;
+    this.postInfo=post;
   },
   }
 }
@@ -141,4 +142,28 @@ export default {
   display:inline-block;
 }
 
+#subDiv{
+  display: inline-block;
+  padding: 2%;
+  margin: 2% 1.5%;
+  width: 70%;
+  height:100%;
+  background-color: white;
+  height:100%;
+  border-radius:15px;
+  text-align:center;
+  font-size: 17px;
+  font-weight: 600
+
+}
+@media(max-width:1250px){
+  #subDiv{
+    width:62%;
+  }
+}
+@media(max-width:945px){
+  #subDiv{
+    width:95%;
+  }
+}
 </style>

@@ -12,7 +12,7 @@ export  const MimicComment =new Vue({
           {
             var promise1 = new Promise(function(resolve, reject) {
                 setTimeout(function() {
-                  resolve(parentID+"_Child");
+                  resolve({comment:parentID+"_Child"});
                 }, 300);
               });
     return promise1;
@@ -59,7 +59,6 @@ export  const MimicComment =new Vue({
                     return true;
                  })
                 .catch(function (error) {
-                    console.log(ID,self.$localStorage.get('token'));
                     return false;
                  });
         }

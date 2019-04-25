@@ -1,4 +1,5 @@
 <template>
+  <div id="one">
   <div id="main">
      <img width="70px" src="../../public/AMFz23O.jpg" >
 
@@ -15,6 +16,7 @@
      <button  type="button" class="btn btn-primary " data-toggle="button" aria-pressed="false" autocomplete="off" @click="post()">CREATE POST</button>
      <button v-show="login" style=" cursor: no-drop" type="button" class="btn btn-info" data-toggle="button" aria-pressed="false" autocomplete="off">CREATE COMMUNITY</button>
   </div>
+</div>
 </template>
 
 <script>
@@ -72,28 +74,35 @@ p{
 
 }
 button{
-  width:80%;
-  height:40px;
+  width:90%;
+  height:37px;
   font-weight: 500;
   font-size: 17px;
-  margin-left: 9%;
-  margin-top:5%;
-  border-radius: 20%;
+  margin-left: 5%;
+  margin-top:4%;
+  border-radius: 10px;
 }
 
 #main{
-  float:right;
-  width:21%;
+  display: inline-block;
+  width:320px;
   max-height: 50%;
   color:black;
   background-color: white;
-  border-radius: 5%;
-  margin-top: 4%;
-  margin-right: 14%;
+  border-radius: 10px;
+  height: auto;
+  padding: 3%
+  
 } 
+#one
+{
+  position: absolute;
+  top: 130px;
+  left: 65%;
+}
 
-@media(max-width:960px){
-  #main{
+@media(max-width:933px){
+  #one{
     display:none
   }
 }

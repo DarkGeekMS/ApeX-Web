@@ -1,8 +1,14 @@
 <template>
-<modal name="ForgetPass" transition="pop-out" :width="modalWidth" :height="450" id="demo1">
+<modal name="ForgetPass" transition="pop-out" width="50%" height="70%" :clickToClose="false">
+  <ResetCode></ResetCode>
+<!--  <demo-login-modal> </demo-login-modal> -->
   <div class="box">
+    <div class="box-part" id="bp-right"></div>
+
     <div class="box-part" id="bp-left">
       <div class="partition" id="partition-register">
+
+        <button class="lead" id="closebtn" @click="close()"> X</button>
 
         <div class="partition-title">
         <h1> Reset your password </h1>
@@ -22,39 +28,40 @@
             <input id="Email" type="email" class="form-control" name="email"
               placeholder="EMAIL" v-model="email" v-on:keyup="restart()" required autofocus>
             
-            <div style="margin-top: 32px"></div>
             <button id="Next" class="btn blue" style="display:block" @click.prevent="post()">EMAIL ME</button>
             <span class="lead"> {{validate}}  </span>
             
             <span id="EmailError" class="lead"> {{errorE}}  </span>
 
             <p class = "lead" style = "fontSize:15px; color:blue;" > {{ congra }}  </p>
+            <a id="forgetname" class="btn btn-link" @click="$modal.show('demo-login')"> LOG IN  </a>
+           <a id="forgetpass" class="btn btn-link" @click="$modal.show('demo-sign')"> SIGN UP </a>
 
         </div>
 
       </div>
     </div>
-    <div class="box-part" id="bp-right"> <img src="../../public/form.jpg" height="100%"></div>
   </div>
 </modal>
 </template>
 
 <script>
+//import DemoLoginModal  from './LoginModal.vue'
+import ResetCode  from './ResetCode.vue'
 import {AllServices} from '../MimicServices/AllServices.js'
 
-const MODAL_WIDTH = 656;
 /**
  * @vue-data {string} [email=""] Email value
  * @vue-data {string} [error=""] error value
- * @vue-data {integer} [modalWidth=656] width of modal
  */
 export default {
   name: 'ForgetPass',
   components:{
+  //   DemoLoginModal,
+     ResetCode
   },
   data(){
       return{
-        modalWidth: MODAL_WIDTH,
         username:'',
         email: '',
         errorE: '',
@@ -64,14 +71,10 @@ export default {
       }
     },
   created () {
-    this.modalWidth = window.innerWidth < MODAL_WIDTH ? MODAL_WIDTH / 2 : MODAL_WIDTH,
     this.errorU = '',
     this.errorE ='',
     this.validate='',
     this.congra=''
-  },
-  updated(){
-    this.$localStorage.set('emailVal', this.email)
   },
   methods:{
     /**
@@ -79,8 +82,7 @@ export default {
      * @param {string} [email] - email value of the user   
     */
     validateEmail: function(email) {
-      var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      return re.test(String(email).toLowerCase());
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     },
     /**
      * check out the value of email is empty or invalid, and generate an error in this case, if not show the second modal and send value   
@@ -104,11 +106,12 @@ export default {
           var check = AllServices.forgetPass(this.username, this.email);
           if(check)
           {
-            this.congra = "If the provided email address matches that account's verified email address, you'll receive an email with the reset link shortly." ;
+            this.congra = "If the provided email address matches that account's verified email address, you'll receive a code with the reset link shortly." ;
+            setTimeout(() =>this.$modal.show('ResetCode') , 4000)
+
           }
           else{
             this.validate =  this.$localStorage.get('error');
-            console.log(this.validate);
           }
         }
         else {
@@ -116,7 +119,8 @@ export default {
          AllServices.forgetPass(this.username, this.email).then((data) => {
          if(data)
           {
-            this.congra = "If the provided email address matches that account's verified email address, you'll receive an email with the reset link shortly." ;
+            this.congra = "If the provided email address matches that account's verified email address, you'll receive a code with the reset link shortly." ;
+            setTimeout(() =>this.$modal.show('ResetCode') , 4000)
           }
           else{
             this.validate =  this.$localStorage.get('error');
@@ -132,6 +136,10 @@ export default {
       this.validate='',
       this.congra=''
     },
+    close: function(){
+      this.$modal.hide('ForgetPass');
+      this.$modal.hide('demo-login');
+    }
   },
 }
 </script>
@@ -141,12 +149,28 @@ body{
   display: grid;
   font-family: IBMPlexSans,sans-serif;
 }
+.box a{
+  text-decoration:none;
+  font-weight:500;
+  font-size:14px
+}
 $background_color: #404142;
+#closebtn
+{
+  float:right;
+  margin:7px -5px;
+  border:0;
+  color:grey;
+  width:22px;
+  height:25px;
+  font-size:19px;
+  background-color:white;
+}
 .box {
   background: white;
   overflow: hidden;
-  width: 1000px;
-  height: 450px;
+  width: 100%;
+  height: 100%;
   border-radius: 2px;
   box-sizing: border-box;
   box-shadow: 0 0 40px black;
@@ -158,9 +182,13 @@ $background_color: #404142;
     vertical-align: top;
     box-sizing: border-box;
     height: 100%;
-    width: 50%;
+    width: 80%;
     &#bp-right {
+      background:url('../../public/form2.png') ;
+      background-size:cover;
+      background-repeat: no-repeat;
       border-left: 1px solid #eee;
+      width:18%   
     }
   }
   .partition {
@@ -172,13 +200,13 @@ $background_color: #404142;
       width: 100%;
       letter-spacing: 1px;
       font-family: Noto Sans,sans-serif;
-        font-size: 14px;
-        font-weight: 500;
-        line-height: 21px;
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 21px;
     }
     .partition-title h1{
-        font-size: 20px;
-        color:black
+      font-size: 20px;
+      color:black
     }
     .partition-form {
       padding: 0 20px;
@@ -192,71 +220,41 @@ $background_color: #404142;
     }
   }
 
-  .autocomplete-fix {
-    position: absolute;
-    visibility: hidden;
-    overflow: hidden;
-    opacity: 0;
-    width: 0;
-    height: 0;
-    left: 0;
-    top: 0;
-  }
 }
-/*.pop-out-enter-active,
-.pop-out-leave-active {
-  transition: all 0.5s;
-}
-.pop-out-enter,
-.pop-out-leave-active {
-  opacity: 0;
-  transform: translateY(24px);
-} */
-
 button.btn {
   outline: none;
-  background: white;
   border: 0;
-  padding: 10px 18px;
+  padding: 10px 25px;
   cursor: pointer;
   border-radius: 3px;
   color: white;
   box-shadow: 0 4px 8px rgba(#20a0ff, .3);
   background: #4db3ff;
   font-weight: 600;
-  border-radius: 3px;
-  min-width: 90px;
-  margin-bottom: 8px;
-  margin-top: 8px;
-  margin-right: 8px;
+  min-width: 25%;
+  margin-bottom: 5%;
+  margin-top: 10%;
+  margin-left:10px;
   &:hover {
     background: #20a0ff;
   }
-  &.green {
-    box-shadow: 0 4px 8px rgba(#50C9BA, .3);
-    background: #50C9BA;
-    &:hover {
-     background: mix(#50C9BA, black, 95%);
-    }
-  }
-  &.red {
-    box-shadow: 0 4px 8px rgba(#F21368, .3);
-    background: #F21368;
-    &:hover {
-      background: mix(#F21368, black, 95%);
-    }
-  }
+  
 }
 
 input {
 display: block;
 box-sizing: border-box;
 margin-bottom: 4px;
-width: 100%;
+width: 90%;
 font-size: 12px;
 line-height: 2;
 padding: 4px 8px;
 font-family: inherit;
 transition: 0.5s all;
+}
+@media(max-width:750px){
+  div .partition-title p{
+    display: none
+  }
 }
 </style>

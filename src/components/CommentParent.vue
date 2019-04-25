@@ -2,7 +2,7 @@
   <div id = "CommentParent" v-bind:style="{marginLeft: 5 +'%'}">
     <WriteComment buttonType="0" v-bind:parentID="postID" v-on:Comment="addComment" v-bind:style="{width: 55 +'%'}"></WriteComment>
     <div v-for = "comment in comments" :key="comment.user">
-      <Comment v-on:Delete="deleteComment"  v-on:Reply2="addReply" v-on:Edit="editComment" v-bind:user= comment.user  v-bind:level= comment.level v-bind:content= comment.content v-bind:idx=comment.idx v-bind:parentIdx=comment.parentIdx v-bind:parentID=comment.parentID v-bind:ID=comment.currentID v-bind:date=comment.date></Comment>
+      <Comment v-on:Delete="deleteComment"  v-on:Reply2="addReply" v-on:Edit="editComment" v-bind:user= comment.user  v-bind:level= comment.level v-bind:content= comment.content v-bind:con= comment.con v-bind:idx=comment.idx v-bind:parentIdx=comment.parentIdx v-bind:parentID=comment.parentID v-bind:ID=comment.currentID v-bind:date=comment.date></Comment>
     </div>
   </div>
 </template>
@@ -38,17 +38,17 @@ export default {
       }
   },
   methods:{
-      addComment:function(cont,use,pID,cID){
+      addComment:function(cont,con,use,pID,cID){
         if (cont!='')
-          this.comments.push({user:this.$localStorage.get('userName'), content:cont, idx:this.comments.length,level:0,parentIdx:-1,parentID:pID,currentID:cID, date:new Date()});
+          this.comments.push({user:this.$localStorage.get('userName'), content:cont,con:con , idx:this.comments.length,level:0,parentIdx:-1,parentID:pID,currentID:cID, date:new Date()});
           else
           alert("empty text not allowed!");
       },
-      addReply:function(cont,parent,l,pID,cID){
+      addReply:function(cont,con,parent,l,pID,cID){
         if (cont!='')
         {
           var i = parent+1;
-          this.comments.push({user:this.$localStorage.get('userName'), content:cont ,idx:i ,level:l,parentIdx:parent,parentID:pID,currentID:cID, date:new Date() });
+          this.comments.push({user:this.$localStorage.get('userName'), content:cont,con:con ,idx:i ,level:l,parentIdx:parent,parentID:pID,currentID:cID, date:new Date() });
           var rep = this.comments.pop();
           for (var x = this.comments.length;x>i;x--){
             this.comments[x]=this.comments[x-1];
@@ -64,9 +64,11 @@ export default {
         }
 
       },
-      editComment:function(content,i){
-         if (content!='')
+      editComment:function(content,con,i){
+         if (content!=''){
           this.comments[i].content=content;
+          this.comments[i].con=con;
+         }
           else
         alert("empty text not allowed!");
 

@@ -18,27 +18,9 @@
 
     data () {
       return {
-        login: false
       }
-    },
-    created () {
-      setInterval(() => {
-        this.login = this.$localStorage.get('login')
-      }, 1000)
     },
     methods:{
-      /**
-       * if user is logged in , can go to create post or create community   
-      */
-      post: function(){
-        if( this.$localStorage.get('login') )
-        {
-          this.$router.push('/Submit');
-        }
-        else{
-           this.$modal.show('demo-login');
-        }
-      }
     }
 }
 </script>
@@ -65,8 +47,8 @@ button{
   font-weight: 500;
   font-size: 17px;
   margin-left: 9%;
-  margin-top:5%;
-  border-radius: 20%;
+  margin:5% 10%;
+  border-radius: 15px;
 }
 .think{
   width:20%;
@@ -76,7 +58,7 @@ button{
 
 #main{
   float:right;
-  width:20%;
+  width:300px;
   max-height: 50%;
   color:black;
   background-color: white;
@@ -85,7 +67,7 @@ button{
   margin-right: 15px;
 } 
 
-@media(max-width:960px){
+@media(max-width:945px){
   #main{
     display:none
   }

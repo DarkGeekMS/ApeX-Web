@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import axios from 'axios'
-import App from '../App.vue'
 
 export  const MimicSearch =new Vue({
   data(){
@@ -77,9 +76,10 @@ export  const MimicSearch =new Vue({
     {
       if(mimic ==  true)
       {
-         if(this.$localStorage.get('search') == this.searchValue)
+        var posts = [];
+         if(this.$localStorage.get('search') == this.searchValue  )
          {
-            var posts = [
+            posts = [
              {
               apex_id:1,
               content:'Experience enjoyable JavaScript development with WebStorm. With smart code completion, safe refactoring, and first-class support for Node.js, Angular and React. Download free trial 😀😂🍔😍',
@@ -89,6 +89,19 @@ export  const MimicSearch =new Vue({
               votes:150
             },
             {
+              apex_id:1,
+              content:'Experience enjoyable JavaScript development with WebStorm. With smart code completion, safe refactoring, and first-class support for Node.js, Angular and React. Download free trial 😀😂🍔😍',
+              id:1,
+              postedby:'AyatMostafa',
+              title:'posttitle',
+              votes:150
+            }]
+            return posts
+         }
+         else if(this.$localStorage.get('search')=="Nada")
+         {
+             posts = [
+             {
               apex_id:1,
               content:'Experience enjoyable JavaScript development with WebStorm. With smart code completion, safe refactoring, and first-class support for Node.js, Angular and React. Download free trial 😀😂🍔😍',
               id:1,
