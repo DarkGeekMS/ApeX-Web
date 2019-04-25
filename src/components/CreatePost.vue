@@ -9,9 +9,10 @@
     </div>
 
       <div class="form-group dropApex" >
-        <select class="form-control" name="category" @change="handleChange">
+        <select id="selectList" class="form-control" name="category" @change="handleChange">
           <option>choose a community</option>
-           <option v-for="name in apexNames">{{name}}</option>         
+           <!-- <option v-for="name in apexNames">{{name}}</option>          -->
+          
                    
           </select>
        </div>
@@ -151,6 +152,7 @@ export default {
         ],
         switchTo:'Switch to Fancy Pants Editor',
         normal:true,
+        indx:null,
         enable:true,
         token:'',
         apexComId:'',
@@ -189,14 +191,17 @@ export default {
       else{
         this.switchTo='Switch to Fancy Pants Editor';
       }
-   console.log(this.normal);
-   console.log(this.switchTo);
+  /* console.log(this.normal);
+   console.log(this.switchTo);*/
       },
-handleChange(e){
+handleChange(){
 
-if(e.target.options.selectedIndex > -1) {
-            console.log(e.target.options[e.target.options.selectedIndex].dataset.foo)
-        }
+var sel = document.getElementById('selectList');
+
+var opt = sel.options[sel.selectedIndex];
+indx=sel.selectedIndex;
+// display value property of select list (from selected option)
+//console.log( sel.value );
 
 },
      /**
@@ -206,7 +211,7 @@ if(e.target.options.selectedIndex > -1) {
 
          Enable(){
 
-	 if(document.getElementById("textsend").value==="" || document.getElementById("usr").value==="")  {
+	 if(document.getElementById("textsendnormal").value==="" || document.getElementById("usr").value==="")  {
             document.getElementById('button').disabled = true;
         } else {
             document.getElementById('button').disabled = false;
@@ -285,7 +290,7 @@ if(e.target.options.selectedIndex > -1) {
 
     submitPost(){
        this.videoUrl=document.getElementById('textsend3').value;
-       this.apexComId='';//TODO
+       this.apexComId=apexNames[indx].id;
        this.bodyPost=document.getElementById('textsend').value;
        this.imgName=document.getElementById('imgId').src;
 

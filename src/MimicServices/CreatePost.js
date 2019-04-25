@@ -14,7 +14,7 @@ token:'1',
   methods:{
     submitPost: function(videoUrl,apexComId,bodyPost,imgName,token,isLocked,mimic){
       
-      if(true){
+      if(mimic){
          if(token=='1' && apexComId=='1'){
             return true;
          }
