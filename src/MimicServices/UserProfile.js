@@ -7,116 +7,213 @@ export  const MimicUserProfile =new Vue({
       if(mimic){
   var profileInfo={
       userName:'',
-      image:'',
+      image:'https://i.imgur.com/AMFz23O.jpg',
       karma:9,
       saved:[{},{}],
       hidden:[{},{}],
-      reports:[{},{}],
+      // reports:[{},{}],
       personalPosts:[{},{}],
+      blockList:[
+        {userName:'user1'},
+  {userName:'user2'},
+  {userName:'user3'},
+  {userName:'user4'}
+      ],
       cakeDay:'March 15, 2019',
+      reports:[
+        {post:{
+        id:'555',
+        posted_by:'Nourhan',
+        apex_id:'555',
+        title:'dj',
+        content:'Experience enjoyable JavaScript development with WebStorm. With smart code completion, safe refactoring, and first-class support for Node.js, Angular and React. Download free trial 😀😂🍔😍',
+        locked:false,
+        commenetnum:5,
+        votes:9,
+        img_name:'',
+        video_url:'https://www.youtube.com/embed/Va0Rq147SRU'},
+        reason:"It's threatening self-harm or suicide",
+        id:8099,
+        fullName:'nourhan'
+      },
+      // {comment:{
+      //   content:'this is the review report mimic service',
+      //   idx:9,
+      //   level:1,
+      //   parentIdx:67,
+      //   parentID:9,
+      //   ID:9,
+      //   date:'march 9 2019'
+      //   },
+      //   reason:"It's personal and confidential information",
+      // },
+      ],
   }
-  return profileInfo;
+    var promise = new Promise(function(resolve) {
+        setTimeout(function() {
+          resolve(profileInfo);
+        }, 300);
+      });
+return promise;
 }
 else {
-    axios.post('http://35.232.3.8/api/info',{
+    return axios.post(this.$localStorage.get('baseUrl') + 'api/info',{
           Token:this.$localStorage.get('token')
       })
-      .then(function (response) {
-          return response;
+      .then(response=> {
+        return response.data;
+       })
+      .catch(function (error) {
+        alert(error)
+        // console.log(error);
       });
-      // .catch(function (error) {
-      //   //   alert('sorry something went wrong')
-      //   // console.log(error);
-      // });
     }
   },
-  getUserInfoById: function(mimic,userName){
+getUserInfoById: function(mimic,userName){
 
     if(mimic){
 var profileInfo={
     userName:'',
-    image:'',
+    image:'https://i.imgur.com/AMFz23O.jpg',
     karma:9,
     personalPosts:[{},{}],
     cakeDay:'March 15, 2019',
+    fullName:'nourhan'
 }
-return profileInfo;
+var promise = new Promise(function(resolve) {
+  setTimeout(function() {
+    resolve(profileInfo);
+  }, 300);
+
+});
+return promise;
 }
 else {
-    axios.post('http://35.232.3.8/api/user_data',  {
+    return axios.post(this.$localStorage.get('baseUrl') + 'api/user_data',  {
       Token:this.$localStorage.get('token'),
       userid:userName
   })
-  .then(function (response) {
-      return response;
+  .then(response=> {
+    return response.data;
+   })
+  .catch(function (error) {
+    alert(error)
+    // console.log(error);
   });
-  // .catch(function (error) {
-  //   // console.log(error);
-  // });
   }
 },
 
 getUserType: function(mimic){
 
   if(mimic){
-return 1;
+  var info={
+      id: "t2_2",
+        fullname: null,
+        email: "111@gmail.com",
+        username: "MohamedRamzy123",
+        avatar: " ",
+        karma: 1,
+        notification: 1,
+        type: 1,
+        created_at: "2019-03-18 09:36:09",
+        updated_at: "2019-03-18 09:36:09"
+    }
+
+    var promise = new Promise(function(resolve) {
+      setTimeout(function() {
+        resolve(info);
+      }, 300);
+    });
+    return promise;
 }
 else {
-    axios.post('http://35.232.3.8/api/me', {
+    return axios.post(this.$localStorage.get('baseUrl') + 'api/me', {
              Token:this.$localStorage.get('token')
             })
-              .then(function (response) {
-                return response;
-              });
-          // .catch(function (error) {
-          // // console.log(error);
-          // });
+            .then(response=> {
+              return response.data;
+             })
+            .catch(function (error) {
+              alert(error);
+              // console.log(error);
+            });
 }
 },
 
 deleteUser: function(mimic,userName){
 
   if(mimic){
-return true;
+    return true;
 }
 else {
-  axios.delete('http://35.232.3.8/api/del_user',{params: {
+    axios.delete(this.$localStorage.get('baseUrl') + 'api/del_user',{params: {
     userID:userName,
     Token:this.$localStorage.get('token')}
 })
 .then(function (response) {
   return response;
+})
+.catch(function (error) {
+  alert(error);
+  // console.log(error);
 });
-// .catch(function (error) {
-//   // console.log(error);
-// });
 }
 },
 getUserInfoByIdforGuest:function(mimic,userName){
   if(mimic){
     var profileInfo={
         userName:'',
-        image:'',
+        image:'https://i.imgur.com/AMFz23O.jpg',
         karma:9,
         personalPosts:[{},{}],
-        cakeDay:'ِAugeust 15, 2019',
+        cakeDay:'ِjune 15, 2019',
+        fullName:null
     }
-    return profileInfo;
+    var promise = new Promise(function(resolve) {
+      setTimeout(function() {
+        resolve(profileInfo);
+      }, 300);
+    });
+    return promise;
     }
     else {
-        axios.get('http://35.232.3.8/api/user_data', {
+        return axios.get(this.$localStorage.get('baseUrl') + 'api/user_data', {
         params: {
           userid:userName
         }
       })
-      .then(function (response) {
-          return response;
+      .then(response=> {
+        return response.data;
+       })
+      .catch(function (error) {
+        alert(error);
+        // console.log(error);
       });
-      // .catch(function (error) {
-      //   // console.log(error);
-      // });
       }
+    },
+blockUser:function(mimic,userName){
+  if(mimic){
+    var promise = new Promise(function(resolve) {
+      setTimeout(function() {
+        resolve('The user has been blocked successfully');
+      }, 300);
+    });
+      return promise;
     }
+    else {
+      return axios.post(this.$localStorage.get('baseUrl') + 'api/block_user', {
+        userid:userName,
+        Token:this.$localStorage.get('token')
+    })
+    .then(response=> {
+      return response.data;
+     })
+    .catch(function (error) {
+      alert(error);
+      // console.log(error);
+    });
+    }
+}
 
   }
 });

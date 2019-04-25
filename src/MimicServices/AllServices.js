@@ -17,6 +17,7 @@ export  const AllServices =new Vue({
     }
   },
   methods:{
+   
     getState(){
       return this.mimic
     },
@@ -59,16 +60,20 @@ export  const AllServices =new Vue({
     {
     	return MimicAuth.LogIn(user,pass,this.mimic);
     },
-    getPosts:function(ApexComName) {
-       return MimicDisplayPosts.getPostsData(this.mimic,ApexComName);
+    forgetPass: function(user,email)
+    {
+    return MimicAuth.ForgetPass(user,email,this.mimic);
     },
-	getAbout:function(ApexComName) {
-    var about=MimicApexCom.getAbout(this.mimic,ApexComName);
-    return about
+    getPosts:function(apexComName) {
+       return MimicDisplayPosts.getPostsData(this.mimic,apexComName);
+    },
+	getAbout:function(apexComName) {
+    var about=MimicApexCom.getAbout(this.mimic,apexComName);
+    return about;
 	},
-	getSubscribers:function(ApexComName) {
-    var SubscribersList=MimicApexCom.getSubscribers(this.mimic,ApexComName);
-    return SubscribersList
+	getSubscribers:function(apexComName) {
+    var SubscribersList=MimicApexCom.getSubscribers(this.mimic,apexComName);
+    return SubscribersList;
 	},
 	getUserInfo:function() {
     var profileInfo=MimicUserProfile.getUserInfo(this.mimic);
@@ -102,12 +107,17 @@ deletePost:function(name,ID){
   return MimicPost.deletePost(name,ID,this.mimic);
 },
 
+EditPost: function(ID,content){
+  var data=MimicPost.EditPost(ID,content,this.mimic);
+  return data;
+},
+
 userType:function(){
   var data=MimicUserProfile.getUserType(this.mimic);
   return data;
 },
-blockSubscriber:function(userName,ApexComName){
-  var data=MimicApexCom.blockSubscriber(this.mimic,userName,ApexComName);
+blockSubscriber:function(userName,apexComName){
+  var data=MimicApexCom.blockSubscriber(this.mimic,userName,apexComName);
   return data;
 },
 deleteUser:function(userName){
@@ -154,7 +164,7 @@ deleteMessage: function(ID){
   var data=MimicMessage.deleteMessage(ID,this.mimic);
   return data;
 },
-blockUser:function(ID){
+blockSender:function(ID){
   var data=MimicMessage.blockUser(ID,this.mimic);
   return data;
 },
@@ -169,7 +179,23 @@ getUserInfoByIdforGuest:function(userName){
 getReplies: function(ID){
   var data=MimicMessage.getReplies(ID,this.mimic);
   return data;
-}
+},
+blockUser:function(userName){
+  var data=MimicUserProfile.getUserInfoByIdforGuest(this.mimic,userName);
+  return data;
+},
+addOrDeleteModerator:function(userName,apexComName){
+  var data=MimicApexCom.addOrDeleteModerator(this.mimic,userName,apexComName);
+  return data;
+},
+reviewReports:function(apexComName){
+  var data=MimicApexCom.reviewReports(this.mimic,apexComName);
+  return data;
+},
+ignoreReport:function(id){
+  var data=MimicApexCom.ignoreReport(this.mimic,id);
+  return data;
+},
 
   }
 

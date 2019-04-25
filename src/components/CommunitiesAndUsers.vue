@@ -1,6 +1,6 @@
 <template>
   <div id="mainDiv" >
-    <a href="" id="subDiv" v-show="exist" v-for='apex in apexs' > 
+    <a href="" id="subDiv" v-show="exist" v-for='apex in apexs' :key="apex.id" > 
       <div id="sub1">
          <img width="20%" :src="'../../public/'+apex.avatar"/>
          <a class="name"> {{apex.name}} </a>
@@ -11,20 +11,20 @@
          <button class="btn btn-primary log" style="display:inline-block; width:15%" type="button"> JOIN</button>  
        </div>
        
-       </br></br>
+       <br/><br/>
     </a>
-    <a href="" id="subDiv" v-show="exist" v-for='user in users' > 
+    <a href="" id="subDiv" v-show="exist" v-for='user in users' :key="user.id" > 
       <div id="sub1">
          <img width="20%" :src="'../../public/'+user.avatar"/>
          <a class="name"> {{user.name}} </a>
-       </br>
+       <br/>
          <div class="memb"> {{user.karma}} karma </div>
        </div> 
        <div id="sub2">
          <button class="btn btn-primary log" style="display:inline-block; width:15%" type="button"> FOLLOW</button>  
        </div>
        
-       </br></br>
+       <br/><br/>
     </a>
     <div id="subDiv" style="text-align:center;font-size: 17px;font-weight: 600; " v-show="!exist"> {{error}} ''{{this.$localStorage.get('search')}}'' 
     </div>
@@ -74,7 +74,7 @@ export default {
 }
 #mainDiv{
     margin:2% 3%;
-    width: 75%;
+    width: 73%;
     height:100%;
     background-color: white;
     height:100%;
@@ -138,9 +138,14 @@ img{
   float:right;
   margin-right: 1%;
 }
-@media(max-width:964.7px){
+@media(max-width:1050px){
   #mainDiv{
     width:60%;
+  }
+}
+@media(max-width:964.7px){
+  #mainDiv{
+    width:50%;
   }
 }
 @media(max-width:800px){

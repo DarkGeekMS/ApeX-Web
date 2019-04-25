@@ -1,35 +1,21 @@
 <template id="profilesidebardesign">
 <div id='sidebar'>
+<div id="main">
     <div class="box" id="infobox">
         <div class="bluebackgroung">
           <div class="img">
-             <img width="100" height="100" class="image" src="../../public/AMFz23O.jpg" />
-
-
-             <!-- <object type="image/svg+xml" data="../../public/karma.svg" class="logo"></object> -->
-             <!-- <img src="../../public/karma.svg" class="karma" alt="Breaking Borders Logo" height="65" width="68"> -->
-             <!-- <object type="image/svg+xml" data="../../public/karma.svg" class="karma"></object> -->
-             <!-- <a :href="picture" download>
-                    <img :src="picture" alt="image" width="100" height="100" class="image"/>
-             </a> -->
-
-             <!-- <a @click.prevent="downloadItem(picture)" :href="picture" width="100" height="100" class="image">
-             </a> -->
-
+             <img width="100%" class="image" :src="image" />
           </div>
-        </div> 
+        </div>
         <div class="content">
-          <a class="link" href="#account" > {{userName}} </a>
-          <!-- chaaange routes -->
-          <div class="info">
-          <h5 class="font" style="display:inline;" id="karmacount">karma</h5>
-          <h5 class="font" style="display:inline;" id="cakeday">cake day</h5>
-          </div>              
-            <div class="images" >
-              
-             <svg class="svg" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+          <h4 class="username" v-show="fullName==null"> {{userName}} </h4>
+          <h4 class="username" > {{fullName}} </h4>
+<div class="info">
+  <div style="display:inline; float:left; width:50%;">
+    <h5 class="font"  id="karmacount">karma</h5>
+    <svg style="display:inline;" class="svg" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 viewBox="0 0 20 20"  xml:space="preserve">
-   
+
 <path class="karma" d="M7.509604,9.809682c0.092814-1.228464,1.071614-2.207275,2.30009-2.300069
 	C8.787232,6.158976,7.167115,5.28595,5.34253,5.28595h-0.0566v0.05657C5.28593,7.167094,6.158977,8.787262,7.509604,9.809682z"/>
 <path class="karma" d="M7.509604,10.190318c-1.350626,1.02242-2.223673,2.642588-2.223673,4.467163v0.056569h0.0566
@@ -53,9 +39,13 @@
 	c0.258138,0.852885,0.719604,1.657298,1.393799,2.331503L10,16.666666l0.039998-0.039997
 	c0.674194-0.674215,1.135661-1.478618,1.393799-2.331503C10.901387,13.962443,10.417033,13.54601,10,13.051686z"/>
 </svg>
-<h5 id="karmanumber" style="display:inline;"> {{karmaCount}} </h5>
-<h5 id="cakedaynumber" style="display:inline; float:right;"> {{cakeDay}} </h5>
-<svg class="svg2" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+<h5 style="display:inline; color:#7c7c7c;" id="karmanumber" > {{karmaCount}} </h5>
+
+  </div>
+  <div style="display:inline; float:right; width:50%;">
+    <h5 class="font"  id="cakeday">cake day</h5>
+
+<svg style="display:inline;" class="svg2" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 width="512px" height="512px" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve">
 <g>
 	<path class="karma" d="M454.928,237.161l-32.273-89.114c-5.769-15.921-22.479-25.068-38.994-21.332l-51.145,11.539
@@ -83,77 +73,108 @@
 		/>
 </g>
 </svg>
-
+<h5 style="display:inline; font-size: 14px; color:#7c7c7c;" id="cakedaynumber" > {{cakeDay}} </h5>
+  </div>
 </div>
+          <button v-show="notGuest()&&settings" id="createpostbutton" class="button" type="button">new post</button>
+          <button v-show="!notGuest()&&settings" v-on:click="blockUser()" id="blocktbutton" class="button" type="button">block</button>
+          <button v-show="isAdmin()&&settings" v-on:click="deleteUser()" id="deletebutton" class="button" type="button">delete user</button>
+        </div>
+    </div>
 
+<div  id="blocklistbox" v-show="notGuest() && blockList.length !==0">
+  <!-- <div  id="blocklistbox"> -->
+      <h3 class="Header" id="blocklistheader">Block list</h3>
+      <div class="contentblocklist" >
+      <div id="blocklistitam" v-for="(blockedUser,index) in blockList" :key="blockedUser.id">
+    <h5 > {{blockedUser.userName}}</h5>
+    <button id="unblockbutton" class="unblockButton" v-on:click="unblockUser(blockedUser.userName,index)">unblock</button>
 
-          
-          
-          <button v-show="notGuest()" id="createpostbutton" class="button" type="button">new post</button>
-          <button v-show="isAdmin()" v-on:click="deleteUser()" id="deletebutton" class="button" type="button">delete user</button>
-        </div>       
-    </div> 
+  </div>
+    </div>
+    </div>
+    </div>
 </div>
 </template>
 
 <script>
-import axios from 'axios'
 import {AllServices} from '../MimicServices/AllServices.js'
 
 
 /**
  * @vue-data {JWT} [token='']  user Token
- * @vue-prop  {string} image - Url of user profile image 
+ * @vue-prop  {string} image - Url of user profile image
  * @vue-prop  {number} KarmaCount - Number of karma
- *@vue-prop {string} UserName - Name of user 
+ *@vue-prop {string} UserName - Name of user
  */
 
 export default {
   props:{
       userName:String,
-      karmaCount:Number,
-      image:String,
-      cakeDay:String,
+      // karmaCount:Number,
+      // image:String,
+      // cakeDay:String,
+      // blockList:Array,
+      settings:Boolean,
        },
   data () {
     return {
-      //token:this.$localStorage.get('token'),
-
+      token:this.$localStorage.get('token'),
+      loggedIn:this.$localStorage.get('login'),
+      // userName:'',
+      karmaCount:0,
+      image:'',
+      cakeDay:'',
+      blockList:[],
+      fullName:''
     }
   },
   methods:
   {
-
-  //   downloadItem (url) {
-  //   Axios.get(url, { responseType: 'blob' })
-  //     .then(({ data }) => {
-  //       let blob = new Blob([data], { type: 'image/png' })
-  //       let link = document.createElement('a')
-  //       link.href = window.URL.createObjectURL(blob)
-  //       link.download = 'image.png'
-  //       link.click()
-  //     .catch(error => {
-  //       console.error(error)
-  //     })
-  //   })
-  // },
-
   /**
     * check if the user if Admin
     */
     isAdmin:function(){
       if(this.loggedIn){
-     var data= AllServices.userType();
-        if(data ==1){
+      AllServices.userType().then((data) =>{
+        if(data.type ==1){
           return true;
           }
         else{
           return false;
         }
+      })
+      }
+    },
+    unblockUser:function(userName,index){
+     AllServices.blockUser(userName).then((data) =>{
+     if(data){
+         this.blockList.splice(index, 1);
+         alert('this user have been blocked successfully');
+       }
+       else{
+         alert('sorry something worng happend');
+       }
+       })
+    },
+
+    blockUser:function(){
+    if(this.loggedIn){
+     AllServices.blockUser(this.userName).then((data) =>{
+     if(data){
+         alert('this user have been blocked successfully');
+       }
+       else{
+         alert('sorry something worng happend');
+       }
+       })
+       }
+      else{
+        alert('you have to log in first');
       }
     },
     /**
-    * check if the user requesting his profile or other user profile 
+    * check if the user requesting his profile or other user profile
     */
     notGuest:function(){
       if(this.loggedIn){
@@ -179,127 +200,189 @@ export default {
       alert('sorry something went wrong :)')
     }
     },
+    /**
+    * get user profile info
+    */
+    getUserProfile:function(){
+      AllServices.getUserInfo().then((data) =>{
+      this.karmaCount = data.karma;
+      this.image = data.image;
+      this.fullName = data.fullName;
+      // this.userName = data.userName;
+      this.savedPosts = data.saved;
+      this.hiddenPosts = data.hidden;
+      this.personalPosts = data.personalPosts;
+      this.reports = data.reports;
+      this.cakeDay = data.cakeDay;
+      this.blockList = data.blockList;
+      })
+   },
+    /**
+    * get user account data for another user
+    */
+   getUserData:function(){
+      AllServices.getUserInfoById(this.userName).then((data) =>{
+      this.karmaCount = data.karma;
+      this.image = data.image;
+      this.fullName = data.fullName;
+      this.personalPosts = data.personalPosts;
+      this.cakeDay = data.cakeDay;
+      })
+   },
+   /**
+    * get user account data for a guset
+    */
+   getUserDataForGuest:function(){
+     AllServices.getUserInfoByIdforGuest(this.userName).then((data) =>{
+      this.karmaCount = data.karma;
+      this.image = data.image;
+      this.fullName = data.fullName;
+      // this.userName = data.userName;
+      this.personalPosts = data.personalPosts;
+      this.cakeDay = data.cakeDay;
+     })
+   },
   },
+  mounted(){
+    if(this.loggedIn){
+    if(this.userName == this.loggeduser){
+      this.getUserProfile();
+    }
+    else{
+      this.getUserData();
+    }
+    }
+    else{
+      this.getUserDataForGuest();
+    }
+  }
 }
 </script>
 
 <style scoped>
+*{
+  box-sizing: border-box;
+    /* box-sizing: border-box;
+
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  
+  -webkit-flex-flow: row wrap;
+  justify-content: space-around; */
+}
+#sidebar{
+  width:22%;
+  float:right;
+  margin-right:5%;
+  margin-left:3%;
+  margin-top: 5%;
+}
 .bluebackgroung{
   background-color: deepskyblue;
   padding-top: 12%;
   padding-bottom:0%;
   padding-left:4%;
   padding-right:65%;
-  height: 94px;
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
+  height: auto;
+  border-top-left-radius: 20%;
+  border-top-right-radius: 20%;
 }
 .image{
-  border-radius: 4px;
+  border-radius: 10%;
 }
-.img{ 
-  padding:3px;
-  background-color: #eee;
+.img{
+  padding:2%;
+  background-color: white;
   box-sizing: border-box;
   border-radius: 4px;
-  margin-bottom:10%;
+  margin-bottom:-15%;
+  width:80px;
 }
 .content{
-  background-color: #eee;
+  background-color: white;
   height: auto;
-  padding-top: 20%;
+  padding-top: 5%;
   padding-bottom:5%;
   padding-left:8%;
   padding-right:8%;
-  border-bottom-left-radius: 8px;
-  border-bottom-right-radius: 8px;
+  border-bottom-left-radius: 20%;
+  border-bottom-right-radius: 20%;
 }
 .name{
-  font-size: 12px;
+  font-size: 16px;
   font-weight: 500;
-  line-height: 16px;
   color: rgb(34, 34, 34);
   margin-top: 4%;
 }
-.link{
-  text-decoration: none;
+.username{
   color: black;
+  font-size: 16px;
+}
+.box{
+  margin-bottom: 5%;
 }
 .button{
   width:100%;
   margin:2% 0%;
   background-color:skyBlue;
-  color: #eee;
-  padding: 0%;
+  color:white;
+  padding: 1%;
   border-width: 3px;
-  border-radius: 8px;
+  border-radius: 20%;
   cursor:pointer;
   border-color: skyblue;
   border-style: solid;
   font-size: 14px;
-  font-weight: 700;
+  font-weight: 500;
   letter-spacing: 0.5px;
-  line-height: 32px;
   text-transform: uppercase;
-  height:38px;
+  height:auto;
+  overflow: hidden;
 }
 .button:hover {opacity: 0.75}
 
 #karmanumber{
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 400;
 }
 .Header{
   background-color: skyBlue;
-  padding:12px;
+  padding:4%;
   margin-top: 10%;
   margin-bottom: 0%;
   height:auto;
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
-}
-#apexcomlistbox{
-  background-color: #eee;
-  height: auto;
-  padding: 4%;
-  border-bottom-left-radius: 8px;
-  border-bottom-right-radius: 8px;
+  border-top-left-radius: 20%;
+  border-top-right-radius: 20%;
+  font-size: 20px;
 }
 .karma{
   fill: skyBlue;
-  width:14px;
-  height:14px;
 }
 .svg{
-  width:30px;
-  height:30px;
+  width:18%;
+  height:auto;
   margin-top:0%;
   margin-left:0%;
-  margin-right:-2%;
-  margin-bottom:-3%;
+  margin-right:0%;
+  margin-bottom:-7%;
   padding-left:0%;
   padding-right:0%;
   padding-top:2%;
-  padding-bottom:1%;
+  padding-bottom:2%;
 }
 .svg2{
-  width:30px;
-  height:30px;
-  margin-top:-1%;
+  width:14%;
+  height:auto;
+  margin-top:0%;
   margin-left:0%;
   margin-right:0%;
-  margin-bottom:-3%;
-  padding-left:0%;
-  padding-right:0%;
-  padding-top:2%;
-  padding-bottom:1%;
-  float: right;;
-}
-#cakeday{
-  float: right;;
-  margin-top:-2%;
-  margin-left:0%;
-  margin-right:17%;
   margin-bottom:-3%;
   padding-left:0%;
   padding-right:0%;
@@ -309,14 +392,68 @@ export default {
 .info{
   margin-top: 3%;
   margin-bottom: 3%;
+  display: inline-block;
+  width: 100%;
 }
 .font{
   font-size: 18px;
   font-weight: 500;
-  line-height: 18px;
+  color:#222;
 }
 .images{
   margin-top: 3%;
   margin-bottom: 3%;
+}
+.unblockButton{
+  width:30%;
+  margin-top:-11%;
+  margin-left:0%;
+  margin-right: 0%;
+  margin-bottom: 0%;
+  color:skyBlue;
+  padding: 1%;
+  float:right;
+  border-width: 3px;
+  border-radius: 20%;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  cursor:pointer;
+  border-color: skyblue;
+  border-style: solid;
+  text-transform: uppercase;
+  height:auto;
+  overflow: hidden;
+}
+.unblockButton:hover {opacity: 0.75}
+.Header{
+  background-color: skyBlue;
+  padding:4%;
+  margin: 0%;
+  height:auto;
+  border-top-left-radius: 20%;
+  border-top-right-radius: 20%;
+}
+.contentblocklist{
+  background-color: #eee;
+  height: auto;
+  padding-top: 5%;
+  padding-bottom:5%;
+  padding-left:8%;
+  padding-right:8%;
+  border-bottom-left-radius: 20%;
+  border-bottom-right-radius: 20%;
+}
+#blocklistitam{
+  width:100%;
+  height: auto;
+  display:inline-block;
+  padding: 0%;
+  margin:3%;
+}
+@media(max-width:960px){
+  #sidebar{
+    display:none
+  }
 }
 </style>

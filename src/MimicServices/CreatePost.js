@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import axios from 'axios'
+
 export  const MimicCreatePosts =new Vue({
   data(){
 return {
@@ -12,15 +13,18 @@ token:'1',
   },
   methods:{
     submitPost: function(videoUrl,apexComId,bodyPost,imgName,token,isLocked,mimic){
-      if(mimic===true){
+      
+      if(mimic){
          if(token=='1' && apexComId=='1'){
+    
             return true;
+            
          }
             return false;
                 }
 
 else {
-    axios.post( "http://35.232.3.8/api/submit_post"  ,{
+    axios.post( this.$localStorage.get('baseUrl') + "api/submit_post"  ,{
 
         ApexCom_id:apexComId,
         _token:token,
@@ -40,6 +44,25 @@ else {
          }
        })
  }
+    },
+    getApexNames:function(mimic){
+    if(mimic==true){
+        var names=["apexname1","apexname2","apexname3","apexname4"];
+     
+        var promise = new Promise(function(resolve) {
+          setTimeout(function() {
+            resolve(names);
+          }, 300);
+        });
+      return promise;
+      
+    }
+    else{
+     // axios.get();
+      
+///TODO COMPLETE THE REQUEST 
+    }
+
     }
   }
 

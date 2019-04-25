@@ -10,73 +10,98 @@
     </router-link>
 
     <div class="container-fluid">
-       <div class="form-group drop" style="display:inline-block; margin:0.5% 0.5%">
-          <select class="form-control dropdown-primary" name="category">
-              <option disabled> </option>
-              <optgroup style="font-size: 13px" label="REDDIT FEEDS">
-                <option> Popular</option>
-                <option>  All</option>
-                <option> Original Content</option>
-              </optgroup>
-              
-              <option disabled>──────────</option>  
-              
-              <optgroup style="font-size: 12px" label="MY COMMUNITIES" v-show="this.$localStorage.get('login')" >
-                <option v-for="(apex, key) in apexs" > {{apex.name}} </option> 
-              </optgroup>
-          </select>
-      </div>
+ 
+    <div class="btn-group sel" >
+      <button type="button" data-toggle="dropdown" class="btn btn-default dropdown-toggle">
+        <i class="glyphicon glyphicon-arrow-up blue" id="classed" ></i>  
+        <span id="selectted" > Popular</span> 
+        <span class="caret" style="float:right; margin-top:10px" ></span>
+      </button>
+      
+      <ul class="dropdown-menu drop1" style="width:93%">
+        <li class="dropdown-header">REDDIT FEEDS</li>
+        <li v-show="this.$localStorage.get('login')"><a href="#" class="glyphicon glyphicon-home blue" ><span id="items">Home</span></a></li> 
+        <li><a href="#" class="glyphicon glyphicon-arrow-up blue"><span id="items">Popular</span></a></li>
+        <li><a href="#" class="glyphicon glyphicon-stats blue"><span id="items">All</span></a></li>
+        <li><a href="#"> <span style="background-color:blue; color:white; padding-left:3px"> oc </span> <span style="color:black;padding-left:7%">Original Content</span></a></li>
 
+        <li class="divider"></li>
 
-      <div class="form-group has-feedback has-search" style="display:inline-block">
-        <span class="glyphicon glyphicon-search form-control-feedback"></span>
-        <input type="text" class="form-control" placeholder="Search Reddit" v-model="searchVal" v-on:keyup.enter="search()">
-      </div>
+        <li class="dropdown-header" v-show="this.$localStorage.get('login')">MY COMMUNITIES</li>
+            <li v-show="log" v-for="apex in apexs" :key="apex.id" ><router-link to="{ name:'ApexCom', params: {ApexComName:apex.name} }" > {{apex.name}} </router-link></li> 
+      </ul>
+    </div>  
+  
 
-      <div class="btn-toolbar" role="toolbar"> 
-		  <div class="btn-group">
-        <button type="button" class="btn btn-default" alt="popular"> 
-          <i class="glyphicon glyphicon-arrow-up"></i></span> 
-        </button> 
-		    <button type="button" class="btn btn-default"> 
-		      <i class="glyphicon glyphicon-stats"></i> 
-		    </button>
-		    <button type="button" class="btn btn-default last"> 
-		      <span style="background-color:black; color:white; padding-left:3px"> oc 
-		      </span> 
-		    </button>
-		  </div> 
-      </div> 
-
-
-      <div v-show="!this.$localStorage.get('login')" class="form-group log" style="display:inline-block">
-          <button id="LoginBTN" type="button" class="btn btn-info log1" @click="$modal.show('demo-login')"> LOG IN </button>
-          <button id="SignUp" type="button" class="btn btn-primary log1" data-toggle="button" aria-pressed="false" autocomplete="off" @click="$modal.show('demo-sign')">SIGN UP</button>
-      </div>
-
-      <div v-show="this.$localStorage.get('login')" class="btn-group log" id="loggedDiv">
-        <button type="button" data-toggle="dropdown" class="btn btn-default dropdown-toggle" id="loggedbutton">
-        <img  width="20"
-          src="../../public//Logo_X.png" > {{ userLog }}  <span class="caret"></span></button>
-        <ul class="dropdown-menu">
-            <li class="dropdown-header">MY STUFF</li>
-            <li><router-link :to="{ name: 'UserProfile', params: {userName:userLog} } ">My Profile</router-link></li>
-            <li><a href="#">User Settings</a></li>
-            <li class="divider"></li>
-            <li><a class="logOut" href="#" @click="Logout()">Log Out</a></li>
-        </ul>
-      </div>
+    <div class="form-group has-feedback has-search" style="display:inline-block">
+      <span class="glyphicon glyphicon-search form-control-feedback"></span>
+      <input type="text" class="form-control" placeholder="Search Reddit" v-model="searchVal" v-on:keyup.enter="search()">
     </div>
+
+    <div class="btn-toolbar tool1" role="toolbar"> 
+    <div class="btn-group">
+    <button type="button" class="btn btn-default b1"> 
+    <i class="glyphicon glyphicon-arrow-up"></i>
+    </button> 
+    <button type="button" class="btn btn-default b2"> 
+    <i class="glyphicon glyphicon-stats"></i> 
+    </button>
+    <button type="button" class="btn btn-default b3"> 
+    <span style="background-color:black; color:white; padding-left:3px"> oc </span> 
+    </button>
+    </div> 
+    </div> 
+
+    <div class="btn-toolbar tool2" role="toolbar" v-show="this.$localStorage.get('login')"> 
+      <div class="btn-group">
+      <button type="button" class="btn btn-default b4"> 
+      <i class="glyphicon glyphicon-envelope"></i>
+      </button> 
+      <button type="button" class="btn btn-default b5"> 
+      <i class="glyphicon glyphicon-edit"></i>
+      </button>
+      </div> 
+    </div> 
+
+
+    <div v-show="!this.$localStorage.get('login')" class="form-group log" style="display:inline-block">
+      <button id="LoginBTN" type="button" class="btn btn-info log1" @click="$modal.show('demo-login')"> LOG IN </button>
+      <button id="SignUp" type="button" class="btn btn-primary log1" data-toggle="button" aria-pressed="false" autocomplete="off" @click="$modal.show('demo-sign')">SIGN UP</button>
+    </div>
+
+    <div v-show="this.$localStorage.get('login')" class="btn-group log">
+      <button type="button" data-toggle="dropdown" class="btn btn-default dropdown-toggle" id="loggedbutton">
+      <img  width="27" src="../../public/AMFz23O.jpg" style="border-radius:30%" ><span id="usernam"> {{ userLog }} </span> <span class="caret" style="float:right; margin-top:10px" ></span>
+      </button>
+      <ul class="dropdown-menu">
+        <li class="dropdown-header">MY STUFF</li>
+        <li><router-link :to="{ name: 'UserProfile', params: {userName:userLog} } ">My Profile</router-link></li>
+        <li><router-link :to="{ name: 'UserSettings'} ">User Settings</router-link></li>
+        <li class="divider"></li>
+        <li><a class="logOut" href="/" @click="Logout()">Log Out</a></li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="list pop1"> Popular </div>
+  <div class="list pop2"> All </div>
+  <div class="list pop3"> Orignal Content </div>
+  
+  <div class="list pop4"> Messages </div>
+  <div class="list pop5"> Create Post </div>
+
+
 
   </nav>
 </div>
 </template>
 
 <script>
-  import DemoLoginModal  from './DemoLoginModal.vue'
-  import DemoSignModal  from './DemoSignModal.vue'
-  import {AllServices} from '../MimicServices/AllServices.js'
-
+import DemoLoginModal  from './LoginModal.vue'
+import DemoSignModal  from './SignModal.vue'
+import {AllServices} from '../MimicServices/AllServices.js'
+import $ from'jquery/dist/jquery.min.js'
 /**
  * @vue-data {string} [userLog=""] name of user logged in
  * @vue-data {string} [searchVal=""] search value  
@@ -94,15 +119,67 @@
         canBeShown: false,
         userLog: '',
         searchVal: '',
-        apexs:[]
+        apexs:[],
+        log:false
       }
     },
     created () {
-      this.apexs = AllServices.getApexNames(),	
+      AllServices.getApexNames().then((data) =>
+      {
+        if(data)
+        {
+          this.apexs = data
+        }
+      }),
       setInterval(() => {
         this.userLog = this.$localStorage.get('userName');
+        this.log = this.$localStorage.get('login');
         this.canBeShown = !this.canBeShown
       }, 500)
+    },
+    mounted()
+    {
+      if(this.$localStorage.get('login')){
+        $('#selectted').text($('.drop1 a').first().text());
+        var className = $($('.drop1 a').first()).prop('class');
+        var remclass = $('#classed').prop('class');
+        $('#classed').removeClass(remclass);
+        $('#classed').addClass(className);
+      }
+      
+      $('.drop1 a').click(function(){
+        $('#selectted').text($(this).text());
+        var className = $(this).prop('class');
+        var remclass = $('#classed').prop('class');
+        $('#classed').removeClass(remclass);
+        $('#classed').addClass(className);
+      });
+
+      $('.b1').hover(function() {
+      $('.pop1').show();
+        }, function() {
+      $('.pop1').hide();
+      });
+      $('.b2').hover(function() {
+      $('.pop2').show();
+        }, function() {
+      $('.pop2').hide();
+      });
+      $('.b3').hover(function() {
+      $('.pop3').show();
+        }, function() {
+      $('.pop3').hide();
+      });
+      $('.b4').hover(function() {
+      $('.pop4').show();
+        }, function() {
+      $('.pop4').hide();
+      });
+      $('.b5').hover(function() {
+      $('.pop5').show();
+        }, function() {
+      $('.pop5').hide();
+      });
     },
 
     methods: {
@@ -133,6 +210,10 @@
           this.$localStorage.set('search' , this.searchVal),
           this.$router.push({ name:'Search'} )
         }
+      },
+      fun: function()
+      {
+        document.getElementById('pop').style.display='block'
       }
     },
 }
@@ -145,25 +226,20 @@
   max-height:3%;
   border:1px solid #eee
 }
-
-.drop
-{
-  width:15%
-}
 input{
   width:100%;
-  margin-top:1.2%;
+  margin-top:8px;
   display:inline-block;
 }
 .has-search{
-  width:40%;
+  width:41.5%;
   height:100%;
 }
 .has-search .form-control-feedback {
     right: initial;
     left: 0;
     color: #ccc;
-    margin-top:1.3%
+    margin-top:8px
 }
 .has-search .form-control {
     padding-right: 12px;
@@ -172,53 +248,200 @@ input{
 .log{
   height:100%;
   float:right;
-  margin:0.5% 0.5%;
+  margin-top:0.3%;
+  width:15%;
+  margin-right: 5px;
+  margin-left:0;
 }
-@media(max-width:887px){
-  .has-search,.drop{
-      width:30%;
+.log1{
+  width:45%;
+  padding-left: 5px;
+  margin:4px 1%;
+
+}
+/*@media(max-width:887px){
+  .has-search, div.sel{
+    width:30%;
+  }
+} */
+@media(max-width:57px){
+  div input,.has-search .form-control-feedback {
+    display: none
+  }
+  div .sel .caret {
+    display: none
   }
 }
-@media(max-width:1186.4px){
-  .btn-toolbar, .btn-group{
+@media(max-width:100px){
+  div .log {
+    display: none
+  }
+}
+@media(max-width:520px){
+  div .log .caret,.log1{
+    display: none
+  }
+}
+@media(max-width:971px){
+  div .tool1{
     display:none
   }
-}
-@media(max-width:1414px){
-  .log,.log1{
-  	display: none
+  div .log{
+    width:110px;
   }
 }
-button{
-  width:100px;
-  margin:0 5px;
+/*@media(max-width:650px){
+  div .tool2{
+    display:none
+  }
+} */
+@media(max-width:997px){
+  div #selectted{
+    display: none;
+  }
+  .has-search{
+    width:30%;
+  }
+} 
+@media(max-width:1054px){
+  div .tool2 
+  {
+    display: none  }
+  div .tool1{
+    margin-left: 4%
+  }
+}
+@media(max-width:1211px){
+  div #usernam{
+    display: none;
+  }
+  
+  div .tool1, div .tool2 {
+    padding-left: 0.5%
+  }
+}
+@media(max-width:1350px){
+  div .log{
+    width: 13%
+  }
+  .log1
+  {
+    width:45%;
+  }
 }
 #loggedbutton{
-  width:200px;
-  height:40px;
-  margin:-3px 4px;
-  font-size:17px;
-  color:#999999;
+  width:100%;
+  font-size:15px;
+  border-radius: 5%;
+  text-align: left
 }
 #loggedbutton:hover {
-  background: #fff;
+  border:1px solid #ccc6;
+  background-color: white
 }
 ul{
-  width:200px;
+  width:95%;
   margin:2px 4px;
 }
-.btn-toolbar{
-	width:20%;
-	display: inline-block;
-    padding-left: 6%;
+.tool1{
+  width:10%;
+  display: inline-block;
+  margin-bottom: -15px;
+  padding-left: 10px;
+
+}
+.tool1 .btn-group{
+  border-right: 1px solid #ccc;
+
 }
 .btn-group button{
-	width:30%;
-    margin-bottom:-9%;
-    border :1px solid white;
+  width:30%;
+  border :1px solid white;
+  border-radius: 0
 }
-button.last{
-	border-right: 1px solid #ccc;
+.tool2{
+  width:6%;
+  display: inline-block;
+  margin-bottom: -15px;
+}
+.tool2 button{
+  width:45%;
 }
 
+.sel{
+  width:20%;
+  padding-right: 1%;
+  box-sizing: border-box;
+}
+
+.sel button{
+  width:100%;
+  text-align: left;
+  font-size: 15px;
+    border-radius: 5%;
+
+}
+.sel button:hover{
+  border:1px solid #ccc6;
+  background-color:white; 
+}
+.sel li a{
+  padding-right: 8px;
+  cursor: pointer;
+}
+.blue{
+  color:blue;
+}
+a #items{
+  color:black;
+  padding-left: 10%;
+  font-size: 16px
+}
+#selectted{
+  padding-left:8%;
+  line-height: 18px;
+  font-size: 14px
+}
+
+
+
+
+.list{
+  border: none;
+  width: 50px;
+  height: 80%;
+  line-height: 9px;
+  padding: 0.3%;
+  color:white;
+  background-color: #000;
+  border-radius: 10%;
+  font-size: 12px;
+  transition: all ease-in-out 0.5s;
+  margin-left:68%;
+  margin-top: -0.8%;
+  display: none;
+}
+.pop2
+{
+  width:25px;
+  margin-left:71%;
+}
+.pop3
+{
+  width:95px;
+  margin-left:72%;
+  border-radius: 10%;
+}
+.pop4
+{
+  width:64px;
+  margin-left:76.5%;
+  border-radius: 10%;
+}
+.pop5
+{
+  width:75px;
+  margin-left:78.5%;
+  border-radius: 10%;
+}
 </style>

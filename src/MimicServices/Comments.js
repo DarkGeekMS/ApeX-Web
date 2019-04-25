@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import axios from 'axios'
 import App from '../App.vue'
+
 export  const MimicComment =new Vue({
 
   methods:{
@@ -21,7 +22,7 @@ export  const MimicComment =new Vue({
       }
       else
       {
-        return axios.post('http://35.232.3.8/api/comment', {
+        return axios.post(this.$localStorage.get('baseUrl') + 'api/comment', {
             content: cont,
             parent: parentID,
             token:this.$localStorage.get('token')
@@ -48,7 +49,7 @@ export  const MimicComment =new Vue({
         else
         {
             var self = this;
-            axios.delete('http://35.232.3.8/api/delete', {
+            axios.delete(this.$localStorage.get('baseUrl') + 'api/delete', {
                 data : {
                 name: ID,
                 token: self.$localStorage.get('token')
@@ -71,7 +72,7 @@ export  const MimicComment =new Vue({
         }
         else
         {
-            axios.post('http://35.232.3.8/api/save', {
+            axios.post(this.$localStorage.get('baseUrl') + 'api/save', {
             ID: ID,
             token:this.$localStorage.get('token')
              })
@@ -105,7 +106,7 @@ export  const MimicComment =new Vue({
         else
         {
             var self = this;
-            return axios.patch('http://35.232.3.8/api/edit', {
+            return axios.patch(this.$localStorage.get('baseUrl') + 'api/edit', {
                 name: ID,
                 content: cont,
                 token: this.$localStorage.get('token')
@@ -143,7 +144,7 @@ export  const MimicComment =new Vue({
                   resolve({votes:p});
                 }, 300);
               });
-            
+
     return promise1;
             }
 
@@ -151,14 +152,14 @@ export  const MimicComment =new Vue({
         }
         else
         {
-       return axios.post('http://35.232.3.8/api/vote', {
+       return axios.post(this.$localStorage.get('baseUrl') + 'api/vote', {
        name: ID,
        dir: 1,
        token: this.$localStorage.get('token')
         })
       .then(function (response) {
         return response.data;
-        
+
        })
       .catch(function (error)
       {
@@ -190,22 +191,22 @@ export  const MimicComment =new Vue({
                       resolve({votes:p});
                     }, 300);
                   });
-                
+
         return promise1;
                 }
-    
+
                     return false;
         }
         else
         {
-       return axios.post('http://35.232.3.8/api/vote', {
+       return axios.post(this.$localStorage.get('baseUrl') + 'api/vote', {
        name: ID,
        dir: -1,
        token: this.$localStorage.get('token')
         })
       .then(function (response) {
         return response.data;
-        
+
        })
       .catch(function (error)
       {

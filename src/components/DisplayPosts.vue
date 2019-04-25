@@ -3,14 +3,14 @@
     <div id="PostContainer" v-for="onePost in posts">
      <post v-bind:postData="onePost" v-on:showUp="showPost" ></post>
     </div>
-    <DemoOnePost  id="PostModal" :onePostData="postInfo" ></DemoOnePost>
+    <OnePost  id="PostModal" :onePostData="postInfo" ></OnePost>
     <!-- v-bind:style="{width: 80 +'%'}" -->
   </div>
 </template>
 
 <script>
 import post from "./Post.vue"
-import DemoOnePost from './DisplayOnePost.vue'
+import OnePost from './DisplayOnePost.vue'
 import {AllServices} from '../MimicServices/AllServices.js'
 /**
  * @vue-data {object} [postInfo='']  the content of the post to be displayed on the modal
@@ -47,28 +47,41 @@ methods:
     * request gets posts from a certain ApexCom
     */
    getPosts(){
-     if(AllServices.getState()){
-       this.posts= AllServices.getPosts(this.apexComName);
-     }
-     else{
+     // if(AllServices.getState()){
+       // this.posts= AllServices.getPosts(this.apexComName);
+     // }
+     // else{
          AllServices.getPosts(this.apexComName).then((data) => {
           this.posts= data;
          })
-   }
+   // }
 }
 },
 components:{
   'post':post,
-  'DemoOnePost':DemoOnePost
+  'OnePost':OnePost
 }
 
 }
 </script>
 
 <style scoped>
+
+#PostContainer{
+
+
+
+}
+#PostModal{
+  width: 10%;
+  height: 10%;
+  background: red;
+ 
+}
 #DisplayPosts{
-   width: 60%;
+   /* width: 100%; */
   display: inline-block;
+  padding-top: 5%;
 }
 
 </style>

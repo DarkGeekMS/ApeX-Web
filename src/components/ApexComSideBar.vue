@@ -1,12 +1,18 @@
 <template>
     <div class="sidebar" >
+      <div id="main">
       <div class="box" id="descroption box">
        <h3 class="Header" id="descroption box header">Community Details</h3>
       <div class="content">
-          <h3 id="Apex-com-name">
-         <img class="image" src="../../public/Logo_small.png" >
-         {{apexComName}}</h3>
-       <p id="subscribers Count">{{subscribersCount}} subscribers</p>
+          <h3 style="color:#1a1a1b; display:inline; font-size: 20px;" id="Apexcomname">{{apexComName}}</h3>
+          <div class="img">
+        <img style="box-sizing: border-box; border-radius: 50%;" class="image" :src="image" > 
+      </div>
+
+         <p style=" color:#1a1a1b;
+    font-weight: 550;  margin-top: 8%;">Members</p>
+         
+       <p style=" color:#1a1a1b; margin-left:8%;" id="subscribers Count">{{subscribersCount}}</p>
        <p id="description">{{description}}</p>
        <button id="subscribebutton" v-bind:class="{button1:subscribed,button:!subscribed}" v-on:mouseover="changeState('unsubscribe')" v-on:mouseleave="changeState('subscribed')" type="button" v-on:click="subscribe()">
        <span> {{state}} </span> </button>
@@ -15,7 +21,7 @@
        </div>
        </div>
 
-       <div class="box" id="rules box">
+       <div class="box" id="rules box" v-show="rules.length !==0">
       <h3 class="Header" id="rules box header">Rules</h3>
       <div class="content">
       <ol  id="ruleslist">
@@ -24,23 +30,22 @@
     </div>
     </div>
 
-    <div  id="moderators box">
+    <div class="box" id="moderators box" v-show="moderators.length !==0">
       <h3 class="Header" id="moderators box header">Moderators</h3>
       <div class="content" >
       <ul class="list" style="list-style-type:none;" id="moderatorslist">
-        <li  id="moderators list item" v-for="moderator in moderators" :key="moderator.id">
-          <!-- <a id="moderators account link" class="accountLink" href="#link">{{moderator.userName}}</a> -->
+        <li  id="moderatorslistitem" v-for="moderator in moderators" :key="moderator.id">
           <router-link class="accountLink" :to="{name:'UserProfile' , params: {userName:moderator.userName}}"> {{moderator.userName}}</router-link>
         </li>
       </ul>
     </div>
     </div>
       </div>
+      </div>
 </template>
 
 
 <script>
-import axios from 'axios'
 import {AllServices} from '../MimicServices/AllServices.js'
 
 /**
@@ -60,10 +65,10 @@ import {AllServices} from '../MimicServices/AllServices.js'
 export default {
     props:{
        apexComName:String,
-       description:String,
-       moderators:Array,
-       rules:Array,
-       subscribersCount: Number,
+      //  description:String,
+      //  moderators:Array,
+      //  rules:Array,
+      //  subscribersCount: Number,
        },
     data(){
         return{
@@ -74,6 +79,12 @@ export default {
             userName:this.$localStorage.get('userName'),
             loggedIn:this.$localStorage.get('login'),
             //userName:'subscriber1',
+            // apexComName:'',
+            description:'',
+            moderators:[],
+            rules:[],
+            subscribersCount:0,
+            image:''
         }
 
     },
@@ -118,9 +129,9 @@ export default {
     */
     getSubscribers(){
       if(this.loggedIn){
-        this.subscribers= AllServices.getSubscribers(this.apexComName);
+        AllServices.getSubscribers(this.apexComName).then((data) =>{
+          this.subscribers=data.subscribers;
         var subscribe = this.subscribers.find(this.CheckUser);
-        console.log(subscribe);
         if(subscribe !== undefined){
           this.subscribed = true;
           this.state='subscribed';
@@ -129,6 +140,7 @@ export default {
           this.subscribed=false;
           this.state='subscribe';
     }
+    })
       }
       else{
           this.subscribed=false;
@@ -141,13 +153,14 @@ export default {
       isAdmin:function()
       {
         if(this.loggedIn){
-        var data= AllServices.userType();
-        if(data ==1){
+        AllServices.userType().then((data) =>{
+        if(data.type ==1){
           return true;
           }
         else{
           return false;
         }
+        })
         }
       },
       /**
@@ -156,7 +169,7 @@ export default {
     subscribe:function()
     {
       if(this.loggedIn){
-      var data = AllServices.subscribe(this.apexComName);
+      AllServices.subscribe(this.apexComName).then((data) =>{
       if(data){
       if(this.subscribed){
       this.subscribed = false;
@@ -170,65 +183,117 @@ export default {
     else{
       alert('something wrong happened try again later');
     }
+    })
       }
       else{
         alert('login first,please');
       }
     },
+    getAbout(){
+         AllServices.getAbout(this.ApexComName).then((about) =>{
+         this.description=about.description;
+         this.moderators=about.moderators;
+         console.log(this.moderators.length);
+         this.rules=about.rules;
+         this.image=about.image;
+         this.subscribersCount=about.subscribersCount;
+         });
+   },
+
   },
  mounted(){
-   if(this.loggedIn){
    this.getSubscribers();
-   }
+   this.getAbout();
  }
 
 }
 </script>
 
 <style scoped>
-
+*{
+  box-sizing: border-box;
+}
+#main{
+  width:22%;
+  float:right;
+   /* width:23%; */
+   /* position:absolute; */
+   /* max-height:50%; */
+   /* max-width:80%; */
+  /* height: auto; */
+  margin-top:4%;
+  margin-bottom: 0%;
+  margin-left: 3%;
+  margin-right: 5%;
+}
+.sidebar{
+  /* float:right; */
+   /* width:23%; */
+   /* position:absolute; */
+   /* max-height:50%; */
+  /* height: auto; */
+  /* margin-top:4%; */
+  /* margin-bottom: 0%; */
+  /* margin-left: 3%; */
+  /* margin-right: 4%; */
+  /* box-sizing: border-box; */
+}
 .Header{
   background-color: skyBlue;
-  padding:12px;
+  color:#1a1a1b;
+  padding:4%;
   margin: 0%;
-  height:auto;
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
+  /* height:auto; */
+  border-top-left-radius: 20%;
+  border-top-right-radius: 20%;
+  font-size: 16px;
+  font-weight: 400;
+  overflow-wrap: break-word;
 }
 #description{
   font-family: "Noto Sans", Arial, sans-serif;
+  color:#1a1a1b;
   font-size: 16px;
   font-weight: 400;
   line-height: 21px;
-  color: #1a1a1b;
   overflow-wrap: break-word;
+  /* overflow-wrap: break-word; */
+}
+.box{
+  margin-top: 0%;
+  margin-bottom: 5%;
 }
 
 .content{
   margin-top:0%;
-  margin-bottom: 8%;
-  background-color:#eee;
-  border-bottom-left-radius:8px;
-  border-bottom-right-radius:8px;
-  padding:5%;
+  margin-bottom: 0%;
+  background-color:white;
+  border-bottom-left-radius:20%;
+  border-bottom-right-radius:20%;
+  padding-top:8%;
+  padding-bottom:5%;
+  padding-left:5%;
+  padding-right:5%;
+  overflow-wrap: break-word;
+  color:#1a1a1b;
 }
 .button{
   width:100%;
   margin:2% 0%;
   background-color:skyBlue;
-  color: #eee;
-  padding: 0%;
+  color: white;
+  padding: 1%;
   border-width: 3px;
-  border-radius: 8px;
+  border-radius: 20%;
   cursor:pointer;
   border-color: skyblue;
   border-style: solid;
   font-size: 14px;
-  font-weight: 700;
+  font-weight: 500;
   letter-spacing: 0.5px;
-  line-height: 32px;
   text-transform: uppercase;
-  height:38px;
+  overflow: hidden;
+  /* height:auto; */
 }
 .button:hover {opacity: 0.75}
 .button1:hover {opacity: 0.75}
@@ -237,43 +302,79 @@ export default {
   width:100%;
   margin:2% 0%;
   color:skyBlue;
-  background-color: #eee;
-  padding: 0%;
+  background-color: white;
+  padding: 1%;
   border-width: 3px;
-  border-radius: 8px;
+  border-radius: 20%;
   cursor:pointer;
   border-color: skyblue;
   border-style: solid;
   font-size: 14px;
-  font-weight: 700;
+  font-weight: 500;
   letter-spacing: 0.5px;
-  line-height: 32px;
   text-transform: uppercase;
-  height:38px;
+  /* height:auto; */
+  margin-left:5%;
+  margin-right:5%;
+  overflow: hidden;
 }
-.image{
-  width:16%;
-  height:50px;
-  margin-top:0%;
+img{
+  width: 100%;
+}
+.img{
+  width: 15%;
+  display:inline;
+  margin-top:-3%;
   margin-bottom:0%;
-  margin-right:0%;
+  margin-right:3%;
   margin-left:0%;
-  border-radius: 25px;
-  box-sizing: border-box;
+  float: left;
 }
 .accountLink{
   text-decoration: none;
-  color: black;
+  /* color: black; */
 }
 .list{
   padding-left: 0%;
 }
+
 #ruleslistitem{
-  font-size: 17px;
+  font-size: 14px;
 font-weight: 500;
-line-height: 24px;
+color:#1a1a1b;
 }
 #ruleslist{
   padding-left: 6%;
 }
+#moderatorslistitem{
+  margin-bottom: 2%;
+  font-size: 14px;
+  color:#1a1a1b;
+}
+.imagediv{
+  display: inline;
+}
+@media(max-width:960px){
+  #main{
+    display:none
+  }
+}
+p{
+  /* color:#7c7c7c;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 21px;
+  overflow-wrap: break-word; */
+}
+/* @media (max-width: 605px){
+img{
+  margin-top:4px;
+}
+}
+@media (max-width: 529px){
+img{
+  margin-top:8px;
+}
+} */
+
 </style>

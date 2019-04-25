@@ -1,9 +1,8 @@
 <template id="PostTemlate">
-<div id="PostItme" class="postItem" >
-<div class="panel panel-default" style="width: 62rem;   "  @click="ShowModal()" v-show="Not_Hide" id="post">
-  <!-- <div class="row" id="postRow"> -->
-    <div class="panel-body"  style="width: 62rem;" >
-    <div class="panel2 panel-default" style="width: 3.7rem;" id="postSide">
+  <div class="postMod">
+<div class="panel panel-default"  @click="ShowModal()" v-show="Not_Hide" id="post">
+    <div class="panel-body">
+    <div class="panel2 panel-default"  id="postSide">
 
 
           <div class="column1" id="postCol1">
@@ -26,26 +25,25 @@
 
 
       </div>
-        <div class="column2" id="postCol2">
 
-      <router-link class="fontUser" id="subred" :to="{name:'ApexCom' , params: {ApexComName:postData.apex_id}}">{{postData.apex_id}}</router-link>
+
+      <router-link class="fontUser" id="subred" :to="{name:'ApexCom' , params: {apexComName:postData.apex_id}}">{{postData.apex_id}}</router-link>
       <font class="postby" id="fontPostby">. Posted by</font>
-      <router-link class="postby" id="user" :to="{name:'UserProfile' , params: {userName:postData.postedby}}"> {{postData.postedby}}</router-link>
+      <router-link class="postby" id="user" :to="{name:'UserProfile' , params: {userName:postData.posted_by}}"> {{postData.posted_by}}</router-link>
 
       <font class="postby" id="fontpost"> </font>
-      <a href="#" class="postby" id="timeAgo"> 15 hours ago </a>
+      <a href="#" class="postby" id="timeAgo">  </a>
       <p id="postBody" class="hPost">
 
-        {{postData.content}} </p>
+        {{postData.content}}
+         </p>
 
 
-      <!-- <a href="#" class="fontUser" id="subred"> apex_id </a>
-        <font class="postby" id="fontPostby">. Posted by</font>
-        <a href="#" class="postby" id="user"> username</a>
-        <font class="postby" id="fontpost"> </font>
-        <a href="#" class="postby" id="timeAgo"> 15 hours ago </a>
-        <h3 id="postBody">content </h3> -->
+<iframe  v-show ="postData.videolink!==''" width="100%" height="315"  :src=postData.videolink frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<img v-show="postData.img!==''" :src=postData.img  height="100%" width="100%">
 </div>
+   
 <footer>
 
 <div class="btn-group" role="group" aria-label="..." id="drop">
@@ -69,6 +67,12 @@ Comments</button>
     <ul class="dropdown-menu" id="dropMenu">
       <li ><a href="#"  @click="Hide" class="HIDE"><i class="fa fa-ban" id="HideIcon"></i>Hide</a></li>
       <li><a href="#"><i class="glyphicon glyphicon-flag" id="ReportIcon"></i>Report</a></li>
+      <li><a href="#"><i class="glyphicon glyphicon-pencil" id="ReportIcon"></i>edit</a></li>
+      <li><a href="#" @click="isLocked">
+        
+        <i v-if="Locked=='unlock'" class="fa fa-lock" id="ReportIcon"></i>
+        <i v-if="Locked=='Lock'" class="fa fa-unlock" id="ReportIcon"></i>
+          {{this.Locked}}</a></li>
     </ul>
   </div>
 
@@ -79,20 +83,18 @@ Comments</button>
 </footer>
 
 
-
           </div>
 
        </div>
 
-   </div>
 
-<!-- </div> -->
+
+
 
 </template>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
 <script id="postScript">
-import axios from 'axios'
 
 import {MimicDisplayPosts} from '../MimicServices/DisplayPosts.js'
 import { AllServices } from '../MimicServices/AllServices';
@@ -114,6 +116,7 @@ import { AllServices } from '../MimicServices/AllServices';
 export default {
 
   name: 'PostItem',
+
    data(){
        return{
              Not_Hide :true,
@@ -132,11 +135,36 @@ export default {
 
              moderator:false,
              ShowModalVar:true,
-             Deleted:false
+             Deleted:false,
+             video:true ,
+             image:false ,
+             Locked:'Lock',
+             ago:''      
             };
          },
 
   methods: {
+    isLocked(){
+        if(this.ShowModalVar == true){
+      this.ToggleShowModalVar();
+    }
+     // alert('lock successfully');
+     
+     if(this.Locked=='Lock'){
+
+       this.Locked='unlock';
+        this.$emit('lockComment',this.Locked);
+     }
+     else{this.Locked='Lock';
+      this.$emit('lockComment',this.Locked);}
+      AllServices.isLocked(this.PostId,this.$localStorage.get('token'));
+
+    },
+    editText(){
+
+
+
+    },
      /**
      * delete post if the moderator press delete button.
      */
@@ -147,22 +175,7 @@ export default {
        }
         this.PostId=postData.id;
        AllServices.deletePost(this.PostId,this.$localStorage.get('token'));
-//          axios.post("http://localhost/DelComment",{
-//          ID    : this.PostId,
-//          token : this.$localStorage.get('token')
 
-//  }).then(response=>{
-//    if(response){
-//      this.Deleted = true;
-//      alert("Deleted successfully");
-//    }
-
-//  }).catch(function (error)
-//  {
-//   //console.log(error);
-
-
-//    });
    },
   /**
     * Hide post if the User press Hide button.
@@ -180,19 +193,7 @@ export default {
             }
         this.PostId=postData.id;
         AllServices.Hide(this.PostId,this.$localStorage.get('token'));
-        // axios.post("http://localhost/Hide",
-        // {
-        //     name    : this.PostId,
-        //     ID : this.$localStorage.get('token')
 
-
-        // }).then(response => {
-        //   if(response){
-        //   alert("Hidden successfully");}
-        // }).catch(function (error)
-        // {
-        //    //console.log(error);
-        // });
          },
     changeColor_up()
     {
@@ -215,22 +216,7 @@ export default {
                       this.votes          += 1;
                        this.PostId=postData.id;
                       AllServices.upvote(this.$localStorage.get('token'),this.PostId,1);
-                  //     axios.post("http://localhost/vote",
-                  //     {
 
-                  //       ID       : this.$localStorage.get('token'),
-                  //       name     : this.PostId,
-                  //       direction:1
-
-                  //     }).then(response => {
-                  //       if(response){
-                  //          alert("upvote successfully");}
-
-                  //     }).catch(function (error)
-                  //     {
-                  //   console.log(error);
-
-                  // });
                 }
               else {
                     this.className_up = 'btn btn-light btn-sm is-gray';
@@ -238,18 +224,7 @@ export default {
                     this.pressed_up = false;
                      this.PostId=postData.id;
                   AllServices.defaultVote(this.PostId,this.$localStorage.get('token'),0);
-                //     axios.post("http://localhost/vote",
-                //    {
 
-
-                //     ID:this.$localStorage.get('token'),
-                //     name:this.PostId,
-                //     direction:0
-
-                //   }).then(response => {}).catch(function (error)
-                //   {
-                //    console.log(error);
-                //  });
                }
 
 
@@ -274,23 +249,7 @@ export default {
                          this.votes-=1;
                           this.PostId=postData.id;
                          AllServices.downvote(this.PostId,this.$localStorage.get('token'),-1);
-                    //      axios.post("http://localhost/vote",
-                    //  {
 
-
-                    //       ID      : this.$localStorage.get('token'),
-                    //       name    : this.PostId,
-                    //       direction: -1
-
-                    //  }).then(response =>{
-                    //    if(response){
-                    //      alert("downvote successfully");
-                    //    }
-                    //  }).catch(function (error)
-                    //  {
-                    //   //console.log(error);
-
-                    // });
                   }
               else {
                   this.className_down = 'btn btn-light btn-sm is-gray';
@@ -300,17 +259,6 @@ export default {
                    this.pressed_down = false;
                     this.PostId=postData.id;
                    AllServices.defaultVote(this.PostId,this.$localStorage.get('token'),0);
-                  //  axios.post("http://localhost/vote",
-                  //  {
-
-
-                  //   ID:this.$localStorage.get('token'),
-                  //   name:this.PostId,
-                  //   direction:0
-
-                  // }).then(response => {}).catch(function (error) {
-                  //    console.log(error);
-                  //  });
 
 
                  }
@@ -319,6 +267,7 @@ export default {
     * Save post if the User press Hide button.
     */
     Save(){
+      
       if(this.ShowModalVar == true){
       this.ToggleShowModalVar();
     }
@@ -326,41 +275,90 @@ export default {
         {
         //alert('Post saved successfully');
         this.Saved="unsave";
-         this.PostId=postData.id;
+        this.PostId=postData.id;
         AllServices.save(this.$localStorage.get('token'),this.PostId);
-        // axios.post( "http://localhost/save",
-        // {
 
-        //     ID:this.PostId ,
-        //     token:this.$localStorage.get('token')
-
-
-        // }).then(response=>{
-        //   if(response){
-        //     alert('Post saved successfully');
-        //   }
-        // } ).catch(function (error)
-        // {
-        //     // console.log(error);
-
-        // });
       }
-        else{
-          this.PostId=postData.id;
-
-          AllServices.save(this.$localStorage.get('token'),this.PostId);
-             //alert('Post unsaved successfully');
+        else if(this.Saved=="unsave"){
             this.Saved="Save";
+            this.PostId=postData.id;
 
+         
+         //   alert(postData.apex_id);
+           
+             AllServices.save(this.$localStorage.get('token'),this.PostId);
            }
 
 
 
 
     },
+    
+ timeSince(date) {
+   var delta = Math.round((+new Date - date) / 1000);
+
+var minute = 60,
+    hour = minute * 60,
+    day = hour * 24,
+    week = day * 7;
+
+var fuzzy;
+
+if (delta < 60) {
+    fuzzy = 'just now';
+}  else if (delta < 2 * minute) {
+    fuzzy = 'a minute ago.'
+} else if (delta < hour) {
+    fuzzy = Math.floor(delta / minute) + ' minutes ago.';
+} else if (Math.floor(delta / hour) == 1) {
+    fuzzy = '1 hour ago.'
+} else if (delta < day) {
+    fuzzy = Math.floor(delta / hour) + ' hours ago.';
+} else if (delta < day * 2) {
+    fuzzy = 'yesterday';
+}
+this.time=fuzzy;
+//  var d = new Date(date),
+//         month = '' + (d.getMonth() + 1),
+//         day = '' + d.getDate(),
+//         year = d.getFullYear();
+
+//     if (month.length < 2) month = '0' + month;
+//     if (day.length < 2) day = '0' + day;
+
+//     return [year, month, day].join('-');
+  // var seconds = Math.floor((new Date() - date) / 1000);
+
+  // var interval = Math.floor(seconds / 31536000);
+
+  // if (interval > 1) {
+  //   return interval + " years";
+  // }
+  // interval = Math.floor(seconds / 2592000);
+  // if (interval > 1) {
+  //   return interval + " months";
+  // }
+  // interval = Math.floor(seconds / 86400);
+  // if (interval > 1) {
+  //   return interval + " days";
+  // }
+  // interval = Math.floor(seconds / 3600);
+  // if (interval > 1) {
+  //   return interval + " hours";
+  // }
+  // interval = Math.floor(seconds / 60);
+  // if (interval > 1) {
+  //   return interval + " minutes";
+  // }
+  // return Math.floor(seconds) + " seconds";
+},
+    /**
+* show the clicked post on the modal.
+*/
       ShowModal(){
         if(this.ShowModalVar == true){
           this.$emit('showUp',this.postData);
+   
           this.$modal.show('Demo-OnePost');
         }
           else {
@@ -372,34 +370,28 @@ export default {
       ToggleShowModalVar(){
         this.ShowModalVar=!this.ShowModalVar;
               },
-//       getUserId(){
-// //axios.get("http://localhost/me",{token:this.token}).then(response=>{this.userId=response.userID});
-// }
-
-
 },
 props: {
 postData:{},
        },
 created(){
 
-
-
-         axios.get("http://localhost/me",{token:this.token}).then(response=>{this.userId=response.userID}).catch(function (error)
-         {
-          //console.log(error);
-        });
-
-
+      /*
+      axios.get("http://localhost/me",{token:this.token}).then(response=>{this.userId=response.userID}).catch(function (error)
+       {
+        console.log(error);
+      });
+      */
 
        if(this.userId==2){
         this.moderator=true;
-
        }
-
 },
-
-}
+computed :{
+        createdDate : function(){
+          //  return moment().format('dddd');
+        }
+}}
 
 
 </script>
@@ -428,13 +420,21 @@ created(){
             }
 .column1 {
             float: left;
-            column-rule-width: 1px;
+            column-rule-width: 10%;
          }
  #post:hover{
             border-color:rgb(135, 138, 140);
 
             }
+ #postBody:hover{
+             cursor:pointer
+               }
 
+  #imgId{
+         cursor: pointer;
+     
+        }
+  
 h5 {
     text-align: center;
    }
@@ -444,20 +444,20 @@ h5 {
     display: flex;
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
-    margin-right: -15px;
-    margin-left: 0;
+    margin-right: -5%;
+    margin-left: 0%;
      }
 
 
 #footer{
     width: 100%;
-    height: 30px;
+    height: 100%;
     position: absolute;
-    bottom: 0px;
+    bottom: 0%;
     margin-left: 1%;
       }
 .panel2{
-    margin-bottom: 0px;
+    margin-bottom: 0%;
     background-color: #fff;
     border: 1px solid transparent;
     border-radius: 4px;
@@ -465,10 +465,11 @@ h5 {
     box-shadow: 0 1px 1px rgba(0,0,0,.05);}
 
     .panel {
-
-        margin-bottom: 100%;
-        margin-left: 100px;
-        margin-top: 60px;
+        width:100%;
+        margin-bottom: 0%;
+        margin-left: 5%;
+        margin-right: unset;
+        margin-top: 3%;
         background-color: #fff;
         border: 1px solid transparent;
         border-radius: 4px;
@@ -483,26 +484,45 @@ h5 {
 .postby{
     font-size: 12px;
     color: rgb(120, 124, 126);
+    cursor: pointer;
 }
 .buttonDelete{
       background-color: #f4511e;
 /*      margin-left: 470px;*/
 } /* Red */
-.postItem{
-width: 0%;
-margin-left:6%;
-padding-top:3%;
-margin-top: 0%;
-/* margin-bottom: -112px; */
+/* .postItem{
+    box-sizing: border-box;
+    width: 250%;
+    margin-left: 9.5%;
+    padding-top: 2%;
+    margin-top: 0%;
+    min-width: 50%;
+    height: 100%;
+   margin-right: 0%;
+
+} */
+@media(max-width:1054px){
+  div .panel 
+  {
+    width: 80%;
+
+      }
+  div .panel{
+    margin-left: 4%
+  }
+}
+#postCol1{
+
+height:100%;
 
 }
-
 .hPost{
    overflow: auto;
    word-wrap: break-word;
    margin-top:0%;
    font-family:Verdana, Geneva, Tahoma, sans-serif;
    font-size: 130%;
+  
 
 }
 .column2{
@@ -511,5 +531,35 @@ width: 100%;
 }
 .panel-body {
      padding: 2px;
+     cursor: pointer;
 }
+
+#post{
+
+    width: 80%;
+   box-sizing: border-box;
+    /* width: 250%; */
+    margin-left: 23%;
+    margin-top: 2%;
+    min-width: 50%;
+    height: 100%;
+   margin-right: 0%;
+
+}
+
+.panel-body{
+
+  width: 100%;
+}
+
+#postSide{
+width: 30%;
+
+}
+/*
+@media(max-width:1000px){
+  .postItem{
+      width:170%;
+  }
+}  */
 </style>

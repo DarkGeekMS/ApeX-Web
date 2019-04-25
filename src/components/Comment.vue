@@ -5,7 +5,7 @@
       <div id = "firstLine">
         <button id ="Up" v-on:click="Upvote" v-show="!this.upVoted" class = "arrows,up"></button>
         <button id ="Up2" v-on:click="Upvote" v-show="this.upVoted" class = "arrows,up"></button>
-        <router-link 
+        <router-link
           class ="smallText"
           :to="{name:'UserProfile' ,
            params: {userName:this.user}}">
@@ -22,8 +22,8 @@
         <button id ="Down2" v-on:click="Downvote" v-show="this.downVoted" class = "arrows,down"></button>
         <div class = "condiv" v-for = "part in con" :key="part.start">
           <p class="content"  v-if = "!part.type" >{{part.c}}</p>
-          <router-link 
-          v-if = "part.type" 
+          <router-link
+          v-if = "part.type"
           :to="{name:'UserProfile' ,
            params: {userName:part.c}}">
             {{part.c}}
@@ -56,7 +56,6 @@
 
 <script>
 import WriteComment from './WriteComment.vue'
-import axios from 'axios'
 import reportBox from './ReportModal.vue'
 import {AllServices} from '../MimicServices/AllServices.js'
 
@@ -109,7 +108,7 @@ retrieveWithNoEdit:function(){
   this.showEditBox =0;
 },
 Delete:function(){
- 
+
 
 
   if(AllServices.DeleteComment(this.ID))
@@ -117,7 +116,7 @@ Delete:function(){
     else{
       this.$emit('Delete',this.idx );
     }
-  
+
 },
 OpString:function(){
    for (var i = 0;i<this.content.length;i++)
@@ -135,7 +134,7 @@ OpString:function(){
                     }
                 }
               }
-             
+
                     for (var x = i;x<this.content.length;x++)
                     {
                         if((this.content[x+1]=='u' && this.content[x+2]=='/' && this.content[x]==' ')||x==this.content.length-1)
@@ -145,9 +144,9 @@ OpString:function(){
                             i=x;
                             break;
                         }
-                    }   
+                    }
 
-              
+
           }
 },
 Save:function(){

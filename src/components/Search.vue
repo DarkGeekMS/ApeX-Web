@@ -3,7 +3,7 @@
     <div class="header">
        <h1>  {{ searchValue }} </h1> 
        <p> Search results </p>
-     </br>
+       <br/>
     </div>
     <div class="body">
       <ul>
@@ -11,13 +11,14 @@
        <li><router-link to="/Search/users" exact> Communities and users </router-link></li>
       </ul>
     </div>
-   <div v-if="this.$route.name == 'Search'" id="DisplayPosts">  
-      <div id="PostContainer" v-for="onePost in posts">
-         <post :postData="onePost" v-on:showUp="showPost" ></post>
+    <div v-if="this.$route.name == 'Search'" id="DisplayPosts">  
+      <div id="PostContainer" v-for="onePost in posts" :key="onePost.name">
+         <post :postData="onePost" v-on:showUp="showPost"></post>
       </div>
+      <DemoOnePost  id="PostModal" :onePostData="postInfo" ></DemoOnePost>
     </div>  
-
-       <router-view></router-view>
+    <SearchSideBar></SearchSideBar>
+    <router-view></router-view>
     
   </div>
 
@@ -25,6 +26,8 @@
 
 <script>
 import post from "./Post.vue"
+import DemoOnePost from './DisplayOnePost.vue'
+import SearchSideBar from './SearchSideBar.vue'
 import {AllServices} from '../MimicServices/AllServices.js'
 /**
  * @vue-data {string} [error=""] if there is no matching
@@ -39,12 +42,17 @@ export default {
   }, */
   components:{
     'post':post,
+    'DemoOnePost':DemoOnePost,
+    'SearchSideBar': SearchSideBar
+
   },
   data(){
     return{
       searchValue: '',
       posts: [],
-      error: ''
+      error: '',
+      postInfo:'',
+
     }
   },
   created(){
@@ -64,6 +72,15 @@ export default {
     else{
       this.posts= result
     }
+  },
+  methods:{
+  /**
+  * assign the post to be shown in the modal
+  */
+  showPost:function(post)
+  {
+  this.postInfo=post;
+  },
   }
 }
 </script>
@@ -80,7 +97,7 @@ export default {
   background-color: white;
   width:100%;
   padding-left:2%;
-  margin-top: 3%;
+  margin-top: 43px;
   border:1px solid #eee
 }
 .header h1{
@@ -91,7 +108,7 @@ export default {
   color:#999;
 }
 .body ul{
-  padding: 1% 0;
+  padding: 13px 0;
   background-color: white;
   padding-left:3%;
   width:100%;
@@ -116,11 +133,12 @@ export default {
 }
 
 #PostContainer{
-  margin-top: -8%;
+  margin-top: 3%;
 
 }
 #DisplayPosts{
   width:60%;
+  display:inline-block;
 }
 
 </style>

@@ -1,15 +1,19 @@
 <template id="subscribers list design">
-<div class="list" id="subscribers list">
-  <div id="subscribers box" class="box" v-for="(subscriber,index) in SubscribersList" :key="subscriber.id">
+<div id="subscriberslist">
+  <h4 v-if="subscribersList.length ==0" >there is nothing to show </h4>
+  <div id="subscribers box" class="box" v-for="(subscriber,index) in subscribersList" :key="subscriber.id">
+    <div class="name">
     <router-link class="accountLink" :to="{name:'UserProfile' , params: {userName:subscriber.userName}}"> {{subscriber.userName}}</router-link>
-    <button id="remove button" class="removeButton" v-on:click="blockUser(subscriber,index)">BLOCK</button>
+    <div class="img">
+        <img style="box-sizing: border-box; border-radius: 50%;" class="image" :src="subscriber.image" > 
+      </div>
+      </div>
+    <button id="removebutton" class="removeButton" v-on:click="blockUser(subscriber.userName,index)">block</button>
   </div>
- 
 </div>
 </template>
 
 <script>
-import axios from 'axios'
 import {AllServices} from '../MimicServices/AllServices.js'
 
 /**
@@ -19,11 +23,11 @@ import {AllServices} from '../MimicServices/AllServices.js'
  */
 
 export default {
-  props:['ApexComName'],
+  props:['apexComName'],
   data () {
     return {
       token:this.$localStorage.get('token'),
-      SubscribersList:[]
+      subscribersList:[]
     }
   },
   methods:
@@ -33,17 +37,17 @@ export default {
       */
     blockUser:function(userName,index)
     {
-      var data = AllServices.blockSubscriber(userName,this.ApexComName);
+      var data = AllServices.blockSubscriber(userName,this.apexComName);
       if(data){
-      this.SubscribersList.splice(index, 1);
-      }
-      else{
-        console.log(error);
+      this.subscribersList.splice(index, 1);
       }
     },
       getsubscribers(){
-      this.SubscribersList= AllServices.getSubscribers(this.ApexComName);
-      }
+        AllServices.getSubscribers(this.apexComName).then((data) =>{
+          console.log(data);
+        this.subscribersList=data;
+      })
+    }
   },
   mounted()
   {
@@ -53,28 +57,86 @@ export default {
 </script>
 
 <style scoped>
+*{
+  box-sizing: border-box;
+}
+/* * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; */
+
+  /* padding: 0;
+  margin: 0;
+  list-style: none;
+  
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  
+  -webkit-flex-flow: row wrap;
+  justify-content: space-around; */
+/* } */
+#subscriberslist{
+  /* width:60%;
+  margin-top:3%; */
+}
 .box{
   width:100%;
   height:auto;
   background-color:white;
   margin:1% 0%;
   padding:4% 3%;
-  border-radius: 8px;
+  border-radius: 20%;
+  display:inline-block;
 }
-.removeButton{
+#removebutton{
   background-color:skyBlue;
-  width:auto;
+  width:20%;
   height:auto;
-  border-radius: 8px;
-  padding:1% 1%;
-  margin:-1% 2%;
+  padding:1%;
+  margin:2% 2%;
   float:right;
   cursor:pointer;
   color:white;
+  border-width: 3px;
+  border-radius: 20%;
+  cursor:pointer;
+  border-color: skyblue;
+  border-style: solid;
+  font-size: 1.2vw;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  /* height: auto; */
+  overflow: hidden;
 }
 
-.removeButton:hover {opacity: 0.75}
+.removeButton:hover {opacity: 0.75;}
 .accountLink{
   text-decoration: none;
+  /* color:black; */
+  font-size: 1.2vw;
+  
+}
+img{
+  width: 100%;
+}
+.img{
+  width: 10%;
+  display:inline;
+  margin-top:-2%;
+  margin-bottom:0%;
+  margin-right:2%;
+  margin-left:0%;
+  float: left;
+}
+.name{
+  width:50%;
+  margin:0% 0%;
+  padding: 3% 0%;
+  float:left;
+  display: inline;
 }
 </style>

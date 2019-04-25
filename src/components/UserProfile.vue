@@ -1,24 +1,28 @@
 <template id="profiledesign">
 <div id='userprofile'>
     <div id='firstnavbar'>
-        <a id="posttab" class="navbarlinks" href="#">posts</a>
-        <a id="savedtab" v-show="notGuest()" class="navbarlinks" href="#">saved</a>
-        <a id="hiddentab" v-show="notGuest()" class="navbarlinks" href="#">hidden</a>
-        <a id="reporttab" v-show="isModerator() && notGuest()" class="navbarlinks" href="#">report</a>
-
-    </div> 
-        <SideBar 
+      
+        <a style="font-size: 16px;"  id="posttab" class="navbarlinks" href="#">posts</a>
+        <a style="font-size: 16px;"  id="savedtab" v-show="notGuest()" class="navbarlinks" href="#">saved</a>
+        <a style="font-size: 16px;"  id="hiddentab" v-show="notGuest()" class="navbarlinks" href="#">hidden</a>
+        <!-- <a style="font-size: 16px;"  id="reporttab" v-show="isModerator() && notGuest()" class="navbarlinks" href="#">report</a> -->
+        <router-link style="font-size: 16px;" id="reportlink" class="navbarlinks" :to="{name:'Report'}">view reports</router-link>
+        
+    </div>
+    <div class="sort">
+    <Sort ></Sort>
+  </div>
+        <SideBar
+        v-bind:settings="true"
         v-bind:userName="userName"
-        v-bind:karmaCount="karmaCount"
-        v-bind:image="image"
-        v-bind:cakeDay="cakeDay"
-                class="sidebar" ></SideBar>
+        class="sidebar" ></SideBar>
+    <router-view class="routerview"></router-view>
 </div>
 </template>
 
 <script>
-import axios from 'axios'
 import SideBar from './UserProfileSideBar.vue'
+import Sort from './Sort.vue'
 import {AllServices} from '../MimicServices/AllServices.js'
 
 /**
@@ -26,7 +30,7 @@ import {AllServices} from '../MimicServices/AllServices.js'
  * @vue-data {string} [loggeduser='']  name of logged in user
  * @vue-data {boolean} [loggedIn='']  check if user is logged in
  * @vue-data {number} karmaCount - Number of karma
- * @vue-data {string} [image]  Url of user profile image 
+ * @vue-data {string} [image]  Url of user profile image
  * @vue-data {array} personalPosts - user personal posts
  * @vue-data  {array} savedPosts - user saved posts
  * @vue-data  {array} hiddenPosts - user hidden posts
@@ -36,13 +40,14 @@ import {AllServices} from '../MimicServices/AllServices.js'
 export default {
   props:['userName'],
     components:{
-    'SideBar':SideBar
+    'SideBar':SideBar,
+    'Sort':Sort
   },
   data () {
     return {
-      //token:this.$localStorage.get('token'),
-      //loggeduser:this.$localStorage.get('userName'),
-      //loggedIn:this.$localStorage.get('login'),
+      token:this.$localStorage.get('token'),
+      loggeduser:this.$localStorage.get('userName'),
+      loggedIn:this.$localStorage.get('login'),
       karmaCount:1,
       image:'',
       personalPosts:[],
@@ -50,27 +55,35 @@ export default {
       hiddenPosts:[],
       reports:[],
       cakeDay:'',
+      blockList:[],
+    //   blockList:[
+    //       {userName:'user1'},
+    // {userName:'user2'},
+    // {userName:'user3'},
+    // {userName:'user4'}
+    //     ],
     }
   },
   methods:
   {
     /**
-     *check if user is moderator 
+     *check if user is moderator
     */
     isModerator:function()
       {
         if(this.loggedIn){
-        var data= AllServices.userType();
-        if(data ==2){
+        AllServices.userType().then((data) =>{
+        if(data.type ==2){
           return true;
           }
         else{
           return false;
           }
+        })
         }
       },
     /**
-    * check if the user requesting his profile or other user profile 
+    * check if the user requesting his profile or other user profile
     */
     notGuest:function(){
       if(this.loggedIn){
@@ -85,40 +98,44 @@ export default {
       }
     },
     /**
-    * get user profile info 
+    * get user profile info
     */
     getUserProfile:function(){
-      var data= AllServices.getUserInfo();
+      AllServices.getUserInfo().then((data) =>{
       this.karmaCount = data.karma;
-      // this.image = data.image;
+      this.image = data.image;
       //this.userName = data.userName;
       this.savedPosts = data.saved;
       this.hiddenPosts = data.hidden;
       this.personalPosts = data.personalPosts;
       this.reports = data.reports;
       this.cakeDay = data.cakeDay;
+      this.blockList = data.blockList;
+      })
    },
     /**
     * get user account data for another user
     */
    getUserData:function(){
-      var data= AllServices.getUserInfoById(this.userName);
+      AllServices.getUserInfoById(this.userName).then((data) =>{
       this.karmaCount = data.karma;
-      // this.image = data.image;
+      this.image = data.image;
      // this.userName = data.userName;
       this.personalPosts = data.personalPosts;
       this.cakeDay = data.cakeDay;
+      })
    },
    /**
     * get user account data for a guset
     */
    getUserDataForGuest:function(){
-     var data= AllServices.getUserInfoByIdforGuest(this.userName);
+     AllServices.getUserInfoByIdforGuest(this.userName).then((data) =>{
       this.karmaCount = data.karma;
-      // this.image = data.image;
+      this.image = data.image;
      // this.userName = data.userName;
       this.personalPosts = data.personalPosts;
       this.cakeDay = data.cakeDay;
+     })
    }
 
   },
@@ -140,40 +157,69 @@ export default {
 </script>
 
 <style scoped>
+* {
+  /* box-sizing: border-box; */
+
+  /* padding: 0;
+  margin: 0;
+  list-style: none;
+  
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  
+  -webkit-flex-flow: row wrap;
+  justify-content: space-around; */
+}
+#userprofile{
+  margin-top:50px;
+}
 #firstnavbar{
-    background-color: #eee;
     width:100%;
-    height: 60px;
-    text-transform: uppercase; 
-    padding-top:2%;
-    padding-bottom: 0%;
-    margin-top: 3%;
+    /* height: 60px; */
+    text-transform: uppercase;
+    background-color: white;
+    padding-top:18px;
+    padding-bottom: 10px;
     margin-bottom: 0%;
     margin-left: 0%;
 }
 .navbarlinks{
     padding-top: 0%;
-    padding-bottom: 0%;
-    padding-right: 1%;
-    padding-left: 2%;
+    padding-bottom: 10px;
+    margin-right: 3%;
+    margin-left: 3%;
     text-decoration: none;
     color: black;
-    margin-top: 0%;
-    margin-bottom: 0%;
-    font-size: 14px;
     font-weight: 500;
-    line-height: 18px;
-    
 }
 .navbarlinks:hover{
     color:deepskyblue;
 }
-#sidebar{
-    width:25%;
+.sort{
+  margin-top:-57px;
+  /* margin-right:0%; */
+  /* height:30px; */
+}
+.sidebar{
+  margin-top:4%;
+    /* width:23%;
     height: auto;
     margin:8%;
     margin-left: 3%;
-    margin-right: 6%;
-    float:right;
+    margin-right: 4%;
+    float:right; */
+}
+.routerview{
+  margin-top: 0%;
+  margin-bottom: 0%;
+  margin-left: 4%;
+  border-radius:20%;
+}
+.router-link-active{
+  border-bottom: 3px solid deepSkyBlue;
+  color: deepskyblue;
 }
 </style>

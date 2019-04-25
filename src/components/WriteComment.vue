@@ -1,7 +1,7 @@
 <template>
   <div id="WriteComment" v-show="!replyClicked && !editClicked">
     <div>
-      
+
       <textarea  id="CommentSpace" class="write" v-model="content"  cols="30" rows="10"></textarea>
 
     </div>
@@ -17,7 +17,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 import {AllServices} from '../MimicServices/AllServices.js'
 
 
@@ -98,11 +97,10 @@ OpString:function(){
           }
 },
     comment:function(){
-              console.log('hhhh ya ro7 omk',this.content);
       this.OpString();
        if (this.content!=null)
       {
-      
+
       //TODO:send request and get currentID
       AllServices.WriteComment(this.content,this.parentID).then((data) => {
         if(data){
@@ -113,19 +111,18 @@ OpString:function(){
       });
       //to test
       //this.currentID=this.parentID+1;
-      
+
       }
       else
       alert("Empty Text cannot be submitted!");
     }
     ,
     reply:function(){
-      console.log('hhhh ya ro7 omk',this.content);
       this.OpString();
 
        if (this.content!=null)
       {
-      
+
       //TODO:send request and get currentID
       AllServices.WriteComment(this.content,this.parentID).then((data) => {
         if(data){
@@ -142,7 +139,7 @@ OpString:function(){
 
       //to test
       //this.currentID=this.parentID+1;
-      
+
       }
       else
       alert("Empty Text cannot be submitted!");
