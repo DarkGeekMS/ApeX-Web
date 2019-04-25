@@ -14,12 +14,14 @@
 
 
      <button  type="button" class="btn btn-primary " data-toggle="button" aria-pressed="false" autocomplete="off" @click="post()">CREATE POST</button>
-     <button v-show="login" style=" cursor: no-drop" type="button" class="btn btn-info" data-toggle="button" aria-pressed="false" autocomplete="off">CREATE COMMUNITY</button>
+     <button v-show="login" style=" cursor: no-drop" type="button" class="btn btn-info" data-toggle="button" aria-pressed="false" autocomplete="off" @click="create()">CREATE COMMUNITY</button>
   </div>
 </div>
 </template>
 
 <script>
+import {AllServices} from '../MimicServices/AllServices.js'
+
   /**
   * @vue-data {boolean} [login=false] if user is logged in 
   */
@@ -47,6 +49,13 @@
         else{
            this.$modal.show('demo-login');
         }
+      },
+      create: function() {
+        var type = AllServices.userType().then((data)=>{
+        if(data.type == 1){
+          return true;
+          }
+        })
       }
     }
 }

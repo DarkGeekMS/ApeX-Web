@@ -1,6 +1,7 @@
 <template>
 <modal name="ForgetUser" transition="pop-out" width="50%" height="70%" id="demo1" :clickToClose="false">
  <!-- <demo-login-modal> </demo-login-modal> -->
+ <ForgetUser2/>
  
   <div class="box">
     <div class="box-part" id="bp-right"></div>
@@ -18,18 +19,22 @@
 
         <div class="partition-form">
 
+            <input id="password" type="password" placeholder="Password" class="form-control"
+             v-model="pass" name="password" v-on:keyup="restart()" required>
+
             <input id="Email" type="email" class="form-control" name="email"
-              placeholder="EMAIL" v-model="email" v-on:keyup="restart()" required autofocus>
+            placeholder="EMAIL" v-model="email" v-on:keyup="restart()" required autofocus>
             
             <div style="margin-top: 32px"></div>
             <button id="Next" class="btn blue" style="display:block" @click.prevent="post()">EMAIL ME</button>
             <span class="lead"> {{validate}}  </span>
-            
+
+            <span id="PassError" class="lead"> {{errorP}}  </span>
             <span id="EmailError" class="lead"> {{errorE}}  </span>
 
             <p class = "lead" style = "fontSize:15px; color:blue;" > {{ congra }}  </p>
             <a id="forgetname" class="btn btn-link" @click="$modal.show('demo-login')"> LOG IN  </a>
-           <a id="forgetpass" class="btn btn-link" @click="$modal.show('demo-sign')"> SIGN UP </a>
+            <a id="forgetpass" class="btn btn-link" @click="$modal.show('demo-sign')"> SIGN UP </a>
 
         </div>
 
@@ -41,6 +46,7 @@
 
 <script>
 //import DemoLoginModal  from './LoginModal.vue'
+import ForgetUser2  from './ForgetUser2.vue'
 import {AllServices} from '../MimicServices/AllServices.js'
 /**
  * @vue-data {string} [email=""] Email value
@@ -49,26 +55,24 @@ import {AllServices} from '../MimicServices/AllServices.js'
 export default {
   name: 'ForgetUser',
   components:{
-  //   DemoLoginModal
+  //   DemoLoginModal,
+  ForgetUser2
   },
   data(){
       return{
-        username:'',
         email: '',
-        errorE: '',
+        pass:'',
+        errorP: '',
         errorU:'',
         validate:'',
         congra:''
       }
     },
   created () {
-    this.errorU = '',
+    this.errorP = '',
     this.errorE ='',
     this.validate='',
     this.congra=''
-  },
-  updated(){
-    this.$localStorage.set('emailVal', this.email)
   },
   methods:{
     /**
@@ -90,14 +94,18 @@ export default {
       {
         this.errorE = 'That email is invalid'
       }
+      else if(this.pass.length < 6)
+      {
+        this.errorP = "Password must be at least 6 characters long"
+      }
       else
       {
-          this.validate =  this.$localStorage.get('error');
         if(AllServices.getState()){
-          var check = AllServices.forgetPass(this.username, this.email);
+          var check = AllServices.forgetUser(this.pass, this.email);
           if(check)
           {
-            this.congra = "If the provided email address matches that account's verified email address, you'll receive an email with the reset link shortly." ;
+            this.congra = "If the provided email address matches that account's verified email address, you'll receive a code to login in." ;
+            setTimeout(() =>  this.$modal.show('ForgetUser2',{pass: this.pass}) , 2000);
           }
           else{
             this.validate =  this.$localStorage.get('error');
@@ -105,10 +113,12 @@ export default {
         }
         else {
 
-         AllServices.forgetPass(this.username, this.email).then((data) => {
+         AllServices.forgetUser(this.pass, this.email).then((data) => {
          if(data)
           {
-            this.congra = "If the provided email address matches that account's verified email address, you'll receive an email with the reset link shortly." ;
+            this.congra = "If the provided email address matches that account's verified email address, you'll receive a code to log in." ;
+            setTimeout(() =>  this.$modal.show('ForgetUser2',{pass: this.pass}) , 2000);
+
           }
           else{
             this.validate =  this.$localStorage.get('error');
@@ -119,7 +129,7 @@ export default {
     },
     restart: function()
     {
-      this.errorU = '',
+      this.errorp = '',
       this.errorE ='',
       this.validate='',
       this.congra=''
@@ -232,11 +242,11 @@ button.btn {
 input {
 display: block;
 box-sizing: border-box;
-margin-bottom: 4px;
+margin-bottom: 10px;
 width: 90%;
 font-size: 12px;
 line-height: 2;
-padding: 3.5% 4%;
+padding: 4px 8px;
 font-family: inherit;
 transition: 0.5s all;
 }
