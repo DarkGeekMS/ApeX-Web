@@ -1,7 +1,7 @@
 <template>
   <div id="app" >
     <navbar></navbar>
-    <button  @click="topFunction()" id="myBtn" class="btn blue">BACK TO TOP </button> 
+    <button  @click="topFunction()" id="myBtn" class="btn blue" v-show="top()">BACK TO TOP </button>
     <router-view></router-view>
     <!-- <us></us> -->
  </div>
@@ -32,15 +32,22 @@ export default {
     {
       $(document).bind('scroll', function() {
         var backToTopButton = $('#myBtn');
-        if ($(document).scrollTop() > 500) {
+        if ($(document).scrollTop() > 700) {
           backToTopButton.css('display','block');
         } else {
           backToTopButton.css('display','none');
         }
       }.bind(this));
+    },
+    top : function(){
+      if( document.documentElement.scrollTop > 700)
+        return true;
+      else{
+        return false;
+      }
     }
   }
-  
+
 }
 </script>
 
@@ -52,14 +59,14 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
-  background-color: #DAE0E6; 
+  /* background-color: #DAE0E6;  */
   min-height:1000px;
 }
 
 button.btn {
   outline: none;
   border: 0;
-  z-index:1;
+  z-index:99;
   background: white;
   padding: 3px 16px;
   cursor: pointer;
@@ -75,14 +82,11 @@ button.btn {
   letter-spacing: 0.5px;
   line-height: 24px;
   text-transform: uppercase;
-  margin-left: 80%;
-  margin-top: 40%;
   position: fixed;
-  display: none
+  top: 93%;
+  left: 75%;
   &:hover {
     background: #20a0ff;
   }
 }
-
-
 </style>

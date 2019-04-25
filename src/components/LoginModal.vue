@@ -1,14 +1,18 @@
 <template>
 
-<modal name="demo-login" transition="pop-out" :width="modalWidth" :height="450">
+<modal name="demo-login" transition="pop-out" width="50%" height="70%" :clickToClose="false">
   <ForgetPass/>
+  <ForgetUser/>
 
   <div class="box">
+     <div class="box-part" id="bp-right"></div>
     <div class="box-part" id="bp-left">
       <div class="partition" id="partition-register">
+        
+        <button class="lead" id="closebtn" @click="close()"> X</button>
 
         <div class="partition-title">
-        <img  width="45"
+        <img  width="10%"
          src="../../public//Logo_X.png" >
          Sign in
         </div>
@@ -31,37 +35,40 @@
             <button class="btn blue" type="submit" @click.prevent="post()" style="display:block" id="LoginButton">Sign In</button>
           </form>
 
-           <a id="forgetname" class="btn btn-link"  href="#"  style="text-decoration:none"> Forgot username </a>
-           <a id="forgetpass" class="btn btn-link"  href="#" @click="$modal.show('ForgetPass')" style="text-decoration:none"> Forgot password </a>
+           <a id="forgetname" class="btn btn-link" @click="$modal.show('ForgetUser')"> Forgot username </a>
+           <a id="forgetpass" class="btn btn-link" @click="$modal.show('ForgetPass')"> Forgot password </a>
+           <br/>
 
+           <p class="lead" style="fontSize:13px; color:black; padding-left:13px;display:inline-block" > New to Apex? </p>
+           <a class="btn btn-link" @click="$modal.show('demo-sign')"  style="font-weight:500;margin-top:-7px"> SIGN UP </a>
         </div>
       </div>
     </div>
-    <div class="box-part" id="bp-right"> <img src="../../public/form.jpg" height="100%"></div>
+
+   
   </div>
 </modal>
 </template>
 
 <script>
 import ForgetPass from './ForgetPass.vue'
+import ForgetUser from './ForgetUser.vue'
 import {AllServices} from '../MimicServices/AllServices.js'
-const MODAL_WIDTH = 656;
 
 /**
  * @vue-data {string} [username=""] name of user logged in
  * @vue-data {string} [pass=""] password of user logged in
- * @vue-data {integer} [modalWidth=656] width of modal
  * @vue-data {string} [error=""] when username or password are invalid
  * @vue-data {string} [congra=''] congratulation when user logged in
  */
 export default {
   name: 'DemoLoginModal',
   components:{
-    ForgetPass
+    ForgetPass,
+    ForgetUser
   },
   data(){
     return{
-      modalWidth: MODAL_WIDTH,
       username: '',
       pass: '',
       error: '',
@@ -69,7 +76,6 @@ export default {
     }
   },
   created () {
-    this.modalWidth = window.innerWidth < MODAL_WIDTH ? MODAL_WIDTH / 2 : MODAL_WIDTH,
     this.congra = ''
   },
   methods:{
@@ -110,6 +116,11 @@ export default {
     {
       this.congra = ''
       this.error = ''
+    },
+    close: function(){
+      this.$modal.hide('demo-login');
+      this.$modal.hide('ForgetUser');
+      this.$modal.hide('ForgetPass');
     }
   }
 }
@@ -120,12 +131,26 @@ body{
   display: grid;
   -webkit-font-smoothing: antialiased;
 }
+.box a{
+  text-decoration:none
+}
 $background_color: #404142;
+#closebtn
+{
+  float:right;
+  margin:7px -5px;
+  border:0;
+  color:grey;
+  width:22px;
+  height:25px;
+  font-size:19px;
+  background-color:white;
+}
 .box {
   background: white;
   overflow: hidden;
-  width: 1000px;
-  height: 450px;
+  width: 100%;
+  height: 100%;
   border-radius: 2px;
   box-sizing: border-box;
   box-shadow: 0 0 40px black;
@@ -135,14 +160,14 @@ $background_color: #404142;
     display: inline-block;
     position: relative;
     vertical-align: top;
-    box-sizing: border-box;
     height: 100%;
-    width: 50%;
+    width: 80%;
     &#bp-right {
+      background:url('../../public/form2.png') ;
+       background-size:cover;
+      background-repeat: no-repeat;
       border-left: 1px solid #eee;
-    }
-    &#bp-left{
-
+      width:18%
     }
   }
   .partition {
@@ -185,37 +210,22 @@ $background_color: #404142;
 
 button.btn {
   outline: none;
-  background: white;
   border: 0;
-  padding: 10px 18px;
+  padding: 10px 25px;
   cursor: pointer;
   border-radius: 3px;
   color: white;
   box-shadow: 0 4px 8px rgba(#20a0ff, .3);
   background: #4db3ff;
   font-weight: 600;
-  border-radius: 3px;
-  min-width: 90px;
-  margin-bottom: 8px;
-  margin-top: 8px;
-  margin-right: 8px;
+  min-width: 25%;
+  margin-bottom: 5%;
+  margin-top: 10%;
+  margin-left:10px;
   &:hover {
     background: #20a0ff;
   }
-  &.green {
-    box-shadow: 0 4px 8px rgba(#50C9BA, .3);
-    background: #50C9BA;
-    &:hover {
-     background: mix(#50C9BA, black, 95%);
-    }
-  }
-  &.red {
-    box-shadow: 0 4px 8px rgba(#F21368, .3);
-    background: #F21368;
-    &:hover {
-      background: mix(#F21368, black, 95%);
-    }
-  }
+  
 }
 
 .inp
@@ -253,7 +263,7 @@ input{
   border: 0;
   font-family: inherit;
   padding: 12px 0;
-  height: 48px;
+  height: 10%;
   font-size: 16px;
   font-weight: 500;
   border-bottom: 2px solid #C8CCD4;
@@ -267,7 +277,7 @@ input{
   &:not(:placeholder-shown),
     + span{
       color: #5A667F;
-      transform: translateY(-26px) scale(.95);
+      transform: translateY(-20px) scale(.95);
   }
   &:focus
   {
@@ -276,13 +286,13 @@ input{
   }
     + span{
       color: #0077FF;
-      transform: translateY(-26px) scale(.75);
+      transform: translateY(-20px) scale(.75);
     }
       + .border{
           transform: scaleX(1);
         }
   }
   
-    
+ 
   
 </style>

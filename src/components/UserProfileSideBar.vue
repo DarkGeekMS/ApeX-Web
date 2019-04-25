@@ -1,14 +1,15 @@
 <template id="profilesidebardesign">
 <div id='sidebar'>
+<div id="main">
     <div class="box" id="infobox">
         <div class="bluebackgroung">
           <div class="img">
-             <img width="100%" height="100%" class="image" :src="image" />
+             <img width="100%" class="image" :src="image" />
           </div>
         </div>
         <div class="content">
-          <h4 class="username" > {{userName}} </h4>
-
+          <h4 class="username" v-show="fullName==null"> {{userName}} </h4>
+          <h4 class="username" > {{fullName}} </h4>
 <div class="info">
   <div style="display:inline; float:left; width:50%;">
     <h5 class="font"  id="karmacount">karma</h5>
@@ -38,7 +39,7 @@
 	c0.258138,0.852885,0.719604,1.657298,1.393799,2.331503L10,16.666666l0.039998-0.039997
 	c0.674194-0.674215,1.135661-1.478618,1.393799-2.331503C10.901387,13.962443,10.417033,13.54601,10,13.051686z"/>
 </svg>
-<h5 style="display:inline;" id="karmanumber" > {{karmaCount}} </h5>
+<h5 style="display:inline; color:#7c7c7c;" id="karmanumber" > {{karmaCount}} </h5>
 
   </div>
   <div style="display:inline; float:right; width:50%;">
@@ -72,12 +73,12 @@
 		/>
 </g>
 </svg>
-<h5 style="display:inline; font-size: 1vw;" id="cakedaynumber" > {{cakeDay}} </h5>
+<h5 style="display:inline; font-size: 14px; color:#7c7c7c;" id="cakedaynumber" > {{cakeDay}} </h5>
   </div>
 </div>
-          <button v-show="notGuest()" id="createpostbutton" class="button" type="button">new post</button>
-          <button v-show="!notGuest()" v-on:click="blockUser()" id="blocktbutton" class="button" type="button">block</button>
-          <button v-show="isAdmin()" v-on:click="deleteUser()" id="deletebutton" class="button" type="button">delete user</button>
+          <button v-show="notGuest()&&settings" id="createpostbutton" class="button" type="button" v-on:click="createPost()">new post</button>
+          <button v-show="!notGuest()&&settings" v-on:click="blockUser()" id="blocktbutton" class="button" type="button">block</button>
+          <button v-show="isAdmin()&&settings" v-on:click="deleteUser()" id="deletebutton" class="button" type="button">delete user</button>
         </div>
     </div>
 
@@ -90,6 +91,7 @@
     <button id="unblockbutton" class="unblockButton" v-on:click="unblockUser(blockedUser.userName,index)">unblock</button>
 
   </div>
+    </div>
     </div>
     </div>
 </div>
@@ -109,16 +111,22 @@ import {AllServices} from '../MimicServices/AllServices.js'
 export default {
   props:{
       userName:String,
-      karmaCount:Number,
-      image:String,
-      cakeDay:String,
-      blockList:Array,
+      // karmaCount:Number,
+      // image:String,
+      // cakeDay:String,
+      // blockList:Array,
+      settings:Boolean,
        },
   data () {
     return {
       token:this.$localStorage.get('token'),
       loggedIn:this.$localStorage.get('login'),
-
+      // userName:'',
+      karmaCount:0,
+      image:'',
+      cakeDay:'',
+      blockList:[],
+      fullName:''
     }
   },
   methods:
@@ -151,7 +159,6 @@ export default {
     },
 
     blockUser:function(){
-      console.log(this.userName);
     if(this.loggedIn){
      AllServices.blockUser(this.userName).then((data) =>{
      if(data){
@@ -163,7 +170,7 @@ export default {
        })
        }
       else{
-        alert('you have to log in first');
+        this.$modal.show('demo-login');
       }
     },
     /**
@@ -193,17 +200,79 @@ export default {
       alert('sorry something went wrong :)')
     }
     },
+    /**
+       * if user is logged in , can go to create post or create community   
+      */
+      createPost: function(){
+        if( this.loggedIn )
+        {
+          this.$router.push('/Submit');
+        }
+        else{
+           this.$modal.show('demo-login');
+        }
+      },
+    /**
+    * get user profile info
+    */
+    getUserProfile:function(){
+      AllServices.getUserInfo().then((data) =>{
+      this.karmaCount = data.karma;
+      this.image = data.image;
+      this.fullName = data.fullName;
+      // this.userName = data.userName;
+      this.savedPosts = data.saved;
+      this.hiddenPosts = data.hidden;
+      this.personalPosts = data.personalPosts;
+      this.reports = data.reports;
+      this.cakeDay = data.cakeDay;
+      this.blockList = data.blockList;
+      })
+   },
+    /**
+    * get user account data for another user
+    */
+   getUserData:function(){
+      AllServices.getUserInfoById(this.userName).then((data) =>{
+      this.karmaCount = data.karma;
+      this.image = data.image;
+      this.fullName = data.fullName;
+      this.personalPosts = data.personalPosts;
+      this.cakeDay = data.cakeDay;
+      })
+   },
+   /**
+    * get user account data for a guset
+    */
+   getUserDataForGuest:function(){
+     AllServices.getUserInfoByIdforGuest(this.userName).then((data) =>{
+      this.karmaCount = data.karma;
+      this.image = data.image;
+      this.fullName = data.fullName;
+      // this.userName = data.userName;
+      this.personalPosts = data.personalPosts;
+      this.cakeDay = data.cakeDay;
+     })
+   },
   },
   mounted(){
-    console.log(this.userName);
+    if(this.loggedIn){
+    if(this.userName == this.loggeduser){
+      this.getUserProfile();
+    }
+    else{
+      this.getUserData();
+    }
+    }
+    else{
+      this.getUserDataForGuest();
+    }
   }
 }
 </script>
 
 <style scoped>
 *{
-  margin: 0;
-  padding: 0;
   box-sizing: border-box;
     /* box-sizing: border-box;
 
@@ -220,6 +289,13 @@ export default {
   -webkit-flex-flow: row wrap;
   justify-content: space-around; */
 }
+#sidebar{
+  width:22%;
+  float:right;
+  margin-right:5%;
+  margin-left:3%;
+  margin-top: 5%;
+}
 .bluebackgroung{
   background-color: deepskyblue;
   padding-top: 12%;
@@ -235,15 +311,16 @@ export default {
 }
 .img{
   padding:2%;
-  background-color: #eee;
+  background-color: white;
   box-sizing: border-box;
   border-radius: 4px;
-  margin-bottom:-36%;
+  margin-bottom:-15%;
+  width:80px;
 }
 .content{
-  background-color: #eee;
+  background-color: white;
   height: auto;
-  padding-top: 20%;
+  padding-top: 5%;
   padding-bottom:5%;
   padding-left:8%;
   padding-right:8%;
@@ -251,14 +328,17 @@ export default {
   border-bottom-right-radius: 20%;
 }
 .name{
-  font-size: 1vw;
+  font-size: 16px;
   font-weight: 500;
   color: rgb(34, 34, 34);
   margin-top: 4%;
 }
 .username{
   color: black;
-  font-size: 1.2vw;
+  font-size: 16px;
+}
+.box{
+  margin-bottom: 5%;
 }
 .button{
   width:100%;
@@ -271,16 +351,17 @@ export default {
   cursor:pointer;
   border-color: skyblue;
   border-style: solid;
-  font-size: 1.2vw;
-  font-weight: 700;
+  font-size: 14px;
+  font-weight: 500;
   letter-spacing: 0.5px;
   text-transform: uppercase;
   height:auto;
+  overflow: hidden;
 }
 .button:hover {opacity: 0.75}
 
 #karmanumber{
-  font-size: 1vw;
+  font-size: 14px;
   font-weight: 400;
 }
 .Header{
@@ -291,14 +372,7 @@ export default {
   height:auto;
   border-top-left-radius: 20%;
   border-top-right-radius: 20%;
-  font-size: 2vw;
-}
-#apexcomlistbox{
-  background-color: #eee;
-  height: auto;
-  padding: 4%;
-  border-bottom-left-radius: 20%;
-  border-bottom-right-radius: 20%;
+  font-size: 20px;
 }
 .karma{
   fill: skyBlue;
@@ -334,8 +408,9 @@ export default {
   width: 100%;
 }
 .font{
-  font-size: 1.3vw;
+  font-size: 18px;
   font-weight: 500;
+  color:#222;
 }
 .images{
   margin-top: 3%;
@@ -352,14 +427,15 @@ export default {
   float:right;
   border-width: 3px;
   border-radius: 20%;
-  font-size: 1.2vw;
-  font-weight: 700;
+  font-size: 14px;
+  font-weight: 500;
   letter-spacing: 0.5px;
   cursor:pointer;
   border-color: skyblue;
   border-style: solid;
   text-transform: uppercase;
   height:auto;
+  overflow: hidden;
 }
 .unblockButton:hover {opacity: 0.75}
 .Header{
@@ -369,9 +445,6 @@ export default {
   height:auto;
   border-top-left-radius: 20%;
   border-top-right-radius: 20%;
-}
-#blocklistbox{
-  margin-top: 5%;
 }
 .contentblocklist{
   background-color: #eee;
@@ -389,5 +462,10 @@ export default {
   display:inline-block;
   padding: 0%;
   margin:3%;
+}
+@media(max-width:960px){
+  #sidebar{
+    display:none
+  }
 }
 </style>

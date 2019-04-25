@@ -3,35 +3,35 @@
   <div class="Apexcom" id="Apexcom">
     <div class="apexcomName" id="apexcomName">
       <div class="imagediv">
-      <h1 style=" font-size: 2.7vw; display:inline;" id="Name">{{apexComName}}</h1>
-      <div class="img">
-        <img style="box-sizing: border-box; border-radius: 50%;" class="image" :src="image" > 
-      </div>
-      
+        <h1 style=" font-size: 28px; display:inline;" id="Name">{{apexComName}}</h1>
+        <div class="img">
+          <img style="box-sizing: border-box; border-radius: 50%;" class="image" :src="image" > 
+        </div>
       </div>
     </div>
-
     <div class="navBar" id="navbar">
-        <router-link style="font-size: 1.2vw;"  id="postslink" class="navbarLinks" :to="{name:'Posts'}">Posts</router-link>
-        <router-link style="font-size: 1.2vw;"   id="subscribersListlink" class="navbarLinks" :to="{name:'Subscribers'}">subscribers</router-link>
-        <!-- <router-link style="font-size: 1.2vw;"  v-show="isModerator() || isAdmin()" id="reportlink" class="navbarLinks" :to="{name:'Reports'}">view reports</router-link> -->
-        <router-link style="font-size: 1.2vw;" id="reportlink" class="navbarLinks" :to="{name:'Reports'}">view reports</router-link>
-        <router-link style="font-size: 1.2vw;"  v-show="isAdmin()"  id="addmoderatorlink" class="navbarLinks" :to="{name:'Moderators'}">add moderator</router-link>
-         <router-link style="font-size: 1.2vw;"  v-show="isAdmin()"  id="deletemoderatorlink" class="navbarLinks" :to="{name:'DeleteModerators'}">delete moderator</router-link>
-
+      <router-link  id="postslink" class="navbarLinks" :to="{name:'Posts'}">Posts</router-link>
+      <router-link  v-show="isModerator() || isAdmin()" id="subscribersListlink" class="navbarLinks" :to="{name:'Subscribers'}">subscribers</router-link>
+      <router-link  v-show="isModerator() || isAdmin()" id="reportlink" class="navbarLinks" :to="{name:'Reports'}">view reports</router-link>
+      <!-- <router-link id="reportlink" class="navbarLinks" :to="{name:'Reports'}">view reports</router-link> -->
+      <!-- <router-link  id="addmoderatorlink" class="navbarLinks" :to="{name:'AddModerators'}">add moderator</router-link> -->
+      <router-link v-show="isAdmin()"  id="addmoderatorlink" class="navbarLinks" :to="{name:'Moderators'}">add moderator</router-link>
+      <!-- <router-link  id="deletemoderatorlink" class="navbarLinks" :to="{name:'DeleteModerators'}">delete moderator</router-link> -->
+      <!-- <router-link v-show="isAdmin()"  id="deletemoderatorlink" class="navbarLinks" :to="{name:'DeleteModerators'}">delete moderator</router-link> -->
     </div>
-</div>
-    <SideBar class="sidebar" v-bind:apexComName="apexComName"
-    ></SideBar>
-    <div class="routerview">
-    <router-view></router-view>
-    </div>
+      </div>
+  <div class="sort">
+    <Sort ></Sort>
+  </div>
+  <SideBar class="sidebar" v-bind:apexComName="apexComName"></SideBar>
+    <router-view class="routerview"></router-view> 
 </div>
 </template>
 
 <script>
 import SideBar from './ApexComSideBar.vue'
 import {AllServices} from '../MimicServices/AllServices.js'
+import Sort from './Sort.vue'
 
 /**
  * @vue-data {JWT} [token='']  user Token
@@ -45,7 +45,8 @@ import {AllServices} from '../MimicServices/AllServices.js'
 export default {
   props:['apexComName'],
   components:{
-    'SideBar':SideBar
+    'SideBar':SideBar,
+    'Sort':Sort
   },
   data () {
     return {
@@ -114,6 +115,7 @@ export default {
          this.image=about.image;
          })
    },
+   
 
   },
   mounted()
@@ -124,68 +126,104 @@ export default {
 </script>
 
 <style scoped>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+#all{
+  margin-top: 50px;
+  height:60%;
+}
+.main{
+  /* height:100%; */
+  /* position: relative; */
+  /* max-height:3%; */
+  /* height:auto; */
 }
 .Apexcom{
-  width:100%;
-  height: 50%;
-  margin-top:4%;
-  margin-bottom:2%;
-  /* height: auto; */
+  /* max-height:3%; */
+  /* height:100%; */
+  
+  /* min-height:108%;
+  max-height:60%; */
+  /* position:relative; */
+  /* width:100%; */
+  /* height: 50%; */
+  /* position:relative; */
 }
+  /* margin-top:3.7%;
+  /* margin-bottom:2%; */
+  /* height: auto; */
+/* }  */
 .apexcomName{
   background-color: deepSkyBlue;
-  width:auto;
-  padding-top:3%;
+  /* width:auto; */
+  /* width:100%; */
+  /* margin-top: 50px; */
+  padding-top:38px;
   color: white;
+  box-sizing: border-box;
   /* height: auto; */
+  /* max-height:65%; */
 }
 #Name{
   padding-left: 1%;
   padding-top: 1%;
   display:inline;
 }
+.sort{
+  margin-top:-58px;
+  /* margin-right:0%; */
+  /* height:30px; */
+}
 .navBar{
   background-color: rgb(219, 240, 255);
-  width:100%;
+  /* max-height:35%; */
+  /* width:100%; */
+  /* width:100%; */
+  margin-top: 0%;
   /* height:auto; */
-  margin-bottom:1%;
-  padding:1%;
+  margin-bottom:0%;
+  padding-top:20px;
+  padding-bottom:10px;
   padding-left: 7%;
+  box-sizing: border-box;
 }
 .navbarLinks{
   color: deepSkyBlue;
-  padding: 0% 1%;
-  padding-bottom: 1%;
+  padding-top: 0%;
+  padding-bottom: 9px;
+  margin-right: 0%;
+  margin-left: 3%;
   text-decoration: none;
-  margin:1%;
+  font-weight: 500;
+  text-transform: uppercase;
+  font-size: 14px;
 }
 .routerview{
-  width:56%;
-  margin-top: 5%;
+  /* width:56%; */
+  margin-top: 4%;
   margin-bottom: 0%;
   margin-left: 4%;
   border-radius:20%;
-  padding: 2%;
-  float:left;
+  width:60%;
+  /* padding: 2%; */
+  /* float:left; */
+  
 }
 .sidebar{
-  width:23%;
-  height: auto;
+  /* margin-top:4%; */
+  /* margin-right: 4%; */
+  /* width:23%; */
+  /* height: auto;
   margin-top:4%;
   margin-bottom: 0%;
   margin-left: 3%;
   margin-right: 4%;
-  float:right;
+  float:right; */
 }
 .router-link-active{
   border-bottom: 3px solid deepSkyBlue;
 }
 img{
   width:100%;
+  height:100%;
   /* height:4; */
   /* display: flex; */
   /* margin-top:0%;
@@ -196,36 +234,33 @@ img{
 }
 .imagediv{
   margin-top:0%;
-  margin-bottom:2%;
+  margin-bottom:25px;
   width:100%;
   display:inline-block;
 }
 .img{
-  width: 3%;
+  width: 50px;
   display:inline;
-  margin-top:0%;
+  margin-top:-0.5%;
   margin-bottom:0%;
   margin-right:0%;
   margin-left:3%;
   float: left;
 }
-/* @media (max-width: 1024px){
-.Apexcom{
-  margin-top:40px;
-  
+@media(max-width:768px){
+  .img{
+    display:none
+  }
+}
+@media(max-width:768px){
+  .img{
+    display:none
+  }
+}
+@media(max-width:700px){
+  .router-link-active{
+  border-bottom: 0px;
 }
 }
-@media (max-width: 425px){
-img{
-  margin-top:6px;
-}
-}
-@media (max-width: 313px){
-img{
-  margin-top:8px;
-} */
-/* } */
-
-
 
 </style>

@@ -1,5 +1,5 @@
 <template id="addmoderatorpagedesign">
-<div>
+<div class="main">
 <div class="form-group has-feedback has-search" style="display:inline-block">
         <span class="glyphicon glyphicon-search form-control-feedback"></span>
         <input type="text" class="form-control" placeholder="Search for user to Add as moderator" v-model="searchVal" v-on:keyup.enter="search()">

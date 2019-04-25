@@ -1,5 +1,5 @@
 <template id="addmoderatorpagedesign">
-<div>
+<div id="main">
 
 <a href="#" id="subDiv" v-show="exist" v-for='user in users' :key="user.id" >
       <div id="sub1">
@@ -21,7 +21,6 @@
 </template>
 
 <script>
-import ApexComDeleteModerators from './ApexComDeleteModerators.vue'
 import {AllServices} from '../MimicServices/AllServices.js'
 
 export default {
@@ -63,24 +62,7 @@ props:['apexComName'],
 </script>
 
 <style scoped>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
 
-  /* padding: 0;
-  margin: 0;
-  list-style: none;
-  
-  display: -webkit-box;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
-  
-  -webkit-flex-flow: row wrap;
-  justify-content: space-around; */
-}
 .button{
   width:30%;
   margin-top:0%;
@@ -93,14 +75,15 @@ props:['apexComName'],
   float:right;
   border-width: 3px;
   border-radius: 20%;
-  font-size: 1.2vw;
-  font-weight: 700;
+  font-size: 14px;
+  font-weight: 500;
   letter-spacing: 0.5px;
   cursor:pointer;
   border-color: skyblue;
   border-style: solid;
   text-transform: uppercase;
   height:auto;
+  overflow: hidden;
 }
 .button:hover {opacity: 0.7}
 

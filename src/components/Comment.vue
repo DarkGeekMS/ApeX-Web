@@ -70,7 +70,11 @@ export default {
     parentIdx:Number,
     parentID:String,
     ID:String,
-    date:Date
+    date:Date,
+    con: {
+    type: Array,
+    default: function () { return [] }
+  }
   },
   data(){
     return{
@@ -82,25 +86,21 @@ export default {
     showReplyBox:0,
     showEditBox:0,
     deleted:1,
-    unSaved:'Save',
-    con : []
-
+    unSaved:'Save'
     }
   },
-  created(){
+  mounted(){
     setInterval(() => this.DateFormat(this.date), 1000);
-
   /////
-  this.OpString();
   },
   methods:{
-edit:function(updatedContent){
+edit:function(updatedConten,con){
   this.content=updatedContent;
+  this.con=con;
   this.showEditBox =0;
   //EMIT EVENT TO COMMENT PARENT TO EDIT THE CONTENT OF THE IDX = idx  by updatedContent
-  this.$emit('Edit',updatedContent,this.idx );
-  this.con=[];
-  this.OpString();
+  this.$emit('Edit',updatedContent,con,this.idx );
+ 
 
 
 },
@@ -176,9 +176,9 @@ Downvote:function(){
           this.points=data.votes;
         }});
 },
-addReply:function(cont,use,parent,parentLevel,parentID,currentID){
+addReply:function(cont,con,use,parent,parentLevel,parentID,currentID){
   // send to comment parent to push in the array!!!!!
-  this.$emit('Reply2',cont,parent,parentLevel+1,parentID,currentID );
+  this.$emit('Reply2',cont,con,parent ,parentLevel+1,parentID,currentID );
 
 
 },
@@ -330,8 +330,15 @@ this.time=fuzzy;
   position:static;
   float:left;
 }
-.condiv ,.content, .user  {
-display: inline;
+ .content  { 
+overflow: hidden;
  }
+ .user{
+display: inline;
+
+ }
+ /* .condiv{
+   max-width: 100%;
+ } */
 
 </style>

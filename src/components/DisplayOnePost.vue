@@ -75,15 +75,15 @@ width: 100%;
  width: 100%;
 }
 .sidebar{
-  width:25%;
-  height: auto;
-  margin:8%;
-  margin-left: 3%;
-  margin-right: 6%;
-  /* background-color:white; */
-   float:right;
-  padding-top: 0%;
-   display: inline-block;
+  // width:25%;
+  // height: auto;
+  // margin:8%;
+  // margin-left: 3%;
+  // margin-right: 6%;
+  // /* background-color:white; */
+  //  float:right;
+  // padding-top: 0%;
+  //  display: inline-block;
 
 }
 

@@ -1,22 +1,22 @@
 <template>
     <div class="sidebar" >
+      <div id="main">
       <div class="box" id="descroption box">
        <h3 class="Header" id="descroption box header">Community Details</h3>
       <div class="content">
-          <h3 style="display:inline; font-size: 2vw;" id="Apexcomname">{{apexComName}}</h3>
+          <h3 style="color:#1a1a1b; display:inline; font-size: 20px;" id="Apexcomname">{{apexComName}}</h3>
           <div class="img">
         <img style="box-sizing: border-box; border-radius: 50%;" class="image" :src="image" > 
       </div>
 
-         <p style="font-size: 1.2vw;
+         <p style=" color:#1a1a1b;
     font-weight: 550;  margin-top: 8%;">Members</p>
          
-       <p style="font-size: 1.3vw;
-    font-weight: 500; margin-left:8%;" id="subscribers Count">{{subscribersCount}}</p>
+       <p style=" color:#1a1a1b; margin-left:8%;" id="subscribers Count">{{subscribersCount}}</p>
        <p id="description">{{description}}</p>
        <button id="subscribebutton" v-bind:class="{button1:subscribed,button:!subscribed}" v-on:mouseover="changeState('unsubscribe')" v-on:mouseleave="changeState('subscribed')" type="button" v-on:click="subscribe()">
        <span> {{state}} </span> </button>
-       <button id="createpostbutton" class="button" type="button">create post</button>
+       <button id="createpostbutton" class="button" type="button" v-on:click="createPost()">create post</button>
        <button id="deteteApexCom" v-show="isAdmin()" class="button" type="button" v-on:click="deleteAC()">delete</button>
        </div>
        </div>
@@ -33,13 +33,14 @@
     <div class="box" id="moderators box" v-show="moderators.length !==0">
       <h3 class="Header" id="moderators box header">Moderators</h3>
       <div class="content" >
-      <ul class="list" style="list-style-type:none;" id="moderatorslist">
-        <li  id="moderatorslistitem" v-for="moderator in moderators" :key="moderator.id">
-          <router-link class="accountLink" :to="{name:'UserProfile' , params: {userName:moderator.userName}}"> {{moderator.userName}}</router-link>
-        </li>
-      </ul>
+        <div id="moderatorsbox" class="box2" v-for="(moderator,index) in moderators" :key="moderator.id">
+          <router-link style="font-size: 14px;" class="accountLink" :to="{name:'UserProfile' , params: {userName:moderator.userName}}"> {{moderator.userName}}</router-link>
+          <button v-show="isAdmin()" style="width:35%; float: right; margin:0%" id="remove button" class="button1" v-on:click="deleteModerator(moderator.userName,index)">delete</button>
+        </div>
+      
     </div>
     </div>
+      </div>
       </div>
 </template>
 
@@ -146,6 +147,18 @@ export default {
           this.state='subscribe';
     }
    },
+   /**
+       * if user is logged in , can go to create post or create community   
+      */
+      createPost: function(){
+        if( this.loggedIn )
+        {
+          this.$router.push('/Submit');
+        }
+        else{
+           this.$modal.show('demo-login');
+        }
+      },
       /**
       *check if user is an admin
       */
@@ -185,9 +198,18 @@ export default {
     })
       }
       else{
-        alert('login first,please');
+        this.$modal.show('demo-login');
       }
     },
+    deleteModerator:function(userName,index){
+          var data = AllServices.addOrDeleteModerator(userName,this.apexComName);
+          if(data){
+          this.moderators.splice(index, 1);
+          }
+          else{
+              alert('sorry something went wrong');
+              }
+      },
     getAbout(){
          AllServices.getAbout(this.ApexComName).then((about) =>{
          this.description=about.description;
@@ -209,56 +231,78 @@ export default {
 </script>
 
 <style scoped>
-* {
-  margin: 0;
-  padding: 0;
+*{
   box-sizing: border-box;
-
-  /* padding: 0;
-  margin: 0;
-  list-style: none;
-  
-  display: -webkit-box;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
-  
-  -webkit-flex-flow: row wrap;
-  justify-content: space-around; */
+}
+#main{
+  width:22%;
+  float:right;
+   /* width:23%; */
+   /* position:absolute; */
+   /* max-height:50%; */
+   /* max-width:80%; */
+  /* height: auto; */
+  margin-top:4%;
+  margin-bottom: 0%;
+  margin-left: 3%;
+  margin-right: 5%;
+}
+.sidebar{
+  /* float:right; */
+   /* width:23%; */
+   /* position:absolute; */
+   /* max-height:50%; */
+  /* height: auto; */
+  /* margin-top:4%; */
+  /* margin-bottom: 0%; */
+  /* margin-left: 3%; */
+  /* margin-right: 4%; */
+  /* box-sizing: border-box; */
 }
 .Header{
   background-color: skyBlue;
+  color:#1a1a1b;
   padding:4%;
   margin: 0%;
-  height:auto;
+  /* height:auto; */
   border-top-left-radius: 20%;
   border-top-right-radius: 20%;
-  font-size: 2vw;
+  font-size: 16px;
+  font-weight: 400;
+  overflow-wrap: break-word;
 }
 #description{
   font-family: "Noto Sans", Arial, sans-serif;
-  font-size: 1.28vw;
+  color:#1a1a1b;
+  font-size: 16px;
   font-weight: 400;
-  color: #1a1a1b;
+  line-height: 21px;
   overflow-wrap: break-word;
+  /* overflow-wrap: break-word; */
 }
 .box{
-  margin-top: 5%;
-  margin-bottom: 0%;
-  color: black;
+  margin-top: 0%;
+  margin-bottom: 5%;
+  /* display:flow-root; */
+  display:block;
 }
-
+.box2{
+  margin-top: 0%;
+  margin-bottom: 7%;
+  display: block;
+}
 .content{
   margin-top:0%;
   margin-bottom: 0%;
-  background-color:#eee;
+  background-color:white;
   border-bottom-left-radius:20%;
   border-bottom-right-radius:20%;
   padding-top:8%;
   padding-bottom:5%;
   padding-left:5%;
   padding-right:5%;
+  overflow-wrap: break-word;
+  color:#1a1a1b;
 }
 .button{
   width:100%;
@@ -271,10 +315,11 @@ export default {
   cursor:pointer;
   border-color: skyblue;
   border-style: solid;
-  font-size: 1.2vw;
-  font-weight: 700;
+  font-size: 14px;
+  font-weight: 500;
   letter-spacing: 0.5px;
   text-transform: uppercase;
+  overflow: hidden;
   /* height:auto; */
 }
 .button:hover {opacity: 0.75}
@@ -291,13 +336,14 @@ export default {
   cursor:pointer;
   border-color: skyblue;
   border-style: solid;
-  font-size: 1.2vw;
-  font-weight: 700;
+  font-size: 14px;
+  font-weight: 500;
   letter-spacing: 0.5px;
   text-transform: uppercase;
   /* height:auto; */
   margin-left:5%;
   margin-right:5%;
+  overflow: hidden;
 }
 img{
   width: 100%;
@@ -313,26 +359,44 @@ img{
 }
 .accountLink{
   text-decoration: none;
-  color: black;
+  /* color: black; */
 }
 .list{
   padding-left: 0%;
 }
+
 #ruleslistitem{
-  font-size: 1.4vw;
+  font-size: 14px;
 font-weight: 500;
+color:#1a1a1b;
 }
 #ruleslist{
   padding-left: 6%;
 }
 #moderatorslistitem{
   margin-bottom: 2%;
-  font-size: 1.2vw;
+  font-size: 14px;
+  color:#1a1a1b;
 }
 .imagediv{
   display: inline;
 }
-
+@media(max-width:960px){
+  #main{
+    display:none
+  }
+}
+#remove-button{
+  float: right;
+  /* display: inline; */
+}
+p{
+  /* color:#7c7c7c;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 21px;
+  overflow-wrap: break-word; */
+}
 /* @media (max-width: 605px){
 img{
   margin-top:4px;
