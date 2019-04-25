@@ -11,7 +11,6 @@ import Users from './components/CommunitiesAndUsers.vue'
 import ApexComModerator from './components/ApexComModerator.vue'
 import ApexComAddModerator from './components/ApexComAddModerator.vue'
 import UserSettings from './components/UserSettings.vue'
-import ApexComDeleteModerator from './components/ApexComDeleteModerators.vue'
 import SubmitPost from './components/SubmitPost.vue'
 
 export default[
@@ -21,7 +20,6 @@ export default[
         {path:'AddModerators',name:'AddModerators',component:ApexComModerator,props:true ,children :[
           {path:'search',name:'Moderators', component:ApexComAddModerator,props:true },
         ]},
-        {path:'deletemoderator',name:'DeleteModerators',component:ApexComDeleteModerator},
         {path:'ApexPosts',name:'Posts',component:ApexComPosts},
         {path:'ApexSubscribers',name:'Subscribers',component:ApexComSubscribers,props:true},
         {path:'ApexReports',name:'Reports',component:Reports,props:true},

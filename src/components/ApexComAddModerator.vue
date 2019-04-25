@@ -21,7 +21,6 @@
 </template>
 
 <script>
-import ApexComDeleteModerators from './ApexComDeleteModerators.vue'
 import {AllServices} from '../MimicServices/AllServices.js'
 
 export default {

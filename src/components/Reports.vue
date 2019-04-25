@@ -61,6 +61,7 @@ props:['apexComName','userName'],
   methods:
   {
     reviewReports(string){
+      console.log(string);
          AllServices.reviewReports(string).then((data) =>{
          this.reportedComment=data.reportedComment;
          this.reportedPost=data.reportedpost;
