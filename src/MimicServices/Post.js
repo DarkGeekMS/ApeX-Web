@@ -3,7 +3,42 @@ import axios from 'axios'
 
 export  const MimicPost=new Vue({
 methods:{
+  EditPost: function(ID,cont,mimic){
+    if( mimic == true)
+    {
+        if(this.$localStorage.login)
+        {
+        var promise1 = new Promise(function(resolve, reject) {
+            setTimeout(function() {
+              resolve(true);
+            }, 300);
+          });
+return promise1;
+        }
+        var promise1 = new Promise(function(resolve, reject) {
+            setTimeout(function() {
+              resolve(false);
+            }, 300);
+          });
+return promise1;
+    }
+    else
+    {
+        var self = this;
+        return axios.patch(this.$localStorage.get('baseUrl') + 'api/edit', {
+            name: ID,
+            content: cont,
+            token: this.$localStorage.get('token')
 
+         })
+       .then(function (response) {
+           return true;
+        })
+       .catch(function (error) {
+           return false;
+        });
+    }
+},
     save:function(token,ID,mimic){
 
         if(mimic){

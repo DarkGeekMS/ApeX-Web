@@ -2,7 +2,7 @@
   <div id="HomePage" >
     <Sort></Sort>
     <DisplayPosts :apexComName="''" class='ds'></DisplayPosts>
-    <SideBar> </SideBar>
+   <SideBar> </SideBar>
 
   </div>
 </template>
@@ -11,12 +11,14 @@
 import Sort from "./Sort.vue"
 import DisplayPosts from "./DisplayPosts.vue"
 import HomeSideBar from "./HomeSideBar.vue"
+
 export default {
   name: 'HomePage',
   components:{
     'DisplayPosts':DisplayPosts,
     'SideBar':HomeSideBar,
-    'Sort':Sort
+    'Sort':Sort,
+  
   },
 }
 

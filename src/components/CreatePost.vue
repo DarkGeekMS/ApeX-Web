@@ -11,14 +11,12 @@
       <div class="form-group dropApex" >
         <select id="selectList" class="form-control" name="category" @change="handleChange">
           <!-- <option>choose a community</option> -->
-           <!-- <option v-for="(x,index) in apexs">{{x}}</option>          -->
+     
          <option v-for="apex in apexs" :key="apex.id"> 
                {{apex.name}}
-             <!-- {{x[index].name}} -->
+         
              </option>        
-           <!-- <ul> -->
-                   <!-- <li id="result"></li> -->
-                   <!-- </ul> -->
+         
           </select>
        </div>
        
@@ -157,12 +155,14 @@ export default {
         ],
         switchTo:'Switch to Fancy Pants Editor',
         normal:true,
+        isCreated:false,
         indx:null,
         enable:true,
         token:'',
         apexComId:'',
         bodyPost:'',
         imgName:'',
+        title:'',
         apexs:[],
         image: '',
         videoUrl:'',
@@ -294,13 +294,25 @@ console.log(this.indx);
      */
 
     submitPost(){
+
+     
+      this.bodyPost=document.getElementById('textsendnormal').value;
+      
+       this.$emit('PostEmit',this.bodyPost);
+        this.$router.push('/ShowCreatedPost');
+      
        this.videoUrl=document.getElementById('textsend3').value;
        this.apexComId=apexs[this.indx].id;
-       this.bodyPost=document.getElementById('textsend').value;
+      // this.bodyPost=document.getElementById('textsendnormal').value;
        this.imgName=document.getElementById('imgId').src;
-
-    //  AllServices.submit(this.videoUrl,this.apexComId,this.bodyPost,this.imgName,this.isLocked,this.$localStorage.get('token'));
-
+       this.title=document.getElementById("usr").value;
+      //  this.$emit('Post',this.title,this.bodyPost,this.$localStorage.get('token'));
+       
+       // this.$router.push('/ShowCreatedPost');
+        
+     
+      AllServices.submit(this.videoUrl,this.apexComId,this.bodyPost,this.imgName,this.isLocked,this.$localStorage.get('token'));
+  
     }
 
     },
@@ -316,7 +328,7 @@ console.log(this.indx);
      * it return all apexnames to be displayed in listbox .
      */
 created(){
- 
+
   AllServices.getApexNames().then((data) =>
       {
         if(data)
@@ -324,21 +336,7 @@ created(){
           this.apexs = data
         }
       });
-   /*   var array =apexs,
-  // Reduce will iterate over all the array items and returns a single value.
-  listItems = array.reduce((result, item) => {
-    // Add a string to the result for the current item. This syntax is using template literals.
-    result += `<li>${item}</li>`;
-    
-    // Always return the result in the reduce callback, it will be the value or result in the next iteration.
-    return result;
-  }, ''); // The '' is an empty string, it is the initial value result.
-  // Get the element from the DOM in which to display the list, this should be an ul or ol element.
-  resultElement = document.getElementById('result');
-
-// Set the inner HTML
-resultElement.innerHTML = listItems;
-*/
+  
 }
 
 

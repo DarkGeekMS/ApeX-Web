@@ -105,6 +105,11 @@ deletePost:function(name,ID){
   return MimicPost.deletePost(name,ID,this.mimic);
 },
 
+EditPost: function(ID,content){
+  var data=MimicPost.EditPost(ID,content,this.mimic);
+  return data;
+},
+
 userType:function(){
   var data=MimicUserProfile.getUserType(this.mimic);
   return data;

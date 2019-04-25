@@ -12,6 +12,8 @@ import ApexComModerator from './components/ApexComModerator.vue'
 import ApexComAddModerator from './components/ApexComAddModerator.vue'
 import UserSettings from './components/UserSettings.vue'
 import ApexComDeleteModerator from './components/ApexComDeleteModerators.vue'
+import SubmitPost from './components/SubmitPost.vue'
+
 export default[
       {path:'/ApexCom/:apexComName',name:'ApexCom',props:true,component:ApexCom , children :
       [
@@ -33,5 +35,6 @@ export default[
         {path:'users', component:Users },]},
     {path:'/userprofile/:userName',name:'UserProfile',component:userprofile,props:true},
 
-    {path:'/UserSettings',name:'UserSettings',component:UserSettings}
+    {path:'/UserSettings',name:'UserSettings',component:UserSettings},
+    {path:'/ShowCreatedPost',name:'SubmitPost',component:SubmitPost}
 ]
