@@ -40,9 +40,9 @@
          </p>
 
 
-<iframe  v-show ="postData.videolink!==''" width="100%" height="315"  :src=postData.videolink frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe  v-show ="postData.video_url!==''" width="100%" height="315"  :src=postData.video_url frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-<img v-show="postData.img!==''" :src=postData.img  height="100%" width="100%">
+<img v-show="postData.img_name!==''" :src=postData.img_name  height="100%" width="100%">
 </div>
     <!-- </div> -->
 <footer>
@@ -501,6 +501,16 @@ h5 {
    margin-right: 0%;
 
 } */
+@media(max-width:1054px){
+  div .panel 
+  {
+    width: 80%;
+
+      }
+  div .panel{
+    margin-left: 4%
+  }
+}
 #postCol1{
 
 height:100%;

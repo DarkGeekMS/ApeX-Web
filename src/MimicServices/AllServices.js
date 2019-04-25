@@ -11,7 +11,7 @@ import { MimicSearch } from './Search.js'
 export  const AllServices =new Vue({
   data(){
     return{
-      mimic:false
+      mimic:true
     }
   },
   methods:{
@@ -31,7 +31,7 @@ export  const AllServices =new Vue({
       MimicPost.Post(this.mimic);
 
     },
-    getApexNames:function(mimic)
+    getApexNames:function()
     {
       return MimicAuth.getApex(this.mimic)
     },
@@ -104,13 +104,7 @@ deletePost:function(name,ID){
 
   return MimicPost.deletePost(name,ID,this.mimic);
 },
-getApexNames:function(){
-  return MimicCreatePosts.getApexNames();
-},
-// isLocked:function(){
-//        return MimicPost
 
-// },
 userType:function(){
   var data=MimicUserProfile.getUserType(this.mimic);
   return data;

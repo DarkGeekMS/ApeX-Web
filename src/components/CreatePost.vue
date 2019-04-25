@@ -10,10 +10,15 @@
 
       <div class="form-group dropApex" >
         <select id="selectList" class="form-control" name="category" @change="handleChange">
-          <option>choose a community</option>
-           <!-- <option v-for="name in apexNames">{{name}}</option>          -->
-          
-                   
+          <!-- <option>choose a community</option> -->
+           <!-- <option v-for="(x,index) in apexs">{{x}}</option>          -->
+         <option v-for="apex in apexs" :key="apex.id"> 
+               {{apex.name}}
+             <!-- {{x[index].name}} -->
+             </option>        
+           <!-- <ul> -->
+                   <!-- <li id="result"></li> -->
+                   <!-- </ul> -->
           </select>
        </div>
        
@@ -158,7 +163,7 @@ export default {
         apexComId:'',
         bodyPost:'',
         imgName:'',
-        apexNames:[],
+        apexs:[],
         image: '',
         videoUrl:'',
         isLocked:false,
@@ -199,9 +204,9 @@ handleChange(){
 var sel = document.getElementById('selectList');
 
 var opt = sel.options[sel.selectedIndex];
-indx=sel.selectedIndex;
+this.indx=sel.selectedIndex;
 // display value property of select list (from selected option)
-//console.log( sel.value );
+console.log(this.indx);
 
 },
      /**
@@ -290,7 +295,7 @@ indx=sel.selectedIndex;
 
     submitPost(){
        this.videoUrl=document.getElementById('textsend3').value;
-       this.apexComId=apexNames[indx].id;
+       this.apexComId=apexs[this.indx].id;
        this.bodyPost=document.getElementById('textsend').value;
        this.imgName=document.getElementById('imgId').src;
 
@@ -312,8 +317,28 @@ indx=sel.selectedIndex;
      */
 created(){
  
- apexNames=AllServices.getApexNames();
+  AllServices.getApexNames().then((data) =>
+      {
+        if(data)
+        {
+          this.apexs = data
+        }
+      });
+   /*   var array =apexs,
+  // Reduce will iterate over all the array items and returns a single value.
+  listItems = array.reduce((result, item) => {
+    // Add a string to the result for the current item. This syntax is using template literals.
+    result += `<li>${item}</li>`;
+    
+    // Always return the result in the reduce callback, it will be the value or result in the next iteration.
+    return result;
+  }, ''); // The '' is an empty string, it is the initial value result.
+  // Get the element from the DOM in which to display the list, this should be an ul or ol element.
+  resultElement = document.getElementById('result');
 
+// Set the inner HTML
+resultElement.innerHTML = listItems;
+*/
 }
 
 
