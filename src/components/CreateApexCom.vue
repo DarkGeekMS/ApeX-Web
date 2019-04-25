@@ -1,34 +1,33 @@
 <template>
-<div class='settings'>
-  <ChangeMail></ChangeMail>
-  <ChangePass></ChangePass>
-<h2 class="page-header">User settings</h2>
-<h6  class="page-header"><b>ACCOUNT PREFERENCES</b></h6>
-<div>
-  <h2><button  id ="ChangeButton" type="button"  @click="showpass()">CHANGE</button></h2>
-  <h2>Change password</h2>
-  <h6>Password must be at least 6 characters long</h6>
-</div>
-<h6  class="page-header"><b>PROFILE INFORMATION</b></h6>
-<div>
-  <h2>Email Address</h2>
-  <h6>{{email}}</h6>
-  <div class="partition" id="partition-register">
-    <div class="partition-form">
-      <form autocomplete="false">
-        <input id="n-password2" type="password" placeholder="Password">
-        <input id="n-email" type="text" placeholder="Email">
-      </form>
-    </div>
-  </div>
+<div class="CreateApexCom">
+<!-- here -->
 
-  <!-- <h2><button  id ="ChangeButton" type="button"  @click="showmail()">CHANGE</button></h2> -->
-<div class="noti">
-  <label class="switch"><input type="checkbox"><span class="slider round"></span></label>
-  <h2>Allow Notifications</h2>
+<h2 class="page-header">Create Apex Community</h2>
+
+
+<form class="">
+
+<!-- community name -->
+<div class="form-group">
+  <h6 class="page-header" ><b>Write community name</b></h6>
+  <input type="text"  id="name"  placeholder="ApexCom Name" v-model="name" required></input>
 </div>
 
 
+
+<!-- description -->
+<div class="form-group">
+  <h6 class="page-header"><b>Write community Description</b></h6>
+  <textarea class="form-control" id="Description" placeholder="ApexCom Description" name="description" rows="2" v-model="description" required></textarea>
+</div>
+
+<!-- rules -->
+<div class="form-group">
+  <h6 class="page-header"><b>Enter Community Rules</b></h6>
+  <textarea class="form-control" id="rules" placeholder="ApexCom Rules" name="rule" rows="3" v-model="rule" required></textarea>
+</div>
+
+<!-- image update -->
 <div class="upload photos">
   <div class="samerow">
     <div class="box" @dragover.prevent @drop="onDrop">
@@ -67,97 +66,47 @@
   </div>
 </div>
 
-<button :disabled="check"  type="submit" style="margin-left:450px" @click.prevent="post()" id="ChangeButton">Save</button>
+<!-- create bottum -->
+<button  type="submit" style="margin-left:450px"  id="Button" v-on:click="CreateApex()">Create</button>
 
+</form>
+</div>
 
-z
-</div>
-<h6  class="page-header"><b>DEACTIVATE ACCOUNT</b></h6>
-<div class="">
-</div>
-<!-- <UserProfileSideBar
-v-bind:userName="userName"
-v-bind:karmaCount="karmaCount"
-v-bind:image="image"
-v-bind:cakeDay="cakeDay"
-v-bind:blockList ="blockList"
-class="sidebar" ></UserProfileSideBar> -->
-</div>
 </template>
 
 <script>
-
-
-import ChangeMail from './UserSettingsModals/ChangeEmail.vue'
-import ChangePass from './UserSettingsModals/ChangePass.vue'
-import UserProfileSideBar from './UserProfileSideBar.vue'
-
 import {AllServices} from '../MimicServices/AllServices.js'
 
-
 export default {
-  components:{
-    ChangeMail,
-    ChangePass,
-    UserProfileSideBar
-  },
   data(){
     return{
-        image:'',
-    email:this.$localStorage.get('emailVal'),
-  userName:'marc',
-  karmaCount:1,
-//    image:'http://bashkatibnews.com/contents/article/515_lybfjrmf.jpg',
-    cakeDay:55,
-    blockList:[]
-    }
-  },
-  methods:{
-    showpass(){
-      this.$modal.show('changepass')
-    },
-     onDrop: function(e) {
-          e.stopPropagation();
-          e.preventDefault();
-          var files = e.dataTransfer.files;
-          this.createFile(files[0]);
-        },
-         /**
-       * when the user upload the img it enable the post button and store the img src
-       */
-        onChange(e) {
-
-          var files = e.target.files;
-          this.createFile(files[0]);
-           this.imagable=true;
-           this.Enable();
-
-        },
-        createFile(file) {
-          if (!file.type.match('image.*')) {
-            alert('Select an image');
-            return;
-          }
-          var img = new Image();
-          var reader = new FileReader();
-          var vm = this;
-
-          reader.onload = function(e) {
-            vm.image = e.target.result;
-           this.imgName=vm.image; // NOT SURE YET IF THIS WHAT THE API DOC WANT
-            //console.log(this.imgName);
-          }
-          reader.readAsDataURL(file);
-
-        },
-
-
+    name:"",
+    description:"",
+    rule:"",
+    error:{}
   }
+},
+methods:{
+  CreateApex:function() {
+    AllServices.CreateApexCom(this.name,this.description,this.rule,"","").then((data) => {
+     this.error= data;
+     this.ErrorCheck();
+   });
+  },
+  ErrorCheck:function(){
+    if(this.error == true){
+      alert("here correct")
+    }
+    else{
+      alert("Noooooo")
+    }
+  }
+}
 }
 </script>
 
 <style scoped>
-.settings{
+.CreateApexCom{
   margin-top: 5%;
   margin-left: 10%;
   margin-right: 40%;
@@ -167,7 +116,7 @@ export default {
 
 
 
-#ChangeButton{
+#Button{
 
 box-sizing: border-box;
 text-align: center;
