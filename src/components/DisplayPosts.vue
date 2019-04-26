@@ -19,7 +19,8 @@ import {AllServices} from '../MimicServices/AllServices.js'
  */
 export default {
   props:{
-    apexComName:String
+    apexComName:String,
+    postData:{}
     },
 data(){
 return{

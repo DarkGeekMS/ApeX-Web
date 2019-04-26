@@ -592,10 +592,12 @@ width: 100%;
 width: 30%;
 
 }
-/*
-@media(max-width:1000px){
-  .postItem{
-      width:170%;
+
+@media (max-width:1000px){
+ #post{
+      width:165%;
+      margin-left:0%;
+      
   }
-}  */
+} 
 </style>
