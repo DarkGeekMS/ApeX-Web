@@ -1,6 +1,11 @@
 <template id="PostTemlate">
+
   <div class="postMod">
+    <!-- VERY IMPORTANT! REPORT MODAL APPEARS MULTIPLE TIMES FOR EACH POST  -->
+   <reportBox> </reportBox>
+    
 <div class="panel panel-default"  @click="ShowModal()" v-show="Not_Hide" id="post">
+
     <div class="panel-body">
     <div class="panel2 panel-default"  id="postSide">
 
@@ -48,7 +53,7 @@
 
 <div class="btn-group" role="group" aria-label="..." id="drop">
 
-  <button type="button" class="btn btn-default " id="commentButton"><i class="far fa-comment-alt" id="commentIcon"></i>
+  <button type="button" class="btn btn-default " id="commentButton" ><i class="far fa-comment-alt" id="commentIcon"></i>
 Comments</button>
   <button  type="button" class="btn btn-default  SAVE"  @click="Save" id="SaveButton" >
 
@@ -66,7 +71,7 @@ Comments</button>
     </button>
     <ul class="dropdown-menu" id="dropMenu">
       <li ><a href="#"  @click="Hide" class="HIDE"><i class="fa fa-ban" id="HideIcon"></i>Hide</a></li>
-      <li><a href="#" @click="$modal.show('reportBox')"><i class="glyphicon glyphicon-flag" id="ReportIcon" ></i>Report</a></li>
+      <li><a href="#" @click="report"><i class="glyphicon glyphicon-flag" id="ReportIcon" ></i>Report</a></li>
       <li><a href="#"><i class="glyphicon glyphicon-pencil" id="ReportIcon"></i>edit</a></li>
       <li><a href="#" @click="isLocked">
         
@@ -87,7 +92,7 @@ Comments</button>
 
        </div>
 
-
+    
 
 
 
@@ -119,6 +124,7 @@ export default {
 
    data(){
        return{
+           
              Not_Hide :true,
              is_Hide  :false,
 
@@ -144,6 +150,15 @@ export default {
          },
 
   methods: {
+    report(){
+if(this.ShowModalVar == true){
+      this.ToggleShowModalVar();
+    }
+   //alert('ana report');
+     this.onlyOneTime=false;
+      this.$modal.show('reportBox');
+
+    },
     isLocked(){
         if(this.ShowModalVar == true){
       this.ToggleShowModalVar();
