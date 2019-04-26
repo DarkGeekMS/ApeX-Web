@@ -275,7 +275,7 @@ this.Enable();
           alert('Select an image');
           return;
         }
-        var img = new Image();
+       // var img = new Image();
         var reader = new FileReader();
         var vm = this;
 

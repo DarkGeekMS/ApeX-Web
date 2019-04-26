@@ -66,7 +66,7 @@ Comments</button>
     </button>
     <ul class="dropdown-menu" id="dropMenu">
       <li ><a href="#"  @click="Hide" class="HIDE"><i class="fa fa-ban" id="HideIcon"></i>Hide</a></li>
-      <li><a href="#"><i class="glyphicon glyphicon-flag" id="ReportIcon"></i>Report</a></li>
+      <li><a href="#" @click="$modal.show('reportBox')"><i class="glyphicon glyphicon-flag" id="ReportIcon" ></i>Report</a></li>
       <li><a href="#"><i class="glyphicon glyphicon-pencil" id="ReportIcon"></i>edit</a></li>
       <li><a href="#" @click="isLocked">
         
@@ -98,7 +98,7 @@ Comments</button>
 
 import {MimicDisplayPosts} from '../MimicServices/DisplayPosts.js'
 import { AllServices } from '../MimicServices/AllServices';
-
+import reportBox from './ReportModal.vue'
 /**
  * @vue-data {string} [Save="Save"] Save value
  * @vue-data {boolean} [Not_Hide=true]    check if post not hide
@@ -391,7 +391,13 @@ computed :{
         createdDate : function(){
           //  return moment().format('dddd');
         }
-}}
+},
+components:{
+    reportBox,
+   
+  
+  }
+}
 
 
 </script>

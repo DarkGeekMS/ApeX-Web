@@ -54,7 +54,7 @@ export default {
 
   methods:{
     getData(e){
-       alert('ana emit ');
+      // alert('ana emit ');
     
         if(e){
           this.isCreated=true;
