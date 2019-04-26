@@ -406,16 +406,15 @@ margin-left:55%;
 .Cpost{
 
     width: 30%;
-    margin-block-end: -3%;
-    margin-top: 6.5%;
     margin-left: 5.5%;
 
 }
 
 .a{
-
-    margin-bottom: 5%;
-
+    padding-top: 6%;
+    border-bottom: 1px solid rgb(237, 239, 241);
+    color:black;
+ 
 }
 
 .form-control{
