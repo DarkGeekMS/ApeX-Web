@@ -83,7 +83,7 @@ export  const MimicAuth =new Vue({
         }
       }
       else{
-      //  var self = this;
+        var self = this;
         return axios.post(this.$localStorage.get('baseUrl') + 'api/sign_in', {
             username : user,
             password : pass
@@ -122,7 +122,7 @@ export  const MimicAuth =new Vue({
               this.item = response.data; 
              return true;
           }).catch(function () {
-            self.$localStorage.set('error','Username is not found');
+             self.$localStorage.set('error','Username is not found');
              return false;
           });
       }
@@ -173,7 +173,7 @@ export  const MimicAuth =new Vue({
           });
       }
     },
-   
+
     ForgetUser: function(pass,email,mimic)
     {
       if(mimic == true)

@@ -6,13 +6,14 @@
       <div class="content">
           <h3 style="color:#1a1a1b; display:inline; font-size: 20px;" id="Apexcomname">{{apexComName}}</h3>
           <div class="img">
-        <img style="box-sizing: border-box; border-radius: 50%;" class="image" :src="image" > 
+        <img style="box-sizing: border-box; border-radius: 50%;" class="image" :src="image" >
       </div>
 
-         <p style=" color:#1a1a1b;
-    font-weight: 550;  margin-top: 8%;">Members</p>
-         
-       <p style=" color:#1a1a1b; margin-left:8%;" id="subscribers Count">{{subscribersCount}}</p>
+
+      <div class="sub">
+       <p id="subscribersCount">{{subscribersCount}}</p>
+       <p id="subscribers">Members</p>
+       </div>
        <p id="description">{{description}}</p>
        <button id="subscribebutton" v-bind:class="{button1:subscribed,button:!subscribed}" v-on:mouseover="changeState('unsubscribe')" v-on:mouseleave="changeState('subscribed')" type="button" v-on:click="subscribe()">
        <span> {{state}} </span> </button>
@@ -37,7 +38,7 @@
           <router-link style="font-size: 14px;" class="accountLink" :to="{name:'UserProfile' , params: {userName:moderator.userName}}"> {{moderator.userName}}</router-link>
           <button v-show="isAdmin()" style="width:35%; float: right; margin:0%" id="remove button" class="button1" v-on:click="deleteModerator(moderator.userName,index)">delete</button>
         </div>
-      
+
     </div>
     </div>
       </div>
@@ -148,12 +149,12 @@ export default {
     }
    },
    /**
-       * if user is logged in , can go to create post or create community   
+       * if user is logged in , can go to create post or create community
       */
       createPost: function(){
         if( this.loggedIn )
         {
-          this.$router.push('/Submit');
+          alert('you have to log in, first');
         }
         else{
            this.$modal.show('demo-login');
@@ -166,7 +167,7 @@ export default {
       {
         if(this.loggedIn){
         AllServices.userType().then((data) =>{
-        if(data.type ==1){
+        if(data.type == 1){
           return true;
           }
         else{
@@ -198,7 +199,7 @@ export default {
     })
       }
       else{
-        this.$modal.show('demo-login');
+        alert('you have to log in, first');
       }
     },
     deleteModerator:function(userName,index){
@@ -211,10 +212,19 @@ export default {
               }
       },
     getAbout(){
-         AllServices.getAbout(this.ApexComName).then((about) =>{
+         console.log(this.ApexComName);
+         AllServices.getAbout(this.ApexComName).then((about) => {
          this.description=about.description;
          this.moderators=about.moderators;
-         console.log(this.moderators.length);
+         this.rules=about.rules;
+         this.image=about.image;
+         this.subscribersCount=about.subscribersCount;
+         });
+   },
+   getAboutGuest(){
+         AllServices.getAboutGuest(this.ApexComName).then((about) =>{
+         this.description=about.description;
+         this.moderators=about.moderators;
          this.rules=about.rules;
          this.image=about.image;
          this.subscribersCount=about.subscribersCount;
@@ -224,7 +234,12 @@ export default {
   },
  mounted(){
    this.getSubscribers();
+   if(this.loggedIn){
    this.getAbout();
+   }
+   else{
+     this.getAboutGuest();
+   }
  }
 
 }
@@ -247,17 +262,20 @@ export default {
   margin-left: 3%;
   margin-right: 5%;
 }
-.sidebar{
-  /* float:right; */
-   /* width:23%; */
-   /* position:absolute; */
-   /* max-height:50%; */
-  /* height: auto; */
-  /* margin-top:4%; */
-  /* margin-bottom: 0%; */
-  /* margin-left: 3%; */
-  /* margin-right: 4%; */
-  /* box-sizing: border-box; */
+#subscribersCount{
+color:#1a1a1b;
+ font-size: 16px;
+ font-weight: 500;
+  margin-left:0%;
+  margin-bottom: 0%;
+}
+#subscribers{
+color:#1a1a1b; font-size: 12px;
+    font-weight: 500; word-break: break-word;  margin-top: 0%;
+}
+.sub{
+  margin-top: 8%;
+  margin-left: 0%;
 }
 .Header{
   background-color: skyBlue;
@@ -349,10 +367,10 @@ img{
   width: 100%;
 }
 .img{
-  width: 15%;
+  width: 35px;
   display:inline;
-  margin-top:-3%;
-  margin-bottom:0%;
+  margin-top:-8px;
+  margin-bottom:5%;
   margin-right:3%;
   margin-left:0%;
   float: left;

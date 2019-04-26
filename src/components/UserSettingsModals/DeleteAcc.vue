@@ -1,5 +1,6 @@
 <template>
 <modal name="DeleteAcount" transition="pop-out" :scrollable="true" width="30%" height="auto">
+<div class="">
   <div class="box">
         <h6 class="page-header"><b>Deactivate your account</b></h6>
       <h6>Sorry to see you go!</h6>
@@ -21,11 +22,12 @@
 </div>
 
             <div class="button-set">
-              <button @click="hide()">Cancel</button>
-              <button @click="deleteacc()">Delete</button>
+              <button id="goto-signin-btn" @click="hide()" class="Button">Cancel</button>
+              <button id="register-btn" @click="deleteacc()" class="Button">Delete</button>
             </div>
 
 
+  </div>
   </div>
 </modal>
 </template>
@@ -136,28 +138,30 @@ $background_color: #404142;
     transition: 0.5s all;
     outline: none;
   }
-  button {
-    background: white;
-    border-radius: 4px;
-    box-sizing: border-box;
-    padding: 10px;
-    letter-spacing: 1px;
-    font-family: "Open Sans", sans-serif;
-    font-weight: 400;
-    min-width: 140px;
-    margin-top: 8px;
-    color: black;
-    cursor: pointer;
-    border: 1px solid #DDDEDF;
-    text-transform: uppercase;
-    transition: 0.1s all;
-    font-size: 10px;
-    outline: none;
-    &:hover {
-      border-color: mix(#DDDEDF, black, 90%);
-      color: mix(#8b8c8d, black, 80%);
-    }
-  }
+  // button {
+  //   background: white;
+  //   border-radius: 4px;
+  //   box-sizing: border-box;
+  //   padding: 10px;
+  //   letter-spacing: 1px;
+  //   font-family: "Open Sans", sans-serif;
+  //   font-weight: 400;
+  //   min-width: 140px;
+  //   margin-top: 8px;
+  //   color: black;
+  //   cursor: pointer;
+  //   border: 1px solid #DDDEDF;
+  //   text-transform: uppercase;
+  //   transition: 0.1s all;
+  //   font-size: 10px;
+  //   outline: none;
+  //   &:hover {
+  //     border-color: mix(#DDDEDF, black, 90%);
+  //     color: mix(#8b8c8d, black, 80%);
+  //   }
+  // }
+  //
+  //
   .large-btn {
     width: 100%;
     background: white;
@@ -169,7 +173,9 @@ $background_color: #404142;
     }
   }
   .button-set {
-    margin-bottom: 8px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    float: right;
   }
   #register-btn,
   #signin-btn {
@@ -195,4 +201,28 @@ $background_color: #404142;
   opacity: 0;
   transform: translateY(24px);
 }
+
+.Button{
+
+box-sizing: border-box;
+text-align: center;
+font-size: 12px;
+font-weight: 700;
+letter-spacing: 0.5px;
+line-height: 24px;
+text-transform: uppercase;
+background-color: transparent;
+color: rgb(0, 121, 211);
+fill: rgb(0, 121, 211);
+border-width: 1px;
+border-style: solid;
+border-image: initial;
+border-radius: 4px;
+text-decoration: none;
+padding: 3px 16px;
+border-color: rgb(0, 121, 211);
+}
+
+
+
 </style>

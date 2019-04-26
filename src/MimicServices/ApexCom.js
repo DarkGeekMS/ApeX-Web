@@ -27,18 +27,52 @@ return promise;
 }
 else {
   return axios.post(this.$localStorage.get('baseUrl') + 'api/about', {
-      ApexCom_id :ApexComName,
-      Token:this.token
+      ApexCom_ID :ApexComName,
+      token:this.$localStorage.get('token')
   })
   .then(response=> {
     return response.data;
    })
   .catch(function (error) {
-    alert(error)
-    // console.log(error);
+    console.log(error);
   });
     }
   },
+  getAboutGuest: function(mimic,ApexComName){
+
+    if(mimic){
+var about={
+  rules:['rule1','rule2','rule3'],
+  subscribersCount:78,
+  description:'this is just the mimic server',
+  moderators:[
+    {userName:'moderator1'},
+  {userName:'moderator2'},
+  {userName:'moderator3'},
+  {userName:'moderator4'}
+],
+image:'https://i.imgur.com/AMFz23O.jpg',
+}
+var promise = new Promise(function(resolve) {
+  setTimeout(function() {
+    resolve(about);
+  }, 300);
+});
+return promise;
+}
+else {
+return axios.get(this.$localStorage.get('baseUrl') + 'api/about', {
+    ApexCom_id :ApexComName,
+})
+.then(response=> {
+  return response.data;
+ })
+.catch(function (error) {
+  alert(error)
+  // console.log(error);
+});
+  }
+},
 
 getSubscribers: function(mimic,apexComName){
     if(mimic){
@@ -59,17 +93,14 @@ return promise;
 }
 else {
  return axios.post(this.$localStorage.get('baseUrl') + 'api/get_subscribers', {
-
       ApexCom_id :apexComName,
-      Token:this.$localStorage.get('token')
-
+      token:this.$localStorage.get('token')
   })
   .then(response => {
     return response.data;
    })
   .catch(function (error) {
-    alert(error)
-    // console.log(error);
+    console.log(error);
   });
   }
 },
@@ -80,17 +111,16 @@ blockSubscriber: function(mimic,userName,apexComName){
 return true;
 }
 else {
-  axios.post('api/block', {
+  axios.post(this.$localStorage.get('baseUrl') + 'api/block', {
         ApexCom_id:apexComName,
         user_id:userName,
-        Token:this.$localStorage.get('token')
+        token:this.$localStorage.get('token')
       })
       .then(function (response) {
         return response;
           })
           .catch(function (error) {
-            alert(error)
-            // console.log(error);
+            console.log(error);
           });
     }
     },
@@ -101,17 +131,17 @@ deleteApexCom: function(mimic,apexComName){
     return true;
     }
     else {
-      axios.delete(this.$localStorage.get('baseUrl') + 'api/del_ac',{params: {
+      axios.delete(this.$localStorage.get('baseUrl') + 'api/del_ac',{
+        params: {
          ApexCom_id:apexComName,
-         Token:this.$localStorage.get('token')
+         token:this.$localStorage.get('token')
     }
         })
         .then(function (response) {
           return response;
             })
             .catch(function (error) {
-              alert(error)
-              // console.log(error);
+              console.log(error);
             });
 }
     },
@@ -122,14 +152,13 @@ subscribe: function(mimic,apexComName){
     else {
       axios.post(this.$localStorage.get('baseUrl') + 'api/subscribe', {
       ApexCom_id:apexComName,
-      Token:this.$localStorage.get('token')
+      token:this.$localStorage.get('token')
       })
       .then(function (response) {
         return response;
       })
       .catch(function (error) {
-        alert(error)
-        // console.log(error);
+        console.log(error);
       });
 }
 },
@@ -147,8 +176,7 @@ else {
         return response;
           })
           .catch(function (error) {
-            alert(error)
-            // console.log(error);
+            console.log(error);
           });
     }
     },
@@ -237,8 +265,7 @@ reviewReports: function(mimic,apexComName){
             return response.data;
            })
           .catch(function (error) {
-            alert(error)
-            // console.log(error);
+            console.log(error);
           });
         }
         },
@@ -255,11 +282,82 @@ ignoreReport:function(mimic,apexComName){
             return response;
               })
               .catch(function (error) {
-                alert(error)
-                // console.log(error);
+                console.log(error);
               });
   }
 
-}
+},
+searchU: function(mimic)
+{
+  if(mimic ==  true)
+  {
+    if(this.$localStorage.get('searchModerator') == 'Ayat' )
+    {
+       var result = [
+         [{
+            apex_id:1,
+            content:'Experience enjoyable JavaScript development with WebStorm. With smart code completion, safe refactoring, and first-class support for Node.js, Angular and React. Download free trial 😀😂🍔😍',
+            id:1,
+            postedby:'AyatMostafa',
+            title:'posttitle',
+            votes:150
+          },],
+         [{
+           id:1,
+           name:'AyatMostafa',
+           numOfMeb: 0,
+           avatar:'https://b.thumbs.redditmedia.com/ooMk56fzWZCheEvB0mfTlsKk7P86TEu_BylqPJ-36EQ.png',
+           description: "Aww, cripes. I didn't know I'd have to write a description. How many words is that so far, like a hundred? Soooo, yeah. Mildly interesting stuff.",
+         },],
+         [{
+            id:1,
+            name:'ayatmostafa',
+            avatar:'https://i.ytimg.com/vi/inYarqDCCGA/maxresdefault.jpg?fbclid=IwAR2SOsEdCa3c9PC8x4UaNgKXEynjKgq-R_LlYn9WMsCrutAjjdCpXOZkCOs',
+            karma:10
+          },
+          {
+            id:1,
+            name:'ayatmostafa',
+            avatar:'https://i.ytimg.com/vi/inYarqDCCGA/maxresdefault.jpg?fbclid=IwAR2SOsEdCa3c9PC8x4UaNgKXEynjKgq-R_LlYn9WMsCrutAjjdCpXOZkCOs',
+            karma:10
+          },
+          {
+            id:1,
+            name:'ayatmostafa',
+            avatar:'https://i.ytimg.com/vi/inYarqDCCGA/maxresdefault.jpg?fbclid=IwAR2SOsEdCa3c9PC8x4UaNgKXEynjKgq-R_LlYn9WMsCrutAjjdCpXOZkCOs',
+            karma:10
+          },
+          {
+            id:1,
+            name:'ayatmostafa',
+            avatar:'https://i.ytimg.com/vi/inYarqDCCGA/maxresdefault.jpg?fbclid=IwAR2SOsEdCa3c9PC8x4UaNgKXEynjKgq-R_LlYn9WMsCrutAjjdCpXOZkCOs',
+            karma:10
+          }
+        ]
+      ]
+      var promise1 = new Promise(function(resolve){
+        setTimeout(function() {
+          resolve(result);
+        }, 300)
+        });
+      return result
+    }
+    else{
+      return 'Sorry, there were no results for'
+    }
+  }
+  else
+  {
+    axios.post(this.$localStorage.get('baseUrl') + 'api/search',{
+    query: this.$localStorage.get('search'),
+    token: this.$localStorage.get('token')
+    }).then(response => {
+      var result= response.data;
+      return result
+    }).catch(error => {
+      return error
+    })
+  }
+},
   }
 })

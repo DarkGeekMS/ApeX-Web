@@ -5,7 +5,7 @@
       <div class="imagediv">
         <h1 style=" font-size: 28px; display:inline;" id="Name">{{apexComName}}</h1>
         <div class="img">
-          <img style="box-sizing: border-box; border-radius: 50%;" class="image" :src="image" > 
+          <img style="box-sizing: border-box; border-radius: 50%;" class="image" :src="image" >
         </div>
       </div>
     </div>
@@ -14,17 +14,15 @@
       <router-link  v-show="isModerator() || isAdmin()" id="subscribersListlink" class="navbarLinks" :to="{name:'Subscribers'}">subscribers</router-link>
       <router-link  v-show="isModerator() || isAdmin()" id="reportlink" class="navbarLinks" :to="{name:'Reports'}">view reports</router-link>
       <!-- <router-link id="reportlink" class="navbarLinks" :to="{name:'Reports'}">view reports</router-link> -->
-      <router-link  id="addmoderatorlink" class="navbarLinks" :to="{name:'AddModerators'}">add moderator</router-link>
-      <!-- <router-link v-show="isAdmin()"  id="addmoderatorlink" class="navbarLinks" :to="{name:'Moderators'}">add moderator</router-link> -->
-      <!-- <router-link  id="deletemoderatorlink" class="navbarLinks" :to="{name:'DeleteModerators'}">delete moderator</router-link> -->
-      <!-- <router-link v-show="isAdmin()"  id="deletemoderatorlink" class="navbarLinks" :to="{name:'DeleteModerators'}">delete moderator</router-link> -->
+      <!-- <router-link  id="addmoderatorlink" class="navbarLinks" :to="{name:'AddModerators'}">add moderator</router-link> -->
+      <router-link v-show="isAdmin()"  id="addmoderatorlink" class="navbarLinks" :to="{name:'Moderators'}">add moderator</router-link>
     </div>
       </div>
   <div class="sort">
     <Sort style="padding-top:10px"></Sort>
   </div>
   <SideBar class="sidebar" v-bind:apexComName="apexComName"></SideBar>
-    <router-view class="routerview"></router-view> 
+    <router-view class="routerview"></router-view>
 </div>
 </template>
 
@@ -52,6 +50,8 @@ export default {
     return {
       token:this.$localStorage.get('token'),
       userName:this.$localStorage.get('userName'),
+      loggedIn:this.$localStorage.get('login'),
+
       //userName:'moderator1',
       // description:'',
       moderators:[],
@@ -115,12 +115,26 @@ export default {
          this.image=about.image;
          })
    },
-   
+   getAboutGuest(){
+         AllServices.getAboutGuest(this.ApexComName).then((about) =>{
+        //  this.description=about.description;
+         this.moderators=about.moderators;
+        //  this.rules=about.rules;
+         this.image=about.image;
+        //  this.subscribersCount=about.subscribersCount;
+         });
+   },
+
 
   },
   mounted()
   {
-  this.getAbout();
+  if(this.loggedIn){
+   this.getAbout();
+   }
+   else{
+     this.getAboutGuest();
+   }
   }
 }
 </script>
@@ -139,7 +153,7 @@ export default {
 .Apexcom{
   /* max-height:3%; */
   /* height:100%; */
-  
+
   /* min-height:108%;
   max-height:60%; */
   /* position:relative; */
@@ -205,7 +219,7 @@ export default {
   width:60%;
   /* padding: 2%; */
   /* float:left; */
-  
+
 }
 .sidebar{
   /* margin-top:4%; */

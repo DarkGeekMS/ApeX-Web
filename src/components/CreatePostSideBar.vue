@@ -5,12 +5,12 @@
      
      <div id="g"> <img width="70px" src="../../public/Logo_small.png" > <h5>Posting to Apex</h5></div>
       </div>
-      <div id="g"><h5 v-show="login">1.Remember the human</h5></div>
-      <div id="g"> <h5 v-show="login"> 2.Behave like you would in real life </h5></div>
-      <div id="g"> <h5 v-show="login"> 3.Look for the original source of content </h5></div>
-      <div id="g"> <h5 v-show="login"> 4.Search for duplicates before posting</h5></div>
-      <div id="g">  <h5 v-show="login"> 5.Behave like you would in real life </h5></div>
-      <div id="g"> <h5 v-show="login"> 6.Read the community’s rules </h5></div>
+      <div id="g"><h5 >1.Remember the human</h5></div>
+      <div id="g"> <h5> 2.Behave like you would in real life </h5></div>
+      <div id="g"> <h5> 3.Look for the original source of content </h5></div>
+      <div id="g"> <h5> 4.Search for duplicates before posting</h5></div>
+      <div id="g">  <h5> 5.Behave like you would in real life </h5></div>
+      <div id="g"> <h5> 6.Read the community’s rules </h5></div>
 
   
 
@@ -109,7 +109,7 @@ button{
   left: 71%;
 }
 
-@media(max-width:933px){
+@media(max-width:959px){
   #one{
     display:none
   }
