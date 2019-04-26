@@ -6,12 +6,12 @@
       <div class="content">
           <h3 style="color:#1a1a1b; display:inline; font-size: 20px;" id="Apexcomname">{{apexComName}}</h3>
           <div class="img">
-        <img style="box-sizing: border-box; border-radius: 50%;" class="image" :src="image" > 
+        <img style="box-sizing: border-box; border-radius: 50%;" class="image" :src="image" >
       </div>
 
          <p style=" color:#1a1a1b;
     font-weight: 550;  margin-top: 8%;">Members</p>
-         
+
        <p style=" color:#1a1a1b; margin-left:8%;" id="subscribers Count">{{subscribersCount}}</p>
        <p id="description">{{description}}</p>
        <button id="subscribebutton" v-bind:class="{button1:subscribed,button:!subscribed}" v-on:mouseover="changeState('unsubscribe')" v-on:mouseleave="changeState('subscribed')" type="button" v-on:click="subscribe()">
@@ -37,7 +37,7 @@
           <router-link style="font-size: 14px;" class="accountLink" :to="{name:'UserProfile' , params: {userName:moderator.userName}}"> {{moderator.userName}}</router-link>
           <button v-show="isAdmin()" style="width:35%; float: right; margin:0%" id="remove button" class="button1" v-on:click="deleteModerator(moderator.userName,index)">delete</button>
         </div>
-      
+
     </div>
     </div>
       </div>
@@ -148,7 +148,7 @@ export default {
     }
    },
    /**
-       * if user is logged in , can go to create post or create community   
+       * if user is logged in , can go to create post or create community
       */
       createPost: function(){
         if( this.loggedIn )
@@ -166,7 +166,7 @@ export default {
       {
         if(this.loggedIn){
         AllServices.userType().then((data) =>{
-        if(data.type ==1){
+        if(data.type == 1){
           return true;
           }
         else{
@@ -211,10 +211,10 @@ export default {
               }
       },
     getAbout(){
-         AllServices.getAbout(this.ApexComName).then((about) =>{
+         console.log(this.ApexComName);
+         AllServices.getAbout(this.ApexComName).then((about) => {
          this.description=about.description;
          this.moderators=about.moderators;
-         console.log(this.moderators.length);
          this.rules=about.rules;
          this.image=about.image;
          this.subscribersCount=about.subscribersCount;
@@ -223,7 +223,7 @@ export default {
 
   },
  mounted(){
-   this.getSubscribers();
+   //this.getSubscribers();
    this.getAbout();
  }
 

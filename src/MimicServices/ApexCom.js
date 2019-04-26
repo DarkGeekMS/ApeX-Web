@@ -27,15 +27,14 @@ return promise;
 }
 else {
   return axios.post(this.$localStorage.get('baseUrl') + 'api/about', {
-      ApexCom_id :ApexComName,
-      Token:this.token
+      ApexCom_ID :ApexComName,
+      token:this.$localStorage.get('token')
   })
   .then(response=> {
     return response.data;
    })
   .catch(function (error) {
-    alert(error)
-    // console.log(error);
+    console.log(error);
   });
     }
   },
@@ -59,17 +58,14 @@ return promise;
 }
 else {
  return axios.post(this.$localStorage.get('baseUrl') + 'api/get_subscribers', {
-
       ApexCom_id :apexComName,
-      Token:this.$localStorage.get('token')
-
+      token:this.$localStorage.get('token')
   })
   .then(response => {
     return response.data;
    })
   .catch(function (error) {
-    alert(error)
-    // console.log(error);
+    console.log(error);
   });
   }
 },
@@ -80,17 +76,16 @@ blockSubscriber: function(mimic,userName,apexComName){
 return true;
 }
 else {
-  axios.post('api/block', {
+  axios.post(this.$localStorage.get('baseUrl') + 'api/block', {
         ApexCom_id:apexComName,
         user_id:userName,
-        Token:this.$localStorage.get('token')
+        token:this.$localStorage.get('token')
       })
       .then(function (response) {
         return response;
           })
           .catch(function (error) {
-            alert(error)
-            // console.log(error);
+            console.log(error);
           });
     }
     },
@@ -101,17 +96,17 @@ deleteApexCom: function(mimic,apexComName){
     return true;
     }
     else {
-      axios.delete(this.$localStorage.get('baseUrl') + 'api/del_ac',{params: {
+      axios.delete(this.$localStorage.get('baseUrl') + 'api/del_ac',{
+        params: {
          ApexCom_id:apexComName,
-         Token:this.$localStorage.get('token')
+         token:this.$localStorage.get('token')
     }
         })
         .then(function (response) {
           return response;
             })
             .catch(function (error) {
-              alert(error)
-              // console.log(error);
+              console.log(error);
             });
 }
     },
@@ -122,14 +117,13 @@ subscribe: function(mimic,apexComName){
     else {
       axios.post(this.$localStorage.get('baseUrl') + 'api/subscribe', {
       ApexCom_id:apexComName,
-      Token:this.$localStorage.get('token')
+      token:this.$localStorage.get('token')
       })
       .then(function (response) {
         return response;
       })
       .catch(function (error) {
-        alert(error)
-        // console.log(error);
+        console.log(error);
       });
 }
 },
@@ -147,8 +141,7 @@ else {
         return response;
           })
           .catch(function (error) {
-            alert(error)
-            // console.log(error);
+            console.log(error);
           });
     }
     },
@@ -237,8 +230,7 @@ reviewReports: function(mimic,apexComName){
             return response.data;
            })
           .catch(function (error) {
-            alert(error)
-            // console.log(error);
+            console.log(error);
           });
         }
         },
@@ -255,8 +247,7 @@ ignoreReport:function(mimic,apexComName){
             return response;
               })
               .catch(function (error) {
-                alert(error)
-                // console.log(error);
+                console.log(error);
               });
   }
 
