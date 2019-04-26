@@ -106,7 +106,7 @@ button{
 #one
 {
   position: absolute;
-  top: 130px;
+  top: 116px;
   left: 65%;
 }
 
