@@ -78,6 +78,9 @@ export default {
   created(){
 
  
+  },
+  props:{
+    postData:{}
   }
 
 }

@@ -205,7 +205,7 @@ var sel = document.getElementById('selectList');
 var opt = sel.options[sel.selectedIndex];
 this.indx=sel.selectedIndex;
 this.Enable();
-this.apexComId=apexs[this.indx].name;
+this.apexComId=this.apexs[this.indx-1].id;
 
 //alert(this.apexComId);
 
@@ -306,9 +306,14 @@ this.apexComId=apexs[this.indx].name;
      */
 
     submitPost(){
+       if(this.normal){
+         this.bodyPost=document.getElementById('textsendnormal').value;
+       }
+      else{
+         this.bodyPost=document.getElementById('textsendrte-view').value;
+      }
+
        
-      this.bodyPost=document.getElementById('textsendnormal').value;
-        
     // console.log(this.bodyPost);
       if(this.imagable){
       this.imgName=document.getElementById('imgId').src;
@@ -347,7 +352,7 @@ this.apexComId=apexs[this.indx].name;
       AllServices.submit(this.videoUrl,this.apexComId,this.bodyPost,this.imgName,this.isLocked,this.$localStorage.get('token'));
      //alert('هعمل ايمت اهو ');
  
-      this.$emit('PostEmit',this.title,this.bodyPost,this.imgName,this.videoUrl,this.$localStorage.get('userName'),this.apexs[this.indx].name);
+      this.$emit('PostEmit',this.title,this.bodyPost,this.imgName,this.videoUrl,this.$localStorage.get('userName'),this.apexs[this.indx-1].name);
       this.$router.push('/Submit');
      
     }
