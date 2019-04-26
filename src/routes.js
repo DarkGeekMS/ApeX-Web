@@ -21,7 +21,7 @@ export default[
         {path:'AddModerators',name:'AddModerators',component:ApexComModerator,props:true ,children :[
           {path:'searchUser',name:'Moderators', component:ApexComAddModerator,props:true },
         ]},
-        {path:'ApexPosts',name:'Posts',component:ApexComPosts},
+        {path:'ApexPosts/:apexComName',name:'Posts',component:ApexComPosts,props:true},
         {path:'ApexSubscribers',name:'Subscribers',component:ApexComSubscribers,props:true},
         {path:'ApexReports',name:'Reports',component:Reports,props:true},
 
