@@ -13,11 +13,15 @@ import {MimicUserSettings} from './UserSettings.js'
 export  const AllServices =new Vue({
   data(){
     return{
-      mimic:false
+      mimic:true
     }
   },
   methods:{
+    isLocked(id){
+      var data=MimicPost.isLocked(id,this.mimic);
+      return data;
 
+    },
     getState(){
       return this.mimic
     },

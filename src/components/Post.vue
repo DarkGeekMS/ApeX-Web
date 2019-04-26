@@ -13,7 +13,7 @@
           <div class="column1" id="postCol1">
 
 
-<button @click="changeColor_up" type="button" :class="className_up" id="up">
+<button @click="changeColor_up" type="button" :class="className_up" id="up" >
         <i class="glyphicon glyphicon-arrow-up"></i>
 </button>
 
@@ -77,7 +77,7 @@ Comments</button>
       <li ><a href="#"  @click="Hide" class="HIDE"><i class="fa fa-ban" id="HideIcon"></i>Hide</a></li>
       <li><a  @click="report"><i class="glyphicon glyphicon-flag" id="ReportIcon" ></i>Report</a></li>
       <li v-if="postData.canEdit"><a href="#" @click="editText" ><i class="glyphicon glyphicon-pencil" id="ReportIcon"></i>edit</a></li>
-      <li><a href="#" @click="isLocked">
+      <li><a href="#" @click="isLocked" v-show="isAdmin() || isModerator()">
         
         <i v-if="Locked=='unlock'" class="fa fa-lock" id="ReportIcon"></i>
         <i v-if="Locked=='Lock'" class="fa fa-unlock" id="ReportIcon"></i>
@@ -156,6 +156,33 @@ export default {
          },
 
   methods: {
+     isModerator:function()
+      {
+        if(this.$localStorage.get('login')){
+        AllServices.userType().then((data) =>{
+        if(data.type ==2){
+          return true;
+          }
+        else{
+          return false;
+        }
+        })
+        }
+      },
+   isAdmin:function()
+      {
+       
+        if(this.$localStorage.get('login')){
+        AllServices.userType().then((data) =>{
+        if(data.type ==1){
+          return true;
+          }
+        else{
+          return false;
+        }
+        })
+        }
+      },
    
     saveChange(){
     
@@ -181,20 +208,24 @@ export default {
     }
     },
     isLocked(){
-      if(this.$localStorage.get('login') ){
+      if(this.$localStorage.get('login')){
         if(this.ShowModalVar == true){
-      this.ToggleShowModalVar();
+        this.ToggleShowModalVar();
     }
      // alert('lock successfully');
      
      if(this.Locked=='Lock'){
 
        this.Locked='unlock';
-        this.$emit('lockComment',this.Locked);
+       this.$emit('lockComment',this.Locked);
+       
      }
-     else{this.Locked='Lock';
-      this.$emit('lockComment',this.Locked);}
-      AllServices.isLocked(this.PostId,this.$localStorage.get('token'));
+     else{
+      this.Locked='Lock';
+      this.$emit('lockComment',this.Locked);
+      }
+      this.PostId=this.postData.id;
+      AllServices.isLocked(this.PostId);
 
     }
     else{
@@ -269,6 +300,7 @@ export default {
 
                       this.votes          += 1;
                        this.PostId=postData.id;
+                       this.postData.up=true;
                       AllServices.upvote(this.$localStorage.get('token'),this.PostId,1);
 
                 }
@@ -426,7 +458,7 @@ this.time=fuzzy;
       ShowModal(){
         this.isModal=true;
         if(this.ShowModalVar == true){
-          this.$emit('showUp',this.postData);
+          this.$emit('showUp',this.postData,);
    
           this.$modal.show('Demo-OnePost');
         }
