@@ -61,7 +61,7 @@ else{this.locked=true;
 <style lang="scss" scoped >
 #PopupModal{
     overflow: scroll;
-  
+  background:#333333;
 }
 .postContent{
 overflow: scroll;
