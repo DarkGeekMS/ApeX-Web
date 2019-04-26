@@ -41,6 +41,6 @@ export default[
   },
 
     {path:'/UserSettings',name:'UserSettings',component:UserSettings},
-    {path:'/CreateApexCom',name:'CreateApexCom',component:CreateApexCom}
+    {path:'/CreateApexCom',name:'CreateApexCom',component:CreateApexCom},
     {path:'/ShowCreatedPost',name:'SubmitPost',component:SubmitPost}
 ]

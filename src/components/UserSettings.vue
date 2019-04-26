@@ -1,7 +1,7 @@
 <template>
 <div class='settings'>
-  <ChangeMail></ChangeMail>
   <ChangePass></ChangePass>
+  <DelAcc></DelAcc>
 <h2 class="page-header">User settings</h2>
 <h6  class="page-header"><b>ACCOUNT PREFERENCES</b></h6>
 <div>
@@ -82,13 +82,26 @@ v-bind:image="image"
 v-bind:cakeDay="cakeDay"
 v-bind:blockList ="blockList"
 class="sidebar" ></UserProfileSideBar> -->
+
+<div class="s19ceyn0-2 htFOkz">
+  <button class="s19ceyn0-1 knawbn" @click="showDel()">
+    <svg class="s19ceyn0-0 iFmWTj" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+      <path d="M16.5,2H12.71l-.85-.85A.5.5,0,0,0,11.5,1h-3a.5.5,0,0,0-.35.15L7.29,2H3.5a.5.5,0,0,0-.5.5v1a.5.5,0,0,0,.5.5h13a.5.5,0,0,0,.5-.5v-1A.5.5,0,0,0,16.5,2Z"></path>
+      <path d="M16.5,5H3.5a.5.5,0,0,0-.5.5v12A1.5,1.5,0,0,0,4.5,19h11A1.5,1.5,0,0,0,17,17.5V5.5A.5.5,0,0,0,16.5,5ZM6.75,15.5a.75.75,0,0,1-1.5,0v-7a.75.75,0,0,1,1.5,0Zm4,0a.75.75,0,0,1-1.5,0v-7a.75.75,0,0,1,1.5,0Zm4,0a.75.75,0,0,1-1.5,0v-7a.75.75,0,0,1,1.5,0Z"></path>
+    </svg>deactivate account</button>
+  </div>
+
+
+
+
+
 </div>
 </template>
 
 <script>
 
 
-import ChangeMail from './UserSettingsModals/ChangeEmail.vue'
+import DelAcc from './UserSettingsModals/DeleteAcc.vue'
 import ChangePass from './UserSettingsModals/ChangePass.vue'
 import UserProfileSideBar from './UserProfileSideBar.vue'
 
@@ -97,7 +110,7 @@ import {AllServices} from '../MimicServices/AllServices.js'
 
 export default {
   components:{
-    ChangeMail,
+    DelAcc,
     ChangePass,
     UserProfileSideBar
   },
@@ -116,43 +129,17 @@ export default {
     showpass(){
       this.$modal.show('changepass')
     },
-     onDrop: function(e) {
-          e.stopPropagation();
-          e.preventDefault();
-          var files = e.dataTransfer.files;
-          this.createFile(files[0]);
-        },
-         /**
-       * when the user upload the img it enable the post button and store the img src
-       */
-        onChange(e) {
+    showDel()
+    {
+    this.$modal.show('DeleteAcount')
+    },
 
-          var files = e.target.files;
-          this.createFile(files[0]);
-           this.imagable=true;
-           this.Enable();
-
-        },
-        createFile(file) {
-          if (!file.type.match('image.*')) {
-            alert('Select an image');
-            return;
-          }
-          var img = new Image();
-          var reader = new FileReader();
-          var vm = this;
-
-          reader.onload = function(e) {
-            vm.image = e.target.result;
-           this.imgName=vm.image; // NOT SURE YET IF THIS WHAT THE API DOC WANT
-            //console.log(this.imgName);
-          }
-          reader.readAsDataURL(file);
-
-        },
-
-
-  }
+  },
+  mounted:function () {
+    AllServices.getPrefs();
+    AllServices.updatePrefs();
+    AllServices.changePass();
+    },
 }
 </script>
 
@@ -251,15 +238,46 @@ border-color: rgb(0, 121, 211);
 
 
 
-
-
-
-button{
-/* background-color: white; */
-/* color: blue; */
-float: right;
-display: inline-block;
+.htFOkz {
+    display: flex;
+    -webkit-box-pack: end;
+    justify-content: flex-end;
 }
+
+
+.knawbn {
+    display: flex;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    line-height: 24px;
+    text-transform: uppercase;
+    color: rgb(255, 88, 91);
+}
+
+
+
+.iFmWTj {
+    width: 20px;
+    margin-right: 4px;
+    fill: rgb(255, 88, 91);
+}
+
+
+
+
+
+button {
+    background: transparent;
+    border: none;
+    color: inherit;
+    cursor: pointer;
+    padding: initial;
+    float: right;
+    display: inline-block;
+}
+
+
 .noti{
 display: inline;
 

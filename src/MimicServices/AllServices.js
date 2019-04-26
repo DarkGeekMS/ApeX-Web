@@ -9,6 +9,7 @@ import { MimicComment } from './Comments.js'
 import { MimicSearch } from './Search.js'
 import {MimicCreateApexCom} from './CreateApexCom.js'
 import { MimicMessage } from './Messages.js'
+import {MimicUserSettings} from './UserSettings.js'
 export  const AllServices =new Vue({
   data(){
     return{
@@ -205,7 +206,18 @@ ignoreReport:function(id){
 },
 CreateApexCom:function(Name,Description,Rules,Avatar,Banner) {
 return MimicCreateApexCom.CreateApexCom(this.mimic,Name,Description,Rules,Avatar,Banner);
+},
+deleteAcc:function(Pass) {
+  return MimicUserSettings.deleteAcc(mimic,pass)
+},
+getPrefs:function(){
+  return MimicUserSettings.getPrefs(mimic);
+},
+updatePrefs:function(email,avatar,username) {
+  return MimicUserSettings.updatePrefs(mimic,email,avatar,username);
+},
+changePass:function (password,withCode,username,key){
+    return MimicUserSettings.changePass(mimic,password,withCode,username,key);
 }
   }
-
 });
