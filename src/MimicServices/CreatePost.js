@@ -15,8 +15,10 @@ token:'1',
     submitPost: function(videoUrl,apexComId,bodyPost,imgName,token,isLocked,mimic){
       
       if(mimic){
-         if(token=='1' && apexComId=='1'){
-    
+         if(this.$localStorage.login){
+        
+          // this.$router.push('/ShowCreatedPost');
+       
             return true;
             
          }
@@ -29,17 +31,22 @@ else {
         ApexCom_id:apexComId,
         _token:token,
         body:bodyPost,
-        img_name:imgName,
+        avatar:imgName,
         video_url:videoUrl,
         isLocked:isLocked
 
 
 
 
-       }).then(function(response){
+       },{
+       headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+
+      }}
+       ).then(function(response){
 
          if(response){
-           //TODO it will  display your Post which you have created soon
+          this.$router.push('/ShowCreatedPost');
 
          }
        })

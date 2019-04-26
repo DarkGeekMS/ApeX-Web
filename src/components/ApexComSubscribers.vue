@@ -1,7 +1,7 @@
 <template id="subscribers list design">
 <div id="subscriberslist">
   <h4 v-if="subscribersList.length ==0" >there is nothing to show </h4>
-  <div id="subscribers box" class="box" v-for="(subscriber,index) in subscribersList" :key="subscriber.id">
+  <div v-if="subscribersList.length !=0" id="subscribers box" class="box" v-for="(subscriber,index) in subscribersList" :key="subscriber.id">
     <div class="name">
     <router-link class="accountLink" :to="{name:'UserProfile' , params: {userName:subscriber.userName}}"> {{subscriber.userName}}</router-link>
     <div class="img">

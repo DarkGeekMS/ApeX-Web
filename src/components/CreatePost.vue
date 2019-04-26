@@ -10,7 +10,7 @@
 
       <div class="form-group dropApex" >
         <select id="selectList" class="form-control" name="category" @change="handleChange">
-          <!-- <option>choose a community</option> -->
+          <option>choose a community</option>
      
          <option v-for="apex in apexs" :key="apex.id"> 
                {{apex.name}}
@@ -118,12 +118,11 @@
 <script>
 import tab from './PostTab.vue'
 import tabs from './PostTabs.vue'
-import Vue from "vue";
+import Vue from "vue"
 import {AllServices} from '../MimicServices/AllServices.js'
 import { RichTextEditorPlugin, Toolbar, HtmlEditor } from "@syncfusion/ej2-vue-richtexteditor";
 import HomeSideBar from "./HomeSideBar.vue"
 Vue.use(RichTextEditorPlugin);
-
 /**
  * @vue-data {string} [apexComId=''] Id of apexcom which post will be created in
  * @vue-data {boolean} [enable=true]    check if post button is enable or not
@@ -161,7 +160,7 @@ export default {
         token:'',
         apexComId:'',
         bodyPost:'',
-        imgName:'',
+        avatar:'',
         title:'',
         apexs:[],
         image: '',
@@ -205,8 +204,10 @@ var sel = document.getElementById('selectList');
 
 var opt = sel.options[sel.selectedIndex];
 this.indx=sel.selectedIndex;
+this.apexComId=apexs[this.indx].name;
+this.Enable();
 // display value property of select list (from selected option)
-console.log(this.indx);
+//console.log(this.indx);
 
 },
      /**
@@ -216,26 +217,32 @@ console.log(this.indx);
 
          Enable(){
 
-	 if(document.getElementById("textsendnormal").value==="" || document.getElementById("usr").value==="")  {
+	 if(document.getElementById("textsendnormal").value==="" || document.getElementById("usr").value==="" || this.indx ==null ||this.indx==0)  {
             document.getElementById('button').disabled = true;
+            
         } else {
             document.getElementById('button').disabled = false;
-             console.log(document.getElementById('text').value);
+            this.title=document.getElementById("usr").value;
+             
         }
 
 
 
-         	 if(document.getElementById("textsend3").value==="" || document.getElementById("usr3").value==="")  {
+         	 if(document.getElementById("textsend3").value==="" || document.getElementById("usr3").value==="" || this.indx ==null ||this.indx==0)  {
             document.getElementById('button3').disabled = true;
+           
         } else {
             document.getElementById('button3').disabled = false;
+            this.videoUrl=document.getElementById("textsend3").value;
+            this.title=document.getElementById("usr3").value;
         }
 
 
-        if(this.imagable===false|| document.getElementById("usr2").value==="")  {
+        if(this.imagable===false|| document.getElementById("usr2").value==="" || this.indx ==null ||this.indx==0)  {
             document.getElementById('button2').disabled = true;
         } else {
             document.getElementById('button2').disabled = false;
+            this.title=document.getElementById("usr2").value;
         }
 
 
@@ -274,8 +281,10 @@ console.log(this.indx);
 
         reader.onload = function(e) {
           vm.image = e.target.result;
-          this.imgName=vm.image; // NOT SURE YET IF THIS WHAT THE API DOC WANT
-          console.log(this.imgName);
+          
+          this.avatar=vm.image; 
+        
+         // console.log(this.imgName);
         }
         reader.readAsDataURL(file);
 
@@ -294,25 +303,45 @@ console.log(this.indx);
      */
 
     submitPost(){
-
-     
-      this.bodyPost=document.getElementById('textsendnormal').value;
-      
-       this.$emit('PostEmit',this.bodyPost);
-        this.$router.push('/ShowCreatedPost');
-      
-       this.videoUrl=document.getElementById('textsend3').value;
-       this.apexComId=apexs[this.indx].id;
-      // this.bodyPost=document.getElementById('textsendnormal').value;
-       this.imgName=document.getElementById('imgId').src;
-       this.title=document.getElementById("usr").value;
-      //  this.$emit('Post',this.title,this.bodyPost,this.$localStorage.get('token'));
        
-       // this.$router.push('/ShowCreatedPost');
+      this.bodyPost=document.getElementById('textsendnormal').value;
         
+    // console.log(this.bodyPost);
+      if(this.imagable){
+      this.imgName=document.getElementById('imgId').src;
+     // console.log(this.imgName);
+      }
      
+      
+     
+     
+      
+       // this.videoUrl=document.getElementById('textsend3').value;
+        //console.log(this.videoUrl);
+      
+
+      //console.log(this.videoUrl);
+       
+        
+           
+            
+          //alert(this.indx);
+    
+     // console.log(this.apexComId);
+      // this.bodyPost=document.getElementById('textsendnormal').value;
+     //  alert('gooa create post com');
+
+         
+     
+   
+      // console.log(this.title);
+     
+      //  this.$emit('Post',this.title,this.bodyPost,this.$localStorage.get('token'))
+
+      this.$emit('PostEmit',this.bodyPost);
+
       AllServices.submit(this.videoUrl,this.apexComId,this.bodyPost,this.imgName,this.isLocked,this.$localStorage.get('token'));
-  
+      this.$router.push('/ShowCreatedPost');
     }
 
     },
@@ -333,7 +362,8 @@ created(){
       {
         if(data)
         {
-          this.apexs = data
+          this.apexs = data;
+          
         }
       });
   

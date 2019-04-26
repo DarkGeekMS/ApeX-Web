@@ -1,29 +1,30 @@
 <template>
   <div id="submitPage" >  
-
-<Post  v-on:PostEmit="getData($event)"  v-bind:postData="createPostData" class="postStyle" > </Post>
-
-
+<Post v-bind:postData="createPostData" class="postStyle" v-if="isCreated"> </Post>
+<CreatePost v-on:PostEmit="getData($event)" v-if="firstTime"></CreatePost>
 
 
   </div>
 </template>
 
 <script>
+
 import Post from './Post.vue'
 import CreatePost from './CreatePost.vue'
+
 export default {
     data(){
      return{
-
+         isCreated:false,
+         firstTime:true,
          showCreatePost:true,
          postInfo:'',
          posts:'',
           createPostData:{
 
-             id:'555',
-              posted_by:'Nada',
-              apex_id:'555',
+             id:'',
+              posted_by:'',
+              apex_id:'',
               title:'dj',
               content:'',
               locked:false,
@@ -44,29 +45,33 @@ export default {
     }
     },
   name: 'submitPage',
- props:{
 
-  
-
-},
   components:{
     'Post':Post,
     'CreatePost':CreatePost,
   
   },
+
   methods:{
-  
     getData(e){
-   this.createPostData.content=e;
-        alert('hello');
+       alert('ana emit ');
+    
+        if(e){
+          this.isCreated=true;
+          this.firstTime=false;
+        }
+
+     
+      // this.createPostData.content=e.bodyPost;
+       this.createPostData.content=e;
+   
     }
-
-
   },
   created(){
-//this.getData();
-    //  this.createPostData.content="hello";
+   
+     
   }
+
 }
 
 </script>

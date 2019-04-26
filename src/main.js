@@ -52,6 +52,7 @@ new Vue({
       default:'http://35.232.3.8/'
     }
   }
+  
 })
 
 Vue.config.productionTip = false
