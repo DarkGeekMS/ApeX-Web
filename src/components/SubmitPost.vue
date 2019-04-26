@@ -17,7 +17,7 @@ export default {
      return{
          isCreated:false,
          firstTime:true,
-         showCreatePost:true,
+       
          postInfo:'',
          posts:'',
           createPostData:{
@@ -68,8 +68,8 @@ export default {
     }
   },
   created(){
-   
-     
+
+ 
   }
 
 }
@@ -79,8 +79,9 @@ export default {
 <style scoped>
 .postStyle{
 
-width: 50%;
+width: 80%;
 padding-top:10%;
+margin-left:-17% !important;
 
 
 }

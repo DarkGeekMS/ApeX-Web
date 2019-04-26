@@ -338,10 +338,15 @@ this.Enable();
      
       //  this.$emit('Post',this.title,this.bodyPost,this.$localStorage.get('token'))
 
-      this.$emit('PostEmit',this.bodyPost);
-
+      // this.$emit('PostEmit',this.bodyPost);
+     // alert('قبل السيرفر');
+     
       AllServices.submit(this.videoUrl,this.apexComId,this.bodyPost,this.imgName,this.isLocked,this.$localStorage.get('token'));
-      this.$router.push('/ShowCreatedPost');
+     //alert('هعمل ايمت اهو ');
+ 
+      this.$emit('PostEmit',this.bodyPost);
+      this.$router.push('/Submit');
+     
     }
 
     },
