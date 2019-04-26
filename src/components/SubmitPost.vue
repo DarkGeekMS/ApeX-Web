@@ -1,5 +1,6 @@
 <template>
   <div id="submitPage" >  
+<CreatePostSideBar></CreatePostSideBar>
 <Post v-bind:postData="createPostData" class="postStyle" v-if="isCreated&&!showCreateEdit"  v-on:Edit="EditPost"> </Post>
 <CreatePost v-on:PostEmit="getData" v-if="firstTime ||showCreateEdit" ></CreatePost>
 
@@ -11,7 +12,7 @@
 
 import Post from './Post.vue'
 import CreatePost from './CreatePost.vue'
-
+import CreatePostSideBar from './CreatePostSideBar.vue'
 export default {
     data(){
      return{
@@ -51,6 +52,7 @@ export default {
   components:{
     'Post':Post,
     'CreatePost':CreatePost,
+    CreatePostSideBar
   
   },
 
