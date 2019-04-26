@@ -31,34 +31,33 @@ components:{
       search: function(){
         if( this.searchVal != '')
         {
-          this.$localStorage.set('search' , this.searchVal),
+          this.$localStorage.set('searchModerator' , this.searchVal),
           this.$router.push({ name:'Moderators'} )
         }
-      }
+      },
   },
   mounted()
   {
 
-  }
+  },
+  // created(){
+  //   setInterval(() => {
+  //       this.searchValue = this.$localStorage.get('search');
+  //       this.login = this.$localStorage.get('login');
+  //       var mq = window.matchMedia( "(max-width: 933px)" );
+  //       if (mq.matches) {
+  //        this.wid = '158%'
+  //       }   
+  //       else{
+  //         this.wid = '80%'
+  //       }
+  //   }, 1000)
+  // },
 }
 </script>
 
 <style scoped>
-* {
-  width: 70%;
-  /* padding: 0;
-  margin: 0;
-  list-style: none;
-  
-  display: -webkit-box;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
-  
-  -webkit-flex-flow: row wrap;
-  justify-content: space-around; */
-}
+
 .moderatorcomponent{
   width:100%;
   height:auto;

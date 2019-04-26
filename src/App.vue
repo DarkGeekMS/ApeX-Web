@@ -59,7 +59,7 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
-  background-color: #DAE0E6;  
+  background-color: #DAE0E6;
   min-height:1000px;
 }
 
@@ -89,6 +89,6 @@ button.btn {
  button .btn:hover {
   background: #20a0ff;
 }
- 
+
 
 </style>

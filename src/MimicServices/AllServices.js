@@ -26,7 +26,7 @@ export  const AllServices =new Vue({
         return posts
    },
     submit:function(videoUrl,apexComId,bodyPost,imgName, isLocked,token){
-    
+
       var data=MimicCreatePosts.submitPost(videoUrl,apexComId,bodyPost,imgName,isLocked,token,this.mimic);
       return data;
 
@@ -86,6 +86,10 @@ export  const AllServices =new Vue({
     },
 	getAbout:function(apexComName) {
     var about=MimicApexCom.getAbout(this.mimic,apexComName);
+    return about;
+  },
+  getAboutGuest:function(apexComName) {
+    var about=MimicApexCom.getAboutGuest(this.mimic,apexComName);
     return about;
 	},
 	getSubscribers:function(apexComName) {
@@ -231,6 +235,10 @@ updatePrefs:function(email,avatar,username) {
 },
 changePass:function (password,withCode,username,key){
     return MimicUserSettings.changePass(mimic,password,withCode,username,key);
-}
+},
+searchU:function(id){
+  var data=MimicApexCom.searchU(this.mimic,id);
+  return data;
+},
   }
 });

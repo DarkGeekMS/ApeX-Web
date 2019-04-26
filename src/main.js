@@ -47,12 +47,16 @@ new Vue({
       type: String,
       default: ''
     },
+    searchModerator:{
+      type: String,
+      default: ''
+    },
     baseUrl:{
       type:String,
       default:'http://35.232.3.8/'
     }
   }
-  
+
 })
 
 Vue.config.productionTip = false
