@@ -43,6 +43,7 @@
 
         {{postData.content}}
          </p>
+         <textarea v-if="postData.canEdit"></textarea>
 
 
 <iframe  v-show ="postData.videolink!==''" width="100%" height="315"  :src=postData.videolink frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
