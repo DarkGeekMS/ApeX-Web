@@ -1,7 +1,7 @@
 <template>
   <div id="submitPage" >  
 <Post v-bind:postData="createPostData" class="postStyle" v-if="isCreated"> </Post>
-<CreatePost v-on:PostEmit="getData($event)" v-if="!isCreated"></CreatePost>
+<CreatePost v-on:PostEmit="getData($event)" v-if="firstTime"></CreatePost>
 
 
   </div>
@@ -16,14 +16,15 @@ export default {
     data(){
      return{
          isCreated:false,
+         firstTime:true,
          showCreatePost:true,
          postInfo:'',
          posts:'',
           createPostData:{
 
-             id:'555',
-              posted_by:'Nada',
-              apex_id:'555',
+             id:'',
+              posted_by:'',
+              apex_id:'',
               title:'dj',
               content:'',
               locked:false,
@@ -44,11 +45,7 @@ export default {
     }
     },
   name: 'submitPage',
- props:{
- Data:{}
-  
 
-},
   components:{
     'Post':Post,
     'CreatePost':CreatePost,
@@ -57,17 +54,22 @@ export default {
 
   methods:{
     getData(e){
-     
+       alert('ana emit ');
     
-        if(e.bodyPost){
+        if(e){
           this.isCreated=true;
+          this.firstTime=false;
         }
-        alert(e.bodyPost);
+
      
+      // this.createPostData.content=e.bodyPost;
        this.createPostData.content=e;
-       //this.createPostData.img=e.imgName;
    
     }
+  },
+  created(){
+   
+     
   }
 
 }
