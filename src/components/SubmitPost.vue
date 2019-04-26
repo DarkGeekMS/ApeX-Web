@@ -1,7 +1,7 @@
 <template>
   <div id="submitPage" >  
 <Post v-bind:postData="createPostData" class="postStyle" v-if="isCreated"> </Post>
-<CreatePost v-on:PostEmit="getData($event)" v-if="firstTime"></CreatePost>
+<CreatePost v-on:PostEmit="getData" v-if="firstTime"></CreatePost>
 
 
   </div>
@@ -25,7 +25,7 @@ export default {
              id:'',
               posted_by:'',
               apex_id:'',
-              title:'dj',
+              title:'',
               content:'',
               locked:false,
               commenets_count:5,
@@ -53,17 +53,25 @@ export default {
   },
 
   methods:{
-    getData(e){
-      // alert('ana emit ');
+    getData(title,content,img,video,author,apex){
+     //  alert('ana emit ');
     
-        if(e){
+        if(content || img ||video){
           this.isCreated=true;
           this.firstTime=false;
         }
 
      
       // this.createPostData.content=e.bodyPost;
-       this.createPostData.content=e;
+       this.createPostData.content=content;
+       this.createPostData.img=img;
+       this.createPostData.videolink=video;
+       this.createPostData.posted_by=author;
+       this.createPostData.title=title;
+       this.createPostData.apex_id=apex;
+
+
+      
    
     }
   },

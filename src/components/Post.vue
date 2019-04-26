@@ -38,6 +38,7 @@
 
       <font class="postby" id="fontpost"> </font>
       <a href="#" class="postby" id="timeAgo">  </a>
+      <h3>{{postData.title}}</h3>
       <p id="postBody" class="hPost">
 
         {{postData.content}}

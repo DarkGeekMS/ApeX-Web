@@ -204,8 +204,11 @@ var sel = document.getElementById('selectList');
 
 var opt = sel.options[sel.selectedIndex];
 this.indx=sel.selectedIndex;
-this.apexComId=apexs[this.indx].name;
 this.Enable();
+this.apexComId=apexs[this.indx].name;
+
+//alert(this.apexComId);
+
 // display value property of select list (from selected option)
 //console.log(this.indx);
 
@@ -216,7 +219,7 @@ this.Enable();
      */
 
          Enable(){
-
+     //alert(this.indx);
 	 if(document.getElementById("textsendnormal").value==="" || document.getElementById("usr").value==="" || this.indx ==null ||this.indx==0)  {
             document.getElementById('button').disabled = true;
             
@@ -344,7 +347,7 @@ this.Enable();
       AllServices.submit(this.videoUrl,this.apexComId,this.bodyPost,this.imgName,this.isLocked,this.$localStorage.get('token'));
      //alert('هعمل ايمت اهو ');
  
-      this.$emit('PostEmit',this.bodyPost);
+      this.$emit('PostEmit',this.title,this.bodyPost,this.imgName,this.videoUrl,this.$localStorage.get('userName'),this.apexs[this.indx].name);
       this.$router.push('/Submit');
      
     }
