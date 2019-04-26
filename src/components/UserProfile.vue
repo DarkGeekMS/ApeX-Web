@@ -10,7 +10,7 @@
         
     </div>
     <div class="sort">
-    <Sort ></Sort>
+    <Sort style="padding-top:10px"></Sort>
   </div>
         <SideBar
         v-bind:settings="true"

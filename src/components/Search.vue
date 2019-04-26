@@ -8,7 +8,7 @@
     <div class="body">
       <ul>
        <li><router-link to="/Search" exact > Posts </router-link></li>
-       <li><router-link to="/Search/users" exact> Communities and users </router-link></li>
+       <li><router-link to="/Search/users" id="h" exact> Communities and users </router-link></li>
       </ul>
     </div>
     <div v-if="this.$route.name == 'Search'" v-show="exist" id="DisplayPosts">  
@@ -63,15 +63,30 @@ export default {
   },
   beforeUpdate()
   {
-    var result = AllServices.searchPosts();
-    if( typeof result === 'string')
+    if(this.$localStorage.get('login'))
     {
-        this.exist = false,
-        this.error = result
+      var result = AllServices.searchUser();
+      if( typeof result === 'string')
+      {
+          this.exist = false,
+          this.error = result
+      }
+      else{
+        this.posts= result[0],
+        this.exist = true
+      }
     }
     else{
-      this.posts= result,
-      this.exist = true
+      var result = AllServices.searchGuest();
+      if( typeof result === 'string')
+      {
+          this.exist = false,
+          this.error = result
+      }
+      else{
+        this.posts= result[0],
+        this.exist = true
+      }
     }
   },
   methods:{
@@ -166,4 +181,9 @@ export default {
     width:95%;
   }
 }
+@media(max-width:303px){
+  div ul #h{
+    display: none
+  }
+} 
 </style>

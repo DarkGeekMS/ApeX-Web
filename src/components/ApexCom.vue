@@ -21,7 +21,7 @@
     </div>
       </div>
   <div class="sort">
-    <Sort ></Sort>
+    <Sort style="padding-top:10px"></Sort>
   </div>
   <SideBar class="sidebar" v-bind:apexComName="apexComName"></SideBar>
     <router-view class="routerview"></router-view> 

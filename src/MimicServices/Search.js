@@ -4,56 +4,78 @@ import axios from 'axios'
 export  const MimicSearch =new Vue({
   data(){
     return {
-      searchValue: 'Ayat'
+      searchValue: 'Ayat',
+      token:'01'
     }
   },
   methods:{
 
-    searchApex: function(mimic)
+    SearchU: function(mimic)
     {
       if(mimic ==  true)
       {
-        if(this.$localStorage.get('search') == this.searchValue )
+        if(this.$localStorage.get('search') == this.searchValue && this.$localStorage.get('token') == this.token )
         {
            var result = [
+             [{
+                apex_id:1,
+                content:'Experience enjoyable JavaScript development with WebStorm. With smart code completion, safe refactoring, and first-class support for Node.js, Angular and React. Download free trial 😀😂🍔😍',
+                id:1,
+                postedby:'AyatMostafa',
+                title:'posttitle',
+                votes:150
+              },
+              {
+                apex_id:1,
+                content:'Experience enjoyable JavaScript development with WebStorm. With smart code completion, safe refactoring, and first-class support for Node.js, Angular and React. Download free trial 😀😂🍔😍',
+                id:1,
+                postedby:'AyatMostafa',
+                title:'posttitle',
+                votes:150
+              }],
              [{
                id:1,
                name:'AyatMostafa',
                numOfMeb: 0,
-               avatar:'AMFz23O.jpg',
+               avatar:'https://b.thumbs.redditmedia.com/ooMk56fzWZCheEvB0mfTlsKk7P86TEu_BylqPJ-36EQ.png',
                description: "Aww, cripes. I didn't know I'd have to write a description. How many words is that so far, like a hundred? Soooo, yeah. Mildly interesting stuff.",
              },
              {
                id:1,
                name:'AyatMostafa',
                numOfMeb: 0,
-               avatar:'../../public/AMFz23O.jpg',
+               avatar:'https://b.thumbs.redditmedia.com/ooMk56fzWZCheEvB0mfTlsKk7P86TEu_BylqPJ-36EQ.png',
                description: "Aww, cripes. I didn't know I'd have to write a description. How many words is that so far, like a hundred? Soooo, yeah. Mildly interesting stuff.",
              },{
                id:1,
                name:'AyatMostafa',
                numOfMeb: 0,
-               avatar:'../../public/Logo_X.png',
+               avatar:'https://b.thumbs.redditmedia.com/ooMk56fzWZCheEvB0mfTlsKk7P86TEu_BylqPJ-36EQ.png',
                description: "Aww, cripes. I didn't know I'd have to write a description. How many words is that so far, like a hundred? Soooo, yeah. Mildly interesting stuff.",
              },
              {
                id:2,
                name:'NadaMostafa',
                numOfMeb: 0,
-               avatar:'Logo_X.png',
+               avatar:'https://i.ytimg.com/vi/inYarqDCCGA/maxresdefault.jpg?fbclid=IwAR2SOsEdCa3c9PC8x4UaNgKXEynjKgq-R_LlYn9WMsCrutAjjdCpXOZkCOs',
                description: "Aww, cripes. I didn't knowterests you. Mildly. It's in the name, ffs.hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh"
              }],
              [{
                 id:1,
-                name:'Ayat',
-                avatar:'AMFz23O.jpg',
+                name:'ayatmostafa',
+                avatar:'https://i.ytimg.com/vi/inYarqDCCGA/maxresdefault.jpg?fbclid=IwAR2SOsEdCa3c9PC8x4UaNgKXEynjKgq-R_LlYn9WMsCrutAjjdCpXOZkCOs',
                 karma:10
               }]
           ]
+          var promise1 = new Promise(function(resolve){
+            setTimeout(function() {
+              resolve(result);
+            }, 300)
+            });
           return result
         }
         else{
-          return 'Sorry, there were no community results for'
+          return 'Sorry, there were no results for'
         }
       }
       else
@@ -62,67 +84,91 @@ export  const MimicSearch =new Vue({
         query: this.$localStorage.get('search'),
         token: this.$localStorage.get('token')
         }).then(response => {
-          var result=[];
-          result[0] =  response.data.apexComs;
-          result[1] =  response.data.users;
+          var result= response.data;
           return result
         }).catch(error => {
           return error
         })
       }
     },
-
-    searchPost:function(mimic)
+    SearchG: function(mimic)
     {
       if(mimic ==  true)
       {
-        var posts = [];
-         if(this.$localStorage.get('search') == this.searchValue  )
-         {
-            posts = [
+        if(this.$localStorage.get('search') == this.searchValue)
+        {
+           var result = [
+             [{
+                apex_id:1,
+                content:'Experience enjoyable JavaScript development with WebStorm. With smart code completion, safe refactoring, and first-class support for Node.js, Angular and React. Download free trial 😀😂🍔😍',
+                id:1,
+                postedby:'AyatMostafa',
+                title:'posttitle',
+                votes:150
+              },
+              {
+                apex_id:1,
+                content:'Experience enjoyable JavaScript development with WebStorm. With smart code completion, safe refactoring, and first-class support for Node.js, Angular and React. Download free trial 😀😂🍔😍',
+                id:1,
+                postedby:'AyatMostafa',
+                title:'posttitle',
+                votes:150
+              }],
+             [{
+               id:1,
+               name:'AyatMostafa',
+               numOfMeb: 0,
+               avatar:'https://b.thumbs.redditmedia.com/ooMk56fzWZCheEvB0mfTlsKk7P86TEu_BylqPJ-36EQ.png',
+               description: "Aww, cripes. I didn't know I'd have to write a description. How many words is that so far, like a hundred? Soooo, yeah. Mildly interesting stuff.",
+             },
              {
-              apex_id:1,
-              content:'Experience enjoyable JavaScript development with WebStorm. With smart code completion, safe refactoring, and first-class support for Node.js, Angular and React. Download free trial 😀😂🍔😍',
-              id:1,
-              postedby:'AyatMostafa',
-              title:'posttitle',
-              votes:150
-            },
-            {
-              apex_id:1,
-              content:'Experience enjoyable JavaScript development with WebStorm. With smart code completion, safe refactoring, and first-class support for Node.js, Angular and React. Download free trial 😀😂🍔😍',
-              id:1,
-              postedby:'AyatMostafa',
-              title:'posttitle',
-              votes:150
-            }]
-            return posts
-         }
-         else if(this.$localStorage.get('search')=="Nada")
-         {
-             posts = [
+               id:1,
+               name:'AyatMostafa',
+               numOfMeb: 0,
+               avatar:'https://i.ytimg.com/vi/inYarqDCCGA/maxresdefault.jpg?fbclid=IwAR2SOsEdCa3c9PC8x4UaNgKXEynjKgq-R_LlYn9WMsCrutAjjdCpXOZkCOs',
+               description: "Aww, cripes. I didn't know I'd have to write a description. How many words is that so far, like a hundred? Soooo, yeah. Mildly interesting stuff.",
+             },{
+               id:1,
+               name:'AyatMostafa',
+               numOfMeb: 0,
+               avatar:'http://bashkatibnews.com/contents/article/515_lybfjrmf.jpg',
+               description: "Aww, cripes. I didn't know I'd have to write a description. How many words is that so far, like a hundred? Soooo, yeah. Mildly interesting stuff.",
+             },
              {
-              apex_id:1,
-              content:'Experience enjoyable JavaScript development with WebStorm. With smart code completion, safe refactoring, and first-class support for Node.js, Angular and React. Download free trial 😀😂🍔😍',
-              id:1,
-              postedby:'AyatMostafa',
-              title:'posttitle',
-              votes:150
-            }]
-            return posts
-         }
-         else{
-           return 'Sorry, there were no posts results for'
-         }
+               id:2,
+               name:'NadaMostafa',
+               numOfMeb: 0,
+               avatar:'https://b.thumbs.redditmedia.com/ooMk56fzWZCheEvB0mfTlsKk7P86TEu_BylqPJ-36EQ.png',
+               description: "Aww, cripes. I didn't knowterests you. Mildly. It's in the name, ffs.hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh"
+             }],
+             [{
+                id:1,
+                name:'Ayat',
+                avatar:'https://b.thumbs.redditmedia.com/ooMk56fzWZCheEvB0mfTlsKk7P86TEu_BylqPJ-36EQ.png',
+                karma:10
+              }]
+          ]
+          var promise1 = new Promise(function(resolve){
+            setTimeout(function() {
+              resolve(result);
+            }, 300)
+            });
+          return result
+        }
+        else{
+          return 'Sorry, there were no results for'
+        }
       }
       else
       {
-        axios.get(this.$localStorage.get('baseUrl') + 'api/Apex_names', {
-          }).then(response => {
-             return response.data
-          }).catch(function (error) {
-             return error
-          });
+        axios.post(this.$localStorage.get('baseUrl') + 'api/search',{
+        query: this.$localStorage.get('search'),
+        }).then(response => {
+          var result= response.data;
+          return result
+        }).catch(error => {
+          return error
+        })
       }
     }
 
