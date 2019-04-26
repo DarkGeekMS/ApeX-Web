@@ -72,8 +72,8 @@ Comments</button>
     </button>
     <ul class="dropdown-menu" id="dropMenu">
       <li ><a href="#"  @click="Hide" class="HIDE"><i class="fa fa-ban" id="HideIcon"></i>Hide</a></li>
-      <li><a href="#" @click="report"><i class="glyphicon glyphicon-flag" id="ReportIcon" ></i>Report</a></li>
-      <li><a href="#"><i class="glyphicon glyphicon-pencil" id="ReportIcon"></i>edit</a></li>
+      <li><a  @click="report"><i class="glyphicon glyphicon-flag" id="ReportIcon" ></i>Report</a></li>
+      <li v-if="postData.canEdit"><a href="#" @click="editText" ><i class="glyphicon glyphicon-pencil" id="ReportIcon"></i>edit</a></li>
       <li><a href="#" @click="isLocked">
         
         <i v-if="Locked=='unlock'" class="fa fa-lock" id="ReportIcon"></i>
@@ -125,7 +125,7 @@ export default {
 
    data(){
        return{
-           
+             editShow:false,
              Not_Hide :true,
              is_Hide  :false,
 
@@ -177,7 +177,11 @@ if(this.ShowModalVar == true){
 
     },
     editText(){
-
+       if(this.ShowModalVar == true){
+      this.ToggleShowModalVar();
+        } 
+        this.$emit('Edit');
+        //this.$router.go(-1);
 
 
     },
@@ -391,6 +395,9 @@ props: {
 postData:{},
        },
 created(){
+  
+   
+  
 
       /*
       axios.get("http://localhost/me",{token:this.token}).then(response=>{this.userId=response.userID}).catch(function (error)
@@ -402,6 +409,7 @@ created(){
        if(this.userId==2){
         this.moderator=true;
        }
+       
 },
 computed :{
         createdDate : function(){

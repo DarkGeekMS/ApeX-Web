@@ -138,6 +138,9 @@ Vue.use(RichTextEditorPlugin);
  */
 
 export default {
+  props:{
+    EditData:{}
+  },
    components:{
 
     'SideBar':HomeSideBar,
@@ -379,6 +382,11 @@ created(){
           
         }
       });
+
+//       if(EditData.canEdit){
+// // document.getElementById("textsendnormal").value=EditData.content;
+//         alert('edit now');
+//       }
   
 }
 

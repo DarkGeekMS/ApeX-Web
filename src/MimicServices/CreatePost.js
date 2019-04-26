@@ -46,9 +46,11 @@ else {
        ).then(function(response){
 
          if(response){
-          this.$router.push('/ShowCreatedPost');
+         // this.$router.push('/ShowCreatedPost');
+         return true;
 
          }
+         return false;
        })
  }
     },

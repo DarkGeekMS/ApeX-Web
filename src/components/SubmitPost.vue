@@ -1,7 +1,7 @@
 <template>
   <div id="submitPage" >  
-<Post v-bind:postData="createPostData" class="postStyle" v-if="isCreated"> </Post>
-<CreatePost v-on:PostEmit="getData" v-if="firstTime"></CreatePost>
+<Post v-bind:postData="createPostData" class="postStyle" v-if="isCreated&&!showCreateEdit"  v-on:Edit="EditPost"> </Post>
+<CreatePost v-on:PostEmit="getData" v-if="firstTime ||showCreateEdit" ></CreatePost>
 
 
   </div>
@@ -15,13 +15,14 @@ import CreatePost from './CreatePost.vue'
 export default {
     data(){
      return{
+         showCreateEdit:false,
          isCreated:false,
          firstTime:true,
        
          postInfo:'',
          posts:'',
           createPostData:{
-
+            canEdit:false,
              id:'',
               posted_by:'',
               apex_id:'',
@@ -59,20 +60,26 @@ export default {
         if(content || img ||video){
           this.isCreated=true;
           this.firstTime=false;
+          this.createPostData.canEdit=true;
         }
 
      
       // this.createPostData.content=e.bodyPost;
-       this.createPostData.content=content;
-       this.createPostData.img=img;
-       this.createPostData.videolink=video;
-       this.createPostData.posted_by=author;
-       this.createPostData.title=title;
-       this.createPostData.apex_id=apex;
-
+      this.createPostData.content=content;
+      this.createPostData.img=img;
+      this.createPostData.videolink=video;
+      this.createPostData.posted_by=author;
+      this.createPostData.title=title;
+      this.createPostData.apex_id=apex;
+      this.createPostData.canEdit=true;
 
       
    
+    },
+    EditPost(){
+   
+      this.showCreateEdit=true;
+      this.isCreated=true;
     }
   },
   created(){
@@ -80,7 +87,17 @@ export default {
  
   },
   props:{
-    postData:{}
+    postData:{},
+    retriveData:{
+      retriveContent:'',
+      retriveImg:'',
+      retriveVideo:'',
+      retriveAuthor:'',
+      retriveTitle:'',
+      retriveApexId:'',
+      Edit:true
+
+    }
   }
 
 }
