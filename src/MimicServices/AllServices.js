@@ -13,7 +13,7 @@ import {MimicUserSettings} from './UserSettings.js'
 export  const AllServices =new Vue({
   data(){
     return{
-      mimic:true
+      mimic:false
     }
   },
   methods:{
@@ -231,6 +231,10 @@ updatePrefs:function(email,avatar,username) {
 },
 changePass:function (password,withCode,username,key){
     return MimicUserSettings.changePass(mimic,password,withCode,username,key);
-}
+},
+searchU:function(id){
+  var data=MimicApexCom.searchU(this.mimic,id);
+  return data;
+},
   }
 });

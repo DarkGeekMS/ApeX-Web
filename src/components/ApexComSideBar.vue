@@ -153,7 +153,7 @@ export default {
       createPost: function(){
         if( this.loggedIn )
         {
-          this.$router.push('/Submit');
+          alert('you have to log in, first');
         }
         else{
            this.$modal.show('demo-login');
@@ -198,7 +198,7 @@ export default {
     })
       }
       else{
-        this.$modal.show('demo-login');
+        alert('you have to log in, first');
       }
     },
     deleteModerator:function(userName,index){
