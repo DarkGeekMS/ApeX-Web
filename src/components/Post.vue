@@ -593,7 +593,7 @@ width: 30%;
 
 }
 
-@media (max-width:1000px){
+@media (max-width:933px){
  #post{
       width:165%;
       margin-left:0%;

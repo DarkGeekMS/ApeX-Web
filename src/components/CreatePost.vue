@@ -611,6 +611,7 @@ input[type="file"] {
   width: 100%;
   margin-left: 20%;
   align:center;
+  
 }
 .check{
 
@@ -658,25 +659,39 @@ height: 30%;
     
    
 }
-/* .e-richtexteditor .e-rte-toolbar.e-control[class*='e-toolbar'], .e-richtexteditor .e-rte-toolbar.e-toolbar.e-extended-toolbar.e-control[class*='e-toolbar'] {
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    width:70% !important;
-    max-width: 70%;
-} */
-/* .e-richtexteditor .e-rte-toolbar, .e-richtexteditor .e-rte-toolbar.e-toolbar.e-extended-toolbar{
-
- width:70% !important;
-
+@media (max-width:959px){
+ .bodyPost{
+      width:100%;
+      margin-left:0%;
+      
+  }
+ .form-control{
+      width:100%;
+      
+      
+  }
+ .display-inline {
+  /* display: inline-block;
+  vertical-align: middle; */
+  /* display: flex; */
+  padding-top: 0%;
+ 
+  display: none;
+  /* padding:0; */
+  /* margin-top: -73%; */
+ 
 }
-.e-toolbar{
-  width: 70% !important;
 
+} 
+
+@media (max-width:1300px){
+   .form-control{
+      width:60%;
+      
+      
+  }
+ 
+  
 }
-#textsend_toolbar .e-rte-toolbar .e-control .e-toolbar .e-lib .e-extended-toolbar .e-keyboard{
-
-  width: 70% !important;
-} */
-
 
 </style>
