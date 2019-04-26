@@ -69,7 +69,7 @@ export default {
           if(check)
           {
             this.congra = 'Now you can log in with your password ' ;
-            setTimeout(() =>this.close() , 1000)
+            setTimeout(() =>this.close() , 5000)
 
           }
           else{
@@ -82,7 +82,7 @@ export default {
          if(data)
           {
             this.congra = 'Now you can log in with your password ' ;
-            setTimeout(() =>this.close() , 1000)     
+            setTimeout(() =>this.close() , 5000)     
           }
           else{
             this.error =  this.$localStorage.get('error');

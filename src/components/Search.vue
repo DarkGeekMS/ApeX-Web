@@ -32,6 +32,8 @@ import DemoOnePost from './DisplayOnePost.vue'
 import Sort from './Sort.vue'
 import SearchSideBar from './SearchSideBar.vue'
 import {AllServices} from '../MimicServices/AllServices.js'
+import $ from'jquery/dist/jquery.min.js'
+
 /**
  * @vue-data {string} [error=""] if there is no matching
  * @vue-data {string} [searchVal=""] search value  
@@ -68,32 +70,70 @@ export default {
         }
     }, 1000)
   },
+  mounted(){
+     $('#selectted').text('Search Results');
+        var remclass = $('#classed').prop('class');
+        $('#classed').removeClass(remclass);
+        $('#classed').addClass("glyphicon glyphicon-search");
+  },
   beforeUpdate()
   {
     if(this.$localStorage.get('login'))
     {
-      var result = AllServices.searchUser();
-      if( typeof result === 'string')
+      if(AllServices.getState())
       {
-          this.exist = false,
-          this.error = result
+        var result = AllServices.searchUser();
+        if( typeof result === 'string')
+        {
+            this.exist = false,
+            this.error = result
+        }
+        else{
+          this.posts= result[0],
+          this.exist = true
+        }
       }
       else{
-        this.posts= result[0],
-        this.exist = true
-      }
+        AllServices.searchUser().then((data) =>{
+          if( typeof data === 'string')
+          {
+            this.exist = false,
+            this.error = data
+          }
+          else{
+            this.posts= data[0],
+            this.exist = true
+          }
+        })
+      }     
     }
     else{
-      var result = AllServices.searchGuest();
-      if( typeof result === 'string')
+      if(AllServices.getState())
       {
-          this.exist = false,
-          this.error = result
+        var resultT = AllServices.searchGuest();
+        if( typeof resultT === 'string')
+        {
+            this.exist = false,
+            this.error = resultT
+        }
+        else{
+          this.posts= resultT[0],
+          this.exist = true
+        }
       }
       else{
-        this.posts= result[0],
-        this.exist = true
-      }
+        AllServices.searchGuest().then((data) =>{
+          if( typeof data === 'string')
+          {
+            this.exist = false,
+            this.error = data
+          }
+          else{
+            this.posts= data[0],
+            this.exist = true
+          }
+        })
+      } 
     }
   },
   methods:{
@@ -200,4 +240,5 @@ export default {
     display: none
   }
 } 
+/**/
 </style>

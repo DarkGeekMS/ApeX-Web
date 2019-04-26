@@ -7,7 +7,8 @@ export  const MimicAuth =new Vue({
       username: 'ayatmostafa',
       password: '0000000',
       token: '01',
-      code: '1234'
+      code: '1234',
+      item:''
     }
   },
   methods:{
@@ -118,6 +119,7 @@ export  const MimicAuth =new Vue({
             username : user,
             email : email
           }).then(response => {
+              this.item = response.data; 
              return true;
           }).catch(function () {
             self.$localStorage.set('error','Username is not found');
@@ -144,10 +146,11 @@ export  const MimicAuth =new Vue({
         return axios.post(this.$localStorage.get('baseUrl') + 'api/check_code', {
             username : code
           }).then(response => {
-             return true;
+            this.item = response.data;
+            return true;
           }).catch(function () {
             self.$localStorage.set('error','Invalid code');
-             return false;
+            return false;
           });
       }
     },
@@ -162,10 +165,11 @@ export  const MimicAuth =new Vue({
         return axios.post(this.$localStorage.get('baseUrl') + 'api/change_password', {
             password : pass
           }).then(response => {
-             return true;
+            this.item = response.data;
+            return true;
           }).catch(function () {
             self.$localStorage.set('error','Invalid password');
-             return false;
+            return false;
           });
       }
     },
@@ -190,7 +194,8 @@ export  const MimicAuth =new Vue({
             password : pass,
             email : email
           }).then(response => {
-             return true;
+            this.item = response.data;
+            return true;
           }).catch(function () {
             self.$localStorage.set('error','There was an error sending your request. Please try again');
              return false;

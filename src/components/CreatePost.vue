@@ -116,6 +116,7 @@
 </template>
 
 <script>
+import $ from'jquery/dist/jquery.min.js'
 import tab from './PostTab.vue'
 import tabs from './PostTabs.vue'
 import Vue from "vue"
@@ -188,6 +189,12 @@ export default {
     },
     provide:{
         richtexteditor:[Toolbar, HtmlEditor]
+    },
+    mounted(){
+     $('#selectted').text('Create Post');
+        var remclass = $('#classed').prop('class');
+        $('#classed').removeClass(remclass);
+        $('#classed').addClass("glyphicon glyphicon-edit");
     },
     methods:{
       switchM(){

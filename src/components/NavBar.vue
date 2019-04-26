@@ -19,7 +19,7 @@
       
       <ul class="dropdown-menu drop1" style="width:93%">
         <li class="dropdown-header">REDDIT FEEDS</li>
-        <li v-show="this.$localStorage.get('login')"><a href="#" class="glyphicon glyphicon-home blue" ><span id="items">Home</span></a></li> 
+        <li v-show="this.$localStorage.get('login')"><a href="/" class="glyphicon glyphicon-home blue" ><span id="items">Home</span></a></li> 
         <li><a href="#" class="glyphicon glyphicon-arrow-up blue"><span id="items">Popular</span></a></li>
         <li><a href="#" class="glyphicon glyphicon-stats blue"><span id="items">All</span></a></li>
         <li><a href="#"> <span style="background-color:blue; color:white; padding-left:3px"> oc </span> <span style="color:black;padding-left:7%">Original Content</span></a></li>
@@ -229,6 +229,10 @@ input{
   width:100%;
   margin-top:8px;
   display:inline-block;
+  background-color:rgb(246, 247, 250);
+}
+input:hover{
+  background-color:white;
 }
 .has-search{
   width:41.5%;
@@ -249,7 +253,7 @@ input{
   float:right;
   margin-top:0.3%;
   width:15%;
-  margin-right: 5px;
+  margin-right: .5%;
   margin-left:0;
 }
 .log1{
