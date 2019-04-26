@@ -9,6 +9,7 @@ import { MimicComment } from './Comments.js'
 import { MimicSearch } from './Search.js'
 import {MimicCreateApexCom} from './CreateApexCom.js'
 import { MimicMessage } from './Messages.js'
+import {MimicUserSettings} from './UserSettings.js'
 export  const AllServices =new Vue({
   data(){
     return{
@@ -25,7 +26,9 @@ export  const AllServices =new Vue({
         return posts
    },
     submit:function(videoUrl,apexComId,bodyPost,imgName, isLocked,token){
-      MimicCreatePosts.submitPost(videoUrl,apexComId,bodyPost,imgName,isLocked,token,this.mimic);
+    
+      var data=MimicCreatePosts.submitPost(videoUrl,apexComId,bodyPost,imgName,isLocked,token,this.mimic);
+      return data;
 
     },
     Post:function(){
@@ -202,8 +205,12 @@ addOrDeleteModerator:function(userName,apexComName){
   var data=MimicApexCom.addOrDeleteModerator(this.mimic,userName,apexComName);
   return data;
 },
-reviewReports:function(apexComName){
+reviewReportsAC:function(apexComName){
   var data=MimicApexCom.reviewReports(this.mimic,apexComName);
+  return data;
+},
+reviewReportsUP:function(userName){
+  var data=MimicUserProfile.reviewReports(this.mimic,userName);
   return data;
 },
 ignoreReport:function(id){
@@ -212,7 +219,18 @@ ignoreReport:function(id){
 },
 CreateApexCom:function(Name,Description,Rules,Avatar,Banner) {
 return MimicCreateApexCom.CreateApexCom(this.mimic,Name,Description,Rules,Avatar,Banner);
+},
+deleteAcc:function(Pass) {
+  return MimicUserSettings.deleteAcc(mimic,pass)
+},
+getPrefs:function(){
+  return MimicUserSettings.getPrefs(mimic);
+},
+updatePrefs:function(email,avatar,username) {
+  return MimicUserSettings.updatePrefs(mimic,email,avatar,username);
+},
+changePass:function (password,withCode,username,key){
+    return MimicUserSettings.changePass(mimic,password,withCode,username,key);
 }
   }
-
 });

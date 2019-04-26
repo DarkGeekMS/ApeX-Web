@@ -60,13 +60,16 @@ props:['apexComName','userName'],
   },
   methods:
   {
-    reviewReports(string){
-      console.log(string);
-         AllServices.reviewReports(string).then((data) =>{
+    reviewReportsAC(){
+         AllServices.reviewReportsAC(this.apexComName).then((data) =>{
          this.reportedComment=data.reportedComment;
          this.reportedPost=data.reportedpost;
-         console.log(this.reports.comment);
-         console.log(this.reports.post);
+         });
+   },
+   reviewReportsUP(){
+         AllServices.reviewReportsUP(this.userName).then((data) =>{
+         this.reportedComment=data.reportedComment;
+         this.reportedPost=data.reportedpost;
          });
    },
    ignoreReport(id,index,type){
@@ -84,10 +87,10 @@ props:['apexComName','userName'],
     console.log(this.apexComName);
     console.log(this.userName);
     if(this.apexComName!==undefined){
-    this.reviewReports(this.apexComName);
+    this.reviewReportsAC(this.apexComName);
     }
     else{
-      this.reviewReports(this.userName);
+      this.reviewReportsUP(this.userName);
     }
   }
 }

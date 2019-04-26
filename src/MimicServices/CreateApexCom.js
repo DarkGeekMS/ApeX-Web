@@ -5,7 +5,7 @@ export  const MimicCreateApexCom =new Vue({
   methods:{
     CreateApexCom: function(mimic,Name,Description,Rules,Avatar,Banner){
       if(mimic==true){
-        
+
         if(Name!=''&& Description!=''&& Rules!='')
         {
           var promise1 = new Promise(function(resolve, reject) {
@@ -25,7 +25,7 @@ return promise1;
                 }
               }
 else {
-  return axios.get(this.$localStorage.get('baseUrl') + 'api/site_admin',
+  return axios.post(this.$localStorage.get('baseUrl') + 'api/site_admin',
  {
     name:Name ,
     description: Description,

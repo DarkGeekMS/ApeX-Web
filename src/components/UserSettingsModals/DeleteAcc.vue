@@ -1,47 +1,69 @@
 <template>
-<modal name="changeemail" transition="pop-out" :scrollable="true" width="44%" height="44%">
+<modal name="DeleteAcount" transition="pop-out" :scrollable="true" width="30%" height="auto">
   <div class="box">
-    <div class="box-part" id="bp-left">
-      <div class="partition" id="partition-register">
-        <div class="partition-title">CHANGE EMAIL</div>
-        <div class="partition-form">
-          <form autocomplete="false">
+        <h6 class="page-header"><b>Deactivate your account</b></h6>
+      <h6>Sorry to see you go!</h6>
+<ul>
+  <li><h6>If you are having a problem on ApexCom, please consider contacting us about it before deactivating your account.</h6></li>
+<br>
+  <li><h6>  Deactivating your account will not delete the content of posts and comments you've made on ApexCom. To do so please delete them individually.</h6></li>
+</ul>
+<br>
+<h6>ACCOUNT CREDENTIALS FOR SECURITY PURPOSES</h6>
 
-            <div class="autocomplete-fix">
-              <input type="password">
+<div class="partition" id="partition-register">
+  <div class="partition-form">
+    <form autocomplete="false">
+      <input id="n-password2" type="password" v-model="password" placeholder="Password">
+
+    </form>
+  </div>
+</div>
+
+            <div class="button-set">
+              <button @click="hide()">Cancel</button>
+              <button @click="deleteacc()">Delete</button>
             </div>
 
-            <input id="n-password2" type="password" placeholder="Password">
-            <input id="n-email" type="text" placeholder="Email">
-          </form>
 
-          <div style="margin-top: 42px">
-          </div>
-
-          <div class="button-set">
-            <button id="goto-signin-btn">Cancel</button>
-            <button id="register-btn">Save</button>
-          </div>
-
-        </div>
-      </div>
-    </div>
   </div>
 </modal>
 </template>
+
 <script>
-const MODAL_WIDTH = 656
+import {AllServices} from '../../MimicServices/AllServices.js'
 export default {
-  name: 'DemoLoginModal',
   data () {
     return {
-
+password:''
     }
   },
+methods:{
+hide(){
+  this.$modal.hide('DeleteAcount')
+},
+deleteacc(){
+  AllServices.deleteAcc(this.password).then((data) => {
+   this.error= data;
+   this.ErrorCheck();
+ });
+},
+ErrorCheck(){
+// todo check error type and do behavior
 
+}
+}
 }
 </script>
 <style lang="scss" scoped>
+h6{
+  margin-left: 5%
+}
+ul{
+list-style-type: lower-roman;
+list-style-position: outside;
+
+}
 $background_color: #404142;
 .box {
   background: white;
@@ -51,7 +73,7 @@ $background_color: #404142;
   border-radius: 2%;
   box-sizing: border-box;
   box-shadow: 0 0 7% black;
-  color: #8b8c8d;
+  color: black;
   font-size: 0;
   .box-part {
     display: inline-block;
@@ -102,7 +124,8 @@ $background_color: #404142;
   input[type=text] {
     display: block;
     box-sizing: border-box;
-    margin-bottom: 4px;
+    margin-bottom: 20px;
+    margin-top: 20px;
     width: 100%;
     font-size: 12px;
     line-height: 2;
@@ -123,7 +146,7 @@ $background_color: #404142;
     font-weight: 400;
     min-width: 140px;
     margin-top: 8px;
-    color: #8b8c8d;
+    color: black;
     cursor: pointer;
     border: 1px solid #DDDEDF;
     text-transform: uppercase;
