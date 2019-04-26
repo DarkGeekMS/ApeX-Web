@@ -135,7 +135,7 @@ export default {
              pressed_up   : false,
              pressed_down : false,
 
-             votes  :0,
+             votes  :this.postData.votes,
              Saved  :"Save",
              PostId   :"",
              token  :this.$localStorage.get('token'),
@@ -396,8 +396,10 @@ postData:{},
        },
 created(){
   
-   
-  
+   if(this.postData.canEdit){
+      this.className_up    = 'btn btn-light btn-sm is-red';
+        this.pressed_up      =true;
+   }
 
       /*
       axios.get("http://localhost/me",{token:this.token}).then(response=>{this.userId=response.userID}).catch(function (error)
@@ -420,6 +422,10 @@ components:{
     reportBox,
    
   
+  },
+  mounted(){
+//     alert('votess');
+//  this.votes=postData.votes;
   }
 }
 

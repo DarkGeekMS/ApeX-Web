@@ -15,6 +15,7 @@ import CreatePost from './CreatePost.vue'
 export default {
     data(){
      return{
+      
          showCreateEdit:false,
          isCreated:false,
          firstTime:true,
@@ -30,7 +31,7 @@ export default {
               content:'',
               locked:false,
               commenets_count:5,
-              votes:9,
+              votes:1,
               img:'',
               videolink:'',
               created_at:"2019-03-23 17:20:45",

@@ -15,7 +15,7 @@ export  const MimicDisplayPosts =new Vue({
               content:'Experience enjoyable JavaScript development with Kannnaasss. With smart code completion, safe refactoring, and first-class support for Node.js, Angular and React. Download Kannnaasss 😀😂🍔😍',
               locked:false,
               commenets_count:5,
-              votes:9,
+              votes:1000,
               img:'',
               videolink:'https://www.youtube.com/embed/Va0Rq147SRU',
               created_at:"2019-03-23 17:20:45",
@@ -35,11 +35,13 @@ export  const MimicDisplayPosts =new Vue({
               created_at:"2019-03-23 17:20:45",
               updates_at:null,
               apex_com_name:"health aware",
-              post_writer_user:"Nada"
+              post_writer_user:"Nada",
+              votes:-1
             },
             {
               id:'111',
               posted_by:'Nourhan',
+              votes:150,
               apex_id:'cinema',
               title:'Avengers Endgame😲',
               content:'Software costs more to maintain than it does to develop. For systems with a long life, maintenance costs may be several times development costs😮 ',
@@ -49,6 +51,7 @@ export  const MimicDisplayPosts =new Vue({
             ,{
               id:'444',
               posted_by:'marc',
+              votes:0,
               apex_id:'444',
               title:'korty po3po3',
               content:"Software engineering is concerned with theories, methods and tools for professional software development.software costs often dominate computer system costs. the costs of software on a PC are often greater than the hardware cost 🤔.",
@@ -62,6 +65,7 @@ export  const MimicDisplayPosts =new Vue({
             ,{
               id:'222',
               posted_by:'Double',
+              votes:0,
               apex_id:'weather forecast',
               title:'paparro fille',
               content:`Partly cloudy in the evening, becoming cloudy overnight. Low around 55 F. Winds S at 5 to 10 mph
