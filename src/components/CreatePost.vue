@@ -611,6 +611,7 @@ input[type="file"] {
   width: 100%;
   margin-left: 20%;
   align:center;
+  
 }
 .check{
 
@@ -658,25 +659,73 @@ height: 30%;
     
    
 }
-/* .e-richtexteditor .e-rte-toolbar.e-control[class*='e-toolbar'], .e-richtexteditor .e-rte-toolbar.e-toolbar.e-extended-toolbar.e-control[class*='e-toolbar'] {
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    width:70% !important;
-    max-width: 70%;
-} */
-/* .e-richtexteditor .e-rte-toolbar, .e-richtexteditor .e-rte-toolbar.e-toolbar.e-extended-toolbar{
+@media (max-width:959px){
+ .bodyPost{
+      width:100%;
+      margin-left:0%;
+      
+  }
+ .form-control{
+      width:100%;
+      
+      
+  }
+ .btnImage{
+  /* width:30%; */
+  font-size: 50%;
+  
+}
 
- width:70% !important;
+
+} 
+
+@media (max-width:1300px){
+   .form-control{
+      width:60%;
+      
+      
+  }
+ .imgBox{
+   width: 50%;
+ }
+  
+}
+
+@media (max-width:2000px){
+
+  .drop1 {
+  
+  padding-top: 0%;
+  margin-inline-start: 0%;
 
 }
-.e-toolbar{
-  width: 70% !important;
-
+@media (max-width:200px){
+  
+ .btnImage{
+       margin: -32%;
+       font-size: 30%;
 }
-#textsend_toolbar .e-rte-toolbar .e-control .e-toolbar .e-lib .e-extended-toolbar .e-keyboard{
+  
+}
+@media (max-width:100px){
+  
+ .btnImage{
+       margin: -63%;
+      font-size: 10%;
+}
+  
+}
 
-  width: 70% !important;
-} */
 
+@media (max-width:115px){
+  
+ .btnImage{
+      padding:0%;
+      font-size: 10%;
+  
+}
+  
+}
+}
 
 </style>

@@ -180,6 +180,7 @@ OpString:function(){
     color: #2c3e50;
     resize:vertical;
     border:none;
+    background:white;
 }
 .comButton{
 font-size: 17px;

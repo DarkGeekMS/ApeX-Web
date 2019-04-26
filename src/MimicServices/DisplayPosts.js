@@ -24,6 +24,17 @@ export  const MimicDisplayPosts =new Vue({
               post_writer_user:"double"
 
             },
+            
+            {
+              id:'111',
+              posted_by:'Nourhan',
+              votes:150,
+              apex_id:'cinema',
+              title:'Avengers Endgame😲',
+              content:'Software costs more to maintain than it does to develop. For systems with a long life, maintenance costs may be several times development costs😮 ',
+              videolink:'',
+              img:'https://cnet3.cbsistatic.com/img/xLgPeuq6CW9A2N2V2kKmhMT6h2o=/1092x0/2019/03/14/dd4d8d9c-5f16-4f6b-a7d8-65a00d095c2c/avengers-endgame-poster-square-crop.jpg'
+            },
             {
               id:'333',
               posted_by:'Ayat',
@@ -37,16 +48,6 @@ export  const MimicDisplayPosts =new Vue({
               apex_com_name:"health aware",
               post_writer_user:"Nada",
               votes:-1
-            },
-            {
-              id:'111',
-              posted_by:'Nourhan',
-              votes:150,
-              apex_id:'cinema',
-              title:'Avengers Endgame😲',
-              content:'Software costs more to maintain than it does to develop. For systems with a long life, maintenance costs may be several times development costs😮 ',
-              videolink:'',
-              img:'https://cnet3.cbsistatic.com/img/xLgPeuq6CW9A2N2V2kKmhMT6h2o=/1092x0/2019/03/14/dd4d8d9c-5f16-4f6b-a7d8-65a00d095c2c/avengers-endgame-poster-square-crop.jpg'
             }
             ,{
               id:'444',
