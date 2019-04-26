@@ -109,7 +109,7 @@ button{
   left: 71%;
 }
 
-@media(max-width:933px){
+@media(max-width:959px){
   #one{
     display:none
   }
