@@ -1,11 +1,11 @@
 <template>
 
 <modal name="demo-login" transition="pop-out" width="50%" height="70%" :clickToClose="false">
-  <ForgetPass/>
+  <ForgetPass/> 
   <ForgetUser/>
 
   <div class="box">
-     <div class="box-part" id="bp-right"></div>
+    <div class="box-part" id="bp-right"></div>
     <div class="box-part" id="bp-left">
       <div class="partition" id="partition-register">
         
@@ -32,11 +32,11 @@
             <p class = "lead" style = "fontSize:15px; color:blue; padding-left:15px" > {{ congra }}  </p>
 
             <div style="margin-top: 32px"></div>
-            <button class="btn blue" type="submit" @click.prevent="post()" style="display:block" id="LoginButton">Sign In</button>
+            <button class="btn blue" type="submit" @click.prevent="post()" style="display:block" >Sign In</button>
           </form>
 
-           <a id="forgetname" class="btn btn-link" @click="$modal.show('ForgetUser')"> Forgot username </a>
-           <a id="forgetpass" class="btn btn-link" @click="$modal.show('ForgetPass')"> Forgot password </a>
+           <a  class="btn btn-link" @click="$modal.show('ForgetUser')"> Forgot username </a>
+           <a  class="btn btn-link" @click="$modal.show('ForgetPass')"> Forgot password </a>
            <br/>
 
            <p class="lead" style="fontSize:13px; color:black; padding-left:13px;display:inline-block" > New to Apex? </p>
@@ -89,22 +89,22 @@ export default {
           if(check)
           {
             this.congra = 'You are now logged in. You will soon be redirected' ;
-            setTimeout(() =>this.$modal.hide('demo-login') , 1000)
+            setTimeout(() =>this.$modal.hide('demo-login') , 1000);
           }
           else{
-              this.error =  this.$localStorage.get('error');
+            this.error =  this.$localStorage.get('error');
           }
         }
         else {
 
-           AllServices.logIn(this.username, this.pass).then((data) => {
-         if(data)
+          AllServices.logIn(this.username, this.pass).then((data) => {
+          if(data)
           {
             this.congra = 'You are now logged in. You will soon be redirected' ;
             setTimeout(() =>this.$modal.hide('demo-login') , 1000)
           }
           else{
-              this.error =  this.$localStorage.get('error');
+            this.error =  this.$localStorage.get('error');
           }
          })
        }
@@ -119,7 +119,7 @@ export default {
     },
     close: function(){
       this.$modal.hide('demo-login');
-      this.$modal.hide('ForgetUser');
+      this.$modal.hide('forget-user');
       this.$modal.hide('ForgetPass');
     }
   }

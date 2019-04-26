@@ -1,8 +1,6 @@
 <template>
-<modal name="ForgetUser" transition="pop-out" width="50%" height="70%" id="demo1" :clickToClose="false">
- <!-- <demo-login-modal> </demo-login-modal> -->
+<modal name="ForgetUser" transition="pop-out" width="50%" height="70%" :clickToClose="false">
  <ForgetUser2/>
- 
   <div class="box">
     <div class="box-part" id="bp-right"></div>
 
@@ -19,10 +17,10 @@
 
         <div class="partition-form">
 
-            <input id="password" type="password" placeholder="Password" class="form-control"
+            <input type="password" placeholder="Password" class="form-control"
              v-model="pass" name="password" v-on:keyup="restart()" required>
 
-            <input id="Email" type="email" class="form-control" name="email"
+            <input type="email" class="form-control" name="email"
             placeholder="EMAIL" v-model="email" v-on:keyup="restart()" required autofocus>
             
             <div style="margin-top: 32px"></div>
@@ -33,8 +31,7 @@
             <span id="EmailError" class="lead"> {{errorE}}  </span>
 
             <p class = "lead" style = "fontSize:15px; color:blue;" > {{ congra }}  </p>
-            <a id="forgetname" class="btn btn-link" @click="$modal.show('demo-login')"> LOG IN  </a>
-            <a id="forgetpass" class="btn btn-link" @click="$modal.show('demo-sign')"> SIGN UP </a>
+            
 
         </div>
 
@@ -45,7 +42,6 @@
 </template>
 
 <script>
-//import DemoLoginModal  from './LoginModal.vue'
 import ForgetUser2  from './ForgetUser2.vue'
 import {AllServices} from '../MimicServices/AllServices.js'
 /**
@@ -55,8 +51,7 @@ import {AllServices} from '../MimicServices/AllServices.js'
 export default {
   name: 'ForgetUser',
   components:{
-  //   DemoLoginModal,
-  ForgetUser2
+    ForgetUser2
   },
   data(){
       return{

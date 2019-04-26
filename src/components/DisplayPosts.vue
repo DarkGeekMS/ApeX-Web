@@ -20,8 +20,7 @@ import {AllServices} from '../MimicServices/AllServices.js'
 export default {
   props:{
     apexComName:String,
-    postData:{
-    }
+    postData:{}// VERY IMPORTANT TO PREVENT THE ERRORS IN CONSOLE 
     },
 data(){
 return{
@@ -82,8 +81,8 @@ components:{
   width: 10%;
   height: 10%;
   background: red;
-  
- 
+
+
 }
 #DisplayPosts{
    /* width: 100%; */

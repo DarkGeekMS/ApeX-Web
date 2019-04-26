@@ -1,6 +1,6 @@
 <template>
 <modal name="demo-sign" transition="pop-out" width="50%" height="70%" :clickToClose="false">
-  <demo-sign2-modal v-bind:email="this.email"> </demo-sign2-modal>
+  <demo-sign2-modal> </demo-sign2-modal>
   <div class="box">
     <div class="box-part" id="bp-right"></div>
 
