@@ -141,7 +141,7 @@ export  const MimicAuth =new Vue({
       }
       else{
         var self = this;
-        return axios.post('http://127.0.0.1:8001/api/mail_verify', {
+        return axios.post(this.$localStorage.get('baseUrl') + 'api/check_code', {
             username : code
           }).then(response => {
              return true;
@@ -159,7 +159,7 @@ export  const MimicAuth =new Vue({
       }
       else{
         var self = this;
-        return axios.post('http://127.0.0.1:8001/api/mail_verify', {
+        return axios.post(this.$localStorage.get('baseUrl') + 'api/change_password', {
             password : pass
           }).then(response => {
              return true;
@@ -169,6 +169,68 @@ export  const MimicAuth =new Vue({
           });
       }
     },
+   
+    ForgetUser: function(pass,email,mimic)
+    {
+      if(mimic == true)
+      {
+        if( pass == this.password && email == this.email)
+        {
+          return true;
+        }
+        else
+        {
+          this.$localStorage.set('error','There was an error sending your request. Please try again');
+          return false;
+        }
+      }
+      else{
+        var self = this;
+        return axios.post(this.$localStorage.get('baseUrl') + 'api/mail_verify', {
+            password : pass,
+            email : email
+          }).then(response => {
+             return true;
+          }).catch(function () {
+            self.$localStorage.set('error','There was an error sending your request. Please try again');
+             return false;
+          });
+      }
+    },
+    ForgetUser2: function(code,mimic)
+    {
+      if(mimic == true)
+      {
+        if( code == this.code )
+        {
+         /* var name = this.username;
+          var promise1 = new Promise(function(resolve){
+            setTimeout(function() {
+              resolve(name);
+            }, 300)
+        }); */
+        return this.username
+        }
+        else
+        {
+          this.$localStorage.set('error','There was an error sending your request. Please try again');
+          return false;
+        }
+      }
+      else{
+        var self = this;
+        return axios.post(this.$localStorage.get('baseUrl') + 'api/check_code', {
+            code : code,
+           // email : email
+          }).then(response => {
+             return response.data.username;
+          }).catch(function () {
+            self.$localStorage.set('error','There was an error sending your request. Please try again');
+             return false;
+          });
+      }
+    },
+
     getApex: function(mimic)
     {
       if(mimic ==  true)
