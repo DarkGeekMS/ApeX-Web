@@ -73,6 +73,14 @@ export  const AllServices =new Vue({
     {
       return MimicAuth.forgetPass3(pass,this.mimic);
     },
+    forgetUser: function(pass,email)
+    {
+      return MimicAuth.ForgetUser(pass,email,this.mimic);
+    },
+    forgetUser2: function(code)
+    {
+      return MimicAuth.ForgetUser2(code,this.mimic);
+    },
     getPosts:function(apexComName) {
       return MimicDisplayPosts.getPostsData(this.mimic,apexComName);
     },
@@ -197,8 +205,12 @@ addOrDeleteModerator:function(userName,apexComName){
   var data=MimicApexCom.addOrDeleteModerator(this.mimic,userName,apexComName);
   return data;
 },
-reviewReports:function(apexComName){
+reviewReportsAC:function(apexComName){
   var data=MimicApexCom.reviewReports(this.mimic,apexComName);
+  return data;
+},
+reviewReportsUP:function(userName){
+  var data=MimicUserProfile.reviewReports(this.mimic,userName);
   return data;
 },
 ignoreReport:function(id){

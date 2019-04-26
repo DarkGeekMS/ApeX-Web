@@ -32,7 +32,6 @@ export default[
     {path:'/Submit',name:'CreatePost',component:CreatePost},
     {path:'/Search', name:'Search' , component:Search, children :[
         {path:'users', component:Users } ]},
-    {path:'/userprofile/:userName',name:'UserProfile',component:userprofile,props:true},
     {path:'/Messages' ,name:'Messages',component:MessageBar},
     {path:'/userprofile/:userName',name:'UserProfile',component:userprofile,props:true,children :[
       {path:'Report',name:'Report', component:Reports,props:true },]

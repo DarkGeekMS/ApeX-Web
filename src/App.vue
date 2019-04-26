@@ -85,8 +85,10 @@ button.btn {
   position: fixed;
   top: 93%;
   left: 75%;
-  &:hover {
-    background: #20a0ff;
-  }
 }
+ button .btn:hover {
+  background: #20a0ff;
+}
+ 
+
 </style>
