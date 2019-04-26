@@ -576,7 +576,7 @@ width: 100%;
    box-sizing: border-box;
     /* width: 250%; */
     margin-left: 23%;
-    margin-top: 2%;
+    margin-top: 4%;
     min-width: 50%;
     height: 100%;
    margin-right: 0%;
@@ -593,11 +593,10 @@ width: 30%;
 
 }
 
-@media (max-width:1000px){
+@media (max-width:933px){
  #post{
-      width:165%;
-      margin-left:0%;
-      
+      width:158%;
+      margin-left:4.6%;
   }
 } 
 </style>
