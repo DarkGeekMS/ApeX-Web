@@ -7,7 +7,15 @@
   </div>
  <ApexComSideBar class="sidebar"></ApexComSideBar>
    
-      <CommentParent v-show="!this.locked" postID='t3_10' class="cmt"  v-on:lockComment="lock($event)"></CommentParent>
+      <CommentParent 
+      v-show="!this.locked" 
+      postID='t3_10' 
+      class="cmt"  
+      v-on:lockComment="lock($event)" 
+      v-bind:postOwnerUserName = 'postOwnerUserName'
+      v-bind:moderatorUserName = 'moderatorUserName'
+      >
+      </CommentParent>
 
 </div>
 </modal>
@@ -25,9 +33,7 @@ import ApexComSideBar from "./ApexComSideBar.vue"
 export default {
 name: 'DemoOnePost',
 props:{
-  onePostData:{},
-  
-
+  onePostData:{}
 },
 components:
 {
@@ -51,7 +57,9 @@ else{this.locked=true;
   data(){
     return{
 
-      locked:false
+      locked:false,
+      postOwnerUserName : "hohoho",
+      moderatorUserName : 'FF'
     };
       }
       

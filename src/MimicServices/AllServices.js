@@ -156,6 +156,10 @@ EditComment: function(ID,content){
   var data=MimicComment.EditComment(ID,content,this.mimic);
   return data;
 },
+getComments: function(ID){
+  var data=MimicComment.getComments(ID,this.mimic);
+  return data;
+},
 sendMessage: function(rec,title,cont){
   var data=MimicMessage.sendMessage(rec,title,cont,this.mimic);
   return data;

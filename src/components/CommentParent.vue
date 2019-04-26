@@ -2,7 +2,26 @@
   <div id = "CommentParent" v-bind:style="{marginLeft: 5 +'%'}">
     <WriteComment buttonType="0" v-bind:parentID="postID" v-on:Comment="addComment" v-bind:style="{width: 55 +'%'}"></WriteComment>
     <div v-for = "comment in comments" :key="comment.user">
-      <Comment v-on:Delete="deleteComment"  v-on:Reply2="addReply" v-on:Edit="editComment" v-bind:user= comment.user  v-bind:level= comment.level v-bind:content= comment.content v-bind:con= comment.con v-bind:idx=comment.idx v-bind:parentIdx=comment.parentIdx v-bind:parentID=comment.parentID v-bind:ID=comment.currentID v-bind:date=comment.date></Comment>
+      <Comment 
+      v-on:Delete="deleteComment"  
+      v-on:Reply2="addReply" 
+      v-on:Edit="editComment" 
+      v-bind:user= comment.user  
+      v-bind:level= comment.level 
+      v-bind:content= comment.content 
+      v-bind:con= comment.con 
+      v-bind:idx=comment.idx 
+      v-bind:parentIdx=comment.parentIdx 
+      v-bind:parentID=comment.parentID 
+      v-bind:ID=comment.currentID 
+      v-bind:date=comment.date 
+      v-bind:points=comment.points 
+      v-bind:unSaved = comment.unSaved
+      v-bind:upVoted = comment.upVoted
+      v-bind:downVoted = comment.downVoted
+      v-bind:postOwnerUserName = 'postOwnerUserName'
+      v-bind:moderatorUserName = 'moderatorUserName'
+      ></Comment>
     </div>
   </div>
 </template>
@@ -10,13 +29,16 @@
 <script>
 import WriteComment from './WriteComment.vue'
 import Comment from './Comment.vue'
+import {AllServices} from '../MimicServices/AllServices.js'
 
 
 
 export default {
   name:'CommentParentItem',
   props:{
-    postID:String
+    postID:String,
+    moderatorUserName:String,
+    postOwnerUserName:String
   },
  components: {
     WriteComment,
@@ -37,10 +59,16 @@ export default {
           ]
       }
   },
+  mounted(){
+    //each 2 minutes
+    this.getAllComments();
+    setInterval(() => this.getAllComments(), 120000);
+  /////
+  },
   methods:{
       addComment:function(cont,con,use,pID,cID){
         if (cont!='')
-          this.comments.push({user:this.$localStorage.get('userName'), content:cont,con:con , idx:this.comments.length,level:0,parentIdx:-1,parentID:pID,currentID:cID, date:new Date()});
+          this.comments.push({user:this.$localStorage.get('userName'), content:cont,con:con , idx:this.comments.length,level:0,parentIdx:-1,parentID:pID,currentID:cID, date:new Date(),points:0 , unSaved :"Save", upVoted :false,downVoted:false});
           else
           alert("empty text not allowed!");
       },
@@ -48,12 +76,11 @@ export default {
         if (cont!='')
         {
           var i = parent+1;
-          this.comments.push({user:this.$localStorage.get('userName'), content:cont,con:con ,idx:i ,level:l,parentIdx:parent,parentID:pID,currentID:cID, date:new Date() });
+          this.comments.push({user:this.$localStorage.get('userName'), content:cont,con:con ,idx:i ,level:l,parentIdx:parent,parentID:pID,currentID:cID, date:new Date(),points:0, unSaved :"Save", upVoted :false,downVoted:false });
           var rep = this.comments.pop();
           for (var x = this.comments.length;x>i;x--){
             this.comments[x]=this.comments[x-1];
             this.comments[x].idx++;
-
           }
 
         this.comments[i]=rep;
@@ -108,11 +135,89 @@ export default {
         for (var i = x;i<=maxDeletedIdx;i++)
         {
           this.deleteCommentByIdx(x);
+        }
 
+        for(var i = 0;i<this.comments.length;i++){
+          this.comments[i].parentIdx = this.getParentIdx(this.comments,i);
         }
 
 
-      }
+
+      },
+      getAllComments:function(){
+        var arr;
+        AllServices.getComments(this.postID).then((data) => {
+       if(data){
+          arr = data;
+          console.log('data',data);
+          this.comments =[];
+          console.log('gggg',arr);
+        for(var i = 0; i < arr.length; i++){
+          var obj = {};
+          obj.user = arr[i].writerUserName;
+          obj.content = arr[i].content;
+          obj.con = this.OpString(arr[i].content);
+          obj.idx=i;
+          obj.level = arr[i].level;
+          obj.parentIdx = -1;
+          obj.parentID = arr[i].parent;
+          obj.currentID = arr[i].id;
+          obj.date = arr[i].created_at;
+          obj.points = arr[i].votes;
+          obj.upVoted = arr[i].userVote==1?true:false;
+          obj.downVoted = arr[i].userVote==-1?true:false;
+          ///
+          obj.unSaved = arr[i].Saved?"Unsave":"Save";
+          ///
+          this.comments[i] = obj;
+          this.comments[i].parentIdx = this.getParentIdx(this.comments,i);
+
+        }}});
+        
+        
+
+      },
+      getParentIdx:function(arr,t){
+        for(var i = 0;i<t;i++){
+          if(arr[t].parentID == arr[i].currentID)
+          {
+            return i;
+          }
+        }
+      },
+      OpString:function(content){
+        var con = [];
+        for (var i = 0;i<content.length;i++)
+                {
+                    if (content[i]=='u' && content[i+1]=='/' && content[i+2]!=' ')
+                    {
+                      for (var x = i;x<content.length;x++)
+                      {
+                          if (content[x+1]==' '|| x==content.length-1)
+                          {
+                          var str = content.slice(i,x+1);
+                          con.push({c:str , type:1});
+                          i=x+1;
+                          break;
+                          }
+                      }
+                    }
+
+                          for (var x = i;x<content.length;x++)
+                          {
+                              if((content[x+1]=='u' && content[x+2]=='/' && content[x]==' ')||x==content.length-1)
+                              {
+                                  var str = content.slice(i,x+1);
+                                  con.push({c:str , type:0});
+                                  i=x;
+                                  break;
+                              }
+                          }
+
+
+                }
+                return con;
+}
   }
 }
 </script>

@@ -36,14 +36,10 @@
 
       <div id = "thirdLine" v-show="!showEditBox">
         <button class = "buttons" v-on:click = "showReplyBox = !showReplyBox" id = "Reply">Reply</button>
-        <span>|</span>
-        <button class = "buttons" id = "Report" @click="$modal.show('reportBox')">Report</button>
-        <span>|</span>
+        <button class = "buttons" id = "Report" @click="$modal.show('reportBox')" v-show = "showReportButton">Report</button>
         <button class = "buttons" v-on:click="Save" id = "Save" >{{unSaved}}</button>
-        <span>|</span>
-        <button class = "buttons" v-on:click = "showEditBox = !showEditBox" id = "Edit">Edit</button>
-        <span>|</span>
-        <button class = "buttons" v-on:click ="Delete" id = "Delete">Delete</button>
+        <button class = "buttons" v-on:click = "showEditBox = !showEditBox" id = "Edit" v-show = "showEditButton">Edit</button>
+        <button class = "buttons" v-on:click ="Delete" id = "Delete" v-show = "showDeleteButton">Delete</button>
       </div>
 
       <br>
@@ -74,22 +70,53 @@ export default {
     con: {
     type: Array,
     default: function () { return [] }
-  }
+    },
+    user:String,
+    upVoted:Boolean,
+    downVoted:Boolean,
+    points:Number,
+    unSaved:String,
+    moderatorUserName:String,
+    postOwnerUserName:String
   },
   data(){
     return{
-    user:this.$localStorage.get('userName'),
-    upVoted:false,
-    downVoted:false,
-    points:0,
+    // user:this.$localStorage.get('userName'),
+    // upVoted:false,
+    // downVoted:false,
+    // points:0,
     time:'',
     showReplyBox:0,
     showEditBox:0,
     deleted:1,
-    unSaved:'Save'
+    showDeleteButton:false,
+    showEditButton:false,
+    showReportButton:false,
+
+    // unSaved:'Save'
     }
   },
   mounted(){
+          
+    if(this.$localStorage.get('userName') == this.user){
+      // comment owner
+      this.commentOwnerButtons();
+    }
+    else if (this.$localStorage.get('userName') == this.moderatorUserName)
+    {
+      // moderator
+      this.moderatorButtons();
+    }
+    else if (this.$localStorage.get('userName') == this.postOwnerUserName)
+    {
+      // post owner
+      this.postOwnerButtons();
+    }
+    else
+    {
+      // guest
+      this.guestButtons();
+    }
     setInterval(() => this.DateFormat(this.date), 1000);
   /////
   },
@@ -207,6 +234,27 @@ if (delta < 60) {
     fuzzy = 'yesterday';
 }
 this.time=fuzzy;
+},
+
+commentOwnerButtons:function(){
+  this.showReportButton = false;
+  this.showDeleteButton = false;
+  this.showEditButton = true;
+},
+moderatorButtons:function(){
+  this.showReportButton = false;
+  this.showDeleteButton = true;
+  this.showEditButton = false;
+},
+postOwnerButtons:function(){
+   this.showReportButton = true;
+  this.showDeleteButton = true;
+  this.showEditButton = false;
+},
+guestButtons:function(){
+  this.showReportButton = true;
+  this.showDeleteButton = false;
+  this.showEditButton = false;
 }
   },
 
