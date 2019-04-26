@@ -24,7 +24,7 @@ export  const MimicDisplayPosts =new Vue({
               post_writer_user:"double"
 
             },
-            
+
             {
               id:'111',
               posted_by:'Nourhan',

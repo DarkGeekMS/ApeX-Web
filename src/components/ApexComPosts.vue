@@ -2,7 +2,7 @@
 <template id="posts desing">
   <!-- class="postsBox" -->
    <div  id="postslist">
-    <DisplayPosts class="box" v-bind:apexComName="ApexComName"></DisplayPosts>
+    <DisplayPosts class="box" v-bind:apexComName="apexName"></DisplayPosts>
   </div>
 </template>
 
@@ -14,9 +14,10 @@ import DisplayPosts from './DisplayPosts.vue'
  */
 
 export default {
-  props:['ApexComName'],
+  props:['apexComName'],
   data () {
     return {
+      apexName:this.apexComName,
   }
 },
   components:{
@@ -32,13 +33,13 @@ export default {
   /* padding: 0;
   margin: 0;
   list-style: none;
-  
+
   display: -webkit-box;
   display: -moz-box;
   display: -ms-flexbox;
   display: -webkit-flex;
   display: flex;
-  
+
   -webkit-flex-flow: row wrap;
   justify-content: space-around; */
 }

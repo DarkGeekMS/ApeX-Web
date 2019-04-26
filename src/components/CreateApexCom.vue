@@ -1,11 +1,13 @@
 <template>
+  <div class="ApexComm">
+
 <div class="CreateApexCom">
 <!-- here -->
 
 <h2 class="page-header">Create Apex Community</h2>
 
 
-<form class="">
+
 
 <!-- community name -->
 <div class="form-group">
@@ -67,11 +69,16 @@
 </div>
 
 <!-- create bottum -->
-<button  type="submit" style="margin-left:450px"  id="Button" v-on:click="CreateApex()">Create</button>
+<button  type="submit" style="margin-left:450px"  id="Button" @click="CreateApex()">Create</button>
 
-</form>
+<h3 v-if="error">the ApexCom is created successfully</h3>
+<h5 v-if="error">To Go to your new ApexCom , Press the below buttom </h5>
+
+<button  type="submit" style="margin-left:450px"  id="Button" v-if="error">Go to your new ApexCom</button>
+
+
 </div>
-
+</div>
 </template>
 
 <script>
@@ -83,24 +90,31 @@ export default {
     name:"",
     description:"",
     rule:"",
-    error:{}
+    error:false
   }
+},
+computed:{
 },
 methods:{
   CreateApex:function() {
+    if(this.name!=""&&this.description!=""&&this.rule!=""){
     AllServices.CreateApexCom(this.name,this.description,this.rule,"","").then((data) => {
      this.error= data;
      this.ErrorCheck();
    });
+ }
   },
   ErrorCheck:function(){
-    if(this.error == true){
-      alert("here correct")
-    }
-    else{
-      alert("Noooooo")
-    }
-  }
+    // if(this.error == true){
+        alert(this.error);
+     // this.$router.push({ path: '/HomePage'});
+     // location.replace('/HomePage')
+    // params: { apexComName: 'this.name' } })
+    // }
+    // else{
+      // alert("Noooooo")
+    // }
+}
 }
 }
 </script>
@@ -113,7 +127,11 @@ methods:{
   background:white;
 }
 
-
+.ApexComm{
+  width: 100%;
+  height: 100%;
+  background:white;
+}
 
 
 #Button{

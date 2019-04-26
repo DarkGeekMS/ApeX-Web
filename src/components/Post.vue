@@ -39,13 +39,15 @@
       <font class="postby" id="fontpost"> </font>
       <a href="#" class="postby" id="timeAgo">  </a>
       <h3>{{postData.title}}</h3>
-      <p id="postBody" class="hPost">
+      <p id="postBody" class="hPost" v-if="!this.showEditTextArea">
 
         {{postData.content}}
          </p>
-         <!-- <textarea v-if="postData.canEdit"></textarea> -->
-
-
+          <textarea  @keyup="store" v-if="this.showEditTextArea" class="form-control" rows="7" id="textarea">{{postData.content}}</textarea> 
+          
+          <button @click="saveChange" v-if="this.showEditTextArea" class="btn btn-primary postButton" id="saveEdit">SAVE</button>
+          <!-- <button  v-if="this.showEditTextArea" class="btn btn-primary postButton" id="cancel">CANCEL</button> -->
+          
 <iframe  v-show ="postData.videolink!==''" width="100%" height="315"  :src=postData.videolink frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 <img v-show="postData.img!==''" :src=postData.img  height="100%" width="100%">
@@ -126,6 +128,8 @@ export default {
 
    data(){
        return{
+              isModal:false,
+             showEditTextArea:false,
              editShow:false,
              Not_Hide :true,
              is_Hide  :false,
@@ -152,16 +156,32 @@ export default {
          },
 
   methods: {
+   
+    saveChange(){
+    
+          this.postData.content= document.getElementById("textarea").value; 
+          this.showEditTextArea=false;
+          AllServices.EditPost(this.postData.id, this.postData.content);
+        
+  
+    },
+
     report(){
-if(this.ShowModalVar == true){
-      this.ToggleShowModalVar();
-    }
-   //alert('ana report');
+    if(this.$localStorage.get('login') ){
+        if(this.ShowModalVar == true){
+        this.ToggleShowModalVar();
+         }
+  
      this.onlyOneTime=false;
       this.$modal.show('reportBox');
 
+    }
+    else{
+      alert('Login First!!');
+    }
     },
     isLocked(){
+      if(this.$localStorage.get('login') ){
         if(this.ShowModalVar == true){
       this.ToggleShowModalVar();
     }
@@ -176,13 +196,19 @@ if(this.ShowModalVar == true){
       this.$emit('lockComment',this.Locked);}
       AllServices.isLocked(this.PostId,this.$localStorage.get('token'));
 
+    }
+    else{
+      alert('Login First!!');
+    }
     },
+
     editText(){
        if(this.ShowModalVar == true){
-      this.ToggleShowModalVar();
+           this.ToggleShowModalVar();
         } 
-        this.$emit('Edit');
-        //this.$router.go(-1);
+       // this.$emit('Edit');
+        this.showEditTextArea=true;
+       
 
 
     },
@@ -202,6 +228,7 @@ if(this.ShowModalVar == true){
     * Hide post if the User press Hide button.
     */
        Hide(){
+           if( this.$localStorage.get('login') ){
          if(this.ShowModalVar == true){
          this.ToggleShowModalVar();
          }
@@ -215,9 +242,15 @@ if(this.ShowModalVar == true){
         this.PostId=postData.id;
         AllServices.Hide(this.PostId,this.$localStorage.get('token'));
 
-         },
+         }
+         else{
+         alert('login first');
+       }
+       }
+       ,
     changeColor_up()
     {
+      if(this.$localStorage.get('login') ){
       if(this.ShowModalVar == true){
       this.ToggleShowModalVar();
     }
@@ -250,8 +283,14 @@ if(this.ShowModalVar == true){
 
 
 
-      },
+      }
+      else{
+        alert('Login First !!');
+      }
+      }
+      ,
      changeColor_down(){
+       if(this.$localStorage.get('login') ){
        if(this.ShowModalVar == true){
        this.ToggleShowModalVar();
      }
@@ -283,12 +322,16 @@ if(this.ShowModalVar == true){
 
 
                  }
+              }
+              else{
+                alert('Login First !!');
+              }
               },
                /**
     * Save post if the User press Hide button.
     */
     Save(){
-      
+        if( this.$localStorage.get('login') ){
       if(this.ShowModalVar == true){
       this.ToggleShowModalVar();
     }
@@ -313,6 +356,10 @@ if(this.ShowModalVar == true){
 
 
 
+    }
+    else{
+      alert('login First !!');
+    }
     },
     
  timeSince(date) {
@@ -377,6 +424,7 @@ this.time=fuzzy;
 * show the clicked post on the modal.
 */
       ShowModal(){
+        this.isModal=true;
         if(this.ShowModalVar == true){
           this.$emit('showUp',this.postData);
    
@@ -513,6 +561,7 @@ h5 {
         -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05);
         box-shadow: 0 1px 1px rgba(0,0,0,.05);
     }
+   
 .fontUser{
     font-size: 12px;
     font-weight: 700;
@@ -525,19 +574,8 @@ h5 {
 }
 .buttonDelete{
       background-color: #f4511e;
-/*      margin-left: 470px;*/
-} /* Red */
-/* .postItem{
-    box-sizing: border-box;
-    width: 250%;
-    margin-left: 9.5%;
-    padding-top: 2%;
-    margin-top: 0%;
-    min-width: 50%;
-    height: 100%;
-   margin-right: 0%;
 
-} */
+} 
 @media(max-width:1054px){
   div .panel 
   {
@@ -587,6 +625,14 @@ width: 100%;
 .panel-body{
 
   width: 100%;
+}
+#saveEdit{
+  margin-left:92.5%; 
+}
+#cancel{
+  margin-left:80%;
+  /* padding-top: 0%; */
+  
 }
 
 #postSide{

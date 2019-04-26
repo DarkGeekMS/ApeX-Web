@@ -21,10 +21,10 @@ export  const AllServices =new Vue({
     getState(){
       return this.mimic
     },
-    getPosts:function() {
-      var posts=MimicDisplayPosts.getPostsData(this.mimic);
-        return posts
-   },
+   //  getPosts:function() {
+   //    var posts=MimicDisplayPosts.getPostsData(this.mimic);
+   //      return posts
+   // },
     submit:function(videoUrl,apexComId,bodyPost,imgName, isLocked,token){
 
       var data=MimicCreatePosts.submitPost(videoUrl,apexComId,bodyPost,imgName,isLocked,token,this.mimic);
@@ -85,7 +85,12 @@ export  const AllServices =new Vue({
       return MimicDisplayPosts.getPostsData(this.mimic,apexComName);
     },
 	getAbout:function(apexComName) {
-    return MimicApexCom.getAbout(this.mimic,apexComName);
+    var about=MimicApexCom.getAbout(this.mimic,apexComName);
+    return about;
+  },
+  getAboutGuest:function(apexComName) {
+    var about=MimicApexCom.getAboutGuest(this.mimic,apexComName);
+    return about;
 	},
 	getSubscribers:function(apexComName) {
     var SubscribersList=MimicApexCom.getSubscribers(this.mimic,apexComName);
@@ -230,6 +235,10 @@ updatePrefs:function(email,avatar,username) {
 },
 changePass:function (password,withCode,username,key){
     return MimicUserSettings.changePass(mimic,password,withCode,username,key);
-}
+},
+searchU:function(id){
+  var data=MimicApexCom.searchU(this.mimic,id);
+  return data;
+},
   }
 });
