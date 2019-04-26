@@ -81,7 +81,7 @@ components:{
 #DisplayPosts{
    /* width: 100%; */
   display: inline-block;
-  padding-top: 5%;
+  padding-top: 0%;
 }
 
 </style>
