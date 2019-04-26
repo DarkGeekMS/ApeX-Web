@@ -52,8 +52,8 @@ import {AllServices} from '../MimicServices/AllServices.js'
       },
       create: function() {
         var type = AllServices.userType().then((data)=>{
-        if(data.type == 1){
-          return true;
+          if(data.type == 1){
+            this.$router.push({ name:'CreateApexCom'} )
           }
         })
       }

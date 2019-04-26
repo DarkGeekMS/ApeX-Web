@@ -36,15 +36,14 @@ export  const AllServices =new Vue({
     {
       return MimicAuth.getApex(this.mimic)
     },
-    searchApexAndUser:function()
+    searchUser:function()
     {
-      return MimicSearch.searchApex(this.mimic)
+      return MimicSearch.SearchU(this.mimic)
     },
-    searchPosts:function()
+    searchGuest:function()
     {
-      return MimicSearch.searchPost(this.mimic)
+      return MimicSearch.SearchG(this.mimic)
     },
-
     signUp: function(email, user,pass)
     {
       return MimicAuth.SignUp(email, user,pass,this.mimic);

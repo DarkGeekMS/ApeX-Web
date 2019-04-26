@@ -6,14 +6,13 @@
       <br/>  <br/>  
      <p > Have an idea for a new community? </p>
 
-     <button  style=" cursor: no-drop" type="button" class="btn btn-info" data-toggle="button" aria-pressed="false" autocomplete="off">CREATE COMMUNITY</button>
+     <button  style=" cursor: no-drop" type="button" class="btn btn-info" data-toggle="button" aria-pressed="false" autocomplete="off" @click="create()">CREATE COMMUNITY</button>
   </div>
 </template>
 
 <script>
-  /**
-  * @vue-data {boolean} [login=false] if user is logged in 
-  */
+import {AllServices} from '../MimicServices/AllServices.js'
+
   export default {
 
     data () {
@@ -21,6 +20,13 @@
       }
     },
     methods:{
+      create: function() {
+        var type = AllServices.userType().then((data)=>{
+          if(data.type == 1){
+            this.$router.push({ name:'CreateApexCom'} )
+          }
+        })
+      }
     }
 }
 </script>

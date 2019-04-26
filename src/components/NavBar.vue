@@ -27,7 +27,7 @@
         <li class="divider"></li>
 
         <li class="dropdown-header" v-show="this.$localStorage.get('login')">MY COMMUNITIES</li>
-            <li v-show="log" v-for="apex in apexs" :key="apex.id" ><router-link to="{ name:'ApexCom', params: {ApexComName:apex.name} }" > {{apex.name}} </router-link></li> 
+            <li v-show="log" v-for="apex in apexs" :key="apex.id" ><router-link :to="{ name:'ApexCom', params: {ApexComName:apex.name} }" > {{apex.name}} </router-link></li> 
       </ul>
     </div>  
   
@@ -53,10 +53,10 @@
 
     <div class="btn-toolbar tool2" role="toolbar" v-show="this.$localStorage.get('login')"> 
       <div class="btn-group">
-      <button type="button" class="btn btn-default b4"> 
+      <button type="button" class="btn btn-default b4" @click="$router.push({ name:'Messages'})"> 
       <i class="glyphicon glyphicon-envelope"></i>
       </button> 
-      <button type="button" class="btn btn-default b5"> 
+      <button type="button" class="btn btn-default b5" @click="$router.push('/Submit')"> 
       <i class="glyphicon glyphicon-edit"></i>
       </button>
       </div> 
@@ -256,7 +256,6 @@ input{
   width:45%;
   padding-right: -5px;
   margin:4px 1%;
-
 }
 @media(max-width:106px){
   div .sel{
@@ -287,11 +286,6 @@ input{
     width:110px;
   }
 }
-/*@media(max-width:650px){
-  div .tool2{
-    display:none
-  }
-} */
 @media(max-width:997px){
   div #selectted{
     display: none;
