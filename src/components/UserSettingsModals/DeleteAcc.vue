@@ -1,66 +1,72 @@
-
-
-
 <template>
-<modal name="changepass" transition="pop-out" :scrollable="true" width="44%" height="44%">
+<modal name="DeleteAcount" transition="pop-out" :scrollable="true" width="30%" height="auto">
+<div class="">
   <div class="box">
-    <div class="box-part" id="bp-left">
-      <div class="partition" id="partition-register">
-        <div class="partition-title">CHANGE PASSWORD</div>
-        <div class="partition-form">
-          <form autocomplete="false">
+        <h6 class="page-header"><b>Deactivate your account</b></h6>
+      <h6>Sorry to see you go!</h6>
+<ul>
+  <li><h6>If you are having a problem on ApexCom, please consider contacting us about it before deactivating your account.</h6></li>
+<br>
+  <li><h6>  Deactivating your account will not delete the content of posts and comments you've made on ApexCom. To do so please delete them individually.</h6></li>
+</ul>
+<br>
+<h6>ACCOUNT CREDENTIALS FOR SECURITY PURPOSES</h6>
 
-            <div class="autocomplete-fix">
-              <input type="password">
+<div class="partition" id="partition-register">
+  <div class="partition-form">
+    <form autocomplete="false">
+      <input id="n-password2" type="password" v-model="password" placeholder="Password">
+
+    </form>
+  </div>
+</div>
+
+            <div class="button-set">
+              <button id="goto-signin-btn" @click="hide()" class="Button">Cancel</button>
+              <button id="register-btn" @click="deleteacc()" class="Button">Delete</button>
             </div>
 
-            <input id="n-password2" type="password" placeholder="Old Password">
-            <input id="n-password2" type="password" placeholder="New Password">
-            <input id="n-password2" type="password" placeholder="Confirm Password">
 
-          </form>
-
-
-          <div class="button-set">
-            <button id="goto-signin-btn" class="Button" @click="hide()">Cancel</button>
-            <button id="register-btn" class="Button" >Save</button>
-          </div>
-
-        </div>
-      </div>
-    </div>
+  </div>
   </div>
 </modal>
 </template>
+
 <script>
-const MODAL_WIDTH = 656
+import {AllServices} from '../../MimicServices/AllServices.js'
 export default {
-  name: 'DemoLoginModal',
   data () {
     return {
-      modalWidth: MODAL_WIDTH
+password:''
     }
   },
-  created () {
-    this.modalWidth = window.innerWidth < MODAL_WIDTH
-      ? MODAL_WIDTH / 2
-      : MODAL_WIDTH
-  },
+methods:{
+hide(){
+  this.$modal.hide('DeleteAcount')
+},
+deleteacc(){
+  AllServices.deleteAcc(this.password).then((data) => {
+   this.error= data;
+   this.ErrorCheck();
+ });
+},
+ErrorCheck(){
+// todo check error type and do behavior
 
-  methods:{
-
-    hide () {
-    this.$modal.hide('changepass');
-  }
-
-  }
-
+}
+}
 }
 </script>
 <style lang="scss" scoped>
+h6{
+  margin-left: 5%
+}
+ul{
+list-style-type: lower-roman;
+list-style-position: outside;
+
+}
 $background_color: #404142;
-$github_color: #DBA226;
-$facebook_color: #3880FF;
 .box {
   background: white;
   overflow: hidden;
@@ -69,7 +75,7 @@ $facebook_color: #3880FF;
   border-radius: 2%;
   box-sizing: border-box;
   box-shadow: 0 0 7% black;
-  color: #8b8c8d;
+  color: black;
   font-size: 0;
   .box-part {
     display: inline-block;
@@ -120,7 +126,8 @@ $facebook_color: #3880FF;
   input[type=text] {
     display: block;
     box-sizing: border-box;
-    margin-bottom: 4px;
+    margin-bottom: 20px;
+    margin-top: 20px;
     width: 100%;
     font-size: 12px;
     line-height: 2;
@@ -141,7 +148,7 @@ $facebook_color: #3880FF;
   //   font-weight: 400;
   //   min-width: 140px;
   //   margin-top: 8px;
-  //   color: #8b8c8d;
+  //   color: black;
   //   cursor: pointer;
   //   border: 1px solid #DDDEDF;
   //   text-transform: uppercase;
@@ -166,28 +173,13 @@ $facebook_color: #3880FF;
     }
   }
   .button-set {
-    margin-bottom: 8px;
+    margin-bottom: 10px;
+    margin-right: 10px;
     float: right;
   }
   #register-btn,
   #signin-btn {
     margin-left: 8px;
-  }
-  .facebook-btn {
-    border-color: $facebook_color;
-    color: $facebook_color;
-    &:hover {
-      border-color: $facebook_color;
-      background: $facebook_color;
-    }
-  }
-  .github-btn {
-    border-color: $github_color;
-    color: $github_color;
-    &:hover {
-      border-color: $github_color;
-      background: $github_color;
-    }
   }
   .autocomplete-fix {
     position: absolute;
@@ -210,9 +202,6 @@ $facebook_color: #3880FF;
   transform: translateY(24px);
 }
 
-
-
-
 .Button{
 
 box-sizing: border-box;
@@ -233,6 +222,7 @@ text-decoration: none;
 padding: 3px 16px;
 border-color: rgb(0, 121, 211);
 }
+
 
 
 </style>

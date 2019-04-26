@@ -5,12 +5,12 @@
         <a style="font-size: 16px;"  id="posttab" class="navbarlinks" href="#">posts</a>
         <a style="font-size: 16px;"  id="savedtab" v-show="notGuest()" class="navbarlinks" href="#">saved</a>
         <a style="font-size: 16px;"  id="hiddentab" v-show="notGuest()" class="navbarlinks" href="#">hidden</a>
-        <!-- <a style="font-size: 16px;"  id="reporttab" v-show="isModerator() && notGuest()" class="navbarlinks" href="#">report</a> -->
-        <router-link style="font-size: 16px;" id="reportlink" class="navbarlinks" :to="{name:'Report'}">view reports</router-link>
+        <a style="font-size: 16px;"  id="reporttab" v-show="isModerator() && notGuest()" class="navbarlinks" href="#">report</a>
+        <!-- <router-link style="font-size: 16px;" id="reportlink" class="navbarlinks" :to="{name:'Report'}">view reports</router-link> -->
         
     </div>
     <div class="sort">
-    <Sort ></Sort>
+    <Sort style="padding-top:10px"></Sort>
   </div>
         <SideBar
         v-bind:settings="true"

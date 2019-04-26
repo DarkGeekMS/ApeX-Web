@@ -1,34 +1,38 @@
 <template>
   <div id="submitPage" >  
-
-<Post  v-on:PostEmit="getData($event)"  v-bind:postData="createPostData" class="postStyle" > </Post>
-
-
+<CreatePostSideBar></CreatePostSideBar>
+<Post v-bind:postData="createPostData" class="postStyle" v-if="isCreated"> </Post>
+<CreatePost v-on:PostEmit="getData" v-if="firstTime" id="createPost"></CreatePost>
 
 
   </div>
 </template>
 
 <script>
+
 import Post from './Post.vue'
 import CreatePost from './CreatePost.vue'
+import CreatePostSideBar from './CreatePostSideBar.vue'
 export default {
     data(){
      return{
-
-         showCreatePost:true,
+      
+         showCreateEdit:false,
+         isCreated:false,
+         firstTime:true,
+       
          postInfo:'',
          posts:'',
           createPostData:{
-
-             id:'555',
-              posted_by:'Nada',
-              apex_id:'555',
-              title:'dj',
+            canEdit:false,
+             id:'',
+              posted_by:'',
+              apex_id:'',
+              title:'',
               content:'',
               locked:false,
               commenets_count:5,
-              votes:9,
+              votes:1,
               img:'',
               videolink:'',
               created_at:"2019-03-23 17:20:45",
@@ -44,39 +48,72 @@ export default {
     }
     },
   name: 'submitPage',
- props:{
 
-  
-
-},
   components:{
     'Post':Post,
     'CreatePost':CreatePost,
+    CreatePostSideBar
   
   },
+
   methods:{
-  
-    getData(e){
-   this.createPostData.content=e;
-        alert('hello');
+    getData(title,content,img,video,author,apex){
+     //  alert('ana emit ');
+    
+        if(content || img ||video){
+          this.isCreated=true;
+          this.firstTime=false;
+          this.createPostData.canEdit=true;
+        }
+
+     
+      // this.createPostData.content=e.bodyPost;
+      this.createPostData.content=content;
+      this.createPostData.img=img;
+      this.createPostData.videolink=video;
+      this.createPostData.posted_by=author;
+      this.createPostData.title=title;
+      this.createPostData.apex_id=apex;
+      this.createPostData.canEdit=true;
+
+      
+   
+    },
+    EditPost(){
+   
+      this.showCreateEdit=true;
+      this.isCreated=true;
     }
-
-
   },
   created(){
-//this.getData();
-    //  this.createPostData.content="hello";
+
+ 
+  },
+  props:{
+    postData:{},
+    retriveData:{
+      retriveContent:'',
+      retriveImg:'',
+      retriveVideo:'',
+      retriveAuthor:'',
+      retriveTitle:'',
+      retriveApexId:'',
+      Edit:true
+
+    }
   }
+
 }
 
 </script>
 
 <style scoped>
 .postStyle{
-
-width: 50%;
+width: 80%;
 padding-top:10%;
-
+margin-left:-17% !important;
 
 }
+
+
 </style>

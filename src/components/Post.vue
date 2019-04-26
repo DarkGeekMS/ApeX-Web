@@ -1,6 +1,11 @@
 <template id="PostTemlate">
+
   <div class="postMod">
+    <!-- VERY IMPORTANT! REPORT MODAL APPEARS MULTIPLE TIMES FOR EACH POST  -->
+   <reportBox> </reportBox>
+    
 <div class="panel panel-default"  @click="ShowModal()" v-show="Not_Hide" id="post">
+
     <div class="panel-body">
     <div class="panel2 panel-default"  id="postSide">
 
@@ -33,12 +38,16 @@
 
       <font class="postby" id="fontpost"> </font>
       <a href="#" class="postby" id="timeAgo">  </a>
-      <p id="postBody" class="hPost">
+      <h3>{{postData.title}}</h3>
+      <p id="postBody" class="hPost" v-if="!this.showEditTextArea">
 
         {{postData.content}}
          </p>
-
-
+          <textarea  @keyup="store" v-if="this.showEditTextArea" class="form-control" rows="7" id="textarea">{{postData.content}}</textarea> 
+          
+          <button @click="saveChange" v-if="this.showEditTextArea" class="btn btn-primary postButton" id="saveEdit">SAVE</button>
+          <!-- <button  v-if="this.showEditTextArea" class="btn btn-primary postButton" id="cancel">CANCEL</button> -->
+          
 <iframe  v-show ="postData.videolink!==''" width="100%" height="315"  :src=postData.videolink frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 <img v-show="postData.img!==''" :src=postData.img  height="100%" width="100%">
@@ -48,7 +57,7 @@
 
 <div class="btn-group" role="group" aria-label="..." id="drop">
 
-  <button type="button" class="btn btn-default " id="commentButton"><i class="far fa-comment-alt" id="commentIcon"></i>
+  <button type="button" class="btn btn-default " id="commentButton" ><i class="far fa-comment-alt" id="commentIcon"></i>
 Comments</button>
   <button  type="button" class="btn btn-default  SAVE"  @click="Save" id="SaveButton" >
 
@@ -66,8 +75,8 @@ Comments</button>
     </button>
     <ul class="dropdown-menu" id="dropMenu">
       <li ><a href="#"  @click="Hide" class="HIDE"><i class="fa fa-ban" id="HideIcon"></i>Hide</a></li>
-      <li><a href="#"><i class="glyphicon glyphicon-flag" id="ReportIcon"></i>Report</a></li>
-      <li><a href="#"><i class="glyphicon glyphicon-pencil" id="ReportIcon"></i>edit</a></li>
+      <li><a  @click="report"><i class="glyphicon glyphicon-flag" id="ReportIcon" ></i>Report</a></li>
+      <li v-if="postData.canEdit"><a href="#" @click="editText" ><i class="glyphicon glyphicon-pencil" id="ReportIcon"></i>edit</a></li>
       <li><a href="#" @click="isLocked">
         
         <i v-if="Locked=='unlock'" class="fa fa-lock" id="ReportIcon"></i>
@@ -87,7 +96,7 @@ Comments</button>
 
        </div>
 
-
+    
 
 
 
@@ -98,7 +107,7 @@ Comments</button>
 
 import {MimicDisplayPosts} from '../MimicServices/DisplayPosts.js'
 import { AllServices } from '../MimicServices/AllServices';
-
+import reportBox from './ReportModal.vue'
 /**
  * @vue-data {string} [Save="Save"] Save value
  * @vue-data {boolean} [Not_Hide=true]    check if post not hide
@@ -119,6 +128,9 @@ export default {
 
    data(){
        return{
+              isModal:false,
+             showEditTextArea:false,
+             editShow:false,
              Not_Hide :true,
              is_Hide  :false,
 
@@ -128,7 +140,7 @@ export default {
              pressed_up   : false,
              pressed_down : false,
 
-             votes  :0,
+             votes  :this.postData.votes,
              Saved  :"Save",
              PostId   :"",
              token  :this.$localStorage.get('token'),
@@ -144,7 +156,32 @@ export default {
          },
 
   methods: {
+   
+    saveChange(){
+    
+          this.postData.content= document.getElementById("textarea").value; 
+          this.showEditTextArea=false;
+          AllServices.EditPost(this.postData.id, this.postData.content);
+        
+  
+    },
+
+    report(){
+    if(this.$localStorage.get('login') ){
+        if(this.ShowModalVar == true){
+        this.ToggleShowModalVar();
+         }
+  
+     this.onlyOneTime=false;
+      this.$modal.show('reportBox');
+
+    }
+    else{
+      alert('Login First!!');
+    }
+    },
     isLocked(){
+      if(this.$localStorage.get('login') ){
         if(this.ShowModalVar == true){
       this.ToggleShowModalVar();
     }
@@ -159,9 +196,19 @@ export default {
       this.$emit('lockComment',this.Locked);}
       AllServices.isLocked(this.PostId,this.$localStorage.get('token'));
 
+    }
+    else{
+      alert('Login First!!');
+    }
     },
-    editText(){
 
+    editText(){
+       if(this.ShowModalVar == true){
+           this.ToggleShowModalVar();
+        } 
+       // this.$emit('Edit');
+        this.showEditTextArea=true;
+       
 
 
     },
@@ -181,6 +228,7 @@ export default {
     * Hide post if the User press Hide button.
     */
        Hide(){
+           if( this.$localStorage.get('login') ){
          if(this.ShowModalVar == true){
          this.ToggleShowModalVar();
          }
@@ -194,9 +242,15 @@ export default {
         this.PostId=postData.id;
         AllServices.Hide(this.PostId,this.$localStorage.get('token'));
 
-         },
+         }
+         else{
+         alert('login first');
+       }
+       }
+       ,
     changeColor_up()
     {
+      if(this.$localStorage.get('login') ){
       if(this.ShowModalVar == true){
       this.ToggleShowModalVar();
     }
@@ -229,8 +283,14 @@ export default {
 
 
 
-      },
+      }
+      else{
+        alert('Login First !!');
+      }
+      }
+      ,
      changeColor_down(){
+       if(this.$localStorage.get('login') ){
        if(this.ShowModalVar == true){
        this.ToggleShowModalVar();
      }
@@ -262,12 +322,16 @@ export default {
 
 
                  }
+              }
+              else{
+                alert('Login First !!');
+              }
               },
                /**
     * Save post if the User press Hide button.
     */
     Save(){
-      
+        if( this.$localStorage.get('login') ){
       if(this.ShowModalVar == true){
       this.ToggleShowModalVar();
     }
@@ -292,6 +356,10 @@ export default {
 
 
 
+    }
+    else{
+      alert('login First !!');
+    }
     },
     
  timeSince(date) {
@@ -356,6 +424,7 @@ this.time=fuzzy;
 * show the clicked post on the modal.
 */
       ShowModal(){
+        this.isModal=true;
         if(this.ShowModalVar == true){
           this.$emit('showUp',this.postData);
    
@@ -375,6 +444,11 @@ props: {
 postData:{},
        },
 created(){
+  
+   if(this.postData.canEdit){
+      this.className_up    = 'btn btn-light btn-sm is-red';
+        this.pressed_up      =true;
+   }
 
       /*
       axios.get("http://localhost/me",{token:this.token}).then(response=>{this.userId=response.userID}).catch(function (error)
@@ -386,12 +460,23 @@ created(){
        if(this.userId==2){
         this.moderator=true;
        }
+       
 },
 computed :{
         createdDate : function(){
           //  return moment().format('dddd');
         }
-}}
+},
+components:{
+    reportBox,
+   
+  
+  },
+  mounted(){
+//     alert('votess');
+//  this.votes=postData.votes;
+  }
+}
 
 
 </script>
@@ -476,6 +561,7 @@ h5 {
         -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05);
         box-shadow: 0 1px 1px rgba(0,0,0,.05);
     }
+   
 .fontUser{
     font-size: 12px;
     font-weight: 700;
@@ -488,19 +574,8 @@ h5 {
 }
 .buttonDelete{
       background-color: #f4511e;
-/*      margin-left: 470px;*/
-} /* Red */
-/* .postItem{
-    box-sizing: border-box;
-    width: 250%;
-    margin-left: 9.5%;
-    padding-top: 2%;
-    margin-top: 0%;
-    min-width: 50%;
-    height: 100%;
-   margin-right: 0%;
 
-} */
+} 
 @media(max-width:1054px){
   div .panel 
   {
@@ -540,7 +615,7 @@ width: 100%;
    box-sizing: border-box;
     /* width: 250%; */
     margin-left: 23%;
-    margin-top: 2%;
+    margin-top: 4%;
     min-width: 50%;
     height: 100%;
    margin-right: 0%;
@@ -551,15 +626,24 @@ width: 100%;
 
   width: 100%;
 }
+#saveEdit{
+  margin-left:92.5%; 
+}
+#cancel{
+  margin-left:80%;
+  /* padding-top: 0%; */
+  
+}
 
 #postSide{
 width: 30%;
 
 }
-/*
-@media(max-width:1000px){
-  .postItem{
-      width:170%;
+
+@media (max-width:933px){
+ #post{
+      width:158%;
+      margin-left:4.6%;
   }
-}  */
+} 
 </style>

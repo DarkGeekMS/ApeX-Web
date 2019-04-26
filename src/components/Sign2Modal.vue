@@ -1,9 +1,10 @@
 <template>
-<modal name="demo-sign2" transition="pop-out" :width="modalWidth" :height="400">
+<modal name="demo-sign2" transition="pop-out" width="50%" height="70%" :clickToClose="false">
   <demo-sign3-modal> </demo-sign3-modal>
   <div class="box">
     <div class="box-part" id="bp-left">
       <div class="partition" id="partition-register">
+        <button class="lead" id="closebtn" @click="close()"> X</button>
 
         <div class="partition-title">
         <h1 class=""> Choose your username </h1>
@@ -23,9 +24,7 @@
                <span class="lead" style = "fontSize:10px" v-show="invalidUser" >Enter a username of max length 17 without spaces </span>
                <p class = "lead" style = "fontSize:15px; color:red" > {{ error }}  </p>
 
-               <div style="margin-top: 20px"></div>
-
-
+               <div style="margin-top: 2%"></div>
 
               <input id="password" type="password" class="form-control" name="password"
                 placeholder="PASSWORD" v-on:keyup="restart()"
@@ -36,10 +35,9 @@
 
 
             </div>
-            <div style="margin-top: 70px"></div>
-            <div style="background_color:#eee;border-top:1.5px solid #eee; height:55px" >
-              <a id="Back" class="btn blue" @click="$modal.hide('demo-sign2')">BACK</a>
-              <button :disabled="check" class="btn blue" type="submit" style="margin-left:450px" @click.prevent="post()" id="SignUpFinish">SIGN UP</button>
+            <div style="background_color:#eee;border-top:1.5px solid #eee;margin-top: 15%" >
+              <a id="Back" class="btn blue" style="margin-left:15px" @click="$modal.hide('demo-sign2')">BACK</a>
+              <button :disabled="check" class="btn blue" type="submit" style="margin-left:43%" @click.prevent="post()" id="SignUpFinish">SIGN UP</button>
             </div>
 
           </form>
@@ -52,14 +50,12 @@
 </template>
 
 <script>
-const MODAL_WIDTH = 656;
 import DemoSign3Modal  from './Sign3Modal.vue'
 import {AllServices} from '../MimicServices/AllServices.js'
 
 /**
  * @vue-data {string} [username=""] name of user sign up
  * @vue-data {string} [pass=""] password of user sign up
- * @vue-data {integer} [modalWidth=656] width of modal
  * @vue-data {boolean} [invalidUser=false] invaliduser
  * @vue-data {boolean} [invalidPass=false] invalidPass
  * @vue-data {boolean} [invalidUserAndPass=false] invalidUserAndPass
@@ -73,7 +69,6 @@ export default {
   },
   data(){
         return{
-          modalWidth: MODAL_WIDTH,
           username: "",
           pass: "",
           invalidUser:false,
@@ -82,9 +77,6 @@ export default {
           error: '',
           congra: ''
         }
-  },
-  created () {
-    this.modalWidth = window.innerWidth < MODAL_WIDTH ? MODAL_WIDTH / 2 : MODAL_WIDTH
   },
   computed:{
     /**
@@ -163,7 +155,14 @@ export default {
         this.invalidUserAndPass =false,
         this.error = '',
         this.congra = ''
-      }
+      },
+      close: function(){
+      this.$modal.hide('demo-sign');
+      this.$modal.hide('demo-sign2');
+      this.$modal.hide('demo-login');
+      this.$modal.hide('ForgetUser');
+      this.$modal.hide('ForgetPass');
+    }
   }
 }
 </script>
@@ -176,16 +175,26 @@ body{
   font-family:Arial ,Tohama, fantasy
 }
 $background_color: #404142;
+#closebtn
+{
+  float:right;
+  margin:7px 390px ;
+  border:0;
+  color:grey;
+  width:22px;
+  height:25px;
+  font-size:19px;
+  background-color:white;
+}
 .box {
   background: white;
   overflow: hidden;
-  width: 1000px;
-  height: 400px;
+  width: 150%;
+  height: 100%;
   border-radius: 2px;
   box-sizing: border-box;
   box-shadow: 0 0 40px black;
   color: #8b8c8d;
-  font-size: 0;
   .box-part {
     display: inline-block;
     position: relative;
@@ -193,7 +202,6 @@ $background_color: #404142;
     box-sizing: border-box;
     height: 100%;
     width: 100%;
-
   }
   .partition {
     width: 100%;
@@ -204,10 +212,9 @@ $background_color: #404142;
       padding: 10px;
       width: 100%;
       letter-spacing: 1px;
-        font-size: 14px;
-        font-weight: 500;
-        line-height: 21px;
-        font-family: "Times New Roman", Times, serif;
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 21px;
     }
     .partition-title p{
       width:65%
@@ -229,61 +236,22 @@ $background_color: #404142;
     }
 
   }
-
-  .autocomplete-fix {
-    position: absolute;
-    visibility: hidden;
-    overflow: hidden;
-    opacity: 0;
-    width: 0;
-    height: 0;
-    left: 0;
-    top: 0;
-  }
 }
-.pop-out-enter-active,
-.pop-out-leave-active {
-  transition: all 0.5s;
-}
-.pop-out-enter,
-.pop-out-leave-active {
-  opacity: 0;
-  transform: translateY(24px);
-}
-
 button.btn {
   outline: none;
-  background: white;
   border: 0;
-  padding: 10px 18px;
+  padding: 10px 25px;
   cursor: pointer;
   border-radius: 3px;
   color: white;
   box-shadow: 0 4px 8px rgba(#20a0ff, .3);
   background: #4db3ff;
   font-weight: 600;
-  border-radius: 3px;
-  min-width: 90px;
-  margin-bottom: 8px;
-  margin-top: 8px;
-  margin-right: 8px;
+  min-width: 13%;
+  margin-top: 1%;
   &:hover {
     background: #20a0ff;
-  }
-  &.green {
-    box-shadow: 0 4px 8px rgba(#50C9BA, .3);
-    background: #50C9BA;
-    &:hover {
-     background: mix(#50C9BA, black, 95%);
-    }
-  }
-  &.red {
-    box-shadow: 0 4px 8px rgba(#F21368, .3);
-    background: #F21368;
-    &:hover {
-      background: mix(#F21368, black, 95%);
-    }
-  }
+  } 
 }
 
 input[type=password],

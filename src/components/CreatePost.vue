@@ -10,7 +10,7 @@
 
       <div class="form-group dropApex" >
         <select id="selectList" class="form-control" name="category" @change="handleChange">
-          <!-- <option>choose a community</option> -->
+          <option>choose a community</option>
      
          <option v-for="apex in apexs" :key="apex.id"> 
                {{apex.name}}
@@ -118,12 +118,11 @@
 <script>
 import tab from './PostTab.vue'
 import tabs from './PostTabs.vue'
-import Vue from "vue";
+import Vue from "vue"
 import {AllServices} from '../MimicServices/AllServices.js'
 import { RichTextEditorPlugin, Toolbar, HtmlEditor } from "@syncfusion/ej2-vue-richtexteditor";
 import HomeSideBar from "./HomeSideBar.vue"
 Vue.use(RichTextEditorPlugin);
-
 /**
  * @vue-data {string} [apexComId=''] Id of apexcom which post will be created in
  * @vue-data {boolean} [enable=true]    check if post button is enable or not
@@ -139,6 +138,9 @@ Vue.use(RichTextEditorPlugin);
  */
 
 export default {
+  props:{
+    EditData:{}
+  },
    components:{
 
     'SideBar':HomeSideBar,
@@ -161,7 +163,7 @@ export default {
         token:'',
         apexComId:'',
         bodyPost:'',
-        imgName:'',
+        avatar:'',
         title:'',
         apexs:[],
         image: '',
@@ -205,8 +207,13 @@ var sel = document.getElementById('selectList');
 
 var opt = sel.options[sel.selectedIndex];
 this.indx=sel.selectedIndex;
+this.Enable();
+this.apexComId=this.apexs[this.indx-1].id;
+
+//alert(this.apexComId);
+
 // display value property of select list (from selected option)
-console.log(this.indx);
+//console.log(this.indx);
 
 },
      /**
@@ -215,27 +222,33 @@ console.log(this.indx);
      */
 
          Enable(){
-
-	 if(document.getElementById("textsendnormal").value==="" || document.getElementById("usr").value==="")  {
+     //alert(this.indx);
+	 if(document.getElementById("textsendnormal").value==="" || document.getElementById("usr").value==="" || this.indx ==null ||this.indx==0)  {
             document.getElementById('button').disabled = true;
+            
         } else {
             document.getElementById('button').disabled = false;
-             console.log(document.getElementById('text').value);
+            this.title=document.getElementById("usr").value;
+             
         }
 
 
 
-         	 if(document.getElementById("textsend3").value==="" || document.getElementById("usr3").value==="")  {
+         	 if(document.getElementById("textsend3").value==="" || document.getElementById("usr3").value==="" || this.indx ==null ||this.indx==0)  {
             document.getElementById('button3').disabled = true;
+           
         } else {
             document.getElementById('button3').disabled = false;
+            this.videoUrl=document.getElementById("textsend3").value;
+            this.title=document.getElementById("usr3").value;
         }
 
 
-        if(this.imagable===false|| document.getElementById("usr2").value==="")  {
+        if(this.imagable===false|| document.getElementById("usr2").value==="" || this.indx ==null ||this.indx==0)  {
             document.getElementById('button2').disabled = true;
         } else {
             document.getElementById('button2').disabled = false;
+            this.title=document.getElementById("usr2").value;
         }
 
 
@@ -268,14 +281,16 @@ console.log(this.indx);
           alert('Select an image');
           return;
         }
-        var img = new Image();
+       // var img = new Image();
         var reader = new FileReader();
         var vm = this;
 
         reader.onload = function(e) {
           vm.image = e.target.result;
-          this.imgName=vm.image; // NOT SURE YET IF THIS WHAT THE API DOC WANT
-          console.log(this.imgName);
+          
+          this.avatar=vm.image; 
+        
+         // console.log(this.imgName);
         }
         reader.readAsDataURL(file);
 
@@ -294,25 +309,55 @@ console.log(this.indx);
      */
 
     submitPost(){
+       if(this.normal){
+         this.bodyPost=document.getElementById('textsendnormal').value;
+       }
+      else{
+         this.bodyPost=document.getElementById('textsendrte-view').value;
+      }
 
-     
-      this.bodyPost=document.getElementById('textsendnormal').value;
-      
-       this.$emit('PostEmit',this.bodyPost);
-        this.$router.push('/ShowCreatedPost');
-      
-       this.videoUrl=document.getElementById('textsend3').value;
-       this.apexComId=apexs[this.indx].id;
-      // this.bodyPost=document.getElementById('textsendnormal').value;
-       this.imgName=document.getElementById('imgId').src;
-       this.title=document.getElementById("usr").value;
-      //  this.$emit('Post',this.title,this.bodyPost,this.$localStorage.get('token'));
        
-       // this.$router.push('/ShowCreatedPost');
+    // console.log(this.bodyPost);
+      if(this.imagable){
+      this.imgName=document.getElementById('imgId').src;
+     // console.log(this.imgName);
+      }
+     
+      
+     
+     
+      
+       // this.videoUrl=document.getElementById('textsend3').value;
+        //console.log(this.videoUrl);
+      
+
+      //console.log(this.videoUrl);
+       
         
+           
+            
+          //alert(this.indx);
+    
+     // console.log(this.apexComId);
+      // this.bodyPost=document.getElementById('textsendnormal').value;
+     //  alert('gooa create post com');
+
+         
+     
+   
+      // console.log(this.title);
+     
+      //  this.$emit('Post',this.title,this.bodyPost,this.$localStorage.get('token'))
+
+      // this.$emit('PostEmit',this.bodyPost);
+     // alert('قبل السيرفر');
      
       AllServices.submit(this.videoUrl,this.apexComId,this.bodyPost,this.imgName,this.isLocked,this.$localStorage.get('token'));
-  
+     //alert('هعمل ايمت اهو ');
+ 
+      this.$emit('PostEmit',this.title,this.bodyPost,this.imgName,this.videoUrl,this.$localStorage.get('userName'),this.apexs[this.indx-1].name);
+      this.$router.push('/Submit');
+     
     }
 
     },
@@ -333,9 +378,15 @@ created(){
       {
         if(data)
         {
-          this.apexs = data
+          this.apexs = data;
+          
         }
       });
+
+//       if(EditData.canEdit){
+// // document.getElementById("textsendnormal").value=EditData.content;
+//         alert('edit now');
+//       }
   
 }
 
@@ -355,16 +406,15 @@ margin-left:55%;
 .Cpost{
 
     width: 30%;
-    margin-block-end: -3%;
-    margin-top: 6.5%;
     margin-left: 5.5%;
 
 }
 
 .a{
-
-    margin-bottom: 5%;
-
+    padding-top: 6%;
+    border-bottom: 1px solid rgb(237, 239, 241);
+    color:black;
+ 
 }
 
 .form-control{
@@ -561,6 +611,7 @@ input[type="file"] {
   width: 100%;
   margin-left: 20%;
   align:center;
+  
 }
 .check{
 
@@ -608,25 +659,73 @@ height: 30%;
     
    
 }
-/* .e-richtexteditor .e-rte-toolbar.e-control[class*='e-toolbar'], .e-richtexteditor .e-rte-toolbar.e-toolbar.e-extended-toolbar.e-control[class*='e-toolbar'] {
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    width:70% !important;
-    max-width: 70%;
-} */
-/* .e-richtexteditor .e-rte-toolbar, .e-richtexteditor .e-rte-toolbar.e-toolbar.e-extended-toolbar{
+@media (max-width:959px){
+ .bodyPost{
+      width:100%;
+      margin-left:0%;
+      
+  }
+ .form-control{
+      width:100%;
+      
+      
+  }
+ .btnImage{
+  /* width:30%; */
+  font-size: 50%;
+  
+}
 
- width:70% !important;
+
+} 
+
+@media (max-width:1300px){
+   .form-control{
+      width:60%;
+      
+      
+  }
+ .imgBox{
+   width: 50%;
+ }
+  
+}
+
+@media (max-width:2000px){
+
+  .drop1 {
+  
+  padding-top: 0%;
+  margin-inline-start: 0%;
 
 }
-.e-toolbar{
-  width: 70% !important;
-
+@media (max-width:200px){
+  
+ .btnImage{
+       margin: -32%;
+       font-size: 30%;
 }
-#textsend_toolbar .e-rte-toolbar .e-control .e-toolbar .e-lib .e-extended-toolbar .e-keyboard{
+  
+}
+@media (max-width:100px){
+  
+ .btnImage{
+       margin: -63%;
+      font-size: 10%;
+}
+  
+}
 
-  width: 70% !important;
-} */
 
+@media (max-width:115px){
+  
+ .btnImage{
+      padding:0%;
+      font-size: 10%;
+  
+}
+  
+}
+}
 
 </style>

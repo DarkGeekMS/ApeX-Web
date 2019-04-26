@@ -6,38 +6,26 @@
       <br/>  <br/>  
      <p > Have an idea for a new community? </p>
 
-     <button  style=" cursor: no-drop" type="button" class="btn btn-info" data-toggle="button" aria-pressed="false" autocomplete="off">CREATE COMMUNITY</button>
+     <button  style=" cursor: no-drop" type="button" class="btn btn-info" data-toggle="button" aria-pressed="false" autocomplete="off" @click="create()">CREATE COMMUNITY</button>
   </div>
 </template>
 
 <script>
-  /**
-  * @vue-data {boolean} [login=false] if user is logged in 
-  */
+import {AllServices} from '../MimicServices/AllServices.js'
+
   export default {
 
     data () {
       return {
-        login: false
       }
     },
-    created () {
-      setInterval(() => {
-        this.login = this.$localStorage.get('login')
-      }, 1000)
-    },
     methods:{
-      /**
-       * if user is logged in , can go to create post or create community   
-      */
-      post: function(){
-        if( this.$localStorage.get('login') )
-        {
-          this.$router.push('/Submit');
-        }
-        else{
-           this.$modal.show('demo-login');
-        }
+      create: function() {
+        var type = AllServices.userType().then((data)=>{
+          if(data.type == 1){
+            this.$router.push({ name:'CreateApexCom'} )
+          }
+        })
       }
     }
 }
@@ -65,8 +53,8 @@ button{
   font-weight: 500;
   font-size: 17px;
   margin-left: 9%;
-  margin-top:5%;
-  border-radius: 20%;
+  margin:5% 10%;
+  border-radius: 15px;
 }
 .think{
   width:20%;
@@ -76,7 +64,7 @@ button{
 
 #main{
   float:right;
-  width:20%;
+  width:300px;
   max-height: 50%;
   color:black;
   background-color: white;
@@ -85,7 +73,7 @@ button{
   margin-right: 15px;
 } 
 
-@media(max-width:960px){
+@media(max-width:933px){
   #main{
     display:none
   }

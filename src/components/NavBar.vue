@@ -1,6 +1,5 @@
 <template>
 <div>
-
  <demo-login-modal> </demo-login-modal>
  <demo-sign-modal> </demo-sign-modal>
  <nav class="navbar navbar-expand-lg navbar-light navbar-fixed-top" id="mainNav">
@@ -28,7 +27,7 @@
         <li class="divider"></li>
 
         <li class="dropdown-header" v-show="this.$localStorage.get('login')">MY COMMUNITIES</li>
-            <li v-show="log" v-for="apex in apexs" :key="apex.id" ><router-link to="{ name:'ApexCom', params: {ApexComName:apex.name} }" > {{apex.name}} </router-link></li> 
+            <li v-show="log" v-for="apex in apexs" :key="apex.id" ><router-link :to="{ name:'ApexCom', params: {ApexComName:apex.name} }" > {{apex.name}} </router-link></li> 
       </ul>
     </div>  
   
@@ -54,10 +53,10 @@
 
     <div class="btn-toolbar tool2" role="toolbar" v-show="this.$localStorage.get('login')"> 
       <div class="btn-group">
-      <button type="button" class="btn btn-default b4"> 
+      <button type="button" class="btn btn-default b4" @click="$router.push({ name:'Messages'})"> 
       <i class="glyphicon glyphicon-envelope"></i>
       </button> 
-      <button type="button" class="btn btn-default b5"> 
+      <button type="button" class="btn btn-default b5" @click="$router.push('/Submit')"> 
       <i class="glyphicon glyphicon-edit"></i>
       </button>
       </div> 
@@ -112,7 +111,7 @@ import $ from'jquery/dist/jquery.min.js'
   export default {
     components:{
       DemoLoginModal,
-      DemoSignModal
+      DemoSignModal,
     },
     data () {
       return {
@@ -255,25 +254,22 @@ input{
 }
 .log1{
   width:45%;
-  padding-left: 5px;
+  padding-right: -5px;
   margin:4px 1%;
-
 }
-/*@media(max-width:887px){
-  .has-search, div.sel{
-    width:30%;
+@media(max-width:106px){
+  div .sel{
+    display: none
   }
-} */
-@media(max-width:57px){
+}
+@media(max-width:232px){
   div input,.has-search .form-control-feedback {
     display: none
   }
-  div .sel .caret {
-    display: none
-  }
+  
 }
-@media(max-width:100px){
-  div .log {
+@media(max-width:319px){
+  div .log, div .sel .caret {
     display: none
   }
 }
@@ -290,11 +286,6 @@ input{
     width:110px;
   }
 }
-/*@media(max-width:650px){
-  div .tool2{
-    display:none
-  }
-} */
 @media(max-width:997px){
   div #selectted{
     display: none;

@@ -69,11 +69,13 @@ else{this.locked=true;
 <style lang="scss" scoped >
 #PopupModal{
     overflow: scroll;
+  background:#333333;
 }
 .postContent{
 overflow: scroll;
 height: 100%;
 width: 100%;
+background-color: #DAE0E6; 
 }
 .cmt{
 // padding-top: 3%;
@@ -81,17 +83,18 @@ width: 100%;
  padding-left: 10%;
  margin-top: 23%;
  width: 100%;
+ 
 }
 .sidebar{
-  width:25%;
-  height: auto;
-  margin:8%;
-  margin-left: 3%;
-  margin-right: 6%;
-  /* background-color:white; */
-   float:right;
-  padding-top: 0%;
-   display: inline-block;
+  // width:25%;
+  // height: auto;
+  // margin:8%;
+  // margin-left: 3%;
+  // margin-right: 6%;
+  // /* background-color:white; */
+  //  float:right;
+  // padding-top: 0%;
+  //  display: inline-block;
 
 }
 
@@ -104,7 +107,13 @@ width: 100%;
   margin-top: 0%;
   float:left;
    display: inline-block;
+ 
 
+
+}
+#modalView{
+
+    
 }
 
 

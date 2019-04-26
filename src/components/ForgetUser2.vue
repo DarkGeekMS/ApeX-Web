@@ -1,7 +1,5 @@
 <template>
-<modal name="ForgetPass" transition="pop-out" width="50%" height="70%" :clickToClose="false">
-  <ResetCode></ResetCode>
-<!--  <demo-login-modal> </demo-login-modal> -->
+<modal name="ForgetUser2" transition="pop-out" width="50%" height="70%" :clickToClose="false" @before-open="beforeOpen">
   <div class="box">
     <div class="box-part" id="bp-right"></div>
 
@@ -11,31 +9,18 @@
         <button class="lead" id="closebtn" @click="close()"> X</button>
 
         <div class="partition-title">
-        <h1> Reset your password </h1>
-        <p>
-            Don't worry! You may have forgotten your password, but we can help you out. Enter your username below and we'll email you a link to reset your password.
-        </p>
+        <h1> Please set your code here to continue </h1>
         </div>
 
         <div class="partition-form">
 
-            <input type="text" class="form-control" name="username"
-            placeholder="USERNAME" v-model="username" v-on:keyup="restart()" required autofocus>
+            <input type="text" class="form-control" name="code"
+            placeholder="CODE" v-model="code" v-on:keyup="restart()" required autofocus>
 
-            <span id="EmailError" class="lead"> {{errorU}}  </span>
-
-
-            <input id="Email" type="email" class="form-control" name="email"
-              placeholder="EMAIL" v-model="email" v-on:keyup="restart()" required autofocus>
+            <button id="Next" class="btn blue" style="display:block" @click.prevent="post()">SEND</button>
+            <span class="lead"> {{error}}  </span>
             
-            <button id="Next" class="btn blue" style="display:block" @click.prevent="post()">EMAIL ME</button>
-            <span class="lead"> {{validate}}  </span>
-            
-            <span id="EmailError" class="lead"> {{errorE}}  </span>
-
             <p class = "lead" style = "fontSize:15px; color:blue;" > {{ congra }}  </p>
-            <a id="forgetname" class="btn btn-link" @click="$modal.show('demo-login')"> LOG IN  </a>
-           <a id="forgetpass" class="btn btn-link" @click="$modal.show('demo-sign')"> SIGN UP </a>
 
         </div>
 
@@ -46,8 +31,6 @@
 </template>
 
 <script>
-//import DemoLoginModal  from './LoginModal.vue'
-import ResetCode  from './ResetCode.vue'
 import {AllServices} from '../MimicServices/AllServices.js'
 
 /**
@@ -55,75 +38,66 @@ import {AllServices} from '../MimicServices/AllServices.js'
  * @vue-data {string} [error=""] error value
  */
 export default {
-  name: 'ForgetPass',
-  components:{
-  //   DemoLoginModal,
-     ResetCode
-  },
+  name: 'ForgetUser2',
   data(){
-      return{
-        username:'',
-        email: '',
-        errorE: '',
-        errorU:'',
-        validate:'',
-        congra:''
-      }
-    },
-  created () {
-    this.errorU = '',
-    this.errorE ='',
-    this.validate='',
-    this.congra=''
+    return{
+      code:'',
+      pass:'',
+      error:'',
+      congra:''
+    }
   },
   methods:{
-    /**
-     * check out if the email is valid or not
-     * @param {string} [email] - email value of the user   
-    */
-    validateEmail: function(email) {
-      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-    },
     /**
      * check out the value of email is empty or invalid, and generate an error in this case, if not show the second modal and send value   
     */
     post: function(){
-      if(this.username == '' || this.username.indexOf(' ') > 0)
+      if(this.code == '')
       {
-        this.errorU = 'Username must be between 3 and 17 characters without any space'
-      }
-      else if(this.email == '')
-      {
-        this.errorE = 'Please enter an email address'
-      }
-      else if(!(this.validateEmail(this.email)))
-      {
-        this.errorE = 'That email is invalid'
+        this.error = 'Please enter the code'
       }
       else
       {
         if(AllServices.getState()){
-          var check = AllServices.forgetPass(this.username, this.email);
+          var check = AllServices.forgetUser2(this.code);
           if(check)
           {
-            this.congra = "If the provided email address matches that account's verified email address, you'll receive a code with the reset link shortly." ;
-            setTimeout(() =>this.$modal.show('ResetCode') , 4000)
+            console.log(check);
+            this.congra = "your code is correct, Now your are logged in " ;
+            var check2 = AllServices.logIn(check, this.pass);
+            if(check2)
+            {
+              this.congra = 'You are now logged in. You will soon be redirected' ;
+            }
+            else{
+                this.error =  this.$localStorage.get('error');
+            }
+            setTimeout(() =>this.close() , 2000);
 
-          }
+            }
           else{
-            this.validate =  this.$localStorage.get('error');
+            this.error =  this.$localStorage.get('error');
           }
         }
         else {
 
-         AllServices.forgetPass(this.username, this.email).then((data) => {
+         AllServices.forgetUser2(this.code).then((data) => {
          if(data)
           {
-            this.congra = "If the provided email address matches that account's verified email address, you'll receive a code with the reset link shortly." ;
-            setTimeout(() =>this.$modal.show('ResetCode') , 4000)
+            this.congra = "your code is correct, Now your are logged in " ;
+            AllServices.logIn(data, this.pass).then((data) => {
+            if(data)
+              {
+                this.congra = 'You are now logged in. You will soon be redirected' ;
+              }
+              else{
+                  this.error =  this.$localStorage.get('error');
+              }
+            })
+            setTimeout(() =>this.close() , 2000);
           }
           else{
-            this.validate =  this.$localStorage.get('error');
+            this.error =  this.$localStorage.get('error');
           }
          })
         }
@@ -131,14 +105,16 @@ export default {
     },
     restart: function()
     {
-      this.errorU = '',
-      this.errorE ='',
-      this.validate='',
+      this.error = '',
       this.congra=''
     },
     close: function(){
+      this.$modal.hide('ForgetUser2');
       this.$modal.hide('ForgetPass');
       this.$modal.hide('demo-login');
+    },
+    beforeOpen:function (event) {
+      this.pass = event.params.pass;
     }
   },
 }
@@ -244,7 +220,7 @@ button.btn {
 input {
 display: block;
 box-sizing: border-box;
-margin-bottom: 4px;
+margin: 5px;
 width: 90%;
 font-size: 12px;
 line-height: 2;

@@ -1,35 +1,35 @@
 <template>
-<div class="UserSettings">
-<div class='settings'>
-  <ChangePass></ChangePass>
-  <DelAcc></DelAcc>
-<h2 class="page-header">User settings</h2>
-<h6  class="page-header"><b>ACCOUNT PREFERENCES</b></h6>
-<div>
-  <h2><button  id ="ChangeButton" type="button"  @click="showpass()">CHANGE</button></h2>
-  <h2>Change password</h2>
-  <h6>Password must be at least 6 characters long</h6>
-</div>
-<h6  class="page-header"><b>PROFILE INFORMATION</b></h6>
-<div>
-  <h2>Email Address</h2>
-  <h6>{{email}}</h6>
-  <div class="partition" id="partition-register">
-    <div class="partition-form">
-      <form autocomplete="false">
-        <input id="n-password2" type="password" placeholder="Password">
-        <input id="n-email" type="text" placeholder="Email">
-      </form>
-    </div>
-  </div>
+  <div class="ApexComm">
 
-  <!-- <h2><button  id ="ChangeButton" type="button"  @click="showmail()">CHANGE</button></h2> -->
-<div class="noti">
-  <label class="switch"><input type="checkbox"><span class="slider round"></span></label>
-  <h2>Allow Notifications</h2>
+<div class="CreateApexCom">
+<!-- here -->
+
+<h2 class="page-header">Create Apex Community</h2>
+
+
+
+
+<!-- community name -->
+<div class="form-group">
+  <h6 class="page-header" ><b>Write community name</b></h6>
+  <input type="text"  id="name"  placeholder="ApexCom Name" v-model="name" required></input>
 </div>
 
 
+
+<!-- description -->
+<div class="form-group">
+  <h6 class="page-header"><b>Write community Description</b></h6>
+  <textarea class="form-control" id="Description" placeholder="ApexCom Description" name="description" rows="2" v-model="description" required></textarea>
+</div>
+
+<!-- rules -->
+<div class="form-group">
+  <h6 class="page-header"><b>Enter Community Rules</b></h6>
+  <textarea class="form-control" id="rules" placeholder="ApexCom Rules" name="rule" rows="3" v-model="rule" required></textarea>
+</div>
+
+<!-- image update -->
 <div class="upload photos">
   <div class="samerow">
     <div class="box" @dragover.prevent @drop="onDrop">
@@ -68,86 +68,73 @@
   </div>
 </div>
 
-<button :disabled="check"  type="submit" style="margin-left:450px" @click.prevent="post()" id="ChangeButton">Save</button>
-</div>
-<h6  class="page-header"><b>DEACTIVATE ACCOUNT</b></h6>
-<div class="">
-</div>
+<!-- create bottum -->
+<button  type="submit" style="margin-left:450px"  id="Button" @click="CreateApex()">Create</button>
 
-<div class="s19ceyn0-2 htFOkz">
-  <button class="s19ceyn0-1 knawbn" @click="showDel()">
-    <svg class="s19ceyn0-0 iFmWTj" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-      <path d="M16.5,2H12.71l-.85-.85A.5.5,0,0,0,11.5,1h-3a.5.5,0,0,0-.35.15L7.29,2H3.5a.5.5,0,0,0-.5.5v1a.5.5,0,0,0,.5.5h13a.5.5,0,0,0,.5-.5v-1A.5.5,0,0,0,16.5,2Z"></path>
-      <path d="M16.5,5H3.5a.5.5,0,0,0-.5.5v12A1.5,1.5,0,0,0,4.5,19h11A1.5,1.5,0,0,0,17,17.5V5.5A.5.5,0,0,0,16.5,5ZM6.75,15.5a.75.75,0,0,1-1.5,0v-7a.75.75,0,0,1,1.5,0Zm4,0a.75.75,0,0,1-1.5,0v-7a.75.75,0,0,1,1.5,0Zm4,0a.75.75,0,0,1-1.5,0v-7a.75.75,0,0,1,1.5,0Z"></path>
-    </svg>deactivate account</button>
-  </div>
+<h3 v-if="error">the ApexCom is created successfully</h3>
+<h5 v-if="error">To Go to your new ApexCom , Press the below buttom </h5>
 
-
-
+<button  type="submit" style="margin-left:450px"  id="Button" v-if="error">Go to your new ApexCom</button>
 
 
 </div>
-
 </div>
 </template>
 
 <script>
-
-
-import DelAcc from './UserSettingsModals/DeleteAcc.vue'
-import ChangePass from './UserSettingsModals/ChangePass.vue'
-import UserProfileSideBar from './UserProfileSideBar.vue'
-
 import {AllServices} from '../MimicServices/AllServices.js'
 
-
 export default {
-  components:{
-    DelAcc,
-    ChangePass,
-    UserProfileSideBar
-  },
   data(){
     return{
-        image:'',
-    email:this.$localStorage.get('emailVal'),
-  userName:'marc',
-  karmaCount:1,
-//    image:'http://bashkatibnews.com/contents/article/515_lybfjrmf.jpg',
-    cakeDay:55,
-    blockList:[]
-    }
+    name:"",
+    description:"",
+    rule:"",
+    error:false
+  }
+},
+computed:{
+},
+methods:{
+  CreateApex:function() {
+    if(this.name!=""&&this.description!=""&&this.rule!=""){
+    AllServices.CreateApexCom(this.name,this.description,this.rule,"","").then((data) => {
+     this.error= data;
+     this.ErrorCheck();
+   });
+ }
   },
-  methods:{
-    showpass(){
-      this.$modal.show('changepass')
-    },
-    showDel()
-    {
-    this.$modal.show('DeleteAcount')
-    },
-
-  },
-  mounted:function () {
-    AllServices.getPrefs();
-    AllServices.updatePrefs();
-    AllServices.changePass();
-    },
+  ErrorCheck:function(){
+    // if(this.error == true){
+        alert(this.error);
+     // this.$router.push({ path: '/HomePage'});
+     // location.replace('/HomePage')
+    // params: { apexComName: 'this.name' } })
+    // }
+    // else{
+      // alert("Noooooo")
+    // }
+}
+}
 }
 </script>
 
 <style scoped>
-.settings{
+.CreateApexCom{
   margin-top: 5%;
   margin-left: 10%;
   margin-right: 40%;
   background:white;
 }
 
+.ApexComm{
+  width: 100%;
+  height: 100%;
+  background:white;
+}
 
 
-
-#ChangeButton{
+#Button{
 
 box-sizing: border-box;
 text-align: center;
@@ -168,10 +155,7 @@ padding: 3px 16px;
 border-color: rgb(0, 121, 211);
 }
 
-.UserSettings{
-width: 100% ;
-background: white;
-}
+
 
 .view {
     -webkit-box-align: center;
@@ -234,46 +218,15 @@ background: white;
 
 
 
-.htFOkz {
-    display: flex;
-    -webkit-box-pack: end;
-    justify-content: flex-end;
+
+
+
+button{
+/* background-color: white; */
+/* color: blue; */
+float: right;
+display: inline-block;
 }
-
-
-.knawbn {
-    display: flex;
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.5px;
-    line-height: 24px;
-    text-transform: uppercase;
-    color: rgb(255, 88, 91);
-}
-
-
-
-.iFmWTj {
-    width: 20px;
-    margin-right: 4px;
-    fill: rgb(255, 88, 91);
-}
-
-
-
-
-
-button {
-    background: transparent;
-    border: none;
-    color: inherit;
-    cursor: pointer;
-    padding: initial;
-    float: right;
-    display: inline-block;
-}
-
-
 .noti{
 display: inline;
 

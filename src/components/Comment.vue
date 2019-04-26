@@ -282,6 +282,7 @@ guestButtons:function(){
     position: static;
     width:53%;
     float:left;
+    background:white;
 }
 
 

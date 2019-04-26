@@ -10,12 +10,12 @@ export  const MimicDisplayPosts =new Vue({
             {
               id:'555',
               posted_by:'Nada',
-              apex_id:'555',
-              title:'dj',
-              content:'Experience enjoyable JavaScript development with WebStorm. With smart code completion, safe refactoring, and first-class support for Node.js, Angular and React. Download free trial 😀😂🍔😍',
+              apex_id:'spacetoon',
+              title:'Kannnnaassss😍',
+              content:'Experience enjoyable JavaScript development with Kannnaasss. With smart code completion, safe refactoring, and first-class support for Node.js, Angular and React. Download Kannnaasss 😀😂🍔😍',
               locked:false,
               commenets_count:5,
-              votes:9,
+              votes:1000,
               img:'',
               videolink:'https://www.youtube.com/embed/Va0Rq147SRU',
               created_at:"2019-03-23 17:20:45",
@@ -23,12 +23,38 @@ export  const MimicDisplayPosts =new Vue({
               apex_com_name:"health care",
               post_writer_user:"double"
 
+            },
+            
+            {
+              id:'111',
+              posted_by:'Nourhan',
+              votes:150,
+              apex_id:'cinema',
+              title:'Avengers Endgame😲',
+              content:'Software costs more to maintain than it does to develop. For systems with a long life, maintenance costs may be several times development costs😮 ',
+              videolink:'',
+              img:'https://cnet3.cbsistatic.com/img/xLgPeuq6CW9A2N2V2kKmhMT6h2o=/1092x0/2019/03/14/dd4d8d9c-5f16-4f6b-a7d8-65a00d095c2c/avengers-endgame-poster-square-crop.jpg'
+            },
+            {
+              id:'333',
+              posted_by:'Ayat',
+              apex_id:'nature',
+              title:'sea',
+              content:'I love javascript ,vue ,html ,css 🐸🐸🐸',
+              videolink:'',
+              img:'https://cdn.pixabay.com/photo/2016/04/15/04/02/water-1330252__340.jpg',
+              created_at:"2019-03-23 17:20:45",
+              updates_at:null,
+              apex_com_name:"health aware",
+              post_writer_user:"Nada",
+              votes:-1
             }
             ,{
               id:'444',
               posted_by:'marc',
+              votes:0,
               apex_id:'444',
-              title:'dj',
+              title:'korty po3po3',
               content:"Software engineering is concerned with theories, methods and tools for professional software development.software costs often dominate computer system costs. the costs of software on a PC are often greater than the hardware cost 🤔.",
               created_at:"2019-03-23 17:20:45",
               updates_at:null,
@@ -36,23 +62,13 @@ export  const MimicDisplayPosts =new Vue({
               post_writer_user:"marc",
               videolink:"" ,
               img:'http://bashkatibnews.com/contents/article/515_lybfjrmf.jpg'
-            },{
-              id:'333',
-              posted_by:'Ayat',
-              apex_id:'333',
-              title:'dj',
-              content:'I love javascript ,vue ,html ,css 🐸🐸🐸',
-              videolink:'',
-              img:'https://i.ytimg.com/vi/inYarqDCCGA/maxresdefault.jpg',
-              created_at:"2019-03-23 17:20:45",
-              updates_at:null,
-              apex_com_name:"health aware",
-              post_writer_user:"Nada"
-            },{
+            }
+            ,{
               id:'222',
               posted_by:'Double',
+              votes:0,
               apex_id:'weather forecast',
-              title:'dj',
+              title:'paparro fille',
               content:`Partly cloudy in the evening, becoming cloudy overnight. Low around 55 F. Winds S at 5 to 10 mph
 
               Sun may give way to rain for this evening, with a 10 percent chance of precipitation and a low of 50 degrees. Winds are expected to remain calm at 9 mph
@@ -67,14 +83,6 @@ export  const MimicDisplayPosts =new Vue({
               apex_com_name:"leader care",
               post_writer_user:"SHAWKY",
               video_url:''
-            },{
-              id:'111',
-              posted_by:'Nourhan',
-              apex_id:'222',
-              title:'anime',
-              content:'Software costs more to maintain than it does to develop. For systems with a long life, maintenance costs may be several times development costs🍔 😂 ',
-              videolink:'',
-              img:''
             },
           ];
           var promise1 = new Promise(function(resolve, reject) {

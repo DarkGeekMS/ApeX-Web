@@ -6,7 +6,8 @@ export  const MimicAuth =new Vue({
       email: 'ayat.mostafa998@gmail.com',
       username: 'ayatmostafa',
       password: '0000000',
-      token: '01'
+      token: '01',
+      code: '1234'
     }
   },
   methods:{
@@ -81,7 +82,7 @@ export  const MimicAuth =new Vue({
         }
       }
       else{
-      //  var self = this;
+        var self = this;
         return axios.post(this.$localStorage.get('baseUrl') + 'api/sign_in', {
             username : user,
             password : pass
@@ -119,11 +120,117 @@ export  const MimicAuth =new Vue({
           }).then(response => {
              return true;
           }).catch(function () {
-            self.$localStorage.set('error','Username is not found');
+             self.$localStorage.set('error','Username is not found');
              return false;
           });
       }
     },
+    forgetPass2: function(code,mimic)
+    {
+      if(mimic == true)
+      {
+        if( code == this.code )
+        {
+          return true;
+        }
+        else
+        {
+          this.$localStorage.set('error','Invalid code');
+          return false;
+        }
+      }
+      else{
+        var self = this;
+        return axios.post(this.$localStorage.get('baseUrl') + 'api/check_code', {
+            username : code
+          }).then(response => {
+             return true;
+          }).catch(function () {
+            self.$localStorage.set('error','Invalid code');
+             return false;
+          });
+      }
+    },
+    forgetPass3: function(pass,mimic)
+    {
+      if(mimic == true)
+      {
+        return true;
+      }
+      else{
+        var self = this;
+        return axios.post(this.$localStorage.get('baseUrl') + 'api/change_password', {
+            password : pass
+          }).then(response => {
+             return true;
+          }).catch(function () {
+            self.$localStorage.set('error','Invalid password');
+             return false;
+          });
+      }
+    },
+
+    ForgetUser: function(pass,email,mimic)
+    {
+      if(mimic == true)
+      {
+        if( pass == this.password && email == this.email)
+        {
+          return true;
+        }
+        else
+        {
+          this.$localStorage.set('error','There was an error sending your request. Please try again');
+          return false;
+        }
+      }
+      else{
+        var self = this;
+        return axios.post(this.$localStorage.get('baseUrl') + 'api/mail_verify', {
+            password : pass,
+            email : email
+          }).then(response => {
+             return true;
+          }).catch(function () {
+            self.$localStorage.set('error','There was an error sending your request. Please try again');
+             return false;
+          });
+      }
+    },
+    ForgetUser2: function(code,mimic)
+    {
+      if(mimic == true)
+      {
+        if( code == this.code )
+        {
+         /* var name = this.username;
+          var promise1 = new Promise(function(resolve){
+            setTimeout(function() {
+              resolve(name);
+            }, 300)
+        }); */
+        return this.username
+        }
+        else
+        {
+          this.$localStorage.set('error','There was an error sending your request. Please try again');
+          return false;
+        }
+      }
+      else{
+        var self = this;
+        return axios.post(this.$localStorage.get('baseUrl') + 'api/check_code', {
+            code : code,
+           // email : email
+          }).then(response => {
+             return response.data.username;
+          }).catch(function () {
+            self.$localStorage.set('error','There was an error sending your request. Please try again');
+             return false;
+          });
+      }
+    },
+
     getApex: function(mimic)
     {
       if(mimic ==  true)
