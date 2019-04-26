@@ -195,8 +195,12 @@ addOrDeleteModerator:function(userName,apexComName){
   var data=MimicApexCom.addOrDeleteModerator(this.mimic,userName,apexComName);
   return data;
 },
-reviewReports:function(apexComName){
+reviewReportsAC:function(apexComName){
   var data=MimicApexCom.reviewReports(this.mimic,apexComName);
+  return data;
+},
+reviewReportsUP:function(userName){
+  var data=MimicUserProfile.reviewReports(this.mimic,userName);
   return data;
 },
 ignoreReport:function(id){

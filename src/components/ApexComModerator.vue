@@ -45,10 +45,7 @@ components:{
 
 <style scoped>
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-
+  width: 70%;
   /* padding: 0;
   margin: 0;
   list-style: none;
