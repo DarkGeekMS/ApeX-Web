@@ -12,13 +12,13 @@
       </ul>
     </div>
     <div v-if="this.$route.name == 'Search'" v-show="exist" id="DisplayPosts">  
+      <Sort class="sort" :style="{width:wid, marginTop:'2%'}" ></Sort> 
       <div id="PostContainer" v-for="onePost in posts" :key="onePost.name">
          <post :postData="onePost" v-on:showUp="showPost"></post>
       </div>
       <DemoOnePost id="PostModal" :onePostData="postInfo" ></DemoOnePost>
     </div> 
-    <div v-if="this.$route.name == 'Search'" v-show="!exist" id="subDiv"> {{error}} ''{{this.$localStorage.get('search')}}'' 
-    </div> 
+    <div v-if="this.$route.name == 'Search'" v-show="!exist" id="subDiv"> {{error}} ''{{this.$localStorage.get('search')}}'' </div> 
     <SearchSideBar v-show="login"></SearchSideBar>
     <router-view></router-view>
     
@@ -29,6 +29,7 @@
 <script>
 import post from "./Post.vue"
 import DemoOnePost from './DisplayOnePost.vue'
+import Sort from './Sort.vue'
 import SearchSideBar from './SearchSideBar.vue'
 import {AllServices} from '../MimicServices/AllServices.js'
 /**
@@ -40,8 +41,8 @@ export default {
   components:{
     'post':post,
     'DemoOnePost':DemoOnePost,
-    'SearchSideBar': SearchSideBar
-
+    'SearchSideBar': SearchSideBar,
+    'Sort':Sort
   },
   data(){
     return{
@@ -51,15 +52,21 @@ export default {
       error: '',
       exist:true,
       postInfo:'',
-
+      wid:'80%'
     }
   },
   created(){
     setInterval(() => {
         this.searchValue = this.$localStorage.get('search');
         this.login = this.$localStorage.get('login');
+        var mq = window.matchMedia( "(max-width: 933px)" );
+        if (mq.matches) {
+         this.wid = '158%'
+        }   
+        else{
+          this.wid = '80%'
+        }
     }, 1000)
-    
   },
   beforeUpdate()
   {
@@ -149,7 +156,7 @@ export default {
 }
 
 #PostContainer{
-  margin-top: 3%;
+  margin-top: 2%;
 
 }
 #DisplayPosts{
@@ -171,14 +178,21 @@ export default {
   font-weight: 600
 
 }
+.sort{
+  padding-top:10px;
+  margin-left:23%;
+}
 @media(max-width:1250px){
   #subDiv{
     width:62%;
   }
 }
-@media(max-width:945px){
-  #subDiv{
+@media(max-width:933px){
+  #subDiv, {
     width:95%;
+  }
+  div .sort{
+    margin-left: 5%
   }
 }
 @media(max-width:303px){

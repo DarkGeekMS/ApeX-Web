@@ -19,7 +19,7 @@ export default[
       [
         {path:'/' ,name:'ApexComPosts',component:ApexComPosts},
         {path:'AddModerators',name:'AddModerators',component:ApexComModerator,props:true ,children :[
-          {path:'search',name:'Moderators', component:ApexComAddModerator,props:true },
+          {path:'searchUser',name:'Moderators', component:ApexComAddModerator,props:true },
         ]},
         {path:'ApexPosts',name:'Posts',component:ApexComPosts},
         {path:'ApexSubscribers',name:'Subscribers',component:ApexComSubscribers,props:true},

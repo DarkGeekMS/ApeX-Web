@@ -334,7 +334,7 @@ export default {
   margin-top: 4%;
 }
 .username{
-  color: black;
+  color: #7c7c7c;
   font-size: 16px;
 }
 .box{
@@ -408,7 +408,7 @@ export default {
   width: 100%;
 }
 .font{
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 500;
   color:#222;
 }

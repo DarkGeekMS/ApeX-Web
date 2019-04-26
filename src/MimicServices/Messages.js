@@ -21,7 +21,7 @@ export  const MimicMessage =new Vue({
       }
       else
       {
-        return axios.post('http://35.232.3.8/api/compose', {
+        return axios.post(this.$localStorage.get('baseUrl') + 'api/compose', {
             reciever:rec,
             subject:title,
             content: cont,
@@ -40,18 +40,18 @@ export  const MimicMessage =new Vue({
     deleteMessage: function(ID,mimic){
       if(mimic == true){
 
-          
+
             var promise1 = new Promise(function(resolve, reject) {
                 setTimeout(function() {
                   resolve(true);
                 }, 300);
               });
     return promise1;
-         
+
       }
       else
       {
-        return axios.post('http://35.232.3.8/api/del_msg', {
+        return axios.post(this.$localStorage.get('baseUrl') + 'api/del_msg', {
             id:ID,
             token:this.$localStorage.get('token')
         })
@@ -75,7 +75,7 @@ export  const MimicMessage =new Vue({
       }
       else
       {
-        return axios.post('http://35.232.3.8/api/block_user', {
+        return axios.post(this.$localStorage.get('baseUrl') + 'api/block_user', {
             blockedID:ID,
             token:this.$localStorage.get('token')
         })
@@ -155,7 +155,7 @@ return promise1;
   }
   else
   {
-    return axios.post('http://35.232.3.8/api/inbox_messages', {
+    return axios.post(this.$localStorage.get('baseUrl') + 'api/inbox_messages', {
         token:this.$localStorage.get('token')
     })
        .then(response=> {
@@ -206,7 +206,7 @@ return promise1;
       }
       else
       {
-        return axios.post('http://35.232.3.8/api/moreComments', {
+        return axios.post(this.$localStorage.get('baseUrl') + 'api/moreComments', {
             parent:ID,
             token:this.$localStorage.get('token')
         })

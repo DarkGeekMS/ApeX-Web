@@ -73,7 +73,7 @@ button{
   margin-right: 15px;
 } 
 
-@media(max-width:945px){
+@media(max-width:933px){
   #main{
     display:none
   }

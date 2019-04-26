@@ -1,8 +1,8 @@
 <template>
   <div id="submitPage" >  
 <CreatePostSideBar></CreatePostSideBar>
-<Post v-bind:postData="createPostData" class="postStyle" v-if="isCreated&&!showCreateEdit"  v-on:Edit="EditPost"> </Post>
-<CreatePost v-on:PostEmit="getData" v-if="firstTime ||showCreateEdit" ></CreatePost>
+<Post v-bind:postData="createPostData" class="postStyle" v-if="isCreated"> </Post>
+<CreatePost v-on:PostEmit="getData" v-if="firstTime" id="createPost"></CreatePost>
 
 
   </div>
@@ -109,11 +109,11 @@ export default {
 
 <style scoped>
 .postStyle{
-
 width: 80%;
 padding-top:10%;
 margin-left:-17% !important;
 
-
 }
+
+
 </style>
