@@ -87,6 +87,10 @@ export  const AllServices =new Vue({
 	getAbout:function(apexComName) {
     var about=MimicApexCom.getAbout(this.mimic,apexComName);
     return about;
+  },
+  getAboutGuest:function(apexComName) {
+    var about=MimicApexCom.getAboutGuest(this.mimic,apexComName);
+    return about;
 	},
 	getSubscribers:function(apexComName) {
     var SubscribersList=MimicApexCom.getSubscribers(this.mimic,apexComName);

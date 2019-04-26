@@ -14,8 +14,8 @@
       <router-link  v-show="isModerator() || isAdmin()" id="subscribersListlink" class="navbarLinks" :to="{name:'Subscribers'}">subscribers</router-link>
       <router-link  v-show="isModerator() || isAdmin()" id="reportlink" class="navbarLinks" :to="{name:'Reports'}">view reports</router-link>
       <!-- <router-link id="reportlink" class="navbarLinks" :to="{name:'Reports'}">view reports</router-link> -->
-      <router-link  id="addmoderatorlink" class="navbarLinks" :to="{name:'AddModerators'}">add moderator</router-link>
-      <!-- <router-link v-show="isAdmin()"  id="addmoderatorlink" class="navbarLinks" :to="{name:'Moderators'}">add moderator</router-link> -->
+      <!-- <router-link  id="addmoderatorlink" class="navbarLinks" :to="{name:'AddModerators'}">add moderator</router-link> -->
+      <router-link v-show="isAdmin()"  id="addmoderatorlink" class="navbarLinks" :to="{name:'Moderators'}">add moderator</router-link>
     </div>
       </div>
   <div class="sort">
@@ -50,6 +50,8 @@ export default {
     return {
       token:this.$localStorage.get('token'),
       userName:this.$localStorage.get('userName'),
+      loggedIn:this.$localStorage.get('login'),
+
       //userName:'moderator1',
       // description:'',
       moderators:[],
@@ -113,12 +115,26 @@ export default {
          this.image=about.image;
          })
    },
+   getAboutGuest(){
+         AllServices.getAboutGuest(this.ApexComName).then((about) =>{
+        //  this.description=about.description;
+         this.moderators=about.moderators;
+        //  this.rules=about.rules;
+         this.image=about.image;
+        //  this.subscribersCount=about.subscribersCount;
+         });
+   },
    
 
   },
   mounted()
   {
-  this.getAbout();
+  if(this.loggedIn){
+   this.getAbout();
+   }
+   else{
+     this.getAboutGuest();
+   }
   }
 }
 </script>

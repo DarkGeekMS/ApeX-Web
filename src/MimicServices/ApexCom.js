@@ -39,6 +39,41 @@ else {
   });
     }
   },
+  getAboutGuest: function(mimic,ApexComName){
+
+    if(mimic){
+var about={
+  rules:['rule1','rule2','rule3'],
+  subscribersCount:78,
+  description:'this is just the mimic server',
+  moderators:[
+    {userName:'moderator1'},
+  {userName:'moderator2'},
+  {userName:'moderator3'},
+  {userName:'moderator4'}
+],
+image:'https://i.imgur.com/AMFz23O.jpg',
+}
+var promise = new Promise(function(resolve) {
+  setTimeout(function() {
+    resolve(about);
+  }, 300);
+});
+return promise;
+}
+else {
+return axios.get(this.$localStorage.get('baseUrl') + 'api/about', {
+    ApexCom_id :ApexComName,
+})
+.then(response=> {
+  return response.data;
+ })
+.catch(function (error) {
+  alert(error)
+  // console.log(error);
+});
+  }
+},
 
 getSubscribers: function(mimic,apexComName){
     if(mimic){
