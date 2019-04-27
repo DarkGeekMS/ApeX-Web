@@ -26,7 +26,7 @@ token:'1',
                 }
 
 else {
-    axios.post(baseUrl + "api/submit_post"  ,{
+    axios.post(baseUrl + "api/SubmitPost"  ,{
 
         ApexCom_id:apexComId,
         _token:token,

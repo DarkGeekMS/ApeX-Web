@@ -31,7 +31,7 @@ export  const MimicAuth =new Vue({
       else
       {
         var self = this;
-        return axios.post(baseUrl + 'api/sign_up', {
+        return axios.post(baseUrl + 'api/SignUp', {
             email: email,
             username: user,
             password: pass
@@ -56,7 +56,7 @@ export  const MimicAuth =new Vue({
             this.$localStorage.set('userName', '');
         }
         else{
-          return axios.post(baseUrl + 'api/sign_out',{
+          return axios.post(baseUrl + 'api/SignOut',{
             token : this.$localStorage.get('token')
           })
         }
@@ -84,7 +84,7 @@ export  const MimicAuth =new Vue({
       }
       else{
         var self = this;
-        return axios.post(baseUrl + 'api/sign_in', {
+        return axios.post(baseUrl + 'api/SignIn', {
             username : user,
             password : pass
           }).then(response => {
@@ -115,7 +115,7 @@ export  const MimicAuth =new Vue({
       }
       else{
         var self = this;
-        return axios.post(baseUrl + 'api/mail_verify', {
+        return axios.post(baseUrl + 'api/MailVerification', {
             username : user,
             email : email
           }).then(response => {
@@ -143,7 +143,7 @@ export  const MimicAuth =new Vue({
       }
       else{
         var self = this;
-        return axios.post(baseUrl + 'api/check_code', {
+        return axios.post(baseUrl + 'api/CheckCode', {
             username : code
           }).then(response => {
             this.item = response.data;
@@ -162,7 +162,7 @@ export  const MimicAuth =new Vue({
       }
       else{
         var self = this;
-        return axios.post(baseUrl + 'api/change_password', {
+        return axios.post(baseUrl + 'api/ChangePassword', {
             password : pass
           }).then(response => {
             this.item = response.data;
@@ -190,7 +190,7 @@ export  const MimicAuth =new Vue({
       }
       else{
         var self = this;
-        return axios.post(baseUrl + 'api/mail_verify', {
+        return axios.post(baseUrl + 'api/MailVerification', {
             password : pass,
             email : email
           }).then(response => {
@@ -224,7 +224,7 @@ export  const MimicAuth =new Vue({
       }
       else{
         var self = this;
-        return axios.post(baseUrl + 'api/check_code', {
+        return axios.post(baseUrl + 'api/CheckCode', {
             code : code,
            // email : email
           }).then(response => {
@@ -258,7 +258,7 @@ export  const MimicAuth =new Vue({
       }
       else
       {
-        return axios.get(baseUrl + 'api/Apex_names', {
+        return axios.get(baseUrl + 'api/ApexComs', {
         }).then(response => {
           return response.data
         }).catch(function (error) {

@@ -125,7 +125,7 @@ return promise1;
 else {
   if (this.$localStorage.get('token') == null)
   {
-    return axios.get(baseUrl + 'api/sort_posts',
+    return axios.get(baseUrl + 'api/SortPosts',
    {
       apexComID:ApexComName ,
       sortingParam: "date"
@@ -135,7 +135,7 @@ else {
   }
   else {
     {
-      return axios.post(baseUrl + 'api/sort_posts',
+      return axios.post(baseUrl + 'api/SortPosts',
      {
         apexCommID:ApexComName ,
         sortingParam: "date",

@@ -23,7 +23,7 @@ export  const MimicUserProfile =new Vue({
 return promise;
 }
 else {
-    return axios.post(baseUrl + 'api/info',{
+    return axios.post(baseUrl + 'api/ProfileInfo',{
           Token:this.$localStorage.get('token')
       })
       .then(response=> {
@@ -55,7 +55,7 @@ var promise = new Promise(function(resolve) {
 return promise;
 }
 else {
-    return axios.post(baseUrl + 'api/user_data',  {
+    return axios.post(baseUrl + 'api/UserData',  {
       Token:this.$localStorage.get('token'),
       userid:userName
   })
@@ -145,7 +145,7 @@ reviewReports: function(mimic,userName, baseUrl){
   return promise;
 }
 else {
-   return axios.post(baseUrl + 'api/report_action', {
+   return axios.post(baseUrl + 'api/ReviewReports', {
         user_id:userName,
         Token:this.$localStorage.get('token')
       })
@@ -182,7 +182,7 @@ getUserType: function(mimic, baseUrl){
     return promise;
 }
 else {
-    return axios.post(baseUrl + 'api/me', {
+    return axios.post(baseUrl + 'api/Me', {
              token:this.$localStorage.get('token')
             })
             .then(response=> {
@@ -200,7 +200,7 @@ deleteUser: function(mimic,userName, baseUrl){
     return true;
 }
 else {
-    axios.delete(baseUrl + 'api/del_user',{params: {
+    axios.delete(baseUrl + 'api/DeleteUser',{params: {
     userID:userName,
     Token:this.$localStorage.get('token')}
 })
@@ -232,7 +232,7 @@ getUserInfoByIdforGuest:function(mimic,userName, baseUrl){
     return promise;
     }
     else {
-        return axios.get(baseUrl + 'api/user_data', {
+        return axios.get(baseUrl + 'api/UserData', {
         params: {
           userid:userName
         }
@@ -256,7 +256,7 @@ blockUser:function(mimic,userName, baseUrl){
       return promise;
     }
     else {
-      return axios.post(baseUrl + 'api/block_user', {
+      return axios.post(baseUrl + 'api/BlockUser', {
         userid:userName,
         Token:this.$localStorage.get('token')
     })
@@ -281,7 +281,7 @@ getBlockList(mimic, baseUrl){
       return promise;
   }
   else {
-      return axios.post(baseUrl + 'api/blocklist', {
+      return axios.post(baseUrl + 'api/BlockList', {
                token:this.$localStorage.get('token')
               })
               .then(response=> {

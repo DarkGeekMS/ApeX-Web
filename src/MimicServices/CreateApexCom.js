@@ -25,7 +25,7 @@ return promise1;
                 }
               }
 else {
-  return axios.post(baseUrl + 'api/site_admin',
+  return axios.post(baseUrl + 'api/SiteAdmin',
  {
     name:Name ,
     description: Description,
