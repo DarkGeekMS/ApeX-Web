@@ -34,7 +34,7 @@ else {
     return response.data;
    })
   .catch(function (error) {
-    console.log(error);
+    // console.log(error);
   });
     }
   },
@@ -101,7 +101,7 @@ else {
     return response.data;
    })
   .catch(function (error) {
-    console.log(error);
+    // console.log(error);
   });
   }
 },
@@ -123,7 +123,7 @@ else {
         return response;
           })
           .catch(function (error) {
-            console.log(error);
+            // console.log(error);
           });
     }
     },
@@ -145,7 +145,7 @@ deleteApexCom: function(mimic,apexComName){
           return response;
             })
             .catch(function (error) {
-              console.log(error);
+              // console.log(error);
             });
 }
     },
@@ -163,7 +163,7 @@ subscribe: function(mimic,apexComName){
         return response;
       })
       .catch(function (error) {
-        console.log(error);
+        // console.log(error);
       });
 }
 },
@@ -183,7 +183,7 @@ else {
         return response;
           })
           .catch(function (error) {
-            console.log(error);
+            // console.log(error);
           });
     }
     },
@@ -273,7 +273,7 @@ reviewReports: function(mimic,apexComName){
             return response.data;
            })
           .catch(function (error) {
-            console.log(error);
+            // console.log(error);
           });
         }
         },
@@ -291,7 +291,7 @@ ignoreReport:function(mimic,reportID){
             return response;
               })
               .catch(function (error) {
-                console.log(error);
+                // console.log(error);
               });
   }
 
@@ -357,7 +357,7 @@ searchU: function(mimic)
   }
   else
   {
-    axios.post(this.$localStorage.get('baseUrl') + 'api/search',{
+    return axios.post(this.$localStorage.get('baseUrl') + 'api/search',{
     query: this.$localStorage.get('searchModerator'),
     token: this.$localStorage.get('token')
     }).then(response => {

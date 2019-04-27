@@ -17,18 +17,14 @@ export  const AllServices =new Vue({
     }
   },
   methods:{
-    isLocked(id){
-      var data=MimicPost.isLocked(id,this.mimic);
-      return data;
 
-    },
     getState(){
       return this.mimic
     },
-   //  getPosts:function() {
-   //    var posts=MimicDisplayPosts.getPostsData(this.mimic);
-   //      return posts
-   // },
+    getPosts:function() {
+      var posts=MimicDisplayPosts.getPostsData(this.mimic);
+        return posts
+   },
     submit:function(videoUrl,apexComId,bodyPost,imgName, isLocked,token){
 
       var data=MimicCreatePosts.submitPost(videoUrl,apexComId,bodyPost,imgName,isLocked,token,this.mimic);
@@ -200,14 +196,15 @@ getAllMessages:function(){
 },
 getUserInfoByIdforGuest:function(userName){
   var data=MimicUserProfile.getUserInfoByIdforGuest(this.mimic,userName);
-  return data;
+  alert(userName+'all');
+    return data;
 },
 getReplies: function(ID){
   var data=MimicMessage.getReplies(ID,this.mimic);
   return data;
 },
 blockUser:function(userName){
-  var data=MimicUserProfile.getUserInfoByIdforGuest(this.mimic,userName);
+  var data=MimicUserProfile.blockUser(this.mimic,userName);
   return data;
 },
 addOrDeleteModerator:function(userName,apexComName){

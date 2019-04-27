@@ -117,7 +117,7 @@ export default {
          })
    },
    getAboutGuest(){
-         AllServices.getAboutGuest(this.ApexComName).then((about) =>{
+         AllServices.getAboutGuest(this.apexComName).then((about) =>{
            console.log(this.apexComName+'inside');
         //  this.description=about.description;
          this.moderators=about.moderators;

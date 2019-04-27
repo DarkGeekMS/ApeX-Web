@@ -246,6 +246,7 @@ export default {
     */
    getUserDataForGuest:function(){
      AllServices.getUserInfoByIdforGuest(this.userName).then((data) =>{
+       alert(this.userName+'inside');
       this.karmaCount = data.karma;
       this.image = data.image;
       this.fullName = data.fullName;
