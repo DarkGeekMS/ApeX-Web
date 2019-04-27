@@ -8,7 +8,7 @@
           </div>
         </div>
         <div class="content">
-          <h4 class="username" v-show="fullName==null"> {{userName}} </h4>
+          <h4 class="username" v-show="fullName.length==0"> {{userName}} </h4>
           <h4 class="username" > {{fullName}} </h4>
 <div class="info">
   <div style="display:inline; float:left; width:50%;">
