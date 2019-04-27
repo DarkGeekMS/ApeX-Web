@@ -81,7 +81,7 @@ return promise1;
 
             else{
 
-                axios.post(baseUrl + "api/DelComment",{
+                axios.DELETE(baseUrl + "api/DelComment",{
                     ID    : name,
                     token : ID
 
