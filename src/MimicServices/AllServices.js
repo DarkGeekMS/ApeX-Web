@@ -17,14 +17,18 @@ export  const AllServices =new Vue({
     }
   },
   methods:{
+    isLocked(id){
+      var data=MimicPost.isLocked(id,this.mimic);
+      return data;
 
+    },
     getState(){
       return this.mimic
     },
-    getPosts:function() {
-      var posts=MimicDisplayPosts.getPostsData(this.mimic);
-        return posts
-   },
+   //  getPosts:function() {
+   //    var posts=MimicDisplayPosts.getPostsData(this.mimic);
+   //      return posts
+   // },
     submit:function(videoUrl,apexComId,bodyPost,imgName, isLocked,token){
 
       var data=MimicCreatePosts.submitPost(videoUrl,apexComId,bodyPost,imgName,isLocked,token,this.mimic);

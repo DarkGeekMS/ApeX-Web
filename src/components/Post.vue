@@ -13,7 +13,7 @@
           <div class="column1" id="postCol1">
 
 
-<button @click="changeColor_up" type="button" :class="className_up" id="up">
+<button @click="changeColor_up" type="button" :class="className_up" id="up" >
         <i class="glyphicon glyphicon-arrow-up"></i>
 </button>
 
@@ -39,13 +39,15 @@
       <font class="postby" id="fontpost"> </font>
       <a href="#" class="postby" id="timeAgo">  </a>
       <h3>{{postData.title}}</h3>
-      <p id="postBody" class="hPost">
+      <p id="postBody" class="hPost" v-if="!this.showEditTextArea">
 
         {{postData.content}}
          </p>
-         <!-- <textarea v-if="postData.canEdit"></textarea> -->
-
-
+          <textarea  @keyup="store" v-if="this.showEditTextArea" class="form-control" rows="7" id="textarea">{{postData.content}}</textarea> 
+          
+          <button @click="saveChange" v-if="this.showEditTextArea" class="btn btn-primary postButton" id="saveEdit">SAVE</button>
+          <!-- <button  v-if="this.showEditTextArea" class="btn btn-primary postButton" id="cancel">CANCEL</button> -->
+          
 <iframe  v-show ="postData.videolink!==''" width="100%" height="315"  :src=postData.videolink frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 <img v-show="postData.img!==''" :src=postData.img  height="100%" width="100%">
@@ -75,7 +77,7 @@ Comments</button>
       <li ><a href="#"  @click="Hide" class="HIDE"><i class="fa fa-ban" id="HideIcon"></i>Hide</a></li>
       <li><a  @click="report"><i class="glyphicon glyphicon-flag" id="ReportIcon" ></i>Report</a></li>
       <li v-if="postData.canEdit"><a href="#" @click="editText" ><i class="glyphicon glyphicon-pencil" id="ReportIcon"></i>edit</a></li>
-      <li><a href="#" @click="isLocked">
+      <li><a href="#" @click="isLocked" v-show="isAdmin() || isModerator()">
         
         <i v-if="Locked=='unlock'" class="fa fa-lock" id="ReportIcon"></i>
         <i v-if="Locked=='Lock'" class="fa fa-unlock" id="ReportIcon"></i>
@@ -126,6 +128,8 @@ export default {
 
    data(){
        return{
+              isModal:false,
+             showEditTextArea:false,
              editShow:false,
              Not_Hide :true,
              is_Hide  :false,
@@ -152,37 +156,90 @@ export default {
          },
 
   methods: {
+     isModerator:function()
+      {
+        if(this.$localStorage.get('login')){
+        AllServices.userType().then((data) =>{
+        if(data.type ==2){
+          return true;
+          }
+        else{
+          return false;
+        }
+        })
+        }
+      },
+   isAdmin:function()
+      {
+       
+        if(this.$localStorage.get('login')){
+        AllServices.userType().then((data) =>{
+        if(data.type ==1){
+          return true;
+          }
+        else{
+          return false;
+        }
+        })
+        }
+      },
+   
+    saveChange(){
+    
+          this.postData.content= document.getElementById("textarea").value; 
+          this.showEditTextArea=false;
+          AllServices.EditPost(this.postData.id, this.postData.content);
+        
+  
+    },
+
     report(){
-if(this.ShowModalVar == true){
-      this.ToggleShowModalVar();
-    }
-   //alert('ana report');
+    if(this.$localStorage.get('login') ){
+        if(this.ShowModalVar == true){
+        this.ToggleShowModalVar();
+         }
+  
      this.onlyOneTime=false;
       this.$modal.show('reportBox');
 
+    }
+    else{
+      alert('Login First!!');
+    }
     },
     isLocked(){
+      if(this.$localStorage.get('login')){
         if(this.ShowModalVar == true){
-      this.ToggleShowModalVar();
+        this.ToggleShowModalVar();
     }
      // alert('lock successfully');
      
      if(this.Locked=='Lock'){
 
        this.Locked='unlock';
-        this.$emit('lockComment',this.Locked);
+       this.$emit('lockComment',this.Locked);
+       
      }
-     else{this.Locked='Lock';
-      this.$emit('lockComment',this.Locked);}
-      AllServices.isLocked(this.PostId,this.$localStorage.get('token'));
+     else{
+      this.Locked='Lock';
+      this.$emit('lockComment',this.Locked);
+      }
+      this.PostId=this.postData.id;
+      AllServices.isLocked(this.PostId);
 
+    }
+    else{
+      alert('Login First!!');
+    }
     },
+
     editText(){
        if(this.ShowModalVar == true){
-      this.ToggleShowModalVar();
+           this.ToggleShowModalVar();
         } 
-        this.$emit('Edit');
-        //this.$router.go(-1);
+       // this.$emit('Edit');
+        this.showEditTextArea=true;
+       
 
 
     },
@@ -202,6 +259,7 @@ if(this.ShowModalVar == true){
     * Hide post if the User press Hide button.
     */
        Hide(){
+           if( this.$localStorage.get('login') ){
          if(this.ShowModalVar == true){
          this.ToggleShowModalVar();
          }
@@ -215,9 +273,15 @@ if(this.ShowModalVar == true){
         this.PostId=postData.id;
         AllServices.Hide(this.PostId,this.$localStorage.get('token'));
 
-         },
+         }
+         else{
+         alert('login first');
+       }
+       }
+       ,
     changeColor_up()
     {
+      if(this.$localStorage.get('login') ){
       if(this.ShowModalVar == true){
       this.ToggleShowModalVar();
     }
@@ -236,6 +300,7 @@ if(this.ShowModalVar == true){
 
                       this.votes          += 1;
                        this.PostId=postData.id;
+                       this.postData.up=true;
                       AllServices.upvote(this.$localStorage.get('token'),this.PostId,1);
 
                 }
@@ -250,8 +315,14 @@ if(this.ShowModalVar == true){
 
 
 
-      },
+      }
+      else{
+        alert('Login First !!');
+      }
+      }
+      ,
      changeColor_down(){
+       if(this.$localStorage.get('login') ){
        if(this.ShowModalVar == true){
        this.ToggleShowModalVar();
      }
@@ -283,12 +354,16 @@ if(this.ShowModalVar == true){
 
 
                  }
+              }
+              else{
+                alert('Login First !!');
+              }
               },
                /**
     * Save post if the User press Hide button.
     */
     Save(){
-      
+        if( this.$localStorage.get('login') ){
       if(this.ShowModalVar == true){
       this.ToggleShowModalVar();
     }
@@ -313,6 +388,10 @@ if(this.ShowModalVar == true){
 
 
 
+    }
+    else{
+      alert('login First !!');
+    }
     },
     
  timeSince(date) {
@@ -377,8 +456,9 @@ this.time=fuzzy;
 * show the clicked post on the modal.
 */
       ShowModal(){
+        this.isModal=true;
         if(this.ShowModalVar == true){
-          this.$emit('showUp',this.postData);
+          this.$emit('showUp',this.postData,);
    
           this.$modal.show('Demo-OnePost');
         }
@@ -513,6 +593,7 @@ h5 {
         -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05);
         box-shadow: 0 1px 1px rgba(0,0,0,.05);
     }
+   
 .fontUser{
     font-size: 12px;
     font-weight: 700;
@@ -525,19 +606,8 @@ h5 {
 }
 .buttonDelete{
       background-color: #f4511e;
-/*      margin-left: 470px;*/
-} /* Red */
-/* .postItem{
-    box-sizing: border-box;
-    width: 250%;
-    margin-left: 9.5%;
-    padding-top: 2%;
-    margin-top: 0%;
-    min-width: 50%;
-    height: 100%;
-   margin-right: 0%;
 
-} */
+} 
 @media(max-width:1054px){
   div .panel 
   {
@@ -587,6 +657,14 @@ width: 100%;
 .panel-body{
 
   width: 100%;
+}
+#saveEdit{
+  margin-left:92.5%; 
+}
+#cancel{
+  margin-left:80%;
+  /* padding-top: 0%; */
+  
 }
 
 #postSide{

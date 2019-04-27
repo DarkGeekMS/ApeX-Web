@@ -1,4 +1,5 @@
 <template>
+<div class="UserSettings">
 <div class='settings'>
   <ChangePass></ChangePass>
   <DelAcc></DelAcc>
@@ -68,20 +69,10 @@
 </div>
 
 <button :disabled="check"  type="submit" style="margin-left:450px" @click.prevent="post()" id="ChangeButton">Save</button>
-
-
-z
 </div>
 <h6  class="page-header"><b>DEACTIVATE ACCOUNT</b></h6>
 <div class="">
 </div>
-<!-- <UserProfileSideBar
-v-bind:userName="userName"
-v-bind:karmaCount="karmaCount"
-v-bind:image="image"
-v-bind:cakeDay="cakeDay"
-v-bind:blockList ="blockList"
-class="sidebar" ></UserProfileSideBar> -->
 
 <div class="s19ceyn0-2 htFOkz">
   <button class="s19ceyn0-1 knawbn" @click="showDel()">
@@ -94,6 +85,8 @@ class="sidebar" ></UserProfileSideBar> -->
 
 
 
+
+</div>
 
 </div>
 </template>
@@ -175,7 +168,10 @@ padding: 3px 16px;
 border-color: rgb(0, 121, 211);
 }
 
-
+.UserSettings{
+width: 100% ;
+background: white;
+}
 
 .view {
     -webkit-box-align: center;

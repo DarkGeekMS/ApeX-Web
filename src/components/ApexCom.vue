@@ -5,7 +5,7 @@
       <div class="imagediv">
         <h1 style=" font-size: 28px; display:inline;" id="Name">{{apexComName}}</h1>
         <div class="img">
-          <img style="box-sizing: border-box; border-radius: 50%;" class="image" :src="image" > 
+          <img style="box-sizing: border-box; border-radius: 50%;" class="image" :src="image" >
         </div>
       </div>
     </div>
@@ -22,7 +22,7 @@
     <Sort style="padding-top:10px"></Sort>
   </div>
   <SideBar class="sidebar" v-bind:apexComName="apexComName"></SideBar>
-    <router-view class="routerview"></router-view> 
+    <router-view class="routerview"></router-view>
 </div>
 </template>
 
@@ -126,7 +126,7 @@ export default {
         //  this.subscribersCount=about.subscribersCount;
          });
    },
-   
+
 
   },
   mounted()
@@ -155,7 +155,7 @@ export default {
 .Apexcom{
   /* max-height:3%; */
   /* height:100%; */
-  
+
   /* min-height:108%;
   max-height:60%; */
   /* position:relative; */
@@ -221,7 +221,7 @@ export default {
   width:60%;
   /* padding: 2%; */
   /* float:left; */
-  
+
 }
 .sidebar{
   /* margin-top:4%; */

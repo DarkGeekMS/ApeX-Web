@@ -244,10 +244,26 @@ if(response){
 }
 }
 },
-isLocked(){
-
-  
+isLocked(ID,mimic){
+    if( mimic == true)
+    {
+        if(this.$localStorage.login)
+            return false;
+        return true;
+    }
+    else
+    {
+        axios.post(this.$localStorage.get('baseUrl') + 'api/save', {
+        ID: ID,
+        token:this.$localStorage.get('token')
+         })
+       .then(function (response) {
+           return true;
+        })
+       .catch(function (error) {
+           return false;
+        });
+    }
 }
-
 
 }})

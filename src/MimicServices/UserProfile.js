@@ -217,14 +217,13 @@ getUserType: function(mimic){
 }
 else {
     return axios.post(this.$localStorage.get('baseUrl') + 'api/me', {
-             Token:this.$localStorage.get('token')
+             token:this.$localStorage.get('token')
             })
             .then(response=> {
               return response.data;
              })
             .catch(function (error) {
-              alert(error);
-              // console.log(error);
+              console.log(error);
             });
 }
 },

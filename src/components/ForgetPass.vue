@@ -1,10 +1,9 @@
 <template>
 <modal name="ForgetPass" transition="pop-out" width="50%" height="70%" :clickToClose="false">
-  <ResetCode></ResetCode>
-<!--  <demo-login-modal> </demo-login-modal> -->
+  <ResetCode/>
+
   <div class="box">
     <div class="box-part" id="bp-right"></div>
-
     <div class="box-part" id="bp-left">
       <div class="partition" id="partition-register">
 
@@ -25,17 +24,17 @@
             <span id="EmailError" class="lead"> {{errorU}}  </span>
 
 
-            <input id="Email" type="email" class="form-control" name="email"
+            <input type="email" class="form-control" name="email"
               placeholder="EMAIL" v-model="email" v-on:keyup="restart()" required autofocus>
             
-            <button id="Next" class="btn blue" style="display:block" @click.prevent="post()">EMAIL ME</button>
+            <button  class="btn blue" style="display:block" @click.prevent="post()">EMAIL ME</button>
             <span class="lead"> {{validate}}  </span>
             
             <span id="EmailError" class="lead"> {{errorE}}  </span>
 
             <p class = "lead" style = "fontSize:15px; color:blue;" > {{ congra }}  </p>
-            <a id="forgetname" class="btn btn-link" @click="$modal.show('demo-login')"> LOG IN  </a>
-           <a id="forgetpass" class="btn btn-link" @click="$modal.show('demo-sign')"> SIGN UP </a>
+       <!--     <a  class="btn btn-link" @click="$modal.show('demo-login')"> LOG IN  </a>
+            <a  class="btn btn-link" @click="$modal.show('demo-sign')"> SIGN UP </a> -->
 
         </div>
 
@@ -46,7 +45,6 @@
 </template>
 
 <script>
-//import DemoLoginModal  from './LoginModal.vue'
 import ResetCode  from './ResetCode.vue'
 import {AllServices} from '../MimicServices/AllServices.js'
 
@@ -57,8 +55,7 @@ import {AllServices} from '../MimicServices/AllServices.js'
 export default {
   name: 'ForgetPass',
   components:{
-  //   DemoLoginModal,
-     ResetCode
+    ResetCode
   },
   data(){
       return{

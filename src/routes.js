@@ -17,11 +17,11 @@ import SubmitPost from './components/SubmitPost.vue'
 export default[
       {path:'/ApexCom/:apexComName',name:'ApexCom',props:true,component:ApexCom , children :
       [
-        {path:'/' ,component:ApexComPosts},
+        {path:'/' ,name:'ApexComPosts',component:ApexComPosts},
         {path:'AddModerators',name:'AddModerators',component:ApexComModerator,props:true ,children :[
           {path:'searchUser',name:'Moderators', component:ApexComAddModerator,props:true },
         ]},
-        {path:'ApexPosts',name:'Posts',component:ApexComPosts},
+        {path:'ApexPosts/:apexComName',name:'Posts',component:ApexComPosts,props:true},
         {path:'ApexSubscribers',name:'Subscribers',component:ApexComSubscribers,props:true},
         {path:'ApexReports',name:'Reports',component:Reports,props:true},
 
@@ -39,5 +39,5 @@ export default[
 
     {path:'/UserSettings',name:'UserSettings',component:UserSettings},
     {path:'/CreateApexCom',name:'CreateApexCom',component:CreateApexCom},
-   
+
 ]

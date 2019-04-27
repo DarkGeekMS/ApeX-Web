@@ -49,33 +49,67 @@ export default {
   mounted () {
     if(this.$localStorage.get('login'))
     {
-      var result = AllServices.searchUser();
-      if( typeof result === 'string')
+      if(AllServices.getState())
       {
-        this.exist = false,
-        this.error = result
+        var result = AllServices.searchUser();
+        if( typeof result === 'string')
+        {
+            this.exist = false,
+            this.error = result
+        }
+        else{
+          this.apexs = result[1],
+          this.users = result[2],
+          this.exist = true
+        }
       }
       else{
-        this.apexs = result[1],
-        this.users = result[2],
-        this.exist = true
-      }
+        AllServices.searchUser().then((data) =>{
+          if( typeof data === 'string')
+          {
+            this.exist = false,
+            this.error = data
+          }
+          else{
+            this.apexs = data[1],
+            this.users = data[2],
+            this.exist = true
+          }
+        })
+      }     
     }
     else{
-      var result = AllServices.searchGuest();
-      }
-      if( typeof result === 'string')
+      if(AllServices.getState())
       {
-        this.exist = false,
-        this.error = result
+        var resultT = AllServices.searchGuest();
+        if( typeof resultT === 'string')
+        {
+            this.exist = false,
+            this.error = resultT
+        }
+        else{
+          this.apexs = resultT[1],
+          this.users = resultT[2],
+          this.exist = true
+        }
       }
       else{
-        this.apexs = result[1],
-        this.users = result[2],
-        this.exist = true
-      }
+        AllServices.searchGuest().then((data) =>{
+          if( typeof data === 'string')
+          {
+            this.exist = false,
+            this.error = data
+          }
+          else{
+            this.apexs = data[1],
+            this.users = data[2],
+            this.exist = true
+          }
+        })
+      } 
     }
   }
+}
 </script>
 
 <style scoped>
