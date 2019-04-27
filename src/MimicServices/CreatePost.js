@@ -12,21 +12,21 @@ token:'1',
 
   },
   methods:{
-    submitPost: function(videoUrl,apexComId,bodyPost,imgName,token,isLocked,mimic){
-      
+    submitPost: function(videoUrl,apexComId,bodyPost,imgName,token,isLocked,mimic, baseUrl){
+
       if(mimic){
          if(this.$localStorage.login){
-        
+
           // this.$router.push('/ShowCreatedPost');
-       
+
             return true;
-            
+
          }
             return false;
                 }
 
 else {
-    axios.post( this.$localStorage.get('baseUrl') + "api/submit_post"  ,{
+    axios.post(baseUrl + "api/submit_post"  ,{
 
         ApexCom_id:apexComId,
         _token:token,
@@ -54,22 +54,22 @@ else {
        })
  }
     },
-    getApexNames:function(mimic){
+    getApexNames:function(mimic, baseUrl){
     if(mimic==true){
         var names=["apexname1","apexname2","apexname3","apexname4"];
-     
+
         var promise = new Promise(function(resolve) {
           setTimeout(function() {
             resolve(names);
           }, 300);
         });
       return promise;
-      
+
     }
     else{
      // axios.get();
-      
-///TODO COMPLETE THE REQUEST 
+
+///TODO COMPLETE THE REQUEST
     }
 
     }

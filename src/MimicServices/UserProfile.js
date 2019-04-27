@@ -3,7 +3,7 @@ import axios from 'axios'
 
 export  const MimicUserProfile =new Vue({
   methods:{
-    getUserInfo: function(mimic){
+    getUserInfo: function(mimic, baseUrl){
       if(mimic){
   var profileInfo={
       userName:'',
@@ -12,7 +12,7 @@ export  const MimicUserProfile =new Vue({
       saved:[{},{}],
       hidden:[{},{}],
       personalPosts:[{},{}],
-      
+
       cakeDay:'March 15, 2019',
   }
     var promise = new Promise(function(resolve) {
@@ -23,7 +23,7 @@ export  const MimicUserProfile =new Vue({
 return promise;
 }
 else {
-    return axios.post(this.$localStorage.get('baseUrl') + 'api/info',{
+    return axios.post(baseUrl + 'api/info',{
           Token:this.$localStorage.get('token')
       })
       .then(response=> {
@@ -35,7 +35,7 @@ else {
       });
     }
   },
-getUserInfoById: function(mimic,userName){
+getUserInfoById: function(mimic,userName, baseUrl){
 
     if(mimic){
 var profileInfo={
@@ -55,7 +55,7 @@ var promise = new Promise(function(resolve) {
 return promise;
 }
 else {
-    return axios.post(this.$localStorage.get('baseUrl') + 'api/user_data',  {
+    return axios.post(baseUrl + 'api/user_data',  {
       Token:this.$localStorage.get('token'),
       userid:userName
   })
@@ -68,7 +68,7 @@ else {
   });
   }
 },
-reviewReports: function(mimic,userName){
+reviewReports: function(mimic,userName, baseUrl){
   if(mimic){
     var report={
       reportedComment:[{post:{
@@ -145,7 +145,7 @@ reviewReports: function(mimic,userName){
   return promise;
 }
 else {
-   return axios.post(this.$localStorage.get('baseUrl') + 'api/report_action', {
+   return axios.post(baseUrl + 'api/report_action', {
         user_id:userName,
         Token:this.$localStorage.get('token')
       })
@@ -158,7 +158,7 @@ else {
       });
     }
     },
-getUserType: function(mimic){
+getUserType: function(mimic, baseUrl){
 
   if(mimic){
   var info={
@@ -182,7 +182,7 @@ getUserType: function(mimic){
     return promise;
 }
 else {
-    return axios.post(this.$localStorage.get('baseUrl') + 'api/me', {
+    return axios.post(baseUrl + 'api/me', {
              token:this.$localStorage.get('token')
             })
             .then(response=> {
@@ -194,13 +194,13 @@ else {
 }
 },
 
-deleteUser: function(mimic,userName){
+deleteUser: function(mimic,userName, baseUrl){
 
   if(mimic){
     return true;
 }
 else {
-    axios.delete(this.$localStorage.get('baseUrl') + 'api/del_user',{params: {
+    axios.delete(baseUrl + 'api/del_user',{params: {
     userID:userName,
     Token:this.$localStorage.get('token')}
 })
@@ -213,7 +213,7 @@ else {
 });
 }
 },
-getUserInfoByIdforGuest:function(mimic,userName){
+getUserInfoByIdforGuest:function(mimic,userName, baseUrl){
   // alert(userName);
   if(mimic){
     var profileInfo={
@@ -232,7 +232,7 @@ getUserInfoByIdforGuest:function(mimic,userName){
     return promise;
     }
     else {
-        return axios.get(this.$localStorage.get('baseUrl') + 'api/user_data', {
+        return axios.get(baseUrl + 'api/user_data', {
         params: {
           userid:userName
         }
@@ -246,7 +246,7 @@ getUserInfoByIdforGuest:function(mimic,userName){
       });
       }
     },
-blockUser:function(mimic,userName){
+blockUser:function(mimic,userName, baseUrl){
   if(mimic){
     var promise = new Promise(function(resolve) {
       setTimeout(function() {
@@ -256,7 +256,7 @@ blockUser:function(mimic,userName){
       return promise;
     }
     else {
-      return axios.post(this.$localStorage.get('baseUrl') + 'api/block_user', {
+      return axios.post(baseUrl + 'api/block_user', {
         userid:userName,
         Token:this.$localStorage.get('token')
     })
@@ -269,10 +269,10 @@ blockUser:function(mimic,userName){
     });
     }
 },
-getBlockList(mimic){
+getBlockList(mimic, baseUrl){
   if(mimic){
     var info=[{userName:'user1'},{userName:'user1'},{userName:'user1'},{userName:'user1'},{userName:'user1'},{userName:'user1'}]
-  
+
       var promise = new Promise(function(resolve) {
         setTimeout(function() {
           resolve(info);
@@ -281,7 +281,7 @@ getBlockList(mimic){
       return promise;
   }
   else {
-      return axios.post(this.$localStorage.get('baseUrl') + 'api/blocklist', {
+      return axios.post(baseUrl + 'api/blocklist', {
                token:this.$localStorage.get('token')
               })
               .then(response=> {
@@ -289,7 +289,7 @@ getBlockList(mimic){
                })
               .catch(function (error) {
                 // console.log(error);
-              }); 
+              });
 }
 }
   }

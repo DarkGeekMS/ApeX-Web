@@ -3,7 +3,7 @@ import axios from 'axios'
 
 export  const MimicDisplayPosts =new Vue({
   methods:{
-    getPostsData: function(mimic,ApexComName){
+    getPostsData: function(mimic,ApexComName, baseUrl){
       if(mimic==true){
         if(ApexComName==""){
   var posts=[
@@ -125,7 +125,7 @@ return promise1;
 else {
   if (this.$localStorage.get('token') == null)
   {
-    return axios.get(this.$localStorage.get('baseUrl') + 'api/sort_posts',
+    return axios.get(baseUrl + 'api/sort_posts',
    {
       apexComID:ApexComName ,
       sortingParam: "date"
@@ -135,7 +135,7 @@ else {
   }
   else {
     {
-      return axios.post(this.$localStorage.get('baseUrl') + 'api/sort_posts',
+      return axios.post(baseUrl + 'api/sort_posts',
      {
         apexCommID:ApexComName ,
         sortingParam: "date",
