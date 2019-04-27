@@ -3,7 +3,7 @@ import axios from 'axios'
 
 export  const MimicCreateApexCom =new Vue({
   methods:{
-    CreateApexCom: function(mimic,Name,Description,Rules,Avatar,Banner){
+    CreateApexCom: function(mimic,Name,Description,Rules,Avatar,Banner, baseUrl){
       if(mimic==true){
 
         if(Name!=''&& Description!=''&& Rules!='')
@@ -25,7 +25,7 @@ return promise1;
                 }
               }
 else {
-  return axios.post(this.$localStorage.get('baseUrl') + 'api/site_admin',
+  return axios.post(baseUrl + 'api/SiteAdmin',
  {
     name:Name ,
     description: Description,

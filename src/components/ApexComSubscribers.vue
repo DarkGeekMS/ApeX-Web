@@ -83,7 +83,7 @@ export default {
   cursor:pointer;
   border-color: skyblue;
   border-style: solid;
-  font-size: 1.2vw;
+  font-size: 14px;
   font-weight: 500;
   letter-spacing: 0.5px;
   text-transform: uppercase;
@@ -95,7 +95,7 @@ export default {
 .accountLink{
   text-decoration: none;
   /* color:black; */
-  font-size: 1.2vw;
+  font-size: 16px;
   
 }
 img{

@@ -212,8 +212,7 @@ export default {
               }
       },
     getAbout(){
-         console.log(this.ApexComName);
-         AllServices.getAbout(this.ApexComName).then((about) => {
+         AllServices.getAbout(this.apexComName).then((about) => {
          this.description=about.description;
          this.moderators=about.moderators;
          this.rules=about.rules;
@@ -222,7 +221,7 @@ export default {
          });
    },
    getAboutGuest(){
-         AllServices.getAboutGuest(this.ApexComName).then((about) =>{
+         AllServices.getAboutGuest(this.apexComName).then((about) =>{
          this.description=about.description;
          this.moderators=about.moderators;
          this.rules=about.rules;

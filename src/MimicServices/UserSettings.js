@@ -25,7 +25,7 @@ return promise1;
                 }
               }
 else {
-  return axios.delete(this.$localStorage.get('baseUrl') + 'api/del_user',
+  return axios.delete(baseUrl + 'api/DeleteUser',
  {
     UserID:this.$localStorage.get('userName') ,
     token:this.$localStorage.get('token'),
@@ -36,7 +36,7 @@ else {
  }
 },
 
-getPrefs:function (mimic) {
+getPrefs:function (mimic, baseUrl) {
   if(mimic==true)
   {
     data:{
@@ -57,7 +57,7 @@ return promise1;
   }
   else{
 
-    return axios.get(this.$localStorage.get('baseUrl') + 'api/prefs',
+    return axios.get(baseUrl + 'api/GetPreferences',
    {
       UserID:this.$localStorage.get('userName') ,
       token:this.$localStorage.get('token')
@@ -67,9 +67,9 @@ return promise1;
   }
 },
 
-updatePrefs:function (mimic,email,avatar,username) {
+updatePrefs:function (mimic,email,avatar,username, baseUrl) {
   if(mimic==false){
-    return axios.post(this.$localStorage.get('baseUrl') + 'api/updateprefs',
+    return axios.post(baseUrl + 'api/UpdatePreferences',
    {
      token:this.$localStorage.get('token'),
     email:email,
@@ -82,9 +82,9 @@ updatePrefs:function (mimic,email,avatar,username) {
   }
 },
 
-changePass:function (mimic,password,withCode,username,key) {
+changePass:function (mimic,password,withCode,username,key, baseUrl) {
   if(mimic==false){
-    return axios.patch(this.$localStorage.get('baseUrl') + 'api/changepassword',
+    return axios.patch(baseUrl + 'api/ChangePassword',
    {
      token:this.$localStorage.get('token'),
     password:password,

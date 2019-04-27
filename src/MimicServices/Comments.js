@@ -5,7 +5,7 @@ import App from '../App.vue'
 export  const MimicComment =new Vue({
 
   methods:{
-    WriteComment: function(cont,parentID,mimic){
+    WriteComment: function(cont,parentID,mimic, baseUrl){
       if(mimic == true){
 
           if(this.$localStorage.login)
@@ -22,7 +22,7 @@ export  const MimicComment =new Vue({
       }
       else
       {
-        return axios.post(this.$localStorage.get('baseUrl') + 'api/comment', {
+        return axios.post(baseUrl + 'api/AddReply', {
             content: cont,
             parent: parentID,
             token:this.$localStorage.get('token')
@@ -39,7 +39,7 @@ export  const MimicComment =new Vue({
     },
 
 
-    DeleteComment: function(ID,mimic){
+    DeleteComment: function(ID,mimic, baseUrl){
         if( mimic == true)
         {
             if(this.$localStorage.login)
@@ -49,7 +49,7 @@ export  const MimicComment =new Vue({
         else
         {
             var self = this;
-            axios.delete(this.$localStorage.get('baseUrl') + 'api/delete', {
+            axios.delete(baseUrl + 'api/Delete', {
                 data : {
                 name: ID,
                 token: self.$localStorage.get('token')
@@ -63,7 +63,7 @@ export  const MimicComment =new Vue({
                  });
         }
     },
-    SaveComment: function(ID,mimic){
+    SaveComment: function(ID,mimic, baseUrl){
         if( mimic == true)
         {
             if(this.$localStorage.login)
@@ -72,7 +72,7 @@ export  const MimicComment =new Vue({
         }
         else
         {
-            axios.post(this.$localStorage.get('baseUrl') + 'api/save', {
+            axios.post(baseUrl + 'api/Save', {
             ID: ID,
             token:this.$localStorage.get('token')
              })
@@ -84,7 +84,7 @@ export  const MimicComment =new Vue({
             });
         }
     },
-    EditComment: function(ID,cont,mimic){
+    EditComment: function(ID,cont,mimic, baseUrl){
         if( mimic == true)
         {
             if(this.$localStorage.login)
@@ -106,7 +106,7 @@ export  const MimicComment =new Vue({
         else
         {
             var self = this;
-            return axios.patch(this.$localStorage.get('baseUrl') + 'api/edit', {
+            return axios.patch(baseUrl + 'api/EditText', {
                 name: ID,
                 content: cont,
                 token: this.$localStorage.get('token')
@@ -120,7 +120,7 @@ export  const MimicComment =new Vue({
             });
         }
     },
-    UpVoteComment:function(ID,points,upVoted,downVoted,mimic){
+    UpVoteComment:function(ID,points,upVoted,downVoted,mimic, baseUrl){
         if( mimic == true)
         {
             var p;
@@ -152,7 +152,7 @@ export  const MimicComment =new Vue({
         }
         else
         {
-       return axios.post(this.$localStorage.get('baseUrl') + 'api/vote', {
+       return axios.post(baseUrl + 'api/Vote', {
        name: ID,
        dir: 1,
        token: this.$localStorage.get('token')
@@ -170,7 +170,7 @@ export  const MimicComment =new Vue({
        });
         }
     },
-    DownVoteComment:function(ID,points,downVoted,upVoted,mimic){
+    DownVoteComment:function(ID,points,downVoted,upVoted,mimic, baseUrl){
         if( mimic == true)
         {
             var p = points;
@@ -199,7 +199,7 @@ export  const MimicComment =new Vue({
         }
         else
         {
-       return axios.post(this.$localStorage.get('baseUrl') + 'api/vote', {
+       return axios.post(baseUrl + 'api/Vote', {
        name: ID,
        dir: -1,
        token: this.$localStorage.get('token')
