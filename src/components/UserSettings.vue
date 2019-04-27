@@ -99,7 +99,7 @@ import ChangePass from './UserSettingsModals/ChangePass.vue'
 import UserProfileSideBar from './UserProfileSideBar.vue'
 
 import {AllServices} from '../MimicServices/AllServices.js'
-
+import $ from'jquery/dist/jquery.min.js'
 
 export default {
   components:{
@@ -132,7 +132,12 @@ export default {
     AllServices.getPrefs();
     AllServices.updatePrefs();
     AllServices.changePass();
-    },
+    
+    $('#selectted').text('User Settings');
+    var remclass = $('#classed').prop('class');
+    $('#classed').removeClass(remclass);
+    $('#classed').addClass("glyphicon glyphicon-cog");
+  },
 }
 </script>
 
