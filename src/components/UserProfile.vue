@@ -118,6 +118,7 @@ export default {
     */
    getUserData:function(){
       AllServices.getUserInfoById(this.userName).then((data) =>{
+
       this.karmaCount = data.karma;
       this.image = data.image;
      // this.userName = data.userName;
@@ -130,6 +131,7 @@ export default {
     */
    getUserDataForGuest:function(){
      AllServices.getUserInfoByIdforGuest(this.userName).then((data) =>{
+       alert(this.userName+'inside');
       this.karmaCount = data.karma;
       this.image = data.image;
      // this.userName = data.userName;

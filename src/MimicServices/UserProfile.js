@@ -223,7 +223,7 @@ else {
               return response.data;
              })
             .catch(function (error) {
-              console.log(error);
+              // console.log(error);
             });
 }
 },
@@ -248,6 +248,7 @@ else {
 }
 },
 getUserInfoByIdforGuest:function(mimic,userName){
+  alert(userName);
   if(mimic){
     var profileInfo={
         userName:'',
