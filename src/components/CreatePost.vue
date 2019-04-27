@@ -11,10 +11,11 @@
       <div class="form-group dropApex" >
         <select id="selectList" class="form-control" name="category" @change="handleChange">
           <option>choose a community</option>
-     
-         <option v-for="apex in apexs" :key="apex.id"> 
+           
+         <option v-for="apex in apexs[0]" :key="apex.id"> 
+          
                {{apex.name}}
-         
+            
              </option>        
          
           </select>
@@ -40,10 +41,12 @@
                            </div>
      
                           <a  id="switchId"  @click="switchM" >{{this.switchTo}} </a>
-                              <ejs-richtexteditor ref="rteObj" :toolbarSettings="toolbarSettings" id="textsend" @keyup="Enable" v-if="normal==false">
+                          <div v-if="this.normal==false">
+                              <ejs-richtexteditor ref="rteObj" :toolbarSettings="toolbarSettings" id="textsend" @keyup="Enable" >
                               
                     
                               </ejs-richtexteditor> 
+                              </div>
                               <textarea class="form-control" rows="5" id="textsendnormal" @keyup="Enable" v-else>
                     
                               </textarea>
@@ -215,7 +218,8 @@ var sel = document.getElementById('selectList');
 var opt = sel.options[sel.selectedIndex];
 this.indx=sel.selectedIndex;
 this.Enable();
-this.apexComId=this.apexs[this.indx-1].id;
+this.apexComId=this.apexs[0][this.indx-1].id;
+// alert(this.apexComId);
 
 //alert(this.apexComId);
 
@@ -326,12 +330,23 @@ this.apexComId=this.apexs[this.indx-1].id;
  
       if(this.imagable){
       this.imgName=document.getElementById('imgId').src;
+      if(this.imgName==''){
+        this.imgName=null;
+      }
      
       }
-  
-           
+      if(this.videoUrl==''){
+        this.videoUrl=null;
+      }
+      
+      var today = new Date();
+      var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+      var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+      var dateTime = date+' '+time;
+     
+      // alert('fdsa');
       AllServices.submit(this.apexComId,this.title,this.bodyPost,this.imgName,this.videoUrl,this.isLocked,this.$localStorage.get('token'));
-      this.$emit('PostEmit',this.title,this.bodyPost,this.imgName,this.videoUrl,this.$localStorage.get('userName'),this.apexs[this.indx-1].name);
+      this.$emit('PostEmit',dateTime,this.title,this.bodyPost,this.imgName,this.videoUrl,this.$localStorage.get('userName'),this.apexs[0][this.indx-1].name);
       this.$router.push('/Submit');
      
     }
@@ -354,8 +369,10 @@ created(){
       {
         if(data)
         {
+          // alert('feeh data aho');
+        
           this.apexs = data;
-          
+          // console.log(data[0]);
         }
       });
 

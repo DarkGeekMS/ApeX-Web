@@ -213,6 +213,158 @@ export  const MimicComment =new Vue({
         return false;
        });
         }
+    },
+    getComments: function(ID,mimic){
+      if(mimic == true){
+         
+            var comment1 = {
+              writerUserName: "ayatmostafa",
+               content: "comment1",
+               idx: 0,
+               level: 0,
+               parent: "t3_10",
+               id: "t3_10_Child1",
+               created_at: new Date,
+              votes:43,
+              Saved:false,
+              userVote:1
+               };
+            var comment2 = {
+              writerUserName: "MohamedAhmed",
+              content: "reply2 on comment2",
+              idx: 1,
+              level: 1, 
+              parent: "t3_10_Child1", 
+              id: "t3_10_Child1_Child1",
+              created_at:  new Date,
+              votes:0 ,
+              Saved:false,
+              userVote:1
+               };
+            var comment3 = { 
+               writerUserName: "Double",
+               content: "reply1 on comment1",
+               idx: 2,
+               level: 1,
+               parent: "t3_10_Child1",
+               id: "t3_10_Child1_Child2",
+               created_at:  new Date,
+              votes:-22,
+              Saved:true,
+              userVote:-1
+               };
+            var comment4 =  {
+              writerUserName: "Nourhan",
+              content: "comment2",
+              idx: 3,
+              level: 0,
+              parent: "t3_10",
+              id: "t3_10_Child2",
+              created_at:  new Date ,
+              votes:100,
+              Saved:false,
+              userVote:0
+             };
+
+             var comment5 = {
+              writerUserName: "Nada",
+              content: "reply 1 on comment 2 with test of mentions u/double",
+              idx: 4,
+              level: 1,
+              parent: "t3_10_Child2",
+              id: "t3_10_Child2_Child1",
+              created_at:  new Date,
+              votes:3 ,
+              Saved:true,
+              userVote:1
+             };
+
+             var comment6 = {
+              writerUserName: "Mark",
+              content: "comment3",
+              idx: 5,
+              level: 0,
+              parent: "t3_10",
+              id: "t3_10_Child3",
+              created_at:  new Date ,
+              votes:-2,
+              Saved:false,
+              userVote:0
+             };
+
+            var children = [comment1,comment2,comment3,comment4,comment5,comment6];
+            var promise1 = new Promise(function(resolve, reject) {
+                setTimeout(function() {
+                  resolve(children);
+                }, 300);
+              });
+    return promise1;
+          
+      }
+      else
+      {
+        if(this.$localStorage.login)
+          {
+        return axios.post('http://35.232.3.8/api/moreComments', {
+            parent:ID,
+            token:this.$localStorage.get('token')
+        })
+           .then(response=> {
+            return response.data;
+           })
+           .catch(function (error) {
+            return false;
+            });
+          }
+          else{
+            return axios.get('http://35.232.3.8/api/moreComments', {
+            parent:ID,
+        })
+           .then(response=> {
+            return response.data;
+           })
+           .catch(function (error) {
+            return false;
+            });
+          }
+         }
+    },
+    reportComment: function(ID,reason,mimic){
+      if(this.$localStorage.login)
+      {
+      if (mimic == true)
+      {
+        var promise1 = new Promise(function(resolve, reject) {
+          setTimeout(function() {
+            resolve(true);
+          }, 300);
+        });
+        return promise1;
+      }
+      else{
+        return axios.post(this.$localStorage.get('baseUrl') + 'api/report', {
+          name: ID,
+          content: reason,
+          token:this.$localStorage.get('token')
+         })
+         .then(response=> {
+          return response.data;
+         })
+         .catch(function (error) {
+          alert("Log In First!!");
+          return false;
+
+          });
+      }
+      }
+      else{
+        alert("Log In First!!");
+        var promise1 = new Promise(function(resolve, reject) {
+          setTimeout(function() {
+            resolve(true);
+          }, 300);
+        });
+        return promise1;      }
     }
   }
 })
