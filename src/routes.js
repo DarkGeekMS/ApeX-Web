@@ -3,7 +3,7 @@ import ApexComSubscribers from './components/ApexComSubscribers.vue'
 import HomePage from './components/HomePage.vue'
 import ApexCom from './components/ApexCom.vue'
 import userprofile from './components/UserProfile.vue'
-//import ApexComReports from './components/ApexComReports.vue'
+import userprofileBlockList from './components/UserProfileBlockList.vue'
 
 import Reports from './components/Reports.vue'
 import Search from './components/Search.vue'
@@ -34,7 +34,9 @@ export default[
         {path:'users', component:Users } ]},
     {path:'/Messages' ,name:'Messages',component:MessageBar},
     {path:'/userprofile/:userName',name:'UserProfile',component:userprofile,props:true,children :[
-      {path:'Report',name:'Report', component:Reports,props:true },]
+      {path:'Report',name:'Report', component:Reports,props:true },
+      {path:'blockedlist',name:'blockLlist', component:userprofileBlockList,props:true } 
+    ]
   },
 
     {path:'/UserSettings',name:'UserSettings',component:UserSettings},

@@ -89,7 +89,7 @@ export  const AllServices =new Vue({
     return about;
   },
   getAboutGuest:function(apexComName) {
-    alert(apexComName+'all');
+    // alert(apexComName+'all');
     var about=MimicApexCom.getAboutGuest(this.mimic,apexComName);
     return about;
 	},
@@ -196,7 +196,7 @@ getAllMessages:function(){
 },
 getUserInfoByIdforGuest:function(userName){
   var data=MimicUserProfile.getUserInfoByIdforGuest(this.mimic,userName);
-  alert(userName+'all');
+  // alert(userName+'all');
     return data;
 },
 getReplies: function(ID){
@@ -219,8 +219,8 @@ reviewReportsUP:function(userName){
   var data=MimicUserProfile.reviewReports(this.mimic,userName);
   return data;
 },
-ignoreReport:function(id){
-  var data=MimicApexCom.ignoreReport(this.mimic,id);
+ignoreReport:function(user,id){
+  var data=MimicApexCom.ignoreReport(this.mimic,user,id);
   return data;
 },
 CreateApexCom:function(Name,Description,Rules,Avatar,Banner) {
@@ -242,5 +242,9 @@ searchU:function(id){
   var data=MimicApexCom.searchU(this.mimic,id);
   return data;
 },
+getBlockList:function(){
+  var data=MimicUserProfile.getBlockList(this.mimic);
+  return data;
+}
   }
 });

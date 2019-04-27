@@ -81,18 +81,17 @@
           <button v-show="isAdmin()&&settings" v-on:click="deleteUser()" id="deletebutton" class="button" type="button">delete user</button>
         </div>
     </div>
-
+<!-- 
 <div  id="blocklistbox" v-show="notGuest() && blockList.length !==0">
-  <!-- <div  id="blocklistbox"> -->
       <h3 class="Header" id="blocklistheader">Block list</h3>
       <div class="contentblocklist" >
       <div id="blocklistitam" v-for="(blockedUser,index) in blockList" :key="blockedUser.id">
     <h5 > {{blockedUser.userName}}</h5>
     <button id="unblockbutton" class="unblockButton" v-on:click="unblockUser(blockedUser.userName,index)">unblock</button>
 
-  </div>
-    </div>
-    </div>
+  </div> -->
+    <!-- </div> -->
+    <!-- </div> -->
     </div>
 </div>
 </template>
@@ -125,7 +124,6 @@ export default {
       karmaCount:0,
       image:'',
       cakeDay:'',
-      blockList:[],
       fullName:''
     }
   },
@@ -226,7 +224,6 @@ export default {
       this.personalPosts = data.personalPosts;
       this.reports = data.reports;
       this.cakeDay = data.cakeDay;
-      this.blockList = data.blockList;
       })
    },
     /**
@@ -417,28 +414,6 @@ export default {
   margin-top: 3%;
   margin-bottom: 3%;
 }
-.unblockButton{
-  width:30%;
-  margin-top:-11%;
-  margin-left:0%;
-  margin-right: 0%;
-  margin-bottom: 0%;
-  color:skyBlue;
-  padding: 1%;
-  float:right;
-  border-width: 3px;
-  border-radius: 20%;
-  font-size: 14px;
-  font-weight: 500;
-  letter-spacing: 0.5px;
-  cursor:pointer;
-  border-color: skyblue;
-  border-style: solid;
-  text-transform: uppercase;
-  height:auto;
-  overflow: hidden;
-}
-.unblockButton:hover {opacity: 0.75}
 .Header{
   background-color: skyBlue;
   padding:4%;

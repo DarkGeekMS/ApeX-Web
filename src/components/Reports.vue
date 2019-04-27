@@ -8,18 +8,16 @@
   <h4>Reported by:</h4><router-link class="accountLink" :to="{name:'UserProfile' , params: {userName:report.userName}}"> {{report.userName}}</router-link>
   </div>
   <post class="post" v-bind:postData="report.post" ></post>
-  <comment class="comment"
-    v-bind:content="report.comment.content"
-    v-bind:idx="report.comment.idx"
-    v-bind:level="report.comment.level"
-    v-bind:parentIdx="report.comment.parentIdx"
-    v-bind:parentID="report.comment.parebtID"
-    v-bind:ID="report.comment.ID"
-  ></comment>
+  
+  <Comment class="comment"
+  v-bind:user= report.comment.user  v-bind:level= report.comment.level 
+  v-bind:content= report.comment.content v-bind:con= report.comment.con
+   v-bind:idx= report.comment.idx v-bind:parentIdx= report.comment.parentIdx 
+  v-bind:parentID= report.comment.parentID v-bind:ID= report.comment.currentID ></Comment>
 <div class="box">
 <h4>Reason:</h4> <h4>{{report.reason}}</h4>
 </div>
-<button id="ignorebutton" class="button" type="button" v-on:click="ignoreReport(report.id,index,'comment')">ignore report</button>
+<button id="ignorebutton" class="button" type="button" v-on:click="ignoreReport(report.comment.user,report.id,index,'comment')">ignore report</button>
 </div>
 </div>
  <div class='report' v-if="reportedPost.length !==0">
@@ -32,7 +30,7 @@
 <div class="box">
 <h4>Reason:</h4> <h4>{{report.reason}}</h4>
 </div>
-<button id="ignorebutton" class="button" type="button" v-on:click="ignoreReport(report.id,index,'post')">ignore report</button>
+<button id="ignorebutton" class="button" type="button" v-on:click="ignoreReport(report.post.posted_by,report.id,index,'post')">ignore report</button>
 </div>
 </div>
 </div>
@@ -72,8 +70,8 @@ props:['apexComName','userName'],
          this.reportedPost=data.reportedpost;
          });
    },
-   ignoreReport(id,index,type){
-     var data=AllServices.ignoreReport(id);
+   ignoreReport(user,id,index,type){
+     var data=AllServices.ignoreReport(user,id);
      if(data && type=='comment'){
        this.reportedComment.splice(index, 1);
      }
