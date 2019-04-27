@@ -1,11 +1,12 @@
 <template>
-  <div id = "CommentParent" v-bind:style="{marginLeft: 5 +'%'}">
-    <WriteComment buttonType="0" v-bind:parentID="postID" v-on:Comment="addComment" v-bind:style="{width: 55 +'%'}"></WriteComment>
+  <div id = "CommentParent">
+    <WriteComment buttonType="0" v-bind:parentID="postID" v-on:Comment="addComment" ></WriteComment>
     <div v-for = "comment in comments" :key="comment.user">
       <Comment 
       v-on:Delete="deleteComment"  
       v-on:Reply2="addReply" 
       v-on:Edit="editComment" 
+      v-on:Report="reportComment"
       v-bind:user= comment.user  
       v-bind:level= comment.level 
       v-bind:content= comment.content 
@@ -23,6 +24,9 @@
       v-bind:moderatorUserName = 'moderatorUserName'
       ></Comment>
     </div>
+
+    <reportBox v-bind:ID ='IDreported' v-bind:idx ='idxReported'  v-on:Delete="deleteComment($event)"  > </reportBox>
+
   </div>
 </template>
 
@@ -30,6 +34,7 @@
 import WriteComment from './WriteComment.vue'
 import Comment from './Comment.vue'
 import {AllServices} from '../MimicServices/AllServices.js'
+import reportBox from './ReportModal.vue'
 
 
 
@@ -42,6 +47,7 @@ export default {
   },
  components: {
     WriteComment,
+    reportBox,
     Comment
   },
   data(){
@@ -56,7 +62,9 @@ export default {
             parentID,
             CurrentID
           }*/
-          ]
+          ],
+          IDreported:"",
+          idxReported:-1
       }
   },
   mounted(){
@@ -91,14 +99,23 @@ export default {
         }
 
       },
-      editComment:function(content,con,i){
+      editComment:function(content,i){
+          console.log(con);
+          console.log(content);
+          console.log(i);
+
          if (content!=''){
           this.comments[i].content=content;
-          this.comments[i].con=con;
+          this.comments[i].con=this.OpString(content);
          }
           else
         alert("empty text not allowed!");
 
+      },
+      reportComment:function(ID,idx){
+        this.IDreported=ID;
+        this.idxReported=idx;
+        this.$modal.show('reportBox');
       },
       deleteCommentByIdx:function(x){
         for(var i = x;i<this.comments.length-1;i++)
@@ -221,3 +238,8 @@ export default {
   }
 }
 </script>
+<style scoped>
+#CommentParent{
+  margin-left:3%;
+}
+</style>

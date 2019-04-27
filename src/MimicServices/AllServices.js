@@ -181,6 +181,10 @@ getComments: function(ID){
   var data=MimicComment.getComments(ID,this.mimic);
   return data;
 },
+reportComment: function(ID,reason){
+  var data=MimicComment.reportComment(ID,reason,this.mimic);
+  return data;
+},
 sendMessage: function(rec,title,cont){
   var data=MimicMessage.sendMessage(rec,title,cont,this.mimic);
   return data;

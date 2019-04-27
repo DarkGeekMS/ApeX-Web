@@ -1,7 +1,7 @@
 <template>
 
-  <div id="Comment" v-show = "deleted"  v-bind:style="{marginLeft: level*2 +'%'}" >
-     <reportBox> </reportBox>
+  <div id="Comment" v-show = "deleted">
+     <div v-bind:style="{marginLeft: level*4 +'%'}">
       <div id = "firstLine">
         <button id ="Up" v-on:click="Upvote" v-show="!this.upVoted" class = "arrows,up"></button>
         <button id ="Up2" v-on:click="Upvote" v-show="this.upVoted" class = "arrows,up"></button>
@@ -30,22 +30,20 @@
           </router-link>
         </div>
       </div>
-
-      <br>
-      <br>
+      </div>
+      
 
       <div id = "thirdLine" v-show="!showEditBox">
-        <button class = "buttons" v-on:click = "showReplyBox = !showReplyBox" id = "Reply">Reply</button>
-        <button class = "buttons" id = "Report" @click="$modal.show('reportBox')" v-show = "showReportButton">Report</button>
+        <button class = "buttons" v-on:click = "showReplyBox = !showReplyBox  ,showEditBox = false"  id = "Reply">Reply</button>
+        <button class = "buttons" id = "Report" @click="Report" v-show = "showReportButton">Report</button>
         <button class = "buttons" v-on:click="Save" id = "Save" >{{unSaved}}</button>
-        <button class = "buttons" v-on:click = "showEditBox = !showEditBox" id = "Edit" v-show = "showEditButton">Edit</button>
+        <button class = "buttons" v-on:click = "showEditBox = !showEditBox  ,showReplyBox = false" id = "Edit" v-show = "showEditButton">Edit</button>
         <button class = "buttons" v-on:click ="Delete" id = "Delete" v-show = "showDeleteButton">Delete</button>
       </div>
 
       <br>
-
-      <WriteComment buttonType="1" v-bind:parentLevel=level  v-bind:parentID=ID v-bind:parentIdx=idx v-on:Reply="addReply"  v-show = "showReplyBox && !showEditBox"  class="Reply"></WriteComment>
       <WriteComment id="EditBox" buttonType="2" v-on:noEdit="retrieveWithNoEdit" v-bind:parentID=ID v-on:editParent="edit($event)" :content=content v-show = "showEditBox" class="Reply"></WriteComment>
+      <WriteComment buttonType="1" v-bind:parentLevel=level  v-bind:parentID=ID v-bind:parentIdx=idx v-on:Reply="addReply"  v-show = "showReplyBox && !showEditBox"  class="Reply"></WriteComment>
 
   </div>
 </template>
@@ -121,13 +119,14 @@ export default {
   /////
   },
   methods:{
-edit:function(updatedConten,con){
+edit:function(updatedContent){
+     console.log(updatedContent,'bos ya sedy');
   this.content=updatedContent;
-  this.con=con;
+  this.OpString();
   this.showEditBox =0;
   //EMIT EVENT TO COMMENT PARENT TO EDIT THE CONTENT OF THE IDX = idx  by updatedContent
-  this.$emit('Edit',updatedContent,con,this.idx );
- 
+  this.$emit('Edit',updatedContent,this.idx );
+
 
 
 },
@@ -146,6 +145,7 @@ Delete:function(){
 
 },
 OpString:function(){
+    this.con = [];
    for (var i = 0;i<this.content.length;i++)
           {
               if (this.content[i]=='u' && this.content[i+1]=='/' && this.content[i+2]!=' ')
@@ -175,6 +175,9 @@ OpString:function(){
 
 
           }
+},
+Report:function(){
+    this.$emit('Report',this.ID,this.idx);
 },
 Save:function(){
   if(this.unSaved=='Save')
@@ -255,6 +258,10 @@ guestButtons:function(){
   this.showReportButton = true;
   this.showDeleteButton = false;
   this.showEditButton = false;
+},
+deleteReportedComment:function(idx){
+  console.log(idx);
+  this.$emit('Delete',idx );
 }
   },
 
@@ -282,7 +289,7 @@ guestButtons:function(){
     position: static;
     width:53%;
     float:left;
-    background:white;
+    background:transparent;
 }
 
 
@@ -365,7 +372,7 @@ guestButtons:function(){
     font-size: 13px;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     color: rgb(90, 90, 90);
-    background-color:white;
+    background-color:transparent;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     border: none;
@@ -381,13 +388,21 @@ guestButtons:function(){
 }
  .content  { 
 overflow: hidden;
+   display: inline;
+
  }
  .user{
 display: inline;
 
  }
- /* .condiv{
-   max-width: 100%;
- } */
-
+ .condiv{
+   display: inline;
+ }
+#EditBox{
+  position: relative;
+border: black 1px solid;
+width:60%;
+float:left;
+margin-top:5%;
+}
 </style>

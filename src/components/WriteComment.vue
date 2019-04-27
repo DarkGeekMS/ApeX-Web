@@ -42,14 +42,14 @@ export default {
   methods:{
     edit:function(){
       this.editClicked=!this.editClicked;
-        this.OpString();
-
+      this.OpString();
       if (this.content!='')
       {
         console.log('pp',this.parentID);
 AllServices.EditComment(this.parentID,this.content).then((data) => {
         if(data){
-        this.$emit('editParent',this.content,this.con);
+        console.log(this.content,"content in writecomment");
+        this.$emit('editParent',this.content);
         }
         else
           alert("Log In First!!");
@@ -181,6 +181,10 @@ OpString:function(){
     resize:vertical;
     border:none;
     background:white;
+    margin-left:0.5%;
+     margin-top:0.5%;
+
+
 }
 .comButton{
 font-size: 17px;
@@ -255,7 +259,7 @@ position: relative;
 }
 
 #Buttons{
-    background: rgb(221, 221, 221);
+    background:transparent;
     height: 23px;
     position: relative;
     top: 0;
@@ -264,12 +268,15 @@ position: relative;
     -moz-osx-font-smoothing: grayscale;
     align-items: center;
     margin:auto;
+    margin-left:0.5%;
+margin-bottom:1%;
 }
 
 #WriteComment{
-  position: static;
+  position: relative;
 border: black 1px solid;
-width:80%;
+width:60%;
 float:left;
+margin-top:2%;
 }
 </style>

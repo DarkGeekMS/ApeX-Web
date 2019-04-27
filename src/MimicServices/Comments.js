@@ -301,6 +301,8 @@ export  const MimicComment =new Vue({
       }
       else
       {
+        if(this.$localStorage.login)
+          {
         return axios.post('http://35.232.3.8/api/moreComments', {
             parent:ID,
             token:this.$localStorage.get('token')
@@ -311,7 +313,56 @@ export  const MimicComment =new Vue({
            .catch(function (error) {
             return false;
             });
+          }
+          else{
+            return axios.get('http://35.232.3.8/api/moreComments', {
+            parent:ID,
+        })
+           .then(response=> {
+            return response.data;
+           })
+           .catch(function (error) {
+            return false;
+            });
+          }
          }
+    },
+    reportComment: function(ID,reason,mimic){
+      if(this.$localStorage.login)
+      {
+      if (mimic == true)
+      {
+        var promise1 = new Promise(function(resolve, reject) {
+          setTimeout(function() {
+            resolve(true);
+          }, 300);
+        });
+        return promise1;
+      }
+      else{
+        return axios.post(this.$localStorage.get('baseUrl') + 'api/report', {
+          name: ID,
+          content: reason,
+          token:this.$localStorage.get('token')
+         })
+         .then(response=> {
+          return response.data;
+         })
+         .catch(function (error) {
+          alert("Log In First!!");
+          return false;
+
+          });
+      }
+      }
+      else{
+        alert("Log In First!!");
+        var promise1 = new Promise(function(resolve, reject) {
+          setTimeout(function() {
+            resolve(true);
+          }, 300);
+        });
+        return promise1;      }
     }
   }
 })
