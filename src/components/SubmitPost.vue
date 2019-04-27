@@ -69,9 +69,9 @@ export default {
       this.createPostData.content=content;
       this.createPostData.img=img;
       this.createPostData.videolink=video;
-      this.createPostData.posted_by=author;
+      this.createPostData.post_writer_username=author;
       this.createPostData.title=title;
-      this.createPostData.apex_id=apex;
+      this.createPostData.apex_com_name=apex;
       this.createPostData.canEdit=true;
       this.createPostData.created_at=d;
       // alert(d);
