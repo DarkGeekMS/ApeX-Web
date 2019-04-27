@@ -3,23 +3,22 @@
  <demo-login-modal> </demo-login-modal>
  <demo-sign-modal> </demo-sign-modal>
  <nav class="navbar navbar-expand-lg navbar-light navbar-fixed-top" id="mainNav">
-    <router-link class="navbar-brand" :to="{ name:'HomePage'}">
+    <router-link class="navbar-brand" :to="{ name: 'HomePage' , params: {sortingparam:'hot'}}">
       <img style="margin-top:-8px" width="85"
       src="../../public/Logo_small.png" >
     </router-link>
-
     <div class="container-fluid">
- 
+
     <div class="btn-group sel" >
       <button type="button" data-toggle="dropdown" class="btn btn-default dropdown-toggle">
-        <i class="glyphicon glyphicon-arrow-up blue" id="classed" ></i>  
-        <span id="selectted" > Popular</span> 
+        <i class="glyphicon glyphicon-arrow-up blue" id="classed" ></i>
+        <span id="selectted" > Popular</span>
         <span class="caret" style="float:right; margin-top:10px" ></span>
       </button>
-      
+
       <ul class="dropdown-menu drop1" style="width:93%">
         <li class="dropdown-header">REDDIT FEEDS</li>
-        <li v-show="this.$localStorage.get('login')"><a href="/" class="glyphicon glyphicon-home blue" ><span id="items">Home</span></a></li> 
+        <li v-show="this.$localStorage.get('login')"><a href="/" class="glyphicon glyphicon-home blue" ><span id="items">Home</span></a></li>
         <li><a href="#" class="glyphicon glyphicon-arrow-up blue"><span id="items">Popular</span></a></li>
         <li><a href="#" class="glyphicon glyphicon-stats blue"><span id="items">All</span></a></li>
         <li><a href="#"> <span style="background-color:blue; color:white; padding-left:3px"> oc </span> <span style="color:black;padding-left:7%">Original Content</span></a></li>
@@ -27,40 +26,40 @@
         <li class="divider"></li>
 
         <li class="dropdown-header" v-show="this.$localStorage.get('login')">MY COMMUNITIES</li>
-            <li v-show="log" v-for="apex in apexs" :key="apex.id" ><router-link :to="{ name:'ApexCom', params: {ApexComName:apex.name} }" > {{apex.name}} </router-link></li> 
+            <li v-show="log" v-for="apex in apexs" :key="apex.id" ><router-link :to="{ name:'ApexCom', params: {ApexComName:apex.name} }" > {{apex.name}} </router-link></li>
       </ul>
-    </div>  
-  
+    </div>
+
 
     <div class="form-group has-feedback has-search" style="display:inline-block">
       <span class="glyphicon glyphicon-search form-control-feedback"></span>
       <input type="text" class="form-control" placeholder="Search Apex" v-model="searchVal" v-on:keyup.enter="search()">
     </div>
 
-    <div class="btn-toolbar tool1" role="toolbar"> 
+    <div class="btn-toolbar tool1" role="toolbar">
     <div class="btn-group">
-    <button type="button" class="btn btn-default b1"> 
+    <button type="button" class="btn btn-default b1">
     <i class="glyphicon glyphicon-arrow-up"></i>
-    </button> 
-    <button type="button" class="btn btn-default b2"> 
-    <i class="glyphicon glyphicon-stats"></i> 
     </button>
-    <button type="button" class="btn btn-default b3"> 
-    <span style="background-color:black; color:white; padding-left:3px"> oc </span> 
+    <button type="button" class="btn btn-default b2">
+    <i class="glyphicon glyphicon-stats"></i>
     </button>
-    </div> 
-    </div> 
+    <button type="button" class="btn btn-default b3">
+    <span style="background-color:black; color:white; padding-left:3px"> oc </span>
+    </button>
+    </div>
+    </div>
 
-    <div class="btn-toolbar tool2" role="toolbar" v-show="this.$localStorage.get('login')"> 
+    <div class="btn-toolbar tool2" role="toolbar" v-show="this.$localStorage.get('login')">
       <div class="btn-group">
-      <button type="button" class="btn btn-default b4" @click="$router.push({ name:'Messages'})"> 
+      <button type="button" class="btn btn-default b4" @click="$router.push({ name:'Messages'})">
       <i class="glyphicon glyphicon-envelope"></i>
-      </button> 
-      <button type="button" class="btn btn-default b5" @click="$router.push('/Submit')"> 
+      </button>
+      <button type="button" class="btn btn-default b5" @click="$router.push('/Submit')">
       <i class="glyphicon glyphicon-edit"></i>
       </button>
-      </div> 
-    </div> 
+      </div>
+    </div>
 
 
     <div v-show="!this.$localStorage.get('login')" class="form-group log" style="display:inline-block">
@@ -86,7 +85,7 @@
   <div class="list pop1"> Popular </div>
   <div class="list pop2"> All </div>
   <div class="list pop3"> Orignal Content </div>
-  
+
   <div class="list pop4"> Messages </div>
   <div class="list pop5"> Create Post </div>
 
@@ -103,7 +102,7 @@ import {AllServices} from '../MimicServices/AllServices.js'
 import $ from'jquery/dist/jquery.min.js'
 /**
  * @vue-data {string} [userLog=""] name of user logged in
- * @vue-data {string} [searchVal=""] search value  
+ * @vue-data {string} [searchVal=""] search value
  * @vue-data {boolean} [canBeShown=false] check shownModal
  * @vue-data {object} [apexs] names op apexComs
 */
@@ -145,7 +144,7 @@ import $ from'jquery/dist/jquery.min.js'
         $('#classed').removeClass(remclass);
         $('#classed').addClass(className);
       }
-      
+
       $('.drop1 a').click(function(){
         $('#selectted').text($(this).text());
         var className = $(this).prop('class');
@@ -191,7 +190,7 @@ import $ from'jquery/dist/jquery.min.js'
         })
       },
       /**
-       * axios post request to log out the user through send user's token, delete it from data ,delete username and set login false 
+       * axios post request to log out the user through send user's token, delete it from data ,delete username and set login false
       */
       Logout: function(){
         AllServices.logOut()
@@ -270,7 +269,7 @@ input:hover{
   div input,.has-search .form-control-feedback {
     display: none
   }
-  
+
 }
 @media(max-width:319px){
   div .log, div .sel .caret {
@@ -297,9 +296,9 @@ input:hover{
   .has-search{
     width:30%;
   }
-} 
+}
 @media(max-width:1054px){
-  div .tool2 
+  div .tool2
   {
     display: none  }
   div .tool1{
@@ -310,7 +309,7 @@ input:hover{
   div #usernam{
     display: none;
   }
-  
+
   div .tool1, div .tool2 {
     padding-left: 0.5%
   }
@@ -378,7 +377,7 @@ ul{
 }
 .sel button:hover{
   border:1px solid #ccc6;
-  background-color:white; 
+  background-color:white;
 }
 .sel li a{
   padding-right: 8px;

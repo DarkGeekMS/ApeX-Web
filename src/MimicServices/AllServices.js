@@ -22,9 +22,9 @@ export  const AllServices =new Vue({
     getState(){
       return this.mimic
     },
-    submit:function(videoUrl,apexComId,bodyPost,imgName, isLocked,token){
+    submit:function(apexComId,title,bodyPost,imgName,videoUrl, isLocked,token){
 
-      var data=MimicCreatePosts.submitPost(videoUrl,apexComId,bodyPost,imgName,isLocked,token,this.mimic, this.baseUrl);
+      var data=MimicCreatePosts.submitPost(apexComId,title,bodyPost,imgName,videoUrl, isLocked,token,this.mimic, this.baseUrl);
       return data;
 
     },
@@ -78,8 +78,8 @@ export  const AllServices =new Vue({
     {
       return MimicAuth.ForgetUser2(code,this.mimic, this.baseUrl);
     },
-     getPosts:function(apexComName) {
-       return MimicDisplayPosts.getPostsData(this.mimic,apexComName, this.baseUrl);
+    getPosts:function(apexComName,sortparam) {
+      return MimicDisplayPosts.getPostsData(this.mimic,apexComName,sortparam, this.baseUrl);
     },
 	getAbout:function(apexComName) {
     var about=MimicApexCom.getAbout(this.mimic,apexComName, this.baseUrl);

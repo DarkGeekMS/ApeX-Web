@@ -25,7 +25,7 @@ return promise1;
                 }
               }
 else {
-  return axios.delete(baseUrl + 'api/del_user',
+  return axios.delete(baseUrl + 'api/DeleteUser',
  {
     UserID:this.$localStorage.get('userName') ,
     token:this.$localStorage.get('token'),
@@ -57,7 +57,7 @@ return promise1;
   }
   else{
 
-    return axios.get(baseUrl + 'api/prefs',
+    return axios.get(baseUrl + 'api/GetPreferences',
    {
       UserID:this.$localStorage.get('userName') ,
       token:this.$localStorage.get('token')
@@ -69,7 +69,7 @@ return promise1;
 
 updatePrefs:function (mimic,email,avatar,username, baseUrl) {
   if(mimic==false){
-    return axios.post(baseUrl + 'api/updateprefs',
+    return axios.post(baseUrl + 'api/UpdatePreferences',
    {
      token:this.$localStorage.get('token'),
     email:email,
@@ -84,7 +84,7 @@ updatePrefs:function (mimic,email,avatar,username, baseUrl) {
 
 changePass:function (mimic,password,withCode,username,key, baseUrl) {
   if(mimic==false){
-    return axios.patch(baseUrl + 'api/changepassword',
+    return axios.patch(baseUrl + 'api/ChangePassword',
    {
      token:this.$localStorage.get('token'),
     password:password,

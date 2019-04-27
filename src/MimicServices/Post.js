@@ -25,7 +25,7 @@ return promise1;
     else
     {
         var self = this;
-        return axios.patch(baseUrl + 'api/edit', {
+        return axios.patch(baseUrl + 'api/EditText', {
             name: ID,
             content: cont,
             token: this.$localStorage.get('token')
@@ -53,7 +53,7 @@ return promise1;
             }
 
              else {
-                axios.post(baseUrl + "api/save",
+                axios.post(baseUrl + "api/Save",
              {
                 ID:ID,
                 token:token
@@ -81,7 +81,7 @@ return promise1;
 
             else{
 
-                axios.post(baseUrl + "api/DelComment",{
+                axios.DELETE(baseUrl + "api/Delete",{
                     ID    : name,
                     token : ID
 
@@ -148,7 +148,7 @@ return promise1;
                   return false;}
 
            else{
-            axios.post(baseUrl + "api/vote",
+            axios.post(baseUrl + "api/Vote",
             {
 
               ID       : ID,
@@ -181,7 +181,7 @@ return promise1;
                       return false;
            }
            else{
-            axios.post(baseUrl + "api/vote",
+            axios.post(baseUrl + "api/Vote",
                    {
 
 
@@ -225,7 +225,7 @@ defaultVote(name,ID,direction,mimic, baseUrl){
 
 }
 else{
-axios.post(baseUrl + "api/vote",
+axios.post(baseUrl + "api/Vote",
 {
 
 ID       : ID,
@@ -254,7 +254,7 @@ isLocked(ID,mimic, baseUrl){
     }
     else
     {
-        axios.post(baseUrl + 'api/save', {
+        axios.post(baseUrl + 'api/Save', {
         ID: ID,
         token:this.$localStorage.get('token')
          })

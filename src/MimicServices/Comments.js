@@ -22,7 +22,7 @@ export  const MimicComment =new Vue({
       }
       else
       {
-        return axios.post(baseUrl + 'api/comment', {
+        return axios.post(baseUrl + 'api/AddReply', {
             content: cont,
             parent: parentID,
             token:this.$localStorage.get('token')
@@ -49,7 +49,7 @@ export  const MimicComment =new Vue({
         else
         {
             var self = this;
-            axios.delete(baseUrl + 'api/delete', {
+            axios.delete(baseUrl + 'api/Delete', {
                 data : {
                 name: ID,
                 token: self.$localStorage.get('token')
@@ -72,7 +72,7 @@ export  const MimicComment =new Vue({
         }
         else
         {
-            axios.post(baseUrl + 'api/save', {
+            axios.post(baseUrl + 'api/Save', {
             ID: ID,
             token:this.$localStorage.get('token')
              })
@@ -106,7 +106,7 @@ export  const MimicComment =new Vue({
         else
         {
             var self = this;
-            return axios.patch(baseUrl + 'api/edit', {
+            return axios.patch(baseUrl + 'api/EditText', {
                 name: ID,
                 content: cont,
                 token: this.$localStorage.get('token')
@@ -152,7 +152,7 @@ export  const MimicComment =new Vue({
         }
         else
         {
-       return axios.post(baseUrl + 'api/vote', {
+       return axios.post(baseUrl + 'api/Vote', {
        name: ID,
        dir: 1,
        token: this.$localStorage.get('token')
@@ -199,7 +199,7 @@ export  const MimicComment =new Vue({
         }
         else
         {
-       return axios.post(baseUrl + 'api/vote', {
+       return axios.post(baseUrl + 'api/Vote', {
        name: ID,
        dir: -1,
        token: this.$localStorage.get('token')

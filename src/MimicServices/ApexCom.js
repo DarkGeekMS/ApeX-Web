@@ -26,7 +26,7 @@ export  const MimicApexCom =new Vue({
 return promise;
 }
 else {
-  return axios.post(baseUrl + 'api/about', {
+  return axios.post(baseUrl + 'api/AboutApexcom', {
       ApexCom_ID :ApexComName,
       token:this.$localStorage.get('token')
   })
@@ -60,8 +60,8 @@ var promise = new Promise(function(resolve) {
 return promise;
 }
 else {
-return axios.get(baseUrl + 'api/about',{params: {
-    ApexCom_id :ApexComName,}
+return axios.get(baseUrl + 'api/AboutApexcom',{params: {
+    ApexCom_ID :ApexComName,}
 })
 .then(response=> {
   return response.data;
@@ -92,7 +92,7 @@ var promise = new Promise(function(resolve) {
 return promise;
 }
 else {
- return axios.post(baseUrl + 'api/get_subscribers', {
+ return axios.post(baseUrl + 'api/GetSubscribers', {
       ApexCom_id :apexComName,
       token:this.$localStorage.get('token')
   })
@@ -113,7 +113,7 @@ blockSubscriber: function(mimic,userName,apexComName, baseUrl){
 return true;
 }
 else {
-  axios.post(baseUrl + 'api/block', {
+  axios.post(baseUrl + 'api/BlockUser', {
         ApexCom_id:apexComName,
         user_id:userName,
         token:this.$localStorage.get('token')
@@ -134,7 +134,7 @@ deleteApexCom: function(mimic,apexComName, baseUrl){
     return true;
     }
     else {
-      axios.delete(baseUrl + 'api/del_ac',{
+      axios.delete(baseUrl + 'api/DeleteApexcom',{
         params: {
          ApexCom_id:apexComName,
          token:this.$localStorage.get('token')
@@ -154,7 +154,7 @@ subscribe: function(mimic,apexComName, baseUrl){
         return true;
     }
     else {
-      axios.post(baseUrl + 'api/subscribe', {
+      axios.post(baseUrl + 'api/Subscribe', {
       ApexCom_id:apexComName,
       token:this.$localStorage.get('token')
       })
@@ -173,7 +173,7 @@ addOrDeleteModerator: function(mimic,userName,apexComName, baseUrl){
     return true;
   }
 else {
-   axios.post(baseUrl + 'api/add_moderator', {
+   axios.post(baseUrl + 'api/AddModerator', {
         ApexCom_id:apexComName,
         user_id:userName,
         Token:this.$localStorage.get('token')
@@ -264,7 +264,7 @@ reviewReports: function(mimic,apexComName, baseUrl){
       return promise;
     }
     else {
-       return axios.post(baseUrl + 'api/report_action', {
+       return axios.post(baseUrl + 'api/ReviewReports', {
             ApexCom_id:apexComName,
             Token:this.$localStorage.get('token')
           })
@@ -282,7 +282,7 @@ ignoreReport:function(mimic,userID,reportID, baseUrl){
     return true;
   }
   else{
-            axios.post(baseUrl + 'api/report_action', {
+            axios.post(baseUrl + 'api/IgnoreReport', {
             user_id:userID,
             repoer_id:reportID,
             Token:this.$localStorage.get('token')
@@ -357,7 +357,7 @@ searchU: function(mimic, baseUrl)
   }
   else
   {
-    return axios.post(baseUrl + 'api/search',{
+    return axios.post(baseUrl + 'api/Search',{
     query: this.$localStorage.get('searchModerator'),
     token: this.$localStorage.get('token')
     }).then(response => {

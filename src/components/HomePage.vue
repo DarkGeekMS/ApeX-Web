@@ -1,7 +1,6 @@
 <template>
   <div id="HomePage" >
-    <Sort></Sort>
-    <DisplayPosts :apexComName="''" class='ds'></DisplayPosts>
+    <Sort :apex="''"></Sort>
    <SideBar> </SideBar>
 
   </div>
@@ -14,13 +13,20 @@ import HomeSideBar from "./HomeSideBar.vue"
 import $ from'jquery/dist/jquery.min.js'
 
 export default {
+  props:['sortingparam'],
+
   name: 'HomePage',
   components:{
     'DisplayPosts':DisplayPosts,
     'SideBar':HomeSideBar,
     'Sort':Sort,
-  
+
   },
+  data(){
+    return{
+  }
+},
+
   mounted()
     {
       if(this.$localStorage.get('login')){
