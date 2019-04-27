@@ -33,7 +33,7 @@
 
     <div class="form-group has-feedback has-search" style="display:inline-block">
       <span class="glyphicon glyphicon-search form-control-feedback"></span>
-      <input type="text" class="form-control" placeholder="Search Reddit" v-model="searchVal" v-on:keyup.enter="search()">
+      <input type="text" class="form-control" placeholder="Search Apex" v-model="searchVal" v-on:keyup.enter="search()">
     </div>
 
     <div class="btn-toolbar tool1" role="toolbar">
@@ -73,10 +73,10 @@
       </button>
       <ul class="dropdown-menu">
         <li class="dropdown-header">MY STUFF</li>
-        <li><router-link :to="{ name: 'UserProfile', params: {userName:userLog} } ">My Profile</router-link></li>
-        <li><router-link :to="{ name: 'UserSettings'} ">User Settings</router-link></li>
+        <li><router-link :to="{ name: 'UserProfile', params: {userName:userLog} } "><i class="glyphicon glyphicon-user"/> My Profile</router-link></li>
+        <li><router-link :to="{ name: 'UserSettings'}" ><i class="glyphicon glyphicon-cog"></i> User Settings</router-link></li>
         <li class="divider"></li>
-        <li><a class="logOut" href="/" @click="Logout()">Log Out</a></li>
+        <li><a class="logOut" href="/" @click="Logout()"> <i class="glyphicon glyphicon-log-out"></i>   Log Out</a></li>
       </ul>
     </div>
 
@@ -326,7 +326,7 @@ input:hover{
 #loggedbutton{
   width:100%;
   font-size:15px;
-  border-radius: 5%;
+  border-radius: 10px;
   text-align: left
 }
 #loggedbutton:hover {
@@ -372,7 +372,7 @@ ul{
   width:100%;
   text-align: left;
   font-size: 15px;
-    border-radius: 5%;
+  border-radius: 10px;
 
 }
 .sel button:hover{
@@ -396,9 +396,9 @@ a #items{
   line-height: 18px;
   font-size: 14px
 }
-
-
-
+#classed{
+  color:blue;
+}
 
 .list{
   border: none;
