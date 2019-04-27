@@ -1,5 +1,5 @@
 <template>
-<modal name="ForgetPass" transition="pop-out" width="50%" height="70%" :clickToClose="false">
+<modal name="ForgetPass" transition="pop-out" width="50%" height="70%" :clickToClose="false" >
   <ResetCode/>
 
   <div class="box">
@@ -104,7 +104,7 @@ export default {
           if(check)
           {
             this.congra = "If the provided email address matches that account's verified email address, you'll receive a code with the reset link shortly." ;
-            setTimeout(() =>this.$modal.show('ResetCode') , 4000)
+            setTimeout(() =>this.$modal.show('ResetCode',{user: this.username}) , 4000)
 
           }
           else{
@@ -117,7 +117,7 @@ export default {
          if(data)
           {
             this.congra = "If the provided email address matches that account's verified email address, you'll receive a code with the reset link shortly." ;
-            setTimeout(() =>this.$modal.show('ResetCode') , 4000)
+            setTimeout(() =>this.$modal.show('ResetCode',{user: this.username}) , 4000)
           }
           else{
             this.validate =  this.$localStorage.get('error');

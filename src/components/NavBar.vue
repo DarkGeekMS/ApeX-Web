@@ -16,7 +16,7 @@
         <span class="caret" style="float:right; margin-top:10px" ></span>
       </button>
 
-      <ul class="dropdown-menu drop1" style="width:93%">
+      <ul class="dropdown-menu drop1">
         <li class="dropdown-header">REDDIT FEEDS</li>
         <li v-show="this.$localStorage.get('login')"><a href="/" class="glyphicon glyphicon-home blue" ><span id="items">Home</span></a></li>
         <li><a href="#" class="glyphicon glyphicon-arrow-up blue"><span id="items">Popular</span></a></li>
@@ -76,7 +76,7 @@
         <li><router-link :to="{ name: 'UserProfile', params: {userName:userLog} } "><i class="glyphicon glyphicon-user"/> My Profile</router-link></li>
         <li><router-link :to="{ name: 'UserSettings'}" ><i class="glyphicon glyphicon-cog"></i> User Settings</router-link></li>
         <li class="divider"></li>
-        <li><a class="logOut" href="/" @click="Logout()"> <i class="glyphicon glyphicon-log-out"></i>   Log Out</a></li>
+        <li><a href="#" class="logOut" @click="Logout()"> <i class="glyphicon glyphicon-log-out"></i>   Log Out</a></li>
       </ul>
     </div>
 
@@ -126,7 +126,7 @@ import $ from'jquery/dist/jquery.min.js'
       {
         if(data)
         {
-          this.apexs = data
+          this.apexs = data[0];
         }
       }),
       setInterval(() => {
@@ -193,17 +193,14 @@ import $ from'jquery/dist/jquery.min.js'
        * axios post request to log out the user through send user's token, delete it from data ,delete username and set login false
       */
       Logout: function(){
-        AllServices.logOut()
-        this.$localStorage.set('login', false);
-        this.$localStorage.set('token', '');
-        this.$localStorage.set('userName', '');
-        this.$router.replace('/');
+        AllServices.logOut();
+        this.$router.replace('/'); 
       },
       /**
      * when search value isn't empty transfer to localStorage and go to route search
      */
       search: function(){
-        if( this.searchVal != '')
+        if( (this.searchVal != '') && (this.searchVal.length >= 3) )
         {
           this.$localStorage.set('search' , this.searchVal),
           this.$router.push({ name:'Search'} )
@@ -398,6 +395,12 @@ a #items{
 }
 #classed{
   color:blue;
+}
+
+.drop1{
+  width:93%;
+  height:450px;
+  overflow: scroll
 }
 
 .list{

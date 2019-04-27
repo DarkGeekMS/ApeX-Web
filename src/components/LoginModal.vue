@@ -1,6 +1,6 @@
 <template>
 
-<modal name="demo-login" transition="pop-out" width="50%" height="70%" :clickToClose="false">
+<modal name="demo-login" transition="pop-out" width="50%" height="70%" :clickToClose="false" >
   <ForgetPass/> 
   <ForgetUser/>
 
