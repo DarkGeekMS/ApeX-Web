@@ -249,6 +249,7 @@ else {
 }
 },
 getUserInfoByIdforGuest:function(mimic,userName){
+  alert(userName);
   if(mimic){
     var profileInfo={
         userName:'',

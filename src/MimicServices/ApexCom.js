@@ -4,7 +4,7 @@ import axios from 'axios'
 export  const MimicApexCom =new Vue({
   methods:{
     getAbout: function(mimic,ApexComName){
-
+      alert(ApexComName);
       if(mimic){
   var about={
     rules:['rule1','rule2','rule3'],
@@ -40,7 +40,7 @@ else {
     }
   },
   getAboutGuest: function(mimic,ApexComName){
-
+    alert(ApexComName+'serve');
     if(mimic){
 var about={
   rules:['rule1','rule2','rule3'],
@@ -62,8 +62,8 @@ var promise = new Promise(function(resolve) {
 return promise;
 }
 else {
-return axios.get(this.$localStorage.get('baseUrl') + 'api/about', {
-    ApexCom_id :ApexComName,
+return axios.get(this.$localStorage.get('baseUrl') + 'api/about',{params: {
+    ApexCom_id :ApexComName,}
 })
 .then(response=> {
   return response.data;
@@ -76,6 +76,7 @@ return axios.get(this.$localStorage.get('baseUrl') + 'api/about', {
 },
 
 getSubscribers: function(mimic,apexComName){
+  alert(apexComName);
     if(mimic){
 var subscribersList=[
   {userName:'subscriber1',
@@ -110,6 +111,8 @@ else {
 },
 
 blockSubscriber: function(mimic,userName,apexComName){
+  alert(apexComName);
+  alert(userName);
   if(mimic){
 
 return true;
@@ -131,6 +134,7 @@ else {
     },
 
 deleteApexCom: function(mimic,apexComName){
+  alert(apexComName);
       if(mimic){
 
     return true;
@@ -151,6 +155,7 @@ deleteApexCom: function(mimic,apexComName){
 }
     },
 subscribe: function(mimic,apexComName){
+  alert(apexComName);
       if(mimic){
         return true;
     }
@@ -169,6 +174,8 @@ subscribe: function(mimic,apexComName){
 }
 },
 addOrDeleteModerator: function(mimic,userName,apexComName){
+  alert(apexComName);
+  alert(userName);
   if(mimic){
     return true;
   }
@@ -188,6 +195,7 @@ else {
     }
     },
 reviewReports: function(mimic,apexComName){
+  alert(apexComName);
       if(mimic){
         var report={
           reportedComment:[{post:{
@@ -277,13 +285,14 @@ reviewReports: function(mimic,apexComName){
           });
         }
         },
-ignoreReport:function(mimic,apexComName){
+ignoreReport:function(mimic,reportID){
+  alert(reportID);
   if(mimic){
     return true;
   }
   else{
             axios.post(this.$localStorage.get('baseUrl') + 'api/report_action', {
-            ApexCom_id:apexComName,
+            repoer_id:reportID,
             Token:this.$localStorage.get('token')
           })
           .then(function (response) {
@@ -358,7 +367,7 @@ searchU: function(mimic)
   else
   {
     axios.post(this.$localStorage.get('baseUrl') + 'api/search',{
-    query: this.$localStorage.get('search'),
+    query: this.$localStorage.get('searchModerator'),
     token: this.$localStorage.get('token')
     }).then(response => {
       var result= response.data;

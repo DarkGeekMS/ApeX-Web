@@ -81,14 +81,15 @@ export  const AllServices =new Vue({
     {
       return MimicAuth.ForgetUser2(code,this.mimic);
     },
-    getPosts:function(apexComName) {
-      return MimicDisplayPosts.getPostsData(this.mimic,apexComName);
-    },
+    // getPosts:function(apexComName) {
+    //   return MimicDisplayPosts.getPostsData(this.mimic,apexComName);
+    // },
 	getAbout:function(apexComName) {
     var about=MimicApexCom.getAbout(this.mimic,apexComName);
     return about;
   },
   getAboutGuest:function(apexComName) {
+    alert(apexComName+'all');
     var about=MimicApexCom.getAboutGuest(this.mimic,apexComName);
     return about;
 	},
