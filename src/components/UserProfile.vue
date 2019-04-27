@@ -5,9 +5,9 @@
         <a style="font-size: 16px;"  id="posttab" class="navbarlinks" href="#">posts</a>
         <a style="font-size: 16px;"  id="savedtab" v-show="notGuest()" class="navbarlinks" href="#">saved</a>
         <a style="font-size: 16px;"  id="hiddentab" v-show="notGuest()" class="navbarlinks" href="#">hidden</a>
-        <a style="font-size: 16px;"  id="reporttab" v-show="isModerator() && notGuest()" class="navbarlinks" href="#">report</a>
-        <!-- <router-link style="font-size: 16px;" id="reportlink" class="navbarlinks" :to="{name:'Report'}">view reports</router-link> -->
-        
+        <!-- <a style="font-size: 16px;"  id="reporttab" v-show="isModerator() && notGuest()" class="navbarlinks" href="#">report</a> -->
+        <router-link style="font-size: 16px;" v-show="isModerator() && notGuest()" id="reportlink" class="navbarlinks" :to="{name:'Report'}">view reports</router-link>
+        <router-link style="font-size: 16px;" v-show="notGuest()" id="reportlink" class="navbarlinks" :to="{name:'blockLlist'}">block list</router-link>
     </div>
     <div class="sort">
     <Sort style="padding-top:10px"></Sort>
@@ -55,7 +55,7 @@ export default {
       hiddenPosts:[],
       reports:[],
       cakeDay:'',
-      blockList:[],
+      // blockList:[],
     //   blockList:[
     //       {userName:'user1'},
     // {userName:'user2'},

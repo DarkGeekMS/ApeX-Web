@@ -212,7 +212,6 @@ export default {
               }
       },
     getAbout(){
-         console.log(this.apexComName);
          AllServices.getAbout(this.apexComName).then((about) => {
          this.description=about.description;
          this.moderators=about.moderators;

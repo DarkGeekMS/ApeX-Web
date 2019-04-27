@@ -67,7 +67,6 @@ export default {
     */
     CheckModerator:function(name)
     {
-      console.log(name.userName);
       if( name.userName == this.userName){
 
       return true;
@@ -108,7 +107,7 @@ export default {
     */
      getAbout(){
          AllServices.getAbout(this.apexComName).then((about) =>{
-           
+
         //  this.description=about.description;
          this.moderators=about.moderators;
         //  this.rules=about.rules;
@@ -118,7 +117,6 @@ export default {
    },
    getAboutGuest(){
          AllServices.getAboutGuest(this.apexComName).then((about) =>{
-           console.log(this.apexComName+'inside');
         //  this.description=about.description;
          this.moderators=about.moderators;
         //  this.rules=about.rules;

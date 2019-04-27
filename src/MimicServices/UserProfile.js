@@ -3,7 +3,7 @@ import axios from 'axios'
 
 export  const MimicUserProfile =new Vue({
   methods:{
-    getUserInfo: function(mimic){
+    getUserInfo: function(mimic, baseUrl){
       if(mimic){
   var profileInfo={
       userName:'',
@@ -11,43 +11,9 @@ export  const MimicUserProfile =new Vue({
       karma:9,
       saved:[{},{}],
       hidden:[{},{}],
-      // reports:[{},{}],
       personalPosts:[{},{}],
-      blockList:[
-        {userName:'user1'},
-  {userName:'user2'},
-  {userName:'user3'},
-  {userName:'user4'}
-      ],
+
       cakeDay:'March 15, 2019',
-      reports:[
-        {post:{
-        id:'555',
-        posted_by:'Nourhan',
-        apex_id:'555',
-        title:'dj',
-        content:'Experience enjoyable JavaScript development with WebStorm. With smart code completion, safe refactoring, and first-class support for Node.js, Angular and React. Download free trial 😀😂🍔😍',
-        locked:false,
-        commenetnum:5,
-        votes:9,
-        img_name:'',
-        video_url:'https://www.youtube.com/embed/Va0Rq147SRU'},
-        reason:"It's threatening self-harm or suicide",
-        id:8099,
-        fullName:'nourhan'
-      },
-      // {comment:{
-      //   content:'this is the review report mimic service',
-      //   idx:9,
-      //   level:1,
-      //   parentIdx:67,
-      //   parentID:9,
-      //   ID:9,
-      //   date:'march 9 2019'
-      //   },
-      //   reason:"It's personal and confidential information",
-      // },
-      ],
   }
     var promise = new Promise(function(resolve) {
         setTimeout(function() {
@@ -57,7 +23,7 @@ export  const MimicUserProfile =new Vue({
 return promise;
 }
 else {
-    return axios.post(this.$localStorage.get('baseUrl') + 'api/info',{
+    return axios.post(baseUrl + 'api/info',{
           Token:this.$localStorage.get('token')
       })
       .then(response=> {
@@ -69,7 +35,7 @@ else {
       });
     }
   },
-getUserInfoById: function(mimic,userName){
+getUserInfoById: function(mimic,userName, baseUrl){
 
     if(mimic){
 var profileInfo={
@@ -89,7 +55,7 @@ var promise = new Promise(function(resolve) {
 return promise;
 }
 else {
-    return axios.post(this.$localStorage.get('baseUrl') + 'api/user_data',  {
+    return axios.post(baseUrl + 'api/user_data',  {
       Token:this.$localStorage.get('token'),
       userid:userName
   })
@@ -102,7 +68,7 @@ else {
   });
   }
 },
-reviewReports: function(mimic,userName){
+reviewReports: function(mimic,userName, baseUrl){
   if(mimic){
     var report={
       reportedComment:[{post:{
@@ -179,7 +145,7 @@ reviewReports: function(mimic,userName){
   return promise;
 }
 else {
-   return axios.post(this.$localStorage.get('baseUrl') + 'api/report_action', {
+   return axios.post(baseUrl + 'api/report_action', {
         user_id:userName,
         Token:this.$localStorage.get('token')
       })
@@ -192,7 +158,7 @@ else {
       });
     }
     },
-getUserType: function(mimic){
+getUserType: function(mimic, baseUrl){
 
   if(mimic){
   var info={
@@ -216,7 +182,7 @@ getUserType: function(mimic){
     return promise;
 }
 else {
-    return axios.post(this.$localStorage.get('baseUrl') + 'api/me', {
+    return axios.post(baseUrl + 'api/me', {
              token:this.$localStorage.get('token')
             })
             .then(response=> {
@@ -228,13 +194,13 @@ else {
 }
 },
 
-deleteUser: function(mimic,userName){
+deleteUser: function(mimic,userName, baseUrl){
 
   if(mimic){
     return true;
 }
 else {
-    axios.delete(this.$localStorage.get('baseUrl') + 'api/del_user',{params: {
+    axios.delete(baseUrl + 'api/del_user',{params: {
     userID:userName,
     Token:this.$localStorage.get('token')}
 })
@@ -247,8 +213,8 @@ else {
 });
 }
 },
-getUserInfoByIdforGuest:function(mimic,userName){
-  alert(userName);
+getUserInfoByIdforGuest:function(mimic,userName, baseUrl){
+  // alert(userName);
   if(mimic){
     var profileInfo={
         userName:'',
@@ -256,7 +222,7 @@ getUserInfoByIdforGuest:function(mimic,userName){
         karma:9,
         personalPosts:[{},{}],
         cakeDay:'ِjune 15, 2019',
-        fullName:null
+        fullName:''
     }
     var promise = new Promise(function(resolve) {
       setTimeout(function() {
@@ -266,7 +232,7 @@ getUserInfoByIdforGuest:function(mimic,userName){
     return promise;
     }
     else {
-        return axios.get(this.$localStorage.get('baseUrl') + 'api/user_data', {
+        return axios.get(baseUrl + 'api/user_data', {
         params: {
           userid:userName
         }
@@ -280,7 +246,7 @@ getUserInfoByIdforGuest:function(mimic,userName){
       });
       }
     },
-blockUser:function(mimic,userName){
+blockUser:function(mimic,userName, baseUrl){
   if(mimic){
     var promise = new Promise(function(resolve) {
       setTimeout(function() {
@@ -290,7 +256,7 @@ blockUser:function(mimic,userName){
       return promise;
     }
     else {
-      return axios.post(this.$localStorage.get('baseUrl') + 'api/block_user', {
+      return axios.post(baseUrl + 'api/block_user', {
         userid:userName,
         Token:this.$localStorage.get('token')
     })
@@ -302,7 +268,29 @@ blockUser:function(mimic,userName){
       // console.log(error);
     });
     }
-}
+},
+getBlockList(mimic, baseUrl){
+  if(mimic){
+    var info=[{userName:'user1'},{userName:'user1'},{userName:'user1'},{userName:'user1'},{userName:'user1'},{userName:'user1'}]
 
+      var promise = new Promise(function(resolve) {
+        setTimeout(function() {
+          resolve(info);
+        }, 300);
+      });
+      return promise;
+  }
+  else {
+      return axios.post(baseUrl + 'api/blocklist', {
+               token:this.$localStorage.get('token')
+              })
+              .then(response=> {
+                return response.data;
+               })
+              .catch(function (error) {
+                // console.log(error);
+              });
+}
+}
   }
 });
