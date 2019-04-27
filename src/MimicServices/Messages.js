@@ -21,7 +21,7 @@ export  const MimicMessage =new Vue({
       }
       else
       {
-        return axios.post(baseUrl + 'api/compose', {
+        return axios.post(baseUrl + 'api/ComposeMessage', {
             reciever:rec,
             subject:title,
             content: cont,
@@ -51,7 +51,7 @@ export  const MimicMessage =new Vue({
       }
       else
       {
-        return axios.post(baseUrl + 'api/del_msg', {
+        return axios.post(baseUrl + 'api/DeleteMessage', {
             id:ID,
             token:this.$localStorage.get('token')
         })
@@ -75,7 +75,7 @@ export  const MimicMessage =new Vue({
       }
       else
       {
-        return axios.post(baseUrl + 'api/block_user', {
+        return axios.post(baseUrl + 'api/BlockUser', {
             blockedID:ID,
             token:this.$localStorage.get('token')
         })
@@ -155,7 +155,7 @@ return promise1;
   }
   else
   {
-    return axios.post(baseUrl + 'api/inbox_messages', {
+    return axios.post(baseUrl + 'api/InboxMessages', {
         token:this.$localStorage.get('token')
     })
        .then(response=> {
@@ -206,7 +206,7 @@ return promise1;
       }
       else
       {
-        return axios.post(baseUrl + 'api/moreComments', {
+        return axios.post(baseUrl + 'api/RetrieveComments', {
             parent:ID,
             token:this.$localStorage.get('token')
         })

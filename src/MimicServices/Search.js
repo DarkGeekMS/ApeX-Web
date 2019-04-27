@@ -75,7 +75,7 @@ export  const MimicSearch =new Vue({
       }
       else
       {
-        axios.post(baseUrl + 'api/search',{
+        axios.post(baseUrl + 'api/Search',{
         query: this.$localStorage.get('search'),
         token: this.$localStorage.get('token')
         }).then(response => {
@@ -150,7 +150,7 @@ export  const MimicSearch =new Vue({
       }
       else
       {
-        axios.get(baseUrl + 'api/search',{
+        axios.get(baseUrl + 'api/Search',{
         query: this.$localStorage.get('search'),
         }).then(response => {
           return response.data;

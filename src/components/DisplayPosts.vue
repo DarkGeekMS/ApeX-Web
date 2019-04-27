@@ -20,7 +20,8 @@ import {AllServices} from '../MimicServices/AllServices.js'
 export default {
   props:{
     apexComName:String,
-    postData:{}// VERY IMPORTANT TO PREVENT THE ERRORS IN CONSOLE 
+    sortparam:String,
+    postData:{}// VERY IMPORTANT TO PREVENT THE ERRORS IN CONSOLE
     },
 data(){
 return{
@@ -38,7 +39,7 @@ mounted:function () {
 methods:
 {
    ifLock(e){
-     
+
 
    },
   /**
@@ -56,7 +57,8 @@ methods:
        // this.posts= AllServices.getPosts(this.apexComName);
      // }
      // else{
-         AllServices.getPosts(this.apexComName).then((data) => {
+     
+         AllServices.getPosts(this.apexComName,this.sortparam).then((data) => {
           this.posts= data;
          })
    // }
