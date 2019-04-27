@@ -1,14 +1,17 @@
 <template>
-<modal name="demo-sign" transition="pop-out" :width="modalWidth" :height="400">
-  <demo-sign2-modal v-bind:email="this.email"> </demo-sign2-modal>
+<modal name="demo-sign" transition="pop-out" width="50%" height="70%" :clickToClose="false">
+  <demo-sign2-modal> </demo-sign2-modal>
   <div class="box">
+    <div class="box-part" id="bp-right"></div>
+
     <div class="box-part" id="bp-left">
       <div class="partition" id="partition-register">
-
+        <button class="lead" id="closebtn" @click="close()"> X</button>
+       
         <div class="partition-title">
         <h1> Join the worldwide conversation. </h1>
         <p>
-            By having a Reddit account, you can subscribe, vote, and  comment on all your favorite Reddit content. </br>
+            By having a Apex account, you can subscribe, vote, and  comment on all your favorite Apex content. <br/>
             Sign up in just seconds.
         </p>
         </div>
@@ -28,18 +31,15 @@
 
       </div>
     </div>
-    <div class="box-part" id="bp-right"> </div>
   </div>
 </modal>
 </template>
 
 <script>
-const MODAL_WIDTH = 656;
-import DemoSign2Modal  from './DemoSign2Modal.vue'
+import DemoSign2Modal  from './Sign2Modal.vue'
 /**
  * @vue-data {string} [email=""] Email value
  * @vue-data {string} [error=""] error value
- * @vue-data {integer} [modalWidth=656] width of modal
  */
 export default {
   name: 'DemoSignModal',
@@ -48,13 +48,9 @@ export default {
   },
   data(){
       return{
-        modalWidth: MODAL_WIDTH,
         email: '',
         error: ''
       }
-    },
-  created () {
-    this.modalWidth = window.innerWidth < MODAL_WIDTH ? MODAL_WIDTH / 2 : MODAL_WIDTH
   },
   updated(){
     this.$localStorage.set('emailVal', this.email)
@@ -65,8 +61,7 @@ export default {
      * @param {string} [email] - email value of the user   
     */
     validateEmail: function(email) {
-      var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      return re.test(String(email).toLowerCase());
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     },
     /**
      * check out the value of email is empty or invalid, and generate an error in this case, if not show the second modal and send value   
@@ -84,6 +79,13 @@ export default {
         this.$modal.show('demo-sign2');
         this.error = ''
       }
+    },
+    close:function(){
+      this.$modal.hide('demo-sign');
+      this.$modal.hide('demo-login');
+      this.$modal.hide('ForgetUser');
+      this.$modal.hide('ForgetPass');
+
     }
   }
 }
@@ -94,12 +96,22 @@ body{
   display: grid;
   font-family: IBMPlexSans,sans-serif;
 }
-$background_color: #404142;
+#closebtn
+{
+  float:right;
+  margin:7px -5px;
+  border:0;
+  color:grey;
+  width:22px;
+  height:25px;
+  font-size:19px;
+  background-color:white;
+}
 .box {
   background: white;
   overflow: hidden;
-  width: 1000px;
-  height: 400px;
+  width: 100%;
+  height: 100%;
   border-radius: 2px;
   box-sizing: border-box;
   box-shadow: 0 0 40px black;
@@ -111,13 +123,13 @@ $background_color: #404142;
     vertical-align: top;
     box-sizing: border-box;
     height: 100%;
-    width: 50%;
+    width: 80%;
     &#bp-right {
-      background: url("../../public/form.jpg") no-repeat top left;
+      background:url('../../public/form2.png') ;
+      background-size:cover;
+      background-repeat: no-repeat;
       border-left: 1px solid #eee;
-    }
-    &#bp-left{
-
+      width:18%   
     }
   }
   .partition {
@@ -129,9 +141,9 @@ $background_color: #404142;
       width: 100%;
       letter-spacing: 1px;
       font-family: Noto Sans,sans-serif;
-        font-size: 14px;
-        font-weight: 500;
-        line-height: 21px;
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 21px;
     }
     .partition-title h1{
         font-size: 20px;
@@ -148,61 +160,26 @@ $background_color: #404142;
       margin-left:15px
     }
   }
-
-  .autocomplete-fix {
-    position: absolute;
-    visibility: hidden;
-    overflow: hidden;
-    opacity: 0;
-    width: 0;
-    height: 0;
-    left: 0;
-    top: 0;
-  }
 }
-/*.pop-out-enter-active,
-.pop-out-leave-active {
-  transition: all 0.5s;
-}
-.pop-out-enter,
-.pop-out-leave-active {
-  opacity: 0;
-  transform: translateY(24px);
-} */
 
 button.btn {
   outline: none;
-  background: white;
   border: 0;
-  padding: 10px 18px;
+  padding: 10px 25px;
   cursor: pointer;
   border-radius: 3px;
   color: white;
   box-shadow: 0 4px 8px rgba(#20a0ff, .3);
   background: #4db3ff;
   font-weight: 600;
-  border-radius: 3px;
-  min-width: 90px;
-  margin-bottom: 8px;
-  margin-top: 8px;
-  margin-right: 8px;
+  min-width: 25%;
+  margin-bottom: 5%;
+  margin-top: 10%;
+  margin-left:10px;
   &:hover {
     background: #20a0ff;
   }
-  &.green {
-    box-shadow: 0 4px 8px rgba(#50C9BA, .3);
-    background: #50C9BA;
-    &:hover {
-     background: mix(#50C9BA, black, 95%);
-    }
-  }
-  &.red {
-    box-shadow: 0 4px 8px rgba(#F21368, .3);
-    background: #F21368;
-    &:hover {
-      background: mix(#F21368, black, 95%);
-    }
-  }
+  
 }
 
 input[type=password],

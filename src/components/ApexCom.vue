@@ -2,34 +2,34 @@
 <div id="all">
   <div class="Apexcom" id="Apexcom">
     <div class="apexcomName" id="apexcomName">
-      <h1 id="Name">
-        <img class="image" src="../../public/Logo_small.png" >
-        {{ApexComName}}</h1>
+      <div class="imagediv">
+        <h1 style=" font-size: 28px; display:inline;" id="Name">{{apexComName}}</h1>
+        <div class="img">
+          <img style="box-sizing: border-box; border-radius: 50%;" class="image" :src="image" >
+        </div>
+      </div>
     </div>
-
     <div class="navBar" id="navbar">
-        <router-link id="postslink" class="navbarLinks" :to="{name:'Posts'}">Posts</router-link>
-        <router-link v-show="isModerator() || isAdmin()" id="subscribersListlink" class="navbarLinks" :to="{name:'Subscribers'}">subscribers</router-link>
-        <router-link v-show="isModerator() || isAdmin()" id="reportlink" class="navbarLinks" :to="{name:'Reports'}">view reports</router-link>
+      <router-link  id="postslink" class="navbarLinks" :to="{name:'Posts'}">Posts</router-link>
+      <router-link  v-show="isModerator() || isAdmin()" id="subscribersListlink" class="navbarLinks" :to="{name:'Subscribers'}">subscribers</router-link>
+      <router-link  v-show="isModerator() || isAdmin()" id="reportlink" class="navbarLinks" :to="{name:'Reports'}">view reports</router-link>
+      <!-- <router-link id="reportlink" class="navbarLinks" :to="{name:'Reports'}">view reports</router-link> -->
+      <!-- <router-link  id="addmoderatorlink" class="navbarLinks" :to="{name:'AddModerators'}">add moderator</router-link> -->
+      <router-link v-show="isAdmin()"  id="addmoderatorlink" class="navbarLinks" :to="{name:'Moderators'}">add moderator</router-link>
     </div>
-</div>
-    <SideBar class="sidebar" v-bind:apexComName="ApexComName"
-    v-bind:rules="rules"
-    v-bind:description="description"
-    v-bind:moderators="moderators"
-    v-bind:subscribersCount="subscribersCount"
-
-    ></SideBar>
-    <div class="routerview">
-    <router-view></router-view>
-    </div>
+      </div>
+  <div class="sort">
+    <Sort style="padding-top:10px"></Sort>
+  </div>
+  <SideBar class="sidebar" v-bind:apexComName="apexComName"></SideBar>
+    <router-view class="routerview"></router-view>
 </div>
 </template>
 
 <script>
-import axios from 'axios'
 import SideBar from './ApexComSideBar.vue'
 import {AllServices} from '../MimicServices/AllServices.js'
+import Sort from './Sort.vue'
 
 /**
  * @vue-data {JWT} [token='']  user Token
@@ -41,19 +41,23 @@ import {AllServices} from '../MimicServices/AllServices.js'
  */
 
 export default {
-  props:['ApexComName'],
+  props:['apexComName'],
   components:{
-    'SideBar':SideBar
+    'SideBar':SideBar,
+    'Sort':Sort
   },
   data () {
     return {
       token:this.$localStorage.get('token'),
       userName:this.$localStorage.get('userName'),
+      loggedIn:this.$localStorage.get('login'),
+
       //userName:'moderator1',
-      description:'',
+      // description:'',
       moderators:[],
-      rules:[],
-      subscribersCount: 0,
+      // rules:[],
+      // subscribersCount: 0,
+      image:''
     }
   },
   methods:{
@@ -63,7 +67,6 @@ export default {
     */
     CheckModerator:function(name)
     {
-      console.log(name.userName);
       if( name.userName == this.userName){
 
       return true;
@@ -74,7 +77,7 @@ export default {
     */
     isModerator:function(){
       if(this.loggedIn){
-      var moderator = this.moderators.find(this.CheckModerator);
+      var moderator = this.moderators.find(this.CheckModerator)
       if(moderator !== undefined){
           return true;
         }
@@ -89,96 +92,189 @@ export default {
       isAdmin:function()
       {
         if(this.loggedIn){
-        var data= AllServices.userType();
-        if(data ==1){
+        AllServices.userType().then((data) =>{
+        if(data.type ==1){
           return true;
           }
         else{
           return false;
         }
+        })
         }
       },
     /**
     * request the data for certain community
     */
      getAbout(){
-         var about= AllServices.getAbout(this.ApexComName);
-         this.description=about.description;
+         AllServices.getAbout(this.apexComName).then((about) =>{
+
+        //  this.description=about.description;
          this.moderators=about.moderators;
-         this.rules=about.rules;
-         this.subscribersCount=about.subscribersCount;
+        //  this.rules=about.rules;
+        //  this.subscribersCount=about.subscribersCount;
+         this.image=about.image;
+         })
    },
+   getAboutGuest(){
+         AllServices.getAboutGuest(this.apexComName).then((about) =>{
+        //  this.description=about.description;
+         this.moderators=about.moderators;
+        //  this.rules=about.rules;
+         this.image=about.image;
+        //  this.subscribersCount=about.subscribersCount;
+         });
+   },
+
 
   },
   mounted()
   {
-  this.getAbout();
+  if(this.loggedIn){
+   this.getAbout();
+   }
+   else{
+     this.getAboutGuest();
+   }
   }
 }
 </script>
 
 <style scoped>
-
-.Apexcom{
-  width:auto;
-  height:65px;
-  margin-top:3%;
-  margin-bottom:5%;
+#all{
+  margin-top: 50px;
+  height:60%;
 }
+.main{
+  /* height:100%; */
+  /* position: relative; */
+  /* max-height:3%; */
+  /* height:auto; */
+}
+.Apexcom{
+  /* max-height:3%; */
+  /* height:100%; */
+
+  /* min-height:108%;
+  max-height:60%; */
+  /* position:relative; */
+  /* width:100%; */
+  /* height: 50%; */
+  /* position:relative; */
+}
+  /* margin-top:3.7%;
+  /* margin-bottom:2%; */
+  /* height: auto; */
+/* }  */
 .apexcomName{
   background-color: deepSkyBlue;
-  width:auto;
-  height: 85px;
-  padding:1px;
-  color: #eee;
+  /* width:auto; */
+  /* width:100%; */
+  /* margin-top: 50px; */
+  padding-top:38px;
+  color: white;
+  box-sizing: border-box;
+  /* height: auto; */
+  /* max-height:65%; */
 }
 #Name{
-  padding-left: 8%;
+  padding-left: 1%;
+  padding-top: 1%;
+  display:inline;
+}
+.sort{
+  margin-top:-58px;
+  /* margin-right:0%; */
+  /* height:30px; */
 }
 .navBar{
   background-color: rgb(219, 240, 255);
-  width:auto;
-  height:auto;
-  margin:0% 0%;
-  padding:1%;
+  /* max-height:35%; */
+  /* width:100%; */
+  /* width:100%; */
+  margin-top: 0%;
+  /* height:auto; */
+  margin-bottom:0%;
+  padding-top:20px;
+  padding-bottom:10px;
   padding-left: 7%;
+  box-sizing: border-box;
 }
 .navbarLinks{
   color: deepSkyBlue;
-  padding: 0px 1%;
-  padding-bottom: 1%;
+  padding-top: 0%;
+  padding-bottom: 9px;
+  margin-right: 0%;
+  margin-left: 3%;
   text-decoration: none;
-  margin:1%;
+  font-weight: 500;
+  text-transform: uppercase;
+  font-size: 14px;
 }
 .routerview{
-  width:56%;
-  margin: 8% 0%;
+  /* width:56%; */
+  margin-top: 4%;
+  margin-bottom: 0%;
   margin-left: 4%;
-  border-radius:8px;
-  padding: 2%;
-  background-color: #eee;
-  float:left;
+  border-radius:20%;
+  width:60%;
+  /* padding: 2%; */
+  /* float:left; */
+
 }
 .sidebar{
-  width:25%;
-  height: auto;
-  margin:8%;
+  /* margin-top:4%; */
+  /* margin-right: 4%; */
+  /* width:23%; */
+  /* height: auto;
+  margin-top:4%;
+  margin-bottom: 0%;
   margin-left: 3%;
-  margin-right: 6%;
-  /* background-color:white; */
-  float:right;
+  margin-right: 4%;
+  float:right; */
 }
 .router-link-active{
   border-bottom: 3px solid deepSkyBlue;
 }
-.image{
-  width:4%;
-  height:50px;
-  margin-top:0%;
-  margin-bottom:1%;
+img{
+  width:100%;
+  height:100%;
+  /* height:4; */
+  /* display: flex; */
+  /* margin-top:0%;
+  margin-bottom:0%;
   margin-right:0%;
-  margin-left:0%;
-  border-radius: 25px;
-  box-sizing: border-box;
+  margin-left:3%; */
+  /* float: left; */
 }
+.imagediv{
+  margin-top:0%;
+  margin-bottom:25px;
+  width:100%;
+  display:inline-block;
+}
+.img{
+  width: 50px;
+  display:inline;
+  margin-top:-0.5%;
+  margin-bottom:0%;
+  margin-right:0%;
+  margin-left:3%;
+  float: left;
+}
+@media(max-width:768px){
+  .img{
+    display:none
+  }
+}
+@media(max-width:768px){
+  .img{
+    display:none
+  }
+}
+@media(max-width:700px){
+  .router-link-active{
+  border-bottom: 0px;
+}
+}
+
 </style>

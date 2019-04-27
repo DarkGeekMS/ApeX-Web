@@ -1,75 +1,76 @@
 <template>
-   <div>
+   <div id="create">
      <div class="a">
-     
+
        <h4 class="Cpost">Create a post
-    
+
      </h4>
-      
+
     </div>
-   
+
       <div class="form-group dropApex" >
-        <select class="form-control" name="category">
+        <select id="selectList" class="form-control" name="category" @change="handleChange">
           <option>choose a community</option>
-                      <!-- TODO HERE ARE APEXNAMES WHICH I WILL LOOP THROUGH THEM  -->
-                  
-                       <!-- just dummy option for display  -->
-                      
-                      <option>apexname 1</option>
-                      <option>apexname 2</option>
-                      <option>apexname 3</option>
-                      <option>apexname 3</option>
-                   
+     
+         <option v-for="apex in apexs" :key="apex.id"> 
+               {{apex.name}}
+         
+             </option>        
+         
           </select>
        </div>
+       
       <body class="panel bodyPost">
           <form>
 
             <div class="form-group">
-   
 
   
-                  <div id="root" class="container">
+                  <div id="root" class="container" >
+                   
                     <tabs>
+                      
                        <tab  name="Post" :selected="true">
-            
+                         
+            <div id="fancy">
+              
                           <div class="form-group">
-                  
+                      
                              <input type="text" class="form-control" id="usr" placeholder="title" @keyup="Enable">
                            </div>
-                               <!-- <textarea class="form-control" rows="5" id="textsend" @keyup="Enable"></textarea> -->
-                  
-                              <ejs-richtexteditor ref="rteObj" :toolbarSettings="toolbarSettings" id="textsend" @keyup="Enable">
-                               <br>
-                               <br>
-                               <br>
-                               <br>
-                               <br>
-                                 
-                              </ejs-richtexteditor> 
+     
+                          <a  id="switchId"  @click="switchM" >{{this.switchTo}} </a>
+                              <ejs-richtexteditor ref="rteObj" :toolbarSettings="toolbarSettings" id="textsend" @keyup="Enable" v-if="normal==false">
+                              
                     
+                              </ejs-richtexteditor> 
+                              <textarea class="form-control" rows="5" id="textsendnormal" @keyup="Enable" v-else>
+                    
+                              </textarea>
+                  </div>
+            
   
                           <button  class="btn btn-primary postButton" @click="submitPost"  disabled  id="button">POST</button>
                        </tab>
 
                        <tab name="Image" >
                           <div class="form-group ">
-                                        
+
                            <input type="text" class="form-control" id="usr2" placeholder="title" @keyup="Enable">
                           </div>
-                          <div class="panel imgBox"> 
-         
+                          <div class="panel imgBox">
+
                              <div class="helper">
 
                              </div>
                               <div class="drop1 display-inline align-center" @dragover.prevent @drop="onDrop">
-                                            
+
                                 <div class="helper">
 
                                  </div>
-                                            
+
                                 <label v-if="!image" class="btn display-inline btnImage">
-                                                
+
                                        Drag and Drop or Upload
                                  <input type="file" name="image" @change="onChange">
                                  </label>
@@ -79,26 +80,26 @@
                                          <br>
                                         <button class="btnImage" @click="removeFile">REMOVE</button>
                                       </div>
-                                                                    
-                               </div> 
+
+                               </div>
                             </div>
                                                             <button  class="btn btn-primary postButton" @click="submitPost"  disabled  id="button2" >POST</button>
-                                                        
+
                           </tab>
 
                           <tab name="Link" >
                                <div class="form-group">
-                                                                      
+
                                   <input type="text" class="form-control" id="usr3" placeholder="title" @keyup="Enable">
                                 </div>
                                 <textarea class="form-control" rows="3" id="textsend3" placeholder="Url" @keyup="Enable"></textarea>
                                <button  class="btn btn-primary postButton" @click="submitPost"  disabled  id="button3">POST</button>
                            </tab>
                      </tabs>
-        
-       
-         
-       
+
+
+
+
 
     </div>
 
@@ -108,50 +109,64 @@
 
        </form>
 
-
+ 
     </body>
   </div>
+
 </template>
 
 <script>
+import $ from'jquery/dist/jquery.min.js'
 import tab from './PostTab.vue'
 import tabs from './PostTabs.vue'
-import axios from 'axios';
-import Vue from "vue";
+import Vue from "vue"
 import {AllServices} from '../MimicServices/AllServices.js'
 import { RichTextEditorPlugin, Toolbar, HtmlEditor } from "@syncfusion/ej2-vue-richtexteditor";
+import HomeSideBar from "./HomeSideBar.vue"
 Vue.use(RichTextEditorPlugin);
-
 /**
- * @vue-data {string} [apexComId=''] Id of apexcom which post will be created in 
+ * @vue-data {string} [apexComId=''] Id of apexcom which post will be created in
  * @vue-data {boolean} [enable=true]    check if post button is enable or not
- * @vue-data {string} [bodyPost='']    the content of the post 
+ * @vue-data {string} [bodyPost='']    the content of the post
  * @vue-data {string} [imgName='']  the img src which the user upload from browser
- * @vue-data {array} [apexNames=[]]  include the apexnames which you want to choose from 
+ * @vue-data {array} [apexNames=[]]  include the apexnames which you want to choose from
  * @vue-data {string} [videoUrl=''] the url of the video from the youtube
- * @vue-data {boolean} [isLocked=false] 
+ * @vue-data {boolean} [isLocked=false]
  * @vue-data {JWT} [token=''] userID
- * @vue-data  {boolean} [imagable=false] check if the user upload image or not 
+ * @vue-data  {boolean} [imagable=false] check if the user upload image or not
 
 
  */
 
 export default {
+  props:{
+    EditData:{}
+  },
+   components:{
+
+    'SideBar':HomeSideBar,
+    
+  },
     data(){
       return {
-    
+
        items: [
        {
          image: false,
        }
-     
+
         ],
+        switchTo:'Switch to Fancy Pants Editor',
+        normal:true,
+        isCreated:false,
+        indx:null,
         enable:true,
         token:'',
         apexComId:'',
         bodyPost:'',
-        imgName:'',
-        apexNames:[],
+        avatar:'',
+        title:'',
+        apexs:[],
         image: '',
         videoUrl:'',
         isLocked:false,
@@ -168,47 +183,85 @@ export default {
           ]
          },
 
+
       }
-       
+
     },
     provide:{
         richtexteditor:[Toolbar, HtmlEditor]
     },
+    mounted(){
+     $('#selectted').text('Create Post');
+        var remclass = $('#classed').prop('class');
+        $('#classed').removeClass(remclass);
+        $('#classed').addClass("glyphicon glyphicon-edit");
+    },
     methods:{
+      switchM(){
+      this.normal=!(this.normal);
+      if( this.normal){
+      this.switchTo='Switch to markdown';
+      }
+      else{
+        this.switchTo='Switch to Fancy Pants Editor';
+      }
+  /* console.log(this.normal);
+   console.log(this.switchTo);*/
+      },
+handleChange(){
 
+var sel = document.getElementById('selectList');
+
+var opt = sel.options[sel.selectedIndex];
+this.indx=sel.selectedIndex;
+this.Enable();
+this.apexComId=this.apexs[this.indx-1].id;
+
+//alert(this.apexComId);
+
+// display value property of select list (from selected option)
+//console.log(this.indx);
+
+},
      /**
-     * it check if the user insert the title of the post and insert the content or not and it will enable 
-     * the post button to be submitted if and only if the user insert all required content 
+     * it check if the user insert the title of the post and insert the content or not and it will enable
+     * the post button to be submitted if and only if the user insert all required content
      */
 
          Enable(){
-         
-	 if(document.getElementById("textsend").value==="" || document.getElementById("usr").value==="")  { 
-            document.getElementById('button').disabled = true; 
-        } else { 
+     //alert(this.indx);
+	 if(document.getElementById("textsendnormal").value==="" || document.getElementById("usr").value==="" || this.indx ==null ||this.indx==0)  {
+            document.getElementById('button').disabled = true;
+            
+        } else {
             document.getElementById('button').disabled = false;
-             console.log(document.getElementById('text').value);
+            this.title=document.getElementById("usr").value;
+             
         }
-    
-    
 
-         	 if(document.getElementById("textsend3").value==="" || document.getElementById("usr3").value==="")  { 
-            document.getElementById('button3').disabled = true; 
-        } else { 
+
+
+         	 if(document.getElementById("textsend3").value==="" || document.getElementById("usr3").value==="" || this.indx ==null ||this.indx==0)  {
+            document.getElementById('button3').disabled = true;
+           
+        } else {
             document.getElementById('button3').disabled = false;
+            this.videoUrl=document.getElementById("textsend3").value;
+            this.title=document.getElementById("usr3").value;
         }
 
 
-        if(this.imagable===false|| document.getElementById("usr2").value==="")  { 
-            document.getElementById('button2').disabled = true; 
-        } else { 
+        if(this.imagable===false|| document.getElementById("usr2").value==="" || this.indx ==null ||this.indx==0)  {
+            document.getElementById('button2').disabled = true;
+        } else {
             document.getElementById('button2').disabled = false;
+            this.title=document.getElementById("usr2").value;
         }
-    
-    
+
+
     },
      /**
-     * it take the src of the img which the user drop it from the browser 
+     * it take the src of the img which the user drop it from the browser
      */
    onDrop: function(e) {
         e.stopPropagation();
@@ -217,35 +270,37 @@ export default {
         this.createFile(files[0]);
       },
        /**
-     * when the user upload the img it enable the post button and store the img src 
+     * when the user upload the img it enable the post button and store the img src
      */
       onChange(e) {
-         
+
         var files = e.target.files;
         this.createFile(files[0]);
          this.imagable=true;
          this.Enable();
-      
+
       },
        /**
-     * it create file to be stored in img src 
+     * it create file to be stored in img src
      */
       createFile(file) {
         if (!file.type.match('image.*')) {
           alert('Select an image');
           return;
         }
-        var img = new Image();
+       // var img = new Image();
         var reader = new FileReader();
         var vm = this;
 
         reader.onload = function(e) {
           vm.image = e.target.result;
-         this.imgName=vm.image; // NOT SURE YET IF THIS WHAT THE API DOC WANT 
-          //console.log(this.imgName);
+          
+          this.avatar=vm.image; 
+        
+         // console.log(this.imgName);
         }
         reader.readAsDataURL(file);
-       
+
       },
        /**
      * it remove the img if the user upload an img from browser and want to remove it so it make the src empty.
@@ -261,38 +316,61 @@ export default {
      */
 
     submitPost(){
-       this.videoUrl=document.getElementById('textsend3').value;
-       this.apexComId='';//TODO 
-       this.bodyPost=document.getElementById('textsend').value;
-       this.imgName=document.getElementById('imgId').src;
+       if(this.normal){
+         this.bodyPost=document.getElementById('textsendnormal').value;
+       }
+      else{
+         this.bodyPost=document.getElementById('textsendrte-view').value;
+      }
 
-     AllServices.submit(this.videoUrl,this.apexComId,this.bodyPost,this.imgName,this.isLocked,this.$localStorage.get('token'));
-      //  console.log(this.bodyPost);
-      //  console.log('hello');
-      //  axios.post( "http://127.0.0.1:8000/api/submit_post"  ,{
+       
+    // console.log(this.bodyPost);
+      if(this.imagable){
+      this.imgName=document.getElementById('imgId').src;
+     // console.log(this.imgName);
+      }
+     
+      
+     
+     
+      
+       // this.videoUrl=document.getElementById('textsend3').value;
+        //console.log(this.videoUrl);
+      
 
-      //   ApexCom_id:this.apexComId,
-      //   _token:this.$localStorage.get('token'),
-      //   body:this.bodyPost,
-      //   img_name:this.imgName,
-      //   video_url:this.videoUrl,
-      //   isLocked:this.isLocked
+      //console.log(this.videoUrl);
+       
+        
+           
+            
+          //alert(this.indx);
+    
+     // console.log(this.apexComId);
+      // this.bodyPost=document.getElementById('textsendnormal').value;
+     //  alert('gooa create post com');
 
+         
+     
+   
+      // console.log(this.title);
+     
+      //  this.$emit('Post',this.title,this.bodyPost,this.$localStorage.get('token'))
+
+      // this.$emit('PostEmit',this.bodyPost);
+     // alert('قبل السيرفر');
+     
+      AllServices.submit(this.videoUrl,this.apexComId,this.bodyPost,this.imgName,this.isLocked,this.$localStorage.get('token'));
+     //alert('هعمل ايمت اهو ');
  
-
-
-      //  }).then(function(response){
-
-      //    if(response){
-      //      //TODO it will  display your Post which you have created soon 
-          
-      //    }
+      this.$emit('PostEmit',this.title,this.bodyPost,this.imgName,this.videoUrl,this.$localStorage.get('userName'),this.apexs[this.indx-1].name);
+      this.$router.push('/Submit');
+     
     }
 
     },
-    
 
-    
+
+
 
     components:{
      'tab':tab,
@@ -302,15 +380,21 @@ export default {
      * it return all apexnames to be displayed in listbox .
      */
 created(){
- axios.get("http://localhost/Apex_names"
 
-// TODO here we get list of apexnames and display it at combox 
- ).then(function(response){
-    apexNames:response 
+  AllServices.getApexNames().then((data) =>
+      {
+        if(data)
+        {
+          this.apexs = data;
+          
+        }
+      });
 
- })
- 
-
+//       if(EditData.canEdit){
+// // document.getElementById("textsendnormal").value=EditData.content;
+//         alert('edit now');
+//       }
+  
 }
 
 
@@ -318,32 +402,37 @@ created(){
 </script>
 
 <style scoped>
+#switchId{
 
+margin-left:55%;
+}
+.form-group{
 
+  width:100%;
+}
 .Cpost{
 
     width: 30%;
-    margin-block-end: -3%;
-    margin-top: 6.5%;
     margin-left: 5.5%;
 
 }
 
 .a{
-
-    margin-bottom: 5%;
-
+    padding-top: 6%;
+    border-bottom: 1px solid rgb(237, 239, 241);
+    color:black;
+ 
 }
 
 .form-control{
 
-    width: 100%
+    width: 70%
 }
 
 .btn2 {
 
   margin-left:45%;
-  margin-top: 20%; 
+  margin-top: 20%;
   border-color: rgb(0, 121, 211);
   color: rgb(0, 121, 211);
 
@@ -362,12 +451,14 @@ created(){
 
 }
 
-#app { 
+#app {
 
   text-align: center;
 
 }
-
+ #switchId:hover{
+             cursor:pointer
+               }
 .postDisable{
 
   background-color:rgb(0, 121, 211);
@@ -391,17 +482,18 @@ created(){
 
 .bodyPost{
 
-   width:90%;
+   width:64%;
    margin-bottom: 100%;
    margin-left: 5.5%;
    margin-top:0.5%;
+   
 
 }
 .post2{
 
   background-color:rgb(0255, 255, 255);
   color:rgb(0, 121, 211);
- 
+
 }
 
 .row{
@@ -434,7 +526,7 @@ margin-left: 5.5%;
 
 .custom-select select {
 
-  display: none; 
+  display: none;
 
 }
 
@@ -448,7 +540,7 @@ margin-left: 5.5%;
 
      height: 300px;
      width: 70%;
-     
+
 
 }
 .remv{
@@ -467,7 +559,7 @@ margin-left: 5.5%;
   position: relative;
    border-color: rgb(0, 121, 211);
    color: rgb(0, 121, 211);
-  
+
 }
 
 
@@ -526,6 +618,7 @@ input[type="file"] {
   width: 100%;
   margin-left: 20%;
   align:center;
+  
 }
 .check{
 
@@ -535,7 +628,7 @@ margin-left: 2%
 
 .postButton{
 
-  margin-left: 94%;
+  margin-left: 64.5%;
 }
 
 .dropApex{
@@ -543,7 +636,9 @@ display:inline-block;
  margin:0.5% 5% ;
  width: 30%;
 }
-
+#textsend{
+  width: 50%;
+}
 
 @import "../../node_modules/@syncfusion/ej2-base/styles/material.css";
 @import "../../node_modules/@syncfusion/ej2-vue-richtexteditor/styles/material.css";
@@ -559,6 +654,85 @@ display:inline-block;
 margin-top: 5%;
 height: 30%;
 }
+#fancy{
+  width: 100%;
+}
+
+
+.e-richtexteditor.e-rte-tb-expand {
+    border: 1px solid rgba(0, 0, 0, 0.12);
+     width: 70% !important;
+  
+    
+   
+}
+@media (max-width:959px){
+ .bodyPost{
+      width:100%;
+      margin-left:0%;
+      
+  }
+ .form-control{
+      width:100%;
+      
+      
+  }
+ .btnImage{
+  /* width:30%; */
+  font-size: 50%;
+  
+}
+
+
+} 
+
+@media (max-width:1300px){
+   .form-control{
+      width:60%;
+      
+      
+  }
+ .imgBox{
+   width: 50%;
+ }
+  
+}
+
+@media (max-width:2000px){
+
+  .drop1 {
+  
+  padding-top: 0%;
+  margin-inline-start: 0%;
+
+}
+@media (max-width:200px){
+  
+ .btnImage{
+       margin: -32%;
+       font-size: 30%;
+}
+  
+}
+@media (max-width:100px){
+  
+ .btnImage{
+       margin: -63%;
+      font-size: 10%;
+}
+  
+}
+
+
+@media (max-width:115px){
+  
+ .btnImage{
+      padding:0%;
+      font-size: 10%;
+  
+}
+  
+}
+}
+
 </style>
-
-

@@ -3,21 +3,24 @@
     <div class="header">
        <h1>  {{ searchValue }} </h1> 
        <p> Search results </p>
-     </br>
+       <br/>
     </div>
     <div class="body">
       <ul>
        <li><router-link to="/Search" exact > Posts </router-link></li>
-       <li><router-link to="/Search/users" exact> Communities and users </router-link></li>
+       <li><router-link to="/Search/users" id="h" exact> Communities and users </router-link></li>
       </ul>
     </div>
-   <div v-if="this.$route.name == 'Search'" id="DisplayPosts">  
-      <div id="PostContainer" v-for="onePost in posts">
-         <post :postData="onePost" v-on:showUp="showPost" ></post>
+    <div v-if="this.$route.name == 'Search'" v-show="exist" id="DisplayPosts">  
+      <Sort class="sort" :style="{width:wid, marginTop:'2%'}" ></Sort> 
+      <div id="PostContainer" v-for="onePost in posts" :key="onePost.name">
+         <post :postData="onePost" v-on:showUp="showPost"></post>
       </div>
-    </div>  
-
-       <router-view></router-view>
+      <DemoOnePost id="PostModal" :onePostData="postInfo" ></DemoOnePost>
+    </div> 
+    <div v-if="this.$route.name == 'Search'" v-show="!exist" id="subDiv"> {{error}} ''{{this.$localStorage.get('search')}}'' </div> 
+    <SearchSideBar v-show="login"></SearchSideBar>
+    <router-view></router-view>
     
   </div>
 
@@ -25,45 +28,122 @@
 
 <script>
 import post from "./Post.vue"
+import DemoOnePost from './DisplayOnePost.vue'
+import Sort from './Sort.vue'
+import SearchSideBar from './SearchSideBar.vue'
 import {AllServices} from '../MimicServices/AllServices.js'
+import $ from'jquery/dist/jquery.min.js'
+
 /**
  * @vue-data {string} [error=""] if there is no matching
  * @vue-data {string} [searchVal=""] search value  
  * @vue-data {object} [posts] posts that reflect with search value
 */
 export default {
- /* props:{
-    myProperty:{
-      type: String
-    }
-  }, */
   components:{
     'post':post,
+    'DemoOnePost':DemoOnePost,
+    'SearchSideBar': SearchSideBar,
+    'Sort':Sort
   },
   data(){
     return{
       searchValue: '',
+      login:false,
       posts: [],
-      error: ''
+      error: '',
+      exist:true,
+      postInfo:'',
+      wid:'80%'
     }
   },
   created(){
     setInterval(() => {
         this.searchValue = this.$localStorage.get('search');
+        this.login = this.$localStorage.get('login');
+        var mq = window.matchMedia( "(max-width: 933px)" );
+        if (mq.matches) {
+         this.wid = '158%'
+        }   
+        else{
+          this.wid = '80%'
+        }
     }, 1000)
-    
   },
-  mounted()
+  mounted(){
+     $('#selectted').text('Search Results');
+        var remclass = $('#classed').prop('class');
+        $('#classed').removeClass(remclass);
+        $('#classed').addClass("glyphicon glyphicon-search");
+  },
+  beforeUpdate()
   {
-    var result = AllServices.searchPosts();
-    if( typeof result === 'string')
+    if(this.$localStorage.get('login'))
     {
-        this.exist = false,
-        this.error = result
+      if(AllServices.getState())
+      {
+        var result = AllServices.searchUser();
+        if( typeof result === 'string')
+        {
+            this.exist = false,
+            this.error = result
+        }
+        else{
+          this.posts= result[0],
+          this.exist = true
+        }
+      }
+      else{
+        AllServices.searchUser().then((data) =>{
+          if( typeof data === 'string')
+          {
+            this.exist = false,
+            this.error = data
+          }
+          else{
+            this.posts= data[0],
+            this.exist = true
+          }
+        })
+      }     
     }
     else{
-      this.posts= result
+      if(AllServices.getState())
+      {
+        var resultT = AllServices.searchGuest();
+        if( typeof resultT === 'string')
+        {
+            this.exist = false,
+            this.error = resultT
+        }
+        else{
+          this.posts= resultT[0],
+          this.exist = true
+        }
+      }
+      else{
+        AllServices.searchGuest().then((data) =>{
+          if( typeof data === 'string')
+          {
+            this.exist = false,
+            this.error = data
+          }
+          else{
+            this.posts= data[0],
+            this.exist = true
+          }
+        })
+      } 
     }
+  },
+  methods:{
+  /**
+  * assign the post to be shown in the modal
+  */
+  showPost:function(post)
+  {
+    this.postInfo=post;
+  },
   }
 }
 </script>
@@ -80,7 +160,7 @@ export default {
   background-color: white;
   width:100%;
   padding-left:2%;
-  margin-top: 3%;
+  margin-top: 43px;
   border:1px solid #eee
 }
 .header h1{
@@ -91,7 +171,7 @@ export default {
   color:#999;
 }
 .body ul{
-  padding: 1% 0;
+  padding: 13px 0;
   background-color: white;
   padding-left:3%;
   width:100%;
@@ -116,11 +196,49 @@ export default {
 }
 
 #PostContainer{
-  margin-top: -8%;
+  margin-top: 2%;
 
 }
 #DisplayPosts{
   width:60%;
+  display:inline-block;
 }
 
+#subDiv{
+  display: inline-block;
+  padding: 2%;
+  margin: 2% 1.5%;
+  width: 70%;
+  height:100%;
+  background-color: white;
+  height:100%;
+  border-radius:15px;
+  text-align:center;
+  font-size: 17px;
+  font-weight: 600
+
+}
+.sort{
+  padding-top:10px;
+  margin-left:23%;
+}
+@media(max-width:1250px){
+  #subDiv{
+    width:62%;
+  }
+}
+@media(max-width:933px){
+  #subDiv, {
+    width:95%;
+  }
+  div .sort{
+    margin-left: 5%
+  }
+}
+@media(max-width:303px){
+  div ul #h{
+    display: none
+  }
+} 
+/**/
 </style>

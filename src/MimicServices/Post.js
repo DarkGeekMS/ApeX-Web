@@ -1,25 +1,67 @@
 import Vue from 'vue'
 import axios from 'axios'
+
 export  const MimicPost=new Vue({
 methods:{
+  EditPost: function(ID,cont,mimic, baseUrl){
+    if( mimic == true)
+    {
+        if(this.$localStorage.login)
+        {
+        var promise1 = new Promise(function(resolve, reject) {
+            setTimeout(function() {
+              resolve(true);
+            }, 300);
+          });
+return promise1;
+        }
+        var promise1 = new Promise(function(resolve, reject) {
+            setTimeout(function() {
+              resolve(false);
+            }, 300);
+          });
+return promise1;
+    }
+    else
+    {
+        var self = this;
+        return axios.patch(baseUrl + 'api/EditText', {
+            name: ID,
+            content: cont,
+            token: this.$localStorage.get('token')
 
-    save:function(token,ID,mimic){
+         })
+       .then(function (response) {
+           return true;
+        })
+       .catch(function (error) {
+           return false;
+        });
+    }
+},
+    save:function(token,ID,mimic, baseUrl){
 
         if(mimic){
+          if(this.$localStorage.login){
              if(token=="1" && ID=="1"){
                 return true;
               }
+
+                alert("Log In First!!");
                 return false;
              }
+            }
+
              else {
-                axios.post( "http://35.232.3.8/api/save",
+                axios.post(baseUrl + "api/Save",
              {
                 ID:ID,
                 token:token
             }).then(response => {
-              if(response){
-                alert('Post saved successfully');
-              }
+            return true;
+            }).catch(function(error){
+
+              return false;
             })
              }
               },
@@ -39,19 +81,19 @@ methods:{
 
             else{
 
-                axios.post("http://35.232.3.8/api/DelComment",{
+                axios.post(baseUrl + "api/Delete",{
                     ID    : name,
                     token : ID
 
             }).then(response=>{
-              if(response){
-                this.Deleted = true;
-                alert("Deleted successfully");
-              }
 
-            }).catch(function ()
+                this.Deleted = true;
+                return true;
+
+
+            }).catch(function (error)
             {
-             //console.log(error);
+             return false;
 
 
               });
@@ -61,8 +103,9 @@ methods:{
 
 
             },
-               Hide(name,ID,mimic){
+               Hide(name,ID,mimic, baseUrl){
                    if(mimic===true){
+
                     if(name==="1" && ID==="1"){
 
                         return true;
@@ -72,24 +115,25 @@ methods:{
                    }
               else{
 
-                axios.post("http://35.232.3.8/api/Hide",
+                axios.post(baseUrl + "api/Hide",
                 {
                     name    : name,
                     ID : ID
 
                 }).then(response => {
-                  if(response){
-                  alert("Hidden successfully");}
-                }).catch(function ()
+                 return true;
+                }).catch(function (error)
                 {
-                   //console.log(error);
+                   return false;
                 });
 
               }
 
             },
-            upvote(name,ID,direction,mimic){
+            upvote(name,ID,direction,mimic, baseUrl){
                 if(mimic){
+                  if(this.$localStorage.login){
+
                     if(name=="1"  && ID=="1"){
 
                         if(direction==1){
@@ -98,8 +142,13 @@ methods:{
                        }
 
            }
+
+                  }
+                  alert("Log In First!!");
+                  return false;}
+
            else{
-            axios.post("http://35.232.3.8/api/vote",
+            axios.post(baseUrl + "api/Vote",
             {
 
               ID       : ID,
@@ -107,31 +156,32 @@ methods:{
               direction:direction
 
             }).then(response => {
-              if(response){
-                 alert("upvote successfully");}
+              return response.data;
 
             }).catch(function ()
             {
-         // console.log(error);
+        return false;
 
         });
 
               }
             }
-            },
+            ,
 
- downvote(name,ID,direction,mimic){
+ downvote(name,ID,direction,mimic, baseUrl){
                 if(mimic){
+                  if(this.$localStorage.login){
                     if(name=="1"  && ID=="1"){
 
                         if(direction==-1){
 
                           return 200;
                        }
-
+                      }
+                      return false;
            }
            else{
-            axios.post("http://35.232.3.8/api/vote",
+            axios.post(baseUrl + "api/Vote",
                    {
 
 
@@ -139,8 +189,8 @@ methods:{
                     name:name,
                     direction:direction
 
-                  }).then(function (response) {
-                    return response
+                  }).then(response=> {
+                    return response.data;
                 }).catch(function ()
                   {
                   // console.log(error);
@@ -164,7 +214,7 @@ methods:{
 
 
 },
-defaultVote(name,ID,direction,mimic){
+defaultVote(name,ID,direction,mimic, baseUrl){
   if(mimic){
       if(name=="1"  && ID=="1"){
 
@@ -175,7 +225,7 @@ defaultVote(name,ID,direction,mimic){
 
 }
 else{
-axios.post("http://35.232.3.8/api/vote",
+axios.post(baseUrl + "api/Vote",
 {
 
 ID       : ID,
@@ -194,7 +244,27 @@ if(response){
 
 }
 }
+},
+isLocked(ID,mimic, baseUrl){
+    if( mimic == true)
+    {
+        if(this.$localStorage.login)
+            return false;
+        return true;
+    }
+    else
+    {
+        axios.post(baseUrl + 'api/Save', {
+        ID: ID,
+        token:this.$localStorage.get('token')
+         })
+       .then(function (response) {
+           return true;
+        })
+       .catch(function (error) {
+           return false;
+        });
+    }
 }
-
 
 }})

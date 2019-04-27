@@ -1,15 +1,19 @@
 <template id="PostTemlate">
-<div id="PostItme" class="postItem" >
-<div class="panel panel-default" style="width: 62rem;   "  @click="ShowModal()" v-show="Not_Hide" id="post">
-  <!-- <div class="row" id="postRow"> -->
-    <div class="panel-body"  style="width: 62rem;" >
-    <div class="panel2 panel-default" style="width: 3.7rem;" id="postSide">
+
+  <div class="postMod">
+    <!-- VERY IMPORTANT! REPORT MODAL APPEARS MULTIPLE TIMES FOR EACH POST  -->
+   <reportBox> </reportBox>
+    
+<div class="panel panel-default"  @click="ShowModal()" v-show="Not_Hide" id="post">
+
+    <div class="panel-body">
+    <div class="panel2 panel-default"  id="postSide">
 
 
           <div class="column1" id="postCol1">
 
 
-<button @click="changeColor_up" type="button" :class="className_up" id="up">
+<button @click="changeColor_up" type="button" :class="className_up" id="up" >
         <i class="glyphicon glyphicon-arrow-up"></i>
 </button>
 
@@ -22,35 +26,35 @@
 
         </div>
 
-
-
-
       </div>
-        <div class="column2" id="postCol2">
 
-      <router-link class="fontUser" id="subred" :to="{name:'ApexCom' , params: {ApexComName:postData.apex_id}}">{{postData.apex_id}}</router-link>
+
+      <router-link class="fontUser" id="subred" :to="{name:'ApexCom' , params: {apexComName:postData.apex_id}}">{{postData.apex_id}}</router-link>
       <font class="postby" id="fontPostby">. Posted by</font>
-      <router-link class="postby" id="user" :to="{name:'UserProfile' , params: {userName:postData.postedby}}"> {{postData.postedby}}</router-link>
+      <router-link class="postby" id="user" :to="{name:'UserProfile' , params: {userName:postData.posted_by}}"> {{postData.posted_by}}</router-link>
 
       <font class="postby" id="fontpost"> </font>
-      <a href="#" class="postby" id="timeAgo"> 15 hours ago </a>
-      <p id="postBody" class="hPost">
+      <a href="#" class="postby" id="timeAgo">  {{ moment(postData.created_at).fromNow()}}</a>
+      <h3>{{postData.title}}</h3>
+      <p id="postBody" class="hPost" v-if="!this.showEditTextArea">
 
-        {{postData.content}} </p>
+        {{postData.content}}
+         </p>
+          <textarea  @keyup="store" v-if="this.showEditTextArea" class="form-control" rows="7" id="textarea">{{postData.content}}</textarea> 
+          
+          <button @click="saveChange" v-if="this.showEditTextArea" class="btn btn-primary postButton" id="saveEdit">SAVE</button>
+          <!-- <button  v-if="this.showEditTextArea" class="btn btn-primary postButton" id="cancel">CANCEL</button> -->
+          
+<iframe  v-show ="postData.videolink!==''" width="100%" height="315"  :src=postData.videolink frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-
-      <!-- <a href="#" class="fontUser" id="subred"> apex_id </a>
-        <font class="postby" id="fontPostby">. Posted by</font>
-        <a href="#" class="postby" id="user"> username</a>
-        <font class="postby" id="fontpost"> </font>
-        <a href="#" class="postby" id="timeAgo"> 15 hours ago </a>
-        <h3 id="postBody">content </h3> -->
+<img v-show="postData.img!==''" :src=postData.img  height="100%" width="100%">
 </div>
+   
 <footer>
 
 <div class="btn-group" role="group" aria-label="..." id="drop">
 
-  <button type="button" class="btn btn-default " id="commentButton"><i class="far fa-comment-alt" id="commentIcon"></i>
+  <button type="button" class="btn btn-default " id="commentButton" ><i class="far fa-comment-alt" id="commentIcon"></i>
 Comments</button>
   <button  type="button" class="btn btn-default  SAVE"  @click="Save" id="SaveButton" >
 
@@ -68,7 +72,13 @@ Comments</button>
     </button>
     <ul class="dropdown-menu" id="dropMenu">
       <li ><a href="#"  @click="Hide" class="HIDE"><i class="fa fa-ban" id="HideIcon"></i>Hide</a></li>
-      <li><a href="#"><i class="glyphicon glyphicon-flag" id="ReportIcon"></i>Report</a></li>
+      <li><a  @click="report"><i class="glyphicon glyphicon-flag" id="ReportIcon" ></i>Report</a></li>
+      <li v-if="postData.canEdit"><a href="#" @click="editText" ><i class="glyphicon glyphicon-pencil" id="ReportIcon"></i>edit</a></li>
+      <li><a href="#" @click="isLocked" v-show="isAdmin() || isModerator()">
+        
+        <i v-if="Locked=='unlock'" class="fa fa-lock" id="ReportIcon"></i>
+        <i v-if="Locked=='Lock'" class="fa fa-unlock" id="ReportIcon"></i>
+          {{this.Locked}}</a></li>
     </ul>
   </div>
 
@@ -79,24 +89,20 @@ Comments</button>
 </footer>
 
 
-
           </div>
 
        </div>
 
-   </div>
-
-<!-- </div> -->
 
 </template>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
 <script id="postScript">
-import axios from 'axios'
 
 import {MimicDisplayPosts} from '../MimicServices/DisplayPosts.js'
 import { AllServices } from '../MimicServices/AllServices';
-
+import reportBox from './ReportModal.vue'
+var moment =require('moment');
 /**
  * @vue-data {string} [Save="Save"] Save value
  * @vue-data {boolean} [Not_Hide=true]    check if post not hide
@@ -114,8 +120,13 @@ import { AllServices } from '../MimicServices/AllServices';
 export default {
 
   name: 'PostItem',
+
    data(){
        return{
+             moment:moment,
+              isModal:false,
+             showEditTextArea:false,
+             editShow:false,
              Not_Hide :true,
              is_Hide  :false,
 
@@ -125,18 +136,110 @@ export default {
              pressed_up   : false,
              pressed_down : false,
 
-             votes  :0,
+             votes  :this.postData.votes,
              Saved  :"Save",
              PostId   :"",
              token  :this.$localStorage.get('token'),
 
              moderator:false,
              ShowModalVar:true,
-             Deleted:false
+             Deleted:false,
+             video:true ,
+             image:false ,
+             Locked:'Lock',
+             ago:''      
             };
          },
 
   methods: {
+     isModerator:function()
+      {
+        if(this.$localStorage.get('login')){
+        AllServices.userType().then((data) =>{
+        if(data.type ==2){
+          this.moderator=true;
+          return true;
+          }
+        else{
+          return false;
+        }
+        })
+        }
+      },
+   isAdmin:function()
+      {
+       
+        if(this.$localStorage.get('login')){
+        AllServices.userType().then((data) =>{
+        if(data.type ==1){
+          return true;
+          }
+        else{
+          return false;
+        }
+        })
+        }
+      },
+   
+    saveChange(){
+    
+          this.postData.content= document.getElementById("textarea").value; 
+          this.showEditTextArea=false;
+          AllServices.EditPost(this.postData.id, this.postData.content);
+        
+  
+    },
+
+    report(){
+    if(this.$localStorage.get('login') ){
+        if(this.ShowModalVar == true){
+        this.ToggleShowModalVar();
+         }
+  
+     this.onlyOneTime=false;
+      this.$modal.show('reportBox');
+
+    }
+    else{
+      alert('Login First!!');
+    }
+    },
+    isLocked(){
+      if(this.$localStorage.get('login')){
+        if(this.ShowModalVar == true){
+        this.ToggleShowModalVar();
+    }
+     // alert('lock successfully');
+     
+     if(this.Locked=='Lock'){
+
+       this.Locked='unlock';
+       this.$emit('lockComment',this.Locked);
+       
+     }
+     else{
+      this.Locked='Lock';
+      this.$emit('lockComment',this.Locked);
+      }
+      this.PostId=this.postData.id;
+      AllServices.isLocked(this.PostId);
+
+    }
+    else{
+      alert('Login First!!');
+    }
+    },
+
+    editText(){
+       if(this.ShowModalVar == true){
+           this.ToggleShowModalVar();
+        } 
+       // this.$emit('Edit');
+        this.showEditTextArea=true;
+       
+
+
+    },
      /**
      * delete post if the moderator press delete button.
      */
@@ -147,27 +250,13 @@ export default {
        }
         this.PostId=postData.id;
        AllServices.deletePost(this.PostId,this.$localStorage.get('token'));
-//          axios.post("http://localhost/DelComment",{
-//          ID    : this.PostId,
-//          token : this.$localStorage.get('token')
 
-//  }).then(response=>{
-//    if(response){
-//      this.Deleted = true;
-//      alert("Deleted successfully");
-//    }
-
-//  }).catch(function (error)
-//  {
-//   //console.log(error);
-
-
-//    });
    },
   /**
     * Hide post if the User press Hide button.
     */
        Hide(){
+           if( this.$localStorage.get('login') ){
          if(this.ShowModalVar == true){
          this.ToggleShowModalVar();
          }
@@ -180,22 +269,16 @@ export default {
             }
         this.PostId=postData.id;
         AllServices.Hide(this.PostId,this.$localStorage.get('token'));
-        // axios.post("http://localhost/Hide",
-        // {
-        //     name    : this.PostId,
-        //     ID : this.$localStorage.get('token')
 
-
-        // }).then(response => {
-        //   if(response){
-        //   alert("Hidden successfully");}
-        // }).catch(function (error)
-        // {
-        //    //console.log(error);
-        // });
-         },
+         }
+         else{
+         alert('login first');
+       }
+       }
+       ,
     changeColor_up()
     {
+      if(this.$localStorage.get('login') ){
       if(this.ShowModalVar == true){
       this.ToggleShowModalVar();
     }
@@ -214,23 +297,9 @@ export default {
 
                       this.votes          += 1;
                        this.PostId=postData.id;
+                       this.postData.up=true;
                       AllServices.upvote(this.$localStorage.get('token'),this.PostId,1);
-                  //     axios.post("http://localhost/vote",
-                  //     {
 
-                  //       ID       : this.$localStorage.get('token'),
-                  //       name     : this.PostId,
-                  //       direction:1
-
-                  //     }).then(response => {
-                  //       if(response){
-                  //          alert("upvote successfully");}
-
-                  //     }).catch(function (error)
-                  //     {
-                  //   console.log(error);
-
-                  // });
                 }
               else {
                     this.className_up = 'btn btn-light btn-sm is-gray';
@@ -238,24 +307,19 @@ export default {
                     this.pressed_up = false;
                      this.PostId=postData.id;
                   AllServices.defaultVote(this.PostId,this.$localStorage.get('token'),0);
-                //     axios.post("http://localhost/vote",
-                //    {
 
-
-                //     ID:this.$localStorage.get('token'),
-                //     name:this.PostId,
-                //     direction:0
-
-                //   }).then(response => {}).catch(function (error)
-                //   {
-                //    console.log(error);
-                //  });
                }
 
 
 
-      },
+      }
+      else{
+        alert('Login First !!');
+      }
+      }
+      ,
      changeColor_down(){
+       if(this.$localStorage.get('login') ){
        if(this.ShowModalVar == true){
        this.ToggleShowModalVar();
      }
@@ -274,23 +338,7 @@ export default {
                          this.votes-=1;
                           this.PostId=postData.id;
                          AllServices.downvote(this.PostId,this.$localStorage.get('token'),-1);
-                    //      axios.post("http://localhost/vote",
-                    //  {
 
-
-                    //       ID      : this.$localStorage.get('token'),
-                    //       name    : this.PostId,
-                    //       direction: -1
-
-                    //  }).then(response =>{
-                    //    if(response){
-                    //      alert("downvote successfully");
-                    //    }
-                    //  }).catch(function (error)
-                    //  {
-                    //   //console.log(error);
-
-                    // });
                   }
               else {
                   this.className_down = 'btn btn-light btn-sm is-gray';
@@ -300,25 +348,19 @@ export default {
                    this.pressed_down = false;
                     this.PostId=postData.id;
                    AllServices.defaultVote(this.PostId,this.$localStorage.get('token'),0);
-                  //  axios.post("http://localhost/vote",
-                  //  {
-
-
-                  //   ID:this.$localStorage.get('token'),
-                  //   name:this.PostId,
-                  //   direction:0
-
-                  // }).then(response => {}).catch(function (error) {
-                  //    console.log(error);
-                  //  });
 
 
                  }
+              }
+              else{
+                alert('Login First !!');
+              }
               },
                /**
     * Save post if the User press Hide button.
     */
     Save(){
+        if( this.$localStorage.get('login') ){
       if(this.ShowModalVar == true){
       this.ToggleShowModalVar();
     }
@@ -326,41 +368,37 @@ export default {
         {
         //alert('Post saved successfully');
         this.Saved="unsave";
-         this.PostId=postData.id;
+        this.PostId=postData.id;
         AllServices.save(this.$localStorage.get('token'),this.PostId);
-        // axios.post( "http://localhost/save",
-        // {
 
-        //     ID:this.PostId ,
-        //     token:this.$localStorage.get('token')
-
-
-        // }).then(response=>{
-        //   if(response){
-        //     alert('Post saved successfully');
-        //   }
-        // } ).catch(function (error)
-        // {
-        //     // console.log(error);
-
-        // });
       }
-        else{
-          this.PostId=postData.id;
-
-          AllServices.save(this.$localStorage.get('token'),this.PostId);
-             //alert('Post unsaved successfully');
+        else if(this.Saved=="unsave"){
             this.Saved="Save";
+            this.PostId=postData.id;
 
+         
+         //   alert(postData.apex_id);
+           
+             AllServices.save(this.$localStorage.get('token'),this.PostId);
            }
 
 
 
 
+    }
+    else{
+      alert('login First !!');
+    }
     },
+  
+    /**
+* show the clicked post on the modal.
+*/
       ShowModal(){
+        this.isModal=true;
         if(this.ShowModalVar == true){
-          this.$emit('showUp',this.postData);
+          this.$emit('showUp',this.postData,);
+   
           this.$modal.show('Demo-OnePost');
         }
           else {
@@ -372,33 +410,44 @@ export default {
       ToggleShowModalVar(){
         this.ShowModalVar=!this.ShowModalVar;
               },
-//       getUserId(){
-// //axios.get("http://localhost/me",{token:this.token}).then(response=>{this.userId=response.userID});
-// }
-
-
 },
 props: {
 postData:{},
        },
 created(){
+  
+   if(this.postData.canEdit){
+      this.className_up    = 'btn btn-light btn-sm is-red';
+        this.pressed_up      =true;
+   }
 
-
-
-         axios.get("http://localhost/me",{token:this.token}).then(response=>{this.userId=response.userID}).catch(function (error)
-         {
-          //console.log(error);
-        });
-
-
+      /*
+      axios.get("http://localhost/me",{token:this.token}).then(response=>{this.userId=response.userID}).catch(function (error)
+       {
+        console.log(error);
+      });
+      */
 
        if(this.userId==2){
         this.moderator=true;
-
        }
-
+       
 },
-
+computed: {
+  // timestamp: function () {
+  //   return moment(this.<model>.attributes['created-at']).format('YYYY-MM-DD [at] hh:mm')
+  // }
+}
+,
+components:{
+    reportBox,
+   
+  
+  },
+  mounted(){
+//     alert('votess');
+//  this.votes=postData.votes;
+  }
 }
 
 
@@ -428,13 +477,21 @@ created(){
             }
 .column1 {
             float: left;
-            column-rule-width: 1px;
+            column-rule-width: 10%;
          }
  #post:hover{
             border-color:rgb(135, 138, 140);
 
             }
+ #postBody:hover{
+             cursor:pointer
+               }
 
+  #imgId{
+         cursor: pointer;
+     
+        }
+  
 h5 {
     text-align: center;
    }
@@ -444,20 +501,20 @@ h5 {
     display: flex;
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
-    margin-right: -15px;
-    margin-left: 0;
+    margin-right: -5%;
+    margin-left: 0%;
      }
 
 
 #footer{
     width: 100%;
-    height: 30px;
+    height: 100%;
     position: absolute;
-    bottom: 0px;
+    bottom: 0%;
     margin-left: 1%;
       }
 .panel2{
-    margin-bottom: 0px;
+    margin-bottom: 0%;
     background-color: #fff;
     border: 1px solid transparent;
     border-radius: 4px;
@@ -465,16 +522,18 @@ h5 {
     box-shadow: 0 1px 1px rgba(0,0,0,.05);}
 
     .panel {
-
-        margin-bottom: 100%;
-        margin-left: 100px;
-        margin-top: 60px;
+        width:100%;
+        margin-bottom: 0%;
+        margin-left: 5%;
+        margin-right: unset;
+        margin-top: 3%;
         background-color: #fff;
         border: 1px solid transparent;
         border-radius: 4px;
         -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05);
         box-shadow: 0 1px 1px rgba(0,0,0,.05);
     }
+   
 .fontUser{
     font-size: 12px;
     font-weight: 700;
@@ -483,26 +542,34 @@ h5 {
 .postby{
     font-size: 12px;
     color: rgb(120, 124, 126);
+    cursor: pointer;
 }
 .buttonDelete{
       background-color: #f4511e;
-/*      margin-left: 470px;*/
-} /* Red */
-.postItem{
-width: 0%;
-margin-left:6%;
-padding-top:3%;
-margin-top: 0%;
-/* margin-bottom: -112px; */
+
+} 
+@media(max-width:1054px){
+  div .panel 
+  {
+    width: 80%;
+
+      }
+  div .panel{
+    margin-left: 4%
+  }
+}
+#postCol1{
+
+height:100%;
 
 }
-
 .hPost{
    overflow: auto;
    word-wrap: break-word;
    margin-top:0%;
    font-family:Verdana, Geneva, Tahoma, sans-serif;
    font-size: 130%;
+  
 
 }
 .column2{
@@ -511,5 +578,44 @@ width: 100%;
 }
 .panel-body {
      padding: 2px;
+     cursor: pointer;
 }
+
+#post{
+
+    width: 80%;
+   box-sizing: border-box;
+    /* width: 250%; */
+    margin-left: 23%;
+    margin-top: 4%;
+    min-width: 50%;
+    height: 100%;
+   margin-right: 0%;
+
+}
+
+.panel-body{
+
+  width: 100%;
+}
+#saveEdit{
+  margin-left:92.5%; 
+}
+#cancel{
+  margin-left:80%;
+  /* padding-top: 0%; */
+  
+}
+
+#postSide{
+width: 30%;
+
+}
+
+@media (max-width:933px){
+ #post{
+      width:158%;
+      margin-left:4.6%;
+  }
+} 
 </style>

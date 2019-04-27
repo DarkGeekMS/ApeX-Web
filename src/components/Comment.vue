@@ -5,7 +5,7 @@
       <div id = "firstLine">
         <button id ="Up" v-on:click="Upvote" v-show="!this.upVoted" class = "arrows,up"></button>
         <button id ="Up2" v-on:click="Upvote" v-show="this.upVoted" class = "arrows,up"></button>
-        <router-link 
+        <router-link
           class ="smallText"
           :to="{name:'UserProfile' ,
            params: {userName:this.user}}">
@@ -22,8 +22,8 @@
         <button id ="Down2" v-on:click="Downvote" v-show="this.downVoted" class = "arrows,down"></button>
         <div class = "condiv" v-for = "part in con" :key="part.start">
           <p class="content"  v-if = "!part.type" >{{part.c}}</p>
-          <router-link 
-          v-if = "part.type" 
+          <router-link
+          v-if = "part.type"
           :to="{name:'UserProfile' ,
            params: {userName:part.c}}">
             {{part.c}}
@@ -56,7 +56,6 @@
 
 <script>
 import WriteComment from './WriteComment.vue'
-import axios from 'axios'
 import reportBox from './ReportModal.vue'
 import {AllServices} from '../MimicServices/AllServices.js'
 
@@ -71,7 +70,11 @@ export default {
     parentIdx:Number,
     parentID:String,
     ID:String,
-    date:Date
+    date:Date,
+    con: {
+    type: Array,
+    default: function () { return [] }
+  }
   },
   data(){
     return{
@@ -83,25 +86,21 @@ export default {
     showReplyBox:0,
     showEditBox:0,
     deleted:1,
-    unSaved:'Save',
-    con : []
-
+    unSaved:'Save'
     }
   },
-  created(){
+  mounted(){
     setInterval(() => this.DateFormat(this.date), 1000);
-
   /////
-  this.OpString();
   },
   methods:{
-edit:function(updatedContent){
+edit:function(updatedConten,con){
   this.content=updatedContent;
+  this.con=con;
   this.showEditBox =0;
   //EMIT EVENT TO COMMENT PARENT TO EDIT THE CONTENT OF THE IDX = idx  by updatedContent
-  this.$emit('Edit',updatedContent,this.idx );
-  this.con=[];
-  this.OpString();
+  this.$emit('Edit',updatedContent,con,this.idx );
+ 
 
 
 },
@@ -109,7 +108,7 @@ retrieveWithNoEdit:function(){
   this.showEditBox =0;
 },
 Delete:function(){
- 
+
 
 
   if(AllServices.DeleteComment(this.ID))
@@ -117,7 +116,7 @@ Delete:function(){
     else{
       this.$emit('Delete',this.idx );
     }
-  
+
 },
 OpString:function(){
    for (var i = 0;i<this.content.length;i++)
@@ -135,7 +134,7 @@ OpString:function(){
                     }
                 }
               }
-             
+
                     for (var x = i;x<this.content.length;x++)
                     {
                         if((this.content[x+1]=='u' && this.content[x+2]=='/' && this.content[x]==' ')||x==this.content.length-1)
@@ -145,9 +144,9 @@ OpString:function(){
                             i=x;
                             break;
                         }
-                    }   
+                    }
 
-              
+
           }
 },
 Save:function(){
@@ -177,9 +176,9 @@ Downvote:function(){
           this.points=data.votes;
         }});
 },
-addReply:function(cont,use,parent,parentLevel,parentID,currentID){
+addReply:function(cont,con,use,parent,parentLevel,parentID,currentID){
   // send to comment parent to push in the array!!!!!
-  this.$emit('Reply2',cont,parent,parentLevel+1,parentID,currentID );
+  this.$emit('Reply2',cont,con,parent ,parentLevel+1,parentID,currentID );
 
 
 },
@@ -235,6 +234,7 @@ this.time=fuzzy;
     position: static;
     width:53%;
     float:left;
+    background:white;
 }
 
 
@@ -331,8 +331,15 @@ this.time=fuzzy;
   position:static;
   float:left;
 }
-.condiv ,.content, .user  { 
-display: inline;
+ .content  { 
+overflow: hidden;
  }
+ .user{
+display: inline;
+
+ }
+ /* .condiv{
+   max-width: 100%;
+ } */
 
 </style>
