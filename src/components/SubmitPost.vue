@@ -55,7 +55,7 @@ export default {
   },
 
   methods:{
-    getData(title,content,img,video,author,apex){
+    getData(d,title,content,img,video,author,apex){
      //  alert('ana emit ');
     
         if(content || img ||video){
@@ -73,6 +73,9 @@ export default {
       this.createPostData.title=title;
       this.createPostData.apex_id=apex;
       this.createPostData.canEdit=true;
+      this.createPostData.created_at=d;
+      // alert(d);
+     
 
       
    

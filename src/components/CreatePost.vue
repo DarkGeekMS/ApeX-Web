@@ -336,9 +336,15 @@ this.apexComId=this.apexs[this.indx-1].id;
       if(this.videoUrl==''){
         this.videoUrl=null;
       }
-           
+      
+      var today = new Date();
+      var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+      var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+      var dateTime = date+' '+time;
+     
+      
       AllServices.submit(this.apexComId,this.title,this.bodyPost,this.imgName,this.videoUrl,this.isLocked,this.$localStorage.get('token'));
-      this.$emit('PostEmit',this.title,this.bodyPost,this.imgName,this.videoUrl,this.$localStorage.get('userName'),this.apexs[this.indx-1].name);
+      this.$emit('PostEmit',dateTime,this.title,this.bodyPost,this.imgName,this.videoUrl,this.$localStorage.get('userName'),this.apexs[this.indx-1].name);
       this.$router.push('/Submit');
      
     }
