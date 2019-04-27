@@ -85,8 +85,8 @@ export  const AllServices =new Vue({
     {
       return MimicAuth.ForgetUser2(code,this.mimic);
     },
-    getPosts:function(apexComName) {
-      return MimicDisplayPosts.getPostsData(this.mimic,apexComName);
+    getPosts:function(apexComName,sortparam) {
+      return MimicDisplayPosts.getPostsData(this.mimic,apexComName,sortparam);
     },
 	getAbout:function(apexComName) {
     var about=MimicApexCom.getAbout(this.mimic,apexComName);

@@ -14,6 +14,9 @@ import ApexComAddModerator from './components/ApexComAddModerator.vue'
 import UserSettings from './components/UserSettings.vue'
 import CreateApexCom from './components/CreateApexCom.vue'
 import SubmitPost from './components/SubmitPost.vue'
+import Hot from './components/SortHot.vue'
+import New from './components/SortNew.vue'
+import Controversial from './components/SortControversial.vue'
 export default[
       {path:'/ApexCom/:apexComName',name:'ApexCom',props:true,component:ApexCom , children :
       [
@@ -28,7 +31,13 @@ export default[
       ]
       },
     {path:'/',component:HomePage},
-    {path:'/HomePage',name:'HomePage',component:HomePage},
+    {path:'/HomePage',name:'HomePage',component:HomePage,props:true,children:[
+    {path:'Hot',name:'Hot',component:Hot,props:true},
+    {path:'New',name:'New',component:New,props:true},
+    {path:'Controversial',name:'Controversial',component:Controversial,props:true},
+    {path:'Top',name:'Top',component:Hot,props:true},
+    {path:'Rising',name:'Rising',component:New,props:true}
+    ]},
     {path:'/Submit',name:'SubmitPost',component:SubmitPost},
     {path:'/Search', name:'Search' , component:Search, children :[
         {path:'users', component:Users } ]},
