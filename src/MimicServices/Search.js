@@ -10,11 +10,11 @@ export  const MimicSearch =new Vue({
   },
   methods:{
 
-    SearchU: function(mimic)
+    SearchU: function(mimic, baseUrl)
     {
       if(mimic ==  true)
       {
-        if(this.$localStorage.get('search') == this.searchValue && this.$localStorage.get('token') == this.token )
+        if(this.$localStorage.get('search') == this.searchValue && this.$localStorage.get('token') == this.token)
         {
            var result = [
              [{
@@ -44,34 +44,29 @@ export  const MimicSearch =new Vue({
                id:1,
                name:'AyatMostafa',
                numOfMeb: 0,
-               avatar:'https://b.thumbs.redditmedia.com/ooMk56fzWZCheEvB0mfTlsKk7P86TEu_BylqPJ-36EQ.png',
+               avatar:'https://i.ytimg.com/vi/inYarqDCCGA/maxresdefault.jpg?fbclid=IwAR2SOsEdCa3c9PC8x4UaNgKXEynjKgq-R_LlYn9WMsCrutAjjdCpXOZkCOs',
                description: "Aww, cripes. I didn't know I'd have to write a description. How many words is that so far, like a hundred? Soooo, yeah. Mildly interesting stuff.",
              },{
                id:1,
                name:'AyatMostafa',
                numOfMeb: 0,
-               avatar:'https://b.thumbs.redditmedia.com/ooMk56fzWZCheEvB0mfTlsKk7P86TEu_BylqPJ-36EQ.png',
+               avatar:'http://bashkatibnews.com/contents/article/515_lybfjrmf.jpg',
                description: "Aww, cripes. I didn't know I'd have to write a description. How many words is that so far, like a hundred? Soooo, yeah. Mildly interesting stuff.",
              },
              {
                id:2,
                name:'NadaMostafa',
                numOfMeb: 0,
-               avatar:'https://i.ytimg.com/vi/inYarqDCCGA/maxresdefault.jpg?fbclid=IwAR2SOsEdCa3c9PC8x4UaNgKXEynjKgq-R_LlYn9WMsCrutAjjdCpXOZkCOs',
+               avatar:'https://b.thumbs.redditmedia.com/ooMk56fzWZCheEvB0mfTlsKk7P86TEu_BylqPJ-36EQ.png',
                description: "Aww, cripes. I didn't knowterests you. Mildly. It's in the name, ffs.hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh"
              }],
              [{
                 id:1,
-                name:'ayatmostafa',
-                avatar:'https://i.ytimg.com/vi/inYarqDCCGA/maxresdefault.jpg?fbclid=IwAR2SOsEdCa3c9PC8x4UaNgKXEynjKgq-R_LlYn9WMsCrutAjjdCpXOZkCOs',
+                name:'Ayat',
+                avatar:'https://b.thumbs.redditmedia.com/ooMk56fzWZCheEvB0mfTlsKk7P86TEu_BylqPJ-36EQ.png',
                 karma:10
               }]
           ]
-          var promise1 = new Promise(function(resolve){
-            setTimeout(function() {
-              resolve(result);
-            }, 300)
-            });
           return result
         }
         else{
@@ -80,18 +75,17 @@ export  const MimicSearch =new Vue({
       }
       else
       {
-        axios.post(this.$localStorage.get('baseUrl') + 'api/search',{
+        axios.post(baseUrl + 'api/Search',{
         query: this.$localStorage.get('search'),
         token: this.$localStorage.get('token')
         }).then(response => {
-          var result= response.data;
-          return result
+          return response.data;
         }).catch(error => {
           return error
         })
       }
     },
-    SearchG: function(mimic)
+    SearchG: function(mimic, baseUrl)
     {
       if(mimic ==  true)
       {
@@ -148,11 +142,6 @@ export  const MimicSearch =new Vue({
                 karma:10
               }]
           ]
-          var promise1 = new Promise(function(resolve){
-            setTimeout(function() {
-              resolve(result);
-            }, 300)
-            });
           return result
         }
         else{
@@ -161,11 +150,10 @@ export  const MimicSearch =new Vue({
       }
       else
       {
-        axios.post(this.$localStorage.get('baseUrl') + 'api/search',{
+        axios.get(baseUrl + 'api/Search',{
         query: this.$localStorage.get('search'),
         }).then(response => {
-          var result= response.data;
-          return result
+          return response.data;
         }).catch(error => {
           return error
         })

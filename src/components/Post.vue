@@ -13,7 +13,7 @@
           <div class="column1" id="postCol1">
 
 
-<button @click="changeColor_up" type="button" :class="className_up" id="up">
+<button @click="changeColor_up" type="button" :class="className_up" id="up" >
         <i class="glyphicon glyphicon-arrow-up"></i>
 </button>
 
@@ -26,18 +26,15 @@
 
         </div>
 
-
-
-
       </div>
 
 
-      <router-link class="fontUser" id="subred" :to="{name:'ApexCom' , params: {apexComName:postData.apex_id}}">{{postData.apex_id}}</router-link>
+      <router-link class="fontUser" id="subred" :to="{name:'ApexCom' , params: {apexComName:postData.apex_com_name}}">{{postData.apex_com_name}}</router-link>
       <font class="postby" id="fontPostby">. Posted by</font>
-      <router-link class="postby" id="user" :to="{name:'UserProfile' , params: {userName:postData.posted_by}}"> {{postData.posted_by}}</router-link>
+      <router-link class="postby" id="user" :to="{name:'UserProfile' , params: {userName:postData.post_writer_username}}"> {{postData.post_writer_username}}</router-link>
 
       <font class="postby" id="fontpost"> </font>
-      <a href="#" class="postby" id="timeAgo">  </a>
+      <a href="#" class="postby" id="timeAgo">  {{moment(postData.created_at).fromNow()}}</a>
       <h3>{{postData.title}}</h3>
       <p id="postBody" class="hPost" v-if="!this.showEditTextArea">
 
@@ -48,9 +45,9 @@
           <button @click="saveChange" v-if="this.showEditTextArea" class="btn btn-primary postButton" id="saveEdit">SAVE</button>
           <!-- <button  v-if="this.showEditTextArea" class="btn btn-primary postButton" id="cancel">CANCEL</button> -->
           
-<iframe  v-show ="postData.videolink!==''" width="100%" height="315"  :src=postData.videolink frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe  v-show ="postData.videolink!==null" width="100%" height="315"  :src=postData.videolink frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-<img v-show="postData.img!==''" :src=postData.img  height="100%" width="100%">
+<img v-show="postData.img!==null" :src=postData.img  height="100%" width="100%">
 </div>
    
 <footer>
@@ -77,7 +74,7 @@ Comments</button>
       <li ><a href="#"  @click="Hide" class="HIDE"><i class="fa fa-ban" id="HideIcon"></i>Hide</a></li>
       <li><a  @click="report"><i class="glyphicon glyphicon-flag" id="ReportIcon" ></i>Report</a></li>
       <li v-if="postData.canEdit"><a href="#" @click="editText" ><i class="glyphicon glyphicon-pencil" id="ReportIcon"></i>edit</a></li>
-      <li><a href="#" @click="isLocked">
+      <li><a href="#" @click="isLocked" v-show="isAdmin() || isModerator()">
         
         <i v-if="Locked=='unlock'" class="fa fa-lock" id="ReportIcon"></i>
         <i v-if="Locked=='Lock'" class="fa fa-unlock" id="ReportIcon"></i>
@@ -96,9 +93,6 @@ Comments</button>
 
        </div>
 
-    
-
-
 
 </template>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
@@ -108,6 +102,7 @@ Comments</button>
 import {MimicDisplayPosts} from '../MimicServices/DisplayPosts.js'
 import { AllServices } from '../MimicServices/AllServices';
 import reportBox from './ReportModal.vue'
+var moment =require('moment');
 /**
  * @vue-data {string} [Save="Save"] Save value
  * @vue-data {boolean} [Not_Hide=true]    check if post not hide
@@ -128,6 +123,7 @@ export default {
 
    data(){
        return{
+             moment:moment,
               isModal:false,
              showEditTextArea:false,
              editShow:false,
@@ -156,6 +152,34 @@ export default {
          },
 
   methods: {
+     isModerator:function()
+      {
+        if(this.$localStorage.get('login')){
+        AllServices.userType().then((data) =>{
+        if(data.type ==2){
+          this.moderator=true;
+          return true;
+          }
+        else{
+          return false;
+        }
+        })
+        }
+      },
+   isAdmin:function()
+      {
+       
+        if(this.$localStorage.get('login')){
+        AllServices.userType().then((data) =>{
+        if(data.type ==1){
+          return true;
+          }
+        else{
+          return false;
+        }
+        })
+        }
+      },
    
     saveChange(){
     
@@ -181,20 +205,24 @@ export default {
     }
     },
     isLocked(){
-      if(this.$localStorage.get('login') ){
+      if(this.$localStorage.get('login')){
         if(this.ShowModalVar == true){
-      this.ToggleShowModalVar();
+        this.ToggleShowModalVar();
     }
      // alert('lock successfully');
      
      if(this.Locked=='Lock'){
 
        this.Locked='unlock';
-        this.$emit('lockComment',this.Locked);
+       this.$emit('lockComment',this.Locked);
+       
      }
-     else{this.Locked='Lock';
-      this.$emit('lockComment',this.Locked);}
-      AllServices.isLocked(this.PostId,this.$localStorage.get('token'));
+     else{
+      this.Locked='Lock';
+      this.$emit('lockComment',this.Locked);
+      }
+      this.PostId=this.postData.id;
+      AllServices.isLocked(this.PostId);
 
     }
     else{
@@ -269,6 +297,7 @@ export default {
 
                       this.votes          += 1;
                        this.PostId=postData.id;
+                       this.postData.up=true;
                       AllServices.upvote(this.$localStorage.get('token'),this.PostId,1);
 
                 }
@@ -361,72 +390,14 @@ export default {
       alert('login First !!');
     }
     },
-    
- timeSince(date) {
-   var delta = Math.round((+new Date - date) / 1000);
-
-var minute = 60,
-    hour = minute * 60,
-    day = hour * 24,
-    week = day * 7;
-
-var fuzzy;
-
-if (delta < 60) {
-    fuzzy = 'just now';
-}  else if (delta < 2 * minute) {
-    fuzzy = 'a minute ago.'
-} else if (delta < hour) {
-    fuzzy = Math.floor(delta / minute) + ' minutes ago.';
-} else if (Math.floor(delta / hour) == 1) {
-    fuzzy = '1 hour ago.'
-} else if (delta < day) {
-    fuzzy = Math.floor(delta / hour) + ' hours ago.';
-} else if (delta < day * 2) {
-    fuzzy = 'yesterday';
-}
-this.time=fuzzy;
-//  var d = new Date(date),
-//         month = '' + (d.getMonth() + 1),
-//         day = '' + d.getDate(),
-//         year = d.getFullYear();
-
-//     if (month.length < 2) month = '0' + month;
-//     if (day.length < 2) day = '0' + day;
-
-//     return [year, month, day].join('-');
-  // var seconds = Math.floor((new Date() - date) / 1000);
-
-  // var interval = Math.floor(seconds / 31536000);
-
-  // if (interval > 1) {
-  //   return interval + " years";
-  // }
-  // interval = Math.floor(seconds / 2592000);
-  // if (interval > 1) {
-  //   return interval + " months";
-  // }
-  // interval = Math.floor(seconds / 86400);
-  // if (interval > 1) {
-  //   return interval + " days";
-  // }
-  // interval = Math.floor(seconds / 3600);
-  // if (interval > 1) {
-  //   return interval + " hours";
-  // }
-  // interval = Math.floor(seconds / 60);
-  // if (interval > 1) {
-  //   return interval + " minutes";
-  // }
-  // return Math.floor(seconds) + " seconds";
-},
+  
     /**
 * show the clicked post on the modal.
 */
       ShowModal(){
         this.isModal=true;
         if(this.ShowModalVar == true){
-          this.$emit('showUp',this.postData);
+          this.$emit('showUp',this.postData,);
    
           this.$modal.show('Demo-OnePost');
         }
@@ -462,11 +433,12 @@ created(){
        }
        
 },
-computed :{
-        createdDate : function(){
-          //  return moment().format('dddd');
-        }
-},
+computed: {
+  // timestamp: function () {
+  //   return moment(this.<model>.attributes['created-at']).format('YYYY-MM-DD [at] hh:mm')
+  // }
+}
+,
 components:{
     reportBox,
    

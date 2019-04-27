@@ -3,7 +3,7 @@ import ApexComSubscribers from './components/ApexComSubscribers.vue'
 import HomePage from './components/HomePage.vue'
 import ApexCom from './components/ApexCom.vue'
 import userprofile from './components/UserProfile.vue'
-//import ApexComReports from './components/ApexComReports.vue'
+import userprofileBlockList from './components/UserProfileBlockList.vue'
 
 import Reports from './components/Reports.vue'
 import Search from './components/Search.vue'
@@ -14,6 +14,9 @@ import ApexComAddModerator from './components/ApexComAddModerator.vue'
 import UserSettings from './components/UserSettings.vue'
 import CreateApexCom from './components/CreateApexCom.vue'
 import SubmitPost from './components/SubmitPost.vue'
+import Hot from './components/SortHot.vue'
+import New from './components/SortNew.vue'
+import Controversial from './components/SortControversial.vue'
 export default[
       {path:'/ApexCom/:apexComName',name:'ApexCom',props:true,component:ApexCom , children :
       [
@@ -21,20 +24,28 @@ export default[
         {path:'AddModerators',name:'AddModerators',component:ApexComModerator,props:true ,children :[
           {path:'searchUser',name:'Moderators', component:ApexComAddModerator,props:true },
         ]},
-        {path:'ApexPosts',name:'Posts',component:ApexComPosts},
+        {path:'ApexPosts/:apexComName',name:'Posts',component:ApexComPosts,props:true},
         {path:'ApexSubscribers',name:'Subscribers',component:ApexComSubscribers,props:true},
         {path:'ApexReports',name:'Reports',component:Reports,props:true},
 
       ]
       },
     {path:'/',component:HomePage},
-    {path:'/HomePage',name:'HomePage',component:HomePage},
+    {path:'/HomePage',name:'HomePage',component:HomePage,props:true,children:[
+    {path:'Hot',name:'Hot',component:Hot,props:true},
+    {path:'New',name:'New',component:New,props:true},
+    {path:'Controversial',name:'Controversial',component:Controversial,props:true},
+    {path:'Top',name:'Top',component:Hot,props:true},
+    {path:'Rising',name:'Rising',component:New,props:true}
+    ]},
     {path:'/Submit',name:'SubmitPost',component:SubmitPost},
     {path:'/Search', name:'Search' , component:Search, children :[
         {path:'users', component:Users } ]},
     {path:'/Messages' ,name:'Messages',component:MessageBar},
     {path:'/userprofile/:userName',name:'UserProfile',component:userprofile,props:true,children :[
-      {path:'Report',name:'Report', component:Reports,props:true },]
+      {path:'Report',name:'Report', component:Reports,props:true },
+      {path:'blockedlist',name:'blockLlist', component:userprofileBlockList,props:true } 
+    ]
   },
 
     {path:'/UserSettings',name:'UserSettings',component:UserSettings},

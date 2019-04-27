@@ -40,6 +40,8 @@ import axios from 'axios'
 import WriteMessage from "./WriteMessage.vue"
 import Message from "./Message.vue"
 import {AllServices} from '../MimicServices/AllServices.js'
+import $ from'jquery/dist/jquery.min.js'
+
 
 export default {
   name: 'MessageBar',
@@ -58,6 +60,12 @@ export default {
         }
   },
   created () {
+  },
+  mounted(){
+     $('#selectted').text('Messages');
+        var remclass = $('#classed').prop('class');
+        $('#classed').removeClass(remclass);
+        $('#classed').addClass("glyphicon glyphicon-envelope");
   },
   methods:{
       sendMessage:function() {

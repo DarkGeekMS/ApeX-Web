@@ -3,13 +3,13 @@
 <CreatePostSideBar></CreatePostSideBar>
 <Post v-bind:postData="createPostData" class="postStyle" v-if="isCreated"> </Post>
 <CreatePost v-on:PostEmit="getData" v-if="firstTime" id="createPost"></CreatePost>
-
+<CommentParent v-if="isCreated" class="comment"></CommentParent>
 
   </div>
 </template>
 
 <script>
-
+import CommentParent from "./CommentParent.vue"
 import Post from './Post.vue'
 import CreatePost from './CreatePost.vue'
 import CreatePostSideBar from './CreatePostSideBar.vue'
@@ -31,14 +31,14 @@ export default {
               title:'',
               content:'',
               locked:false,
-              commenets_count:5,
+              commenets_count:0,
               votes:1,
               img:'',
               videolink:'',
-              created_at:"2019-03-23 17:20:45",
+              created_at:"",
               updates_at:null,
-              apex_com_name:"health care",
-              post_writer_user:"double"
+              apex_com_name:"",
+              post_writer_user:""
 
 
 
@@ -52,7 +52,9 @@ export default {
   components:{
     'Post':Post,
     'CreatePost':CreatePost,
-    CreatePostSideBar
+    CreatePostSideBar,
+    CommentParent
+
   
   },
 
@@ -113,6 +115,9 @@ width: 80%;
 padding-top:10%;
 margin-left:-17% !important;
 
+}
+.comment{
+  width:109%;
 }
 
 

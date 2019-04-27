@@ -3,7 +3,7 @@ import axios from 'axios'
 
 export  const MimicPost=new Vue({
 methods:{
-  EditPost: function(ID,cont,mimic){
+  EditPost: function(ID,cont,mimic, baseUrl){
     if( mimic == true)
     {
         if(this.$localStorage.login)
@@ -25,7 +25,7 @@ return promise1;
     else
     {
         var self = this;
-        return axios.patch(this.$localStorage.get('baseUrl') + 'api/edit', {
+        return axios.patch(baseUrl + 'api/EditText', {
             name: ID,
             content: cont,
             token: this.$localStorage.get('token')
@@ -39,21 +39,21 @@ return promise1;
         });
     }
 },
-    save:function(token,ID,mimic){
+    save:function(token,ID,mimic, baseUrl){
 
         if(mimic){
           if(this.$localStorage.login){
              if(token=="1" && ID=="1"){
                 return true;
               }
-              
+
                 alert("Log In First!!");
                 return false;
              }
             }
-          
+
              else {
-                axios.post( this.$localStorage.get('baseUrl') + "api/save",
+                axios.post(baseUrl + "api/Save",
              {
                 ID:ID,
                 token:token
@@ -81,15 +81,15 @@ return promise1;
 
             else{
 
-                axios.post(this.$localStorage.get('baseUrl') + "api/DelComment",{
+                axios.DELETE(baseUrl + "api/Delete",{
                     ID    : name,
                     token : ID
 
             }).then(response=>{
-              
+
                 this.Deleted = true;
                 return true;
-              
+
 
             }).catch(function (error)
             {
@@ -103,9 +103,9 @@ return promise1;
 
 
             },
-               Hide(name,ID,mimic){
+               Hide(name,ID,mimic, baseUrl){
                    if(mimic===true){
-                     
+
                     if(name==="1" && ID==="1"){
 
                         return true;
@@ -115,7 +115,7 @@ return promise1;
                    }
               else{
 
-                axios.post(this.$localStorage.get('baseUrl') + "api/Hide",
+                axios.post(baseUrl + "api/Hide",
                 {
                     name    : name,
                     ID : ID
@@ -130,9 +130,10 @@ return promise1;
               }
 
             },
-            upvote(name,ID,direction,mimic){
+            upvote(name,ID,direction,mimic, baseUrl){
                 if(mimic){
                   if(this.$localStorage.login){
+
                     if(name=="1"  && ID=="1"){
 
                         if(direction==1){
@@ -141,13 +142,13 @@ return promise1;
                        }
 
            }
-           
+
                   }
                   alert("Log In First!!");
                   return false;}
 
            else{
-            axios.post(this.$localStorage.get('baseUrl') + "api/vote",
+            axios.post(baseUrl + "api/Vote",
             {
 
               ID       : ID,
@@ -167,7 +168,7 @@ return promise1;
             }
             ,
 
- downvote(name,ID,direction,mimic){
+ downvote(name,ID,direction,mimic, baseUrl){
                 if(mimic){
                   if(this.$localStorage.login){
                     if(name=="1"  && ID=="1"){
@@ -180,7 +181,7 @@ return promise1;
                       return false;
            }
            else{
-            axios.post(this.$localStorage.get('baseUrl') + "api/vote",
+            axios.post(baseUrl + "api/Vote",
                    {
 
 
@@ -213,7 +214,7 @@ return promise1;
 
 
 },
-defaultVote(name,ID,direction,mimic){
+defaultVote(name,ID,direction,mimic, baseUrl){
   if(mimic){
       if(name=="1"  && ID=="1"){
 
@@ -224,7 +225,7 @@ defaultVote(name,ID,direction,mimic){
 
 }
 else{
-axios.post(this.$localStorage.get('baseUrl') + "api/vote",
+axios.post(baseUrl + "api/Vote",
 {
 
 ID       : ID,
@@ -244,10 +245,26 @@ if(response){
 }
 }
 },
-isLocked(){
-
-  
+isLocked(ID,mimic, baseUrl){
+    if( mimic == true)
+    {
+        if(this.$localStorage.login)
+            return false;
+        return true;
+    }
+    else
+    {
+        axios.post(baseUrl + 'api/Save', {
+        ID: ID,
+        token:this.$localStorage.get('token')
+         })
+       .then(function (response) {
+           return true;
+        })
+       .catch(function (error) {
+           return false;
+        });
+    }
 }
-
 
 }})

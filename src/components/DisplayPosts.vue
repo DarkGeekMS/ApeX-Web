@@ -1,9 +1,9 @@
 <template>
   <div id="DisplayPosts">
     <div id="PostContainer" v-for="onePost in posts">
-     <post v-bind:postData="onePost" v-on:showUp="showPost" ></post>
+     <post v-bind:postData="onePost" v-on:showUp="showPost" v-on:lockComment="ifLock"></post>
     </div>
-    <OnePost  id="PostModal" :onePostData="postInfo" ></OnePost>
+    <OnePost  id="PostModal" :onePostData="postInfo"></OnePost>
     <!-- v-bind:style="{width: 80 +'%'}" -->
   </div>
 </template>
@@ -20,7 +20,8 @@ import {AllServices} from '../MimicServices/AllServices.js'
 export default {
   props:{
     apexComName:String,
-    postData:{}
+    sortparam:String,
+    postData:{}// VERY IMPORTANT TO PREVENT THE ERRORS IN CONSOLE
     },
 data(){
 return{
@@ -37,6 +38,10 @@ mounted:function () {
 
 methods:
 {
+   ifLock(e){
+
+
+   },
   /**
   * assign the post to be shown in the modal
   */
@@ -52,7 +57,8 @@ methods:
        // this.posts= AllServices.getPosts(this.apexComName);
      // }
      // else{
-         AllServices.getPosts(this.apexComName).then((data) => {
+     
+         AllServices.getPosts(this.apexComName,this.sortparam).then((data) => {
           this.posts= data;
          })
    // }
@@ -77,8 +83,8 @@ components:{
   width: 10%;
   height: 10%;
   background: red;
-  
- 
+
+
 }
 #DisplayPosts{
    /* width: 100%; */

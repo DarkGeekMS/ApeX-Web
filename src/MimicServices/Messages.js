@@ -3,7 +3,7 @@ import axios from 'axios'
 export  const MimicMessage =new Vue({
 
   methods:{
-    sendMessage: function(rec,title,cont,mimic){
+    sendMessage: function(rec,title,cont,mimic, baseUrl){
       if(mimic == true){
 
           if(this.$localStorage.login)
@@ -21,7 +21,7 @@ export  const MimicMessage =new Vue({
       }
       else
       {
-        return axios.post(this.$localStorage.get('baseUrl') + 'api/compose', {
+        return axios.post(baseUrl + 'api/ComposeMessage', {
             reciever:rec,
             subject:title,
             content: cont,
@@ -37,7 +37,7 @@ export  const MimicMessage =new Vue({
             });
          }
     },
-    deleteMessage: function(ID,mimic){
+    deleteMessage: function(ID,mimic, baseUrl){
       if(mimic == true){
 
 
@@ -51,7 +51,7 @@ export  const MimicMessage =new Vue({
       }
       else
       {
-        return axios.post(this.$localStorage.get('baseUrl') + 'api/del_msg', {
+        return axios.post(baseUrl + 'api/DeleteMessage', {
             id:ID,
             token:this.$localStorage.get('token')
         })
@@ -64,7 +64,7 @@ export  const MimicMessage =new Vue({
             });
          }
     },
-    blockUser: function(ID,mimic){
+    blockUser: function(ID,mimic, baseUrl){
       if(mimic == true){
             var promise1 = new Promise(function(resolve, reject) {
                 setTimeout(function() {
@@ -75,7 +75,7 @@ export  const MimicMessage =new Vue({
       }
       else
       {
-        return axios.post(this.$localStorage.get('baseUrl') + 'api/block_user', {
+        return axios.post(baseUrl + 'api/BlockUser', {
             blockedID:ID,
             token:this.$localStorage.get('token')
         })
@@ -88,7 +88,7 @@ export  const MimicMessage =new Vue({
             });
          }
     },
-    getAllMessages:function(mimic){
+    getAllMessages:function(mimic, baseUrl){
       if(mimic == true){
 
         //sent
@@ -155,7 +155,7 @@ return promise1;
   }
   else
   {
-    return axios.post(this.$localStorage.get('baseUrl') + 'api/inbox_messages', {
+    return axios.post(baseUrl + 'api/InboxMessages', {
         token:this.$localStorage.get('token')
     })
        .then(response=> {
@@ -167,7 +167,7 @@ return promise1;
         });
      }
     },
-    getReplies: function(ID,mimic){
+    getReplies: function(ID,mimic, baseUrl){
       if(mimic == true){
           if(this.$localStorage.login)
           {
@@ -206,7 +206,7 @@ return promise1;
       }
       else
       {
-        return axios.post(this.$localStorage.get('baseUrl') + 'api/moreComments', {
+        return axios.post(baseUrl + 'api/RetrieveComments', {
             parent:ID,
             token:this.$localStorage.get('token')
         })

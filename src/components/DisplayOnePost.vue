@@ -2,8 +2,8 @@
 <div id="DisplayOnePost" class="modalview">
 <modal id="PopupModal" name="Demo-OnePost" :scrollable="true"  transition="pop-out"  width="90%" height="90%" >
   <div id="PostContent" class="postContent">
-    <div >
-  <post v-bind:postData="onePostData" class="mainpost" id="postModal"></post>
+    <div>
+  <post v-bind:postData="onePostData" class="mainpost" id="postModal" v-on:lockComment="lock($event)"></post>
   </div>
  <ApexComSideBar class="sidebar"></ApexComSideBar>
    
@@ -43,11 +43,11 @@ components:
 },
 methods:{
   lock:function(event){
-    this.locked=true;
-    alert('done');
-if(event==='Lock'){
+    // this.locked=true;
+    // alert('done');
+if(event=='Lock'){
      this.locked=false;
-     alert(this.locked);
+     //alert(this.locked);
 }
 else{this.locked=true;
      }

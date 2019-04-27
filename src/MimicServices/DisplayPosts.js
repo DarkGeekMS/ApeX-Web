@@ -3,7 +3,7 @@ import axios from 'axios'
 
 export  const MimicDisplayPosts =new Vue({
   methods:{
-    getPostsData: function(mimic,ApexComName){
+    getPostsData: function(mimic,ApexComName,sortparam, baseUrl){
       if(mimic==true){
         if(ApexComName==""){
   var posts=[
@@ -24,12 +24,13 @@ export  const MimicDisplayPosts =new Vue({
               post_writer_user:"double"
 
             },
-            
+
             {
               id:'111',
               posted_by:'Nourhan',
               votes:150,
               apex_id:'cinema',
+              created_at:"2019-04-26 17:20:45",
               title:'Avengers Endgame😲',
               content:'Software costs more to maintain than it does to develop. For systems with a long life, maintenance costs may be several times development costs😮 ',
               videolink:'',
@@ -43,7 +44,7 @@ export  const MimicDisplayPosts =new Vue({
               content:'I love javascript ,vue ,html ,css 🐸🐸🐸',
               videolink:'',
               img:'https://cdn.pixabay.com/photo/2016/04/15/04/02/water-1330252__340.jpg',
-              created_at:"2019-03-23 17:20:45",
+              created_at:"2019-04-23 17:20:45",
               updates_at:null,
               apex_com_name:"health aware",
               post_writer_user:"Nada",
@@ -122,9 +123,11 @@ return promise1;
               }
       }
 else {
+  alert(sortparam);
+  alert(ApexComName);
   if (this.$localStorage.get('token') == null)
   {
-    return axios.get(this.$localStorage.get('baseUrl') + 'api/sort_posts',
+    return axios.get(baseUrl + 'api/SortPosts',
    {
       apexComID:ApexComName ,
       sortingParam: "date"
@@ -134,7 +137,7 @@ else {
   }
   else {
     {
-      return axios.post(this.$localStorage.get('baseUrl') + 'api/sort_posts',
+      return axios.post(baseUrl + 'api/SortPosts',
      {
         apexCommID:ApexComName ,
         sortingParam: "date",

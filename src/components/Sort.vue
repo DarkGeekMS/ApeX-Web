@@ -8,30 +8,40 @@
       <span class="caret" style="margin-left:5px" ></span>
       </button>
       <ul class="dropdown-menu sort">
-        <li> <a class="glyphicon glyphicon-fire"> Hot</a></li>
+
+ <li> <router-link :to="{ name: 'Hot', params: {ap:apex} }"  class="glyphicon glyphicon-fire"> Hot</router-link></li>
+        <li class="divider"></li>
+<!-- <router-link :to="{ name: '', params: {} }"></router-link> -->
+        <li><router-link :to="{ name: 'New', params: {ap:apex}}"  class="glyphicon glyphicon-certificate"> New </router-link></li>
         <li class="divider"></li>
 
-        <li><a class="glyphicon glyphicon-certificate"> New </a></li>
+        <li><router-link :to="{ name: 'Controversial', params: {ap:apex}}" class="glyphicon glyphicon-flash"> Controversial </router-link></li>
         <li class="divider"></li>
 
-        <li><a class="glyphicon glyphicon-flash"> Controversial </a></li>
+        <li><router-link :to="{ name: 'Top', params: {ap:apex}}" class="glyphicon glyphicon-stats"> Top </router-link></li>
         <li class="divider"></li>
 
-        <li><a class="glyphicon glyphicon-stats"> Top </a></li>
-        <li class="divider"></li>
-        
-        <li><a class="glyphicon glyphicon-arrow-up"> Rising </a></li>
+        <li><router-link :to="{ name: 'Rising', params: {ap:apex}}" class="glyphicon glyphicon-arrow-up"> Rising </router-link></li>
 
       </ul>
     </div>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
 import $ from'jquery/dist/jquery.min.js'
   export default {
+    props:{
+      apex:String
+    },
     data () {
       return {
+      }
+    },
+    methods:{
+emitsort(par){
+        this.$emit('choose',par);
       }
     },
     mounted(){
@@ -46,10 +56,10 @@ import $ from'jquery/dist/jquery.min.js'
         $('.list button').css('background-color','#33a8ff2b');
 
       });
-      $(document).click(function(e) 
+      $(document).click(function(e)
       {
         var container = $(".list");
-        if (!container.is(e.target) && container.has(e.target).length === 0) 
+        if (!container.is(e.target) && container.has(e.target).length === 0)
         {
           $('.list button').css('background-color','white');
         }
@@ -97,7 +107,7 @@ import $ from'jquery/dist/jquery.min.js'
 ul{
   width:10px;
   margin:2px 4px;
-} 
+}
 
 li a{
   color:rgb(135, 138, 140);
@@ -108,13 +118,12 @@ li a{
 
 li a:hover{
   color:black;
-  background-color:#33a8ff2b; 
+  background-color:#33a8ff2b;
 }
 @media(max-width:71.5px){
   div .list {
     display: none
   }
-  
+
 }
 </style>
-

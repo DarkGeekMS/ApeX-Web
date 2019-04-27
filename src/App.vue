@@ -60,7 +60,8 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
   background-color: #DAE0E6;
-  min-height:100%;
+  height: 100%;
+  min-height:720px;
 }
 
 button.btn {

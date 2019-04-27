@@ -62,7 +62,6 @@ export default {
           var check = AllServices.forgetUser2(this.code);
           if(check)
           {
-            console.log(check);
             this.congra = "your code is correct, Now your are logged in " ;
             var check2 = AllServices.logIn(check, this.pass);
             if(check2)

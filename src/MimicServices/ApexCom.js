@@ -3,8 +3,8 @@ import axios from 'axios'
 
 export  const MimicApexCom =new Vue({
   methods:{
-    getAbout: function(mimic,ApexComName){
-
+    getAbout: function(mimic,ApexComName, baseUrl){
+      // alert(ApexComName);
       if(mimic){
   var about={
     rules:['rule1','rule2','rule3'],
@@ -26,21 +26,19 @@ export  const MimicApexCom =new Vue({
 return promise;
 }
 else {
-  return axios.post(this.$localStorage.get('baseUrl') + 'api/about', {
-      ApexCom_id :ApexComName,
-      Token:this.token
+  return axios.post(baseUrl + 'api/AboutApexcom', {
+      ApexCom_ID :ApexComName,
+      token:this.$localStorage.get('token')
   })
   .then(response=> {
     return response.data;
    })
   .catch(function (error) {
-    alert(error)
     // console.log(error);
   });
     }
   },
-  getAboutGuest: function(mimic,ApexComName){
-
+  getAboutGuest: function(mimic,ApexComName, baseUrl){
     if(mimic){
 var about={
   rules:['rule1','rule2','rule3'],
@@ -62,8 +60,8 @@ var promise = new Promise(function(resolve) {
 return promise;
 }
 else {
-return axios.get(this.$localStorage.get('baseUrl') + 'api/about', {
-    ApexCom_id :ApexComName,
+return axios.get(baseUrl + 'api/AboutApexcom',{params: {
+    ApexCom_ID :ApexComName,}
 })
 .then(response=> {
   return response.data;
@@ -75,7 +73,8 @@ return axios.get(this.$localStorage.get('baseUrl') + 'api/about', {
   }
 },
 
-getSubscribers: function(mimic,apexComName){
+getSubscribers: function(mimic,apexComName, baseUrl){
+  // alert(apexComName);
     if(mimic){
 var subscribersList=[
   {userName:'subscriber1',
@@ -93,87 +92,88 @@ var promise = new Promise(function(resolve) {
 return promise;
 }
 else {
- return axios.post(this.$localStorage.get('baseUrl') + 'api/get_subscribers', {
-
+ return axios.post(baseUrl + 'api/GetSubscribers', {
       ApexCom_id :apexComName,
-      Token:this.$localStorage.get('token')
-
+      token:this.$localStorage.get('token')
   })
   .then(response => {
     return response.data;
    })
   .catch(function (error) {
-    alert(error)
     // console.log(error);
   });
   }
 },
 
-blockSubscriber: function(mimic,userName,apexComName){
+blockSubscriber: function(mimic,userName,apexComName, baseUrl){
+  // alert(apexComName);
+  // alert(userName);
   if(mimic){
 
 return true;
 }
 else {
-  axios.post('api/block', {
+  axios.post(baseUrl + 'api/BlockUser', {
         ApexCom_id:apexComName,
         user_id:userName,
-        Token:this.$localStorage.get('token')
+        token:this.$localStorage.get('token')
       })
       .then(function (response) {
         return response;
           })
           .catch(function (error) {
-            alert(error)
             // console.log(error);
           });
     }
     },
 
-deleteApexCom: function(mimic,apexComName){
+deleteApexCom: function(mimic,apexComName, baseUrl){
+  // alert(apexComName);
       if(mimic){
 
     return true;
     }
     else {
-      axios.delete(this.$localStorage.get('baseUrl') + 'api/del_ac',{params: {
+      axios.delete(baseUrl + 'api/DeleteApexcom',{
+        params: {
          ApexCom_id:apexComName,
-         Token:this.$localStorage.get('token')
+         token:this.$localStorage.get('token')
     }
         })
         .then(function (response) {
           return response;
             })
             .catch(function (error) {
-              alert(error)
               // console.log(error);
             });
 }
     },
-subscribe: function(mimic,apexComName){
+subscribe: function(mimic,apexComName, baseUrl){
+  // alert(apexComName);
       if(mimic){
         return true;
     }
     else {
-      axios.post(this.$localStorage.get('baseUrl') + 'api/subscribe', {
+      axios.post(baseUrl + 'api/Subscribe', {
       ApexCom_id:apexComName,
-      Token:this.$localStorage.get('token')
+      token:this.$localStorage.get('token')
       })
       .then(function (response) {
         return response;
       })
       .catch(function (error) {
-        alert(error)
         // console.log(error);
       });
 }
 },
-addOrDeleteModerator: function(mimic,userName,apexComName){
+addOrDeleteModerator: function(mimic,userName,apexComName, baseUrl){
+  // alert(apexComName);
+  // alert(userName);
   if(mimic){
     return true;
   }
 else {
-   axios.post(this.$localStorage.get('baseUrl') + 'api/add_moderator', {
+   axios.post(baseUrl + 'api/AddModerator', {
         ApexCom_id:apexComName,
         user_id:userName,
         Token:this.$localStorage.get('token')
@@ -182,12 +182,12 @@ else {
         return response;
           })
           .catch(function (error) {
-            alert(error)
             // console.log(error);
           });
     }
     },
-reviewReports: function(mimic,apexComName){
+reviewReports: function(mimic,apexComName, baseUrl){
+  // alert(apexComName);
       if(mimic){
         var report={
           reportedComment:[{post:{
@@ -264,7 +264,7 @@ reviewReports: function(mimic,apexComName){
       return promise;
     }
     else {
-       return axios.post(this.$localStorage.get('baseUrl') + 'api/report_action', {
+       return axios.post(baseUrl + 'api/ReviewReports', {
             ApexCom_id:apexComName,
             Token:this.$localStorage.get('token')
           })
@@ -272,31 +272,31 @@ reviewReports: function(mimic,apexComName){
             return response.data;
            })
           .catch(function (error) {
-            alert(error)
             // console.log(error);
           });
         }
         },
-ignoreReport:function(mimic,apexComName){
+ignoreReport:function(mimic,userID,reportID, baseUrl){
+  // alert(reportID);
   if(mimic){
     return true;
   }
   else{
-            axios.post(this.$localStorage.get('baseUrl') + 'api/report_action', {
-            ApexCom_id:apexComName,
+            axios.post(baseUrl + 'api/IgnoreReport', {
+            user_id:userID,
+            repoer_id:reportID,
             Token:this.$localStorage.get('token')
           })
           .then(function (response) {
             return response;
               })
               .catch(function (error) {
-                alert(error)
                 // console.log(error);
               });
   }
 
 },
-searchU: function(mimic)
+searchU: function(mimic, baseUrl)
 {
   if(mimic ==  true)
   {
@@ -357,8 +357,8 @@ searchU: function(mimic)
   }
   else
   {
-    axios.post(this.$localStorage.get('baseUrl') + 'api/search',{
-    query: this.$localStorage.get('search'),
+    return axios.post(baseUrl + 'api/Search',{
+    query: this.$localStorage.get('searchModerator'),
     token: this.$localStorage.get('token')
     }).then(response => {
       var result= response.data;

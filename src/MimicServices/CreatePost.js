@@ -12,26 +12,25 @@ token:'1',
 
   },
   methods:{
-    submitPost: function(videoUrl,apexComId,bodyPost,imgName,token,isLocked,mimic){
-      
+    submitPost: function(apexComId,title,bodyPost,imgName,videoUrl, isLocked,token,mimic, baseUrl){
+
       if(mimic){
          if(this.$localStorage.login){
-        
-          // this.$router.push('/ShowCreatedPost');
-       
+
             return true;
-            
+
          }
             return false;
                 }
 
 else {
-    axios.post( this.$localStorage.get('baseUrl') + "api/submit_post"  ,{
+    axios.post(baseUrl + "api/SubmitPost"  ,{
 
         ApexCom_id:apexComId,
-        _token:token,
+        title:title, 
+        token:token,
         body:bodyPost,
-        avatar:imgName,
+        img_name:imgName,
         video_url:videoUrl,
         isLocked:isLocked
 
@@ -46,7 +45,7 @@ else {
        ).then(function(response){
 
          if(response){
-         // this.$router.push('/ShowCreatedPost');
+        
          return true;
 
          }
@@ -54,22 +53,22 @@ else {
        })
  }
     },
-    getApexNames:function(mimic){
+    getApexNames:function(mimic, baseUrl){
     if(mimic==true){
         var names=["apexname1","apexname2","apexname3","apexname4"];
-     
+
         var promise = new Promise(function(resolve) {
           setTimeout(function() {
             resolve(names);
           }, 300);
         });
       return promise;
-      
+
     }
     else{
      // axios.get();
-      
-///TODO COMPLETE THE REQUEST 
+
+///TODO COMPLETE THE REQUEST
     }
 
     }

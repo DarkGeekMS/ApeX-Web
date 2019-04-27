@@ -116,6 +116,7 @@
 </template>
 
 <script>
+import $ from'jquery/dist/jquery.min.js'
 import tab from './PostTab.vue'
 import tabs from './PostTabs.vue'
 import Vue from "vue"
@@ -188,6 +189,12 @@ export default {
     },
     provide:{
         richtexteditor:[Toolbar, HtmlEditor]
+    },
+    mounted(){
+     $('#selectted').text('Create Post');
+        var remclass = $('#classed').prop('class');
+        $('#classed').removeClass(remclass);
+        $('#classed').addClass("glyphicon glyphicon-edit");
     },
     methods:{
       switchM(){
@@ -290,7 +297,7 @@ this.apexComId=this.apexs[this.indx-1].id;
           
           this.avatar=vm.image; 
         
-         // console.log(this.imgName);
+          console.log(this.avatar);
         }
         reader.readAsDataURL(file);
 
@@ -316,45 +323,14 @@ this.apexComId=this.apexs[this.indx-1].id;
          this.bodyPost=document.getElementById('textsendrte-view').value;
       }
 
-       
-    // console.log(this.bodyPost);
+ 
       if(this.imagable){
       this.imgName=document.getElementById('imgId').src;
-     // console.log(this.imgName);
+     
       }
-     
-      
-     
-     
-      
-       // this.videoUrl=document.getElementById('textsend3').value;
-        //console.log(this.videoUrl);
-      
-
-      //console.log(this.videoUrl);
-       
-        
+  
            
-            
-          //alert(this.indx);
-    
-     // console.log(this.apexComId);
-      // this.bodyPost=document.getElementById('textsendnormal').value;
-     //  alert('gooa create post com');
-
-         
-     
-   
-      // console.log(this.title);
-     
-      //  this.$emit('Post',this.title,this.bodyPost,this.$localStorage.get('token'))
-
-      // this.$emit('PostEmit',this.bodyPost);
-     // alert('قبل السيرفر');
-     
-      AllServices.submit(this.videoUrl,this.apexComId,this.bodyPost,this.imgName,this.isLocked,this.$localStorage.get('token'));
-     //alert('هعمل ايمت اهو ');
- 
+      AllServices.submit(this.apexComId,this.title,this.bodyPost,this.imgName,this.videoUrl,this.isLocked,this.$localStorage.get('token'));
       this.$emit('PostEmit',this.title,this.bodyPost,this.imgName,this.videoUrl,this.$localStorage.get('userName'),this.apexs[this.indx-1].name);
       this.$router.push('/Submit');
      
