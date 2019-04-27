@@ -29,12 +29,12 @@
       </div>
 
 
-      <router-link class="fontUser" id="subred" :to="{name:'ApexCom' , params: {apexComName:postData.apex_id}}">{{postData.apex_id}}</router-link>
+      <router-link class="fontUser" id="subred" :to="{name:'ApexCom' , params: {apexComName:postData.apex_com_name}}">{{postData.apex_com_name}}</router-link>
       <font class="postby" id="fontPostby">. Posted by</font>
-      <router-link class="postby" id="user" :to="{name:'UserProfile' , params: {userName:postData.posted_by}}"> {{postData.posted_by}}</router-link>
+      <router-link class="postby" id="user" :to="{name:'UserProfile' , params: {userName:postData.post_writer_username}}"> {{postData.post_writer_username}}</router-link>
 
       <font class="postby" id="fontpost"> </font>
-      <a href="#" class="postby" id="timeAgo">  {{ moment(postData.created_at).fromNow()}}</a>
+      <a href="#" class="postby" id="timeAgo">  {{moment(postData.created_at).fromNow()}}</a>
       <h3>{{postData.title}}</h3>
       <p id="postBody" class="hPost" v-if="!this.showEditTextArea">
 
@@ -45,9 +45,9 @@
           <button @click="saveChange" v-if="this.showEditTextArea" class="btn btn-primary postButton" id="saveEdit">SAVE</button>
           <!-- <button  v-if="this.showEditTextArea" class="btn btn-primary postButton" id="cancel">CANCEL</button> -->
           
-<iframe  v-show ="postData.videolink!==''" width="100%" height="315"  :src=postData.videolink frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe  v-show ="postData.videolink!==null" width="100%" height="315"  :src=postData.videolink frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-<img v-show="postData.img!==''" :src=postData.img  height="100%" width="100%">
+<img v-show="postData.img!==null" :src=postData.img  height="100%" width="100%">
 </div>
    
 <footer>
