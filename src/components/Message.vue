@@ -125,7 +125,6 @@ blockButton:function(){
 },
 blockUser:function(){
     AllServices.blockSender(this.ID).then((data) => {
-   
       });
 },
 showReplies:function(){
