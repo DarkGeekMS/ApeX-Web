@@ -13,7 +13,7 @@ import {MimicUserSettings} from './UserSettings.js'
 export  const AllServices =new Vue({
   data(){
     return{
-      mimic:false
+      mimic:true
     }
   },
   methods:{
