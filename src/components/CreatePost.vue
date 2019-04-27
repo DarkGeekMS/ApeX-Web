@@ -40,10 +40,12 @@
                            </div>
      
                           <a  id="switchId"  @click="switchM" >{{this.switchTo}} </a>
-                              <ejs-richtexteditor ref="rteObj" :toolbarSettings="toolbarSettings" id="textsend" @keyup="Enable" v-if="normal==false">
+                          <div v-if="this.normal==false">
+                              <ejs-richtexteditor ref="rteObj" :toolbarSettings="toolbarSettings" id="textsend" @keyup="Enable" >
                               
                     
                               </ejs-richtexteditor> 
+                              </div>
                               <textarea class="form-control" rows="5" id="textsendnormal" @keyup="Enable" v-else>
                     
                               </textarea>
@@ -326,9 +328,14 @@ this.apexComId=this.apexs[this.indx-1].id;
  
       if(this.imagable){
       this.imgName=document.getElementById('imgId').src;
+      if(this.imgName==''){
+        this.imgName=null;
+      }
      
       }
-  
+      if(this.videoUrl==''){
+        this.videoUrl=null;
+      }
            
       AllServices.submit(this.apexComId,this.title,this.bodyPost,this.imgName,this.videoUrl,this.isLocked,this.$localStorage.get('token'));
       this.$emit('PostEmit',this.title,this.bodyPost,this.imgName,this.videoUrl,this.$localStorage.get('userName'),this.apexs[this.indx-1].name);

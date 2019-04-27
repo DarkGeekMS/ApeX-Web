@@ -33,16 +33,12 @@ export default {
               locked:false,
               commenets_count:0,
               votes:1,
-              img:'',
-              videolink:'',
+              img:null,
+              videolink:null,
               created_at:"",
               updates_at:null,
               apex_com_name:"",
               post_writer_user:""
-
-
-
-
      }
 
     }
