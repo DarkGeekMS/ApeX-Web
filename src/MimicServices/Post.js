@@ -133,6 +133,7 @@ return promise1;
             upvote(name,ID,direction,mimic){
                 if(mimic){
                   if(this.$localStorage.login){
+                   
                     if(name=="1"  && ID=="1"){
 
                         if(direction==1){
@@ -149,7 +150,7 @@ return promise1;
            else{
             axios.post(this.$localStorage.get('baseUrl') + "api/vote",
             {
-
+                
               ID       : ID,
               name     : name,
               direction:direction

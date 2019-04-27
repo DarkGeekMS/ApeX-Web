@@ -26,9 +26,6 @@
 
         </div>
 
-
-
-
       </div>
 
 
@@ -37,7 +34,7 @@
       <router-link class="postby" id="user" :to="{name:'UserProfile' , params: {userName:postData.posted_by}}"> {{postData.posted_by}}</router-link>
 
       <font class="postby" id="fontpost"> </font>
-      <a href="#" class="postby" id="timeAgo">  </a>
+      <a href="#" class="postby" id="timeAgo">  {{ moment(postData.created_at).fromNow()}}</a>
       <h3>{{postData.title}}</h3>
       <p id="postBody" class="hPost" v-if="!this.showEditTextArea">
 
@@ -96,9 +93,6 @@ Comments</button>
 
        </div>
 
-    
-
-
 
 </template>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
@@ -108,6 +102,7 @@ Comments</button>
 import {MimicDisplayPosts} from '../MimicServices/DisplayPosts.js'
 import { AllServices } from '../MimicServices/AllServices';
 import reportBox from './ReportModal.vue'
+var moment =require('moment');
 /**
  * @vue-data {string} [Save="Save"] Save value
  * @vue-data {boolean} [Not_Hide=true]    check if post not hide
@@ -128,6 +123,7 @@ export default {
 
    data(){
        return{
+             moment:moment,
               isModal:false,
              showEditTextArea:false,
              editShow:false,
@@ -161,6 +157,7 @@ export default {
         if(this.$localStorage.get('login')){
         AllServices.userType().then((data) =>{
         if(data.type ==2){
+          this.moderator=true;
           return true;
           }
         else{
@@ -393,65 +390,7 @@ export default {
       alert('login First !!');
     }
     },
-    
- timeSince(date) {
-   var delta = Math.round((+new Date - date) / 1000);
-
-var minute = 60,
-    hour = minute * 60,
-    day = hour * 24,
-    week = day * 7;
-
-var fuzzy;
-
-if (delta < 60) {
-    fuzzy = 'just now';
-}  else if (delta < 2 * minute) {
-    fuzzy = 'a minute ago.'
-} else if (delta < hour) {
-    fuzzy = Math.floor(delta / minute) + ' minutes ago.';
-} else if (Math.floor(delta / hour) == 1) {
-    fuzzy = '1 hour ago.'
-} else if (delta < day) {
-    fuzzy = Math.floor(delta / hour) + ' hours ago.';
-} else if (delta < day * 2) {
-    fuzzy = 'yesterday';
-}
-this.time=fuzzy;
-//  var d = new Date(date),
-//         month = '' + (d.getMonth() + 1),
-//         day = '' + d.getDate(),
-//         year = d.getFullYear();
-
-//     if (month.length < 2) month = '0' + month;
-//     if (day.length < 2) day = '0' + day;
-
-//     return [year, month, day].join('-');
-  // var seconds = Math.floor((new Date() - date) / 1000);
-
-  // var interval = Math.floor(seconds / 31536000);
-
-  // if (interval > 1) {
-  //   return interval + " years";
-  // }
-  // interval = Math.floor(seconds / 2592000);
-  // if (interval > 1) {
-  //   return interval + " months";
-  // }
-  // interval = Math.floor(seconds / 86400);
-  // if (interval > 1) {
-  //   return interval + " days";
-  // }
-  // interval = Math.floor(seconds / 3600);
-  // if (interval > 1) {
-  //   return interval + " hours";
-  // }
-  // interval = Math.floor(seconds / 60);
-  // if (interval > 1) {
-  //   return interval + " minutes";
-  // }
-  // return Math.floor(seconds) + " seconds";
-},
+  
     /**
 * show the clicked post on the modal.
 */
@@ -494,11 +433,12 @@ created(){
        }
        
 },
-computed :{
-        createdDate : function(){
-          //  return moment().format('dddd');
-        }
-},
+computed: {
+  // timestamp: function () {
+  //   return moment(this.<model>.attributes['created-at']).format('YYYY-MM-DD [at] hh:mm')
+  // }
+}
+,
 components:{
     reportBox,
    
