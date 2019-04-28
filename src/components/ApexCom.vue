@@ -36,7 +36,6 @@
 <script>
 import SideBar from './ApexComSideBar.vue'
 import {AllServices} from '../MimicServices/AllServices.js'
-import Sort from './Sort.vue'
 
 /**
  * @vue-data {JWT} [token='']  user Token
@@ -51,7 +50,6 @@ export default {
   props:['apexComId'],
   components:{
     'SideBar':SideBar,
-    'Sort':Sort
   },
   data () {
     return {

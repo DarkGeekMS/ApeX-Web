@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import axios from 'axios'
-
+import swal from 'sweetalert';
 export  const MimicPost=new Vue({
+  
 methods:{
   EditPost: function(ID,cont,mimic, baseUrl){
     if( mimic == true)
@@ -40,14 +41,14 @@ return promise1;
     }
 },
     save:function(token,ID,mimic, baseUrl){
-
+   
         if(mimic){
           if(this.$localStorage.login){
              if(token=="1" && ID=="1"){
                 return true;
               }
 
-                alert("Log In First!!");
+                swal("Log In First!!");
                 return false;
              }
             }
@@ -58,9 +59,10 @@ return promise1;
                 ID:ID,
                 token:token
             }).then(response => {
+              swal('success :)');
             return true;
             }).catch(function(error){
-
+               swal('wrong :(');
               return false;
             })
              }
@@ -104,6 +106,7 @@ return promise1;
 
             },
                Hide(name,ID,mimic, baseUrl){
+              
                    if(mimic===true){
 
                     if(name==="1" && ID==="1"){
@@ -118,132 +121,119 @@ return promise1;
                 axios.post(baseUrl + "api/Hide",
                 {
                     name    : name,
-                    ID : ID
+                    token : ID
 
                 }).then(response => {
+                  
+                  swal('Post Hidden Successfully :)');
+
                  return true;
                 }).catch(function (error)
                 {
+                  swal("Oops!", "Something went wrong!", "error");
                    return false;
                 });
 
               }
 
             },
-            upvote(name,ID,direction,mimic, baseUrl){
-                if(mimic){
-                  if(this.$localStorage.login){
-
-                    if(name=="1"  && ID=="1"){
-
-                        if(direction==1){
-
-                          return 200;
-                       }
-
-           }
-
+            upvote(ID,points,upVoted,downVoted,mimic, baseUrl){
+              if( mimic == true)
+              {
+                  var p;
+                  p = points;
+      
+                  if(upVoted)
+                  {
+                      if(downVoted)
+                      {
+                          p++;
+                      }
+                      p++;
+      
                   }
-                  alert("Log In First!!");
-                  return false;}
-
-           else{
-            axios.post(baseUrl + "api/Vote",
-            {
-
-              ID       : ID,
-              name     : name,
-              direction:direction
-
-            }).then(response => {
-              return response.data;
-
-            }).catch(function ()
-            {
-        return false;
-
-        });
-
+                  else
+                      p--;
+                  if(this.$localStorage.login)
+                  {
+                  var promise1 = new Promise(function(resolve, reject) {
+                      setTimeout(function() {
+                        resolve({votes:p});
+                      }, 300);
+                    });
+      
+          return promise1;
+                  }
+      
+                      return false;
               }
-            }
+              else
+              {
+             return axios.post(baseUrl + 'api/Vote', {
+             name: ID,
+             dir: 1,
+             token: this.$localStorage.get('token')
+              })
+            .then(function (response) {
+              swal('Successfully :)');
+              return response.data;
+      
+             })
+            .catch(function (error)
+            {
+              return {
+                  done:false,
+                  points:points
+              }
+             });
+              }
+             }
             ,
 
- downvote(name,ID,direction,mimic, baseUrl){
-                if(mimic){
-                  if(this.$localStorage.login){
-                    if(name=="1"  && ID=="1"){
+ downvote(ID,points,downVoted,upVoted,mimic, baseUrl){
+  if( mimic == true)
+  {
+      var p = points;
+      if(downVoted)
+      {
+          if(upVoted)
+          {
+              p--;
+          }
+          p--;
+      }
+      else
+          p++;
+          if(this.$localStorage.login)
+          {
+          var promise1 = new Promise(function(resolve, reject) {
+              setTimeout(function() {
+                resolve({votes:p});
+              }, 300);
+            });
 
-                        if(direction==-1){
+  return promise1;
+          }
 
-                          return 200;
-                       }
-                      }
-                      return false;
-           }
-           else{
-            axios.post(baseUrl + "api/Vote",
-                   {
+              return false;
+  }
+  else
+  {
+ return axios.post(baseUrl + 'api/Vote', {
+ name: ID,
+ dir: -1,
+ token: this.$localStorage.get('token')
+  })
+.then(function (response) {
+  swal('Successfully :)');
+  return response.data;
 
-
-                    ID:ID,
-                    name:name,
-                    direction:direction
-
-                  }).then(response=> {
-                    return response.data;
-                }).catch(function ()
-                  {
-                  // console.log(error);
-                 });
-
-              }
-
-
-
-
-
-
-
-    }
-
-
-
-
-
-
-
-
-},
-defaultVote(name,ID,direction,mimic, baseUrl){
-  if(mimic){
-      if(name=="1"  && ID=="1"){
-
-          if(direction==0){
-
-            return 200;
-         }
-
-}
-else{
-axios.post(baseUrl + "api/Vote",
+ })
+.catch(function (error)
 {
-
-ID       : ID,
-name     : name,
-direction:direction
-
-}).then(response => {
-if(response){
-   alert("upvote successfully");}
-
-}).catch(function ()
-{
-// console.log(error);
-
-});
-
-}
-}
+  return false;
+ });
+  }
 },
 isLocked(ID,mimic, baseUrl){
     if( mimic == true)

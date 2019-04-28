@@ -1,5 +1,5 @@
 <template>
-<modal name="demo-sign3" transition="pop-out" width="50%" height="70%">
+<modal name="demo-sign3" transition="pop-out" width="50%" height="70%" :clickToClose="false" >
   <div class="box">
 
     <button class="btn-primary" style="margin:0 64.5%" @click="action()"  > X </button>

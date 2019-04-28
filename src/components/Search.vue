@@ -11,6 +11,8 @@
        <li><router-link to="/Search/users" id="h" exact> Communities and users </router-link></li>
       </ul>
     </div>
+    <div v-if="this.$route.name == 'Search'" v-show="!exist" id="subDiv"> {{error}} ''{{this.$localStorage.get('search')}}'' </div> 
+
     <div v-if="this.$route.name == 'Search'" v-show="exist" id="DisplayPosts">  
       <Sort class="sort" :style="{width:wid, marginTop:'2%'}" ></Sort> 
       <div id="PostContainer" v-for="onePost in posts" :key="onePost.name">
@@ -18,7 +20,6 @@
       </div>
       <DemoOnePost id="PostModal" :onePostData="postInfo" ></DemoOnePost>
     </div> 
-    <div v-if="this.$route.name == 'Search'" v-show="!exist" id="subDiv"> {{error}} ''{{this.$localStorage.get('search')}}'' </div> 
     <SearchSideBar v-show="login"></SearchSideBar>
     <router-view></router-view>
     
@@ -95,13 +96,13 @@ export default {
       }
       else{
         AllServices.searchUser().then((data) =>{
-          if( typeof data === 'string')
+          if( data.posts.length == 0)
           {
             this.exist = false,
-            this.error = data
+            this.error = 'Sorry, there were no post results for'
           }
           else{
-            this.posts= data[0],
+            this.posts= data.posts,
             this.exist = true
           }
         })
@@ -123,13 +124,13 @@ export default {
       }
       else{
         AllServices.searchGuest().then((data) =>{
-          if( typeof data === 'string')
+          if( data.posts.length == 0)
           {
             this.exist = false,
-            this.error = data
+            this.error = 'Sorry, there were no post results for'
           }
           else{
-            this.posts= data[0],
+            this.posts= data.posts,
             this.exist = true
           }
         })
