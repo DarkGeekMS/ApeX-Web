@@ -18,9 +18,7 @@
       <router-link v-show="isAdmin()"  id="addmoderatorlink" class="navbarLinks" :to="{name:'Moderators'}">add moderator</router-link>
     </div>
       </div>
-  <div class="sort">
-    <Sort style="padding-top:10px"></Sort>
-  </div>
+
   <SideBar class="sidebar" v-bind:apexComName="apexComName"></SideBar>
     <router-view class="routerview"></router-view>
 </div>
@@ -29,7 +27,6 @@
 <script>
 import SideBar from './ApexComSideBar.vue'
 import {AllServices} from '../MimicServices/AllServices.js'
-import Sort from './Sort.vue'
 
 /**
  * @vue-data {JWT} [token='']  user Token
@@ -44,7 +41,6 @@ export default {
   props:['apexComName'],
   components:{
     'SideBar':SideBar,
-    'Sort':Sort
   },
   data () {
     return {
@@ -180,11 +176,6 @@ export default {
   padding-left: 1%;
   padding-top: 1%;
   display:inline;
-}
-.sort{
-  margin-top:-58px;
-  /* margin-right:0%; */
-  /* height:30px; */
 }
 .navBar{
   background-color: rgb(219, 240, 255);
