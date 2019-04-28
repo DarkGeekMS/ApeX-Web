@@ -51,7 +51,10 @@ var about={
   {userName:'moderator4'}
 ],
 image:'https://i.imgur.com/AMFz23O.jpg',
-}
+banner:'https://i.imgur.com/AMFz23O.jpg',
+name:'movies'
+};
+
 var promise = new Promise(function(resolve) {
   setTimeout(function() {
     resolve(about);
@@ -64,6 +67,8 @@ return axios.get(baseUrl + 'api/AboutApexcom',{params: {
     ApexCom_ID :ApexComName,}
 })
 .then(response=> {
+  console.log(response.data);
+  console.log(ApexComName);
   return response.data;
  })
 .catch(function (error) {
@@ -93,7 +98,7 @@ return promise;
 }
 else {
  return axios.post(baseUrl + 'api/GetSubscribers', {
-      ApexCom_id :apexComName,
+      ApexCommID :apexComName,
       token:this.$localStorage.get('token')
   })
   .then(response => {
@@ -136,7 +141,7 @@ deleteApexCom: function(mimic,apexComName, baseUrl){
     else {
       axios.delete(baseUrl + 'api/DeleteApexcom',{
         params: {
-         ApexCom_id:apexComName,
+         Apex_ID:apexComName,
          token:this.$localStorage.get('token')
     }
         })
@@ -174,9 +179,9 @@ addOrDeleteModerator: function(mimic,userName,apexComName, baseUrl){
   }
 else {
    axios.post(baseUrl + 'api/AddModerator', {
-        ApexCom_id:apexComName,
-        user_id:userName,
-        Token:this.$localStorage.get('token')
+        ApexComID:apexComName,
+        UserID:userName,
+        token:this.$localStorage.get('token')
       })
       .then(function (response) {
         return response;
@@ -266,9 +271,10 @@ reviewReports: function(mimic,apexComName, baseUrl){
     else {
        return axios.post(baseUrl + 'api/ReviewReports', {
             ApexCom_id:apexComName,
-            Token:this.$localStorage.get('token')
+            token:this.$localStorage.get('token')
           })
           .then(response => {
+            console.log(response+'');
             return response.data;
            })
           .catch(function (error) {
@@ -284,8 +290,8 @@ ignoreReport:function(mimic,userID,reportID, baseUrl){
   else{
             axios.post(baseUrl + 'api/IgnoreReport', {
             user_id:userID,
-            repoer_id:reportID,
-            Token:this.$localStorage.get('token')
+            reported_id:reportID,
+            token:this.$localStorage.get('token')
           })
           .then(function (response) {
             return response;
@@ -362,6 +368,7 @@ searchU: function(mimic, baseUrl)
     token: this.$localStorage.get('token')
     }).then(response => {
       var result= response.data;
+      console.log(response);
       return result
     }).catch(error => {
       return error

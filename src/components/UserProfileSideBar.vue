@@ -8,7 +8,7 @@
           </div>
         </div>
         <div class="content">
-          <h4 class="username" v-show="fullName.length==0"> {{userName}} </h4>
+          <h4 class="username" v-show="fullName==null"> {{userName}} </h4>
           <h4 class="username" > {{fullName}} </h4>
 <div class="info">
   <div style="display:inline; float:left; width:50%;">
@@ -120,11 +120,13 @@ export default {
     return {
       token:this.$localStorage.get('token'),
       loggedIn:this.$localStorage.get('login'),
+      loggeduser:this.$localStorage.get('userName'),
       // userName:'',
       karmaCount:0,
       image:'',
       cakeDay:'',
-      fullName:''
+      fullName:'',
+      id:''
     }
   },
   methods:
@@ -144,21 +146,9 @@ export default {
       })
       }
     },
-    unblockUser:function(userName,index){
-     AllServices.blockUser(userName).then((data) =>{
-     if(data){
-         this.blockList.splice(index, 1);
-         alert('this user have been blocked successfully');
-       }
-       else{
-         alert('sorry something worng happend');
-       }
-       })
-    },
-
     blockUser:function(){
     if(this.loggedIn){
-     AllServices.blockUser(this.userName).then((data) =>{
+     AllServices.blockUser(this.id).then((data) =>{
      if(data){
          alert('this user have been blocked successfully');
        }
@@ -190,7 +180,7 @@ export default {
     * send request to delete user
     */
     deleteUser:function(){
-      var response = AllServices.deleteUser(this.userName);
+      var response = AllServices.deleteUser(this.id);
       if(response){
       alert('Done :)')
     }
@@ -215,15 +205,18 @@ export default {
     */
     getUserProfile:function(){
       AllServices.getUserInfo().then((data) =>{
-      this.karmaCount = data.karma;
-      this.image = data.image;
-      this.fullName = data.fullName;
+        console.log(data);
+      this.karmaCount = data.user_info.karma;
+      this.image = data.user_info.avatar;
+      this.id = data.user_info.id;
+      this.fullName = data.user_info.fullname;
       // this.userName = data.userName;
-      this.savedPosts = data.saved;
-      this.hiddenPosts = data.hidden;
-      this.personalPosts = data.personalPosts;
-      this.reports = data.reports;
-      this.cakeDay = data.cakeDay;
+      this.savedPosts = data.posts.saved;
+      this.hiddenPosts = data.posts.hidden;
+      this.personalPosts = data.posts.personalPosts;
+      // this.reports = data.userData.reports;
+      // this.cakeDay = data.userData.cakeDay;
+      
       })
    },
     /**
@@ -231,11 +224,13 @@ export default {
     */
    getUserData:function(){
       AllServices.getUserInfoById(this.userName).then((data) =>{
-      this.karmaCount = data.karma;
-      this.image = data.image;
-      this.fullName = data.fullName;
-      this.personalPosts = data.personalPosts;
-      this.cakeDay = data.cakeDay;
+        console.log(data+'j');
+      this.karmaCount = data.userData.karma;
+      this.image = data.userData.avatar;
+      this.id = data.userData.id;
+      this.fullName = data.userData.fullname;
+      this.personalPosts = data.userData.personalPosts;
+      this.cakeDay = data.userData.cakeDay;
       })
    },
    /**
@@ -244,22 +239,27 @@ export default {
    getUserDataForGuest:function(){
      AllServices.getUserInfoByIdforGuest(this.userName).then((data) =>{
        alert(this.userName+'inside');
-      this.karmaCount = data.karma;
-      this.image = data.image;
-      this.fullName = data.fullName;
+      this.karmaCount = data.userData.karma;
+      this.image = data.userData.avatar;
+      this.id = data.userData.id;
+      this.fullName = data.userData.fullname;
       // this.userName = data.userName;
-      this.personalPosts = data.personalPosts;
-      this.cakeDay = data.cakeDay;
+      this.personalPosts = data.userData.personalPosts;
+      this.cakeDay = data.userData.cakeDay;
      })
    },
   },
   mounted(){
     if(this.loggedIn){
     if(this.userName == this.loggeduser){
+      console.log(this.loggeduser);
+      console.log(this.userName);
       this.getUserProfile();
     }
     else{
       this.getUserData();
+      console.log(this.loggeduser);
+      console.log(this.userName);
     }
     }
     else{

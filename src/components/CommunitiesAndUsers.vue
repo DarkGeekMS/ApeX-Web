@@ -1,6 +1,6 @@
 <template>
   <div id="mainDiv" >
-    <router-link  id="subDiv" v-show="exist" v-for='(apex,index) in apexs' :key="index" :to="{ name:'ApexCom', params: {ApexComName:apex.name} }" > 
+    <router-link  id="subDiv" v-show="exist" v-for='(apex,index) in apexs' :key="index" :to="{ name:'ApexCom', params: {ApexComId:apex.id} }" > 
       <div id="sub1">
          <img width="38px" :src=apex.avatar />
          <a class="name"> {{apex.name}} <br/> <span class="memb"> {{apex.numOfMeb}} Members </span></a>

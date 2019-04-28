@@ -18,7 +18,7 @@ import Hot from './components/SortHot.vue'
 import New from './components/SortNew.vue'
 import Controversial from './components/SortControversial.vue'
 export default[
-      {path:'/ApexCom/:apexComName',name:'ApexCom',props:true,component:ApexCom , children :
+      {path:'/ApexCom/:apexComId',name:'ApexCom',props:true,component:ApexCom , children :
       [
         {path:'/' ,name:'ApexComPosts',component:ApexComPosts},
         {path:'AddModerators',name:'AddModerators',component:ApexComModerator,props:true ,children :[

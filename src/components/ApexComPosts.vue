@@ -14,7 +14,7 @@ import DisplayPosts from './DisplayPosts.vue'
  */
 
 export default {
-  props:['apexComName'],
+  props:['apexComId'],
   data () {
     return {
       apexName:this.apexComName,

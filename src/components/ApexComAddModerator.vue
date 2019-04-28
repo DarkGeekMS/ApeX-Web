@@ -12,7 +12,7 @@
          <a class="name"> {{user.name}} <br/> <span class="memb"> {{user.karma}} karma </span> </a>       
        </div> 
        <br/><br/>
-       <button class="button" type="button" v-on:click="addModerator(user.name)">add moderator</button>
+       <button class="button" type="button" v-on:click="addModerator(user.id)">add moderator</button>
     </router-link>
     
     <div id="subDiv" style="text-align:center;font-size: 17px;font-weight: 600; " v-show="!exist"> {{error}} ''{{this.$localStorage.get('searchModerator')}}'' </div>
@@ -28,7 +28,7 @@ import {AllServices} from '../MimicServices/AllServices.js'
  * @vue-data {string} [error=''] if there is no matching
 */
 export default {
-props:['apexComName'],
+props:['apexComId'],
   data () {
     return {
       exist:true,
@@ -40,8 +40,8 @@ props:['apexComName'],
   methods:
   {
       addModerator:function(userName){
-          console.log(this.apexComName);
-          var data = AllServices.addOrDeleteModerator(userName,this.apexComName);
+          console.log(this.apexComId);
+          var data = AllServices.addOrDeleteModerator(userName,this.apexComId);
           if(data){
           }
           else{
@@ -52,19 +52,21 @@ props:['apexComName'],
   beforeUpdate()
   {
     console.log('heyup');
-    var result = AllServices.searchU();
-      if( typeof result === 'string')
-      {
-        this.exist = false,
-        this.error = result
-      }
-      else{
-        this.users = result[2],
-        this.exist = true
-      }
+    
+    AllServices.searchU().then((data) =>{
+          if( typeof data === 'string')
+          {
+            this.exist = false,
+            this.error = data
+          }
+          else{
+            this.users = data[2],
+            this.exist = true
+          }
+        })
       console.log(this.exist);
       console.log(this.users);
-      console.log(this.searchValue);
+      console.log(this.searchValue);    
   },
   created(){
     console.log('hey');
