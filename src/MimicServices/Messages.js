@@ -21,8 +21,26 @@ export  const MimicMessage =new Vue({
       }
       else
       {
+
+        axios.post(baseUrl + 'api/Me', {
+          token:this.$localStorage.get('token')
+      })
+         .then(response=> {
+           console.log("me",response);
+         })
+         .catch(function (error) {
+          return false;
+
+          });
+
+
+
+console.log("rec",rec);
+
+
+          console.log(title);
         return axios.post(baseUrl + 'api/ComposeMessage', {
-            reciever:rec,
+            receiver:rec,
             subject:title,
             content: cont,
             token:this.$localStorage.get('token')
@@ -51,6 +69,7 @@ export  const MimicMessage =new Vue({
       }
       else
       {
+        
         return axios.post(baseUrl + 'api/DeleteMessage', {
             id:ID,
             token:this.$localStorage.get('token')
@@ -94,21 +113,21 @@ export  const MimicMessage =new Vue({
         //sent
         var sent1 = {
           id:"1",
-          title:"sent1",
+          subject:"sent1",
           content:"content1",
           user:"user1",
           date:new Date()
         };
         var sent2 = {
           id:"2",
-          title:"sent2",
+          subject:"sent2",
           content:"content2",
           user:"user2",
           date:new Date()
         };
         var sent3 = {
           id:"3",
-          title:"sent3",
+          subject:"sent3",
           content:"content3",
           user:"user3",
           date:new Date()
@@ -117,34 +136,37 @@ export  const MimicMessage =new Vue({
         //inbox
         var in1 = {
           id:"4",
-          title:"in1",
+          subject:"in1",
           content:"content1",
           user:"user1",
           date:new Date()
         };
         var in2 = {
           id:"5",
-          title:"in2",
+          subject:"in2",
           content:"content2",
           user:"user2",
           date:new Date()
         };
         var in3 = {
           id:"6",
-          title:"in3",
+          subject:"in3",
           content:"content3",
           user:"user3",
           date:new Date()
         };
+        
         var all = [in1,in2,in3];
         var read = [in1,in2];
         var unread = [in3];
-
-        var msgs = {
-          sent:sent,
+        var received = {
           all:all,
           read:read,
           unread:unread
+        };
+        var msgs = {
+          sent:sent,
+          received:received
         };
         var promise1 = new Promise(function(resolve, reject) {
             setTimeout(function() {
@@ -206,8 +228,8 @@ return promise1;
       }
       else
       {
-        return axios.post(baseUrl + 'api/RetrieveComments', {
-            parent:ID,
+        return axios.post(baseUrl + 'api/ReadMessage', {
+            ID:ID,
             token:this.$localStorage.get('token')
         })
            .then(response=> {

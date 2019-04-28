@@ -150,6 +150,7 @@ OpString:function(){
       {
       AllServices.WriteComment(this.content,this.parentID).then((data) => {
         if(data){
+          console.log(data);
         this.replyClicked=!this.replyClicked;
         this.$emit('ReplyOnMessage',this.content);
         }
