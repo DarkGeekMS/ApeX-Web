@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import axios from 'axios'
-
+import swal from 'sweetalert';
 export  const MimicPost=new Vue({
+  
 methods:{
   EditPost: function(ID,cont,mimic, baseUrl){
     if( mimic == true)
@@ -40,14 +41,14 @@ return promise1;
     }
 },
     save:function(token,ID,mimic, baseUrl){
-
+   
         if(mimic){
           if(this.$localStorage.login){
              if(token=="1" && ID=="1"){
                 return true;
               }
 
-                alert("Log In First!!");
+                swal("Log In First!!");
                 return false;
              }
             }
@@ -58,9 +59,10 @@ return promise1;
                 ID:ID,
                 token:token
             }).then(response => {
+              swal('success :)');
             return true;
             }).catch(function(error){
-
+               swal('wrong :(');
               return false;
             })
              }
@@ -104,6 +106,7 @@ return promise1;
 
             },
                Hide(name,ID,mimic, baseUrl){
+              
                    if(mimic===true){
 
                     if(name==="1" && ID==="1"){
@@ -118,12 +121,16 @@ return promise1;
                 axios.post(baseUrl + "api/Hide",
                 {
                     name    : name,
-                    ID : ID
+                    token : ID
 
                 }).then(response => {
+                  
+                  swal('Post Hidden Successfully :)');
+
                  return true;
                 }).catch(function (error)
                 {
+                  swal("Oops!", "Something went wrong!", "error");
                    return false;
                 });
 
@@ -131,6 +138,7 @@ return promise1;
 
             },
             upvote(name,ID,direction,mimic, baseUrl){
+             
                 if(mimic){
                   if(this.$localStorage.login){
 
@@ -151,16 +159,20 @@ return promise1;
             axios.post(baseUrl + "api/Vote",
             {
 
-              ID       : ID,
+              token    : this.$localStorage.get('token'),
               name     : name,
-              direction:direction
+              dir      :direction
 
             }).then(response => {
+              
+              swal('upvoted success :)');
               return response.data;
-
-            }).catch(function ()
-            {
-        return false;
+             
+            }).catch(function (error)
+            { 
+            
+              swal("Oops!", "Something went wrong!", "error");
+              return false;
 
         });
 
@@ -169,6 +181,7 @@ return promise1;
             ,
 
  downvote(name,ID,direction,mimic, baseUrl){
+   
                 if(mimic){
                   if(this.$localStorage.login){
                     if(name=="1"  && ID=="1"){
@@ -180,20 +193,25 @@ return promise1;
                       }
                       return false;
            }
+          }
            else{
+            
             axios.post(baseUrl + "api/Vote",
                    {
 
 
-                    ID:ID,
+                    token:this.$localStorage.get('token'),
                     name:name,
-                    direction:direction
+                    dir:direction
 
                   }).then(response=> {
+                   
+                    swal('downvoted success :)');
                     return response.data;
-                }).catch(function ()
+                }).catch(function (error)
                   {
-                  // console.log(error);
+                    swal("Oops!", "Something went wrong!", "error");
+                
                  });
 
               }
@@ -205,46 +223,10 @@ return promise1;
 
 
     }
-
-
-
-
-
-
-
-
-},
-defaultVote(name,ID,direction,mimic, baseUrl){
-  if(mimic){
-      if(name=="1"  && ID=="1"){
-
-          if(direction==0){
-
-            return 200;
-         }
+  
 
 }
-else{
-axios.post(baseUrl + "api/Vote",
-{
-
-ID       : ID,
-name     : name,
-direction:direction
-
-}).then(response => {
-if(response){
-   alert("upvote successfully");}
-
-}).catch(function ()
-{
-// console.log(error);
-
-});
-
-}
-}
-},
+,
 isLocked(ID,mimic, baseUrl){
     if( mimic == true)
     {
@@ -267,4 +249,4 @@ isLocked(ID,mimic, baseUrl){
     }
 }
 
-}})
+})

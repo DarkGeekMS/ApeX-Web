@@ -56,7 +56,7 @@
 
   <button type="button" class="btn btn-default " id="commentButton" ><i class="far fa-comment-alt" id="commentIcon"></i>
 Comments</button>
-  <button  type="button" class="btn btn-default  SAVE"  @click="Save" id="SaveButton" >
+  <button  type="button" class="btn btn-default  SAVE"  @click="Save()" id="SaveButton" >
 
     <i class="fa fa-plus-square" v-if="Saved=='Save'" id="SaveIcon"></i>
     <i class="glyphicon glyphicon-check" v-if="Saved!='Save'" id="UnsaveIcon"></i>
@@ -74,6 +74,7 @@ Comments</button>
       <li ><a href="#"  @click="Hide" class="HIDE"><i class="fa fa-ban" id="HideIcon"></i>Hide</a></li>
       <li><a  @click="report"><i class="glyphicon glyphicon-flag" id="ReportIcon" ></i>Report</a></li>
       <li v-if="postData.canEdit"><a href="#" @click="editText" ><i class="glyphicon glyphicon-pencil" id="ReportIcon"></i>edit</a></li>
+      <li v-if="postData.canEdit"><a href="#" @click="deletePost" ><i class="glyphicon glyphicon-pencil"></i>edit</a></li>
       <li><a href="#" @click="isLocked" v-show="isAdmin() || isModerator()">
         
         <i v-if="Locked=='unlock'" class="fa fa-lock" id="ReportIcon"></i>
@@ -102,6 +103,7 @@ Comments</button>
 import {MimicDisplayPosts} from '../MimicServices/DisplayPosts.js'
 import { AllServices } from '../MimicServices/AllServices';
 import reportBox from './ReportModal.vue'
+import swal from 'sweetalert';
 var moment =require('moment');
 /**
  * @vue-data {string} [Save="Save"] Save value
@@ -256,7 +258,8 @@ export default {
     * Hide post if the User press Hide button.
     */
        Hide(){
-           if( this.$localStorage.get('login') ){
+        
+         if( this.$localStorage.get('login') ){
          if(this.ShowModalVar == true){
          this.ToggleShowModalVar();
          }
@@ -264,10 +267,11 @@ export default {
             {
             this.Not_Hide=false;
             this.is_Hide=true;
-            alert("Post hidden successfully.")
+            
 
             }
-        this.PostId=postData.id;
+            
+        this.PostId=this.postData.id;
         AllServices.Hide(this.PostId,this.$localStorage.get('token'));
 
          }
@@ -284,6 +288,7 @@ export default {
     }
           if(!this.pressed_up)
           {
+                     
                       if(this.pressed_down)
                       {
                       this.votes         += 1;
@@ -291,22 +296,25 @@ export default {
                       this.className_down = 'btn btn-light btn-sm is-gray';
 
                       }
-
+                    
                       this.className_up    = 'btn btn-light btn-sm is-red';
                       this.pressed_up      =true;
-
-                      this.votes          += 1;
-                       this.PostId=postData.id;
+                        
+                      // this.votes          += 1;
+                     
+                       this.PostId=this.postData.id;
                        this.postData.up=true;
-                      AllServices.upvote(this.$localStorage.get('token'),this.PostId,1);
+                       
+                       AllServices.upvote(this.PostId,this.$localStorage.get('token'),1);
+                     
 
                 }
               else {
                     this.className_up = 'btn btn-light btn-sm is-gray';
-                    this.votes     -= 1;
+                    // this.votes     -= 1;
                     this.pressed_up = false;
-                     this.PostId=postData.id;
-                  AllServices.defaultVote(this.PostId,this.$localStorage.get('token'),0);
+                     this.PostId=this.postData.id;
+                    AllServices.downvote(this.PostId,this.$localStorage.get('token'),-1);
 
                }
 
@@ -335,19 +343,21 @@ export default {
                          this.className_down = 'btn btn-light btn-sm is-blue';
                          this.pressed_down=true;
 
-                         this.votes-=1;
-                          this.PostId=postData.id;
+                        //  this.votes-=1;
+                          this.PostId=this.postData.id;
                          AllServices.downvote(this.PostId,this.$localStorage.get('token'),-1);
+                          this.votes=this.postData.votes;
 
                   }
               else {
                   this.className_down = 'btn btn-light btn-sm is-gray';
 
 
-                   this.votes += 1;
+                  //  this.votes += 1;
                    this.pressed_down = false;
-                    this.PostId=postData.id;
-                   AllServices.defaultVote(this.PostId,this.$localStorage.get('token'),0);
+                    this.PostId=this.postData.id;
+                   AllServices.upvote(this.PostId,this.$localStorage.get('token'),1);
+                   this.votes=this.postData.votes;
 
 
                  }
@@ -360,25 +370,29 @@ export default {
     * Save post if the User press Hide button.
     */
     Save(){
+     
         if( this.$localStorage.get('login') ){
       if(this.ShowModalVar == true){
       this.ToggleShowModalVar();
     }
+    // alert('braaa');
+    // alert(this.Saved);
         if(this.Saved=="Save")
         {
-        //alert('Post saved successfully');
+      
         this.Saved="unsave";
-        this.PostId=postData.id;
+        this.PostId=this.postData.id;
+      
         AllServices.save(this.$localStorage.get('token'),this.PostId);
 
       }
         else if(this.Saved=="unsave"){
             this.Saved="Save";
-            this.PostId=postData.id;
+            this.PostId=this.postData.id;
 
          
-         //   alert(postData.apex_id);
-           
+       
+          
              AllServices.save(this.$localStorage.get('token'),this.PostId);
            }
 

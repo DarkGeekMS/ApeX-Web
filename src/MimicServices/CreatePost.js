@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import axios from 'axios'
-
+import swal from 'sweetalert';
 export  const MimicCreatePosts =new Vue({
   data(){
 return {
@@ -13,7 +13,7 @@ token:'1',
   },
   methods:{
     submitPost: function(apexComId,title,bodyPost,imgName,videoUrl, isLocked,token,mimic, baseUrl){
-
+      
       if(mimic){
          if(this.$localStorage.login){
 
@@ -24,54 +24,41 @@ token:'1',
                 }
 
 else {
-    axios.post(baseUrl + "api/SubmitPost"  ,{
+  
+    axios.post(baseUrl + "api/SubmitPost",{
 
         ApexCom_id:apexComId,
         title:title, 
-        token:token,
+        token:this.$localStorage.get('token'),
         body:bodyPost,
         img_name:imgName,
         video_url:videoUrl,
         isLocked:isLocked
+       
 
-
-
-
-       },{
-       headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-
-      }}
-       ).then(function(response){
-
-         if(response){
+       }).then(response=>{
+          
         
-         return true;
+          swal('Post Submitted successfully');
+          return true;
+         
 
-         }
+     
+       }).catch(function (error){
+        // swal("Oops!", "Something went wrong!", "error");
+        //  console.log(title);
+        //  console.log(apexComId);
+        //  console.log(bodyPost);
+        //  console.log(isLocked);
+        //  console.log(token);
+        // console.log(error);
+        //  alert(error);
          return false;
        })
+      
  }
-    },
-    getApexNames:function(mimic, baseUrl){
-    if(mimic==true){
-        var names=["apexname1","apexname2","apexname3","apexname4"];
-
-        var promise = new Promise(function(resolve) {
-          setTimeout(function() {
-            resolve(names);
-          }, 300);
-        });
-      return promise;
-
     }
-    else{
-     // axios.get();
-
-///TODO COMPLETE THE REQUEST
-    }
-
-    }
+  
   }
 
 

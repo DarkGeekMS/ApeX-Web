@@ -28,6 +28,7 @@ export  const MimicComment =new Vue({
             token:this.$localStorage.get('token')
         })
            .then(response=> {
+        
             return response.data;
            })
            .catch(function (error) {
@@ -158,6 +159,7 @@ export  const MimicComment =new Vue({
        token: this.$localStorage.get('token')
         })
       .then(function (response) {
+   
         return response.data;
 
        })

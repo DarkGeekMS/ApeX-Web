@@ -127,6 +127,7 @@ import {AllServices} from '../MimicServices/AllServices.js'
 import { RichTextEditorPlugin, Toolbar, HtmlEditor } from "@syncfusion/ej2-vue-richtexteditor";
 import HomeSideBar from "./HomeSideBar.vue"
 Vue.use(RichTextEditorPlugin);
+
 /**
  * @vue-data {string} [apexComId=''] Id of apexcom which post will be created in
  * @vue-data {boolean} [enable=true]    check if post button is enable or not
@@ -344,11 +345,18 @@ this.apexComId=this.apexs[0][this.indx-1].id;
       var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
       var dateTime = date+' '+time;
      
-      // alert('fdsa');
-      AllServices.submit(this.apexComId,this.title,this.bodyPost,this.imgName,this.videoUrl,this.isLocked,this.$localStorage.get('token'));
+      
+      
+      var result=AllServices.submit(this.apexComId,this.title,this.bodyPost,this.imgName,this.videoUrl,this.isLocked,this.$localStorage.get('token'));
+      if(!result){
+      swal("Oops!", "Something went wrong!", "error");
+
+      }
+    else{
       this.$emit('PostEmit',dateTime,this.title,this.bodyPost,this.imgName,this.videoUrl,this.$localStorage.get('userName'),this.apexs[0][this.indx-1].name);
+      
       this.$router.push('/Submit');
-     
+       }
     }
 
     },
