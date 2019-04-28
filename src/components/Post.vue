@@ -2,7 +2,7 @@
 
   <div class="postMod">
     <!-- VERY IMPORTANT! REPORT MODAL APPEARS MULTIPLE TIMES FOR EACH POST  -->
-   <reportBox> </reportBox>
+   <reportBox v-show="showReport"> </reportBox>
     
 <div class="panel panel-default"  @click="ShowModal()" v-show="Not_Hide" id="post">
 
@@ -72,7 +72,7 @@ Comments</button>
     </button>
     <ul class="dropdown-menu" id="dropMenu">
       <li ><a href="#"  @click="Hide" class="HIDE"><i class="fa fa-ban" id="HideIcon"></i>Hide</a></li>
-      <li><a  @click="report"><i class="glyphicon glyphicon-flag" id="ReportIcon" ></i>Report</a></li>
+      <li><a  @click="report" class="HIDE"><i class="glyphicon glyphicon-flag" id="ReportIcon" ></i>Report</a></li>
       <li v-if="postData.canEdit"><a href="#" @click="editText" ><i class="glyphicon glyphicon-pencil" id="ReportIcon"></i>edit</a></li>
       <li v-if="postData.canEdit"><a href="#" @click="deletePost" ><i class="glyphicon glyphicon-pencil"></i>edit</a></li>
       <li><a href="#" @click="isLocked" v-show="isAdmin() || isModerator()">
@@ -142,7 +142,7 @@ export default {
              Saved  :"Save",
              PostId   :"",
              token  :this.$localStorage.get('token'),
-
+             showReport:false,
              moderator:false,
              ShowModalVar:true,
              Deleted:false,
@@ -200,6 +200,7 @@ export default {
   
      this.onlyOneTime=false;
       this.$modal.show('reportBox');
+      this.showReport=true;
 
     }
     else{
@@ -282,7 +283,7 @@ export default {
        ,
     changeColor_up()
     {
-     
+     //alert('before '+this.points);
       if(this.$localStorage.get('login') ){
       if(this.ShowModalVar == true){
       this.ToggleShowModalVar();
@@ -321,9 +322,9 @@ export default {
                AllServices.upvote(this.PostId,this.points,this.upVoted,downState).then((data) => {
             if(data){
                 this.points=data.votes;
-                alert(this.points);
+              
                   }});
-
+                //  alert('after '+this.points);
 
       }
       else{
@@ -332,6 +333,7 @@ export default {
       }
       ,
      changeColor_down(){
+       // alert('before '+this.points);
         this.downVoted = !this.downVoted;
         var upState = this.upVoted;
         this.upVoted = false;
@@ -376,6 +378,7 @@ export default {
                    this.points=data.votes;
                  
                  }});
+                  // alert('after '+this.points);
               }
               else{
                 alert('Login First !!');
@@ -517,7 +520,10 @@ components:{
  #postBody:hover{
              cursor:pointer
                }
+#ReportIcon:hover{
+               cursor:pointer
 
+}
   #imgId{
          cursor: pointer;
      

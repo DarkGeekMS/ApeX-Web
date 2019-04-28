@@ -343,15 +343,15 @@ this.apexComId=this.apexs[0][this.indx-1].id;
       
       
       var result=AllServices.submit(this.apexComId,this.title,this.bodyPost,this.imgName,this.videoUrl,this.isLocked,this.$localStorage.get('token'));
-      // if(!result){
-      // swal("Oops!", "Something went wrong!", "error");
+      if(!result){
+      swal("Oops!", "Something went wrong!", "error");
 
-      // }
-    // else{
+      }
+    else{
       this.$emit('PostEmit',dateTime,this.title,this.bodyPost,this.imgName,this.videoUrl,this.$localStorage.get('userName'),this.apexs[0][this.indx-1].name);
       
       this.$router.push('/Submit');
-      //  }
+       }
     }
 
     },
