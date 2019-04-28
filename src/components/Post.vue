@@ -29,7 +29,7 @@
       </div>
 
 
-      <router-link class="fontUser" id="subred" :to="{name:'ApexCom' , params: {apexComName:postData.apex_com_name}}">{{postData.apex_com_name}}</router-link>
+      <router-link class="fontUser" id="subred" :to="{name:'ApexCom' , params: {apexComId:postData.apex_id}}">{{postData.apex_com_name}}</router-link>
       <font class="postby" id="fontPostby">. Posted by</font>
       <router-link class="postby" id="user" :to="{name:'UserProfile' , params: {userName:postData.post_writer_username}}"> {{postData.post_writer_username}}</router-link>
 

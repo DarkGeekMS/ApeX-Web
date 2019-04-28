@@ -1,7 +1,10 @@
 <template id="ApexComDesign">
 <div id="all">
-  <div class="Apexcom" id="Apexcom">
-    <div class="apexcomName" id="apexcomName">
+  <!-- <div id="Apexcom" class="banner" :style="{ backgroundImage: 'url(' + banner + ')' }"> -->
+    <!-- without bannner -->
+    <div id="Apexcom" class="apexcom" >
+    <!-- <div v-bind:class="{apexcomName:banner=='',namebanner:banner!=''}" id="apexcomName"> -->
+      <div class="apexcomName" id="apexcomName">
       <div class="imagediv">
         <h1 style=" font-size: 28px; display:inline;" id="Name">{{apexComName}}</h1>
         <div class="img">
@@ -9,17 +12,23 @@
         </div>
       </div>
     </div>
-    <div class="navBar" id="navbar">
+    
+    <!-- <div v-bind:class="{navBar:banner=='',banner:banner!=''}" id="navbar"> -->
+      <div class="navBar" id="navbar">
       <router-link  id="postslink" class="navbarLinks" :to="{name:'Posts'}">Posts</router-link>
-      <router-link  v-show="isModerator() || isAdmin()" id="subscribersListlink" class="navbarLinks" :to="{name:'Subscribers'}">subscribers</router-link>
+      <!-- <router-link  v-show="isModerator() || isAdmin()" id="subscribersListlink" class="navbarLinks" :to="{name:'Subscribers'}">subscribers</router-link>
       <router-link  v-show="isModerator() || isAdmin()" id="reportlink" class="navbarLinks" :to="{name:'Reports'}">view reports</router-link>
-      <!-- <router-link id="reportlink" class="navbarLinks" :to="{name:'Reports'}">view reports</router-link> -->
-      <!-- <router-link  id="addmoderatorlink" class="navbarLinks" :to="{name:'AddModerators'}">add moderator</router-link> -->
-      <router-link v-show="isAdmin()"  id="addmoderatorlink" class="navbarLinks" :to="{name:'Moderators'}">add moderator</router-link>
+      <router-link v-show="isAdmin()"  id="addmoderatorlink" class="navbarLinks" :to="{name:'Moderators'}">add moderator</router-link> -->
+      <router-link id="subscribersListlink" class="navbarLinks" :to="{name:'Subscribers'}">subscribers</router-link>
+      <router-link id="reportlink" class="navbarLinks" :to="{name:'Reports'}">view reports</router-link>
+      <router-link  id="addmoderatorlink" class="navbarLinks" :to="{name:'AddModerators'}">add moderator</router-link>
+      
     </div>
       </div>
-
-  <SideBar class="sidebar" v-bind:apexComName="apexComName"></SideBar>
+  <div class="sort">
+    <!-- <Sort style="padding-top:10px"></Sort> -->
+  </div>
+  <SideBar class="sidebar" v-bind:apexComId="apexComId"></SideBar>
     <router-view class="routerview"></router-view>
 </div>
 </template>
@@ -38,7 +47,7 @@ import {AllServices} from '../MimicServices/AllServices.js'
  */
 
 export default {
-  props:['apexComName'],
+  props:['apexComId'],
   components:{
     'SideBar':SideBar,
   },
@@ -47,13 +56,14 @@ export default {
       token:this.$localStorage.get('token'),
       userName:this.$localStorage.get('userName'),
       loggedIn:this.$localStorage.get('login'),
-
+      apexComName:'',
       //userName:'moderator1',
       // description:'',
       moderators:[],
       // rules:[],
       // subscribersCount: 0,
-      image:''
+      image:'',
+      banner:''
     }
   },
   methods:{
@@ -63,7 +73,7 @@ export default {
     */
     CheckModerator:function(name)
     {
-      if( name.userName == this.userName){
+      if( name.userID == this.userID){
 
       return true;
       }
@@ -102,21 +112,26 @@ export default {
     * request the data for certain community
     */
      getAbout(){
-         AllServices.getAbout(this.apexComName).then((about) =>{
-
+         AllServices.getAbout(this.apexComId).then((about) =>{
+         console.log(about);
+         this.apexComName=about.name;
         //  this.description=about.description;
          this.moderators=about.moderators;
         //  this.rules=about.rules;
         //  this.subscribersCount=about.subscribersCount;
          this.image=about.image;
+         this.banner=about.banner;
          })
    },
    getAboutGuest(){
-         AllServices.getAboutGuest(this.apexComName).then((about) =>{
+         AllServices.getAboutGuest(this.apexComId).then((about) =>{
+         console.log(about);
+         this.apexComName=about.name;
         //  this.description=about.description;
          this.moderators=about.moderators;
         //  this.rules=about.rules;
          this.image=about.image;
+         this.banner=about.banner;
         //  this.subscribersCount=about.subscribersCount;
          });
    },
@@ -172,10 +187,23 @@ export default {
   /* height: auto; */
   /* max-height:65%; */
 }
+.namebanner{
+  padding-top:38px;
+  color: white;
+  box-sizing: border-box;
+}
 #Name{
   padding-left: 1%;
   padding-top: 1%;
   display:inline;
+}
+.transparent{
+  padding-top: 20px;
+}
+.sort{
+  margin-top:-58px;
+  /* margin-right:0%; */
+  /* height:30px; */
 }
 .navBar{
   background-color: rgb(219, 240, 255);
@@ -223,7 +251,7 @@ export default {
   margin-right: 4%;
   float:right; */
 }
-.router-link-active{
+.router-link-exact-active{
   border-bottom: 3px solid deepSkyBlue;
 }
 img{

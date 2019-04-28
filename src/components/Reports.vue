@@ -47,7 +47,7 @@ export default {
   'Post':post,
   'Comment':Comment
 },
-props:['apexComName','userName'],
+props:['apexComId','userName'],
       
   data () {  
     return {
@@ -59,7 +59,7 @@ props:['apexComName','userName'],
   methods:
   {
     reviewReportsAC(){
-         AllServices.reviewReportsAC(this.apexComName).then((data) =>{
+         AllServices.reviewReportsAC(this.apexComId).then((data) =>{
          this.reportedComment=data.reportedComment;
          this.reportedPost=data.reportedpost;
          });

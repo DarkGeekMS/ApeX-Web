@@ -18,7 +18,7 @@ import Sort from './Sort.vue'
  */
 
 export default {
-  props:['apexComName'],
+  props:['apexComId'],
   data () {
     return {
       apexName:this.apexComName,
