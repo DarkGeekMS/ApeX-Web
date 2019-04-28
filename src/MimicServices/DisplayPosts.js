@@ -123,14 +123,12 @@ return promise1;
               }
       }
 else {
-  alert(sortparam);
-  alert(ApexComName);
   if (this.$localStorage.get('token') == null)
   {
     return axios.get(baseUrl + 'api/SortPosts',
    {
       apexComID:ApexComName ,
-      sortingParam: "date"
+      sortingParam: sortparam
     }).then(response => {
         return response.data.posts;
       })
@@ -140,7 +138,7 @@ else {
       return axios.post(baseUrl + 'api/SortPosts',
      {
         apexCommID:ApexComName ,
-        sortingParam: "date",
+        sortingParam:sortparam,
         token:this.$localStorage.get('token')
       }).then(response => {
           return response.data.posts;
