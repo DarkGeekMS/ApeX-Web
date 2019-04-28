@@ -140,7 +140,7 @@ export default {
 
              points  :this.postData.votes,
              Saved  :"Save",
-             PostId   :"",
+             PostId   :this.postData.id,
              token  :this.$localStorage.get('token'),
              showReport:false,
              moderator:false,
@@ -187,6 +187,9 @@ export default {
     
           this.postData.content= document.getElementById("textarea").value; 
           this.showEditTextArea=false;
+          alert(this.postData.id);
+          alert(this.postData.content);
+          alert(this.postData.title);
           AllServices.EditPost(this.postData.id, this.postData.content);
         
   
