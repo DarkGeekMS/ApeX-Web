@@ -10,10 +10,10 @@
        <br/><br/>
     </router-link>
 
-    <router-link id="subDiv" v-show="exist" v-for='(user,index) in users' :key="'A'+index" :to="{ name: 'UserProfile', params: {userName:user.name}}"> 
+    <router-link id="subDiv" v-show="exist" v-for='(user,index) in users' :key="'A'+index" :to="{ name: 'UserProfile', params: {userName:user.username}}"> 
       <div id="sub1">
          <img width="45px" :src=user.avatar />
-         <a class="name"> {{user.name}} <br/> <span class="memb"> {{user.karma}} karma </span> </a>       
+         <a class="name"> {{user.username}} <br/> <span class="memb"> {{user.karma}} karma </span> </a>       
        </div> 
        <br/><br/>
     </router-link>
@@ -65,14 +65,15 @@ export default {
       }
       else{
         AllServices.searchUser().then((data) =>{
-          if( typeof data === 'string')
+          console.log(data);
+          if( (data.apexComs.length == 0 ) && (data.users.length == 0))
           {
             this.exist = false,
-            this.error = data
+            this.error = 'Sorry, there were no community results for'
           }
           else{
-            this.apexs = data[1],
-            this.users = data[2],
+            this.apexs = data.apexComs,
+            this.users = data.users,
             this.exist = true
           }
         })
@@ -95,14 +96,14 @@ export default {
       }
       else{
         AllServices.searchGuest().then((data) =>{
-          if( typeof data === 'string')
+          if( (data.apexComs.length == 0 ) && (data.users.length == 0))
           {
             this.exist = false,
-            this.error = data
+            this.error = 'Sorry, there were no community results for'
           }
           else{
-            this.apexs = data[1],
-            this.users = data[2],
+            this.apexs = data.apexComs,
+            this.users = data.users,
             this.exist = true
           }
         })

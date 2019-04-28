@@ -1,5 +1,5 @@
 <template>
-<modal name="ResetCode" transition="pop-out" width="50%" height="70%" :clickToClose="false">
+<modal name="ResetCode" transition="pop-out" width="50%" height="70%" :clickToClose="false" @before-open="beforeOpen">
   <ResetPass/>
   <div class="box">
     <div class="box-part" id="bp-right"></div>
@@ -47,6 +47,7 @@ export default {
   data(){
     return{
       code:'',
+      username:'',
       error:'',
       congra:''
     }
@@ -63,7 +64,7 @@ export default {
       else
       {
         if(AllServices.getState()){
-          var check = AllServices.setCode(this.code);
+          var check = AllServices.setCode(this.code,this.username);
           if(check)
           {
             this.congra = "your code is correct, Now set your password" ;
@@ -75,8 +76,7 @@ export default {
           }
         }
         else {
-
-         AllServices.setCode(this.code).then((data) => {
+         AllServices.setCode(this.code,this.username).then((data) => {
          if(data)
           {
             this.congra = "your code is correct, Now set your password " ;
@@ -99,6 +99,9 @@ export default {
       this.$modal.hide('ResetCode');
       this.$modal.hide('ForgetPass');
       this.$modal.hide('demo-login');
+    },
+    beforeOpen:function (event) {
+      this.username = event.params.user;
     }
   },
 }

@@ -22,9 +22,9 @@ export  const AllServices =new Vue({
     getState(){
       return this.mimic
     },
-    submit:function(videoUrl,apexComId,bodyPost,imgName, isLocked,token){
+    submit:function(apexComId,title,bodyPost,imgName,videoUrl, isLocked,token){
 
-      var data=MimicCreatePosts.submitPost(videoUrl,apexComId,bodyPost,imgName,isLocked,token,this.mimic, this.baseUrl);
+      var data=MimicCreatePosts.submitPost(apexComId,title,bodyPost,imgName,videoUrl, isLocked,token,this.mimic, this.baseUrl);
       return data;
 
     },
@@ -62,9 +62,9 @@ export  const AllServices =new Vue({
     {
       return MimicAuth.ForgetPass(user,email,this.mimic, this.baseUrl);
     },
-    setCode: function(code)
+    setCode: function(code,user)
     {
-      return MimicAuth.forgetPass2(code,this.mimic, this.baseUrl);
+      return MimicAuth.forgetPass2(code,user,this.mimic, this.baseUrl);
     },
     setPass: function(pass)
     {
@@ -173,6 +173,14 @@ DownVoteComment: function(ID,points,downVoted,upState){
 },
 EditComment: function(ID,content){
   var data=MimicComment.EditComment(ID,content,this.mimic, this.baseUrl);
+  return data;
+},
+getComments: function(ID){
+  var data=MimicComment.getComments(ID,this.mimic);
+  return data;
+},
+reportComment: function(ID,reason){
+  var data=MimicComment.reportComment(ID,reason,this.mimic);
   return data;
 },
 sendMessage: function(rec,title,cont){

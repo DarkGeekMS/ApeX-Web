@@ -24,6 +24,8 @@
 import SideBar from './UserProfileSideBar.vue'
 import Sort from './Sort.vue'
 import {AllServices} from '../MimicServices/AllServices.js'
+import $ from'jquery/dist/jquery.min.js'
+
 
 /**
  * @vue-data {JWT} [token='']  user Token
@@ -154,6 +156,10 @@ export default {
     else{
       this.getUserDataForGuest();
     }
+    $('#selectted').text('u/' + this.$localStorage.get('userName') );
+    var remclass = $('#classed').prop('class');
+    $('#classed').removeClass(remclass);
+    $('#classed').addClass("glyphicon glyphicon-user");
   }
 }
 </script>

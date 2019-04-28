@@ -1,5 +1,5 @@
 <template>
-<modal name="ForgetUser" transition="pop-out" width="50%" height="70%" :clickToClose="false">
+<modal name="ForgetUser" transition="pop-out" width="50%" height="70%" :clickToClose="false" >
  <ForgetUser2/>
   <div class="box">
     <div class="box-part" id="bp-right"></div>

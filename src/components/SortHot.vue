@@ -29,5 +29,8 @@ name: 'SortHot',
 </script>
 
 <style scoped>
-
+.ds{
+  width:60%;
+  /* background: #2c3e50; */
+}
 </style>

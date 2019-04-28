@@ -16,7 +16,7 @@
         <span class="caret" style="float:right; margin-top:10px" ></span>
       </button>
 
-      <ul class="dropdown-menu drop1" style="width:93%">
+      <ul class="dropdown-menu drop1">
         <li class="dropdown-header">REDDIT FEEDS</li>
         <li v-show="this.$localStorage.get('login')"><a href="/" class="glyphicon glyphicon-home blue" ><span id="items">Home</span></a></li>
         <li><a href="#" class="glyphicon glyphicon-arrow-up blue"><span id="items">Popular</span></a></li>
@@ -26,14 +26,14 @@
         <li class="divider"></li>
 
         <li class="dropdown-header" v-show="this.$localStorage.get('login')">MY COMMUNITIES</li>
-            <li v-show="log" v-for="apex in apexs" :key="apex.id" ><router-link :to="{ name:'ApexCom', params: {ApexComName:apex.name} }" > {{apex.name}} </router-link></li>
+            <li v-show="log" v-for="apex in apexs[0]" :key="apex.id" ><router-link :to="{ name:'ApexCom', params: {ApexComName:apex.name} }" > {{apex.name}} </router-link></li>
       </ul>
     </div>
 
 
     <div class="form-group has-feedback has-search" style="display:inline-block">
       <span class="glyphicon glyphicon-search form-control-feedback"></span>
-      <input type="text" class="form-control" placeholder="Search Reddit" v-model="searchVal" v-on:keyup.enter="search()">
+      <input type="text" class="form-control" placeholder="Search Apex" v-model="searchVal" v-on:keyup.enter="search()">
     </div>
 
     <div class="btn-toolbar tool1" role="toolbar">
@@ -73,10 +73,10 @@
       </button>
       <ul class="dropdown-menu">
         <li class="dropdown-header">MY STUFF</li>
-        <li><router-link :to="{ name: 'UserProfile', params: {userName:userLog} } ">My Profile</router-link></li>
-        <li><router-link :to="{ name: 'UserSettings'} ">User Settings</router-link></li>
+        <li><router-link :to="{ name: 'UserProfile', params: {userName:userLog} } "><i class="glyphicon glyphicon-user"/> My Profile</router-link></li>
+        <li><router-link :to="{ name: 'UserSettings'}" ><i class="glyphicon glyphicon-cog"></i> User Settings</router-link></li>
         <li class="divider"></li>
-        <li><a class="logOut" href="/" @click="Logout()">Log Out</a></li>
+        <li><a href="#" class="logOut" @click="Logout()"> <i class="glyphicon glyphicon-log-out"></i>   Log Out</a></li>
       </ul>
     </div>
 
@@ -126,7 +126,7 @@ import $ from'jquery/dist/jquery.min.js'
       {
         if(data)
         {
-          this.apexs = data
+          this.apexs = data[0];
         }
       }),
       setInterval(() => {
@@ -193,17 +193,14 @@ import $ from'jquery/dist/jquery.min.js'
        * axios post request to log out the user through send user's token, delete it from data ,delete username and set login false
       */
       Logout: function(){
-        AllServices.logOut()
-        this.$localStorage.set('login', false);
-        this.$localStorage.set('token', '');
-        this.$localStorage.set('userName', '');
-        this.$router.replace('/');
+        AllServices.logOut();
+        this.$router.replace('/'); 
       },
       /**
      * when search value isn't empty transfer to localStorage and go to route search
      */
       search: function(){
-        if( this.searchVal != '')
+        if( (this.searchVal != '') && (this.searchVal.length >= 3) )
         {
           this.$localStorage.set('search' , this.searchVal),
           this.$router.push({ name:'Search'} )
@@ -326,7 +323,7 @@ input:hover{
 #loggedbutton{
   width:100%;
   font-size:15px;
-  border-radius: 5%;
+  border-radius: 10px;
   text-align: left
 }
 #loggedbutton:hover {
@@ -372,7 +369,7 @@ ul{
   width:100%;
   text-align: left;
   font-size: 15px;
-    border-radius: 5%;
+  border-radius: 10px;
 
 }
 .sel button:hover{
@@ -396,9 +393,15 @@ a #items{
   line-height: 18px;
   font-size: 14px
 }
+#classed{
+  color:blue;
+}
 
-
-
+.drop1{
+  width:93%;
+  height:450px;
+  overflow: scroll
+}
 
 .list{
   border: none;
