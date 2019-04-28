@@ -62,9 +62,9 @@ export  const AllServices =new Vue({
     {
       return MimicAuth.ForgetPass(user,email,this.mimic, this.baseUrl);
     },
-    setCode: function(code)
+    setCode: function(code,user)
     {
-      return MimicAuth.forgetPass2(code,this.mimic, this.baseUrl);
+      return MimicAuth.forgetPass2(code,user,this.mimic, this.baseUrl);
     },
     setPass: function(pass)
     {
