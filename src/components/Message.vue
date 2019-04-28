@@ -1,5 +1,6 @@
 <template>
 <div class = "container2" v-if="this.showMessage">
+     "ggg" {{ID}}
    <p class = "title">{{title}}:</P>
    <div class = "sub">
        <div class="first-line">
@@ -114,7 +115,10 @@ showReply:function(){
 deleteMsg:function(){
     AllServices.deleteMessage(this.ID).then((data) => {
     if(data)
+        {
+        console.log(data);
         this.showMessage=!this.showMessage;
+        }
    
 
     });
@@ -137,6 +141,7 @@ showReplies:function(){
     else
         this.typeBar =1;
     this.replies = data;
+    console.log(data);
         }
       });
     }

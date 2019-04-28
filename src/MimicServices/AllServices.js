@@ -200,6 +200,7 @@ blockSender:function(ID){
 },
 getAllMessages:function(){
   var data=MimicMessage.getAllMessages(this.mimic, this.baseUrl);
+  console.log(data);
   return data;
 },
 getUserInfoByIdforGuest:function(userName){
