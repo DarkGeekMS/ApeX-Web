@@ -33,16 +33,12 @@ export default {
               locked:false,
               commenets_count:0,
               votes:1,
-              img:'',
-              videolink:'',
+              img:null,
+              videolink:null,
               created_at:"",
               updates_at:null,
               apex_com_name:"",
               post_writer_user:""
-
-
-
-
      }
 
     }
@@ -59,7 +55,7 @@ export default {
   },
 
   methods:{
-    getData(title,content,img,video,author,apex){
+    getData(d,title,content,img,video,author,apex){
      //  alert('ana emit ');
     
         if(content || img ||video){
@@ -73,10 +69,13 @@ export default {
       this.createPostData.content=content;
       this.createPostData.img=img;
       this.createPostData.videolink=video;
-      this.createPostData.posted_by=author;
+      this.createPostData.post_writer_username=author;
       this.createPostData.title=title;
-      this.createPostData.apex_id=apex;
+      this.createPostData.apex_com_name=apex;
       this.createPostData.canEdit=true;
+      this.createPostData.created_at=d;
+      // alert(d);
+     
 
       
    

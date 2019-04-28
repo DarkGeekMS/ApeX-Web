@@ -1,5 +1,5 @@
 <template>
-<modal name="demo-sign2" transition="pop-out" width="50%" height="70%" :clickToClose="false">
+<modal name="demo-sign2" transition="pop-out" width="50%" height="70%" :clickToClose="false"  @before-open="beforeOpen">
   <demo-sign3-modal> </demo-sign3-modal>
   <div class="box">
     <div class="box-part" id="bp-left">
@@ -75,7 +75,8 @@ export default {
           invalidPass:false,
           invalidUserAndPass:false,
           error: '',
-          congra: ''
+          congra: '',
+          email:''
         }
   },
   computed:{
@@ -113,14 +114,13 @@ export default {
           }
 
         else{
-            AllServices.signUp(this.email, this.username, this.pass).then((data) =>
+          AllServices.signUp(this.email, this.username, this.pass).then((data) =>
           {
-          if( data )
+          if(data)
           {
 
             this.congra = 'Your account has been created. Welcome with us' ;
-            setTimeout(() =>{this.$modal.show('demo-sign3');
-               this.$modal.hide('demo-sign1')} , 1000)
+            setTimeout(() =>this.$modal.show('demo-sign3') , 3000)
           }
           else{
             this.error =  this.$localStorage.get('error');
@@ -157,12 +157,15 @@ export default {
         this.congra = ''
       },
       close: function(){
-      this.$modal.hide('demo-sign');
-      this.$modal.hide('demo-sign2');
-      this.$modal.hide('demo-login');
-      this.$modal.hide('ForgetUser');
-      this.$modal.hide('ForgetPass');
-    }
+        this.$modal.hide('demo-sign');
+        this.$modal.hide('demo-sign2');
+        this.$modal.hide('demo-login');
+        this.$modal.hide('ForgetUser');
+        this.$modal.hide('ForgetPass');
+      },
+      beforeOpen:function (event) {
+       this.email = event.params.email;
+      }
   }
 }
 </script>
