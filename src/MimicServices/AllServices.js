@@ -109,18 +109,19 @@ export  const AllServices =new Vue({
 Hide:function(name,ID){
 return MimicPost.Hide(name,ID,this.mimic, this.baseUrl);
 },
-upvote:function(name,ID,direction){
+upvote:function(ID,points,upVoted,downState){
 
-return MimicPost.upvote(name,ID,direction,this.mimic, this.baseUrl);
+  var data= MimicPost.upvote(ID,points,upVoted,downState,this.mimic, this.baseUrl);
+ 
+  return data;
 },
-downvote:function(name,ID,direction){
+downvote:function(ID,points,downVoted,upState){
 
-return MimicPost.downvote(name,ID,direction,this.mimic, this.baseUrl);
-},
-defaultVote:function(name,ID,direction){
+var data= MimicPost.downvote(ID,points,downVoted,upState,this.mimic, this.baseUrl);
 
-  return MimicPost.defaultVote(name,ID,direction,this.mimic, this.baseUrl);
-  },
+return data;
+}
+,
 deletePost:function(name,ID){
 
 
@@ -166,6 +167,7 @@ SaveComment: function(ID){
 },
 UpVoteComment: function(ID,points,upVoted,downState){
   var data=MimicComment.UpVoteComment(ID,points,upVoted,downState,this.mimic, this.baseUrl);
+
   return data;
 },
 DownVoteComment: function(ID,points,downVoted,upState){

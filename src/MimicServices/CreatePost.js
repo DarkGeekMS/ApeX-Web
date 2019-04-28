@@ -45,14 +45,16 @@ else {
 
      
        }).catch(function (error){
-        // swal("Oops!", "Something went wrong!", "error");
-        //  console.log(title);
-        //  console.log(apexComId);
-        //  console.log(bodyPost);
-        //  console.log(isLocked);
-        //  console.log(token);
-        // console.log(error);
-        //  alert(error);
+        swal("Oops!", "Something went wrong!", "error");
+         console.log(title);
+         console.log(apexComId);
+         console.log(bodyPost);
+         console.log(isLocked);
+         console.log(videoUrl);
+         console.log(imgName);
+         console.log(token);
+        console.log(error);
+         alert(error);
          return false;
        })
       

@@ -137,96 +137,104 @@ return promise1;
               }
 
             },
-            upvote(name,ID,direction,mimic, baseUrl){
-             
-                if(mimic){
-                  if(this.$localStorage.login){
-
-                    if(name=="1"  && ID=="1"){
-
-                        if(direction==1){
-
-                          return 200;
-                       }
-
-           }
-
+            upvote(ID,points,upVoted,downVoted,mimic, baseUrl){
+              if( mimic == true)
+              {
+                  var p;
+                  p = points;
+      
+                  if(upVoted)
+                  {
+                      if(downVoted)
+                      {
+                          p++;
+                      }
+                      p++;
+      
                   }
-                  alert("Log In First!!");
-                  return false;}
-
-           else{
-            axios.post(baseUrl + "api/Vote",
-            {
-
-              token    : this.$localStorage.get('token'),
-              name     : name,
-              dir      :direction
-
-            }).then(response => {
-              
-              swal('upvoted success :)');
-              return response.data;
-             
-            }).catch(function (error)
-            { 
-            
-              swal("Oops!", "Something went wrong!", "error");
-              return false;
-
-        });
-
+                  else
+                      p--;
+                  if(this.$localStorage.login)
+                  {
+                  var promise1 = new Promise(function(resolve, reject) {
+                      setTimeout(function() {
+                        resolve({votes:p});
+                      }, 300);
+                    });
+      
+          return promise1;
+                  }
+      
+                      return false;
               }
-            }
+              else
+              {
+             return axios.post(baseUrl + 'api/Vote', {
+             name: ID,
+             dir: 1,
+             token: this.$localStorage.get('token')
+              })
+            .then(function (response) {
+              swal('Successfully :)');
+              return response.data;
+      
+             })
+            .catch(function (error)
+            {
+              return {
+                  done:false,
+                  points:points
+              }
+             });
+              }
+             }
             ,
 
- downvote(name,ID,direction,mimic, baseUrl){
-   
-                if(mimic){
-                  if(this.$localStorage.login){
-                    if(name=="1"  && ID=="1"){
-
-                        if(direction==-1){
-
-                          return 200;
-                       }
-                      }
-                      return false;
-           }
+ downvote(ID,points,downVoted,upVoted,mimic, baseUrl){
+  if( mimic == true)
+  {
+      var p = points;
+      if(downVoted)
+      {
+          if(upVoted)
+          {
+              p--;
           }
-           else{
-            
-            axios.post(baseUrl + "api/Vote",
-                   {
+          p--;
+      }
+      else
+          p++;
+          if(this.$localStorage.login)
+          {
+          var promise1 = new Promise(function(resolve, reject) {
+              setTimeout(function() {
+                resolve({votes:p});
+              }, 300);
+            });
 
+  return promise1;
+          }
 
-                    token:this.$localStorage.get('token'),
-                    name:name,
-                    dir:direction
+              return false;
+  }
+  else
+  {
+ return axios.post(baseUrl + 'api/Vote', {
+ name: ID,
+ dir: -1,
+ token: this.$localStorage.get('token')
+  })
+.then(function (response) {
+  swal('Successfully :)');
+  return response.data;
 
-                  }).then(response=> {
-                   
-                    swal('downvoted success :)');
-                    return response.data;
-                }).catch(function (error)
-                  {
-                    swal("Oops!", "Something went wrong!", "error");
-                
-                 });
-
-              }
-
-
-
-
-
-
-
-    }
-  
-
-}
-,
+ })
+.catch(function (error)
+{
+  return false;
+ });
+  }
+},
 isLocked(ID,mimic, baseUrl){
     if( mimic == true)
     {
@@ -249,4 +257,4 @@ isLocked(ID,mimic, baseUrl){
     }
 }
 
-})
+}})

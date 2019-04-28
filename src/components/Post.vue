@@ -17,7 +17,7 @@
         <i class="glyphicon glyphicon-arrow-up"></i>
 </button>
 
-<h5 id="PostVote">{{votes}}</h5>
+<h5 id="PostVote">{{this.points}}</h5>
 
 <button @click="changeColor_down" type="button" :class="className_down" id="down" class="DOWN">
          <i class="glyphicon glyphicon-arrow-down" id="upArrow"></i>
@@ -138,7 +138,7 @@ export default {
              pressed_up   : false,
              pressed_down : false,
 
-             votes  :this.postData.votes,
+             points  :this.postData.votes,
              Saved  :"Save",
              PostId   :"",
              token  :this.$localStorage.get('token'),
@@ -282,6 +282,7 @@ export default {
        ,
     changeColor_up()
     {
+     
       if(this.$localStorage.get('login') ){
       if(this.ShowModalVar == true){
       this.ToggleShowModalVar();
@@ -291,7 +292,7 @@ export default {
                      
                       if(this.pressed_down)
                       {
-                      this.votes         += 1;
+                  
                       this.pressed_down   = false;
                       this.className_down = 'btn btn-light btn-sm is-gray';
 
@@ -300,24 +301,28 @@ export default {
                       this.className_up    = 'btn btn-light btn-sm is-red';
                       this.pressed_up      =true;
                         
-                      // this.votes          += 1;
+                      
                      
                        this.PostId=this.postData.id;
                        this.postData.up=true;
-                       
-                       AllServices.upvote(this.PostId,this.$localStorage.get('token'),1);
-                     
-
+                
                 }
               else {
                     this.className_up = 'btn btn-light btn-sm is-gray';
-                    // this.votes     -= 1;
                     this.pressed_up = false;
-                     this.PostId=this.postData.id;
-                    AllServices.downvote(this.PostId,this.$localStorage.get('token'),-1);
+                    this.PostId=this.postData.id;
+                
+                   
 
                }
-
+                 this.upVoted = !this.upVoted;
+                var downState = this.downVoted;
+               this.downVoted = false;
+               AllServices.upvote(this.PostId,this.points,this.upVoted,downState).then((data) => {
+            if(data){
+                this.points=data.votes;
+                alert(this.points);
+                  }});
 
 
       }
@@ -327,6 +332,9 @@ export default {
       }
       ,
      changeColor_down(){
+        this.downVoted = !this.downVoted;
+        var upState = this.upVoted;
+        this.upVoted = false;
        if(this.$localStorage.get('login') ){
        if(this.ShowModalVar == true){
        this.ToggleShowModalVar();
@@ -335,7 +343,7 @@ export default {
                   {
                       if(this.pressed_up)
                       {
-                          this.votes-=1;
+                        
                           this.pressed_up=false;
                           this.className_up = 'btn btn-light btn-sm is-gray';
 
@@ -343,24 +351,31 @@ export default {
                          this.className_down = 'btn btn-light btn-sm is-blue';
                          this.pressed_down=true;
 
-                        //  this.votes-=1;
-                          this.PostId=this.postData.id;
-                         AllServices.downvote(this.PostId,this.$localStorage.get('token'),-1);
-                          this.votes=this.postData.votes;
+                       
+                         this.PostId=this.postData.id;
+                  
+                     
+                         
 
                   }
               else {
                   this.className_down = 'btn btn-light btn-sm is-gray';
 
 
-                  //  this.votes += 1;
+              
                    this.pressed_down = false;
-                    this.PostId=this.postData.id;
-                   AllServices.upvote(this.PostId,this.$localStorage.get('token'),1);
-                   this.votes=this.postData.votes;
+                   this.PostId=this.postData.id;
+                
+                 
+           
 
 
                  }
+                  AllServices.downvote(this.PostId,this.points,this.downVoted,upState).then((data) => {
+                 if(data){
+                   this.points=data.votes;
+                 
+                 }});
               }
               else{
                 alert('Login First !!');
@@ -375,8 +390,7 @@ export default {
       if(this.ShowModalVar == true){
       this.ToggleShowModalVar();
     }
-    // alert('braaa');
-    // alert(this.Saved);
+ 
         if(this.Saved=="Save")
         {
       
@@ -427,6 +441,9 @@ export default {
 },
 props: {
 postData:{},
+    upVoted:Boolean,
+    downVoted:Boolean,
+  
        },
 created(){
   
