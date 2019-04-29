@@ -3,7 +3,7 @@
   <h4 v-show="subscribersList.length ==0" >there is nothing to show </h4>
   <div v-show="subscribersList.length !==0" id="subscribers box" class="box" v-for="(subscriber,index) in subscribersList" :key="subscriber.id">
     <div class="name">
-    <router-link class="accountLink" :to="{name:'UserProfile' , params: {userName:subscriber.userName}}"> {{subscriber.userName}}</router-link>
+    <router-link class="accountLink" :to="{name:'UserProfile' , params: {userName:subscriber.username}}"> {{subscriber.username}}</router-link>
     <div class="img">
         <img style="box-sizing: border-box; border-radius: 50%;" class="image" :src="subscriber.image" > 
       </div>
@@ -37,6 +37,8 @@ export default {
       */
     blockUser:function(userid,index)
     {
+      console.log(userid);
+      console.log(this.apexComId);
       var data = AllServices.blockSubscriber(userid,this.apexComId);
       if(data){
       this.subscribersList.splice(index, 1);

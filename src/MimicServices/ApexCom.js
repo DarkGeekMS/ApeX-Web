@@ -118,7 +118,7 @@ blockSubscriber: function(mimic,userName,apexComName, baseUrl){
 return true;
 }
 else {
-  axios.post(baseUrl + 'api/BlockUser', {
+        axios.post(baseUrl + 'api/BlockUser', {
         ApexCom_id:apexComName,
         user_id:userName,
         token:this.$localStorage.get('token')
@@ -155,17 +155,19 @@ deleteApexCom: function(mimic,apexComName, baseUrl){
     },
 subscribe: function(mimic,apexComName, baseUrl){
   // alert(apexComName);
+  console.log(apexComName+'nnnn');
       if(mimic){
         return true;
     }
     else {
-      axios.post(baseUrl + 'api/Subscribe', {
-      ApexCom_id:apexComName,
+      return axios.post(baseUrl + 'api/Subscribe', {
+      ApexCom_ID:apexComName,
       token:this.$localStorage.get('token')
       })
-      .then(function (response) {
-        return response;
-      })
+      .then(response => {
+        console.log(response+'server');
+        return response.data;
+       })
       .catch(function (error) {
         // console.log(error);
       });
@@ -193,6 +195,7 @@ else {
     },
 reviewReports: function(mimic,apexComName, baseUrl){
   // alert(apexComName);
+  console.log(apexComName);
       if(mimic){
         var report={
           reportedComment:[{post:{
@@ -274,7 +277,7 @@ reviewReports: function(mimic,apexComName, baseUrl){
             token:this.$localStorage.get('token')
           })
           .then(response => {
-            console.log(response+'');
+            console.log(response+'server');
             return response.data;
            })
           .catch(function (error) {
@@ -302,7 +305,7 @@ ignoreReport:function(mimic,userID,reportID, baseUrl){
   }
 
 },
-searchU: function(mimic, baseUrl)
+searchU: function(mimic, query,baseUrl)
 {
   if(mimic ==  true)
   {
@@ -363,16 +366,18 @@ searchU: function(mimic, baseUrl)
   }
   else
   {
-    return axios.post(baseUrl + 'api/Search',{
-    query: this.$localStorage.get('searchModerator'),
-    token: this.$localStorage.get('token')
-    }).then(response => {
-      var result= response.data;
-      console.log(response);
-      return result
-    }).catch(error => {
-      return error
-    })
+    console.log(query+'mk');
+        return axios.get(baseUrl + 'api/Search',{
+        params: {
+          query: query,
+          token: this.$localStorage.get('token')
+        }
+        }).then(response => {
+          return response.data;
+        }).catch(error => {
+          return error
+        })
+      
   }
 },
   }

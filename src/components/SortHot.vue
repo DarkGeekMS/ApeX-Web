@@ -29,8 +29,15 @@ name: 'SortHot',
 </script>
 
 <style scoped>
+#SortHot
+{
+  background-color: #DAE0E6;
+  height: 100%;
+  min-height:720px;
+  margin-top: 0px;
+  min-width: 100%;
+}
 .ds{
   width:60%;
-  /* background: #2c3e50; */
 }
 </style>

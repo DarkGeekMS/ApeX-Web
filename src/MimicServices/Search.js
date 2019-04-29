@@ -14,7 +14,7 @@ export  const MimicSearch =new Vue({
     {
       if(mimic ==  true)
       {
-        if(this.$localStorage.get('search') == this.searchValue && this.$localStorage.get('token') == this.token)
+        if(this.$localStorage.get('search') == this.searchValue )
         {
            var result = [
              [{

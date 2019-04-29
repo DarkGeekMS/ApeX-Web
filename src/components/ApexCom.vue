@@ -16,8 +16,8 @@
     <!-- <div v-bind:class="{navBar:banner=='',banner:banner!=''}" id="navbar"> -->
       <div class="navBar" id="navbar">
       <router-link  id="postslink" class="navbarLinks" :to="{name:'Posts'}">Posts</router-link>
-      <!-- <router-link  v-show="isModerator() || isAdmin()" id="subscribersListlink" class="navbarLinks" :to="{name:'Subscribers'}">subscribers</router-link>
-      <router-link  v-show="isModerator() || isAdmin()" id="reportlink" class="navbarLinks" :to="{name:'Reports'}">view reports</router-link>
+      <!-- <router-link  v-show="isModerator() || isAdmin()" id="subscribersListlink" class="navbarLinks" :to="{name:'Subscribers'}">subscribers</router-link> -->
+      <!-- <router-link  v-show="isModerator() || isAdmin()" id="reportlink" class="navbarLinks" :to="{name:'Reports'}">view reports</router-link>
       <router-link v-show="isAdmin()"  id="addmoderatorlink" class="navbarLinks" :to="{name:'Moderators'}">add moderator</router-link> -->
       <router-link id="subscribersListlink" class="navbarLinks" :to="{name:'Subscribers'}">subscribers</router-link>
       <router-link id="reportlink" class="navbarLinks" :to="{name:'Reports'}">view reports</router-link>
@@ -25,9 +25,7 @@
       
     </div>
       </div>
-  <div class="sort">
     <!-- <Sort style="padding-top:10px"></Sort> -->
-  </div>
   <SideBar class="sidebar" v-bind:apexComId="apexComId"></SideBar>
     <router-view class="routerview"></router-view>
 </div>
@@ -153,7 +151,7 @@ export default {
 <style scoped>
 #all{
   margin-top: 50px;
-  height:60%;
+  height:100%;
 }
 .main{
   /* height:100%; */
@@ -241,7 +239,7 @@ export default {
 
 }
 .sidebar{
-  /* margin-top:4%; */
+  margin-top:4%;
   /* margin-right: 4%; */
   /* width:23%; */
   /* height: auto;

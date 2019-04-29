@@ -31,8 +31,9 @@ components:{
       search: function(){
         if( this.searchVal != '')
         {
-          this.$localStorage.set('searchModerator' , this.searchVal),
-          this.$router.push({ name:'Moderators'} )
+          // console.log(this.searchVal)
+          // this.$localStorage.set('searchModerator' , this.searchVal),
+          this.$router.push({name:'Moderators' , params: {query:this.searchVal}})
         }
       },
   },
@@ -40,19 +41,6 @@ components:{
   {
 
   },
-  // created(){
-  //   setInterval(() => {
-  //       this.searchValue = this.$localStorage.get('search');
-  //       this.login = this.$localStorage.get('login');
-  //       var mq = window.matchMedia( "(max-width: 933px)" );
-  //       if (mq.matches) {
-  //        this.wid = '158%'
-  //       }   
-  //       else{
-  //         this.wid = '80%'
-  //       }
-  //   }, 1000)
-  // },
 }
 </script>
 
