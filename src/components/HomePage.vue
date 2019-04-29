@@ -1,8 +1,7 @@
 <template>
   <div id="HomePage" >
     <Sort :apex="''"></Sort>
-   <SideBar> </SideBar>
-
+    <SideBar> </SideBar>
   </div>
 </template>
 
@@ -14,7 +13,6 @@ import $ from'jquery/dist/jquery.min.js'
 
 export default {
   props:['sortingparam'],
-
   name: 'HomePage',
   components:{
     'DisplayPosts':DisplayPosts,
@@ -24,8 +22,8 @@ export default {
   },
   data(){
     return{
-  }
-},
+    }
+  },
 
   mounted()
     {

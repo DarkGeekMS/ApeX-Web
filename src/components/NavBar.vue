@@ -3,7 +3,7 @@
  <demo-login-modal> </demo-login-modal>
  <demo-sign-modal> </demo-sign-modal>
  <nav class="navbar navbar-expand-lg navbar-light navbar-fixed-top" id="mainNav">
-    <router-link class="navbar-brand" :to="{ name: 'HomePage' , params: {sortingparam:'hot'}}">
+    <router-link class="navbar-brand" :to="{ name: 'NewHomePage' , params: {sortingparam:'hot'}}">
       <img style="margin-top:-8px" width="85"
       src="../../public/Logo_small.png" >
     </router-link>
@@ -19,7 +19,7 @@
       <ul class="dropdown-menu drop1">
         <li class="dropdown-header">REDDIT FEEDS</li>
         <li v-show="this.$localStorage.get('login')"><a href="/" class="glyphicon glyphicon-home blue" ><span id="items">Home</span></a></li>
-        <li><a href="#" class="glyphicon glyphicon-arrow-up blue"><span id="items">Popular</span></a></li>
+        <li><router-link  :to="{ name: 'HotHomePage' , params: {sortingparam:'hot'}}" class="glyphicon glyphicon-arrow-up blue"><span id="items">Popular</span></router-link></li>
         <li><a href="#" class="glyphicon glyphicon-stats blue"><span id="items">All</span></a></li>
         <li><a href="#"> <span style="background-color:blue; color:white; padding-left:3px"> oc </span> <span style="color:black;padding-left:7%">Original Content</span></a></li>
 
@@ -122,13 +122,24 @@ import $ from'jquery/dist/jquery.min.js'
       }
     },
     created () {
-      AllServices.getApexNames().then((data) =>
-      {
-        if(data)
+      if(AllServices.getState()){
+         AllServices.getApexNames().then((data) =>
         {
-          this.apexs = data[0];
-        }
-      }),
+          if(data)
+          {
+            this.apexs = data;
+          }
+        })
+      }
+      else{
+        AllServices.getApexNames().then((data) =>
+        {
+          if(data)
+          {
+            this.apexs = data[0];
+          }
+        })
+      }
       setInterval(() => {
         this.userLog = this.$localStorage.get('userName');
         this.log = this.$localStorage.get('login');
@@ -399,7 +410,7 @@ a #items{
 
 .drop1{
   width:93%;
-  height:450px;
+  max-height:450px;
   overflow: scroll
 }
 

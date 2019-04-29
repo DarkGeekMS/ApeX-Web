@@ -5,6 +5,7 @@ export  const MimicPost=new Vue({
   
 methods:{
   EditPost: function(ID,cont,mimic, baseUrl){
+  
     if( mimic == true)
     {
         if(this.$localStorage.login)
@@ -24,7 +25,7 @@ return promise1;
 return promise1;
     }
     else
-    {
+    {  
         var self = this;
         return axios.patch(baseUrl + 'api/EditText', {
             name: ID,
@@ -33,9 +34,12 @@ return promise1;
 
          })
        .then(function (response) {
+         swal('success :)');
            return true;
         })
        .catch(function (error) {
+        swal("Oops!", "Something went wrong!", "error");
+        // alert(ID);
            return false;
         });
     }

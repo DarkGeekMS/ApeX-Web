@@ -25,7 +25,7 @@ export default {
          posts:'',
           createPostData:{
             canEdit:false,
-             id:'',
+              id:'',
               posted_by:'',
               apex_id:'',
               title:'',

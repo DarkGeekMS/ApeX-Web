@@ -11,14 +11,10 @@
 import NavBar from "./components/NavBar.vue"
 import $ from'jquery/dist/jquery.min.js'
 
-//import us from "./components/UserSettings.vue"
-
-
 export default {
   name: 'app',
   components:{
     'navbar':NavBar,
-//us
   },
   mounted(){
     this.$nextTick(function() { this.scrollFunction() });
