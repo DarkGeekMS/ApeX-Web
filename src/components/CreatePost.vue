@@ -30,15 +30,15 @@
                   <div id="root" class="container" >
                    
                     <tabs>
+                      <div class="form-group">
                       
+                             <input type="text" class="form-control" id="usr" placeholder="title" @keyup="Enable">
+                           </div>
                        <tab  name="Post" :selected="true">
                          
             <div id="fancy">
               
-                          <div class="form-group">
-                      
-                             <input type="text" class="form-control" id="usr" placeholder="title" @keyup="Enable">
-                           </div>
+                          
      
                           <a  id="switchId"  @click="switchM" >{{this.switchTo}} </a>
                           <div v-if="this.normal==false">
@@ -57,10 +57,7 @@
                        </tab>
 
                        <tab name="Image" >
-                          <div class="form-group ">
-
-                           <input type="text" class="form-control" id="usr2" placeholder="title" @keyup="Enable">
-                          </div>
+                      
                           <div class="panel imgBox">
 
                              <div class="helper">
@@ -91,10 +88,7 @@
                           </tab>
 
                           <tab name="Link" >
-                               <div class="form-group">
-
-                                  <input type="text" class="form-control" id="usr3" placeholder="title" @keyup="Enable">
-                                </div>
+                             
                                 <textarea class="form-control" rows="3" id="textsend3" placeholder="Url" @keyup="Enable"></textarea>
                                <button  class="btn btn-primary postButton" @click="submitPost"  disabled  id="button3">POST</button>
                            </tab>
@@ -127,6 +121,7 @@ import {AllServices} from '../MimicServices/AllServices.js'
 import { RichTextEditorPlugin, Toolbar, HtmlEditor } from "@syncfusion/ej2-vue-richtexteditor";
 import HomeSideBar from "./HomeSideBar.vue"
 Vue.use(RichTextEditorPlugin);
+
 /**
  * @vue-data {string} [apexComId=''] Id of apexcom which post will be created in
  * @vue-data {boolean} [enable=true]    check if post button is enable or not
@@ -164,6 +159,7 @@ export default {
         isCreated:false,
         indx:null,
         enable:true,
+        imgName:'',
         token:'',
         apexComId:'',
         bodyPost:'',
@@ -172,7 +168,7 @@ export default {
         apexs:[],
         image: '',
         videoUrl:'',
-        isLocked:false,
+        isLocked:0,
         imagable:false,
         toolbarSettings: {
             type: 'Expand',
@@ -245,21 +241,21 @@ this.apexComId=this.apexs[0][this.indx-1].id;
 
 
 
-         	 if(document.getElementById("textsend3").value==="" || document.getElementById("usr3").value==="" || this.indx ==null ||this.indx==0)  {
+         	 if(document.getElementById("textsend3").value==="" || document.getElementById("usr").value==="" || this.indx ==null ||this.indx==0)  {
             document.getElementById('button3').disabled = true;
            
         } else {
             document.getElementById('button3').disabled = false;
             this.videoUrl=document.getElementById("textsend3").value;
-            this.title=document.getElementById("usr3").value;
+            this.title=document.getElementById("usr").value;
         }
 
 
-        if(this.imagable===false|| document.getElementById("usr2").value==="" || this.indx ==null ||this.indx==0)  {
+        if(this.imagable===false|| document.getElementById("usr").value==="" || this.indx ==null ||this.indx==0)  {
             document.getElementById('button2').disabled = true;
         } else {
             document.getElementById('button2').disabled = false;
-            this.title=document.getElementById("usr2").value;
+            this.title=document.getElementById("usr").value;
         }
 
 
@@ -330,25 +326,32 @@ this.apexComId=this.apexs[0][this.indx-1].id;
  
       if(this.imagable){
       this.imgName=document.getElementById('imgId').src;
-      if(this.imgName==''){
-        this.imgName=null;
-      }
+     
      
       }
       if(this.videoUrl==''){
         this.videoUrl=null;
       }
-      
+       if(this.image==''){
+        this.imgName=null;
+      }
       var today = new Date();
       var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
       var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
       var dateTime = date+' '+time;
      
-      // alert('fdsa');
-      AllServices.submit(this.apexComId,this.title,this.bodyPost,this.imgName,this.videoUrl,this.isLocked,this.$localStorage.get('token'));
-      this.$emit('PostEmit',dateTime,this.title,this.bodyPost,this.imgName,this.videoUrl,this.$localStorage.get('userName'),this.apexs[0][this.indx-1].name);
+      
+      
+      var result=AllServices.submit(this.apexComId,this.title,this.bodyPost,this.imgName,this.videoUrl,this.isLocked,this.$localStorage.get('token'));
+    //  if(!result){
+    //  swal("Oops!", "Something went wrong!", "error");
+
+   //    }
+ //    else{
+       this.$emit('PostEmit',dateTime,this.title,this.bodyPost,this.imgName,this.videoUrl,this.$localStorage.get('userName'),this.apexs[0][this.indx-1].name);
+      
       this.$router.push('/Submit');
-     
+     //  }
     }
 
     },

@@ -1,14 +1,14 @@
 <template id="subscribers list design">
 <div id="subscriberslist">
-  <h4 v-if="subscribersList.length ==0" >there is nothing to show </h4>
-  <div v-if="subscribersList.length !=0" id="subscribers box" class="box" v-for="(subscriber,index) in subscribersList" :key="subscriber.id">
+  <h4 v-show="subscribersList.length ==0" >there is nothing to show </h4>
+  <div v-show="subscribersList.length !==0" id="subscribers box" class="box" v-for="(subscriber,index) in subscribersList" :key="subscriber.id">
     <div class="name">
     <router-link class="accountLink" :to="{name:'UserProfile' , params: {userName:subscriber.userName}}"> {{subscriber.userName}}</router-link>
     <div class="img">
         <img style="box-sizing: border-box; border-radius: 50%;" class="image" :src="subscriber.image" > 
       </div>
       </div>
-    <button id="removebutton" class="removeButton" v-on:click="blockUser(subscriber.userName,index)">block</button>
+    <button id="removebutton" class="removeButton" v-on:click="blockUser(subscriber.id,index)">block</button>
   </div>
 </div>
 </template>
@@ -23,7 +23,7 @@ import {AllServices} from '../MimicServices/AllServices.js'
  */
 
 export default {
-  props:['apexComName'],
+  props:['apexComId'],
   data () {
     return {
       token:this.$localStorage.get('token'),
@@ -35,17 +35,17 @@ export default {
     /**
       *send request to block certain user from certain community
       */
-    blockUser:function(userName,index)
+    blockUser:function(userid,index)
     {
-      var data = AllServices.blockSubscriber(userName,this.apexComName);
+      var data = AllServices.blockSubscriber(userid,this.apexComId);
       if(data){
       this.subscribersList.splice(index, 1);
       }
     },
       getsubscribers(){
-        AllServices.getSubscribers(this.apexComName).then((data) =>{
+        AllServices.getSubscribers(this.apexComId).then((data) =>{
           console.log(data);
-        this.subscribersList=data;
+        this.subscribersList=data.subscribers;
       })
     }
   },

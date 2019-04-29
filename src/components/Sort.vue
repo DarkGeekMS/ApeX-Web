@@ -9,19 +9,31 @@
       </button>
       <ul class="dropdown-menu sort">
 
- <li> <router-link :to="{ name: 'Hot', params: {ap:apex} }"  class="glyphicon glyphicon-fire"> Hot</router-link></li>
-        <li class="divider"></li>
+        <li v-show="check()"> <router-link :to="{ name: 'HotHomePage', params: {ap:apex} }"  class="glyphicon glyphicon-fire"> Hot</router-link></li>
+        <li v-show="check()" class="divider"></li>
+        <li v-show="!check()"> <router-link :to="{ name: 'HotApexCom', params: {ap:apex} }"  class="glyphicon glyphicon-fire"> Hot</router-link></li>
+        <li v-show="!check()" class="divider"></li>
+
 <!-- <router-link :to="{ name: '', params: {} }"></router-link> -->
-        <li><router-link :to="{ name: 'New', params: {ap:apex}}"  class="glyphicon glyphicon-certificate"> New </router-link></li>
-        <li class="divider"></li>
+        <li v-show="check()"><router-link :to="{ name: 'NewHomePage', params: {ap:apex}}"  class="glyphicon glyphicon-certificate"> New </router-link></li>
+        <li v-show="check()" class="divider"></li>
+        <li v-show="!check()"><router-link :to="{ name: 'NewApexCom', params: {ap:apex}}"  class="glyphicon glyphicon-certificate"> New </router-link></li>
+        <li v-show="!check()" class="divider"></li>
 
-        <li><router-link :to="{ name: 'Controversial', params: {ap:apex}}" class="glyphicon glyphicon-flash"> Controversial </router-link></li>
-        <li class="divider"></li>
+        <li v-show="check()"><router-link :to="{ name: 'ControversialHomePage', params: {ap:apex}}" class="glyphicon glyphicon-flash"> Controversial </router-link></li>
+        <li v-show="check()" class="divider"></li>
+        <li v-show="!check()"><router-link :to="{ name: 'ControversialApexCom', params: {ap:apex}}" class="glyphicon glyphicon-flash"> Controversial </router-link></li>
+        <li v-show="!check()" class="divider"></li>
 
-        <li><router-link :to="{ name: 'Top', params: {ap:apex}}" class="glyphicon glyphicon-stats"> Top </router-link></li>
-        <li class="divider"></li>
+        <li v-show="check()"><router-link :to="{ name: 'TopHomePage', params: {ap:apex}}" class="glyphicon glyphicon-stats"> Top </router-link></li>
+        <li v-show="check()" class="divider"></li>
+        <li v-show="!check()"><router-link :to="{ name: 'TopApexCom', params: {ap:apex}}" class="glyphicon glyphicon-stats"> Top </router-link></li>
+        <li v-show="!check()" class="divider"></li>
 
-        <li><router-link :to="{ name: 'Rising', params: {ap:apex}}" class="glyphicon glyphicon-arrow-up"> Rising </router-link></li>
+        <li v-show="check()"><router-link :to="{ name: 'RisingHomePage', params: {ap:apex}}" class="glyphicon glyphicon-arrow-up"> Rising </router-link></li>
+        <li v-show="check()" class="divider"></li>
+
+        <li v-show="!check()"><router-link :to="{ name: 'RisingApexCom', params: {ap:apex}}" class="glyphicon glyphicon-arrow-up"> Rising </router-link></li>
 
       </ul>
     </div>
@@ -39,7 +51,20 @@ import $ from'jquery/dist/jquery.min.js'
       return {
       }
     },
+    mounted(){
+      console.log('ApexComName in ApexComPosts',this.apex);
+
+    },
     methods:{
+      check(){
+if(this.apex==""){
+  console.log("home");
+return true;}
+  else {
+      console.log("apex");
+    return false;
+  }
+},
 emitsort(par){
         this.$emit('choose',par);
       }

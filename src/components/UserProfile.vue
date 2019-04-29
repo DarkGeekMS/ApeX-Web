@@ -9,9 +9,9 @@
         <router-link style="font-size: 16px;" v-show="isModerator() && notGuest()" id="reportlink" class="navbarlinks" :to="{name:'Report'}">view reports</router-link>
         <router-link style="font-size: 16px;" v-show="notGuest()" id="reportlink" class="navbarlinks" :to="{name:'blockLlist'}">block list</router-link>
     </div>
-    <div class="sort">
+    <!-- <div class="sort">
     <Sort style="padding-top:10px"></Sort>
-  </div>
+  </div> -->
         <SideBar
         v-bind:settings="true"
         v-bind:userName="userName"
@@ -47,16 +47,8 @@ export default {
   },
   data () {
     return {
-      token:this.$localStorage.get('token'),
       loggeduser:this.$localStorage.get('userName'),
       loggedIn:this.$localStorage.get('login'),
-      karmaCount:1,
-      image:'',
-      personalPosts:[],
-      savedPosts:[],
-      hiddenPosts:[],
-      reports:[],
-      cakeDay:'',
       // blockList:[],
     //   blockList:[
     //       {userName:'user1'},
@@ -99,63 +91,63 @@ export default {
         return false;
       }
     },
-    /**
-    * get user profile info
-    */
-    getUserProfile:function(){
-      AllServices.getUserInfo().then((data) =>{
-      this.karmaCount = data.karma;
-      this.image = data.image;
-      //this.userName = data.userName;
-      this.savedPosts = data.saved;
-      this.hiddenPosts = data.hidden;
-      this.personalPosts = data.personalPosts;
-      this.reports = data.reports;
-      this.cakeDay = data.cakeDay;
-      this.blockList = data.blockList;
-      })
-   },
-    /**
-    * get user account data for another user
-    */
-   getUserData:function(){
-      AllServices.getUserInfoById(this.userName).then((data) =>{
+  //   /**
+  //   * get user profile info
+  //   */
+  //   getUserProfile:function(){
+  //     AllServices.getUserInfo().then((data) =>{
+  //     this.karmaCount = data.karma;
+  //     this.image = data.avatar;
+  //     //this.userName = data.userName;
+  //     this.savedPosts = data.saved;
+  //     this.hiddenPosts = data.hidden;
+  //     this.personalPosts = data.personalPosts;
+  //     this.reports = data.reports;
+  //     this.cakeDay = data.cakeDay;
+  //     this.blockList = data.blockList;
+  //     })
+  //  },
+  //   /**
+  //   * get user account data for another user
+  //   */
+  //  getUserData:function(){
+  //     AllServices.getUserInfoById(this.userName).then((data) =>{
 
-      this.karmaCount = data.karma;
-      this.image = data.image;
-     // this.userName = data.userName;
-      this.personalPosts = data.personalPosts;
-      this.cakeDay = data.cakeDay;
-      })
-   },
-   /**
-    * get user account data for a guset
-    */
-   getUserDataForGuest:function(){
-     AllServices.getUserInfoByIdforGuest(this.userName).then((data) =>{
-       alert(this.userName+'inside');
-      this.karmaCount = data.karma;
-      this.image = data.image;
-     // this.userName = data.userName;
-      this.personalPosts = data.personalPosts;
-      this.cakeDay = data.cakeDay;
-     })
-   }
+  //     this.karmaCount = data.karma;
+  //     this.image = data.avatar;
+  //    // this.userName = data.userName;
+  //     this.personalPosts = data.personalPosts;
+  //     this.cakeDay = data.cakeDay;
+  //     })
+  //  },
+  //  /**
+  //   * get user account data for a guset
+  //   */
+  //  getUserDataForGuest:function(){
+  //    AllServices.getUserInfoByIdforGuest(this.userName).then((data) =>{
+  //      alert(this.userName+'inside');
+  //     this.karmaCount = data.karma;
+  //     this.image = data.image;
+  //    // this.userName = data.userName;
+  //     this.personalPosts = data.personalPosts;
+  //     this.cakeDay = data.cakeDay;
+  //    })
+  //  }
 
   },
   mounted()
   {
-    if(this.loggedIn){
-    if(this.userName == this.loggeduser){
-      this.getUserProfile();
-    }
-    else{
-      this.getUserData();
-    }
-    }
-    else{
-      this.getUserDataForGuest();
-    }
+    // if(this.loggedIn){
+    // if(this.userName == this.loggeduser){
+    //   this.getUserProfile();
+    // }
+    // else{
+    //   this.getUserData();
+    // }
+    // }
+    // else{
+    //   this.getUserDataForGuest();
+    // }
     $('#selectted').text('u/' + this.$localStorage.get('userName') );
     var remclass = $('#classed').prop('class');
     $('#classed').removeClass(remclass);

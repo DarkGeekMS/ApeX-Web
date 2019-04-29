@@ -26,7 +26,8 @@
         <li class="divider"></li>
 
         <li class="dropdown-header" v-show="this.$localStorage.get('login')">MY COMMUNITIES</li>
-            <li v-show="log" v-for="apex in apexs" :key="apex.id" ><router-link :to="{ name:'ApexCom', params: {ApexComName:apex.name} }" > {{apex.name}} </router-link></li>
+
+        <li v-show="log" v-for="apex in apexs" :key="apex.id" ><router-link :to="{ name:'ApexCom', params: {ApexComId:apex.id} }" > {{apex.name}} </router-link></li>
       </ul>
     </div>
 

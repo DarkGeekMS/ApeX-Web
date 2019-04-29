@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import axios from 'axios'
-
+import swal from 'sweetalert';
 export  const MimicCreatePosts =new Vue({
   data(){
 return {
@@ -13,7 +13,7 @@ token:'1',
   },
   methods:{
     submitPost: function(apexComId,title,bodyPost,imgName,videoUrl, isLocked,token,mimic, baseUrl){
-
+      
       if(mimic){
          if(this.$localStorage.login){
 
@@ -24,54 +24,113 @@ token:'1',
                 }
 
 else {
-    axios.post(baseUrl + "api/SubmitPost"  ,{
+  if((imgName==null) &&(videoUrl==null)){
+    axios.post(baseUrl + "api/SubmitPost",{
+      
+      ApexCom_id:apexComId,
+      title:title, 
+      token:this.$localStorage.get('token'),
+      body:bodyPost,
+      isLocked:isLocked
 
-        ApexCom_id:apexComId,
-        title:title, 
-        token:token,
-        body:bodyPost,
-        img_name:imgName,
-        video_url:videoUrl,
-        isLocked:isLocked
+   }).then(response=>{
+       
+      swal('Post Submitted successfully');
+
+      return true;
+       }).catch(function (error){
+    swal("Oops!", "Something went wrong!", "error");
+ 
+     return false;
+   })
 
 
+  }
+  else if(imgName==null){
+    axios.post(baseUrl + "api/SubmitPost",{
+      
+      ApexCom_id:apexComId,
+      title:title, 
+      token:this.$localStorage.get('token'),
+    
+      video_url:videoUrl,
+      isLocked:isLocked
 
 
-       },{
-       headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
+   },{headers:{  "Content-Type": "application/x-www-form-urlencoded"
+  }}).then(response=>{
+      
+    
+      swal('Post Submitted successfully');
+      return true;
+     
 
-      }}
-       ).then(function(response){
+ 
+   }).catch(function (error){
+    swal("Oops!", "Something went wrong!", "error");
+     console.log(videoUrl);
+     return false;
+   })
 
-         if(response){
-        
-         return true;
+  }
+  else if(videoUrl==null){
+    axios.post(baseUrl + "api/SubmitPost",{
+      
+      ApexCom_id:apexComId,
+      title:title, 
+      token:this.$localStorage.get('token'),
+     
+      img_name:imgName,
+      isLocked:isLocked
 
-         }
-         return false;
-       })
- }
-    },
-    getApexNames:function(mimic, baseUrl){
-    if(mimic==true){
-        var names=["apexname1","apexname2","apexname3","apexname4"];
+    
+   
+   
 
-        var promise = new Promise(function(resolve) {
-          setTimeout(function() {
-            resolve(names);
-          }, 300);
-        });
-      return promise;
+   }).then(response=>{
+      
+    
+      swal('Post Submitted successfully');
+      return true;
+     
 
+ 
+   }).catch(function (error){
+    swal("Oops!", "Something went wrong!", "error");
+  
+  
+     return false;
+   })
+
+  }
+  else {
+    axios.post(baseUrl + "api/SubmitPost",{
+      
+      ApexCom_id:apexComId,
+      title:title, 
+      token:this.$localStorage.get('token'),
+      body:bodyPost,
+      img_name:imgName,
+      video_url:videoUrl,
+      isLocked:isLocked
+
+   }).then(response=>{
+      
+      swal('Post Submitted successfully');
+      return true;
+    
+ 
+   }).catch(function (error){
+    swal("Oops!", "Something went wrong!", "error");
+  
+     return false;
+   })
+
+
+        }
+      }
     }
-    else{
-     // axios.get();
-
-///TODO COMPLETE THE REQUEST
-    }
-
-    }
+  
   }
 
 

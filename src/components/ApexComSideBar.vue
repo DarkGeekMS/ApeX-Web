@@ -25,9 +25,7 @@
        <div class="box" id="rules box" v-show="rules.length !==0">
       <h3 class="Header" id="rules box header">Rules</h3>
       <div class="content">
-      <ol  id="ruleslist">
-        <li id="ruleslistitem" v-for="rule in rules" :key="rule.id">{{rule}}</li>
-      </ol>
+        <P id="ruleslistitem">{{rules}}</p>
     </div>
     </div>
 
@@ -35,8 +33,8 @@
       <h3 class="Header" id="moderators box header">Moderators</h3>
       <div class="content" >
         <div id="moderatorsbox" class="box2" v-for="(moderator,index) in moderators" :key="moderator.id">
-          <router-link style="font-size: 14px;" class="accountLink" :to="{name:'UserProfile' , params: {userName:moderator.userName}}"> {{moderator.userName}}</router-link>
-          <button v-show="isAdmin()" style="width:35%; float: right; margin:0%" id="remove button" class="button1" v-on:click="deleteModerator(moderator.userName,index)">delete</button>
+          <router-link style="font-size: 14px;" class="accountLink" :to="{name:'UserProfile' , params: {userName:moderator.userID}}"> {{moderator.userID}}</router-link>
+          <button v-show="isAdmin()" style="width:35%; float: right; margin:0%" id="remove button" class="button1" v-on:click="deleteModerator(moderator.userID,index)">delete</button>
         </div>
 
     </div>
@@ -65,7 +63,7 @@ import {AllServices} from '../MimicServices/AllServices.js'
 
 export default {
     props:{
-       apexComName:String,
+       apexComId:String,
       //  description:String,
       //  moderators:Array,
       //  rules:Array,
@@ -80,10 +78,10 @@ export default {
             userName:this.$localStorage.get('userName'),
             loggedIn:this.$localStorage.get('login'),
             //userName:'subscriber1',
-            // apexComName:'',
+            apexComName:'',
             description:'',
             moderators:[],
-            rules:[],
+            rules:'',
             subscribersCount:0,
             image:''
         }
@@ -107,7 +105,7 @@ export default {
       deleteAC:function()
       {
 
-        var response = AllServices.deleteApexCom(this.apexComName);
+        var response = AllServices.deleteApexCom(this.apexComId);
       if(response){
       alert('Done :)')
     }
@@ -130,8 +128,10 @@ export default {
     */
     getSubscribers(){
       if(this.loggedIn){
-        AllServices.getSubscribers(this.apexComName).then((data) =>{
-          this.subscribers=data.subscribers;
+        AllServices.getSubscribers(this.apexComId).then((data) =>{
+          
+        this.subscribers=data.subscribers;
+      })
         var subscribe = this.subscribers.find(this.CheckUser);
         if(subscribe !== undefined){
           this.subscribed = true;
@@ -141,7 +141,6 @@ export default {
           this.subscribed=false;
           this.state='subscribe';
     }
-    })
       }
       else{
           this.subscribed=false;
@@ -182,7 +181,7 @@ export default {
     subscribe:function()
     {
       if(this.loggedIn){
-      AllServices.subscribe(this.apexComName).then((data) =>{
+      AllServices.subscribe(this.apexComId).then((data) =>{
       if(data){
       if(this.subscribed){
       this.subscribed = false;
@@ -203,7 +202,7 @@ export default {
       }
     },
     deleteModerator:function(userName,index){
-          var data = AllServices.addOrDeleteModerator(userName,this.apexComName);
+          var data = AllServices.addOrDeleteModerator(userName,this.apexComId);
           if(data){
           this.moderators.splice(index, 1);
           }
@@ -212,21 +211,24 @@ export default {
               }
       },
     getAbout(){
-         AllServices.getAbout(this.apexComName).then((about) => {
+         AllServices.getAbout(this.apexComId).then((about) => {
          this.description=about.description;
          this.moderators=about.moderators;
          this.rules=about.rules;
+         this.apexComName=about.name;
          this.image=about.image;
-         this.subscribersCount=about.subscribersCount;
+         this.subscribersCount=about.subscribers_count;
          });
    },
    getAboutGuest(){
-         AllServices.getAboutGuest(this.apexComName).then((about) =>{
+         AllServices.getAboutGuest(this.apexComId).then((about) =>{
+           console.log(about);
          this.description=about.description;
          this.moderators=about.moderators;
+         this.apexComName=about.name;
          this.rules=about.rules;
          this.image=about.image;
-         this.subscribersCount=about.subscribersCount;
+         this.subscribersCount=about.subscribers_count;
          });
    },
 

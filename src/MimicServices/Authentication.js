@@ -274,6 +274,7 @@ export  const MimicAuth =new Vue({
       {
         return axios.get(baseUrl + 'api/ApexComs', {
         }).then(response => {
+         
           return response.data;
           
         }).catch(function (error) {

@@ -18,13 +18,19 @@ import Hot from './components/SortHot.vue'
 import New from './components/SortNew.vue'
 import Controversial from './components/SortControversial.vue'
 export default[
-      {path:'/ApexCom/:apexComName',name:'ApexCom',props:true,component:ApexCom , children :
+      {path:'/ApexCom/:apexComId',name:'ApexCom',props:true,component:ApexCom , children :
       [
         {path:'/' ,name:'ApexComPosts',component:ApexComPosts},
         {path:'AddModerators',name:'AddModerators',component:ApexComModerator,props:true ,children :[
           {path:'searchUser',name:'Moderators', component:ApexComAddModerator,props:true },
         ]},
-        {path:'ApexPosts/:apexComName',name:'Posts',component:ApexComPosts,props:true},
+        {path:'ApexPosts/:apexComName',name:'Posts',component:ApexComPosts,props:true,children:[
+        {path:'Hot',name:'HotApexCom',component:Hot,props:true},
+        {path:'New',name:'NewApexCom',component:New,props:true},
+        {path:'Controversial',name:'ControversialApexCom',component:Controversial,props:true},
+        {path:'Top',name:'TopApexCom',component:Hot,props:true},
+        {path:'Rising',name:'RisingApexCom',component:New,props:true}
+        ]},
         {path:'ApexSubscribers',name:'Subscribers',component:ApexComSubscribers,props:true},
         {path:'ApexReports',name:'Reports',component:Reports,props:true},
 
@@ -32,11 +38,11 @@ export default[
       },
     {path:'/',component:HomePage},
     {path:'/HomePage',name:'HomePage',component:HomePage,props:true,children:[
-    {path:'Hot',name:'Hot',component:Hot,props:true},
-    {path:'New',name:'New',component:New,props:true},
-    {path:'Controversial',name:'Controversial',component:Controversial,props:true},
-    {path:'Top',name:'Top',component:Hot,props:true},
-    {path:'Rising',name:'Rising',component:New,props:true}
+    {path:'Hot',name:'HotHomePage',component:Hot,props:true},
+    {path:'New',name:'NewHomePage',component:New,props:true},
+    {path:'Controversial',name:'ControversialHomePage',component:Controversial,props:true},
+    {path:'Top',name:'TopHomePage',component:Hot,props:true},
+    {path:'Rising',name:'RisingHomePage',component:New,props:true}
     ]},
     {path:'/Submit',name:'SubmitPost',component:SubmitPost},
     {path:'/Search', name:'Search' , component:Search, children :[
@@ -44,7 +50,7 @@ export default[
     {path:'/Messages' ,name:'Messages',component:MessageBar},
     {path:'/userprofile/:userName',name:'UserProfile',component:userprofile,props:true,children :[
       {path:'Report',name:'Report', component:Reports,props:true },
-      {path:'blockedlist',name:'blockLlist', component:userprofileBlockList,props:true } 
+      {path:'blockedlist',name:'blockLlist', component:userprofileBlockList,props:true }
     ]
   },
 
