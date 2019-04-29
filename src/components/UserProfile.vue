@@ -9,9 +9,6 @@
         <router-link style="font-size: 16px;" v-show="isModerator() && notGuest()" id="reportlink" class="navbarlinks" :to="{name:'Report'}">view reports</router-link>
         <router-link style="font-size: 16px;" v-show="notGuest()" id="reportlink" class="navbarlinks" :to="{name:'blockLlist'}">block list</router-link>
     </div>
-    <!-- <div class="sort">
-    <Sort style="padding-top:10px"></Sort>
-  </div> -->
         <SideBar
         v-bind:settings="true"
         v-bind:userName="userName"
@@ -43,7 +40,6 @@ export default {
   props:['userName'],
     components:{
     'SideBar':SideBar,
-    'Sort':Sort
   },
   data () {
     return {
@@ -197,11 +193,6 @@ export default {
 }
 .navbarlinks:hover{
     color:deepskyblue;
-}
-.sort{
-  margin-top:-57px;
-  /* margin-right:0%; */
-  /* height:30px; */
 }
 .sidebar{
   margin-top:4%;

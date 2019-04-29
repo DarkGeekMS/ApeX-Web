@@ -1,7 +1,7 @@
 <template id="reportspagedesign">
 <div class="main">
-<h4 v-if="(reportedPost.length ==0)&&(reportedComment.length ==0)" >there is nothing to show </h4>
- <div class='report' v-if="reportedComment.length !==0">
+<h4 v-show="(reportedPost.length ==0)&&(reportedComment.length ==0)" >there is nothing to show </h4>
+ <div class='report' v-show="reportedComment.length !==0">
    <h4 class="title">Reported comments</h4>
 <div class="onereport" v-for="(report,index) in reportedComment" id='onereport'>
   <div class="box">
@@ -20,7 +20,7 @@
 <button id="ignorebutton" class="button" type="button" v-on:click="ignoreReport(report.comment.user,report.id,index,'comment')">ignore report</button>
 </div>
 </div>
- <div class='report' v-if="reportedPost.length !==0">
+ <div class='report' v-show="reportedPost.length !==0">
    <h4 class="title">Reported posts</h4>
 <div class="onereport" v-for="(report,index) in reportedPost" >
   <div class="box">
@@ -60,14 +60,15 @@ props:['apexComId','userName'],
   {
     reviewReportsAC(){
          AllServices.reviewReportsAC(this.apexComId).then((data) =>{
-         this.reportedComment=data.reportedComment;
-         this.reportedPost=data.reportedpost;
+           console.log(data);
+         this.reportedComment=data.ReportedComments;
+         this.reportedPost=data.ReportedPosts;
          });
    },
    reviewReportsUP(){
          AllServices.reviewReportsUP(this.userName).then((data) =>{
-         this.reportedComment=data.reportedComment;
-         this.reportedPost=data.reportedpost;
+         this.reportedComment=data.ReportedComments;
+         this.reportedPost=data.ReportedPosts;
          });
    },
    ignoreReport(user,id,index,type){
@@ -82,13 +83,13 @@ props:['apexComId','userName'],
   },
   mounted()
   {
-    console.log(this.apexComName);
+    console.log(this.apexComId);
     console.log(this.userName);
-    if(this.apexComName!==undefined){
-    this.reviewReportsAC(this.apexComName);
+    if(this.apexComId!==undefined){
+    this.reviewReportsAC();
     }
     else{
-      this.reviewReportsUP(this.userName);
+      this.reviewReportsUP();
     }
   }
 }

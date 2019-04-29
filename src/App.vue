@@ -2,7 +2,7 @@
   <div id="app" >
     <navbar></navbar>
     <button  @click="topFunction()" id="myBtn" class="btn blue" v-show="top()">BACK TO TOP </button>
-    <router-view></router-view>
+    <router-view :key="$route.fullPath"></router-view>
     <!-- <us></us> -->
  </div>
 </template>
@@ -61,7 +61,7 @@ export default {
   color: #2c3e50;
   background-color: #DAE0E6;
   height: 100%;
-  min-height:720px;
+  min-height:1000px;
 }
 
 button.btn {

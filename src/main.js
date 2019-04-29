@@ -43,10 +43,10 @@ var vm =new Vue({
       type: String,
       default: ''
     },
-    searchModerator:{
-      type: String,
-      default: ''
-    }
+    // searchModerator:{
+    //   type: String,
+    //   default: ''
+    // }
   }
 
 })

@@ -1,5 +1,4 @@
 <template>
-    <div class="sidebar" >
       <div id="main">
       <div class="box" id="descroption box">
        <h3 class="Header" id="descroption box header">Community Details</h3>
@@ -18,7 +17,7 @@
        <button id="subscribebutton" v-bind:class="{button1:subscribed,button:!subscribed}" v-on:mouseover="changeState('unsubscribe')" v-on:mouseleave="changeState('subscribed')" type="button" v-on:click="subscribe()">
        <span> {{state}} </span> </button>
        <button id="createpostbutton" class="button" type="button" v-on:click="createPost()">create post</button>
-       <button id="deteteApexCom" v-show="isAdmin()" class="button" type="button" v-on:click="deleteAC()">delete</button>
+       <button id="deteteApexCom" v-show="isAdmin" class="button" type="button" v-on:click="deleteAC()">delete</button>
        </div>
        </div>
 
@@ -34,18 +33,18 @@
       <div class="content" >
         <div id="moderatorsbox" class="box2" v-for="(moderator,index) in moderators" :key="moderator.id">
           <router-link style="font-size: 14px;" class="accountLink" :to="{name:'UserProfile' , params: {userName:moderator.userID}}"> {{moderator.userID}}</router-link>
-          <button v-show="isAdmin()" style="width:35%; float: right; margin:0%" id="remove button" class="button1" v-on:click="deleteModerator(moderator.userID,index)">delete</button>
+          <button v-show="isAdmin" style="width:35%; float: right; margin:0%" id="remove button" class="button1" v-on:click="deleteModerator(moderator.userID,index)">delete</button>
         </div>
 
     </div>
     </div>
-      </div>
       </div>
 </template>
 
 
 <script>
 import {AllServices} from '../MimicServices/AllServices.js'
+import { constants } from 'crypto';
 
 /**
  * @vue-data {JWT} [token='']  user Token
@@ -83,7 +82,8 @@ export default {
             moderators:[],
             rules:'',
             subscribersCount:0,
-            image:''
+            image:'',
+            isAdmin:false
         }
 
     },
@@ -118,8 +118,8 @@ export default {
       */
       CheckUser:function(name)
     {
-      console.log(this.userName);
-      if( name.userName == this.userName){
+      console.log(name+'hello');
+      if( name.username == this.userName){
       return true;
       }
     },
@@ -129,9 +129,10 @@ export default {
     getSubscribers(){
       if(this.loggedIn){
         AllServices.getSubscribers(this.apexComId).then((data) =>{
-          
+          console.log(this.userName);
+          console.log(data.subscribers[0].id+'side');
         this.subscribers=data.subscribers;
-      })
+      
         var subscribe = this.subscribers.find(this.CheckUser);
         if(subscribe !== undefined){
           this.subscribed = true;
@@ -139,8 +140,9 @@ export default {
         }
         else{
           this.subscribed=false;
-          this.state='subscribe';
+          this.state='subscribe';   
     }
+    })
       }
       else{
           this.subscribed=false;
@@ -162,15 +164,16 @@ export default {
       /**
       *check if user is an admin
       */
-      isAdmin:function()
+      isAdminFunction:function()
       {
         if(this.loggedIn){
         AllServices.userType().then((data) =>{
+          console.log(data+'meeeee');
         if(data.type == 1){
-          return true;
+          this.isAdmin= true;
           }
         else{
-          return false;
+          this.isAdmin= false;
         }
         })
         }
@@ -182,6 +185,7 @@ export default {
     {
       if(this.loggedIn){
       AllServices.subscribe(this.apexComId).then((data) =>{
+        console.log(data);
       if(data){
       if(this.subscribed){
       this.subscribed = false;
@@ -212,6 +216,7 @@ export default {
       },
     getAbout(){
          AllServices.getAbout(this.apexComId).then((about) => {
+           console.log(about);
          this.description=about.description;
          this.moderators=about.moderators;
          this.rules=about.rules;
@@ -233,15 +238,34 @@ export default {
    },
 
   },
- mounted(){
-   this.getSubscribers();
+ mounted(){ 
    if(this.loggedIn){
    this.getAbout();
+   this.isAdminFunction();
+   this.getSubscribers();
    }
    else{
      this.getAboutGuest();
    }
- }
+ },
+//  beforeUpdate(){
+//    this.getSubscribers();
+//    if(this.loggedIn){
+//    this.getAbout();
+//    }
+//    else{
+//      this.getAboutGuest();
+//    }
+//  }
+//  beforeUpdate(){
+//    this.getSubscribers();
+//    if(this.loggedIn){
+//    this.getAbout();
+//    }
+//    else{
+//      this.getAboutGuest();
+//    }
+//  },
 
 }
 </script>
@@ -320,8 +344,8 @@ color:#1a1a1b; font-size: 12px;
   padding-bottom:5%;
   padding-left:5%;
   padding-right:5%;
-  overflow-wrap: break-word;
   color:#1a1a1b;
+  overflow-wrap: break-word;
 }
 .button{
   width:100%;
@@ -359,9 +383,6 @@ color:#1a1a1b; font-size: 12px;
   font-weight: 500;
   letter-spacing: 0.5px;
   text-transform: uppercase;
-  /* height:auto; */
-  margin-left:5%;
-  margin-right:5%;
   overflow: hidden;
 }
 img{

@@ -151,6 +151,7 @@ export default {
      AllServices.blockUser(this.id).then((data) =>{
      if(data){
          alert('this user have been blocked successfully');
+         this.$router.push({name:'HomePage'});
        }
        else{
          alert('sorry something worng happend');
@@ -223,6 +224,7 @@ export default {
     * get user account data for another user
     */
    getUserData:function(){
+     console.log(this.userName);
       AllServices.getUserInfoById(this.userName).then((data) =>{
         console.log(data+'j');
       this.karmaCount = data.userData.karma;

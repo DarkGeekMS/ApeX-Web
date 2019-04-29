@@ -247,8 +247,8 @@ updatePrefs:function(email,avatar,username) {
 changePass:function (password,withCode,username,key){
     return MimicUserSettings.changePass(this.mimic,password,withCode,username,key, this.baseUrl);
 },
-searchU:function(id){
-  var data=MimicApexCom.searchU(this.mimic,id, this.baseUrl);
+searchU:function(query){
+  var data=MimicApexCom.searchU(this.mimic,query, this.baseUrl);
   return data;
 },
 getBlockList:function(){
