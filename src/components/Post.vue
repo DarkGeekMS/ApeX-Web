@@ -202,6 +202,7 @@ export default {
          }
   
      this.onlyOneTime=false;
+      this.$emit('Report',this.ID,this.idx);
       this.$modal.show('reportBox');
       this.showReport=true;
 
@@ -299,12 +300,12 @@ export default {
                   
                       this.pressed_down   = false;
                       this.className_down = 'btn btn-light btn-sm is-gray';
-
+                      
                       }
-                    
+                      
                       this.className_up    = 'btn btn-light btn-sm is-red';
                       this.pressed_up      =true;
-                        
+                        this.postData.upvoted=true;
                       
                      
                        this.PostId=this.postData.id;
@@ -327,12 +328,15 @@ export default {
                 this.points=data.votes;
               
                   }});
+                  
                 //  alert('after '+this.points);
 
       }
+      
       else{
         alert('Login First !!');
       }
+       this.postData.votes=this.points;
       }
       ,
      changeColor_down(){
@@ -355,7 +359,7 @@ export default {
                       }
                          this.className_down = 'btn btn-light btn-sm is-blue';
                          this.pressed_down=true;
-
+                        this.postData.downvoted=true;
                        
                          this.PostId=this.postData.id;
                   
@@ -381,11 +385,13 @@ export default {
                    this.points=data.votes;
                  
                  }});
+               
                   // alert('after '+this.points);
               }
               else{
                 alert('Login First !!');
               }
+                this.postData.votes=this.points;
               },
                /**
     * Save post if the User press Hide button.
@@ -399,8 +405,9 @@ export default {
  
         if(this.Saved=="Save")
         {
-      
+        
         this.Saved="unsave";
+        this.postData.saved=this.Saved;
         this.PostId=this.postData.id;
       
         AllServices.save(this.$localStorage.get('token'),this.PostId);
@@ -408,6 +415,7 @@ export default {
       }
         else if(this.Saved=="unsave"){
             this.Saved="Save";
+            this.postData.saved=this.Saved;
             this.PostId=this.postData.id;
 
          
@@ -431,6 +439,10 @@ export default {
       ShowModal(){
         this.isModal=true;
         if(this.ShowModalVar == true){
+          // this.postData.hide=this.is_Hide;
+          // this.postData.votes=this.points;
+          // this.postData.upvoted=this.upVoted;
+          // this.postData.downvoted=this.downVoted;
           this.$emit('showUp',this.postData,);
    
           this.$modal.show('Demo-OnePost');
@@ -446,7 +458,13 @@ export default {
               },
 },
 props: {
-postData:{},
+postData:{
+  hide:false,
+ 
+  upvoted:false,
+  downvoted:false,
+  saved:"unsave"
+},
     upVoted:Boolean,
     downVoted:Boolean,
   
@@ -482,6 +500,32 @@ components:{
   
   },
   mounted(){
+    if(this.postData.upvoted){
+        this.className_up    = 'btn btn-light btn-sm is-red';
+        this.pressed_up      =true;
+        this.className_down = 'btn btn-light btn-sm is-gray';
+        this.pressed_down=false;
+    }
+    else if(this.postData.downvoted){
+      this.className_up    = 'btn btn-light btn-sm is-gray';
+      this.className_down = 'btn btn-light btn-sm is-blue';
+      this.pressed_down=true;
+      this.pressed_up      =false;
+    }
+    
+  this.postData.votes=this.points;
+  // if(this.postData.saved="Saved"){
+  //   this.Saved="Saved";
+
+  // }
+  // else{
+  //   this.Saved="unsaved";
+  // }
+ 
+   
+ //  this.Saved=this.postData.saved;
+  // this.points=this.postData.votes;
+      
 //     alert('votess');
 //  this.votes=postData.votes;
   }

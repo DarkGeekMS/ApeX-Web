@@ -8,6 +8,7 @@
  <ApexComSideBar class="sidebar"></ApexComSideBar>
    
       <CommentParent 
+     
       v-show="!this.locked" 
       postID='t3_10' 
       class="cmt"  

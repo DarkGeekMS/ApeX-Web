@@ -297,7 +297,7 @@ this.apexComId=this.apexs[0][this.indx-1].id;
           
           this.avatar=vm.image; 
         
-          console.log(this.avatar);
+          // console.log(this.avatar);
         }
         reader.readAsDataURL(file);
 
