@@ -15,7 +15,7 @@ export  const MimicAuth =new Vue({
     SignUp: function(email,user,pass,mimic, baseUrl){
       if(mimic == true){
 
-        if( user == this.username && pass == this.password && this.email == this.$localStorage.get('emailVal'))
+        if( user == this.username && pass == this.password && email == this.email)
         {
           this.$localStorage.set('userName',user);
           this.$localStorage.set('token', this.token);
@@ -40,7 +40,8 @@ export  const MimicAuth =new Vue({
             this.$localStorage.set('token', response.data.token);
             this.$localStorage.set('login', true);
             return true;
-          }).catch(function () {
+          }).catch(function (error) {
+            console.log(error);
             self.$localStorage.set('error','That username is already taken');
             return false;
           });
@@ -51,13 +52,22 @@ export  const MimicAuth =new Vue({
         if( mimic == true)
         {
           if( this.$localStorage.get('token') )
+          {
             this.$localStorage.set('login', false);
             this.$localStorage.set('token', '');
             this.$localStorage.set('userName', '');
+          }        
         }
         else{
-          return axios.post(baseUrl + 'api/SignOut',{
+            axios.post(baseUrl + 'api/SignOut',{
             token : this.$localStorage.get('token')
+          }).then(response =>{
+            if(response.data.token == null)
+            {
+              this.$localStorage.set('login', false);
+              this.$localStorage.set('token', '');
+              this.$localStorage.set('userName', '');
+            }
           })
         }
     },
@@ -115,7 +125,7 @@ export  const MimicAuth =new Vue({
       }
       else{
         var self = this;
-        return axios.post(baseUrl + 'api/MailVerification', {
+        return axios.post(baseUrl + 'api/MailVirification', {
             username : user,
             email : email
           }).then(response => {
@@ -127,11 +137,11 @@ export  const MimicAuth =new Vue({
           });
       }
     },
-    forgetPass2: function(code,mimic, baseUrl)
+    forgetPass2: function(code,user,mimic, baseUrl)
     {
       if(mimic == true)
       {
-        if( code == this.code )
+        if( code == this.code && user == this.username )
         {
           return true;
         }
@@ -144,7 +154,8 @@ export  const MimicAuth =new Vue({
       else{
         var self = this;
         return axios.post(baseUrl + 'api/CheckCode', {
-            username : code
+            code : code,
+            username: user
           }).then(response => {
             this.item = response.data;
             return true;
@@ -163,7 +174,10 @@ export  const MimicAuth =new Vue({
       else{
         var self = this;
         return axios.post(baseUrl + 'api/ChangePassword', {
-            password : pass
+            withcode:true,
+            password : pass,
+            username: ''  ,
+            key: ''  ,
           }).then(response => {
             this.item = response.data;
             return true;
@@ -260,7 +274,9 @@ export  const MimicAuth =new Vue({
       {
         return axios.get(baseUrl + 'api/ApexComs', {
         }).then(response => {
-          return response.data
+         
+          return response.data;
+          
         }).catch(function (error) {
           this.$localStorage.set('error',error);
           return false

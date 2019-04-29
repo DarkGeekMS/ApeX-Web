@@ -3,7 +3,6 @@
     <navbar></navbar>
     <button  @click="topFunction()" id="myBtn" class="btn blue" v-show="top()">BACK TO TOP </button>
     <router-view></router-view>
-    <!-- <us></us> -->
  </div>
 </template>
 
@@ -11,14 +10,10 @@
 import NavBar from "./components/NavBar.vue"
 import $ from'jquery/dist/jquery.min.js'
 
-//import us from "./components/UserSettings.vue"
-
-
 export default {
   name: 'app',
   components:{
     'navbar':NavBar,
-//us
   },
   mounted(){
     this.$nextTick(function() { this.scrollFunction() });
@@ -60,7 +55,8 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
   background-color: #DAE0E6;
-  min-height:100%;
+  height: 100%;
+  min-height:720px;
 }
 
 button.btn {

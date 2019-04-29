@@ -3,64 +3,64 @@
  <demo-login-modal> </demo-login-modal>
  <demo-sign-modal> </demo-sign-modal>
  <nav class="navbar navbar-expand-lg navbar-light navbar-fixed-top" id="mainNav">
-    <router-link class="navbar-brand" :to="{ name:'HomePage'}">
+    <router-link class="navbar-brand" :to="{ name: 'NewHomePage' , params: {sortingparam:'hot'}}">
       <img style="margin-top:-8px" width="85"
       src="../../public/Logo_small.png" >
     </router-link>
-
     <div class="container-fluid">
- 
+
     <div class="btn-group sel" >
       <button type="button" data-toggle="dropdown" class="btn btn-default dropdown-toggle">
-        <i class="glyphicon glyphicon-arrow-up blue" id="classed" ></i>  
-        <span id="selectted" > Popular</span> 
+        <i class="glyphicon glyphicon-arrow-up blue" id="classed" ></i>
+        <span id="selectted" > Popular</span>
         <span class="caret" style="float:right; margin-top:10px" ></span>
       </button>
-      
-      <ul class="dropdown-menu drop1" style="width:93%">
+
+      <ul class="dropdown-menu drop1">
         <li class="dropdown-header">REDDIT FEEDS</li>
-        <li v-show="this.$localStorage.get('login')"><a href="/" class="glyphicon glyphicon-home blue" ><span id="items">Home</span></a></li> 
-        <li><a href="#" class="glyphicon glyphicon-arrow-up blue"><span id="items">Popular</span></a></li>
+        <li v-show="this.$localStorage.get('login')"><a href="/" class="glyphicon glyphicon-home blue" ><span id="items">Home</span></a></li>
+        <li><router-link  :to="{ name: 'HotHomePage' , params: {sortingparam:'hot'}}" class="glyphicon glyphicon-arrow-up blue"><span id="items">Popular</span></router-link></li>
         <li><a href="#" class="glyphicon glyphicon-stats blue"><span id="items">All</span></a></li>
         <li><a href="#"> <span style="background-color:blue; color:white; padding-left:3px"> oc </span> <span style="color:black;padding-left:7%">Original Content</span></a></li>
 
         <li class="divider"></li>
 
         <li class="dropdown-header" v-show="this.$localStorage.get('login')">MY COMMUNITIES</li>
-            <li v-show="log" v-for="apex in apexs" :key="apex.id" ><router-link :to="{ name:'ApexCom', params: {ApexComName:apex.name} }" > {{apex.name}} </router-link></li> 
+
+        <li v-show="log" v-for="apex in apexs" :key="apex.id" ><router-link :to="{ name:'ApexCom', params: {ApexComId:apex.id} }" > {{apex.name}} </router-link></li>
       </ul>
-    </div>  
-  
+    </div>
+
 
     <div class="form-group has-feedback has-search" style="display:inline-block">
       <span class="glyphicon glyphicon-search form-control-feedback"></span>
-      <input type="text" class="form-control" placeholder="Search Reddit" v-model="searchVal" v-on:keyup.enter="search()">
+      <input type="text" class="form-control" placeholder="Search Apex" v-model="searchVal" v-on:keyup.enter="search()">
     </div>
 
-    <div class="btn-toolbar tool1" role="toolbar"> 
+    <div class="btn-toolbar tool1" role="toolbar">
     <div class="btn-group">
-    <button type="button" class="btn btn-default b1"> 
+    <button type="button" class="btn btn-default b1">
     <i class="glyphicon glyphicon-arrow-up"></i>
-    </button> 
-    <button type="button" class="btn btn-default b2"> 
-    <i class="glyphicon glyphicon-stats"></i> 
     </button>
-    <button type="button" class="btn btn-default b3"> 
-    <span style="background-color:black; color:white; padding-left:3px"> oc </span> 
+    <button type="button" class="btn btn-default b2">
+    <i class="glyphicon glyphicon-stats"></i>
     </button>
-    </div> 
-    </div> 
+    <button type="button" class="btn btn-default b3">
+    <span style="background-color:black; color:white; padding-left:3px"> oc </span>
+    </button>
+    </div>
+    </div>
 
-    <div class="btn-toolbar tool2" role="toolbar" v-show="this.$localStorage.get('login')"> 
+    <div class="btn-toolbar tool2" role="toolbar" v-show="this.$localStorage.get('login')">
       <div class="btn-group">
-      <button type="button" class="btn btn-default b4" @click="$router.push({ name:'Messages'})"> 
+      <button type="button" class="btn btn-default b4" @click="$router.push({ name:'Messages'})">
       <i class="glyphicon glyphicon-envelope"></i>
-      </button> 
-      <button type="button" class="btn btn-default b5" @click="$router.push('/Submit')"> 
+      </button>
+      <button type="button" class="btn btn-default b5" @click="$router.push('/Submit')">
       <i class="glyphicon glyphicon-edit"></i>
       </button>
-      </div> 
-    </div> 
+      </div>
+    </div>
 
 
     <div v-show="!this.$localStorage.get('login')" class="form-group log" style="display:inline-block">
@@ -74,10 +74,10 @@
       </button>
       <ul class="dropdown-menu">
         <li class="dropdown-header">MY STUFF</li>
-        <li><router-link :to="{ name: 'UserProfile', params: {userName:userLog} } ">My Profile</router-link></li>
-        <li><router-link :to="{ name: 'UserSettings'} ">User Settings</router-link></li>
+        <li><router-link :to="{ name: 'UserProfile', params: {userName:userLog} } "><i class="glyphicon glyphicon-user"/> My Profile</router-link></li>
+        <li><router-link :to="{ name: 'UserSettings'}" ><i class="glyphicon glyphicon-cog"></i> User Settings</router-link></li>
         <li class="divider"></li>
-        <li><a class="logOut" href="/" @click="Logout()">Log Out</a></li>
+        <li><a href="#" class="logOut" @click="Logout()"> <i class="glyphicon glyphicon-log-out"></i>   Log Out</a></li>
       </ul>
     </div>
 
@@ -86,7 +86,7 @@
   <div class="list pop1"> Popular </div>
   <div class="list pop2"> All </div>
   <div class="list pop3"> Orignal Content </div>
-  
+
   <div class="list pop4"> Messages </div>
   <div class="list pop5"> Create Post </div>
 
@@ -103,7 +103,7 @@ import {AllServices} from '../MimicServices/AllServices.js'
 import $ from'jquery/dist/jquery.min.js'
 /**
  * @vue-data {string} [userLog=""] name of user logged in
- * @vue-data {string} [searchVal=""] search value  
+ * @vue-data {string} [searchVal=""] search value
  * @vue-data {boolean} [canBeShown=false] check shownModal
  * @vue-data {object} [apexs] names op apexComs
 */
@@ -123,13 +123,24 @@ import $ from'jquery/dist/jquery.min.js'
       }
     },
     created () {
-      AllServices.getApexNames().then((data) =>
-      {
-        if(data)
+      if(AllServices.getState()){
+         AllServices.getApexNames().then((data) =>
         {
-          this.apexs = data
-        }
-      }),
+          if(data)
+          {
+            this.apexs = data;
+          }
+        })
+      }
+      else{
+        AllServices.getApexNames().then((data) =>
+        {
+          if(data)
+          {
+            this.apexs = data[0];
+          }
+        })
+      }
       setInterval(() => {
         this.userLog = this.$localStorage.get('userName');
         this.log = this.$localStorage.get('login');
@@ -145,7 +156,7 @@ import $ from'jquery/dist/jquery.min.js'
         $('#classed').removeClass(remclass);
         $('#classed').addClass(className);
       }
-      
+
       $('.drop1 a').click(function(){
         $('#selectted').text($(this).text());
         var className = $(this).prop('class');
@@ -191,20 +202,17 @@ import $ from'jquery/dist/jquery.min.js'
         })
       },
       /**
-       * axios post request to log out the user through send user's token, delete it from data ,delete username and set login false 
+       * axios post request to log out the user through send user's token, delete it from data ,delete username and set login false
       */
       Logout: function(){
-        AllServices.logOut()
-        this.$localStorage.set('login', false);
-        this.$localStorage.set('token', '');
-        this.$localStorage.set('userName', '');
-        this.$router.replace('/');
+        AllServices.logOut();
+        this.$router.replace('/'); 
       },
       /**
      * when search value isn't empty transfer to localStorage and go to route search
      */
       search: function(){
-        if( this.searchVal != '')
+        if( (this.searchVal != '') && (this.searchVal.length >= 3) )
         {
           this.$localStorage.set('search' , this.searchVal),
           this.$router.push({ name:'Search'} )
@@ -270,7 +278,7 @@ input:hover{
   div input,.has-search .form-control-feedback {
     display: none
   }
-  
+
 }
 @media(max-width:319px){
   div .log, div .sel .caret {
@@ -297,9 +305,9 @@ input:hover{
   .has-search{
     width:30%;
   }
-} 
+}
 @media(max-width:1054px){
-  div .tool2 
+  div .tool2
   {
     display: none  }
   div .tool1{
@@ -310,7 +318,7 @@ input:hover{
   div #usernam{
     display: none;
   }
-  
+
   div .tool1, div .tool2 {
     padding-left: 0.5%
   }
@@ -327,7 +335,7 @@ input:hover{
 #loggedbutton{
   width:100%;
   font-size:15px;
-  border-radius: 5%;
+  border-radius: 10px;
   text-align: left
 }
 #loggedbutton:hover {
@@ -373,12 +381,12 @@ ul{
   width:100%;
   text-align: left;
   font-size: 15px;
-    border-radius: 5%;
+  border-radius: 10px;
 
 }
 .sel button:hover{
   border:1px solid #ccc6;
-  background-color:white; 
+  background-color:white;
 }
 .sel li a{
   padding-right: 8px;
@@ -397,9 +405,15 @@ a #items{
   line-height: 18px;
   font-size: 14px
 }
+#classed{
+  color:blue;
+}
 
-
-
+.drop1{
+  width:93%;
+  max-height:450px;
+  overflow: scroll
+}
 
 .list{
   border: none;

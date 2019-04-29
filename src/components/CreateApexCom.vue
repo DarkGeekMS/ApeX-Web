@@ -83,6 +83,7 @@
 
 <script>
 import {AllServices} from '../MimicServices/AllServices.js'
+import $ from'jquery/dist/jquery.min.js'
 
 export default {
   data(){
@@ -92,6 +93,12 @@ export default {
     rule:"",
     error:false
   }
+},
+ mounted(){
+  $('#selectted').text('Create ApexCom');
+  var remclass = $('#classed').prop('class');
+  $('#classed').removeClass(remclass);
+  $('#classed').addClass("glyphicon glyphicon-edit");
 },
 computed:{
 },

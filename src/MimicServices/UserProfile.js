@@ -24,7 +24,7 @@ return promise;
 }
 else {
     return axios.post(baseUrl + 'api/ProfileInfo',{
-          Token:this.$localStorage.get('token')
+          token:this.$localStorage.get('token')
       })
       .then(response=> {
         return response.data;
@@ -56,8 +56,9 @@ return promise;
 }
 else {
     return axios.post(baseUrl + 'api/UserData',  {
-      Token:this.$localStorage.get('token'),
-      userid:userName
+      username:userName,
+      token:this.$localStorage.get('token'),
+      
   })
   .then(response=> {
     return response.data;
@@ -146,8 +147,8 @@ reviewReports: function(mimic,userName, baseUrl){
 }
 else {
    return axios.post(baseUrl + 'api/ReviewReports', {
-        user_id:userName,
-        Token:this.$localStorage.get('token')
+        ApexCom_id:userName,
+        token:this.$localStorage.get('token')
       })
       .then(response => {
         return response.data;
@@ -201,8 +202,8 @@ deleteUser: function(mimic,userName, baseUrl){
 }
 else {
     axios.delete(baseUrl + 'api/DeleteUser',{params: {
-    userID:userName,
-    Token:this.$localStorage.get('token')}
+    UserID:userName,
+    token:this.$localStorage.get('token')}
 })
 .then(function (response) {
   return response;
@@ -234,10 +235,11 @@ getUserInfoByIdforGuest:function(mimic,userName, baseUrl){
     else {
         return axios.get(baseUrl + 'api/UserData', {
         params: {
-          userid:userName
+          username:userName
         }
       })
       .then(response=> {
+        console.log(response.data);
         return response.data;
        })
       .catch(function (error) {
@@ -257,8 +259,8 @@ blockUser:function(mimic,userName, baseUrl){
     }
     else {
       return axios.post(baseUrl + 'api/BlockUser', {
-        userid:userName,
-        Token:this.$localStorage.get('token')
+        blockedID:userName,
+        token:this.$localStorage.get('token')
     })
     .then(response=> {
       return response.data;

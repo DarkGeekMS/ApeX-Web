@@ -22,9 +22,10 @@ export  const AllServices =new Vue({
     getState(){
       return this.mimic
     },
-    submit:function(videoUrl,apexComId,bodyPost,imgName, isLocked,token){
+    submit:function(apexComId,title,bodyPost,imgName,videoUrl, isLocked,token){
 
-      var data=MimicCreatePosts.submitPost(videoUrl,apexComId,bodyPost,imgName,isLocked,token,this.mimic, this.baseUrl);
+      var data=MimicCreatePosts.submitPost(apexComId,title,bodyPost,imgName,videoUrl, isLocked,token,this.mimic, this.baseUrl);
+     
       return data;
 
     },
@@ -62,9 +63,9 @@ export  const AllServices =new Vue({
     {
       return MimicAuth.ForgetPass(user,email,this.mimic, this.baseUrl);
     },
-    setCode: function(code)
+    setCode: function(code,user)
     {
-      return MimicAuth.forgetPass2(code,this.mimic, this.baseUrl);
+      return MimicAuth.forgetPass2(code,user,this.mimic, this.baseUrl);
     },
     setPass: function(pass)
     {
@@ -78,8 +79,8 @@ export  const AllServices =new Vue({
     {
       return MimicAuth.ForgetUser2(code,this.mimic, this.baseUrl);
     },
-     getPosts:function(apexComName) {
-       return MimicDisplayPosts.getPostsData(this.mimic,apexComName, this.baseUrl);
+    getPosts:function(apexComName,sortparam) {
+      return MimicDisplayPosts.getPostsData(this.mimic,apexComName,sortparam, this.baseUrl);
     },
 	getAbout:function(apexComName) {
     var about=MimicApexCom.getAbout(this.mimic,apexComName, this.baseUrl);
@@ -92,6 +93,7 @@ export  const AllServices =new Vue({
 	},
 	getSubscribers:function(apexComName) {
     var SubscribersList=MimicApexCom.getSubscribers(this.mimic,apexComName, this.baseUrl);
+
     return SubscribersList;
 	},
 	getUserInfo:function() {
@@ -103,23 +105,25 @@ export  const AllServices =new Vue({
     return userInfo;
   },
   save:function(token,ID){
+   
     return MimicPost.save(token,ID,this.mimic, this.baseUrl);
   },
 Hide:function(name,ID){
 return MimicPost.Hide(name,ID,this.mimic, this.baseUrl);
 },
-upvote:function(name,ID,direction){
+upvote:function(ID,points,upVoted,downState){
 
-return MimicPost.upvote(name,ID,direction,this.mimic, this.baseUrl);
+  var data= MimicPost.upvote(ID,points,upVoted,downState,this.mimic, this.baseUrl);
+ 
+  return data;
 },
-downvote:function(name,ID,direction){
+downvote:function(ID,points,downVoted,upState){
 
-return MimicPost.downvote(name,ID,direction,this.mimic, this.baseUrl);
-},
-defaultVote:function(name,ID,direction){
+var data= MimicPost.downvote(ID,points,downVoted,upState,this.mimic, this.baseUrl);
 
-  return MimicPost.defaultVote(name,ID,direction,this.mimic, this.baseUrl);
-  },
+return data;
+}
+,
 deletePost:function(name,ID){
 
 
@@ -165,6 +169,7 @@ SaveComment: function(ID){
 },
 UpVoteComment: function(ID,points,upVoted,downState){
   var data=MimicComment.UpVoteComment(ID,points,upVoted,downState,this.mimic, this.baseUrl);
+
   return data;
 },
 DownVoteComment: function(ID,points,downVoted,upState){
@@ -173,6 +178,14 @@ DownVoteComment: function(ID,points,downVoted,upState){
 },
 EditComment: function(ID,content){
   var data=MimicComment.EditComment(ID,content,this.mimic, this.baseUrl);
+  return data;
+},
+getComments: function(ID){
+  var data=MimicComment.getComments(ID,this.mimic);
+  return data;
+},
+reportComment: function(ID,reason){
+  var data=MimicComment.reportComment(ID,reason,this.mimic);
   return data;
 },
 sendMessage: function(rec,title,cont){
@@ -189,6 +202,7 @@ blockSender:function(ID){
 },
 getAllMessages:function(){
   var data=MimicMessage.getAllMessages(this.mimic, this.baseUrl);
+  console.log(data);
   return data;
 },
 getUserInfoByIdforGuest:function(userName){

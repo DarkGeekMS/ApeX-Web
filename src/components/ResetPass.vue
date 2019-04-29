@@ -1,5 +1,5 @@
 <template>
-<modal name="ResetPass" transition="pop-out" width="50%" height="70%" :clickToClose="false">
+<modal name="ResetPass" transition="pop-out" width="50%" height="70%" :clickToClose="false" >
   <div class="box">
     <div class="box-part" id="bp-right"></div>
 

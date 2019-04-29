@@ -2,7 +2,7 @@
 
   <div class="postMod">
     <!-- VERY IMPORTANT! REPORT MODAL APPEARS MULTIPLE TIMES FOR EACH POST  -->
-   <reportBox> </reportBox>
+   <reportBox v-show="showReport"> </reportBox>
     
 <div class="panel panel-default"  @click="ShowModal()" v-show="Not_Hide" id="post">
 
@@ -17,7 +17,7 @@
         <i class="glyphicon glyphicon-arrow-up"></i>
 </button>
 
-<h5 id="PostVote">{{votes}}</h5>
+<h5 id="PostVote">{{this.points}}</h5>
 
 <button @click="changeColor_down" type="button" :class="className_down" id="down" class="DOWN">
          <i class="glyphicon glyphicon-arrow-down" id="upArrow"></i>
@@ -29,12 +29,12 @@
       </div>
 
 
-      <router-link class="fontUser" id="subred" :to="{name:'ApexCom' , params: {apexComName:postData.apex_id}}">{{postData.apex_id}}</router-link>
+      <router-link class="fontUser" id="subred" :to="{name:'ApexCom' , params: {apexComId:postData.apex_id}}">{{postData.apex_com_name}}</router-link>
       <font class="postby" id="fontPostby">. Posted by</font>
-      <router-link class="postby" id="user" :to="{name:'UserProfile' , params: {userName:postData.posted_by}}"> {{postData.posted_by}}</router-link>
+      <router-link class="postby" id="user" :to="{name:'UserProfile' , params: {userName:postData.post_writer_username}}"> {{postData.post_writer_username}}</router-link>
 
       <font class="postby" id="fontpost"> </font>
-      <a href="#" class="postby" id="timeAgo">  {{ moment(postData.created_at).fromNow()}}</a>
+      <a href="#" class="postby" id="timeAgo">  {{moment(postData.created_at).fromNow()}}</a>
       <h3>{{postData.title}}</h3>
       <p id="postBody" class="hPost" v-if="!this.showEditTextArea">
 
@@ -45,9 +45,9 @@
           <button @click="saveChange" v-if="this.showEditTextArea" class="btn btn-primary postButton" id="saveEdit">SAVE</button>
           <!-- <button  v-if="this.showEditTextArea" class="btn btn-primary postButton" id="cancel">CANCEL</button> -->
           
-<iframe  v-show ="postData.videolink!==''" width="100%" height="315"  :src=postData.videolink frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe  v-show ="postData.videolink!==null" width="100%" height="315"  :src=postData.videolink frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-<img v-show="postData.img!==''" :src=postData.img  height="100%" width="100%">
+<img v-show="postData.img!==null" :src=postData.img  height="100%" width="100%">
 </div>
    
 <footer>
@@ -56,7 +56,7 @@
 
   <button type="button" class="btn btn-default " id="commentButton" ><i class="far fa-comment-alt" id="commentIcon"></i>
 Comments</button>
-  <button  type="button" class="btn btn-default  SAVE"  @click="Save" id="SaveButton" >
+  <button  type="button" class="btn btn-default  SAVE"  @click="Save()" id="SaveButton" >
 
     <i class="fa fa-plus-square" v-if="Saved=='Save'" id="SaveIcon"></i>
     <i class="glyphicon glyphicon-check" v-if="Saved!='Save'" id="UnsaveIcon"></i>
@@ -72,8 +72,9 @@ Comments</button>
     </button>
     <ul class="dropdown-menu" id="dropMenu">
       <li ><a href="#"  @click="Hide" class="HIDE"><i class="fa fa-ban" id="HideIcon"></i>Hide</a></li>
-      <li><a  @click="report"><i class="glyphicon glyphicon-flag" id="ReportIcon" ></i>Report</a></li>
+      <li><a  @click="report" class="HIDE"><i class="glyphicon glyphicon-flag" id="ReportIcon" ></i>Report</a></li>
       <li v-if="postData.canEdit"><a href="#" @click="editText" ><i class="glyphicon glyphicon-pencil" id="ReportIcon"></i>edit</a></li>
+      <li v-if="postData.canEdit"><a href="#" @click="deletePost" ><i class="glyphicon glyphicon-pencil"></i>edit</a></li>
       <li><a href="#" @click="isLocked" v-show="isAdmin() || isModerator()">
         
         <i v-if="Locked=='unlock'" class="fa fa-lock" id="ReportIcon"></i>
@@ -102,6 +103,7 @@ Comments</button>
 import {MimicDisplayPosts} from '../MimicServices/DisplayPosts.js'
 import { AllServices } from '../MimicServices/AllServices';
 import reportBox from './ReportModal.vue'
+import swal from 'sweetalert';
 var moment =require('moment');
 /**
  * @vue-data {string} [Save="Save"] Save value
@@ -136,11 +138,11 @@ export default {
              pressed_up   : false,
              pressed_down : false,
 
-             votes  :this.postData.votes,
+             points  :this.postData.votes,
              Saved  :"Save",
-             PostId   :"",
+             PostId   :this.postData.id,
              token  :this.$localStorage.get('token'),
-
+             showReport:false,
              moderator:false,
              ShowModalVar:true,
              Deleted:false,
@@ -185,6 +187,9 @@ export default {
     
           this.postData.content= document.getElementById("textarea").value; 
           this.showEditTextArea=false;
+          alert(this.postData.id);
+          alert(this.postData.content);
+          alert(this.postData.title);
           AllServices.EditPost(this.postData.id, this.postData.content);
         
   
@@ -198,6 +203,7 @@ export default {
   
      this.onlyOneTime=false;
       this.$modal.show('reportBox');
+      this.showReport=true;
 
     }
     else{
@@ -256,7 +262,8 @@ export default {
     * Hide post if the User press Hide button.
     */
        Hide(){
-           if( this.$localStorage.get('login') ){
+        
+         if( this.$localStorage.get('login') ){
          if(this.ShowModalVar == true){
          this.ToggleShowModalVar();
          }
@@ -264,10 +271,11 @@ export default {
             {
             this.Not_Hide=false;
             this.is_Hide=true;
-            alert("Post hidden successfully.")
+            
 
             }
-        this.PostId=postData.id;
+            
+        this.PostId=this.postData.id;
         AllServices.Hide(this.PostId,this.$localStorage.get('token'));
 
          }
@@ -278,39 +286,48 @@ export default {
        ,
     changeColor_up()
     {
+     //alert('before '+this.points);
       if(this.$localStorage.get('login') ){
       if(this.ShowModalVar == true){
       this.ToggleShowModalVar();
     }
           if(!this.pressed_up)
           {
+                     
                       if(this.pressed_down)
                       {
-                      this.votes         += 1;
+                  
                       this.pressed_down   = false;
                       this.className_down = 'btn btn-light btn-sm is-gray';
 
                       }
-
+                    
                       this.className_up    = 'btn btn-light btn-sm is-red';
                       this.pressed_up      =true;
-
-                      this.votes          += 1;
-                       this.PostId=postData.id;
+                        
+                      
+                     
+                       this.PostId=this.postData.id;
                        this.postData.up=true;
-                      AllServices.upvote(this.$localStorage.get('token'),this.PostId,1);
-
+                
                 }
               else {
                     this.className_up = 'btn btn-light btn-sm is-gray';
-                    this.votes     -= 1;
                     this.pressed_up = false;
-                     this.PostId=postData.id;
-                  AllServices.defaultVote(this.PostId,this.$localStorage.get('token'),0);
+                    this.PostId=this.postData.id;
+                
+                   
 
                }
-
-
+                 this.upVoted = !this.upVoted;
+                var downState = this.downVoted;
+               this.downVoted = false;
+               AllServices.upvote(this.PostId,this.points,this.upVoted,downState).then((data) => {
+            if(data){
+                this.points=data.votes;
+              
+                  }});
+                //  alert('after '+this.points);
 
       }
       else{
@@ -319,6 +336,10 @@ export default {
       }
       ,
      changeColor_down(){
+       // alert('before '+this.points);
+        this.downVoted = !this.downVoted;
+        var upState = this.upVoted;
+        this.upVoted = false;
        if(this.$localStorage.get('login') ){
        if(this.ShowModalVar == true){
        this.ToggleShowModalVar();
@@ -327,7 +348,7 @@ export default {
                   {
                       if(this.pressed_up)
                       {
-                          this.votes-=1;
+                        
                           this.pressed_up=false;
                           this.className_up = 'btn btn-light btn-sm is-gray';
 
@@ -335,22 +356,32 @@ export default {
                          this.className_down = 'btn btn-light btn-sm is-blue';
                          this.pressed_down=true;
 
-                         this.votes-=1;
-                          this.PostId=postData.id;
-                         AllServices.downvote(this.PostId,this.$localStorage.get('token'),-1);
+                       
+                         this.PostId=this.postData.id;
+                  
+                     
+                         
 
                   }
               else {
                   this.className_down = 'btn btn-light btn-sm is-gray';
 
 
-                   this.votes += 1;
+              
                    this.pressed_down = false;
-                    this.PostId=postData.id;
-                   AllServices.defaultVote(this.PostId,this.$localStorage.get('token'),0);
+                   this.PostId=this.postData.id;
+                
+                 
+           
 
 
                  }
+                  AllServices.downvote(this.PostId,this.points,this.downVoted,upState).then((data) => {
+                 if(data){
+                   this.points=data.votes;
+                 
+                 }});
+                  // alert('after '+this.points);
               }
               else{
                 alert('Login First !!');
@@ -360,25 +391,28 @@ export default {
     * Save post if the User press Hide button.
     */
     Save(){
+     
         if( this.$localStorage.get('login') ){
       if(this.ShowModalVar == true){
       this.ToggleShowModalVar();
     }
+ 
         if(this.Saved=="Save")
         {
-        //alert('Post saved successfully');
+      
         this.Saved="unsave";
-        this.PostId=postData.id;
+        this.PostId=this.postData.id;
+      
         AllServices.save(this.$localStorage.get('token'),this.PostId);
 
       }
         else if(this.Saved=="unsave"){
             this.Saved="Save";
-            this.PostId=postData.id;
+            this.PostId=this.postData.id;
 
          
-         //   alert(postData.apex_id);
-           
+       
+          
              AllServices.save(this.$localStorage.get('token'),this.PostId);
            }
 
@@ -413,6 +447,9 @@ export default {
 },
 props: {
 postData:{},
+    upVoted:Boolean,
+    downVoted:Boolean,
+  
        },
 created(){
   
@@ -486,7 +523,10 @@ components:{
  #postBody:hover{
              cursor:pointer
                }
+#ReportIcon:hover{
+               cursor:pointer
 
+}
   #imgId{
          cursor: pointer;
      

@@ -14,7 +14,7 @@ export  const MimicSearch =new Vue({
     {
       if(mimic ==  true)
       {
-        if(this.$localStorage.get('search') == this.searchValue && this.$localStorage.get('token') == this.token)
+        if(this.$localStorage.get('search') == this.searchValue )
         {
            var result = [
              [{
@@ -75,7 +75,7 @@ export  const MimicSearch =new Vue({
       }
       else
       {
-        axios.post(baseUrl + 'api/Search',{
+        return axios.post(baseUrl + 'api/Search',{
         query: this.$localStorage.get('search'),
         token: this.$localStorage.get('token')
         }).then(response => {
@@ -150,8 +150,10 @@ export  const MimicSearch =new Vue({
       }
       else
       {
-        axios.get(baseUrl + 'api/Search',{
-        query: this.$localStorage.get('search'),
+        return axios.get(baseUrl + 'api/Search',{
+        params: {
+          query: this.$localStorage.get('search'),
+        }
         }).then(response => {
           return response.data;
         }).catch(error => {
