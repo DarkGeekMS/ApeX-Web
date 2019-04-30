@@ -12,7 +12,7 @@
         <select id="selectList" class="form-control" name="category" @change="handleChange">
           <option>choose a community</option>
            
-         <option v-for="apex in apexs[0]" :key="apex.id"> 
+         <option v-for="apex in apexs" :key="apex.id"> 
           
                {{apex.name}}
             
@@ -214,8 +214,8 @@ var sel = document.getElementById('selectList');
 var opt = sel.options[sel.selectedIndex];
 this.indx=sel.selectedIndex;
 this.Enable();
-this.apexComId=this.apexs[0][this.indx-1].id;
-// alert(this.apexComId);
+this.apexComId=this.apexs[this.indx-1].id;
+ //alert(this.apexComId);
 
 //alert(this.apexComId);
 
@@ -348,7 +348,7 @@ this.apexComId=this.apexs[0][this.indx-1].id;
 
    //    }
  //    else{
-       this.$emit('PostEmit',dateTime,this.title,this.bodyPost,this.imgName,this.videoUrl,this.$localStorage.get('userName'),this.apexs[0][this.indx-1].name);
+       this.$emit('PostEmit',dateTime,this.title,this.bodyPost,this.imgName,this.videoUrl,this.$localStorage.get('userName'),this.apexs[this.indx-1].name);
       
       this.$router.push('/Submit');
      //  }
@@ -374,8 +374,8 @@ created(){
         {
           // alert('feeh data aho');
         
-          this.apexs = data;
-          // console.log(data[0]);
+          this.apexs = data.apexComs;
+         //  console.log(data.apexComs);
         }
       });
 

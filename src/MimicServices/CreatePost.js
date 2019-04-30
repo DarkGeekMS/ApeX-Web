@@ -80,14 +80,16 @@ else {
 
   }
   else if(videoUrl==null){
-    console.log(this.$localStorage.get('token'));
+    var formData = new FormData();
+    var imagefile = imgName;
+    formData.append("image", imagefile.files[0]);
     axios.post(baseUrl + "api/SubmitPost",{
       
       ApexCom_id:apexComId,
       title:title, 
       token:this.$localStorage.get('token'),
       
-      img_name:imgName,
+      img_name:formData,
       isLocked:isLocked
 
     
