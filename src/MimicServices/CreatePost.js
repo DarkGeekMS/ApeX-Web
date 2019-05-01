@@ -33,7 +33,10 @@ else {
       body:bodyPost,
       isLocked:isLocked
 
-   }).then(response=>{
+   },
+   {
+     headers:{"Content-Type": "application/json"
+             }}).then(response=>{
        
       swal('Post Submitted successfully');
 
@@ -57,29 +60,33 @@ else {
       isLocked:isLocked
 
 
-   },{headers:{  "Content-Type": "application/x-www-form-urlencoded"
-  }}).then(response=>{
+   },
+   {headers:{  "Content-Type": "application/json"}
+    }).then(response=>{
       
     
       swal('Post Submitted successfully');
+      
       return true;
      
 
  
    }).catch(function (error){
     swal("Oops!", "Something went wrong!", "error");
-     console.log(videoUrl);
+    
+    // console.log(videoUrl);
      return false;
    })
 
   }
   else if(videoUrl==null){
+    console.log(this.$localStorage.get('token'));
     axios.post(baseUrl + "api/SubmitPost",{
       
       ApexCom_id:apexComId,
       title:title, 
       token:this.$localStorage.get('token'),
-     
+      
       img_name:imgName,
       isLocked:isLocked
 
@@ -87,7 +94,8 @@ else {
    
    
 
-   }).then(response=>{
+   },{headers:{  'Content-Type': 'application/x-www-form-urlencoded'}
+  }).then(response=>{
       
     
       swal('Post Submitted successfully');
@@ -96,8 +104,13 @@ else {
 
  
    }).catch(function (error){
+    
     swal("Oops!", "Something went wrong!", "error");
-  
+  //console.log(imgName);
+ // console.log(apexComId);
+  //console.log(imgName);
+  //console.log(isLocked);
+ 
   
      return false;
    })

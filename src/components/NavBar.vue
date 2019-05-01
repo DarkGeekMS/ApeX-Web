@@ -123,7 +123,7 @@ import $ from'jquery/dist/jquery.min.js'
     },
     created () {
       if(AllServices.getState()){
-         AllServices.getApexNames().then((data) =>
+        AllServices.getApexNames().then((data) =>
         {
           if(data)
           {
