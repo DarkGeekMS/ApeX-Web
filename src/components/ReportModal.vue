@@ -43,7 +43,7 @@ export default {
     idx:Number
   },
   created () {
-    console.log(this.idx,'ggg');
+    // console.log(this.idx,'ggg');
   },
   methods:{
     first:function(){

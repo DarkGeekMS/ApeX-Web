@@ -12,7 +12,7 @@ token:'1',
 
   },
   methods:{
-    submitPost: function(apexComId,title,bodyPost,imgName,videoUrl, isLocked,token,mimic, baseUrl){
+    submitPost:function(apexComId,title,bodyPost,imgName,videoUrl, isLocked,token,mimic, baseUrl){
       
       if(mimic){
          if(this.$localStorage.login){
@@ -25,6 +25,8 @@ token:'1',
 
 else {
   if((imgName==null) &&(videoUrl==null)){
+  
+
     axios.post(baseUrl + "api/SubmitPost",{
       
       ApexCom_id:apexComId,
@@ -32,18 +34,22 @@ else {
       token:this.$localStorage.get('token'),
       body:bodyPost,
       isLocked:isLocked
+      
 
    },
    {
      headers:{"Content-Type": "application/json"
              }}).then(response=>{
-       
+               
       swal('Post Submitted successfully');
-
-      return true;
+     
+      return  response.data;
+    
        }).catch(function (error){
+       
     swal("Oops!", "Something went wrong!", "error");
- 
+
+        alert(error);
      return false;
    })
 
@@ -67,20 +73,20 @@ else {
     
       swal('Post Submitted successfully');
       
-      return true;
+      return response.data;
      
 
  
-   }).catch(function (error){
+   }).catch(function (){
     swal("Oops!", "Something went wrong!", "error");
     
-    // console.log(videoUrl);
+    
      return false;
    })
 
   }
   else if(videoUrl==null){
-    console.log(this.$localStorage.get('token'));
+
     axios.post(baseUrl + "api/SubmitPost",{
       
       ApexCom_id:apexComId,
@@ -97,19 +103,16 @@ else {
    },{headers:{  'Content-Type': 'application/x-www-form-urlencoded'}
   }).then(response=>{
       
-    
+     
       swal('Post Submitted successfully');
-      return true;
+      return response.data;
      
 
  
-   }).catch(function (error){
-    
-    swal("Oops!", "Something went wrong!", "error");
-  //console.log(imgName);
- // console.log(apexComId);
-  //console.log(imgName);
-  //console.log(isLocked);
+   }).catch(function (){
+   
+     swal("Oops!", "Something went wrong! الصوره ", "error");
+ 
  
   
      return false;
@@ -130,10 +133,11 @@ else {
    }).then(response=>{
       
       swal('Post Submitted successfully');
-      return true;
+      return response.data;
+     
     
  
-   }).catch(function (error){
+   }).catch(function (){
     swal("Oops!", "Something went wrong!", "error");
   
      return false;
