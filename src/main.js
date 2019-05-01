@@ -21,7 +21,7 @@ const router = new VueRouter({
 });
 
 
-var vm =new Vue({
+new Vue({
   localStorage: {
     login:{
       type: Boolean,
