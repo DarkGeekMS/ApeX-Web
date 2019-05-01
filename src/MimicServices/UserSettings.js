@@ -56,10 +56,8 @@ return promise1;
 
   }
   else{
-
-    return axios.get(baseUrl + 'api/GetPreferences',
+    return axios.post(baseUrl + 'api/GetPreferences',
    {
-      UserID:this.$localStorage.get('userName') ,
       token:this.$localStorage.get('token')
       }).then(response => {
         return response.data;
@@ -67,14 +65,15 @@ return promise1;
   }
 },
 
-updatePrefs:function (mimic,email,avatar,username, baseUrl) {
+updatePrefs:function (mimic,username,email,avatar,notifie, baseUrl) {
   if(mimic==false){
     return axios.post(baseUrl + 'api/UpdatePreferences',
    {
-     token:this.$localStorage.get('token'),
+     username:username,
     email:email,
     avatar:avatar,
-    username:username
+    notifications:notifie,
+    token:this.$localStorage.get('token')
       }).then(response => {
         return response.data;
       })

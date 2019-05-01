@@ -1,6 +1,6 @@
 <template>
   <div id="DisplayPosts">
-    <div :id="'PostContainer'+i++" v-for="onePost in posts">
+    <div id="PostContainer" v-for="onePost in posts">
      <post v-bind:postData="onePost" v-on:showUp="showPost" v-on:lockComment="ifLock"></post>
     </div>
     <OnePost  id="PostModal" :onePostData="postInfo"></OnePost>
