@@ -53,28 +53,25 @@ components:
 },
 methods:{
   lock:function(event){
-    // this.locked=true;
-    // alert('done');
+
 if(event=='Lock'){
      this.locked=false;
-     //alert(this.locked);
+    
 }
 else{this.locked=true;
      }
   },
   hide(e){
-    // alert("emitted succesffuly on display one post");
-    //alert(e);
+   
   }
 
 },
 updated(){
 
-//  alert("Display one post updated");
 
 },
 created(){
-  // alert("Display one post created ");
+ 
 },
   data(){
     return{
@@ -109,15 +106,7 @@ background-color: #DAE0E6;
  
 }
 .sidebar{
-  // width:25%;
-  // height: auto;
-  // margin:8%;
-  // margin-left: 3%;
-  // margin-right: 6%;
-  // /* background-color:white; */
-  //  float:right;
-  // padding-top: 0%;
-  //  display: inline-block;
+
 
 }
 

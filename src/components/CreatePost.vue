@@ -357,8 +357,18 @@ this.apexComId=this.apexs[this.indx-1].id;
    		// }
        //console.log(formData);
      //  alert('aho ana gey');
-     AllServices.submit(this.apexComId,this.title,this.bodyPost,this.imgName,this.videoUrl,this.isLocked,this.$localStorage.get('token'));
-            // alert('انا تعبت ');
+    //  this.postData.id=' ';
+     AllServices.submit(this.apexComId,this.title,this.bodyPost,this.imgName,this.videoUrl,this.isLocked,this.$localStorage.get('token'));//.then((data) => {
+      //  alert('ahllann');
+      //  if(data){
+      //   //  alert('enta ya 7ag');
+      //     // this.points=data.votes;
+      //     this.postData.id=data.id;
+      //   }});
+
+
+     
+              // swal('انا تعبت ');
             // if(data){
             //       alert('heeey');
             //     this.postData.id=data.id;

@@ -12,7 +12,7 @@ token:'1',
 
   },
   methods:{
-    submitPost: function(apexComId,title,bodyPost,imgName,videoUrl, isLocked,token,mimic, baseUrl){
+    submitPost:function(apexComId,title,bodyPost,imgName,videoUrl, isLocked,token,mimic, baseUrl){
       
       if(mimic){
          if(this.$localStorage.login){
@@ -34,24 +34,22 @@ else {
       token:this.$localStorage.get('token'),
       body:bodyPost,
       isLocked:isLocked
+      
 
    },
    {
      headers:{"Content-Type": "application/json"
              }}).then(response=>{
-              // alert('انا زهقت');
+               alert('انا زهقت');
       swal('Post Submitted successfully');
-      // alert(response.data.id);
+     
       return  response.data;
     
        }).catch(function (error){
-        //  console.log(apexComId);
-        //  console.log(title);
-        //  console.log(this.$localStorage.get('token'));
-        //  console.log(bodyPost);
-        //  console.log(isLocked);
+       
     swal("Oops!", "Something went wrong!", "error");
- 
+
+        alert(error);
      return false;
    })
 
@@ -114,10 +112,7 @@ else {
    }).catch(function (error){
      console.log(imgName);
      swal("Oops!", "Something went wrong! الصوره ", "error");
-  //console.log(imgName);
- // console.log(apexComId);
-  //console.log(imgName);
-  //console.log(isLocked);
+ 
  
   
      return false;

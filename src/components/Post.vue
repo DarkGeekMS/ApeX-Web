@@ -43,7 +43,6 @@
           <textarea  @keyup="store" v-if="this.showEditTextArea" class="form-control" rows="7" id="textarea">{{postData.content}}</textarea> 
           
           <button @click="saveChange" v-if="this.showEditTextArea" class="btn btn-primary postButton" id="saveEdit">SAVE</button>
-          <!-- <button  v-if="this.showEditTextArea" class="btn btn-primary postButton" id="cancel">CANCEL</button> -->
           
 <iframe  v-show ="postData.videolink!==null" width="100%" height="315"  :src=postData.videolink frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
@@ -74,9 +73,11 @@ Comments</button>
       <li ><a href="#"  @click="Hide" class="HIDE"><i class="fa fa-ban" id="HideIcon"></i>Hide</a></li>
       <li><a  @click="report" class="HIDE"><i class="glyphicon glyphicon-flag" id="ReportIcon" ></i>Report</a></li>
       <li v-if="postData.canEdit"><a href="#" @click="editText" ><i class="glyphicon glyphicon-pencil" id="ReportIcon"></i>edit</a></li>
-      <li v-if="postData.canEdit"><a href="#" @click="deletePost" ><i class="glyphicon glyphicon-pencil"></i>edit</a></li>
+      <!-- <li v-if="postData.canEdit"><a href="#" @click="deletePost" ><i class="glyphicon glyphicon-pencil"></i>delete</a></li> -->
+      <li v-if="owner()"><a href="#" @click="deletePost" ><i class="glyphicon glyphicon-pencil"></i>delete</a></li>
       <!-- <li><a href="#" @click="isLocked" v-show="isAdmin() || isModerator()"> -->
       <li><a href="#" @click="isLocked" v-show="false">
+      <!-- <li><a href="#" @click="isLocked" v-show="owner"> -->
         
         <i v-if="Locked=='unlock'" class="fa fa-lock" id="ReportIcon"></i>
         <i v-if="Locked=='Lock'" class="fa fa-unlock" id="ReportIcon"></i>
@@ -155,35 +156,13 @@ export default {
          },
 
   methods: {
-  //    isModerator:function()
-  //     {
-  //       if(this.$localStorage.get('login')){
-  //       AllServices.userType().then((data) =>{
-  //       if(data.type ==2){
-  //         this.moderator=true;
-  //         return true;
-  //         }
-  //       else{
-  //         return false;
-  //       }
-  //       })
-  //       }
-  //     },
-  //  isAdmin:function()
-  //     {
-       
-  //       if(this.$localStorage.get('login')){
-  //       AllServices.userType().then((data) =>{
-  //       if(data.type ==1){
-  //         return true;
-  //         }
-  //       else{
-  //         return false;
-  //       }
-  //       })
-  //       }
-  //     },
-   
+ 
+   owner(){
+      if(this.$localStorage.get('')==this.postData.post_writer_username){
+        return true;
+      }
+    return false;
+   },
     saveChange(){
     
           this.postData.content= document.getElementById("textarea").value; 
@@ -217,7 +196,7 @@ export default {
         if(this.ShowModalVar == true){
         this.ToggleShowModalVar();
     }
-     // alert('lock successfully');
+   
      
      if(this.Locked=='Lock'){
 
@@ -242,7 +221,7 @@ export default {
        if(this.ShowModalVar == true){
            this.ToggleShowModalVar();
         } 
-       // this.$emit('Edit');
+       
         this.showEditTextArea=true;
        
 
@@ -256,7 +235,7 @@ export default {
          if(this.ShowModalVar == true){
          this.ToggleShowModalVar();
        }
-        this.PostId=postData.id;
+        this.PostId=this.postData.id;
         AllServices.deletePost(this.PostId,this.$localStorage.get('token'));
 
    },
@@ -273,7 +252,7 @@ export default {
             {
             this.Not_Hide=false;
             this.is_Hide=true;
-           // alert('emit aho');
+      
             this.$emit('HIDE','nada');
            
             }
@@ -289,7 +268,7 @@ export default {
        ,
     changeColor_up()
     {
-     //alert('before '+this.points);
+   
       if(this.$localStorage.get('login') ){
       if(this.ShowModalVar == true){
       this.ToggleShowModalVar();
@@ -332,7 +311,7 @@ export default {
               
                   }});
                   
-                //  alert('after '+this.points);
+               
 
       }
       
@@ -389,7 +368,7 @@ export default {
                  
                  }});
                
-                  // alert('after '+this.points);
+                
               }
               else{
                 alert('Login First !!');
@@ -480,12 +459,7 @@ created(){
         this.pressed_up      =true;
    }
 
-      /*
-      axios.get("http://localhost/me",{token:this.token}).then(response=>{this.userId=response.userID}).catch(function (error)
-       {
-        console.log(error);
-      });
-      */
+   
 
        if(this.userId==2){
         this.moderator=true;
@@ -493,9 +467,7 @@ created(){
        
 },
 computed: {
-  // timestamp: function () {
-  //   return moment(this.<model>.attributes['created-at']).format('YYYY-MM-DD [at] hh:mm')
-  // }
+ 
 }
 ,
 components:{
@@ -505,27 +477,10 @@ components:{
   },
   mounted(){
    
-  // if(this.postData.saved="Saved"){
-  //   this.Saved="Saved";
-
-  // }
-  // else{
-  //   this.Saved="unsaved";
-  // }
- 
-   
- //  this.Saved=this.postData.saved;
-  // this.points=this.postData.votes;
-      
-//     alert('votess');
-//  this.votes=postData.votes;
+  
   },
   updated() {
-    //  this.$emit('HIDE','nada');
-    // if(!this.Not_Hide){
-      
-    // }
-    //alert("post updated");
+   
     
      if(this.postData.upvoted){
         this.className_up    = 'btn btn-light btn-sm is-red';
@@ -541,22 +496,10 @@ components:{
     }
     
   this.postData.votes=this.points;
-//  this.Not_Hide=this.hide;
- // this.postData.saved=this.Saved;
-//  if(this.postData.saved="Saved"){
-//      this.Saved="Saved";
 
-//    }
-//    else{
-//      this.Saved="unsaved";
-//    }
  
   this.postData.upvoted=this.upVoted;
-  // if(this.postData.hide==true){
-  //   this.Not_Hide=false;
-  // }
-  //this.hide=this.postData.hide;
- // this.points=this.postData.votes;
+  
   },
 }
 

@@ -124,17 +124,20 @@ var data= MimicPost.downvote(ID,points,downVoted,upState,this.mimic, this.baseUr
 return data;
 }
 ,
-deletePost:function(name,ID){
+deletePost:function(postID,token){
 
 
-  return MimicPost.deletePost(name,ID,this.mimic, this.baseUrl);
+  return MimicPost.deletePost(postID,token,this.mimic, this.baseUrl);
 },
 
 EditPost: function(ID,content){
   var data=MimicPost.EditPost(ID,content,this.mimic, this.baseUrl);
   return data;
 },
-
+isLocked:function(ID){
+var data=MimicPost.isLocked(ID,this.mimic,this.baseUrl);
+return data;
+},
 userType:function(){
   var data=MimicUserProfile.getUserType(this.mimic, this.baseUrl);
   return data;
