@@ -63,14 +63,14 @@ else{this.locked=true;
      }
   },
   hide(e){
-    alert("emitted succesffuly on display one post");
+    // alert("emitted succesffuly on display one post");
     //alert(e);
   }
 
 },
 updated(){
 
- alert("Display one post updated");
+//  alert("Display one post updated");
 
 },
 created(){

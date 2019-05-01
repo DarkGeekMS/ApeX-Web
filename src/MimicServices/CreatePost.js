@@ -39,9 +39,9 @@ else {
    {
      headers:{"Content-Type": "application/json"
              }}).then(response=>{
-              alert('انا زهقت');
+              // alert('انا زهقت');
       swal('Post Submitted successfully');
-      alert(response.data.id);
+      // alert(response.data.id);
       return  response.data;
     
        }).catch(function (error){
