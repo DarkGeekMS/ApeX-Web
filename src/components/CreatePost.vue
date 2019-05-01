@@ -11,53 +11,53 @@
       <div class="form-group dropApex" >
         <select id="selectList" class="form-control" name="category" @change="handleChange">
           <option>choose a community</option>
-           
-         <option v-for="apex in apexs[0]" :key="apex.id"> 
-          
+
+         <option v-for="apex in apexs" :key="apex.id">
+
                {{apex.name}}
-            
-             </option>        
-         
+
+             </option>
+
           </select>
        </div>
-       
+
       <body class="panel bodyPost">
           <form>
 
             <div class="form-group">
 
-  
+
                   <div id="root" class="container" >
-                   
+
                     <tabs>
                       <div class="form-group">
-                      
+
                              <input type="text" class="form-control" id="usr" placeholder="title" @keyup="Enable">
                            </div>
                        <tab  name="Post" :selected="true">
-                         
+
             <div id="fancy">
-              
-                          
-     
+
+
+
                           <a  id="switchId"  @click="switchM" >{{this.switchTo}} </a>
                           <div v-if="this.normal==false">
                               <ejs-richtexteditor ref="rteObj" :toolbarSettings="toolbarSettings" id="textsend" @keyup="Enable" >
-                              
-                    
-                              </ejs-richtexteditor> 
+
+
+                              </ejs-richtexteditor>
                               </div>
                               <textarea class="form-control" rows="5" id="textsendnormal" @keyup="Enable" v-else>
-                    
+
                               </textarea>
                   </div>
-            
-  
+
+
                           <button  class="btn btn-primary postButton" @click="submitPost"  disabled  id="button">POST</button>
                        </tab>
 
                        <tab name="Image" >
-                      
+
                           <div class="panel imgBox">
 
                              <div class="helper">
@@ -88,7 +88,7 @@
                           </tab>
 
                           <tab name="Link" >
-                             
+
                                 <textarea class="form-control" rows="3" id="textsend3" placeholder="Url" @keyup="Enable"></textarea>
                                <button  class="btn btn-primary postButton" @click="submitPost"  disabled  id="button3">POST</button>
                            </tab>
@@ -106,7 +106,7 @@
 
        </form>
 
- 
+
     </body>
   </div>
 
@@ -119,7 +119,8 @@ import tabs from './PostTabs.vue'
 import Vue from "vue"
 import {AllServices} from '../MimicServices/AllServices.js'
 import { RichTextEditorPlugin, Toolbar, HtmlEditor } from "@syncfusion/ej2-vue-richtexteditor";
-import HomeSideBar from "./HomeSideBar.vue"
+// import HomeSideBar from "./HomeSideBar.vue"
+// import { error } from 'util';
 Vue.use(RichTextEditorPlugin);
 
 /**
@@ -140,11 +141,7 @@ export default {
   props:{
     EditData:{}
   },
-   components:{
 
-    'SideBar':HomeSideBar,
-    
-  },
     data(){
       return {
 
@@ -154,18 +151,24 @@ export default {
        }
 
         ],
+
         switchTo:'Switch to Fancy Pants Editor',
         normal:true,
         isCreated:false,
         indx:null,
         enable:true,
         imgName:'',
+        imgContent:'',
+        file:'',
         token:'',
         apexComId:'',
+        fillTitle:false,
         bodyPost:'',
         avatar:'',
         title:'',
         apexs:[],
+        selected:false,
+        selected2:false,
         image: '',
         videoUrl:'',
         isLocked:0,
@@ -204,23 +207,17 @@ export default {
       else{
         this.switchTo='Switch to Fancy Pants Editor';
       }
-  /* console.log(this.normal);
-   console.log(this.switchTo);*/
+
       },
 handleChange(){
 
 var sel = document.getElementById('selectList');
 
-var opt = sel.options[sel.selectedIndex];
+// var opt = sel.options[sel.selectedIndex];
 this.indx=sel.selectedIndex;
 this.Enable();
-this.apexComId=this.apexs[0][this.indx-1].id;
-// alert(this.apexComId);
+this.apexComId=this.apexs[this.indx-1].id;
 
-//alert(this.apexComId);
-
-// display value property of select list (from selected option)
-//console.log(this.indx);
 
 },
      /**
@@ -229,25 +226,42 @@ this.apexComId=this.apexs[0][this.indx-1].id;
      */
 
          Enable(){
-     //alert(this.indx);
-	 if(document.getElementById("textsendnormal").value==="" || document.getElementById("usr").value==="" || this.indx ==null ||this.indx==0)  {
+       if(document.getElementById("usr").value===""){
+         this.fillTitle=true;
+       }
+       else{
+          this.fillTitle=false;
+       }
+       if(this.indx==null){
+          this.selected=true;
+       }
+       else{
+          this.selected=false;
+       }
+       if(this.indx==0){
+            this.selected2=true;
+       }
+       else{
+         this.selected2=false;
+       }
+
+        if(this.selected2||document.getElementById("textsendnormal").value==="" || this.fillTitle ||this.selected){
             document.getElementById('button').disabled = true;
-            
-        } else {
+
+        }  else {
             document.getElementById('button').disabled = false;
-            this.title=document.getElementById("usr").value;
-             
+
         }
 
 
 
-         	 if(document.getElementById("textsend3").value==="" || document.getElementById("usr").value==="" || this.indx ==null ||this.indx==0)  {
+        if(this.selected2||document.getElementById("textsend3").value==="" || this.fillTitle ||this.selected){
             document.getElementById('button3').disabled = true;
-           
-        } else {
+
+        }   else {
             document.getElementById('button3').disabled = false;
             this.videoUrl=document.getElementById("textsend3").value;
-            this.title=document.getElementById("usr").value;
+
         }
 
 
@@ -255,9 +269,9 @@ this.apexComId=this.apexs[0][this.indx-1].id;
             document.getElementById('button2').disabled = true;
         } else {
             document.getElementById('button2').disabled = false;
-            this.title=document.getElementById("usr").value;
-        }
 
+        }
+           this.title=document.getElementById("usr").value;
 
     },
      /**
@@ -273,11 +287,11 @@ this.apexComId=this.apexs[0][this.indx-1].id;
      * when the user upload the img it enable the post button and store the img src
      */
       onChange(e) {
-
+        this.imgContent = e.target.files[0];
         var files = e.target.files;
         this.createFile(files[0]);
-         this.imagable=true;
-         this.Enable();
+        this.imagable=true;
+        this.Enable();
 
       },
        /**
@@ -285,19 +299,18 @@ this.apexComId=this.apexs[0][this.indx-1].id;
      */
       createFile(file) {
         if (!file.type.match('image.*')) {
-          alert('Select an image');
+
           return;
         }
-       // var img = new Image();
+
         var reader = new FileReader();
         var vm = this;
 
         reader.onload = function(e) {
           vm.image = e.target.result;
-          
-          this.avatar=vm.image; 
-        
-          console.log(this.avatar);
+
+          this.imgName=vm.image;
+
         }
         reader.readAsDataURL(file);
 
@@ -316,6 +329,7 @@ this.apexComId=this.apexs[0][this.indx-1].id;
      */
 
     submitPost(){
+
        if(this.normal){
          this.bodyPost=document.getElementById('textsendnormal').value;
        }
@@ -323,40 +337,45 @@ this.apexComId=this.apexs[0][this.indx-1].id;
          this.bodyPost=document.getElementById('textsendrte-view').value;
       }
 
- 
       if(this.imagable){
       this.imgName=document.getElementById('imgId').src;
-     
-     
       }
+
       if(this.videoUrl==''){
         this.videoUrl=null;
       }
        if(this.image==''){
         this.imgName=null;
+        this.imgContent=null;
       }
+
       var today = new Date();
       var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
       var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
       var dateTime = date+' '+time;
-     
-      
-      
-      var result=AllServices.submit(this.apexComId,this.title,this.bodyPost,this.imgName,this.videoUrl,this.isLocked,this.$localStorage.get('token'));
-    //  if(!result){
-    //  swal("Oops!", "Something went wrong!", "error");
+      let formData = new FormData();
 
-   //    }
- //    else{
-       this.$emit('PostEmit',dateTime,this.title,this.bodyPost,this.imgName,this.videoUrl,this.$localStorage.get('userName'),this.apexs[0][this.indx-1].name);
-      
-      this.$router.push('/Submit');
-     //  }
+      if(this.imgName!=null){
+           formData.append('img_name', this.imgContent, this.imgContent.name);
+      }
+
+      if(this.videoUrl != null){
+        formData.append('video_url', this.videoUrl);
+      }
+
+      formData.append('ApexCom_id', this.apexComId);
+      formData.append('title', this.title);
+      formData.append('body', this.bodyPost);
+      formData.append('token', this.$localStorage.get('token'));
+      formData.append('isLocked', this.isLocked);
+
+      AllServices.submit(formData);
+
+      this.$emit('PostEmit',dateTime,this.title,this.bodyPost,this.imgName,this.videoUrl,this.$localStorage.get('userName'),this.apexs[this.indx-1].name);
+
+      //this.$router.push('/Submit');
     }
-
     },
-
-
 
 
     components:{
@@ -372,18 +391,15 @@ created(){
       {
         if(data)
         {
-          // alert('feeh data aho');
-        
-          this.apexs = data;
-          // console.log(data[0]);
+
+
+          this.apexs = data.apexComs;
+
         }
       });
 
-//       if(EditData.canEdit){
-// // document.getElementById("textsendnormal").value=EditData.content;
-//         alert('edit now');
-//       }
-  
+
+
 }
 
 
@@ -410,7 +426,7 @@ margin-left:55%;
     padding-top: 6%;
     border-bottom: 1px solid rgb(237, 239, 241);
     color:black;
- 
+
 }
 
 .form-control{
@@ -475,7 +491,7 @@ margin-left:55%;
    margin-bottom: 100%;
    margin-left: 5.5%;
    margin-top:0.5%;
-   
+
 
 }
 .post2{
@@ -607,7 +623,7 @@ input[type="file"] {
   width: 100%;
   margin-left: 20%;
   align:center;
-  
+
 }
 .check{
 
@@ -651,76 +667,76 @@ height: 30%;
 .e-richtexteditor.e-rte-tb-expand {
     border: 1px solid rgba(0, 0, 0, 0.12);
      width: 70% !important;
-  
-    
-   
+
+
+
 }
 @media (max-width:959px){
  .bodyPost{
       width:100%;
       margin-left:0%;
-      
+
   }
  .form-control{
       width:100%;
-      
-      
+
+
   }
  .btnImage{
   /* width:30%; */
   font-size: 50%;
-  
+
 }
 
 
-} 
+}
 
 @media (max-width:1300px){
    .form-control{
       width:60%;
-      
-      
+
+
   }
  .imgBox{
    width: 50%;
  }
-  
+
 }
 
 @media (max-width:2000px){
 
   .drop1 {
-  
+
   padding-top: 0%;
   margin-inline-start: 0%;
 
 }
 @media (max-width:200px){
-  
+
  .btnImage{
        margin: -32%;
        font-size: 30%;
 }
-  
+
 }
 @media (max-width:100px){
-  
+
  .btnImage{
        margin: -63%;
       font-size: 10%;
 }
-  
+
 }
 
 
 @media (max-width:115px){
-  
+
  .btnImage{
       padding:0%;
       font-size: 10%;
-  
+
 }
-  
+
 }
 }
 

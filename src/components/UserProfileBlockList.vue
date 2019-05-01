@@ -3,7 +3,7 @@
   <h4 v-show="blockList.length ==0" >there is nothing to show </h4>
   <div v-show="blockList.length !=0" id="box" class="box" v-for="(user,index) in blockList" :key="user.id">
     <div class="name">
-    <p style="font-size:16px">{{user.userName}}</p>
+    <p style="font-size:16px">{{user.username}}</p>
       </div>
     <button id="button" v-on:click="unblockUser(user.id,index)">unblock</button>
   </div>
@@ -29,6 +29,9 @@ export default {
   },
   methods:
   {
+    /**
+    * used to unblock user
+    */
     unblockUser:function(name,index){
     AllServices.blockUser(name).then((data) =>{
      if(data){
@@ -40,6 +43,9 @@ export default {
        }
        })
     },
+    /**
+    * returns the block list of certian user
+    */
     getBlockList:function(){
         AllServices.getBlockList().then((data) =>{
           console.log(data);

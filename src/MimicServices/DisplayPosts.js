@@ -16,7 +16,7 @@ export  const MimicDisplayPosts =new Vue({
               locked:false,
               commenets_count:5,
               votes:1000,
-              img:'',
+              img:null,
               videolink:'https://www.youtube.com/embed/Va0Rq147SRU',
               created_at:"2019-03-23 17:20:45",
               updates_at:null,
@@ -33,7 +33,7 @@ export  const MimicDisplayPosts =new Vue({
               created_at:"2019-04-26 17:20:45",
               title:'Avengers Endgame😲',
               content:'Software costs more to maintain than it does to develop. For systems with a long life, maintenance costs may be several times development costs😮 ',
-              videolink:'',
+              videolink:null,
               img:'https://cnet3.cbsistatic.com/img/xLgPeuq6CW9A2N2V2kKmhMT6h2o=/1092x0/2019/03/14/dd4d8d9c-5f16-4f6b-a7d8-65a00d095c2c/avengers-endgame-poster-square-crop.jpg'
             },
             {
@@ -42,7 +42,7 @@ export  const MimicDisplayPosts =new Vue({
               apex_id:'nature',
               title:'sea',
               content:'I love javascript ,vue ,html ,css 🐸🐸🐸',
-              videolink:'',
+              videolink:null,
               img:'https://cdn.pixabay.com/photo/2016/04/15/04/02/water-1330252__340.jpg',
               created_at:"2019-04-23 17:20:45",
               updates_at:null,
@@ -61,7 +61,7 @@ export  const MimicDisplayPosts =new Vue({
               updates_at:null,
               apex_com_name:"take care",
               post_writer_user:"marc",
-              videolink:"" ,
+              videolink:null ,
               img:'http://bashkatibnews.com/contents/article/515_lybfjrmf.jpg'
             }
             ,{
@@ -83,7 +83,7 @@ export  const MimicDisplayPosts =new Vue({
               updates_at:null,
               apex_com_name:"leader care",
               post_writer_user:"SHAWKY",
-              video_url:''
+              video_url:null
             },
           ];
           var promise1 = new Promise(function(resolve, reject) {
@@ -105,13 +105,17 @@ return promise1;
 
                     locked:false,
                     commenetnum:5,
-                    votes:9
+                    votes:9,
+                    videolink:null,
+                    img:null
                   },{
                     id:'444',
                     posted_by:'marc',
                     apex_id:'444',
                     title:'dj',
-                    content:'I love javascript ,vue ,html ,css 🐸🐸🐸'
+                    content:'I love javascript ,vue ,html ,css 🐸🐸🐸',
+                    videolink:null,
+                    img:null
                   }
                 ];
                 var promise1 = new Promise(function(resolve, reject) {

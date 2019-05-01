@@ -39,12 +39,32 @@ getUserInfoById: function(mimic,userName, baseUrl){
 
     if(mimic){
 var profileInfo={
-    userName:'',
-    image:'https://i.imgur.com/AMFz23O.jpg',
-    karma:9,
-    personalPosts:[{},{}],
-    cakeDay:'March 15, 2019',
-    fullName:'nourhan'
+  userData: {
+    username: "King",
+    fullname: "Martin Luther King",
+    karma: 1,
+    avatar: "https://i.imgur.com/AMFz23O.jpg"
+},
+posts: [
+    {
+        id: "t3_6",
+        posted_by: "t2_4",
+        apex_id: "t5_2",
+        title: "Anything",
+        img: null,
+        videolink: null,
+        content: null,
+        locked: 0,
+        created_at: "2019-03-23 17:20:35",
+        updated_at: null,
+        current_user_vote: 0,
+        current_user_saved_post: false,
+        votes: 0,
+        comments_count: 0,
+        apex_com_name: "New dawn",
+        post_writer_username: "King"
+    }
+]
 }
 var promise = new Promise(function(resolve) {
   setTimeout(function() {
@@ -58,7 +78,7 @@ else {
     return axios.post(baseUrl + 'api/UserData',  {
       username:userName,
       token:this.$localStorage.get('token'),
-      
+
   })
   .then(response=> {
     return response.data;
@@ -185,13 +205,22 @@ getUserType: function(mimic, baseUrl){
 else {
     return axios.post(baseUrl + 'api/Me', {
              token:this.$localStorage.get('token')
-            })
-            .then(response=> {
-              return response.data;
-             })
-            .catch(function (error) {
-              // console.log(error);
-            });
+           })
+             .then(response=> {
+               return response.data;
+              })
+             .catch(function (error) {
+               // console.log(error);
+             });/*
+      axios.post(baseUrl + 'api/Me', {
+      token:this.$localStorage.get('token')
+     })
+     .then(function (response) {
+      return response;
+    })
+    .catch(function (error) {
+      alert(error);
+    });*/
 }
 },
 
@@ -218,12 +247,32 @@ getUserInfoByIdforGuest:function(mimic,userName, baseUrl){
   // alert(userName);
   if(mimic){
     var profileInfo={
-        userName:'',
-        image:'https://i.imgur.com/AMFz23O.jpg',
-        karma:9,
-        personalPosts:[{},{}],
-        cakeDay:'ِjune 15, 2019',
-        fullName:''
+      userData: {
+        username: "King",
+        fullname: "Martin Luther King",
+        karma: 1,
+        avatar: "https://i.imgur.com/AMFz23O.jpg"
+    },
+    posts: [
+        {
+            id: "t3_6",
+            posted_by: "t2_4",
+            apex_id: "t5_2",
+            title: "Anything",
+            img: null,
+            videolink: null,
+            content: null,
+            locked: 0,
+            created_at: "2019-03-23 17:20:35",
+            updated_at: null,
+            current_user_vote: 0,
+            current_user_saved_post: false,
+            votes: 0,
+            comments_count: 0,
+            apex_com_name: "New dawn",
+            post_writer_username: "King"
+        }
+    ]
     }
     var promise = new Promise(function(resolve) {
       setTimeout(function() {
@@ -273,7 +322,7 @@ blockUser:function(mimic,userName, baseUrl){
 },
 getBlockList(mimic, baseUrl){
   if(mimic){
-    var info=[{userName:'user1'},{userName:'user1'},{userName:'user1'},{userName:'user1'},{userName:'user1'},{userName:'user1'}]
+    var info=[{username:'user1'},{username:'user1'},{username:'user1'},{username:'user1'},{username:'user1'},{username:'user1'}]
 
       var promise = new Promise(function(resolve) {
         setTimeout(function() {

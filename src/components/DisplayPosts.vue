@@ -1,10 +1,21 @@
 <template>
   <div id="DisplayPosts">
-    <div id="PostContainer" v-for="onePost in posts">
+    <div id="PostContainer" v-for="onePost in posts" :key="onePost.id">
+     <post
+      v-bind:postData="onePost"
+      v-on:showUp="showPost"
+      v-on:lockComment="ifLock"
+      v-on:HIDE="hide_Post"
+      v-show="!(onePost.id=='')"
+      >
+      </post>
+    <!-- <div :id="'PostContainer'+i++" v-for="onePost in posts">
      <post v-bind:postData="onePost" v-on:showUp="showPost" v-on:lockComment="ifLock"></post>
+    </div> -->
     </div>
-    <OnePost  id="PostModal" :onePostData="postInfo"></OnePost>
+    <OnePost  id="PostModal" :onePostData="postInfo"   v-on:HIDE="hide_Post" ></OnePost>
     <!-- v-bind:style="{width: 80 +'%'}" -->
+
   </div>
 </template>
 
@@ -22,24 +33,39 @@ export default {
     apexComName:String,
     sortparam:String,
     postData:{}// VERY IMPORTANT TO PREVENT THE ERRORS IN CONSOLE
+    ,postInfo:{
+      ID:'0'
+    }
     },
 data(){
 return{
-  postInfo:'',
-  posts:'',
 
+  posts:'',
+  // hide:false,
+  id:'0',
+
+  // i:0
 
      }
 },
 mounted:function () {
   this.getPosts();
-  },
 
+  },
+updated(){
+
+
+
+
+},
+created(){
+
+},
 
 methods:
 {
    ifLock(e){
-
+     return e;
 
    },
   /**
@@ -48,20 +74,25 @@ methods:
   showPost:function(post)
     {
     this.postInfo=post;
+
+    },
+    hide_Post(e){
+      return e;
+
+    //  this.id=e;
+
+
     },
     /**
     * request gets posts from a certain ApexCom
     */
    getPosts(){
-     // if(AllServices.getState()){
-       // this.posts= AllServices.getPosts(this.apexComName);
-     // }
-     // else{
-     
+
+
          AllServices.getPosts(this.apexComName,this.sortparam).then((data) => {
           this.posts= data;
          })
-   // }
+
 }
 },
 components:{

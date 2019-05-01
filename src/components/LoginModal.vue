@@ -1,6 +1,6 @@
 <template>
 
-<modal name="demo-login" transition="pop-out" width="50%" height="70%" :clickToClose="false" >
+<modal name="demo-login" transition="pop-out" width="50%" height="70%" :clickToClose="false" @before-open="beforeOpen" >
   <ForgetPass/> 
   <ForgetUser/>
 
@@ -121,6 +121,10 @@ export default {
       this.$modal.hide('demo-login');
       this.$modal.hide('forget-user');
       this.$modal.hide('ForgetPass');
+    },
+    beforeOpen:function(){
+      this.congra = ''
+      this.error = ''
     }
   }
 }

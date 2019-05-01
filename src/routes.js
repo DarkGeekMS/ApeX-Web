@@ -22,9 +22,9 @@ export default[
       [
         {path:'/' ,name:'ApexComPosts',component:ApexComPosts},
         {path:'AddModerators',name:'AddModerators',component:ApexComModerator,props:true ,children :[
-          {path:'searchUser',name:'Moderators', component:ApexComAddModerator,props:true },
+          {path:'searchUser/:query',name:'Moderators', component:ApexComAddModerator,props:true },
         ]},
-        {path:'ApexPosts/:apexComName',name:'Posts',component:ApexComPosts,props:true,children:[
+        {path:'ApexPosts/:apexComId',name:'Posts',component:ApexComPosts,props:true,children:[
         {path:'Hot',name:'HotApexCom',component:Hot,props:true},
         {path:'New',name:'NewApexCom',component:New,props:true},
         {path:'Controversial',name:'ControversialApexCom',component:Controversial,props:true},

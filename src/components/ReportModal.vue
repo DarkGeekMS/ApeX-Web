@@ -43,6 +43,7 @@ export default {
     idx:Number
   },
   created () {
+  
   },
   methods:{
     first:function(){
