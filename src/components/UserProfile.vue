@@ -1,7 +1,7 @@
 <template id="profiledesign">
 <div id='userprofile'>
     <div id='firstnavbar'>
-      
+
         <a style="font-size: 16px;"  id="posttab" class="navbarlinks" href="#">posts</a>
         <a style="font-size: 16px;"  id="savedtab" v-show="notGuest" class="navbarlinks" href="#">saved</a>
         <a style="font-size: 16px;"  id="hiddentab" v-show="notGuest" class="navbarlinks" href="#">hidden</a>
@@ -60,7 +60,7 @@ export default {
     isModeratorFunction:function()
       {
         AllServices.userType().then((data) =>{
-        if(data.type ==2){
+        if(data.user.type ==2){
           this.isModerator= true;
           }
         else{
@@ -158,13 +158,13 @@ export default {
   /* padding: 0;
   margin: 0;
   list-style: none;
-  
+
   display: -webkit-box;
   display: -moz-box;
   display: -ms-flexbox;
   display: -webkit-flex;
   display: flex;
-  
+
   -webkit-flex-flow: row wrap;
   justify-content: space-around; */
 }

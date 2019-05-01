@@ -22,9 +22,9 @@ export  const AllServices =new Vue({
     getState(){
       return this.mimic
     },
-    submit:function(apexComId,title,bodyPost,imgName,videoUrl, isLocked,token){
+    submit:function(fd){
 
-      var data=MimicCreatePosts.submitPost(apexComId,title,bodyPost,imgName,videoUrl, isLocked,token,this.mimic, this.baseUrl);
+      var data=MimicCreatePosts.submitPost(fd,this.mimic, this.baseUrl);
 
       return data;
 
@@ -105,7 +105,7 @@ export  const AllServices =new Vue({
     return userInfo;
   },
   save:function(token,ID){
-   
+
     return MimicPost.save(token,ID,this.mimic, this.baseUrl);
   },
 Hide:function(name,ID){
@@ -114,7 +114,7 @@ return MimicPost.Hide(name,ID,this.mimic, this.baseUrl);
 upvote:function(ID,points,upVoted,downState){
 
   var data= MimicPost.upvote(ID,points,upVoted,downState,this.mimic, this.baseUrl);
- 
+
   return data;
 },
 downvote:function(ID,points,downVoted,upState){

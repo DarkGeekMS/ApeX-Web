@@ -78,7 +78,7 @@ else {
     return axios.post(baseUrl + 'api/UserData',  {
       username:userName,
       token:this.$localStorage.get('token'),
-      
+
   })
   .then(response=> {
     return response.data;
@@ -203,15 +203,15 @@ getUserType: function(mimic, baseUrl){
     return promise;
 }
 else {
-    // return axios.post(baseUrl + 'api/Me', {
-    //          token:this.$localStorage.get('token')
-    //         })
-    //         .then(response=> {
-    //           return response.data;
-    //          })
-    //         .catch(function (error) {
-    //           // console.log(error);
-    //         });
+    return axios.post(baseUrl + 'api/Me', {
+             token:this.$localStorage.get('token')
+           })
+             .then(response=> {
+               return response.data;
+              })
+             .catch(function (error) {
+               // console.log(error);
+             });/*
       axios.post(baseUrl + 'api/Me', {
       token:this.$localStorage.get('token')
      })
@@ -220,7 +220,7 @@ else {
     })
     .catch(function (error) {
       alert(error);
-     });
+    });*/
 }
 },
 
