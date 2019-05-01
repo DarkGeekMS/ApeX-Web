@@ -72,9 +72,9 @@ Comments</button>
     <ul class="dropdown-menu" id="dropMenu">
       <li ><a href="#"  @click="Hide" class="HIDE"><i class="fa fa-ban" id="HideIcon"></i>Hide</a></li>
       <li><a  @click="report" class="HIDE"><i class="glyphicon glyphicon-flag" id="ReportIcon" ></i>Report</a></li>
-      <li v-if="owner"><a href="#" @click="editText" ><i class="glyphicon glyphicon-pencil" id="ReportIcon"></i>edit</a></li>
+      <li v-if="postData.canEdit"><a href="#" @click="editText" ><i class="glyphicon glyphicon-pencil" id="ReportIcon"></i>edit</a></li>
       <!-- <li v-if="postData.canEdit"><a href="#" @click="deletePost" ><i class="glyphicon glyphicon-pencil"></i>delete</a></li> -->
-      <li v-if="owner"><a href="#" @click="deletePost" ><i class="glyphicon glyphicon-trash"></i>delete</a></li>
+      <li v-if="postData.canEdit"><a href="#" @click="deletePost" ><i class="glyphicon glyphicon-trash"></i>delete</a></li>
       <!-- <li><a href="#" @click="isLocked" v-show="isAdmin() || isModerator()"> -->
       <li><a href="#" @click="isLocked" v-show="false">
       <!-- <li><a href="#" @click="isLocked" v-show="owner"> -->
@@ -159,11 +159,13 @@ export default {
  
    owner(){
       if(this.$localStorage.get('userName')==this.postData.post_writer_username){
+       
         return true;
       }
       if(this.postData.canEdit){
         return true;
       }
+      return false;
    },
     saveChange(){
     
