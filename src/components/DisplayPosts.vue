@@ -65,7 +65,7 @@ created(){
 methods:
 {
    ifLock(e){
-
+     return e;
 
    },
   /**
@@ -75,10 +75,9 @@ methods:
     {
     this.postInfo=post;
   
-   // alret(this.postInfo.hide);
     },
     hide_Post(e){
-      alert('emitted successfully on DisplayPosts');
+      return e;
       
     //  this.id=e;
   
@@ -88,15 +87,12 @@ methods:
     * request gets posts from a certain ApexCom
     */
    getPosts(){
-     // if(AllServices.getState()){
-       // this.posts= AllServices.getPosts(this.apexComName);
-     // }
-     // else{
+     
 
          AllServices.getPosts(this.apexComName,this.sortparam).then((data) => {
           this.posts= data;
          })
-   // }
+  
 }
 },
 components:{

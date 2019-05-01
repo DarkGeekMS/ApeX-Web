@@ -73,11 +73,11 @@ else {
     
       swal('Post Submitted successfully');
       
-      return true;
+      return response.data;
      
 
  
-   }).catch(function (error){
+   }).catch(function (){
     swal("Oops!", "Something went wrong!", "error");
     
     
@@ -105,11 +105,11 @@ else {
       
      
       swal('Post Submitted successfully');
-      return true;
+      return response.data;
      
 
  
-   }).catch(function (error){
+   }).catch(function (){
    
      swal("Oops!", "Something went wrong! الصوره ", "error");
  
@@ -133,10 +133,11 @@ else {
    }).then(response=>{
       
       swal('Post Submitted successfully');
-      return true;
+      return response.data;
+     
     
  
-   }).catch(function (error){
+   }).catch(function (){
     swal("Oops!", "Something went wrong!", "error");
   
      return false;

@@ -363,11 +363,11 @@ this.apexComId=this.apexs[this.indx-1].id;
     
 
 
-        alert(this.postData.id);
+      
 
        
     
-       this.$emit(this.postData.id,'PostEmit',dateTime,this.title,this.bodyPost,this.imgName,this.videoUrl,this.$localStorage.get('userName'),this.apexs[this.indx-1].name);
+       this.$emit('PostEmit',this.postData.id,dateTime,this.title,this.bodyPost,this.imgName,this.videoUrl,this.$localStorage.get('userName'),this.apexs[this.indx-1].name);
       
       this.$router.push('/Submit');
 
