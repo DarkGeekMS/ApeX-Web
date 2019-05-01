@@ -17,12 +17,21 @@ token:'1',
       if(mimic){
          if(this.$localStorage.login){
 
-            return true;
+         //   return true;
 
-         }
-            return false;
-                }
-
+         var promise1 = new Promise(function(resolve, reject) {
+          setTimeout(function() {
+            resolve(true);
+          }, 300);
+        });
+        return promise1;
+      }
+      var promise1 = new Promise(function(resolve, reject) {
+          setTimeout(function() {
+            resolve(false);
+          }, 300);
+        });
+      }
 else {
   if((fd.get('video_url')==null) &&(fd.get('img_name')==null)){
     axios.post(baseUrl + "api/SubmitPost", fd)
