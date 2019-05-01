@@ -5,7 +5,7 @@
     <div class="name">
     <router-link class="accountLink" :to="{name:'UserProfile' , params: {userName:subscriber.username}}"> {{subscriber.username}}</router-link>
     <div class="img">
-        <img style="box-sizing: border-box; border-radius: 50%;" class="image" :src="subscriber.image" > 
+        <img style="box-sizing: border-box; border-radius: 50%;" class="image" :src="subscriber.avatar" > 
       </div>
       </div>
     <button id="removebutton" class="removeButton" v-on:click="blockUser(subscriber.id,index)">block</button>
@@ -18,8 +18,8 @@ import {AllServices} from '../MimicServices/AllServices.js'
 
 /**
  * @vue-data {JWT} [token='']  user Token
- * @vue-data {array}   subscribers - list of community subscribers
- * @vue-prop  {string} apexComName - community name
+ * @vue-data {array}   subscribersList - list of community subscribers
+ * @vue-prop  {string} apexComId - community ID
  */
 
 export default {
@@ -44,9 +44,12 @@ export default {
       this.subscribersList.splice(index, 1);
       }
     },
+    /**
+    * get the list of subscribers to this community
+    */
       getsubscribers(){
         AllServices.getSubscribers(this.apexComId).then((data) =>{
-          console.log(data);
+          console.log(data.subscribers);
         this.subscribersList=data.subscribers;
       })
     }

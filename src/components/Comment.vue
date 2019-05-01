@@ -193,6 +193,7 @@ Upvote:function(){
   var downState = this.downVoted;
   this.downVoted = false;
   AllServices.UpVoteComment(this.ID,this.points,this.upVoted,downState).then((data) => {
+    
        if(data){
           this.points=data.votes;
         }});

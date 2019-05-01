@@ -54,7 +54,7 @@ export  const MimicAuth =new Vue({
             this.$localStorage.set('login', false);
             this.$localStorage.set('token', '');
             this.$localStorage.set('userName', '');
-          }        
+          }
         }
         else{
           axios.post(baseUrl + 'api/SignOut',{
@@ -261,11 +261,11 @@ export  const MimicAuth =new Vue({
       {
         var names = [
           {
-            id : 1,
+            id : '1',
             name : 'apex1'
           },
           {
-            id : 2,
+            id : '2',
             name : 'apex2'
           }];
         var promise1 = new Promise(function(resolve){

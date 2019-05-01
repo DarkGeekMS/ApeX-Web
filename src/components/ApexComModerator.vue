@@ -13,7 +13,10 @@
 
 <script>
 import {AllServices} from '../MimicServices/AllServices.js'
-
+/**
+ * @vue-prop  {string} apexComId - community Id
+ * @vue-data  {string} searchVal - stores the string that user wants to search for
+*/
 export default {
 props:['apexComId'],
 components:{
@@ -26,7 +29,7 @@ components:{
   methods:
   {
      /**
-     * when search value isn't empty transfer to localStorage and go to route search
+     * when search value isn't empty send it by routes and go to Moderators 
      */
       search: function(){
         if( this.searchVal != '')

@@ -32,7 +32,7 @@
       <h3 class="Header" id="moderators box header">Moderators</h3>
       <div class="content" >
         <div id="moderatorsbox" class="box2" v-for="(moderator,index) in moderators" :key="moderator.id">
-          <router-link style="font-size: 14px;" class="accountLink" :to="{name:'UserProfile' , params: {userName:moderator.userID}}"> {{moderator.userID}}</router-link>
+          <router-link style="font-size: 14px;" class="accountLink" :to="{name:'UserProfile' , params: {userName:moderator.username}}"> {{moderator.username}}</router-link>
           <button v-show="isAdmin" style="width:35%; float: right; margin:0%" id="remove button" class="button1" v-on:click="deleteModerator(moderator.userID,index)">delete</button>
         </div>
 
@@ -48,16 +48,19 @@ import { constants } from 'crypto';
 
 /**
  * @vue-data {JWT} [token='']  user Token
- * @vue-data {string} [loggeduser='']  name of logged in user
- * @vue-data {boolean} [loggedIn='']  check if user is logged in
+ * @vue-data {string} [userName='']  user name
+ * @vue-data {boolean} [loggedIn=false]  check if user is logged in
  * @vue-data {array}   subscribers - list of community subscribers
  * @vue-data {string}   [state='subscribe'] - user state subsribed or not
  * @vue-data {boolean}   [subscribed=false] - check if user is subscriber or not
- * @vue-prop {number} subscribersCount - Number of subscribers for certain community
- * @vue-prop {string} description - community description
- * @vue-prop {array} moderators - moderators for certain community
- * @vue-prop  {array} rules - rules of certain community
- * @vue-prop  {string} apexComName - community name
+ * @vue-data {number} subscribersCount - Number of subscribers for certain community
+ * @vue-data {string} description - community description
+ * @vue-data {array} moderators - moderators for certain community
+ * @vue-data  {string} rules - rules of certain community
+ * @vue-prop  {string} apexComId - community Id
+ * @vue-data  {string} apexComName - community name
+ * @vue-data  {string} image - community image
+ * @vue-data  {boolean} [isAdmin=false] - boolean indicates if the user is admin or not
  */
 
 export default {
@@ -118,7 +121,7 @@ export default {
       */
       CheckUser:function(name)
     {
-      console.log(name+'hello');
+      // console.log(name+'hello');
       if( name.username == this.userName){
       return true;
       }
@@ -127,10 +130,10 @@ export default {
     * get the list of subscribers to this community
     */
     getSubscribers(){
-      if(this.loggedIn){
         AllServices.getSubscribers(this.apexComId).then((data) =>{
           console.log(this.userName);
-          console.log(data.subscribers[0].id+'side');
+          console.log(data+'meeeee');
+          // console.log(data.subscribers[0].id+'side');
         this.subscribers=data.subscribers;
       
         var subscribe = this.subscribers.find(this.CheckUser);
@@ -143,19 +146,19 @@ export default {
           this.state='subscribe';   
     }
     })
-      }
-      else{
-          this.subscribed=false;
-          this.state='subscribe';
-    }
+    //   }
+    //   else{
+    //       this.subscribed=false;
+    //       this.state='subscribe';
+    // }
    },
    /**
-       * if user is logged in , can go to create post or create community
+       * if user is logged in , can go to create post 
       */
       createPost: function(){
         if( this.loggedIn )
         {
-          alert('you have to log in, first');
+          this.$router.push('/Submit');
         }
         else{
            this.$modal.show('demo-login');
@@ -166,17 +169,24 @@ export default {
       */
       isAdminFunction:function()
       {
-        if(this.loggedIn){
-        AllServices.userType().then((data) =>{
+        // AllServices.userType().then((data) =>{
+        //   console.log(data[0]+'meeeee');
+        // if(data.type == 1){
+        //   this.isAdmin= true;
+        //   }
+        // else{
+        //   this.isAdmin= false;
+        // }
+        // })
+        var data= AllServices.userType();
           console.log(data+'meeeee');
-        if(data.type == 1){
-          this.isAdmin= true;
-          }
-        else{
-          this.isAdmin= false;
-        }
-        })
-        }
+        // if(data.type == 1){
+        //   this.isAdmin= true;
+        //   }
+        // else{
+        //   this.isAdmin= false;
+        // }
+        
       },
       /**
       *send request to subscribe or unsubsribe certain community
@@ -205,6 +215,9 @@ export default {
         alert('you have to log in, first');
       }
     },
+    /**
+      *used by admin to delete moderator
+      */
     deleteModerator:function(userName,index){
           var data = AllServices.addOrDeleteModerator(userName,this.apexComId);
           if(data){
@@ -214,6 +227,9 @@ export default {
               alert('sorry something went wrong');
               }
       },
+      /**
+      *get the details of certain community for user
+      */
     getAbout(){
          AllServices.getAbout(this.apexComId).then((about) => {
            console.log(about);
@@ -221,10 +237,13 @@ export default {
          this.moderators=about.moderators;
          this.rules=about.rules;
          this.apexComName=about.name;
-         this.image=about.image;
+         this.image=about.avatar;
          this.subscribersCount=about.subscribers_count;
          });
    },
+   /**
+      *get the details of certain community for guest
+      */
    getAboutGuest(){
          AllServices.getAboutGuest(this.apexComId).then((about) =>{
            console.log(about);
@@ -232,7 +251,7 @@ export default {
          this.moderators=about.moderators;
          this.apexComName=about.name;
          this.rules=about.rules;
-         this.image=about.image;
+         this.image=about.avatar;
          this.subscribersCount=about.subscribers_count;
          });
    },

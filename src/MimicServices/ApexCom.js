@@ -7,16 +7,23 @@ export  const MimicApexCom =new Vue({
       // alert(ApexComName);
       if(mimic){
   var about={
-    rules:['rule1','rule2','rule3'],
-    subscribersCount:78,
-    description:'this is just the mimic server',
-    moderators:[
-      {userName:'moderator1'},
-    {userName:'moderator1'},
-    {userName:'moderator1'},
-    {userName:'moderator1'}
-  ],
-  image:'https://i.imgur.com/AMFz23O.jpg',
+    "contributers_count": 2,
+    moderators: [
+        
+          {"userID": "t2_3",
+          username:'nourhan',},
+          {"userID": "t2_3",
+          username:'nourhan',},
+          {"userID": "t2_3",
+          username:'nourhan',},
+          {"userID": "t2_3",
+          username:'nourhan'}
+    ],
+    subscribers_count: 0,
+    name: "New dawn",
+    description: "The name says it all.",
+    rules: "NO RULES",
+  avatar:'https://i.imgur.com/AMFz23O.jpg',
   }
   var promise = new Promise(function(resolve) {
     setTimeout(function() {
@@ -41,18 +48,24 @@ else {
   getAboutGuest: function(mimic,ApexComName, baseUrl){
     if(mimic){
 var about={
-  rules:['rule1','rule2','rule3'],
-  subscribersCount:78,
-  description:'this is just the mimic server',
-  moderators:[
-    {userName:'moderator1'},
-  {userName:'moderator2'},
-  {userName:'moderator3'},
-  {userName:'moderator4'}
-],
-image:'https://i.imgur.com/AMFz23O.jpg',
+  "contributers_count": 2,
+  "moderators": [
+      {
+          "userID": "t2_3",
+          username:'nourhan',},
+          {"userID": "t2_3",
+          username:'nourhan',},
+          {"userID": "t2_3",
+          username:'nourhan',},
+          {"userID": "t2_3",
+          username:'nourhan'}
+  ],
+  subscribers_count: 0,
+  name: "New dawn",
+  description: "The name says it all.",
+  rules: "NO RULES",
+avatar:'https://i.imgur.com/AMFz23O.jpg',
 banner:'https://i.imgur.com/AMFz23O.jpg',
-name:'movies'
 };
 
 var promise = new Promise(function(resolve) {
@@ -81,17 +94,17 @@ return axios.get(baseUrl + 'api/AboutApexcom',{params: {
 getSubscribers: function(mimic,apexComName, baseUrl){
   // alert(apexComName);
     if(mimic){
-var subscribersList=[
-  {userName:'subscriber1',
-  image:'https://i.imgur.com/AMFz23O.jpg'},
-  {userName:'subscriber2',
-  image:'https://i.imgur.com/AMFz23O.jpg'},
-  {userName:'subscriber3',image:'https://i.imgur.com/AMFz23O.jpg'},
-  {userName:'subscriber4',image:'https://i.imgur.com/AMFz23O.jpg'}
+var subscribers=[
+  {
+      id: "t2_1017",
+      fullname: null,
+      username: "ms16",
+      avatar: "https://i.imgur.com/AMFz23O.jpg",
+  }
 ]
 var promise = new Promise(function(resolve) {
   setTimeout(function() {
-    resolve(subscribersList);
+    resolve(subscribers);
   }, 300);
 });
 return promise;
@@ -358,7 +371,7 @@ searchU: function(mimic, query,baseUrl)
           resolve(result);
         }, 300)
         });
-      return result
+      return promise1
     }
     else{
       return 'Sorry, there were no results for'
