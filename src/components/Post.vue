@@ -1,10 +1,10 @@
-<template id="PostTemlate">
+<template id="PostTemlate" >
 
-  <div class="postMod">
+  <div class="postMod" >
     <!-- VERY IMPORTANT! REPORT MODAL APPEARS MULTIPLE TIMES FOR EACH POST  -->
    <reportBox v-show="showReport"> </reportBox>
     
-<div class="panel panel-default"  @click="ShowModal()" v-show="Not_Hide" id="post">
+<div class="panel panel-default"  @click="ShowModal()"  id="post" v-show="Not_Hide">
 
     <div class="panel-body">
     <div class="panel2 panel-default"  id="postSide">
@@ -256,7 +256,7 @@ export default {
          this.ToggleShowModalVar();
        }
         this.PostId=postData.id;
-       AllServices.deletePost(this.PostId,this.$localStorage.get('token'));
+        AllServices.deletePost(this.PostId,this.$localStorage.get('token'));
 
    },
   /**
@@ -272,12 +272,13 @@ export default {
             {
             this.Not_Hide=false;
             this.is_Hide=true;
-            
-
+           // alert('emit aho');
+            this.$emit('HIDE','nada');
+           
             }
             
-        this.PostId=this.postData.id;
-        AllServices.Hide(this.PostId,this.$localStorage.get('token'));
+          this.PostId=this.postData.id;
+          AllServices.Hide(this.PostId,this.$localStorage.get('token'));
 
          }
          else{
@@ -325,6 +326,7 @@ export default {
                this.downVoted = false;
                AllServices.upvote(this.PostId,this.points,this.upVoted,downState).then((data) => {
             if(data){
+             
                 this.points=data.votes;
               
                   }});
@@ -439,11 +441,11 @@ export default {
       ShowModal(){
         this.isModal=true;
         if(this.ShowModalVar == true){
-          // this.postData.hide=this.is_Hide;
-          // this.postData.votes=this.points;
-          // this.postData.upvoted=this.upVoted;
-          // this.postData.downvoted=this.downVoted;
-          this.$emit('showUp',this.postData,);
+          this.postData.hide=this.is_Hide;
+          this.postData.votes=this.points;
+          this.postData.upvoted=this.upVoted;
+          this.postData.downvoted=this.downVoted;
+          this.$emit('showUp',this.postData);
    
           this.$modal.show('Demo-OnePost');
         }
@@ -458,8 +460,9 @@ export default {
               },
 },
 props: {
+
 postData:{
-  hide:false,
+ 
  
   upvoted:false,
   downvoted:false,
@@ -500,20 +503,7 @@ components:{
   
   },
   mounted(){
-    if(this.postData.upvoted){
-        this.className_up    = 'btn btn-light btn-sm is-red';
-        this.pressed_up      =true;
-        this.className_down = 'btn btn-light btn-sm is-gray';
-        this.pressed_down=false;
-    }
-    else if(this.postData.downvoted){
-      this.className_up    = 'btn btn-light btn-sm is-gray';
-      this.className_down = 'btn btn-light btn-sm is-blue';
-      this.pressed_down=true;
-      this.pressed_up      =false;
-    }
-    
-  this.postData.votes=this.points;
+   
   // if(this.postData.saved="Saved"){
   //   this.Saved="Saved";
 
@@ -528,7 +518,45 @@ components:{
       
 //     alert('votess');
 //  this.votes=postData.votes;
-  }
+  },
+  updated() {
+    //  this.$emit('HIDE','nada');
+    // if(!this.Not_Hide){
+      
+    // }
+    //alert("post updated");
+    
+     if(this.postData.upvoted){
+        this.className_up    = 'btn btn-light btn-sm is-red';
+        this.pressed_up      =true;
+        this.className_down = 'btn btn-light btn-sm is-gray';
+        this.pressed_down=false;
+    }
+    else if(this.postData.downvoted){
+      this.className_up    = 'btn btn-light btn-sm is-gray';
+      this.className_down = 'btn btn-light btn-sm is-blue';
+      this.pressed_down=true;
+      this.pressed_up      =false;
+    }
+    
+  this.postData.votes=this.points;
+//  this.Not_Hide=this.hide;
+ // this.postData.saved=this.Saved;
+//  if(this.postData.saved="Saved"){
+//      this.Saved="Saved";
+
+//    }
+//    else{
+//      this.Saved="unsaved";
+//    }
+ 
+  this.postData.upvoted=this.upVoted;
+  // if(this.postData.hide==true){
+  //   this.Not_Hide=false;
+  // }
+  //this.hide=this.postData.hide;
+ // this.points=this.postData.votes;
+  },
 }
 
 

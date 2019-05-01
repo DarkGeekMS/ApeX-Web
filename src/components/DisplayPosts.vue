@@ -1,9 +1,17 @@
 <template>
   <div id="DisplayPosts">
-    <div id="PostContainer" v-for="onePost in posts">
-     <post v-bind:postData="onePost" v-on:showUp="showPost" v-on:lockComment="ifLock"></post>
+    <div id="PostContainer" v-for="onePost in posts" :key="onePost.id">
+     <post 
+      v-bind:postData="onePost" 
+      v-on:showUp="showPost"
+      v-on:lockComment="ifLock"
+      v-on:HIDE="hide_Post" 
+      v-show="!(onePost.id=='')"
+      >
+      </post>
     </div>
-    <OnePost  id="PostModal" :onePostData="postInfo"></OnePost>
+    
+    <OnePost  id="PostModal" :onePostData="postInfo"   v-on:HIDE="hide_Post" ></OnePost>
     <!-- v-bind:style="{width: 80 +'%'}" -->
   </div>
 </template>
@@ -22,19 +30,33 @@ export default {
     apexComName:String,
     sortparam:String,
     postData:{}// VERY IMPORTANT TO PREVENT THE ERRORS IN CONSOLE
+    ,postInfo:{
+      ID:'0'
+    }
     },
 data(){
 return{
-  postInfo:'',
+ 
   posts:'',
+  hide:false,
+  id:'0'
 
 
      }
 },
 mounted:function () {
   this.getPosts();
+  
   },
+updated(){
 
+
+
+
+},
+created(){
+
+},
 
 methods:
 {
@@ -48,6 +70,15 @@ methods:
   showPost:function(post)
     {
     this.postInfo=post;
+  
+   // alret(this.postInfo.hide);
+    },
+    hide_Post(e){
+      alert('emitted successfully on DisplayPosts');
+      
+    //  this.id=e;
+  
+
     },
     /**
     * request gets posts from a certain ApexCom

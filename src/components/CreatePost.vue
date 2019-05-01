@@ -120,6 +120,7 @@ import Vue from "vue"
 import {AllServices} from '../MimicServices/AllServices.js'
 import { RichTextEditorPlugin, Toolbar, HtmlEditor } from "@syncfusion/ej2-vue-richtexteditor";
 import HomeSideBar from "./HomeSideBar.vue"
+import { error } from 'util';
 Vue.use(RichTextEditorPlugin);
 
 /**
@@ -160,6 +161,7 @@ export default {
         indx:null,
         enable:true,
         imgName:'',
+        file:'',
         token:'',
         apexComId:'',
         bodyPost:'',
@@ -273,11 +275,12 @@ this.apexComId=this.apexs[this.indx-1].id;
      * when the user upload the img it enable the post button and store the img src
      */
       onChange(e) {
-
+       // this.imgName = this.$refs.imgName.files[0];
+      
         var files = e.target.files;
         this.createFile(files[0]);
-         this.imagable=true;
-         this.Enable();
+        this.imagable=true;
+        this.Enable();
 
       },
        /**
@@ -295,9 +298,10 @@ this.apexComId=this.apexs[this.indx-1].id;
         reader.onload = function(e) {
           vm.image = e.target.result;
           
-          this.avatar=vm.image; 
-        
-          // console.log(this.avatar);
+          this.imgName=vm.image; 
+          // var formData=new FormData();
+          // formData.append('file',imgName)
+          //  console.log(formData);
         }
         reader.readAsDataURL(file);
 
@@ -339,10 +343,33 @@ this.apexComId=this.apexs[this.indx-1].id;
       var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
       var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
       var dateTime = date+' '+time;
-     
+    if(this.imgName!=null){
+         var formData = new FormData();
+         formData.append("file", this.imgName);
+    }
       
-      
-      var result=AllServices.submit(this.apexComId,this.title,this.bodyPost,this.imgName,this.videoUrl,this.isLocked,this.$localStorage.get('token'));
+       //console.log(this.imgName);
+      // var imagefile = this.imgName;
+      //  console.log(formData);
+        
+      // for(var pair of formData.entries()) {
+    	// 	console.log(pair[0]+ ', '+ pair[1]); 
+   		// }
+       //console.log(formData);
+     //  alert('aho ana gey');
+     AllServices.submit(this.apexComId,this.title,this.bodyPost,this.imgName,this.videoUrl,this.isLocked,this.$localStorage.get('token'));
+            // alert('انا تعبت ');
+            // if(data){
+            //       alert('heeey');
+            //     this.postData.id=data.id;
+              
+            //       }
+            //       else{
+            //         alert('la la ');
+            //       }});
+        alert(this.postData.id);
+
+       
     //  if(!result){
     //  swal("Oops!", "Something went wrong!", "error");
 

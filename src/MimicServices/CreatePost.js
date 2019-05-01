@@ -25,6 +25,8 @@ token:'1',
 
 else {
   if((imgName==null) &&(videoUrl==null)){
+  
+
     axios.post(baseUrl + "api/SubmitPost",{
       
       ApexCom_id:apexComId,
@@ -37,11 +39,17 @@ else {
    {
      headers:{"Content-Type": "application/json"
              }}).then(response=>{
-       
+              alert('انا زهقت');
       swal('Post Submitted successfully');
-
-      return true;
+      alert(response.data.id);
+      return  response.data;
+    
        }).catch(function (error){
+        //  console.log(apexComId);
+        //  console.log(title);
+        //  console.log(this.$localStorage.get('token'));
+        //  console.log(bodyPost);
+        //  console.log(isLocked);
     swal("Oops!", "Something went wrong!", "error");
  
      return false;
@@ -80,16 +88,14 @@ else {
 
   }
   else if(videoUrl==null){
-    var formData = new FormData();
-    var imagefile = imgName;
-    formData.append("image", imagefile.files[0]);
+
     axios.post(baseUrl + "api/SubmitPost",{
       
       ApexCom_id:apexComId,
       title:title, 
       token:this.$localStorage.get('token'),
       
-      img_name:formData,
+      img_name:imgName,
       isLocked:isLocked
 
     
@@ -99,15 +105,15 @@ else {
    },{headers:{  'Content-Type': 'application/x-www-form-urlencoded'}
   }).then(response=>{
       
-    
+     
       swal('Post Submitted successfully');
       return true;
      
 
  
    }).catch(function (error){
-    
-    swal("Oops!", "Something went wrong!", "error");
+     console.log(imgName);
+     swal("Oops!", "Something went wrong! الصوره ", "error");
   //console.log(imgName);
  // console.log(apexComId);
   //console.log(imgName);

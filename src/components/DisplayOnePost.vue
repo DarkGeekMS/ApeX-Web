@@ -1,9 +1,16 @@
 <template>
 <div id="DisplayOnePost" class="modalview">
-<modal id="PopupModal" name="Demo-OnePost" :scrollable="true"  transition="pop-out"  width="90%" height="90%" >
+<modal id="PopupModal" name="Demo-OnePost" :scrollable="true"  transition="pop-out"  width="90%" height="90%">
   <div id="PostContent" class="postContent">
     <div>
-  <post v-bind:postData="onePostData" class="mainpost" id="postModal" v-on:lockComment="lock($event)"></post>
+      
+  <post
+    v-bind:postData="onePostData"
+    v-on:HIDE="hide"
+    class="mainpost" 
+    id="postModal"
+    v-on:lockComment="lock($event)"
+  ></post>
   </div>
  <ApexComSideBar class="sidebar"></ApexComSideBar>
    
@@ -34,7 +41,9 @@ import ApexComSideBar from "./ApexComSideBar.vue"
 export default {
 name: 'DemoOnePost',
 props:{
-  onePostData:{}
+  onePostData:{
+    
+  }
 },
 components:
 {
@@ -52,15 +61,28 @@ if(event=='Lock'){
 }
 else{this.locked=true;
      }
+  },
+  hide(e){
+    alert("emitted succesffuly on display one post");
+    //alert(e);
   }
 
+},
+updated(){
+
+ alert("Display one post updated");
+
+},
+created(){
+  // alert("Display one post created ");
 },
   data(){
     return{
 
       locked:false,
       postOwnerUserName : "hohoho",
-      moderatorUserName : 'FF'
+      moderatorUserName : 'FF',
+      hide:false
     };
       }
       
