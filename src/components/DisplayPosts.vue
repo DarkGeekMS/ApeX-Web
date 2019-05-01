@@ -1,6 +1,6 @@
 <template>
   <div id="DisplayPosts">
-    <div id="PostContainer" v-for="onePost in posts" :key="onePost.id">
+    <div  :id="'PostContainer'+i++" v-for="onePost in posts" :key="onePost.id">
      <post 
       v-bind:postData="onePost" 
       v-on:showUp="showPost"
@@ -9,10 +9,13 @@
       v-show="!(onePost.id=='')"
       >
       </post>
-    </div>
+    <!-- <div :id="'PostContainer'+i++" v-for="onePost in posts">
+     <post v-bind:postData="onePost" v-on:showUp="showPost" v-on:lockComment="ifLock"></post>
+    </div> -->
     
     <OnePost  id="PostModal" :onePostData="postInfo"   v-on:HIDE="hide_Post" ></OnePost>
     <!-- v-bind:style="{width: 80 +'%'}" -->
+  </div>
   </div>
 </template>
 
@@ -38,9 +41,10 @@ data(){
 return{
  
   posts:'',
-  hide:false,
-  id:'0'
+  // hide:false,
+  id:'0',
 
+  i:0
 
      }
 },
@@ -88,7 +92,7 @@ methods:
        // this.posts= AllServices.getPosts(this.apexComName);
      // }
      // else{
-     
+
          AllServices.getPosts(this.apexComName,this.sortparam).then((data) => {
           this.posts= data;
          })

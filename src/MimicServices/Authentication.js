@@ -8,7 +8,6 @@ export  const MimicAuth =new Vue({
       password: '0000000',
       token: '01',
       code: '1234',
-      item:''
     }
   },
   methods:{
@@ -41,7 +40,6 @@ export  const MimicAuth =new Vue({
             this.$localStorage.set('login', true);
             return true;
           }).catch(function (error) {
-            console.log(error);
             self.$localStorage.set('error','That username is already taken');
             return false;
           });
@@ -59,7 +57,7 @@ export  const MimicAuth =new Vue({
           }        
         }
         else{
-            axios.post(baseUrl + 'api/SignOut',{
+          axios.post(baseUrl + 'api/SignOut',{
             token : this.$localStorage.get('token')
           }).then(response =>{
             if(response.data.token == null)
@@ -125,12 +123,14 @@ export  const MimicAuth =new Vue({
       }
       else{
         var self = this;
-        return axios.post(baseUrl + 'api/MailVirification', {
+        return axios.post(baseUrl + 'api/MailVerification', {
             username : user,
             email : email
           }).then(response => {
-              this.item = response.data;
+            if(response.data.msg === "Email sent successfully")
+            {
              return true;
+            }
           }).catch(function () {
              self.$localStorage.set('error','Username is not found');
              return false;
@@ -157,8 +157,10 @@ export  const MimicAuth =new Vue({
             code : code,
             username: user
           }).then(response => {
-            this.item = response.data;
-            return true;
+            if( response.data.authorized == true)
+            {
+              return true;
+            }
           }).catch(function () {
             self.$localStorage.set('error','Invalid code');
             return false;
@@ -179,7 +181,6 @@ export  const MimicAuth =new Vue({
             username: ''  ,
             key: ''  ,
           }).then(response => {
-            this.item = response.data;
             return true;
           }).catch(function () {
             self.$localStorage.set('error','Invalid password');
@@ -208,8 +209,10 @@ export  const MimicAuth =new Vue({
             password : pass,
             email : email
           }).then(response => {
-            this.item = response.data;
-            return true;
+            if(response.data.msg === "Email sent successfully")
+            {
+              return true;
+            }
           }).catch(function () {
             self.$localStorage.set('error','There was an error sending your request. Please try again');
              return false;
@@ -242,7 +245,10 @@ export  const MimicAuth =new Vue({
             code : code,
            // email : email
           }).then(response => {
-             return response.data.username;
+            if( response.data.authorized == true)
+            {
+              return response.data.username;
+            }
           }).catch(function () {
             self.$localStorage.set('error','There was an error sending your request. Please try again');
              return false;
@@ -256,11 +262,11 @@ export  const MimicAuth =new Vue({
       {
         var names = [
           {
-            id : 1,
+            id : '1',
             name : 'apex1'
           },
           {
-            id : 2,
+            id : '2',
             name : 'apex2'
           }];
         var promise1 = new Promise(function(resolve){

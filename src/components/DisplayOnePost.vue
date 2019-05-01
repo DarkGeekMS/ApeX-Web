@@ -82,7 +82,7 @@ created(){
       locked:false,
       postOwnerUserName : "hohoho",
       moderatorUserName : 'FF',
-      hide:false
+      // hide:false
     };
       }
       

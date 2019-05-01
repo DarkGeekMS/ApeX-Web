@@ -75,7 +75,8 @@ Comments</button>
       <li><a  @click="report" class="HIDE"><i class="glyphicon glyphicon-flag" id="ReportIcon" ></i>Report</a></li>
       <li v-if="postData.canEdit"><a href="#" @click="editText" ><i class="glyphicon glyphicon-pencil" id="ReportIcon"></i>edit</a></li>
       <li v-if="postData.canEdit"><a href="#" @click="deletePost" ><i class="glyphicon glyphicon-pencil"></i>edit</a></li>
-      <li><a href="#" @click="isLocked" v-show="isAdmin() || isModerator()">
+      <!-- <li><a href="#" @click="isLocked" v-show="isAdmin() || isModerator()"> -->
+      <li><a href="#" @click="isLocked" v-show="false">
         
         <i v-if="Locked=='unlock'" class="fa fa-lock" id="ReportIcon"></i>
         <i v-if="Locked=='Lock'" class="fa fa-unlock" id="ReportIcon"></i>
@@ -154,34 +155,34 @@ export default {
          },
 
   methods: {
-     isModerator:function()
-      {
-        if(this.$localStorage.get('login')){
-        AllServices.userType().then((data) =>{
-        if(data.type ==2){
-          this.moderator=true;
-          return true;
-          }
-        else{
-          return false;
-        }
-        })
-        }
-      },
-   isAdmin:function()
-      {
+  //    isModerator:function()
+  //     {
+  //       if(this.$localStorage.get('login')){
+  //       AllServices.userType().then((data) =>{
+  //       if(data.type ==2){
+  //         this.moderator=true;
+  //         return true;
+  //         }
+  //       else{
+  //         return false;
+  //       }
+  //       })
+  //       }
+  //     },
+  //  isAdmin:function()
+  //     {
        
-        if(this.$localStorage.get('login')){
-        AllServices.userType().then((data) =>{
-        if(data.type ==1){
-          return true;
-          }
-        else{
-          return false;
-        }
-        })
-        }
-      },
+  //       if(this.$localStorage.get('login')){
+  //       AllServices.userType().then((data) =>{
+  //       if(data.type ==1){
+  //         return true;
+  //         }
+  //       else{
+  //         return false;
+  //       }
+  //       })
+  //       }
+  //     },
    
     saveChange(){
     

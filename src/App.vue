@@ -2,7 +2,7 @@
   <div id="app" >
     <navbar></navbar>
     <button  @click="topFunction()" id="myBtn" class="btn blue" v-show="top()">BACK TO TOP </button>
-    <router-view :key="$route.fullPath"></router-view>
+    <router-view></router-view>
     <!-- <us></us> -->
  </div>
 </template>

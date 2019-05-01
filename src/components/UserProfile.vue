@@ -3,11 +3,11 @@
     <div id='firstnavbar'>
       
         <a style="font-size: 16px;"  id="posttab" class="navbarlinks" href="#">posts</a>
-        <a style="font-size: 16px;"  id="savedtab" v-show="notGuest()" class="navbarlinks" href="#">saved</a>
-        <a style="font-size: 16px;"  id="hiddentab" v-show="notGuest()" class="navbarlinks" href="#">hidden</a>
+        <a style="font-size: 16px;"  id="savedtab" v-show="notGuest" class="navbarlinks" href="#">saved</a>
+        <a style="font-size: 16px;"  id="hiddentab" v-show="notGuest" class="navbarlinks" href="#">hidden</a>
         <!-- <a style="font-size: 16px;"  id="reporttab" v-show="isModerator() && notGuest()" class="navbarlinks" href="#">report</a> -->
-        <router-link style="font-size: 16px;" v-show="isModerator() && notGuest()" id="reportlink" class="navbarlinks" :to="{name:'Report'}">view reports</router-link>
-        <router-link style="font-size: 16px;" v-show="notGuest()" id="reportlink" class="navbarlinks" :to="{name:'blockLlist'}">block list</router-link>
+        <router-link style="font-size: 16px;" v-show="isModerator && notGuest" id="reportlink" class="navbarlinks" :to="{name:'Report'}">view reports</router-link>
+        <router-link style="font-size: 16px;" v-show="notGuest" id="reportlink" class="navbarlinks" :to="{name:'blockLlist'}">block list</router-link>
     </div>
         <SideBar
         v-bind:settings="true"
@@ -25,15 +25,11 @@ import $ from'jquery/dist/jquery.min.js'
 
 
 /**
- * @vue-data {JWT} [token='']  user Token
  * @vue-data {string} [loggeduser='']  name of logged in user
- * @vue-data {boolean} [loggedIn='']  check if user is logged in
- * @vue-data {number} karmaCount - Number of karma
- * @vue-data {string} [image]  Url of user profile image
- * @vue-data {array} personalPosts - user personal posts
- * @vue-data  {array} savedPosts - user saved posts
- * @vue-data  {array} hiddenPosts - user hidden posts
- * @vue-data  {array} reports - reports of communities that the user is moderator of
+ * @vue-data {boolean} loggedIn  check if user is logged in
+ * @vue-prop  {string} userName - user name
+ * @vue-data  {boolean} [isModerator=false] - boolean indicates if the user is moderator or not
+ * @vue-data  {boolean} [notGuest=false] - boolean indicates if the user is in his profile or other user profile
  */
 
 export default {
@@ -45,6 +41,8 @@ export default {
     return {
       loggeduser:this.$localStorage.get('userName'),
       loggedIn:this.$localStorage.get('login'),
+      isModerator:false,
+      notGuest:false,
       // blockList:[],
     //   blockList:[
     //       {userName:'user1'},
@@ -59,33 +57,30 @@ export default {
     /**
      *check if user is moderator
     */
-    isModerator:function()
+    isModeratorFunction:function()
       {
-        if(this.loggedIn){
         AllServices.userType().then((data) =>{
         if(data.type ==2){
-          return true;
+          this.isModerator= true;
           }
         else{
-          return false;
+          this.isModerator= false;
           }
         })
-        }
       },
     /**
     * check if the user requesting his profile or other user profile
     */
-    notGuest:function(){
-      if(this.loggedIn){
+    notGuestFunction:function(){
       if(this.userName != this.loggeduser){
-        return false;
+        this.notGuest= false;
       }
       else{
-        return true;
+        this.notGuest= true;
       }
-      }else{
-        return false;
-      }
+      // }else{
+      //   this.notGuest=false;
+      // }
     },
   //   /**
   //   * get user profile info
@@ -133,6 +128,10 @@ export default {
   },
   mounted()
   {
+    if(this.loggedIn){
+    this.notGuestFunction();
+    this.isModeratorFunction();
+    }
     // if(this.loggedIn){
     // if(this.userName == this.loggeduser){
     //   this.getUserProfile();
