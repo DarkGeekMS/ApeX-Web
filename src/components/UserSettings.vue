@@ -3,12 +3,12 @@
 <div class='settings'>
   <ChangePass></ChangePass>
   <DelAcc></DelAcc>
-<h2 class="page-header">User settings</h2>
+<h2 id='settingshead' class="page-header">User settings</h2>
 <h6  class="page-header"><b>ACCOUNT PREFERENCES</b></h6>
 <div>
   <h2><button  id ="ChangeButton" type="button"  @click="showpass()">CHANGE</button></h2>
   <h2>Change password</h2>
-  <h6>Password must be at least 6 characters long</h6>
+  <h6 id='notepassword'>Password must be at least 6 characters long</h6>
 </div>
 <h6  class="page-header"><b>PROFILE INFORMATION</b></h6>
 <div>
@@ -25,7 +25,7 @@
 
   <!-- <h2><button  id ="ChangeButton" type="button"  @click="showmail()">CHANGE</button></h2> -->
 <div class="noti">
-  <label class="switch"><input type="checkbox"><span class="slider round"></span></label>
+  <label id='checkboxnotifie' class="switch"><input type="checkbox"><span class="slider round"></span></label>
   <h2>Allow Notifications</h2>
 </div>
 
@@ -33,7 +33,7 @@
 <div class="upload photos">
   <div class="samerow">
     <div class="box" @dragover.prevent @drop="onDrop">
-      <label class="borderbox view">
+      <label id='profilephoto' class="borderbox view">
         <div class=" margins">
           <svg class=" photo" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
             <g>
@@ -50,7 +50,7 @@
       </label>
     </div>
     <div class="box2">
-      <label class="borderbox view">
+      <label id='profilephoto' class="borderbox view">
         <div class=" margins">
           <svg class=" photo" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
             <g><polygon fill="inherit" opacity="0" points="0.610673352 20 20.625 20 20.625 0 0.610673352 0"></polygon>
@@ -68,14 +68,14 @@
   </div>
 </div>
 
-<button :disabled="check"  type="submit" style="margin-left:450px" @click.prevent="post()" id="ChangeButton">Save</button>
+<button :disabled="check"  type="submit" style="margin-left:450px" @click.prevent="post()" id="SaveButton">Save</button>
 </div>
 <h6  class="page-header"><b>DEACTIVATE ACCOUNT</b></h6>
 <div class="">
 </div>
 
 <div class="s19ceyn0-2 htFOkz">
-  <button class="s19ceyn0-1 knawbn" @click="showDel()">
+  <button id='deactivateaccount' class="s19ceyn0-1 knawbn" @click="showDel()">
     <svg class="s19ceyn0-0 iFmWTj" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
       <path d="M16.5,2H12.71l-.85-.85A.5.5,0,0,0,11.5,1h-3a.5.5,0,0,0-.35.15L7.29,2H3.5a.5.5,0,0,0-.5.5v1a.5.5,0,0,0,.5.5h13a.5.5,0,0,0,.5-.5v-1A.5.5,0,0,0,16.5,2Z"></path>
       <path d="M16.5,5H3.5a.5.5,0,0,0-.5.5v12A1.5,1.5,0,0,0,4.5,19h11A1.5,1.5,0,0,0,17,17.5V5.5A.5.5,0,0,0,16.5,5ZM6.75,15.5a.75.75,0,0,1-1.5,0v-7a.75.75,0,0,1,1.5,0Zm4,0a.75.75,0,0,1-1.5,0v-7a.75.75,0,0,1,1.5,0Zm4,0a.75.75,0,0,1-1.5,0v-7a.75.75,0,0,1,1.5,0Z"></path>
@@ -132,7 +132,7 @@ export default {
     AllServices.getPrefs();
     AllServices.updatePrefs();
     AllServices.changePass();
-    
+
     $('#selectted').text('User Settings');
     var remclass = $('#classed').prop('class');
     $('#classed').removeClass(remclass);

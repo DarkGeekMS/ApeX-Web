@@ -1,6 +1,6 @@
 <template>
   <div id="DisplayPosts">
-    <div id="PostContainer" v-for="onePost in posts">
+    <div :id="'PostContainer'+i++" v-for="onePost in posts">
      <post v-bind:postData="onePost" v-on:showUp="showPost" v-on:lockComment="ifLock"></post>
     </div>
     <OnePost  id="PostModal" :onePostData="postInfo"></OnePost>
@@ -27,7 +27,7 @@ data(){
 return{
   postInfo:'',
   posts:'',
-
+  i:0
 
      }
 },
@@ -57,7 +57,7 @@ methods:
        // this.posts= AllServices.getPosts(this.apexComName);
      // }
      // else{
-     
+
          AllServices.getPosts(this.apexComName,this.sortparam).then((data) => {
           this.posts= data;
          })
