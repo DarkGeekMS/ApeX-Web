@@ -40,7 +40,7 @@ else {
    {
      headers:{"Content-Type": "application/json"
              }}).then(response=>{
-               alert('انا زهقت');
+               
       swal('Post Submitted successfully');
      
       return  response.data;
@@ -80,7 +80,7 @@ else {
    }).catch(function (error){
     swal("Oops!", "Something went wrong!", "error");
     
-    // console.log(videoUrl);
+    
      return false;
    })
 
@@ -110,7 +110,7 @@ else {
 
  
    }).catch(function (error){
-     console.log(imgName);
+   
      swal("Oops!", "Something went wrong! الصوره ", "error");
  
  

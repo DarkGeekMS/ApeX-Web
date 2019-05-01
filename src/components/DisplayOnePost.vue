@@ -62,7 +62,7 @@ else{this.locked=true;
      }
   },
   hide(e){
-   
+  this.Hide=e;
   }
 
 },
@@ -79,7 +79,7 @@ created(){
       locked:false,
       postOwnerUserName : "hohoho",
       moderatorUserName : 'FF',
-      // hide:false
+       Hide:false
     };
       }
       

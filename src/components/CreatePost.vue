@@ -119,8 +119,8 @@ import tabs from './PostTabs.vue'
 import Vue from "vue"
 import {AllServices} from '../MimicServices/AllServices.js'
 import { RichTextEditorPlugin, Toolbar, HtmlEditor } from "@syncfusion/ej2-vue-richtexteditor";
-import HomeSideBar from "./HomeSideBar.vue"
-import { error } from 'util';
+// import HomeSideBar from "./HomeSideBar.vue"
+// import { error } from 'util';
 Vue.use(RichTextEditorPlugin);
 
 /**
@@ -141,11 +141,7 @@ export default {
   props:{
     EditData:{}
   },
-   components:{
-
-    'SideBar':HomeSideBar,
-    
-  },
+   
     data(){
       return {
 
@@ -164,10 +160,13 @@ export default {
         file:'',
         token:'',
         apexComId:'',
+        fillTitle:false,
         bodyPost:'',
         avatar:'',
         title:'',
         apexs:[],
+        selected:false,
+        selected2:false,
         image: '',
         videoUrl:'',
         isLocked:0,
@@ -206,23 +205,17 @@ export default {
       else{
         this.switchTo='Switch to Fancy Pants Editor';
       }
-  /* console.log(this.normal);
-   console.log(this.switchTo);*/
+  
       },
 handleChange(){
 
 var sel = document.getElementById('selectList');
 
-var opt = sel.options[sel.selectedIndex];
+// var opt = sel.options[sel.selectedIndex];
 this.indx=sel.selectedIndex;
 this.Enable();
 this.apexComId=this.apexs[this.indx-1].id;
- //alert(this.apexComId);
-
-//alert(this.apexComId);
-
-// display value property of select list (from selected option)
-//console.log(this.indx);
+ 
 
 },
      /**
@@ -231,25 +224,42 @@ this.apexComId=this.apexs[this.indx-1].id;
      */
 
          Enable(){
-     //alert(this.indx);
-	 if(document.getElementById("textsendnormal").value==="" || document.getElementById("usr").value==="" || this.indx ==null ||this.indx==0)  {
+       if(document.getElementById("usr").value===""){
+         this.fillTitle=true;
+       }
+       else{
+          this.fillTitle=false;
+       }
+       if(this.indx==null){
+          this.selected=true;
+       }
+       else{
+          this.selected=false;
+       }
+       if(this.indx==0){
+            this.selected2=true;
+       }
+       else{
+         this.selected2=false;
+       }
+      
+        if(this.selected2||document.getElementById("textsendnormal").value==="" || this.fillTitle ||this.selected){
             document.getElementById('button').disabled = true;
             
-        } else {
+        }  else {
             document.getElementById('button').disabled = false;
-            this.title=document.getElementById("usr").value;
-             
+         
         }
 
 
 
-         	 if(document.getElementById("textsend3").value==="" || document.getElementById("usr").value==="" || this.indx ==null ||this.indx==0)  {
+        if(this.selected2||document.getElementById("textsend3").value==="" || this.fillTitle ||this.selected){
             document.getElementById('button3').disabled = true;
            
-        } else {
+        }   else {
             document.getElementById('button3').disabled = false;
             this.videoUrl=document.getElementById("textsend3").value;
-            this.title=document.getElementById("usr").value;
+           
         }
 
 
@@ -257,9 +267,9 @@ this.apexComId=this.apexs[this.indx-1].id;
             document.getElementById('button2').disabled = true;
         } else {
             document.getElementById('button2').disabled = false;
-            this.title=document.getElementById("usr").value;
+           
         }
-
+           this.title=document.getElementById("usr").value;
 
     },
      /**
@@ -275,7 +285,7 @@ this.apexComId=this.apexs[this.indx-1].id;
      * when the user upload the img it enable the post button and store the img src
      */
       onChange(e) {
-       // this.imgName = this.$refs.imgName.files[0];
+     
       
         var files = e.target.files;
         this.createFile(files[0]);
@@ -291,7 +301,7 @@ this.apexComId=this.apexs[this.indx-1].id;
           alert('Select an image');
           return;
         }
-       // var img = new Image();
+      
         var reader = new FileReader();
         var vm = this;
 
@@ -299,9 +309,7 @@ this.apexComId=this.apexs[this.indx-1].id;
           vm.image = e.target.result;
           
           this.imgName=vm.image; 
-          // var formData=new FormData();
-          // formData.append('file',imgName)
-          //  console.log(formData);
+      
         }
         reader.readAsDataURL(file);
 
@@ -348,47 +356,21 @@ this.apexComId=this.apexs[this.indx-1].id;
          formData.append("file", this.imgName);
     }
       
-       //console.log(this.imgName);
-      // var imagefile = this.imgName;
-      //  console.log(formData);
-        
-      // for(var pair of formData.entries()) {
-    	// 	console.log(pair[0]+ ', '+ pair[1]); 
-   		// }
-       //console.log(formData);
-     //  alert('aho ana gey');
-    //  this.postData.id=' ';
-     AllServices.submit(this.apexComId,this.title,this.bodyPost,this.imgName,this.videoUrl,this.isLocked,this.$localStorage.get('token'));//.then((data) => {
-      //  alert('ahllann');
-      //  if(data){
-      //   //  alert('enta ya 7ag');
-      //     // this.points=data.votes;
-      //     this.postData.id=data.id;
-      //   }});
-
-
      
-              // swal('انا تعبت ');
-            // if(data){
-            //       alert('heeey');
-            //     this.postData.id=data.id;
-              
-            //       }
-            //       else{
-            //         alert('la la ');
-            //       }});
+      
+    
+     AllServices.submit(this.apexComId,this.title,this.bodyPost,this.imgName,this.videoUrl,this.isLocked,this.$localStorage.get('token'));
+    
+
+
         alert(this.postData.id);
 
        
-    //  if(!result){
-    //  swal("Oops!", "Something went wrong!", "error");
-
-   //    }
- //    else{
+    
        this.$emit('PostEmit',dateTime,this.title,this.bodyPost,this.imgName,this.videoUrl,this.$localStorage.get('userName'),this.apexs[this.indx-1].name);
       
       this.$router.push('/Submit');
-     //  }
+
     }
 
     },
@@ -409,17 +391,14 @@ created(){
       {
         if(data)
         {
-          // alert('feeh data aho');
+        
         
           this.apexs = data.apexComs;
-         //  console.log(data.apexComs);
+        
         }
       });
 
-//       if(EditData.canEdit){
-// // document.getElementById("textsendnormal").value=EditData.content;
-//         alert('edit now');
-//       }
+
   
 }
 
