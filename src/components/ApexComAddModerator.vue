@@ -25,9 +25,11 @@
 import {AllServices} from '../MimicServices/AllServices.js'
 import { constants } from 'crypto';
 /**
- * @vue-data {string} [users=""] users that reflect with search value  
+ * @vue-data {string} users users that reflect with search value  
  * @vue-data {boolean} [exist=true] if there is matching
  * @vue-data {string} [error=''] if there is no matching
+ * @vue-prop  {string} apexComId - community Id
+ * @vue-prop  {string} query - stores the string that user wants to search for
 */
 export default {
 props:['apexComId','query'],
@@ -36,11 +38,14 @@ props:['apexComId','query'],
       exist:true,
       error:'',
       users:[],
-      searchValue:''
+      // searchValue:''
     }
   },
   methods:
   {
+    /**
+      *used by admin to add moderator
+      */
       addModerator:function(userId){
         console.log(userId);
           console.log(this.apexComId);
@@ -55,6 +60,9 @@ props:['apexComId','query'],
   mounted()
   {
     console.log(this.query+'koook'); 
+    /**
+      *send the query to be searched for
+      */
     AllServices.searchU(this.query).then((data) =>{
           console.log(data);
           if(data.users.length == 0)

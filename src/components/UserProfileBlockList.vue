@@ -29,6 +29,9 @@ export default {
   },
   methods:
   {
+    /**
+    * used to unblock user
+    */
     unblockUser:function(name,index){
     AllServices.blockUser(name).then((data) =>{
      if(data){
@@ -40,6 +43,9 @@ export default {
        }
        })
     },
+    /**
+    * returns the block list of certian user
+    */
     getBlockList:function(){
         AllServices.getBlockList().then((data) =>{
           console.log(data);
