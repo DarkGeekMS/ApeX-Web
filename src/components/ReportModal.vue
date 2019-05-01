@@ -13,7 +13,7 @@
           <input v-on:click = "sixth" class = "radio" type="button" name="gender" value="It's involuntary pornography">
            <input v-on:click = "seventh" class = "radio" type="button" name="gender" value="It's a transaction for prohibited goods or services">
             <input v-on:click = "eighth" class = "radio" type="button" name="gender" value="It's threatening self-harm or suicide">
-    
+
     <button v-on:click = "close" id = "cancel">Cancel</button>
     <button v-on:click = "sendReport" id = "report" v-show = "enable">Send Report</button>
     <button v-on:click = "sendReport" id = "report2" v-show = "!enable" disabled>Send Report</button>
@@ -43,11 +43,9 @@ export default {
     idx:Number
   },
   created () {
-    console.log(this.idx,'ggg');
   },
   methods:{
     first:function(){
-      console.log(this.reason);
       if(this.reason == "It's spam or abuse"){
         this.reason = "none";
         this.enable = false;
@@ -68,7 +66,7 @@ export default {
         this.enable = false;
         this.checked = false;
 
-      }     
+      }
        else{
         this.enable = true;
         this.reason = "It infringes my copyright";
@@ -164,7 +162,6 @@ export default {
     sendReport:function(){
        AllServices.reportComment(this.ID,this.reason).then((data) => {
        if(data){
-         console.log("reported");
          this.checked = false;
       this.checkedLevel=0;
          this.$emit('Delete',this.idx);
@@ -247,7 +244,7 @@ label{
   font-style: bold;
   font-size:20px;
   background-color:rgb(19, 218, 108);
-  border: none; 
+  border: none;
 border-radius: 8px;
 padding-left: 1%;
 padding-right : 1%;
@@ -263,7 +260,7 @@ margin-right:2%;  height:15%;
   font-style: bold;
   font-size:20px;
   background-color:rgb(146, 245, 190);
-  border: none; 
+  border: none;
   color:rgb(255, 255, 255);
 
 }
@@ -272,12 +269,12 @@ border-radius: 8px;
 padding-left: 1%;
 padding-right : 1%;
 float:right;
-margin-right:2%;  
+margin-right:2%;
 height:15%;
   font-style: bold;
   font-size:16px;
   background-color:white;
-  border-color: rgb(5, 150, 70); 
+  border-color: rgb(5, 150, 70);
   border-width: 1px;
   color:rgb(5, 150, 70);
   padding-top:0.5%;
