@@ -34,13 +34,13 @@ return promise1;
 
          })
        .then(function (response) {
-         swal('success :)');
+         swal('edited successfully :)');
          return response;
-          // return true;
+       
         })
        .catch(function (error) {
         swal("Oops!", "Something went wrong!", "error");
-        // alert(ID);
+   
            return false;
         });
     }
@@ -88,18 +88,22 @@ return promise1;
                     }
 
             else{
-
+             
                 axios.DELETE(baseUrl + "api/Delete",{
                     name    : postID,
                     token : token
 
             }).then(response =>{
+            
+                  swal('deleted successfully :)');
                   return response.data;
              
 
 
-            }).catch(function (error)
+            }).catch(function ()
             {
+            
+             swal("Oops!", "Something went wrong!", "error");
              return false;
 
 

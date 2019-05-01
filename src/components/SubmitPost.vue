@@ -59,6 +59,7 @@ export default {
   
     
         if(content || img ||video){
+       
           this.isCreated=true;
           this.firstTime=false;
           this.createPostData.canEdit=true;

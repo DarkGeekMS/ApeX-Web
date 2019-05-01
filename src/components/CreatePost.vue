@@ -151,6 +151,7 @@ export default {
        }
 
         ],
+  
         switchTo:'Switch to Fancy Pants Editor',
         normal:true,
         isCreated:false,
@@ -298,7 +299,7 @@ this.apexComId=this.apexs[this.indx-1].id;
      */
       createFile(file) {
         if (!file.type.match('image.*')) {
-          alert('Select an image');
+         
           return;
         }
       
@@ -357,19 +358,26 @@ this.apexComId=this.apexs[this.indx-1].id;
     }
       
      
-      
     
-     AllServices.submit(this.apexComId,this.title,this.bodyPost,this.imgName,this.videoUrl,this.isLocked,this.$localStorage.get('token'));
     
+     AllServices.submit(this.apexComId,this.title,this.bodyPost,this.imgName,this.videoUrl,this.isLocked).then((data)=>{
+       
+        var id=data.id;
+        this.$emit('PostEmit',id,dateTime,this.title,this.bodyPost,this.imgName,this.videoUrl,this.$localStorage.get('userName'),this.apexs[this.indx-1].name);
+        this.$router.push('/Submit');
+     
+       
+     });
+
+   
 
 
       
 
        
     
-       this.$emit('PostEmit',this.postData.id,dateTime,this.title,this.bodyPost,this.imgName,this.videoUrl,this.$localStorage.get('userName'),this.apexs[this.indx-1].name);
       
-      this.$router.push('/Submit');
+     
 
     }
 

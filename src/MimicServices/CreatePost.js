@@ -12,22 +12,31 @@ token:'1',
 
   },
   methods:{
-    submitPost:function(apexComId,title,bodyPost,imgName,videoUrl, isLocked,token,mimic, baseUrl){
+    submitPost:function(apexComId,title,bodyPost,imgName,videoUrl, isLocked,mimic, baseUrl){
       
       if(mimic){
          if(this.$localStorage.login){
 
-            return true;
+         //   return true;
 
-         }
-            return false;
-                }
-
+         var promise1 = new Promise(function(resolve, reject) {
+          setTimeout(function() {
+            resolve(true);
+          }, 300);
+        });
+        return promise1;
+      }
+      var promise1 = new Promise(function(resolve, reject) {
+          setTimeout(function() {
+            resolve(false);
+          }, 300);
+        });
+      }
 else {
   if((imgName==null) &&(videoUrl==null)){
   
 
-    axios.post(baseUrl + "api/SubmitPost",{
+    return axios.post(baseUrl + "api/SubmitPost",{
       
       ApexCom_id:apexComId,
       title:title, 
@@ -40,10 +49,11 @@ else {
    {
      headers:{"Content-Type": "application/json"
              }}).then(response=>{
-               
-      swal('Post Submitted successfully');
      
+      swal('Post Submitted successfully');
+      
       return  response.data;
+      
     
        }).catch(function (error){
        
@@ -92,7 +102,6 @@ else {
       ApexCom_id:apexComId,
       title:title, 
       token:this.$localStorage.get('token'),
-      
       img_name:imgName,
       isLocked:isLocked
 
@@ -133,6 +142,7 @@ else {
    }).then(response=>{
       
       swal('Post Submitted successfully');
+     
       return response.data;
      
     

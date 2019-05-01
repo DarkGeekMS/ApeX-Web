@@ -72,9 +72,9 @@ Comments</button>
     <ul class="dropdown-menu" id="dropMenu">
       <li ><a href="#"  @click="Hide" class="HIDE"><i class="fa fa-ban" id="HideIcon"></i>Hide</a></li>
       <li><a  @click="report" class="HIDE"><i class="glyphicon glyphicon-flag" id="ReportIcon" ></i>Report</a></li>
-      <li v-if="postData.canEdit"><a href="#" @click="editText" ><i class="glyphicon glyphicon-pencil" id="ReportIcon"></i>edit</a></li>
+      <li v-if="owner"><a href="#" @click="editText" ><i class="glyphicon glyphicon-pencil" id="ReportIcon"></i>edit</a></li>
       <!-- <li v-if="postData.canEdit"><a href="#" @click="deletePost" ><i class="glyphicon glyphicon-pencil"></i>delete</a></li> -->
-      <li v-if="owner()"><a href="#" @click="deletePost" ><i class="glyphicon glyphicon-pencil"></i>delete</a></li>
+      <li v-if="owner"><a href="#" @click="deletePost" ><i class="glyphicon glyphicon-trash"></i>delete</a></li>
       <!-- <li><a href="#" @click="isLocked" v-show="isAdmin() || isModerator()"> -->
       <li><a href="#" @click="isLocked" v-show="false">
       <!-- <li><a href="#" @click="isLocked" v-show="owner"> -->
@@ -158,18 +158,17 @@ export default {
   methods: {
  
    owner(){
-      if(this.$localStorage.get('')==this.postData.post_writer_username){
+      if(this.$localStorage.get('userName')==this.postData.post_writer_username){
         return true;
       }
-    return false;
+      if(this.postData.canEdit){
+        return true;
+      }
    },
     saveChange(){
     
           this.postData.content= document.getElementById("textarea").value; 
           this.showEditTextArea=false;
-          alert(this.postData.id);
-          alert(this.postData.content);
-          alert(this.postData.title);
           AllServices.EditPost(this.postData.id, this.postData.content);
         
   
@@ -235,6 +234,7 @@ export default {
          if(this.ShowModalVar == true){
          this.ToggleShowModalVar();
        }
+       
         this.PostId=this.postData.id;
         AllServices.deletePost(this.PostId,this.$localStorage.get('token'));
 
