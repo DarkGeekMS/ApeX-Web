@@ -39,7 +39,7 @@ export  const MimicAuth =new Vue({
             this.$localStorage.set('token', response.data.token);
             this.$localStorage.set('login', true);
             return true;
-          }).catch(function (error) {
+          }).catch(function () {
             self.$localStorage.set('error','That username is already taken');
             return false;
           });
@@ -91,7 +91,6 @@ export  const MimicAuth =new Vue({
         }
       }
       else{
-        var self = this;
         return axios.post(baseUrl + 'api/SignIn', {
             username : user,
             password : pass
@@ -176,7 +175,7 @@ export  const MimicAuth =new Vue({
       else{
         var self = this;
         return axios.post(baseUrl + 'api/ChangePassword', {
-            withcode:true,
+            withcode: true,
             password : pass,
             username: ''  ,
             key: ''  ,
@@ -280,8 +279,7 @@ export  const MimicAuth =new Vue({
       {
         return axios.get(baseUrl + 'api/ApexComs', {
         }).then(response => {
-         
-          return response.data;
+          return response.data.apexComs;
           
         }).catch(function (error) {
           this.$localStorage.set('error',error);

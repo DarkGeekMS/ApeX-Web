@@ -136,7 +136,7 @@ import $ from'jquery/dist/jquery.min.js'
         {
           if(data)
           {
-            this.apexs = data[0];
+            this.apexs = data;
           }
         })
       }
