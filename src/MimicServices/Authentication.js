@@ -39,8 +39,8 @@ export  const MimicAuth =new Vue({
             this.$localStorage.set('token', response.data.token);
             this.$localStorage.set('login', true);
             return true;
-          }).catch(function () {
-            self.$localStorage.set('error','That username is already taken');
+          }).catch(function (error) {
+            self.$localStorage.set('error',error.response.data.error);
             return false;
           });
       }
@@ -166,7 +166,7 @@ export  const MimicAuth =new Vue({
           });
       }
     },
-    forgetPass3: function(pass,mimic, baseUrl)
+    forgetPass3: function(pass,user,code,mimic, baseUrl)
     {
       if(mimic == true)
       {
@@ -177,10 +177,13 @@ export  const MimicAuth =new Vue({
         return axios.post(baseUrl + 'api/ChangePassword', {
             withcode: true,
             password : pass,
-            username: ''  ,
-            key: ''  ,
+            username: user  ,
+            key: code  ,
           }).then(response => {
-            return true;
+            if(response.data.changed == true)
+            {
+              return true;
+            }    
           }).catch(function () {
             self.$localStorage.set('error','Invalid password');
             return false;

@@ -60,7 +60,7 @@ export  const AllServices =new Vue({
 
     logIn: function(user,pass)
     {
-    	return MimicAuth.LogIn(user,pass,this.mimic, this.baseUrl);
+    return MimicAuth.LogIn(user,pass,this.mimic, this.baseUrl);
     },
     forgetPass: function(user,email)
     {
@@ -70,9 +70,9 @@ export  const AllServices =new Vue({
     {
       return MimicAuth.forgetPass2(code,user,this.mimic, this.baseUrl);
     },
-    setPass: function(pass)
+    setPass: function(pass , user , code)
     {
-      return MimicAuth.forgetPass3(pass,this.mimic, this.baseUrl);
+      return MimicAuth.forgetPass3(pass,user,code,this.mimic, this.baseUrl);
     },
     forgetUser: function(pass,email)
     {
@@ -244,8 +244,8 @@ ignoreReport:function(user,id){
 CreateApexCom:function(Name,Description,Rules,Avatar,Banner) {
 return MimicCreateApexCom.CreateApexCom(this.mimic,Name,Description,Rules,Avatar,Banner, this.baseUrl);
 },
-deleteAcc:function(Pass) {
-  return MimicUserSettings.deleteAcc(this.mimic,pass, this.baseUrl);
+deleteAcc:function(Pass,id) {
+  return MimicUserSettings.deleteAcc(this.mimic,Pass,id, this.baseUrl);
 },
 getPrefs:function(){
   return MimicUserSettings.getPrefs(this.mimic, this.baseUrl);
