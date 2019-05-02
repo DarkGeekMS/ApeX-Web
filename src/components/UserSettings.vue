@@ -49,14 +49,14 @@
         <div class=" words">Drag and Drop or Upload Avatar Image</div>
         <div class="display">
           <input  name="profileIcon" type="file" @dragover.prevent  @change="onChange" accept="image/x-png,image/jpeg" >
-           
-           
+
+
         </div>
-       
+
       </label>
-      
+
     </div>
-      <img v-else :src="this.image" alt="" class="img" id="imgId" />
+      <img v-else :src="'http://35.232.3.8' + this.image" alt="" class="img" id="imgId" />
     </div>
 </div>
 
