@@ -37,6 +37,9 @@ export  const AllServices =new Vue({
     {
       return MimicAuth.getApex(this.mimic, this.baseUrl);
     },
+    getApexSubscribed:function(){
+      return MimicCreatePosts.getApexSubscribed(this.mimic, this.baseUrl);
+    },
     searchUser:function()
     {
       return MimicSearch.SearchU(this.mimic, this.baseUrl);
@@ -241,8 +244,8 @@ ignoreReport:function(user,id){
 CreateApexCom:function(Name,Description,Rules,Avatar,Banner) {
 return MimicCreateApexCom.CreateApexCom(this.mimic,Name,Description,Rules,Avatar,Banner, this.baseUrl);
 },
-deleteAcc:function(Pass) {
-  return MimicUserSettings.deleteAcc(this.mimic,pass, this.baseUrl);
+deleteAcc:function(Pass,id) {
+  return MimicUserSettings.deleteAcc(this.mimic,Pass,id, this.baseUrl);
 },
 getPrefs:function(){
   return MimicUserSettings.getPrefs(this.mimic, this.baseUrl);

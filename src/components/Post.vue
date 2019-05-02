@@ -4,7 +4,7 @@
     <!-- VERY IMPORTANT! REPORT MODAL APPEARS MULTIPLE TIMES FOR EACH POST  -->
    <reportBox v-show="showReport"> </reportBox>
 
-<div class="panel panel-default"  @click="ShowModal()"  id="post" v-show="Not_Hide">
+<div class="panel panel-default"  @click="ShowModal()"  id="post" v-show="!postData.hide">
 
     <div class="panel-body">
     <div class="panel2 panel-default"  id="postSide">
@@ -13,13 +13,13 @@
           <div class="column1" id="postCol1">
 
 
-<button @click="changeColor_up" type="button" :class="className_up" id="up" >
+<button @click="changeColor_up" type="button"  v-bind:class="[postData.current_user_vote==1? 'btn btn-light btn-sm is-red' : 'btn btn-light btn-sm is-gray']"  id="up" >
         <i class="glyphicon glyphicon-arrow-up"></i>
 </button>
 
 <h5 id="PostVote">{{this.points}}</h5>
 
-<button @click="changeColor_down" type="button" :class="className_down" id="down" class="DOWN">
+<button @click="changeColor_down" type="button" v-bind:class="[postData.current_user_vote==-1? 'btn btn-light btn-sm is-blue' : 'btn btn-light btn-sm is-gray']" id="down" class="DOWN">
          <i class="glyphicon glyphicon-arrow-down" id="upArrow"></i>
 </button>
 
@@ -34,7 +34,7 @@
       <router-link class="postby" id="user" :to="{name:'UserProfile' , params: {userName:postData.post_writer_username}}"> {{postData.post_writer_username}}</router-link>
 
       <font class="postby" id="fontpost"> </font>
-      <a href="#" class="postby" id="timeAgo">  {{moment(this.postData.created_at).fromNow()}}</a>
+      <a href="#" class="postby" id="timeAgo">  {{moment(postData.created_at).fromNow()}}</a>
       <h3>{{postData.title}}</h3>
       <p id="postBody" class="hPost" v-if="!this.showEditTextArea">
 
@@ -53,16 +53,22 @@
 
 <div class="btn-group" role="group" aria-label="..." id="drop">
 
-  <button type="button" class="btn btn-default " id="commentButton" ><i class="far fa-comment-alt" id="commentIcon"></i>
-Comments</button>
-  <button  type="button" class="btn btn-default  SAVE"  @click="Save()" id="SaveButton" >
+  <button type="button" class="btn btn-default " id="commentButton" v-if="this.ShowModalVar == true">
+    <i class="far fa-comment-alt" id="commentIcon"></i>
+        Comments
+</button>
+  <button v-if="postData.current_user_saved_post===false" type="button" class="btn btn-default  SAVE"  @click="Save()" id="SaveButton">
 
-    <i class="fa fa-plus-square" v-if="Saved=='Save'" id="SaveIcon"></i>
-    <i class="glyphicon glyphicon-check" v-if="Saved!='Save'" id="UnsaveIcon"></i>
-
-
+    <i class="fa fa-plus-square"  id="SaveIcon"></i>
+    <!-- <i v-if="postData.current_user_saved_post===true"  class="glyphicon glyphicon-check" id="UnsaveIcon"></i> -->
 
     {{Saved}}</button>
+  <button v-if="postData.current_user_saved_post===true" type="button" class="btn btn-default  SAVE"  @click="Save()" id="SaveButton">
+
+    <!-- <i class="fa fa-plus-square"  id="SaveIcon"></i> -->
+    <i  class="glyphicon glyphicon-check" id="UnsaveIcon"></i>
+
+    {{unsave}}</button>
 
   <div class="btn-group" role="group" id="DropDiv">
     <button @click="ToggleShowModalVar()" type="button" class="btn btn-default " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="DropButton">
@@ -141,6 +147,7 @@ export default {
 
              points  :this.postData.votes,
              Saved  :"Save",
+             unsave:"unsave",
              PostId   :this.postData.id,
              token  :this.$localStorage.get('token'),
              showReport:false,
@@ -150,7 +157,8 @@ export default {
              video:true ,
              image:false ,
              Locked:'Lock',
-             ago:''
+             ago:'',
+          
             };
          },
 
@@ -271,51 +279,22 @@ export default {
        ,
     changeColor_up()
     {
-
+    
       if(this.$localStorage.get('login') ){
       if(this.ShowModalVar == true){
       this.ToggleShowModalVar();
     }
-          if(!this.pressed_up)
-          {
-
-                      if(this.pressed_down)
-                      {
-
-                      this.pressed_down   = false;
-                      this.className_down = 'btn btn-light btn-sm is-gray';
-
-                      }
-
-                      this.className_up    = 'btn btn-light btn-sm is-red';
-                      this.pressed_up      =true;
-                      this.postData.upvoted=true;
-
-
-                       this.PostId=this.postData.id;
-                       this.postData.up=true;
-
-                }
-              else {
-                    this.className_up = 'btn btn-light btn-sm is-gray';
-                    this.pressed_up = false;
-                    this.PostId=this.postData.id;
-
-
-
-               }
+         
+               this.PostId=this.postData.id;
                this.upVoted = !this.upVoted;
                var downState = this.downVoted;
                this.downVoted = false;
                AllServices.upvote(this.PostId,this.points,this.upVoted,downState).then((data) => {
-            if(data){
+                 if(data){
 
-                this.points=data.votes;
+                   this.points=data.votes;
 
                   }});
-
-
-
       }
 
       else{
@@ -325,7 +304,7 @@ export default {
       }
       ,
      changeColor_down(){
-
+        
         this.downVoted = !this.downVoted;
         var upState = this.upVoted;
         this.upVoted = false;
@@ -333,43 +312,14 @@ export default {
        if(this.ShowModalVar == true){
        this.ToggleShowModalVar();
      }
-                  if(!this.pressed_down)
-                  {
-                      if(this.pressed_up)
-                      {
+                                              
+          this.PostId=this.postData.id;
+                       
+          AllServices.downvote(this.PostId,this.points,this.downVoted,upState).then((data) => {
+           if(data){
+             this.points=data.votes;
 
-                          this.pressed_up=false;
-                          this.className_up = 'btn btn-light btn-sm is-gray';
-
-                      }
-                         this.className_down = 'btn btn-light btn-sm is-blue';
-                         this.pressed_down=true;
-                        this.postData.downvoted=true;
-
-                         this.PostId=this.postData.id;
-
-
-
-
-                  }
-              else {
-                  this.className_down = 'btn btn-light btn-sm is-gray';
-
-
-
-                   this.pressed_down = false;
-                   this.PostId=this.postData.id;
-
-
-
-
-
-                 }
-                  AllServices.downvote(this.PostId,this.points,this.downVoted,upState).then((data) => {
-                 if(data){
-                   this.points=data.votes;
-
-                 }});
+              }});
 
 
               }
@@ -384,35 +334,18 @@ export default {
     Save(){
 
         if( this.$localStorage.get('login') ){
-      if(this.ShowModalVar == true){
-      this.ToggleShowModalVar();
-    }
-
-        if(this.Saved=="Save")
-        {
-
-        this.Saved="unsave";
-        this.postData.saved=this.Saved;
-        this.PostId=this.postData.id;
+        if(this.ShowModalVar == true){
+        this.ToggleShowModalVar();
+       
+      }
+       this.PostId=this.postData.id;
 
         AllServices.save(this.$localStorage.get('token'),this.PostId);
+         
 
-      }
-        else if(this.Saved=="unsave"){
-            this.Saved="Save";
-            this.postData.saved=this.Saved;
-            this.PostId=this.postData.id;
-
-
-
-
-             AllServices.save(this.$localStorage.get('token'),this.PostId);
-           }
-
-
-
-
-    }
+        }
+      
+    
     else{
        swal('login First !!');
     }
@@ -446,10 +379,6 @@ props: {
 
 postData:{
 
-
-  upvoted:false,
-  downvoted:false,
-  saved:"unsave"
 },
     upVoted:Boolean,
     downVoted:Boolean,
@@ -462,12 +391,13 @@ created(){
         this.pressed_up      =true;
    }
 
-
-
        if(this.userId==2){
         this.moderator=true;
        }
-
+  
+},
+updated(){
+  
 },
 computed: {
 
@@ -478,33 +408,8 @@ components:{
 
 
   },
-  mounted(){
-  if( this.upVoted==true ||this.postData.upvoted){
-     
-       this.className_up    = 'btn btn-light btn-sm is-red';
-       this.pressed_up      =true;
-    }
-    else if(this.postData.downvoted){
-      this.className_up    = 'btn btn-light btn-sm is-gray';
-      this.className_down = 'btn btn-light btn-sm is-blue';
-      this.pressed_down=true;
-      this.pressed_up      =false;
-    }
-
-  },
-  beforeUpdated() {
-
-
-  this.postData.votes=this.points;
-  this.postData.upvoted=this.upVoted;
-  if(this.Saved=='Saved'){
-     this.postData.saved="Saved";
-  }
-  else{
-    this.postData.saved="unsaved";
-  }
+  
  
-  }
 }
 
 

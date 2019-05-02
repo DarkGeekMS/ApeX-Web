@@ -49,14 +49,18 @@
         <div class=" words">Drag and Drop or Upload Avatar Image</div>
         <div class="display">
           <input  name="profileIcon" type="file" @dragover.prevent  @change="onChange" accept="image/x-png,image/jpeg" >
-           
-           
+
+
         </div>
-       
+
       </label>
-      
+
     </div>
-      <img v-else :src="this.image" alt="" class="img" id="imgId" />
+    <div v-else>
+      <img  :src="this.image" alt="" class="img" id="imgId" />
+      <button class="ChangeButton" @click="removeFile">REMOVE</button>
+    </div>
+
     </div>
 </div>
 

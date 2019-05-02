@@ -6,13 +6,14 @@
       
   <post
     v-bind:postData="onePostData"
-    v-on:HIDE="hide"
     class="mainpost" 
     id="postModal"
     v-on:lockComment="lock($event)"
   ></post>
   </div>
- <ApexComSideBar class="sidebar"></ApexComSideBar>
+ <ApexComSideBar 
+   v-bind:apexComId= onePostData.apex_id
+ class="sidebar"></ApexComSideBar>
    
       <CommentParent 
      
@@ -42,7 +43,7 @@ export default {
 name: 'DemoOnePost',
 props:{
   onePostData:{
-    
+
   }
 },
 components:
@@ -60,9 +61,6 @@ if(event=='Lock'){
 }
 else{this.locked=true;
      }
-  },
-  hide(e){
-  this.Hide=e;
   }
 
 },
@@ -79,7 +77,7 @@ created(){
       locked:false,
       postOwnerUserName : "hohoho",
       moderatorUserName : 'FF',
-       Hide:false
+      
     };
       }
       

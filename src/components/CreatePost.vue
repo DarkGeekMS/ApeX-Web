@@ -387,14 +387,13 @@ this.apexComId=this.apexs[this.indx-1].id;
      */
 created(){
 
-  AllServices.getApexNames().then((data) =>
+  AllServices.getApexSubscribed().then((data) =>
       {
         if(data)
         {
-
-
           this.apexs = data.apexComs;
-
+        
+        
         }
       });
 
