@@ -21,24 +21,23 @@ export  const MimicMessage =new Vue({
       }
       else
       {
+//         axios.post(baseUrl + 'api/Me', {
+//           token:this.$localStorage.get('token')
+//       })
+//          .then(response=> {
+//            console.log("me",response);
+//          })
+//          .catch(function (error) {
+//           return false;
 
-        axios.post(baseUrl + 'api/Me', {
-          token:this.$localStorage.get('token')
-      })
-         .then(response=> {
-           console.log("me",response);
-         })
-         .catch(function (error) {
-          return false;
-
-          });
-
+//           });
 
 
-console.log("rec",rec);
+
+// console.log("rec",rec);
 
 
-          console.log(title);
+//           console.log(title);
         return axios.post(baseUrl + 'api/ComposeMessage', {
             receiver:rec,
             subject:title,
@@ -94,6 +93,8 @@ console.log("rec",rec);
       }
       else
       {
+        console.log(ID);
+
         return axios.post(baseUrl + 'api/BlockUser', {
             blockedID:ID,
             token:this.$localStorage.get('token')

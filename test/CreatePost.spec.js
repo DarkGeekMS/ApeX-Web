@@ -2,9 +2,9 @@ import {shallowMount } from '@vue/test-utils'
 import CreatePost from '../src/components/CreatePost.vue'
 import expect from 'expect'
 import moxios from 'moxios'
-import { RichTextEditorPlugin, Toolbar, HtmlEditor } from "@syncfusion/ej2-vue-richtexteditor";
+// import { RichTextEditorPlugin, Toolbar, HtmlEditor } from "@syncfusion/ej2-vue-richtexteditor";
 // import sinon from 'sinon'
-describe('Post' , (done)=>{
+describe('CreatePost' , (done)=>{
   let wrapper;
   wrapper = shallowMount(CreatePost);
 
@@ -19,13 +19,39 @@ describe('Post' , (done)=>{
 
   });
 
-it('unit test of post', () => {
-  
-  // const button = wrapper.find('#button2')
-  // button.trigger('click')
-  // expect(wrapper.vm.submitPost).toBeCalled();
+it.only('test submit post function is called', () => {
+ 
+  const button = wrapper.find('#button2')
+  button.trigger('click')
+  expect(wrapper.vm.submitPost).toBeCalled();
 
-  expect(wrapper.findAll('div').exists()).toBe(true)
+  // expect(wrapper.findAll('div').exists()).toBe(true)
 });
 
+it('CreatePost component has div tags', () => {
+ 
+   expect(wrapper.findAll('div').exists()).toBe(true)
 });
+
+it('emit is working', () => {
+  wrapper.vm.$emit('PostEmit')
+
+});
+
+it('has Post button', () => {
+  expect(wrapper.contains('#button3')).toBe(true);
+
+});
+const wrapper = shallowMount(CreatePost, {
+  parentComponent: CreatePost
+})
+expect(wrapper.vm.$parent.$options.name).toBe('foo')
+
+
+
+it('div test',()=>{
+  expect(wrapper.is('div')).toBe(true)
+
+});
+});
+

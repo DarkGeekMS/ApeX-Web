@@ -14,21 +14,21 @@
     
 
     <div class = "sentMessages" v-show="sent" v-for="msg in sentArr" v-bind:key="msg.id">
-        <Message  v-bind:date= msg.date  v-bind:title= msg.subject v-bind:content= msg.content v-bind:sender= msg.user v-bind:type= 0 v-bind:ID=msg.id></Message>
+        <Message  v-bind:date= msg.date  v-bind:title= msg.subject v-bind:content= msg.content v-bind:sender= msg.receiver.username v-bind:type= 0 v-bind:ID=msg.id></Message>
     </div>
 <div>
     <div class = "allMessages" v-show="all" v-for="msg in allArr" v-bind:key="msg.id">
-        <Message  v-bind:date= msg.date  v-bind:title= msg.subject v-bind:content= msg.content v-bind:sender= msg.user v-bind:type= 1 v-bind:ID=msg.id></Message>
+        <Message  v-bind:date= msg.date  v-bind:title= msg.subject v-bind:content= msg.content v-bind:senderID= msg.sender.id v-bind:sender= msg.sender.username v-bind:type= 1 v-bind:ID=msg.id></Message>
     </div>
 </div>
 <div>
     <div class = "readMessages" v-show="read" v-for="msg in readArr" v-bind:key="msg.id">
-        <Message  v-bind:date= msg.date  v-bind:title= msg.subject v-bind:content= msg.content v-bind:sender= msg.user v-bind:type= 1 v-bind:ID=msg.id></Message>
+        <Message  v-bind:date= msg.date  v-bind:title= msg.subject v-bind:content= msg.content  v-bind:senderID= msg.sender.id v-bind:sender= msg.sender.username v-bind:type= 1 v-bind:ID=msg.id></Message>
     </div>
 </div>
 <div>
     <div class = "unreadMessages" v-show="unread" v-for="msg in unreadArr" v-bind:key="msg.id">
-        <Message  v-bind:date= msg.date  v-bind:title= msg.subject v-bind:content= msg.content v-bind:sender= msg.user v-bind:type= 1 v-bind:ID=msg.id></Message>
+        <Message  v-bind:date= msg.date  v-bind:title= msg.subject v-bind:content= msg.content v-bind:senderID= msg.sender.id v-bind:sender= msg.sender.username v-bind:type= 1 v-bind:ID=msg.id></Message>
     </div>
 </div>  
     <WriteMessage v-show="send"></WriteMessage>
@@ -127,6 +127,7 @@ export default {
         this.inbox=false;
           AllServices.getAllMessages().then((data) => {
          if(data){
+             console.log(data);
              this.sentArr=data.sent;
              this.allArr=data.received.all;
              this.readArr=data.received.read;

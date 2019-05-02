@@ -1,6 +1,6 @@
-<template id="addmoderatorpagedesign">
+<template v-if="this.searchVal" id="addmoderatorpagedesign">
 <div class="main">
-<div class="form-group has-feedback has-search" style="display:inline-block">
+<div class="form-group has-feedback has-search" style="display:inline-block; width: 60%;">
         <span class="glyphicon glyphicon-search form-control-feedback"></span>
         <input type="text" class="form-control" placeholder="Search for user to Add as moderator" v-model="searchVal" v-on:keyup.enter="search()">
 </div>
@@ -34,8 +34,6 @@ components:{
       search: function(){
         if( this.searchVal != '')
         {
-          // console.log(this.searchVal)
-          // this.$localStorage.set('searchModerator' , this.searchVal),
           this.$router.push({name:'Moderators' , params: {query:this.searchVal}})
         }
       },

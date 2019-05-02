@@ -3,7 +3,7 @@
   <div class="postMod" >
     <!-- VERY IMPORTANT! REPORT MODAL APPEARS MULTIPLE TIMES FOR EACH POST  -->
    <reportBox v-show="showReport"> </reportBox>
-    
+
 <div class="panel panel-default"  @click="ShowModal()"  id="post" v-show="Not_Hide">
 
     <div class="panel-body">
@@ -34,21 +34,21 @@
       <router-link class="postby" id="user" :to="{name:'UserProfile' , params: {userName:postData.post_writer_username}}"> {{postData.post_writer_username}}</router-link>
 
       <font class="postby" id="fontpost"> </font>
-      <a href="#" class="postby" id="timeAgo">  {{moment(postData.created_at).fromNow()}}</a>
+      <a href="#" class="postby" id="timeAgo">  {{moment(this.postData.created_at).fromNow()}}</a>
       <h3>{{postData.title}}</h3>
       <p id="postBody" class="hPost" v-if="!this.showEditTextArea">
 
         {{postData.content}}
          </p>
-          <textarea  @keyup="store" v-if="this.showEditTextArea" class="form-control" rows="7" id="textarea">{{postData.content}}</textarea> 
-          
+          <textarea  @keyup="store" v-if="this.showEditTextArea" class="form-control" rows="7" id="textarea" v-model="postData.content"></textarea>
+
           <button @click="saveChange" v-if="this.showEditTextArea" class="btn btn-primary postButton" id="saveEdit">SAVE</button>
-          
+
 <iframe  v-show ="postData.videolink!==null" width="100%" height="315"  :src=postData.videolink frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-<img v-show="postData.img!==null" :src=postData.img  height="100%" width="100%">
+<img v-show="postData.img!==null" :src="'http://35.232.3.8' + postData.img"  height="100%" width="100%">
 </div>
-   
+
 <footer>
 
 <div class="btn-group" role="group" aria-label="..." id="drop">
@@ -71,14 +71,13 @@ Comments</button>
     </button>
     <ul class="dropdown-menu" id="dropMenu">
       <li ><a href="#"  @click="Hide" class="HIDE"><i class="fa fa-ban" id="HideIcon"></i>Hide</a></li>
-      <li><a  @click="report" class="HIDE"><i class="glyphicon glyphicon-flag" id="ReportIcon" ></i>Report</a></li>
+      <li><a  href="#" @click="report" class="HIDE"><i class="glyphicon glyphicon-flag" id="ReportIcon" ></i>Report</a></li>
       <li v-if="postData.canEdit"><a href="#" @click="editText" ><i class="glyphicon glyphicon-pencil" id="ReportIcon"></i>edit</a></li>
-      <!-- <li v-if="postData.canEdit"><a href="#" @click="deletePost" ><i class="glyphicon glyphicon-pencil"></i>delete</a></li> -->
-      <li v-if="owner()"><a href="#" @click="deletePost" ><i class="glyphicon glyphicon-pencil"></i>delete</a></li>
+      <li v-if="postData.canEdit"><a href="#" @click="deletePost" ><i class="glyphicon glyphicon-trash"></i>delete</a></li>
       <!-- <li><a href="#" @click="isLocked" v-show="isAdmin() || isModerator()"> -->
-      <li><a href="#" @click="isLocked" v-show="false">
+      <li v-if="postData.canEdit"><a href="#" @click="isLocked" >
       <!-- <li><a href="#" @click="isLocked" v-show="owner"> -->
-        
+
         <i v-if="Locked=='unlock'" class="fa fa-lock" id="ReportIcon"></i>
         <i v-if="Locked=='Lock'" class="fa fa-unlock" id="ReportIcon"></i>
           {{this.Locked}}</a></li>
@@ -151,28 +150,29 @@ export default {
              video:true ,
              image:false ,
              Locked:'Lock',
-             ago:''      
+             ago:''
             };
          },
 
   methods: {
- 
+
    owner(){
-      if(this.$localStorage.get('')==this.postData.post_writer_username){
+      if(this.$localStorage.get('userName')==this.postData.post_writer_username){
+
         return true;
       }
-    return false;
+      if(this.postData.canEdit){
+        return true;
+      }
+      return false;
    },
     saveChange(){
-    
-          this.postData.content= document.getElementById("textarea").value; 
+
+          this.postData.content= document.getElementById("textarea").value;
           this.showEditTextArea=false;
-          alert(this.postData.id);
-          alert(this.postData.content);
-          alert(this.postData.title);
           AllServices.EditPost(this.postData.id, this.postData.content);
-        
-  
+
+
     },
 
     report(){
@@ -180,9 +180,9 @@ export default {
         if(this.ShowModalVar == true){
         this.ToggleShowModalVar();
          }
-  
+
      this.onlyOneTime=false;
-      this.$emit('Report',this.ID,this.idx);
+      this.$emit('Report',this.postData.id,this.idx);
       this.$modal.show('reportBox');
       this.showReport=true;
 
@@ -196,13 +196,13 @@ export default {
         if(this.ShowModalVar == true){
         this.ToggleShowModalVar();
     }
-   
-     
+
+
      if(this.Locked=='Lock'){
 
        this.Locked='unlock';
        this.$emit('lockComment',this.Locked);
-       
+
      }
      else{
       this.Locked='Lock';
@@ -220,10 +220,10 @@ export default {
     editText(){
        if(this.ShowModalVar == true){
            this.ToggleShowModalVar();
-        } 
-       
+        }
+
         this.showEditTextArea=true;
-       
+
 
 
     },
@@ -235,6 +235,7 @@ export default {
          if(this.ShowModalVar == true){
          this.ToggleShowModalVar();
        }
+
         this.PostId=this.postData.id;
         AllServices.deletePost(this.PostId,this.$localStorage.get('token'));
 
@@ -243,7 +244,7 @@ export default {
     * Hide post if the User press Hide button.
     */
        Hide(){
-        
+
          if( this.$localStorage.get('login') ){
          if(this.ShowModalVar == true){
          this.ToggleShowModalVar();
@@ -252,11 +253,14 @@ export default {
             {
             this.Not_Hide=false;
             this.is_Hide=true;
-      
-            this.$emit('HIDE','nada');
-           
+
+          //  this.$emit('HIDE',true);
+          this.$modal.hide('Demo-OnePost');
+           this.ShowModalVar=false;
+         
+
             }
-            
+
           this.PostId=this.postData.id;
           AllServices.Hide(this.PostId,this.$localStorage.get('token'));
 
@@ -268,37 +272,37 @@ export default {
        ,
     changeColor_up()
     {
-   
+
       if(this.$localStorage.get('login') ){
       if(this.ShowModalVar == true){
       this.ToggleShowModalVar();
     }
           if(!this.pressed_up)
           {
-                     
+
                       if(this.pressed_down)
                       {
-                  
+
                       this.pressed_down   = false;
                       this.className_down = 'btn btn-light btn-sm is-gray';
-                      
+
                       }
-                      
+
                       this.className_up    = 'btn btn-light btn-sm is-red';
                       this.pressed_up      =true;
                         this.postData.upvoted=true;
-                      
-                     
+
+
                        this.PostId=this.postData.id;
                        this.postData.up=true;
-                
+
                 }
               else {
                     this.className_up = 'btn btn-light btn-sm is-gray';
                     this.pressed_up = false;
                     this.PostId=this.postData.id;
-                
-                   
+
+
 
                }
                  this.upVoted = !this.upVoted;
@@ -306,15 +310,15 @@ export default {
                this.downVoted = false;
                AllServices.upvote(this.PostId,this.points,this.upVoted,downState).then((data) => {
             if(data){
-             
+
                 this.points=data.votes;
-              
+
                   }});
-                  
-               
+
+
 
       }
-      
+
       else{
         alert('Login First !!');
       }
@@ -322,7 +326,7 @@ export default {
       }
       ,
      changeColor_down(){
-       // alert('before '+this.points);
+
         this.downVoted = !this.downVoted;
         var upState = this.upVoted;
         this.upVoted = false;
@@ -334,7 +338,7 @@ export default {
                   {
                       if(this.pressed_up)
                       {
-                        
+
                           this.pressed_up=false;
                           this.className_up = 'btn btn-light btn-sm is-gray';
 
@@ -342,33 +346,33 @@ export default {
                          this.className_down = 'btn btn-light btn-sm is-blue';
                          this.pressed_down=true;
                         this.postData.downvoted=true;
-                       
+
                          this.PostId=this.postData.id;
-                  
-                     
-                         
+
+
+
 
                   }
               else {
                   this.className_down = 'btn btn-light btn-sm is-gray';
 
 
-              
+
                    this.pressed_down = false;
                    this.PostId=this.postData.id;
-                
-                 
-           
+
+
+
 
 
                  }
                   AllServices.downvote(this.PostId,this.points,this.downVoted,upState).then((data) => {
                  if(data){
                    this.points=data.votes;
-                 
+
                  }});
-               
-                
+
+
               }
               else{
                 alert('Login First !!');
@@ -379,19 +383,19 @@ export default {
     * Save post if the User press Hide button.
     */
     Save(){
-     
+
         if( this.$localStorage.get('login') ){
       if(this.ShowModalVar == true){
       this.ToggleShowModalVar();
     }
- 
+
         if(this.Saved=="Save")
         {
-        
+
         this.Saved="unsave";
         this.postData.saved=this.Saved;
         this.PostId=this.postData.id;
-      
+
         AllServices.save(this.$localStorage.get('token'),this.PostId);
 
       }
@@ -400,9 +404,9 @@ export default {
             this.postData.saved=this.Saved;
             this.PostId=this.postData.id;
 
-         
-       
-          
+
+
+
              AllServices.save(this.$localStorage.get('token'),this.PostId);
            }
 
@@ -414,7 +418,7 @@ export default {
       alert('login First !!');
     }
     },
-  
+
     /**
 * show the clicked post on the modal.
 */
@@ -426,7 +430,7 @@ export default {
           this.postData.upvoted=this.upVoted;
           this.postData.downvoted=this.downVoted;
           this.$emit('showUp',this.postData);
-   
+
           this.$modal.show('Demo-OnePost');
         }
           else {
@@ -442,46 +446,46 @@ export default {
 props: {
 
 postData:{
- 
- 
+
+
   upvoted:false,
   downvoted:false,
   saved:"unsave"
 },
     upVoted:Boolean,
     downVoted:Boolean,
-  
+
        },
 created(){
-  
+
    if(this.postData.canEdit){
       this.className_up    = 'btn btn-light btn-sm is-red';
         this.pressed_up      =true;
    }
 
-   
+
 
        if(this.userId==2){
         this.moderator=true;
        }
-       
+
 },
 computed: {
- 
+
 }
 ,
 components:{
     reportBox,
-   
-  
+
+
   },
   mounted(){
-   
-  
+
+
   },
   updated() {
-   
-    
+
+
      if(this.postData.upvoted){
         this.className_up    = 'btn btn-light btn-sm is-red';
         this.pressed_up      =true;
@@ -494,12 +498,10 @@ components:{
       this.pressed_down=true;
       this.pressed_up      =false;
     }
-    
-  this.postData.votes=this.points;
 
- 
+  this.postData.votes=this.points;
   this.postData.upvoted=this.upVoted;
-  
+
   },
 }
 
@@ -545,9 +547,9 @@ components:{
 }
   #imgId{
          cursor: pointer;
-     
+
         }
-  
+
 h5 {
     text-align: center;
    }
@@ -589,7 +591,7 @@ h5 {
         -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05);
         box-shadow: 0 1px 1px rgba(0,0,0,.05);
     }
-   
+
 .fontUser{
     font-size: 12px;
     font-weight: 700;
@@ -603,9 +605,9 @@ h5 {
 .buttonDelete{
       background-color: #f4511e;
 
-} 
+}
 @media(max-width:1054px){
-  div .panel 
+  div .panel
   {
     width: 80%;
 
@@ -625,7 +627,7 @@ height:100%;
    margin-top:0%;
    font-family:Verdana, Geneva, Tahoma, sans-serif;
    font-size: 130%;
-  
+
 
 }
 .column2{
@@ -655,12 +657,12 @@ width: 100%;
   width: 100%;
 }
 #saveEdit{
-  margin-left:92.5%; 
+  margin-left:92.5%;
 }
 #cancel{
   margin-left:80%;
   /* padding-top: 0%; */
-  
+
 }
 
 #postSide{
@@ -673,5 +675,5 @@ width: 30%;
       width:158%;
       margin-left:4.6%;
   }
-} 
+}
 </style>

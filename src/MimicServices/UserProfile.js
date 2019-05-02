@@ -12,7 +12,6 @@ export  const MimicUserProfile =new Vue({
       saved:[{},{}],
       hidden:[{},{}],
       personalPosts:[{},{}],
-
       cakeDay:'March 15, 2019',
   }
     var promise = new Promise(function(resolve) {
@@ -78,7 +77,7 @@ else {
     return axios.post(baseUrl + 'api/UserData',  {
       username:userName,
       token:this.$localStorage.get('token'),
-      
+
   })
   .then(response=> {
     return response.data;
@@ -183,16 +182,18 @@ getUserType: function(mimic, baseUrl){
 
   if(mimic){
   var info={
-      id: "t2_2",
-        fullname: null,
-        email: "111@gmail.com",
-        username: "MohamedRamzy123",
-        avatar: " ",
-        karma: 1,
-        notification: 1,
-        type: 1,
-        created_at: "2019-03-18 09:36:09",
-        updated_at: "2019-03-18 09:36:09"
+    "user": {
+      "id": "t2_2",
+      "fullname": null,
+      "email": "111@gmail.com",
+      "username": "MohamedRamzy123",
+      "avatar": "https://i.imgur.com/AMFz23O.jpg",
+      "karma": 1,
+      "notification": 1,
+      "type": 1,
+      "created_at": "2019-03-18 09:36:09",
+      "updated_at": "2019-03-18 09:36:09"
+  }
     }
 
     var promise = new Promise(function(resolve) {
@@ -203,24 +204,15 @@ getUserType: function(mimic, baseUrl){
     return promise;
 }
 else {
-    // return axios.post(baseUrl + 'api/Me', {
-    //          token:this.$localStorage.get('token')
-    //         })
-    //         .then(response=> {
-    //           return response.data;
-    //          })
-    //         .catch(function (error) {
-    //           // console.log(error);
-    //         });
-      axios.post(baseUrl + 'api/Me', {
-      token:this.$localStorage.get('token')
-     })
-     .then(function (response) {
-      return response;
-    })
-    .catch(function (error) {
-      alert(error);
-     });
+    return axios.post(baseUrl + 'api/Me', {
+             token:this.$localStorage.get('token')
+            })
+            .then(response=> {
+              return response.data;
+             })
+            .catch(function (error) {
+              // console.log(error);
+            });
 }
 },
 
@@ -288,7 +280,6 @@ getUserInfoByIdforGuest:function(mimic,userName, baseUrl){
         }
       })
       .then(response=> {
-        console.log(response.data);
         return response.data;
        })
       .catch(function (error) {

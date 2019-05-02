@@ -6,7 +6,7 @@
       v-on:showUp="showPost"
       v-on:lockComment="ifLock"
       v-on:HIDE="hide_Post"
-      v-show="!(onePost.id=='')"
+     v-show="!(onePost.id=='')"
       >
       </post>
     <!-- <div :id="'PostContainer'+i++" v-for="onePost in posts">

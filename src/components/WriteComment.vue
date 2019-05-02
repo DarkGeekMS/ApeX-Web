@@ -100,7 +100,7 @@ OpString:function(){
       this.OpString();
        if (this.content!=null)
       {
-
+console.log("hah");
       //TODO:send request and get currentID
       AllServices.WriteComment(this.content,this.parentID).then((data) => {
         if(data){
