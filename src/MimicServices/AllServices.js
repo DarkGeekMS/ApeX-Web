@@ -153,13 +153,14 @@ deleteUser:function(userName){
 deleteApexCom:function(apexComName){
   var data=MimicApexCom.deleteApexCom(this.mimic,apexComName, this.baseUrl);
   return data;
-},
+},  
 subscribe:function(apexComName){
   var data=MimicApexCom.subscribe(this.mimic,apexComName, this.baseUrl);
   return data;
 },
 WriteComment: function(content,parentID){
   var data=MimicComment.WriteComment(content,parentID,this.mimic, this.baseUrl);
+  console.log(data);
   return data;
 },
 DeleteComment: function(ID){
@@ -193,6 +194,7 @@ reportComment: function(ID,reason){
 },
 sendMessage: function(rec,title,cont){
   var data=MimicMessage.sendMessage(rec,title,cont,this.mimic, this.baseUrl);
+  console.log(data.user);
   return data;
 },
 deleteMessage: function(ID){
