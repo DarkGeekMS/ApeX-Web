@@ -4,7 +4,6 @@ import HomePage from './components/HomePage.vue'
 import ApexCom from './components/ApexCom.vue'
 import userprofile from './components/UserProfile.vue'
 import userprofileBlockList from './components/UserProfileBlockList.vue'
-
 import Reports from './components/Reports.vue'
 import Search from './components/Search.vue'
 import Users from './components/CommunitiesAndUsers.vue'
@@ -20,10 +19,6 @@ import Controversial from './components/SortControversial.vue'
 export default[
       {path:'/ApexCom/:apexComId',name:'ApexCom',props:true,component:ApexCom , children :
       [
-        {path:'/' ,name:'ApexComPosts',component:ApexComPosts},
-        {path:'AddModerators',name:'AddModerators',component:ApexComModerator,props:true ,children :[
-          {path:'searchUser/:query',name:'Moderators', component:ApexComAddModerator,props:true },
-        ]},
         {path:'ApexPosts',name:'Posts',component:ApexComPosts,props:true,children:[
         {path:'Hot',name:'HotApexCom',component:Hot,props:true},
         {path:'New',name:'NewApexCom',component:New,props:true},
@@ -33,7 +28,10 @@ export default[
         ]},
         {path:'ApexSubscribers',name:'Subscribers',component:ApexComSubscribers,props:true},
         {path:'ApexReports',name:'Reports',component:Reports,props:true},
-
+        {path:'AddModerators',name:'AddModerators',component:ApexComModerator,props:true, 
+        children :[
+          {path:'searchUser/:query',name:'Moderators', component:ApexComAddModerator,props:true },
+        ]},
       ]
       },
     {path:'/',component:HomePage},

@@ -1,12 +1,12 @@
-<template id="addmoderatorpagedesign">
+<template v-if="this.query" id="addmoderatorpagedesign">
 <div >
   <div class="header">
        <h1>  {{ query }} </h1>
        <br/> 
        <p> Search results </p>
     </div>
-  <div id="main" v-for='(user,index) in users' :key="'A'+index">
-  <router-link id="subDiv" v-show="exist" :to="{ name: 'UserProfile', params: {userName:user.username}}"> 
+  <div id="main" v-for='(user,index) in users' :key="'A'+index" v-show="exist">
+  <router-link id="subDiv" :to="{ name: 'UserProfile', params: {userName:user.username}}"> 
       <div id="sub1">
          <img width="45px" :src=user.avatar />
          <a class="name"> {{user.username}} <br/> <span class="memb"> {{user.karma}} karma </span> </a>       
@@ -38,7 +38,6 @@ props:['apexComId','query'],
       exist:true,
       error:'',
       users:[],
-      // searchValue:''
     }
   },
   methods:
@@ -56,34 +55,34 @@ props:['apexComId','query'],
               console.log(data);
               }
       },
-  },
-  mounted()
-  {
-    console.log(this.query+'koook'); 
-    /**
+      /**
       *send the query to be searched for
       */
-    AllServices.searchU(this.query).then((data) =>{
+      searchUser:function(searchVal){
+        console.log(searchVal+'sent'); 
+        AllServices.searchU(searchVal).then((data) =>{
           console.log(data);
           if(data.users.length == 0)
           {
             this.exist = false,
-            this.error = 'Sorry, there were no community results for'
+            this.error = 'Sorry, there were no users results for'
           }
           else{
             this.users = data.users,
             this.exist = true
           }
-        })   
+        }) 
+      }
   },
-  // created(){
-  //   console.log('hey create');
-  //   setInterval(() => {
-  //       this.searchValue = this.$localStorage.get('searchModerator');
-  //   }, 1000)
-
-  // },
-  
+  mounted()
+  {
+    this.searchUser(this.query);
+  },
+  beforeRouteUpdate (to, from, next) {
+    this.searchUser(to.params.query);
+    console.log('route updated search');
+    next();
+  }
 }
 </script>
 
@@ -118,7 +117,6 @@ props:['apexComId','query'],
 }
 .button:hover {opacity: 0.7}
 #subDiv{
-  display: contents;
   width:94%;
   height:100%;
   margin: 0% 6%;
@@ -153,7 +151,6 @@ img{
     color: rgb(135, 138, 140);
 }
 .header{
-  /* background-color: #DAE0E6; */
   width:100%;
   padding-left:2%;
   margin-top: 43px;
