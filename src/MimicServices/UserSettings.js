@@ -65,18 +65,10 @@ return promise1;
   }
 },
 
-updatePrefs:function (mimic,username,email,avatar,notifie, baseUrl) {
+updatePrefs:function (mimic,fd, baseUrl) {
   if(mimic==false){
-    alert(username+" "+email+" "+avatar+" "+notifie)
-    return axios.post(baseUrl + 'api/UpdatePreferences',
-   {
-     username:username,
-     fullname:'',
-    email:email,
-    avatar:avatar,
-    notifications:notifie,
-    token:this.$localStorage.get('token')
-      }).then(response => {
+    console.log(fd)
+    return axios.post(baseUrl + 'api/UpdatePreferences',fd).then(response => {
         console.log(response)
         return response.data;
       })
