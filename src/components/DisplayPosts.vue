@@ -52,7 +52,7 @@ mounted:function () {
   this.getPosts();
 
   },
-updated(){
+beforeUpdate(){
 
 this.getPosts();
 
