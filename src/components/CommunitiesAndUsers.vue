@@ -2,7 +2,7 @@
   <div id="mainDiv" >
     <router-link  id="subDiv" v-show="exist" v-for='(apex,index) in apexs' :key="index" :to="{ name:'ApexCom', params: {ApexComId:apex.id} }" > 
       <div id="sub1">
-         <img width="38px" :src=apex.avatar />
+         <img width="38px" :src="'http://35.232.3.8'+ apex.avatar" />
          <a class="name"> {{apex.name}} <br/> <span class="memb"> {{apex.numOfMeb}} Members </span></a>
          <span >  </span>
        </div> 
@@ -12,7 +12,7 @@
 
     <router-link id="subDiv" v-show="exist" v-for='(user,index) in users' :key="'A'+index" :to="{ name: 'UserProfile', params: {userName:user.username}}"> 
       <div id="sub1">
-         <img width="45px" :src=user.avatar />
+         <img width="45px" :src="'http://35.232.3.8' + user.avatar" />
          <a class="name"> {{user.username}} <br/> <span class="memb"> {{user.karma}} karma </span> </a>       
        </div> 
        <br/><br/>

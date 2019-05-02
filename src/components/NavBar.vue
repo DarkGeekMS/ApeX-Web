@@ -19,8 +19,8 @@
       <ul class="dropdown-menu drop1">
         <li class="dropdown-header">REDDIT FEEDS</li>
         <li v-show="this.$localStorage.get('login')"><a href="/" class="glyphicon glyphicon-home blue" ><span id="items">Home</span></a></li>
-        <li><router-link  :to="{ name: 'HotHomePage' , params: {sortingparam:'hot'}}" class="glyphicon glyphicon-arrow-up blue"><span id="items">Popular</span></router-link></li>
-        <li><a href="#" class="glyphicon glyphicon-stats blue"><span id="items">All</span></a></li>
+        <li><router-link  :to="{ name: 'NewHomePage', params:''}" class="glyphicon glyphicon-arrow-up blue"><span id="items">Popular</span></router-link></li>
+        <li><router-link :to="{ name: 'NewHomePage', params:''}" class="glyphicon glyphicon-stats blue"><span id="items">All</span></router-link></li>
         <li><a href="#"> <span style="background-color:blue; color:white; padding-left:3px"> oc </span> <span style="color:black;padding-left:7%">Original Content</span></a></li>
 
         <li class="divider"></li>
@@ -38,10 +38,10 @@
 
     <div class="btn-toolbar tool1" role="toolbar">
     <div class="btn-group">
-    <button type="button" class="btn btn-default b1">
+    <button type="button" class="btn btn-default b1" @click="$router.push({ name: 'HotHomePage', params:'' })">
     <i class="glyphicon glyphicon-arrow-up"></i>
     </button>
-    <button type="button" class="btn btn-default b2">
+    <button type="button" class="btn btn-default b2" @click="$router.push({ name: 'NewHomePage', params:''})">
     <i class="glyphicon glyphicon-stats"></i>
     </button>
     <button type="button" class="btn btn-default b3">

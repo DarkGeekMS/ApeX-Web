@@ -121,7 +121,7 @@ components:{
    /* width: 100%; */
   display: inline-block;
   padding-top: 0%;
-  margin-top: 6%;
+  margin-top: 0.5%;
 }
 
 </style>
