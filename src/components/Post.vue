@@ -40,7 +40,7 @@
 
         {{postData.content}}
          </p>
-          <textarea  @keyup="store" v-if="this.showEditTextArea" class="form-control" rows="7" id="textarea">{{postData.content}}</textarea>
+          <textarea  @keyup="store" v-if="this.showEditTextArea" class="form-control" rows="7" id="textarea" v-model="postData.content"></textarea>
 
           <button @click="saveChange" v-if="this.showEditTextArea" class="btn btn-primary postButton" id="saveEdit">SAVE</button>
 
@@ -73,10 +73,9 @@ Comments</button>
       <li ><a href="#"  @click="Hide" class="HIDE"><i class="fa fa-ban" id="HideIcon"></i>Hide</a></li>
       <li><a  @click="report" class="HIDE"><i class="glyphicon glyphicon-flag" id="ReportIcon" ></i>Report</a></li>
       <li v-if="postData.canEdit"><a href="#" @click="editText" ><i class="glyphicon glyphicon-pencil" id="ReportIcon"></i>edit</a></li>
-      <!-- <li v-if="postData.canEdit"><a href="#" @click="deletePost" ><i class="glyphicon glyphicon-pencil"></i>delete</a></li> -->
       <li v-if="postData.canEdit"><a href="#" @click="deletePost" ><i class="glyphicon glyphicon-trash"></i>delete</a></li>
       <!-- <li><a href="#" @click="isLocked" v-show="isAdmin() || isModerator()"> -->
-      <li><a href="#" @click="isLocked" v-show="false">
+      <li v-if="postData.canEdit"><a href="#" @click="isLocked" >
       <!-- <li><a href="#" @click="isLocked" v-show="owner"> -->
 
         <i v-if="Locked=='unlock'" class="fa fa-lock" id="ReportIcon"></i>
@@ -324,7 +323,7 @@ export default {
       }
       ,
      changeColor_down(){
-       // alert('before '+this.points);
+
         this.downVoted = !this.downVoted;
         var upState = this.upVoted;
         this.upVoted = false;
