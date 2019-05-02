@@ -54,7 +54,7 @@ mounted:function () {
   },
 updated(){
 
-
+this.getPosts();
 
 
 },
@@ -90,7 +90,8 @@ methods:
 
 
          AllServices.getPosts(this.apexComName,this.sortparam).then((data) => {
-          this.posts= data;
+           this.posts= data;
+                
          })
 
 }
