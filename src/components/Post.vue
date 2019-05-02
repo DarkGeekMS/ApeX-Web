@@ -290,10 +290,8 @@ export default {
                       this.className_up    = 'btn btn-light btn-sm is-red';
                       this.pressed_up      =true;
                       this.postData.upvoted=true;
-
-
-                       this.PostId=this.postData.id;
-                       this.postData.up=true;
+                      this.PostId=this.postData.id;
+                      this.postData.up=true;
 
                 }
               else {
@@ -344,8 +342,8 @@ export default {
                       }
                          this.className_down = 'btn btn-light btn-sm is-blue';
                          this.pressed_down=true;
-                        this.postData.downvoted=true;
-
+                         this.postData.downvoted=true;
+                      
                          this.PostId=this.postData.id;
 
 
@@ -359,6 +357,7 @@ export default {
 
                    this.pressed_down = false;
                    this.PostId=this.postData.id;
+                  
 
 
 
@@ -479,32 +478,27 @@ components:{
 
   },
   mounted(){
-  if( this.upVoted==true ||this.postData.upvoted){
+    
+  if(this.upVoted==true ||this.postData.upvoted){
      
        this.className_up    = 'btn btn-light btn-sm is-red';
        this.pressed_up      =true;
     }
-    else if(this.postData.downvoted){
+    else if(this.postData.downvoted || this.downVoted){
       this.className_up    = 'btn btn-light btn-sm is-gray';
       this.className_down = 'btn btn-light btn-sm is-blue';
       this.pressed_down=true;
       this.pressed_up      =false;
     }
-
-  },
-  beforeUpdated() {
-
-
-  this.postData.votes=this.points;
-  this.postData.upvoted=this.upVoted;
-  if(this.Saved=='Saved'){
+    if(this.Saved=='Saved'){
      this.postData.saved="Saved";
   }
   else{
     this.postData.saved="unsaved";
   }
+
+  },
  
-  }
 }
 
 
