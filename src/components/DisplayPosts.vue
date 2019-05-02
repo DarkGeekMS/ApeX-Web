@@ -6,7 +6,7 @@
       v-on:showUp="showPost"
       v-on:lockComment="ifLock"
       v-on:HIDE="hide_Post"
-     v-show="!(onePost.id=='')"
+      v-show="!(onePost.id=='')"
       >
       </post>
     <!-- <div :id="'PostContainer'+i++" v-for="onePost in posts">
@@ -32,6 +32,8 @@ export default {
   props:{
     apexComName:String,
     sortparam:String,
+    user:Boolean,
+
     postData:{}// VERY IMPORTANT TO PREVENT THE ERRORS IN CONSOLE
     ,postInfo:{
       ID:'0'
@@ -39,7 +41,9 @@ export default {
     },
 data(){
 return{
-
+  savedPosts:{},
+  hiddenPosts:{},
+  personalPosts:{},
   posts:'',
   // hide:false,
   id:'0',
@@ -87,11 +91,29 @@ methods:
     * request gets posts from a certain ApexCom
     */
    getPosts(){
+if(this.user){
+  if(this.sortparam=="saved"){
+  AllServices.getUserInfo().then((data) =>{
+  this.posts = data.saved_posts;
+})
+}
+else if(this.sortparam=="hidden"){
+  AllServices.getUserInfo().then((data) =>{
+  this.posts = data.hidden_posts;
+})
+}
 
-
+else if(this.sortparam=="personal"){
+  AllServices.getUserInfo().then((data) =>{
+  this.posts = data.posts;
+})
+}
+}
+else{
          AllServices.getPosts(this.apexComName,this.sortparam).then((data) => {
           this.posts= data;
-         })
+          })
+      }
 
 }
 },
