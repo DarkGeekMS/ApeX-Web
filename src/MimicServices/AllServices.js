@@ -153,7 +153,7 @@ deleteUser:function(userName){
 deleteApexCom:function(apexComName){
   var data=MimicApexCom.deleteApexCom(this.mimic,apexComName, this.baseUrl);
   return data;
-},  
+},
 subscribe:function(apexComName){
   var data=MimicApexCom.subscribe(this.mimic,apexComName, this.baseUrl);
   return data;
@@ -247,8 +247,8 @@ deleteAcc:function(Pass) {
 getPrefs:function(){
   return MimicUserSettings.getPrefs(this.mimic, this.baseUrl);
 },
-updatePrefs:function(username,email,avatar,notifie) {
-  return MimicUserSettings.updatePrefs(this.mimic,username,email,avatar,notifie,this.baseUrl);
+updatePrefs:function(fd) {
+  return MimicUserSettings.updatePrefs(this.mimic,fd,this.baseUrl);
 },
 changePass:function (password,username,key){
     return MimicUserSettings.changePass(this.mimic,password,username,key, this.baseUrl);

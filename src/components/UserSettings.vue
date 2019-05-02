@@ -48,7 +48,7 @@
         </div>
         <div class=" words">Drag and Drop or Upload Avatar Image</div>
         <div class="display">
-          <input name="profileIcon" type="file" accept="image/x-png,image/jpeg" >
+          <input name="profileIcon" type="file" @dragover.prevent @drop="onDrop" @change="onChange" accept="image/x-png,image/jpeg" >
         </div>
       </label>
     </div>
@@ -99,7 +99,8 @@ export default {
   avatar:'',
   email:'',
   userName:'',
-
+  imgName:'',
+  imgContent:'',
     }
   },
   methods:{
@@ -109,48 +110,47 @@ export default {
          var files = e.dataTransfer.files;
          this.createFile(files[0]);
        },
-       /**
-     * when the user upload the img it enable the post button and store the img src
-     */
-      onChange(e) {
+        /**
+      * when the user upload the img it enable the post button and store the img src
+      */
+       onChange(e) {
+         this.imgContent = e.target.files[0];
+         var files = e.target.files;
+         this.createFile(files[0]);
+         this.imagable=true;
+         this.Enable();
 
+       },
+        /**
+      * it create file to be stored in img src
+      */
+       createFile(file) {
+         if (!file.type.match('image.*')) {
 
-        var files = e.target.files;
-        this.createFile(files[0]);
-        this.imagable=true;
-        this.Enable();
+           return;
+         }
 
-      },
-       /**
-     * it create file to be stored in img src
-     */
-      createFile(file) {
-        if (!file.type.match('image.*')) {
-          alert('Select an image');
-          return;
-        }
+         var reader = new FileReader();
+         var vm = this;
 
-        var reader = new FileReader();
-        var vm = this;
+         reader.onload = function(e) {
+           vm.image = e.target.result;
 
-        reader.onload = function(e) {
-          vm.image = e.target.result;
+           this.imgName=vm.image;
 
-          this.imgName=vm.image;
+         }
+         reader.readAsDataURL(file);
 
-        }
-        reader.readAsDataURL(file);
+       },
+        /**
+      * it remove the img if the user upload an img from browser and want to remove it so it make the src empty.
+      */
+       removeFile() {
+         this.image = '';
+         this.imagable=false;
+         this.Enable();
+       },
 
-      },
-       /**
-     * it remove the img if the user upload an img from browser and want to remove it so it make the src empty.
-     */
-      removeFile() {
-        this.image = '';
-        this.imagable=false;
-        this.Enable();
-      },
-    
     showpass(){
       this.$modal.show('changepass')
     },
@@ -159,8 +159,23 @@ export default {
     this.$modal.show('DeleteAcount')
     },
 updateprefs(){
-  AllServices.updatePrefs(this.userName,this.email,this.avatar,this.notifie).then((data)=>{
-    console.log(data)
+
+  let formData = new FormData();
+
+  if(this.imgName!=null){
+       formData.append('avatar', this.imgContent, this.imgContent.name);
+  }
+
+
+
+  formData.append('username', this.userName);
+  formData.append('email', this.email);
+  formData.append('notifications', this.notifie);
+  formData.append('token', this.$localStorage.get('token'));
+
+
+
+  AllServices.updatePrefs(formData).then((data)=>{
   });
 }
   },
