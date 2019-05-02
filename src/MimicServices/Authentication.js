@@ -277,14 +277,22 @@ export  const MimicAuth =new Vue({
       }
       else
       {
+        if(this.$localStorage.login){
+   
         return axios.get(baseUrl + 'api/ApexComs', {
+        
         }).then(response => {
-          return response.data.apexComs;
+       
+          return response.data.apexcoms;
           
         }).catch(function (error) {
-          this.$localStorage.set('error',error);
-          return false
+   
+            this.$localStorage.set('error',error);
+       
+           return false
         });
+      }
+      
       }
     }
   }

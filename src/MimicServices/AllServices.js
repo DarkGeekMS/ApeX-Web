@@ -37,6 +37,9 @@ export  const AllServices =new Vue({
     {
       return MimicAuth.getApex(this.mimic, this.baseUrl);
     },
+    getApexSubscribed:function(){
+      return MimicCreatePosts.getApexSubscribed(this.mimic, this.baseUrl);
+    },
     searchUser:function()
     {
       return MimicSearch.SearchU(this.mimic, this.baseUrl);

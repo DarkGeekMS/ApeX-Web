@@ -12,6 +12,56 @@ token:'1',
 
   },
   methods:{
+    getApexSubscribed: function(mimic, baseUrl)
+    {
+      if(mimic ==  true)
+      {
+        var names = [
+          {
+            id : '1',
+            name : 'apex1'
+          },
+          {
+            id : '2',
+            name : 'apex2'
+          }];
+        var promise1 = new Promise(function(resolve){
+            setTimeout(function() {
+              resolve(names);
+            }, 300)
+        });
+        return promise1
+      }
+      else
+      {
+        if(this.$localStorage.login){
+         return axios.post(baseUrl + 'api/GetApexcoms', {
+        token:this.$localStorage.get('token'),
+        general:0
+        }).then(response => {
+          
+          return response.data;
+          
+        }).catch(function () {
+            
+           return false
+        });
+      }
+      else{
+        return axios.get(baseUrl + 'api/ApexComs', {
+        
+        }).then(response => {
+       
+          return response.data;
+          
+        }).catch(function () {
+           return false
+        });
+      }
+      
+      }
+    
+    },
     submitPost: function(fd, mimic, baseUrl){
 
       if(mimic){
@@ -90,3 +140,4 @@ else {
     }
   }
 })
+
