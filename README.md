@@ -29,6 +29,9 @@ npm run serve
 npm run build
 ```
 
+## Host IP
+http://35.232.3.8/
+
 ## Website Samples
 
 <To be Added>
