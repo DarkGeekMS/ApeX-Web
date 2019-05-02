@@ -35,9 +35,10 @@ token:'1',
 else {
 
   if((fd.get('video_url')==null) &&(fd.get('img_name')==null)){
+
    return axios.post(baseUrl + "api/SubmitPost", fd)
     .then(response=>{
-     
+    
       swal('Post Submitted successfully');
       return  response.data;
        }).catch(function (){

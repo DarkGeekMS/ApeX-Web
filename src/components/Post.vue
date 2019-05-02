@@ -34,7 +34,7 @@
       <router-link class="postby" id="user" :to="{name:'UserProfile' , params: {userName:postData.post_writer_username}}"> {{postData.post_writer_username}}</router-link>
 
       <font class="postby" id="fontpost"> </font>
-      <a href="#" class="postby" id="timeAgo">  {{moment(postData.created_at).fromNow()}}</a>
+      <a href="#" class="postby" id="timeAgo">  {{moment(this.postData.created_at).fromNow()}}</a>
       <h3>{{postData.title}}</h3>
       <p id="postBody" class="hPost" v-if="!this.showEditTextArea">
 
@@ -71,7 +71,7 @@ Comments</button>
     </button>
     <ul class="dropdown-menu" id="dropMenu">
       <li ><a href="#"  @click="Hide" class="HIDE"><i class="fa fa-ban" id="HideIcon"></i>Hide</a></li>
-      <li><a  @click="report" class="HIDE"><i class="glyphicon glyphicon-flag" id="ReportIcon" ></i>Report</a></li>
+      <li><a  href="#" @click="report" class="HIDE"><i class="glyphicon glyphicon-flag" id="ReportIcon" ></i>Report</a></li>
       <li v-if="postData.canEdit"><a href="#" @click="editText" ><i class="glyphicon glyphicon-pencil" id="ReportIcon"></i>edit</a></li>
       <li v-if="postData.canEdit"><a href="#" @click="deletePost" ><i class="glyphicon glyphicon-trash"></i>delete</a></li>
       <!-- <li><a href="#" @click="isLocked" v-show="isAdmin() || isModerator()"> -->
@@ -182,7 +182,7 @@ export default {
          }
 
      this.onlyOneTime=false;
-      this.$emit('Report',this.ID,this.idx);
+      this.$emit('Report',this.postData.id,this.idx);
       this.$modal.show('reportBox');
       this.showReport=true;
 
@@ -254,7 +254,10 @@ export default {
             this.Not_Hide=false;
             this.is_Hide=true;
 
-            this.$emit('HIDE','nada');
+          //  this.$emit('HIDE',true);
+          this.$modal.hide('Demo-OnePost');
+           this.ShowModalVar=false;
+         
 
             }
 
@@ -497,8 +500,6 @@ components:{
     }
 
   this.postData.votes=this.points;
-
-
   this.postData.upvoted=this.upVoted;
 
   },
