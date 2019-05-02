@@ -386,10 +386,6 @@ postData:{
        },
 created(){
 
-   if(this.postData.canEdit){
-      this.className_up    = 'btn btn-light btn-sm is-red';
-        this.pressed_up      =true;
-   }
 
        if(this.userId==2){
         this.moderator=true;
