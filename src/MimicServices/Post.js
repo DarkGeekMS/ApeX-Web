@@ -10,14 +10,14 @@ methods:{
     {
         if(this.$localStorage.login)
         {
-        var promise1 = new Promise(function(resolve, reject) {
+        var promise1 = new Promise(function(resolve) {
             setTimeout(function() {
               resolve(true);
             }, 300);
           });
 return promise1;
         }
-        var promise1 = new Promise(function(resolve, reject) {
+         promise1 = new Promise(function(resolve) {
             setTimeout(function() {
               resolve(false);
             }, 300);
@@ -26,7 +26,7 @@ return promise1;
     }
     else
     {  
-        var self = this;
+       // var self = this;
         return axios.patch(baseUrl + 'api/EditText', {
             name: ID,
             content: cont,
@@ -34,17 +34,18 @@ return promise1;
 
          })
        .then(function (response) {
-         swal('success :)');
-           return true;
+         swal('edited successfully :)');
+         return response;
+       
         })
-       .catch(function (error) {
+       .catch(function () {
         swal("Oops!", "Something went wrong!", "error");
-        // alert(ID);
+   
            return false;
         });
     }
 },
-    save:function(token,ID,mimic, baseUrl){
+  save:function(token,ID,mimic, baseUrl){
    
         if(mimic){
           if(this.$localStorage.login){
@@ -64,17 +65,18 @@ return promise1;
                 token:token
             }).then(response => {
               swal('success :)');
-            return true;
-            }).catch(function(error){
+           
+            return response;
+            }).catch(function(){
                swal('wrong :(');
               return false;
             })
              }
               },
 
-                deletePost:function(name,ID,mimic){
+  deletePost:function(postID,token,mimic,baseUrl){
                     if(mimic){
-                        if(name=="1" && ID=="1"){
+                        if(postID=="1" && token=="1"){
 
                             return true;
 
@@ -86,19 +88,23 @@ return promise1;
                     }
 
             else{
+             
+                axios.delete(baseUrl + "api/Delete",{
+                    name    : postID,
+                    token : token
 
-                axios.DELETE(baseUrl + "api/Delete",{
-                    ID    : name,
-                    token : ID
-
-            }).then(response=>{
-
-                this.Deleted = true;
-                return true;
+            }).then(response =>{
+            
+                  swal('deleted successfully :)');
+                  return response.data;
+             
 
 
             }).catch(function (error)
             {
+            
+             swal("Oops!", "Something went wrong!", "error");
+             alert(error);
              return false;
 
 
@@ -109,7 +115,7 @@ return promise1;
 
 
             },
-               Hide(name,ID,mimic, baseUrl){
+  Hide(name,ID,mimic, baseUrl){
               
                    if(mimic===true){
 
@@ -131,8 +137,8 @@ return promise1;
                   
                   swal('Post Hidden Successfully :)');
 
-                 return true;
-                }).catch(function (error)
+                 return response.data;
+                }).catch(function ()
                 {
                   swal("Oops!", "Something went wrong!", "error");
                    return false;
@@ -141,7 +147,7 @@ return promise1;
               }
 
             },
-            upvote(ID,points,upVoted,downVoted,mimic, baseUrl){
+  upvote(ID,points,upVoted,downVoted,mimic, baseUrl){
               if( mimic == true)
               {
                   var p;
@@ -160,7 +166,7 @@ return promise1;
                       p--;
                   if(this.$localStorage.login)
                   {
-                  var promise1 = new Promise(function(resolve, reject) {
+                  var promise1 = new Promise(function(resolve) {
                       setTimeout(function() {
                         resolve({votes:p});
                       }, 300);
@@ -183,7 +189,7 @@ return promise1;
               return response.data;
       
              })
-            .catch(function (error)
+            .catch(function ()
             {
               return {
                   done:false,
@@ -194,7 +200,7 @@ return promise1;
              }
             ,
 
- downvote(ID,points,downVoted,upVoted,mimic, baseUrl){
+  downvote(ID,points,downVoted,upVoted,mimic, baseUrl){
   if( mimic == true)
   {
       var p = points;
@@ -210,7 +216,7 @@ return promise1;
           p++;
           if(this.$localStorage.login)
           {
-          var promise1 = new Promise(function(resolve, reject) {
+          var promise1 = new Promise(function(resolve) {
               setTimeout(function() {
                 resolve({votes:p});
               }, 300);
@@ -233,13 +239,14 @@ return promise1;
   return response.data;
 
  })
-.catch(function (error)
-{
+.catch(function ()
+{ 
   return false;
  });
   }
 },
-isLocked(ID,mimic, baseUrl){
+  isLocked(ID,mimic, baseUrl){
+   
     if( mimic == true)
     {
         if(this.$localStorage.login)
@@ -247,15 +254,18 @@ isLocked(ID,mimic, baseUrl){
         return true;
     }
     else
-    {
-        axios.post(baseUrl + 'api/Save', {
-        ID: ID,
+    { 
+        axios.post(baseUrl + 'api/LockPost', {
+        name: ID,
         token:this.$localStorage.get('token')
          })
-       .then(function (response) {
-           return true;
+       .then(response=> {
+        swal('Successfully :)');
+           return response.data;
         })
        .catch(function (error) {
+        swal("Oops!", "Something went wrong!", "error");
+        alert(error);
            return false;
         });
     }

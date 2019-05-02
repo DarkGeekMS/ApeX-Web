@@ -22,6 +22,7 @@ export  const MimicComment =new Vue({
       }
       else
       {
+        console.log(cont,parentID);
         return axios.post(baseUrl + 'api/AddReply', {
             content: cont,
             parent: parentID,
@@ -220,7 +221,7 @@ export  const MimicComment =new Vue({
       if(mimic == true){
          
             var comment1 = {
-              writerUserName: "ayatmostafa",
+              writerUsername: "ayatmostafa",
                content: "comment1",
                idx: 0,
                level: 0,
@@ -232,7 +233,7 @@ export  const MimicComment =new Vue({
               userVote:1
                };
             var comment2 = {
-              writerUserName: "MohamedAhmed",
+              writerUsername: "MohamedAhmed",
               content: "reply2 on comment2",
               idx: 1,
               level: 1, 
@@ -244,7 +245,7 @@ export  const MimicComment =new Vue({
               userVote:1
                };
             var comment3 = { 
-               writerUserName: "Double",
+               writerUsername: "Double",
                content: "reply1 on comment1",
                idx: 2,
                level: 1,
@@ -256,7 +257,7 @@ export  const MimicComment =new Vue({
               userVote:-1
                };
             var comment4 =  {
-              writerUserName: "Nourhan",
+              writerUsername: "Nourhan",
               content: "comment2",
               idx: 3,
               level: 0,
@@ -269,7 +270,7 @@ export  const MimicComment =new Vue({
              };
 
              var comment5 = {
-              writerUserName: "Nada",
+              writerUsername: "Nada",
               content: "reply 1 on comment 2 with test of mentions u/double",
               idx: 4,
               level: 1,
@@ -282,7 +283,7 @@ export  const MimicComment =new Vue({
              };
 
              var comment6 = {
-              writerUserName: "Mark",
+              writerUsername: "Mark",
               content: "comment3",
               idx: 5,
               level: 0,
@@ -307,7 +308,7 @@ export  const MimicComment =new Vue({
       {
         if(this.$localStorage.login)
           {
-        return axios.post('http://35.232.3.8/api/moreComments', {
+        return axios.post('http://35.232.3.8/api/RetrieveComments', {
             parent:ID,
             token:this.$localStorage.get('token')
         })
@@ -319,7 +320,7 @@ export  const MimicComment =new Vue({
             });
           }
           else{
-            return axios.get('http://35.232.3.8/api/moreComments', {
+            return axios.get('http://35.232.3.8/api/RetrieveComments', {
             parent:ID,
         })
            .then(response=> {

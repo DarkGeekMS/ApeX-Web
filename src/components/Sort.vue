@@ -53,11 +53,9 @@ import $ from'jquery/dist/jquery.min.js'
     methods:{
       check(){
         if(this.apex==""){
-          console.log("home");
           return true;
         }
         else {
-          console.log("apex");
           return false;
         }
       },

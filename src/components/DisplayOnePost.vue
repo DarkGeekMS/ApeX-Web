@@ -1,16 +1,23 @@
 <template>
 <div id="DisplayOnePost" class="modalview">
-<modal id="PopupModal" name="Demo-OnePost" :scrollable="true"  transition="pop-out"  width="90%" height="90%" >
+<modal id="PopupModal" name="Demo-OnePost" :scrollable="true"  transition="pop-out"  width="90%" height="90%">
   <div id="PostContent" class="postContent">
     <div>
-  <post v-bind:postData="onePostData" class="mainpost" id="postModal" v-on:lockComment="lock($event)"></post>
+      
+  <post
+    v-bind:postData="onePostData"
+    v-on:HIDE="hide"
+    class="mainpost" 
+    id="postModal"
+    v-on:lockComment="lock($event)"
+  ></post>
   </div>
  <ApexComSideBar class="sidebar"></ApexComSideBar>
    
       <CommentParent 
      
       v-show="!this.locked" 
-      postID='t3_10' 
+      v-bind:postID= onePostData.id 
       class="cmt"  
       v-on:lockComment="lock($event)" 
       v-bind:postOwnerUserName = 'postOwnerUserName'
@@ -34,7 +41,9 @@ import ApexComSideBar from "./ApexComSideBar.vue"
 export default {
 name: 'DemoOnePost',
 props:{
-  onePostData:{}
+  onePostData:{
+    
+  }
 },
 components:
 {
@@ -44,23 +53,33 @@ components:
 },
 methods:{
   lock:function(event){
-    // this.locked=true;
-    // alert('done');
+
 if(event=='Lock'){
      this.locked=false;
-     //alert(this.locked);
+    
 }
 else{this.locked=true;
      }
+  },
+  hide(e){
+  this.Hide=e;
   }
 
+},
+updated(){
+
+
+},
+created(){
+ 
 },
   data(){
     return{
 
       locked:false,
       postOwnerUserName : "hohoho",
-      moderatorUserName : 'FF'
+      moderatorUserName : 'FF',
+       Hide:false
     };
       }
       
@@ -87,15 +106,7 @@ background-color: #DAE0E6;
  
 }
 .sidebar{
-  // width:25%;
-  // height: auto;
-  // margin:8%;
-  // margin-left: 3%;
-  // margin-right: 6%;
-  // /* background-color:white; */
-  //  float:right;
-  // padding-top: 0%;
-  //  display: inline-block;
+
 
 }
 

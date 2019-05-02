@@ -1,9 +1,14 @@
 <template>
   <div id="submitPage" >  
 <CreatePostSideBar></CreatePostSideBar>
-<Post v-bind:postData="createPostData" class="postStyle" v-if="isCreated"> </Post>
+<Post v-bind:postData="createPostData" class="postStyle" v-if="isCreated"></Post>
 <CreatePost v-on:PostEmit="getData" v-if="firstTime" id="createPost"></CreatePost>
-<CommentParent v-if="isCreated" class="comment"></CommentParent>
+<CommentParent 
+  
+     
+      postID='t3_10'  
+      v-if="isCreated" class="comment"
+></CommentParent>
 
   </div>
 </template>
@@ -55,17 +60,18 @@ export default {
   },
 
   methods:{
-    getData(d,title,content,img,video,author,apex){
-     //  alert('ana emit ');
+    getData(id,d,title,content,img,video,author,apex){
+
     
         if(content || img ||video){
+       
           this.isCreated=true;
           this.firstTime=false;
           this.createPostData.canEdit=true;
         }
 
      
-      // this.createPostData.content=e.bodyPost;
+
       this.createPostData.content=content;
       this.createPostData.img=img;
       this.createPostData.videolink=video;
@@ -74,7 +80,8 @@ export default {
       this.createPostData.apex_com_name=apex;
       this.createPostData.canEdit=true;
       this.createPostData.created_at=d;
-      // alert(d);
+      this.createPostData.id=id;
+    
      
 
       
@@ -85,10 +92,6 @@ export default {
       this.showCreateEdit=true;
       this.isCreated=true;
     }
-  },
-  created(){
-
- 
   },
   props:{
     postData:{},

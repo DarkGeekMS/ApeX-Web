@@ -12,7 +12,7 @@
             {{user}}
           </router-link>
         <b class = "smallText">{{points}} points</b>
-        <b class = "smallText">{{time}}</b>
+        <b class = "smallText">{{moment(date).fromNow()}}</b>
         </div>
 
       <br>
@@ -52,6 +52,7 @@
 import WriteComment from './WriteComment.vue'
 import reportBox from './ReportModal.vue'
 import {AllServices} from '../MimicServices/AllServices.js'
+var moment =require('moment');
 
 
 export default {
@@ -90,6 +91,8 @@ export default {
     showDeleteButton:false,
     showEditButton:false,
     showReportButton:false,
+    moment:moment
+
 
     // unSaved:'Save'
     }
@@ -115,7 +118,9 @@ export default {
       // guest
       this.guestButtons();
     }
-    setInterval(() => this.DateFormat(this.date), 1000);
+    ///this.DateFormat(this.date);
+    //console.log('date',this.date,'time',this.time);
+   // setInterval(() => this.DateFormat(this.date), 1000);
   /////
   },
   methods:{
@@ -193,6 +198,7 @@ Upvote:function(){
   var downState = this.downVoted;
   this.downVoted = false;
   AllServices.UpVoteComment(this.ID,this.points,this.upVoted,downState).then((data) => {
+    
        if(data){
           this.points=data.votes;
         }});
@@ -215,7 +221,7 @@ addReply:function(cont,con,use,parent,parentLevel,parentID,currentID){
 DateFormat:function(date){
   // Make a fuzzy time
 var delta = Math.round((+new Date - date) / 1000);
-
+console.log(new Date-date);
 var minute = 60,
     hour = minute * 60,
     day = hour * 24,

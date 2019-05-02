@@ -12,139 +12,74 @@ token:'1',
 
   },
   methods:{
-    submitPost: function(apexComId,title,bodyPost,imgName,videoUrl, isLocked,token,mimic, baseUrl){
-      
+    submitPost: function(fd, mimic, baseUrl){
+
       if(mimic){
          if(this.$localStorage.login){
 
-            return true;
+     
 
-         }
-            return false;
-                }
-
+         var promise1 = new Promise(function(resolve) {
+          setTimeout(function() {
+            resolve(true);
+          }, 300);
+        });
+        return promise1;
+      }
+       promise1 = new Promise(function(resolve) {
+          setTimeout(function() {
+            resolve(false);
+          }, 300);
+        });
+      }
 else {
-  if((imgName==null) &&(videoUrl==null)){
-    axios.post(baseUrl + "api/SubmitPost",{
-      
-      ApexCom_id:apexComId,
-      title:title, 
-      token:this.$localStorage.get('token'),
-      body:bodyPost,
-      isLocked:isLocked
 
-   },
-   {
-     headers:{"Content-Type": "application/json"
-             }}).then(response=>{
-       
+  if((fd.get('video_url')==null) &&(fd.get('img_name')==null)){
+   return axios.post(baseUrl + "api/SubmitPost", fd)
+    .then(response=>{
+     
       swal('Post Submitted successfully');
-
-      return true;
-       }).catch(function (error){
-    swal("Oops!", "Something went wrong!", "error");
- 
-     return false;
+      return  response.data;
+       }).catch(function (){
+      swal("Oops!", "Something went wrong!", "error");
+      return false;
    })
 
 
   }
-  else if(imgName==null){
-    axios.post(baseUrl + "api/SubmitPost",{
-      
-      ApexCom_id:apexComId,
-      title:title, 
-      token:this.$localStorage.get('token'),
-    
-      video_url:videoUrl,
-      isLocked:isLocked
-
-
-   },
-   {headers:{  "Content-Type": "application/json"}
-    }).then(response=>{
-      
-    
+  else if(fd.get('img_name')==null){
+   return axios.post(baseUrl + "api/SubmitPost", fd)
+    .then(response=>{
       swal('Post Submitted successfully');
-      
-      return true;
-     
-
- 
-   }).catch(function (error){
+      return response.data;
+   }).catch(function (){
     swal("Oops!", "Something went wrong!", "error");
-    
-    // console.log(videoUrl);
      return false;
    })
 
   }
-  else if(videoUrl==null){
-    console.log(this.$localStorage.get('token'));
-    axios.post(baseUrl + "api/SubmitPost",{
-      
-      ApexCom_id:apexComId,
-      title:title, 
-      token:this.$localStorage.get('token'),
-      
-      img_name:imgName,
-      isLocked:isLocked
-
-    
-   
-   
-
-   },{headers:{  'Content-Type': 'application/x-www-form-urlencoded'}
-  }).then(response=>{
-      
-    
+  else if(fd.get('video_url')==null){
+   return axios.post(baseUrl + "api/SubmitPost", fd)
+    .then(response=>{
       swal('Post Submitted successfully');
-      return true;
-     
-
- 
-   }).catch(function (error){
-    
-    swal("Oops!", "Something went wrong!", "error");
-  //console.log(imgName);
- // console.log(apexComId);
-  //console.log(imgName);
-  //console.log(isLocked);
- 
-  
+      return response.data;
+   }).catch(function (){
+     swal("Oops!", "Something went wrong!", "error");
      return false;
    })
 
   }
   else {
-    axios.post(baseUrl + "api/SubmitPost",{
-      
-      ApexCom_id:apexComId,
-      title:title, 
-      token:this.$localStorage.get('token'),
-      body:bodyPost,
-      img_name:imgName,
-      video_url:videoUrl,
-      isLocked:isLocked
-
-   }).then(response=>{
-      
+  return  axios.post(baseUrl + "api/SubmitPost", fd)
+    .then(response=>{
       swal('Post Submitted successfully');
-      return true;
-    
- 
-   }).catch(function (error){
+      return response.data;
+   }).catch(function (){
     swal("Oops!", "Something went wrong!", "error");
-  
      return false;
    })
-
-
         }
       }
     }
-  
   }
-
-
 })

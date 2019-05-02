@@ -54,7 +54,7 @@ export  const MimicAuth =new Vue({
             this.$localStorage.set('login', false);
             this.$localStorage.set('token', '');
             this.$localStorage.set('userName', '');
-          }        
+          }
         }
         else{
           axios.post(baseUrl + 'api/SignOut',{
@@ -278,15 +278,30 @@ export  const MimicAuth =new Vue({
       }
       else
       {
-        return axios.get(baseUrl + 'api/ApexComs', {
-        }).then(response => {
-         
-          return response.data;
-          
-        }).catch(function (error) {
-          this.$localStorage.set('error',error);
-          return false
-        });
+      //  if (this.$localStorage.get('token') == null)
+        //{
+          return axios.get(baseUrl + 'api/ApexComs', {
+          }).then(response => {
+            return response.data;
+
+          }).catch(function (error) {
+            this.$localStorage.set('error',error);
+            return false
+          });
+      /*  }
+        else
+        {
+          return axios.post(baseUrl + 'api/GetApexcoms'), {
+            token: this.$localStorage.get('token'),
+            general:0
+          }.then(response => {
+            return response.data;
+
+          }).catch(function (error) {
+            this.$localStorage.set('error',error);
+            return false
+          });
+        }*/
       }
     }
   }

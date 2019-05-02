@@ -1,7 +1,7 @@
 <template id="profiledesign" v-if="this.userName">
 <div id='userprofile'>
     <div id='firstnavbar'>
-      
+
         <a style="font-size: 16px;"  id="posttab" class="navbarlinks" href="#">posts</a>
         <a style="font-size: 16px;"  id="savedtab" v-show="notGuest" class="navbarlinks" href="#">saved</a>
         <a style="font-size: 16px;"  id="hiddentab" v-show="notGuest" class="navbarlinks" href="#">hidden</a>
