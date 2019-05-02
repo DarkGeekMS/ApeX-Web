@@ -248,8 +248,8 @@ getPrefs:function(){
 updatePrefs:function(username,email,avatar,notifie) {
   return MimicUserSettings.updatePrefs(this.mimic,username,email,avatar,notifie,this.baseUrl);
 },
-changePass:function (password,withCode,username,key){
-    return MimicUserSettings.changePass(this.mimic,password,withCode,username,key, this.baseUrl);
+changePass:function (password,username,key){
+    return MimicUserSettings.changePass(this.mimic,password,username,key, this.baseUrl);
 },
 searchU:function(query){
   var data=MimicApexCom.searchU(this.mimic,query, this.baseUrl);

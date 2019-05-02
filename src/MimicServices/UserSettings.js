@@ -67,27 +67,30 @@ return promise1;
 
 updatePrefs:function (mimic,username,email,avatar,notifie, baseUrl) {
   if(mimic==false){
+    alert(username+" "+email+" "+avatar+" "+notifie)
     return axios.post(baseUrl + 'api/UpdatePreferences',
    {
      username:username,
+     fullname:'',
     email:email,
     avatar:avatar,
     notifications:notifie,
     token:this.$localStorage.get('token')
       }).then(response => {
+        console.log(response)
         return response.data;
       })
 
   }
 },
 
-changePass:function (mimic,password,withCode,username,key, baseUrl) {
+changePass:function (mimic,password,username,key, baseUrl) {
   if(mimic==false){
     return axios.patch(baseUrl + 'api/ChangePassword',
    {
      token:this.$localStorage.get('token'),
+     withCode:0,
     password:password,
-    withCode:withCode,
     username:username,
     key:key
       }).then(response => {
