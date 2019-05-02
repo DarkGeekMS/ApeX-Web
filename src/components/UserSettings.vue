@@ -57,7 +57,7 @@
 
     </div>
     <div v-else>
-      <img  :src="this.image" alt="" class="img" id="imgId" />
+      <img  :src="'http://35.232.3.8' + this.image" alt="" class="img" id="imgId" />
       <button class="ChangeButton" @click="removeFile">REMOVE</button>
     </div>
 

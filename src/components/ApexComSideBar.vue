@@ -5,7 +5,7 @@
       <div class="content">
           <h3 style="color:#1a1a1b; display:inline; font-size: 20px;" id="Apexcomname">{{apexComName}}</h3>
           <div class="img">
-        <img style="box-sizing: border-box; border-radius: 50%;" class="image" :src="image" >
+        <img style="box-sizing: border-box; border-radius: 50%;" class="image" :src="'http://35.232.3.8' + image" >
       </div>
 
 
@@ -126,7 +126,7 @@ export default {
     getSubscribers(){
         AllServices.getSubscribers(this.apexComId).then((data) =>{
         this.subscribers=data.subscribers;
-      
+
         var subscribe = this.subscribers.find(this.CheckUser);
         if(subscribe !== undefined){
           this.subscribed = true;
@@ -134,12 +134,12 @@ export default {
         }
         else{
           this.subscribed=false;
-          this.state='subscribe';   
+          this.state='subscribe';
     }
     })
    },
    /**
-       * if user is logged in , can go to create post 
+       * if user is logged in , can go to create post
       */
       createPost: function(){
         if( this.loggedIn )
@@ -233,7 +233,7 @@ export default {
    },
 
   },
- mounted(){ 
+ mounted(){
    if(this.loggedIn){
    this.getAbout();
    this.isAdminFunction();

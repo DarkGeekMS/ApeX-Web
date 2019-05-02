@@ -366,14 +366,16 @@ this.apexComId=this.apexs[this.indx-1].id;
       formData.append('body', this.bodyPost);
       formData.append('token', this.$localStorage.get('token'));
       formData.append('isLocked', this.isLocked);
-  
+
+      var id
+      
       AllServices.submit(formData).then((data)=>{
-        
-       var id=data.id;
-       this.$emit('PostEmit',id,dateTime,this.title,this.bodyPost,this.imgName,this.videoUrl,this.$localStorage.get('userName'),this.apexs[this.indx-1].name);
-       
+
+       id=data.id;
+
       });
-  
+
+      this.$emit('PostEmit',id,dateTime,this.title,this.bodyPost,this.imgName,this.videoUrl,this.$localStorage.get('userName'),this.apexs[this.indx-1].name);
     }
     },
 
@@ -392,8 +394,8 @@ created(){
         if(data)
         {
           this.apexs = data.apexComs;
-        
-        
+
+
         }
       });
 
