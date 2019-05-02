@@ -9,7 +9,7 @@
         <div class="partition-title">
         <h1 class=""> Choose your username </h1>
           <p>
-              Your username is how other community members will see you. This name will be used to credit you for things you share on Reddit. What should we call you?
+              Your username is how other community members will see you. This name will be used to credit you for things you share on Apex. What should we call you?
           </p>
         </div>
               <div style="margin-top: 32px"></div>
@@ -19,25 +19,24 @@
 
             <div class="add" >
               <input id="SignUpUserName" type="text" class="form-control" name="username"
-               placeholder="CHOOSE A USERNAME" v-model="username" v-on:keyup="restart()" required autofocus>
+               placeholder="CHOOSE A USERNAME" v-model="username"v-on:keyup="restart()" required autofocus />
 
-               <span class="lead" style = "fontSize:10px" v-show="invalidUser" >Enter a username of max length 17 without spaces </span>
-               <p class = "lead" style = "fontSize:15px; color:red" > {{ error }}  </p>
+               <span class="lead" style = "fontSize:10px" v-show="invalidUser" >Username must be between 3 and 17 characters without spaces </span>
 
                <div style="margin-top: 2%"></div>
 
               <input id="password" type="password" class="form-control" name="password"
                 placeholder="PASSWORD" v-on:keyup="restart()"
-                v-model="pass" required autofocus>
+                v-model="pass" required autofocus />
                 <span class="lead" style = "fontSize:10px" v-show="invalidPass" >Password must be at least 6 characters long</span>
-                <span class="lead" style = "fontSize:10px" v-show="invalidUserAndPass" >Enter a password of min length 6 &  a username of max length 17</span>
+                <span class="lead" style = "fontSize:10px" v-show="invalidUserAndPass" >Enter a password of min length 6  &  username must be between 3 and 17 characters</span>
                 <p class = "lead" style = "fontSize:15px; color:blue; padding-left:15px" > {{ congra }}  </p>
-
+                <p class = "lead" style = "fontSize:15px; color:red" > {{ error }}  </p>
 
             </div>
             <div style="background_color:#eee;border-top:1.5px solid #eee;margin-top: 15%" >
               <a id="Back" class="btn blue" style="margin-left:15px" @click="$modal.hide('demo-sign2')">BACK</a>
-              <button :disabled="check" class="btn blue" type="submit" style="margin-left:43%" @click.prevent="post()" id="SignUpFinish">SIGN UP</button>
+              <button :disabled="check" class="btn blue" type="submit" @click.prevent="post()" id="SignUpFinish">SIGN UP</button>
             </div>
 
           </form>
@@ -98,7 +97,7 @@ export default {
      * axios post request to send username and password to the server to sign up user
     */
     post: function(){
-        if (this.username.length <= 17 && this.pass.length >= 6 && this.username.indexOf(' ') < 0)
+        if (this.username.length <= 17 && this.username.length >= 3 && this.pass.length >= 6 && this.username.indexOf(' ') < 0)
         {
           if(AllServices.getState()){
             var check=  AllServices.signUp(this.email, this.username, this.pass)
@@ -128,13 +127,13 @@ export default {
           })
         }
         }
-        else if (this.username.length > 17 && this.pass.length < 6){
+        else if ( (this.username.length > 17 || this.username.length < 3)  && this.pass.length < 6){
         this.invalidUserAndPass=true;
         this.invalidUser=false;
         this.invalidPass=false;
 
         }
-        else if (this.username.length > 17 || this.username.indexOf(' ') >= 0)
+        else if ( this.username.length > 17 || this.username.indexOf(' ') >= 0 || this.username.length < 3)
         {
         this.invalidUserAndPass=false;
         this.invalidUser=true;
@@ -181,7 +180,7 @@ $background_color: #404142;
 #closebtn
 {
   float:right;
-  margin:7px 390px ;
+  margin:7px 35%;
   border:0;
   color:grey;
   width:22px;
@@ -250,7 +249,9 @@ button.btn {
   box-shadow: 0 4px 8px rgba(#20a0ff, .3);
   background: #4db3ff;
   font-weight: 600;
-  min-width: 13%;
+  width:100px;
+  float:right;
+  margin-right:35%;
   margin-top: 1%;
   &:hover {
     background: #20a0ff;
@@ -271,5 +272,17 @@ padding: 4px 8px;
 font-family: inherit;
 transition: 0.5s all;
 outline: none;
+}
+@media(max-width:800px)
+{
+  button.btn{
+    margin-right:20%
+  }
+}
+@media(max-width:1156px)
+{
+  button.btn{
+    margin-right:40%
+  }
 }
 </style>

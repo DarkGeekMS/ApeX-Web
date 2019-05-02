@@ -17,13 +17,13 @@
       </button>
 
       <ul class="dropdown-menu drop1">
-        <li class="dropdown-header">REDDIT FEEDS</li>
+        <li class="dropdown-header">APEX FEEDS</li>
         <li v-show="this.$localStorage.get('login')"><a href="/" class="glyphicon glyphicon-home blue" ><span id="items">Home</span></a></li>
         <li><router-link  :to="{ name: 'NewHomePage', params:''}" class="glyphicon glyphicon-arrow-up blue"><span id="items">Popular</span></router-link></li>
         <li><router-link :to="{ name: 'NewHomePage', params:''}" class="glyphicon glyphicon-stats blue"><span id="items">All</span></router-link></li>
         <li><a href="#"> <span style="background-color:blue; color:white; padding-left:3px"> oc </span> <span style="color:black;padding-left:7%">Original Content</span></a></li>
 
-        <li class="divider"></li>
+        <li v-show="log" class="divider"></li>
 
         <li class="dropdown-header" v-show="this.$localStorage.get('login')">MY COMMUNITIES</li>
             <li v-show="log" v-for="apex in apexs" :key="apex.id" ><router-link :to="{ name:'ApexCom', params: {apexComId:apex.id} }" > {{apex.name}} </router-link></li>
@@ -289,12 +289,22 @@ input:hover{
     display: none
   }
 }
+@media(max-width:625px){
+  div .log  #LoginBTN{
+    display: none
+  }
+}
 @media(max-width:971px){
   div .tool1{
     display:none
   }
-  div .log{
-    width:110px;
+  div .log #LoginBTN{
+    width:75px;
+    margin:7px 5px 7px -70%;
+  }
+  div .log #SignUp{
+    width:75px;
+    margin-right: -25px
   }
 }
 @media(max-width:997px){
@@ -319,7 +329,7 @@ input:hover{
   }
 
   div .tool1, div .tool2 {
-    padding-left: 0.5%
+    padding-left: .5%
   }
 }
 @media(max-width:1350px){
@@ -422,7 +432,7 @@ a #items{
   padding: 0.3%;
   color:white;
   background-color: #000;
-  border-radius: 10%;
+  border-radius: 10px;
   font-size: 12px;
   transition: all ease-in-out 0.5s;
   margin-left:68%;
@@ -432,24 +442,21 @@ a #items{
 .pop2
 {
   width:25px;
-  margin-left:71%;
+  margin-left:71.5%;
 }
 .pop3
 {
   width:95px;
   margin-left:72%;
-  border-radius: 10%;
 }
 .pop4
 {
   width:64px;
   margin-left:76.5%;
-  border-radius: 10%;
 }
 .pop5
 {
   width:75px;
   margin-left:78.5%;
-  border-radius: 10%;
 }
 </style>

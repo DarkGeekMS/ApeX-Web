@@ -6,7 +6,8 @@
       <br/>  <br/>  
      <p > Have an idea for a new community? </p>
 
-     <button  style=" cursor: no-drop" type="button" class="btn btn-info" data-toggle="button" aria-pressed="false" autocomplete="off" @click="create()">CREATE COMMUNITY</button>
+     <button  style=" cursor: no-drop" type="button" class="btn btn-info" data-toggle="button" aria-pressed="false" autocomplete="off" @click="create()" id="comm">CREATE COMMUNITY</button>
+     <div class="warn2">To prevent spam, you must be an admin to create communities. </div>
   </div>
 </template>
 
@@ -19,11 +20,21 @@ import {AllServices} from '../MimicServices/AllServices.js'
       return {
       }
     },
+    mounted(){
+      $('#comm').hover(function() {
+      $('.warn2').show();
+        }, function() {
+      $('.warn2').hide();
+      });
+    },
     methods:{
       create: function() {
           AllServices.userType().then((data)=>{
           if(data.type == 1){
-            this.$router.push({ name:'CreateApexCom'} )
+            this.$router.push({ name:'CreateApexCom'} );
+            $('#comm').css('cursor','pointer');
+          }else{
+            $('#comm').css('cursor','no-drop')
           }
         })
       }
@@ -77,5 +88,23 @@ button{
   #main{
     display:none
   }
+}
+.warn2{
+  border: none;
+  width: 65%;
+  overflow: hidden;
+  line-height: 15px;
+  padding: 0.3%;
+  color:white;
+  background-color: #000;
+  border-radius: 10px;
+  padding: 7px;
+  padding-left: 15px;
+  font-size: 12px;
+  transition: all ease-in-out 0.5s;
+  margin-left:52px;
+  margin-top:-8px;
+  text-align:center;
+  display:none;
 }
  </style>

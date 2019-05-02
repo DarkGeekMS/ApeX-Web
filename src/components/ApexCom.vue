@@ -26,6 +26,7 @@
 <script>
 import SideBar from './ApexComSideBar.vue'
 import {AllServices} from '../MimicServices/AllServices.js'
+import $ from'jquery/dist/jquery.min.js'
 
 /**
  * @vue-prop  {string} apexComId - community Id
@@ -107,7 +108,9 @@ export default {
          this.apexComName=about.name;
          this.moderators=about.moderators;
          this.image=about.avatar;
+         $('#selectted').text('a/' + this.apexComName );
          })
+
    },
    /**
       *get the details of certain community for guest
@@ -118,23 +121,30 @@ export default {
          this.apexComName=about.name;
          this.moderators=about.moderators;
          this.image=about.avatar;
+         $('#selectted').text('a/' + this.apexComName );
          });
+
+
    },
 
 
   },
   mounted()
   {
-  if(this.loggedIn){
-   this.getAbout();
-   this.isAdminFunction();
-   this.isModeratorFunction();
-   }
-   else{
-     this.getAboutGuest();
-   }
+    if(this.loggedIn){
+     this.getAbout();
+     this.isAdminFunction();
+     this.isModeratorFunction();
+     }
+    else{
+      this.getAboutGuest();
+    }
+  
+    var remclass = $('#classed').prop('class');
+    $('#classed').removeClass(remclass);
+    $('#classed').addClass("glyphicon glyphicon-globe");
   },
-   beforeRouteUpdate (to, from, next) {
+  beforeRouteUpdate (to, from, next) {
     // this.getContent(to.params.uid);
     console.log('route updated');
     next();
