@@ -10,7 +10,7 @@
       </post>
   
     </div>
-    <OnePost  id="PostModal" :onePostData="postInfo"   v-on:HIDE="hide_Post" ></OnePost>
+    <OnePost  id="PostModal" :onePostData="postInfo"  ></OnePost>
     <!-- v-bind:style="{width: 80 +'%'}" -->
 
   </div>
@@ -30,14 +30,13 @@ export default {
     apexComName:String,
     sortparam:String,
     postData:{}// VERY IMPORTANT TO PREVENT THE ERRORS IN CONSOLE
-    ,postInfo:{
-      ID:'0'
-    }
+    
     },
 data(){
 return{
 
   posts:'',
+  postInfo:''
 
 
      }

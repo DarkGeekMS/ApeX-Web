@@ -9,7 +9,7 @@ export  const MimicDisplayPosts =new Vue({
   var posts=[
             {
               id:'555',
-              posted_by:'Nada',
+              post_writer_username:'Nada',
               apex_id:'spacetoon',
               title:'Kannnnaassss😍',
               content:'Experience enjoyable JavaScript development with Kannnaasss. With smart code completion, safe refactoring, and first-class support for Node.js, Angular and React. Download Kannnaasss 😀😂🍔😍',
@@ -21,16 +21,21 @@ export  const MimicDisplayPosts =new Vue({
               created_at:"2019-03-23 17:20:45",
               updates_at:null,
               apex_com_name:"health care",
-              post_writer_user:"double"
+              post_writer_user:"double",
+              current_user_vote:0,
+              current_user_saved_post:false
 
             },
 
             {
               id:'111',
-              posted_by:'Nourhan',
+              post_writer_username:'Nourhan',
               votes:150,
+              current_user_vote:-1,
               apex_id:'cinema',
+              apex_com_name:"apexName2",
               created_at:"2019-04-26 17:20:45",
+              current_user_saved_post:true,
               title:'Avengers Endgame😲',
               content:'Software costs more to maintain than it does to develop. For systems with a long life, maintenance costs may be several times development costs😮 ',
               videolink:null,
@@ -47,20 +52,24 @@ export  const MimicDisplayPosts =new Vue({
               created_at:"2019-04-23 17:20:45",
               updates_at:null,
               apex_com_name:"health aware",
-              post_writer_user:"Nada",
-              votes:-1
+              current_user_saved_post:false,
+              post_writer_username:"Nada",
+              votes:-1,
+              current_user_vote:1
             }
             ,{
               id:'444',
               posted_by:'marc',
               votes:0,
+              current_user_vote:0,
               apex_id:'444',
               title:'korty po3po3',
               content:"Software engineering is concerned with theories, methods and tools for professional software development.software costs often dominate computer system costs. the costs of software on a PC are often greater than the hardware cost 🤔.",
               created_at:"2019-03-23 17:20:45",
               updates_at:null,
               apex_com_name:"take care",
-              post_writer_user:"marc",
+              post_writer_username:"marc",
+              current_user_saved_post:true,
               videolink:null ,
               img:'http://bashkatibnews.com/contents/article/515_lybfjrmf.jpg'
             }
@@ -68,6 +77,7 @@ export  const MimicDisplayPosts =new Vue({
               id:'222',
               posted_by:'Double',
               votes:0,
+              current_user_vote:-1,
               apex_id:'weather forecast',
               title:'paparro fille',
               content:`Partly cloudy in the evening, becoming cloudy overnight. Low around 55 F. Winds S at 5 to 10 mph
@@ -81,8 +91,9 @@ export  const MimicDisplayPosts =new Vue({
               img:'',
               created_at:"2019-03-23 17:20:45",
               updates_at:null,
+              current_user_saved_post:false,
               apex_com_name:"leader care",
-              post_writer_user:"SHAWKY",
+              post_writer_username:"SHAWKY",
               video_url:null
             },
           ];
@@ -99,6 +110,7 @@ return promise1;
                   {
                     id:'555',
                     posted_by:'Nada',
+                    apex_com_name:"funny",
                     apex_id:'555',
                     title:'dj',
               content:'Experience enjoyable JavaScript development with WebStorm. With smart code completion, safe refactoring, and first-class support for Node.js, Angular and React. Download free trial 😀😂🍔😍',
@@ -107,15 +119,26 @@ return promise1;
                     commenetnum:5,
                     votes:9,
                     videolink:null,
-                    img:null
+                    img:null,
+                    post_writer_username:"Nada",
+                    "created_at": "2019-03-23 17:20:44",
+                    current_user_saved_post:false,
+                    current_user_vote:1
                   },{
                     id:'444',
                     posted_by:'marc',
+                    apex_com_name:"cinema",
                     apex_id:'444',
                     title:'dj',
+                    votes:-5,
                     content:'I love javascript ,vue ,html ,css 🐸🐸🐸',
                     videolink:null,
-                    img:null
+                    img:null,
+                    post_writer_username:"Nada",
+                    "created_at": "2019-03-23 17:20:43",
+                    current_user_saved_post:true,
+                    current_user_vote:0,
+
                   }
                 ];
                 var promise1 = new Promise(function(resolve, reject) {
