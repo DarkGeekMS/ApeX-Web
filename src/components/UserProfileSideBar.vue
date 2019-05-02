@@ -8,7 +8,7 @@
           </div>
         </div>
         <div class="content">
-          <h4 class="username" v-show="fullName.length==0"> {{userName}} </h4>
+          <h4 class="username" v-show="fullName==null"> {{userName}} </h4>
           <h4 class="username" > {{fullName}} </h4>
 <div class="info">
   <div style="display:inline; float:left; width:50%;">
@@ -76,9 +76,9 @@
 <h5 style="display:inline; font-size: 14px; color:#7c7c7c;" id="cakedaynumber" > {{cakeDay}} </h5>
   </div>
 </div>
-          <button v-show="notGuest()&&settings" id="createpostbutton" class="button" type="button" v-on:click="createPost()">new post</button>
-          <button v-show="!notGuest()&&settings" v-on:click="blockUser()" id="blocktbutton" class="button" type="button">block</button>
-          <button v-show="isAdmin()&&settings" v-on:click="deleteUser()" id="deletebutton" class="button" type="button">delete user</button>
+          <button v-show="notGuest&&settings" id="createpostbutton" class="button" type="button" v-on:click="createPost()">new post</button>
+          <button v-show="!notGuest&&settings" v-on:click="blockUser()" id="blocktbutton" class="button" type="button">block</button>
+          <button v-show="isAdmin&&settings" v-on:click="deleteUser()" id="deletebutton" class="button" type="button">delete user</button>
         </div>
     </div>
 <!-- 
@@ -102,29 +102,37 @@ import {AllServices} from '../MimicServices/AllServices.js'
 
 /**
  * @vue-data {JWT} [token='']  user Token
- * @vue-prop  {string} image - Url of user profile image
- * @vue-prop  {number} KarmaCount - Number of karma
- *@vue-prop {string} UserName - Name of user
+ * @vue-data  {string} image - Url of user profile image
+ * @vue-data  {number} KarmaCount - Number of karma
+ * @vue-prop {string} UserName - Name of user
+ * @vue-prop {string} settings - indicates wether the comonent is called in profile or settings
+ * @vue-data  {boolean} [isAdmin=false] - boolean indicates if the user is moderator or not
+ * @vue-data  {boolean} [notGuest=false] - boolean indicates if the user is in his profile or other user profile
+ * @vue-data {string} id - user id
+ * @vue-data {string} cakeDay - date when this profile was created
+ * @vue-data {string} fullName - user full name
+ * @vue-data {string} loggeduser  name of logged in user
+ * @vue-data {boolean} loggedIn  check if user is logged in
  */
 
 export default {
   props:{
       userName:String,
-      // karmaCount:Number,
-      // image:String,
-      // cakeDay:String,
-      // blockList:Array,
       settings:Boolean,
        },
   data () {
     return {
       token:this.$localStorage.get('token'),
       loggedIn:this.$localStorage.get('login'),
+      loggeduser:this.$localStorage.get('userName'),
       // userName:'',
       karmaCount:0,
       image:'',
       cakeDay:'',
-      fullName:''
+      fullName:'',
+      id:'',
+      isAdmin:false,
+      notGuest:false,
     }
   },
   methods:
@@ -132,35 +140,25 @@ export default {
   /**
     * check if the user if Admin
     */
-    isAdmin:function(){
-      if(this.loggedIn){
-      AllServices.userType().then((data) =>{
-        if(data.type ==1){
-          return true;
-          }
-        else{
-          return false;
-        }
-      })
-      }
+    isAdminFunction:function(){
+      // AllServices.userType().then((data) =>{
+      //   if(data.type ==1){
+      //     this.isAdmin= true;
+      //     }
+      //   else{
+      //     this.isAdmin= false;
+      //   }
+      // })
     },
-    unblockUser:function(userName,index){
-     AllServices.blockUser(userName).then((data) =>{
-     if(data){
-         this.blockList.splice(index, 1);
-         alert('this user have been blocked successfully');
-       }
-       else{
-         alert('sorry something worng happend');
-       }
-       })
-    },
-
+    /**
+    * used to block user
+    */
     blockUser:function(){
     if(this.loggedIn){
-     AllServices.blockUser(this.userName).then((data) =>{
+     AllServices.blockUser(this.id).then((data) =>{
      if(data){
          alert('this user have been blocked successfully');
+         this.$router.push({name:'HomePage'});
        }
        else{
          alert('sorry something worng happend');
@@ -174,23 +172,22 @@ export default {
     /**
     * check if the user requesting his profile or other user profile
     */
-    notGuest:function(){
-      if(this.loggedIn){
+    notGuestFunction:function(){
       if(this.userName != this.loggeduser){
-        return false;
+        this.notGuest= false;
       }
       else{
-        return true;
+        this.notGuest= true;
       }
-      }else{
-        return false;
-      }
+      // }else{
+      //   this.notGuest=false;
+      // }
     },
     /**
     * send request to delete user
     */
     deleteUser:function(){
-      var response = AllServices.deleteUser(this.userName);
+      var response = AllServices.deleteUser(this.id);
       if(response){
       alert('Done :)')
     }
@@ -215,27 +212,33 @@ export default {
     */
     getUserProfile:function(){
       AllServices.getUserInfo().then((data) =>{
-      this.karmaCount = data.karma;
-      this.image = data.image;
-      this.fullName = data.fullName;
+        console.log(data.posts);
+      this.karmaCount = data.user_info[0].karma;
+      this.image = data.user_info[0].avatar;
+      this.id = data.user_info[0].id;
+      this.fullName = data.user_info[0].fullname;
       // this.userName = data.userName;
-      this.savedPosts = data.saved;
-      this.hiddenPosts = data.hidden;
-      this.personalPosts = data.personalPosts;
-      this.reports = data.reports;
-      this.cakeDay = data.cakeDay;
+      this.savedPosts = data.posts.saved_posts;
+      this.hiddenPosts = data.hidden_posts;
+      this.personalPosts = data.posts;
+      // this.reports = data.userData.reports;
+      // this.cakeDay = data.userData.cakeDay;
+      
       })
    },
     /**
     * get user account data for another user
     */
    getUserData:function(){
+     console.log(this.userName);
       AllServices.getUserInfoById(this.userName).then((data) =>{
-      this.karmaCount = data.karma;
-      this.image = data.image;
-      this.fullName = data.fullName;
-      this.personalPosts = data.personalPosts;
-      this.cakeDay = data.cakeDay;
+        console.log(data.karma+'j');
+      this.karmaCount = data.userData.karma;
+      this.image = data.userData.avatar;
+      this.id = data.userData.id;
+      this.fullName = data.userData.fullname;
+      this.personalPosts = data.userData.personalPosts;
+      // this.cakeDay = data.userData.cakeDay;
       })
    },
    /**
@@ -244,23 +247,31 @@ export default {
    getUserDataForGuest:function(){
      AllServices.getUserInfoByIdforGuest(this.userName).then((data) =>{
        alert(this.userName+'inside');
-      this.karmaCount = data.karma;
-      this.image = data.image;
-      this.fullName = data.fullName;
+      this.karmaCount = data.userData.karma;
+      this.image = data.userData.avatar;
+      this.id = data.userData.id;
+      this.fullName = data.userData.fullname;
       // this.userName = data.userName;
-      this.personalPosts = data.personalPosts;
-      this.cakeDay = data.cakeDay;
+      this.personalPosts = data.userData.personalPosts;
+      // this.cakeDay = data.userData.cakeDay;
      })
    },
   },
   mounted(){
     if(this.loggedIn){
     if(this.userName == this.loggeduser){
+      console.log(this.loggeduser);
+      console.log(this.userName);
       this.getUserProfile();
+
     }
     else{
       this.getUserData();
+      console.log(this.loggeduser);
+      console.log(this.userName);
     }
+    this.notGuestFunction();
+    this.isAdminFunction();
     }
     else{
       this.getUserDataForGuest();

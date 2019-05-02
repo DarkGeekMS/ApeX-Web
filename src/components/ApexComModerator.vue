@@ -13,9 +13,12 @@
 
 <script>
 import {AllServices} from '../MimicServices/AllServices.js'
-
+/**
+ * @vue-prop  {string} apexComId - community Id
+ * @vue-data  {string} searchVal - stores the string that user wants to search for
+*/
 export default {
-props:['apexComName'],
+props:['apexComId'],
 components:{
 },
   data () {
@@ -26,13 +29,14 @@ components:{
   methods:
   {
      /**
-     * when search value isn't empty transfer to localStorage and go to route search
+     * when search value isn't empty send it by routes and go to Moderators 
      */
       search: function(){
         if( this.searchVal != '')
         {
-          this.$localStorage.set('searchModerator' , this.searchVal),
-          this.$router.push({ name:'Moderators'} )
+          // console.log(this.searchVal)
+          // this.$localStorage.set('searchModerator' , this.searchVal),
+          this.$router.push({name:'Moderators' , params: {query:this.searchVal}})
         }
       },
   },
@@ -40,19 +44,6 @@ components:{
   {
 
   },
-  // created(){
-  //   setInterval(() => {
-  //       this.searchValue = this.$localStorage.get('search');
-  //       this.login = this.$localStorage.get('login');
-  //       var mq = window.matchMedia( "(max-width: 933px)" );
-  //       if (mq.matches) {
-  //        this.wid = '158%'
-  //       }   
-  //       else{
-  //         this.wid = '80%'
-  //       }
-  //   }, 1000)
-  // },
 }
 </script>
 

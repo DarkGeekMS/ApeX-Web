@@ -1,11 +1,11 @@
-<template id="subscribers list design">
-<div id="blocklist">
-  <h4 v-if="blockList.length ==0" >there is nothing to show </h4>
-  <div v-if="blockList.length !=0" id="subscribers box" class="box" v-for="(user,index) in blockList" :key="user.id">
+<template id="block design">
+<div id="block">
+  <h4 v-show="blockList.length ==0" >there is nothing to show </h4>
+  <div v-show="blockList.length !=0" id="box" class="box" v-for="(user,index) in blockList" :key="user.id">
     <div class="name">
-    <p style="font-size:16px">{{user.userName}}</p>
+    <p style="font-size:16px">{{user.username}}</p>
       </div>
-    <button id="button" v-on:click="unblockUser(user.userName,index)">unblock</button>
+    <button id="button" v-on:click="unblockUser(user.id,index)">unblock</button>
   </div>
 </div>
 </template>
@@ -29,6 +29,9 @@ export default {
   },
   methods:
   {
+    /**
+    * used to unblock user
+    */
     unblockUser:function(name,index){
     AllServices.blockUser(name).then((data) =>{
      if(data){
@@ -40,10 +43,13 @@ export default {
        }
        })
     },
+    /**
+    * returns the block list of certian user
+    */
     getBlockList:function(){
         AllServices.getBlockList().then((data) =>{
           console.log(data);
-        this.blockList=data;
+        this.blockList=data.blocklist;
       })
     }
   },
@@ -58,7 +64,7 @@ export default {
 *{
   box-sizing: border-box;
 }
-#blocklist{
+#block{
   width:60%;
   margin-top:4%;
 }

@@ -1,7 +1,10 @@
 <template id="ApexComDesign">
 <div id="all">
-  <div class="Apexcom" id="Apexcom">
-    <div class="apexcomName" id="apexcomName">
+  <!-- <div id="Apexcom" class="banner" :style="{ backgroundImage: 'url(' + banner + ')' }"> -->
+    <!-- without bannner -->
+    <div id="Apexcom" class="apexcom" >
+    <!-- <div v-bind:class="{apexcomName:banner=='',namebanner:banner!=''}" id="apexcomName"> -->
+      <div class="apexcomName" id="apexcomName">
       <div class="imagediv">
         <h1 style=" font-size: 28px; display:inline;" id="Name">{{apexComName}}</h1>
         <div class="img">
@@ -9,17 +12,21 @@
         </div>
       </div>
     </div>
-    <div class="navBar" id="navbar">
+    
+    <!-- <div v-bind:class="{navBar:banner=='',banner:banner!=''}" id="navbar"> -->
+      <div class="navBar" id="navbar">
       <router-link  id="postslink" class="navbarLinks" :to="{name:'Posts'}">Posts</router-link>
-      <router-link  v-show="isModerator() || isAdmin()" id="subscribersListlink" class="navbarLinks" :to="{name:'Subscribers'}">subscribers</router-link>
-      <router-link  v-show="isModerator() || isAdmin()" id="reportlink" class="navbarLinks" :to="{name:'Reports'}">view reports</router-link>
-      <!-- <router-link id="reportlink" class="navbarLinks" :to="{name:'Reports'}">view reports</router-link> -->
-      <!-- <router-link  id="addmoderatorlink" class="navbarLinks" :to="{name:'AddModerators'}">add moderator</router-link> -->
-      <router-link v-show="isAdmin()"  id="addmoderatorlink" class="navbarLinks" :to="{name:'Moderators'}">add moderator</router-link>
+      <router-link  v-show="isModerator || isAdmin" id="subscribersListlink" class="navbarLinks" :to="{name:'Subscribers'}">subscribers</router-link> 
+       <router-link  v-show="isModerator || isAdmin" id="reportlink" class="navbarLinks" :to="{name:'Reports'}">view reports</router-link>
+      <router-link v-show="isAdmin"  id="addmoderatorlink" class="navbarLinks" :to="{name:'Moderators'}">add moderator</router-link>
+      <!-- <router-link id="subscribersListlink" class="navbarLinks" :to="{name:'Subscribers'}">subscribers</router-link>
+      <router-link id="reportlink" class="navbarLinks" :to="{name:'Reports'}">view reports</router-link>
+      <router-link  id="addmoderatorlink" class="navbarLinks" :to="{name:'AddModerators'}">add moderator</router-link> -->
+      
     </div>
       </div>
-
-  <SideBar class="sidebar" v-bind:apexComName="apexComName"></SideBar>
+    <!-- <Sort style="padding-top:10px"></Sort> -->
+  <SideBar class="sidebar" v-bind:apexComId="apexComId"></SideBar>
     <router-view class="routerview"></router-view>
 </div>
 </template>
@@ -29,16 +36,18 @@ import SideBar from './ApexComSideBar.vue'
 import {AllServices} from '../MimicServices/AllServices.js'
 
 /**
+ * @vue-prop  {string} apexComId - community Id
  * @vue-data {JWT} [token='']  user Token
- * @vue-data {string} [loggeduser='']  name of logged in user
- * @vue-data {number} subscribersCount - Number of subscribers for certain community
- * @vue-data {string} description - community description
+ * @vue-data {string} [userName='']  user name
  * @vue-data {array} moderators - moderators for certain community
- * @vue-data  {array} rules - rules of certain community
+ * @vue-data  {string} apexComName - community name
+ * @vue-data  {string} image - community image
+ * @vue-data  {boolean} [isAdmin=false] - boolean indicates if the user is admin or not
+ * @vue-data  {boolean} [isModerator=false] - boolean indicates if the user is moderator or not
  */
 
 export default {
-  props:['apexComName'],
+  props:['apexComId'],
   components:{
     'SideBar':SideBar,
   },
@@ -47,13 +56,16 @@ export default {
       token:this.$localStorage.get('token'),
       userName:this.$localStorage.get('userName'),
       loggedIn:this.$localStorage.get('login'),
-
+      apexComName:'',
       //userName:'moderator1',
       // description:'',
       moderators:[],
       // rules:[],
       // subscribersCount: 0,
-      image:''
+      isModerator:false,
+      isAdmin:false,
+      image:'',
+      banner:''
     }
   },
   methods:{
@@ -63,60 +75,64 @@ export default {
     */
     CheckModerator:function(name)
     {
-      if( name.userName == this.userName){
+      if( name.username == this.userName){
 
       return true;
       }
     },
     /**
-    * loop on moderators to check if user is moderator of this community
+    * loop on moderators to check if user is moderator for this community
     */
-    isModerator:function(){
-      if(this.loggedIn){
+    isModeratorFunction:function(){
       var moderator = this.moderators.find(this.CheckModerator)
       if(moderator !== undefined){
-          return true;
+          this.isModerator= true;
         }
       else{
-          return false;
+          this.isModerator= false;
         }
-      }
     },
     /**
       *check if user is an admin
       */
-      isAdmin:function()
-      {
-        if(this.loggedIn){
-        AllServices.userType().then((data) =>{
-        if(data.type ==1){
-          return true;
-          }
-        else{
-          return false;
-        }
-        })
-        }
-      },
+      // isAdminFunction:function()
+      // {
+      //   AllServices.userType().then((data) =>{
+      //   if(data.type ==1){
+      //     this.isAdmin= true;
+      //     }
+      //   else{
+      //     this.isAdmin= false;
+      //   }
+      //   })
+      // },
     /**
-    * request the data for certain community
-    */
+      *get the details of certain community for user
+      */
      getAbout(){
-         AllServices.getAbout(this.apexComName).then((about) =>{
-
+         AllServices.getAbout(this.apexComId).then((about) =>{
+         console.log(about);
+         this.apexComName=about.name;
         //  this.description=about.description;
          this.moderators=about.moderators;
         //  this.rules=about.rules;
         //  this.subscribersCount=about.subscribersCount;
-         this.image=about.image;
+         this.image=about.avatar;
+         this.banner=about.banner;
          })
    },
+   /**
+      *get the details of certain community for guest
+      */
    getAboutGuest(){
-         AllServices.getAboutGuest(this.apexComName).then((about) =>{
+         AllServices.getAboutGuest(this.apexComId).then((about) =>{
+         console.log(about);
+         this.apexComName=about.name;
         //  this.description=about.description;
          this.moderators=about.moderators;
         //  this.rules=about.rules;
-         this.image=about.image;
+         this.image=about.avatar;
+         this.banner=about.banner;
         //  this.subscribersCount=about.subscribersCount;
          });
    },
@@ -127,10 +143,17 @@ export default {
   {
   if(this.loggedIn){
    this.getAbout();
+  //  this.isAdminFunction();
+   this.isModeratorFunction();
    }
    else{
      this.getAboutGuest();
    }
+  },
+   beforeRouteUpdate (to, from, next) {
+    // this.getContent(to.params.uid);
+    console.log('route updated');
+    next();
   }
 }
 </script>
@@ -138,7 +161,7 @@ export default {
 <style scoped>
 #all{
   margin-top: 50px;
-  height:60%;
+  height:100%;
 }
 .main{
   /* height:100%; */
@@ -172,10 +195,26 @@ export default {
   /* height: auto; */
   /* max-height:65%; */
 }
+.namebanner{
+  padding-top:38px;
+  color: white;
+  box-sizing: border-box;
+}
 #Name{
   padding-left: 1%;
   padding-top: 1%;
   display:inline;
+}
+.transparent{
+  padding-top: 20px;
+}
+.sort{
+  margin-top:-58px;
+  /* margin-right:0%; */
+  /* height:30px; */
+  /* width: 160%;
+  margin-right: -60%;
+  margin-left: -7%; */
 }
 .navBar{
   background-color: rgb(219, 240, 255);
@@ -213,7 +252,7 @@ export default {
 
 }
 .sidebar{
-  /* margin-top:4%; */
+  margin-top:4%;
   /* margin-right: 4%; */
   /* width:23%; */
   /* height: auto;
@@ -223,7 +262,7 @@ export default {
   margin-right: 4%;
   float:right; */
 }
-.router-link-active{
+.router-link-exact-active{
   border-bottom: 3px solid deepSkyBlue;
 }
 img{

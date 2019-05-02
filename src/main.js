@@ -21,7 +21,7 @@ const router = new VueRouter({
 });
 
 
-var vm =new Vue({
+new Vue({
   localStorage: {
     login:{
       type: Boolean,
@@ -43,10 +43,10 @@ var vm =new Vue({
       type: String,
       default: ''
     },
-    searchModerator:{
-      type: String,
-      default: ''
-    }
+    // searchModerator:{
+    //   type: String,
+    //   default: ''
+    // }
   }
 
 })

@@ -14,7 +14,6 @@
         <li v-show="!check()"> <router-link :to="{ name: 'HotApexCom', params: {ap:apex} }"  class="glyphicon glyphicon-fire"> Hot</router-link></li>
         <li v-show="!check()" class="divider"></li>
 
-<!-- <router-link :to="{ name: '', params: {} }"></router-link> -->
         <li v-show="check()"><router-link :to="{ name: 'NewHomePage', params: {ap:apex}}"  class="glyphicon glyphicon-certificate"> New </router-link></li>
         <li v-show="check()" class="divider"></li>
         <li v-show="!check()"><router-link :to="{ name: 'NewApexCom', params: {ap:apex}}"  class="glyphicon glyphicon-certificate"> New </router-link></li>
@@ -51,21 +50,16 @@ import $ from'jquery/dist/jquery.min.js'
       return {
       }
     },
-    mounted(){
-      console.log('ApexComName in ApexComPosts',this.apex);
-
-    },
     methods:{
       check(){
-if(this.apex==""){
-  console.log("home");
-return true;}
-  else {
-      console.log("apex");
-    return false;
-  }
-},
-emitsort(par){
+        if(this.apex==""){
+          return true;
+        }
+        else {
+          return false;
+        }
+      },
+      emitsort(par){
         this.$emit('choose',par);
       }
     },

@@ -22,9 +22,10 @@ export  const AllServices =new Vue({
     getState(){
       return this.mimic
     },
-    submit:function(apexComId,title,bodyPost,imgName,videoUrl, isLocked,token){
+    submit:function(fd){
 
-      var data=MimicCreatePosts.submitPost(apexComId,title,bodyPost,imgName,videoUrl, isLocked,token,this.mimic, this.baseUrl);
+      var data=MimicCreatePosts.submitPost(fd,this.mimic, this.baseUrl);
+
       return data;
 
     },
@@ -92,6 +93,7 @@ export  const AllServices =new Vue({
 	},
 	getSubscribers:function(apexComName) {
     var SubscribersList=MimicApexCom.getSubscribers(this.mimic,apexComName, this.baseUrl);
+
     return SubscribersList;
 	},
 	getUserInfo:function() {
@@ -103,34 +105,39 @@ export  const AllServices =new Vue({
     return userInfo;
   },
   save:function(token,ID){
+
     return MimicPost.save(token,ID,this.mimic, this.baseUrl);
   },
 Hide:function(name,ID){
 return MimicPost.Hide(name,ID,this.mimic, this.baseUrl);
 },
-upvote:function(name,ID,direction){
+upvote:function(ID,points,upVoted,downState){
 
-return MimicPost.upvote(name,ID,direction,this.mimic, this.baseUrl);
+  var data= MimicPost.upvote(ID,points,upVoted,downState,this.mimic, this.baseUrl);
+
+  return data;
 },
-downvote:function(name,ID,direction){
+downvote:function(ID,points,downVoted,upState){
 
-return MimicPost.downvote(name,ID,direction,this.mimic, this.baseUrl);
-},
-defaultVote:function(name,ID,direction){
+var data= MimicPost.downvote(ID,points,downVoted,upState,this.mimic, this.baseUrl);
 
-  return MimicPost.defaultVote(name,ID,direction,this.mimic, this.baseUrl);
-  },
-deletePost:function(name,ID){
+return data;
+}
+,
+deletePost:function(postID,token){
 
 
-  return MimicPost.deletePost(name,ID,this.mimic, this.baseUrl);
+  return MimicPost.deletePost(postID,token,this.mimic, this.baseUrl);
 },
 
 EditPost: function(ID,content){
   var data=MimicPost.EditPost(ID,content,this.mimic, this.baseUrl);
   return data;
 },
-
+isLocked:function(ID){
+var data=MimicPost.isLocked(ID,this.mimic,this.baseUrl);
+return data;
+},
 userType:function(){
   var data=MimicUserProfile.getUserType(this.mimic, this.baseUrl);
   return data;
@@ -166,6 +173,7 @@ SaveComment: function(ID){
 },
 UpVoteComment: function(ID,points,upVoted,downState){
   var data=MimicComment.UpVoteComment(ID,points,upVoted,downState,this.mimic, this.baseUrl);
+
   return data;
 },
 DownVoteComment: function(ID,points,downVoted,upState){
@@ -199,7 +207,7 @@ blockSender:function(ID){
 },
 getAllMessages:function(){
   var data=MimicMessage.getAllMessages(this.mimic, this.baseUrl);
-  console.log(data);
+  // console.log(data);
   return data;
 },
 getUserInfoByIdforGuest:function(userName){
@@ -239,14 +247,14 @@ deleteAcc:function(Pass) {
 getPrefs:function(){
   return MimicUserSettings.getPrefs(this.mimic, this.baseUrl);
 },
-updatePrefs:function(email,avatar,username) {
-  return MimicUserSettings.updatePrefs(this.mimic,email,avatar,username, this.baseUrl);
+updatePrefs:function(username,email,avatar,notifie) {
+  return MimicUserSettings.updatePrefs(this.mimic,username,email,avatar,notifie,this.baseUrl);
 },
 changePass:function (password,withCode,username,key){
     return MimicUserSettings.changePass(this.mimic,password,withCode,username,key, this.baseUrl);
 },
-searchU:function(id){
-  var data=MimicApexCom.searchU(this.mimic,id, this.baseUrl);
+searchU:function(query){
+  var data=MimicApexCom.searchU(this.mimic,query, this.baseUrl);
   return data;
 },
 getBlockList:function(){

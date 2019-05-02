@@ -3,9 +3,8 @@
   <!-- class="postsBox" -->
    <div  id="postslist">
      <div class="sort">
-       <Sort :apex="apexComName" style="padding-top:10px"></Sort>
+       <Sort :apex="apexComId" style="padding-top:10px"></Sort>
      </div>
-    <DisplayPosts class="box" v-bind:apexComName="apexName"></DisplayPosts>
   </div>
 </template>
 
@@ -14,16 +13,11 @@ import DisplayPosts from './DisplayPosts.vue'
 import Sort from './Sort.vue'
 
 /**
- * @vue-prop  {string} apexComName - community name
+ * @vue-prop  {string} apexComId - community name
  */
 
 export default {
-  props:['apexComName'],
-  data () {
-    return {
-      apexName:this.apexComName,
-  }
-},
+  props:['apexComId'],
   components:{
     'DisplayPosts':DisplayPosts,
     'Sort':Sort
@@ -34,6 +28,9 @@ export default {
 <style scoped>
 .sort{
   margin-top:-58px;
+  width: 167%;
+  /* margin-right: -60%; */
+  margin-left: -7%;
   /* margin-right:0%; */
   /* height:30px; */
 }

@@ -1,78 +1,88 @@
 <template id="addmoderatorpagedesign">
 <div >
   <div class="header">
-       <h1>  {{ searchValue }} </h1>
+       <h1>  {{ query }} </h1>
        <br/> 
        <p> Search results </p>
     </div>
-  <div id="main">
-  <router-link id="subDiv" v-show="exist" v-for='(user,index) in users' :key="'A'+index" :to="{ name: 'UserProfile', params: {userName:user.name}}"> 
+  <div id="main" v-for='(user,index) in users' :key="'A'+index">
+  <router-link id="subDiv" v-show="exist" :to="{ name: 'UserProfile', params: {userName:user.username}}"> 
       <div id="sub1">
          <img width="45px" :src=user.avatar />
-         <a class="name"> {{user.name}} <br/> <span class="memb"> {{user.karma}} karma </span> </a>       
+         <a class="name"> {{user.username}} <br/> <span class="memb"> {{user.karma}} karma </span> </a>       
        </div> 
        <br/><br/>
-       <button class="button" type="button" v-on:click="addModerator(user.name)">add moderator</button>
-    </router-link>
+       </router-link>
+       <button class="button" type="button" v-on:click="addModerator(user.id)">add moderator</button>
     
-    <div id="subDiv" style="text-align:center;font-size: 17px;font-weight: 600; " v-show="!exist"> {{error}} ''{{this.$localStorage.get('searchModerator')}}'' </div>
-  </div>
+  </div> 
+    <div id="subDiv" style="text-align:center;font-size: 17px;font-weight: 600; " v-show="!exist"> {{error}} ''{{query}}'' </div>
+  
 </div>
 </template>
 
 <script>
 import {AllServices} from '../MimicServices/AllServices.js'
+import { constants } from 'crypto';
 /**
- * @vue-data {string} [users=""] users that reflect with search value  
+ * @vue-data {string} users users that reflect with search value  
  * @vue-data {boolean} [exist=true] if there is matching
  * @vue-data {string} [error=''] if there is no matching
+ * @vue-prop  {string} apexComId - community Id
+ * @vue-prop  {string} query - stores the string that user wants to search for
 */
 export default {
-props:['apexComName'],
+props:['apexComId','query'],
   data () {
     return {
       exist:true,
       error:'',
       users:[],
-      searchValue:''
+      // searchValue:''
     }
   },
   methods:
   {
-      addModerator:function(userName){
-          console.log(this.apexComName);
-          var data = AllServices.addOrDeleteModerator(userName,this.apexComName);
+    /**
+      *used by admin to add moderator
+      */
+      addModerator:function(userId){
+        console.log(userId);
+          console.log(this.apexComId);
+          var data = AllServices.addOrDeleteModerator(userId,this.apexComId);
           if(data){
           }
           else{
-              console.log(error);
+              console.log(data);
               }
       },
   },
-  beforeUpdate()
+  mounted()
   {
-    console.log('heyup');
-    var result = AllServices.searchU();
-      if( typeof result === 'string')
-      {
-        this.exist = false,
-        this.error = result
-      }
-      else{
-        this.users = result[2],
-        this.exist = true
-      }
-      console.log(this.exist);
-      console.log(this.users);
-      console.log(this.searchValue);
+    console.log(this.query+'koook'); 
+    /**
+      *send the query to be searched for
+      */
+    AllServices.searchU(this.query).then((data) =>{
+          console.log(data);
+          if(data.users.length == 0)
+          {
+            this.exist = false,
+            this.error = 'Sorry, there were no community results for'
+          }
+          else{
+            this.users = data.users,
+            this.exist = true
+          }
+        })   
   },
-  created(){
-    console.log('hey');
-    setInterval(() => {
-        this.searchValue = this.$localStorage.get('searchModerator');
-    }, 1000)
+  // created(){
+  //   console.log('hey create');
+  //   setInterval(() => {
+  //       this.searchValue = this.$localStorage.get('searchModerator');
+  //   }, 1000)
 
-  },
+  // },
   
 }
 </script>
@@ -108,7 +118,7 @@ props:['apexComName'],
 }
 .button:hover {opacity: 0.7}
 #subDiv{
-  display: block;
+  display: contents;
   width:94%;
   height:100%;
   margin: 0% 6%;
@@ -117,11 +127,10 @@ props:['apexComName'],
 }
 #main{
     margin:2%;
-    width: 70%;
+    width: 90%;
     height:100%;
     background-color: white;
     border-radius:15px;
-    display: inline;
 }
 #sub1{
   width:35%;
@@ -144,7 +153,7 @@ img{
     color: rgb(135, 138, 140);
 }
 .header{
-  background-color: white;
+  /* background-color: #DAE0E6; */
   width:100%;
   padding-left:2%;
   margin-top: 43px;

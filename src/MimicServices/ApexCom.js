@@ -7,16 +7,23 @@ export  const MimicApexCom =new Vue({
       // alert(ApexComName);
       if(mimic){
   var about={
-    rules:['rule1','rule2','rule3'],
-    subscribersCount:78,
-    description:'this is just the mimic server',
-    moderators:[
-      {userName:'moderator1'},
-    {userName:'moderator1'},
-    {userName:'moderator1'},
-    {userName:'moderator1'}
-  ],
-  image:'https://i.imgur.com/AMFz23O.jpg',
+    "contributers_count": 2,
+    moderators: [
+        
+          {"userID": "t2_3",
+          username:'nourhan',},
+          {"userID": "t2_3",
+          username:'nourhan',},
+          {"userID": "t2_3",
+          username:'nourhan',},
+          {"userID": "t2_3",
+          username:'nourhan'}
+    ],
+    subscribers_count: 0,
+    name: "New dawn",
+    description: "The name says it all.",
+    rules: "NO RULES",
+  avatar:'https://i.imgur.com/AMFz23O.jpg',
   }
   var promise = new Promise(function(resolve) {
     setTimeout(function() {
@@ -41,17 +48,26 @@ else {
   getAboutGuest: function(mimic,ApexComName, baseUrl){
     if(mimic){
 var about={
-  rules:['rule1','rule2','rule3'],
-  subscribersCount:78,
-  description:'this is just the mimic server',
-  moderators:[
-    {userName:'moderator1'},
-  {userName:'moderator2'},
-  {userName:'moderator3'},
-  {userName:'moderator4'}
-],
-image:'https://i.imgur.com/AMFz23O.jpg',
-}
+  "contributers_count": 2,
+  "moderators": [
+      {
+          "userID": "t2_3",
+          username:'nourhan',},
+          {"userID": "t2_3",
+          username:'nourhan',},
+          {"userID": "t2_3",
+          username:'nourhan',},
+          {"userID": "t2_3",
+          username:'nourhan'}
+  ],
+  subscribers_count: 0,
+  name: "New dawn",
+  description: "The name says it all.",
+  rules: "NO RULES",
+avatar:'https://i.imgur.com/AMFz23O.jpg',
+banner:'https://i.imgur.com/AMFz23O.jpg',
+};
+
 var promise = new Promise(function(resolve) {
   setTimeout(function() {
     resolve(about);
@@ -64,6 +80,8 @@ return axios.get(baseUrl + 'api/AboutApexcom',{params: {
     ApexCom_ID :ApexComName,}
 })
 .then(response=> {
+  console.log(response.data);
+  console.log(ApexComName);
   return response.data;
  })
 .catch(function (error) {
@@ -76,24 +94,24 @@ return axios.get(baseUrl + 'api/AboutApexcom',{params: {
 getSubscribers: function(mimic,apexComName, baseUrl){
   // alert(apexComName);
     if(mimic){
-var subscribersList=[
-  {userName:'subscriber1',
-  image:'https://i.imgur.com/AMFz23O.jpg'},
-  {userName:'subscriber2',
-  image:'https://i.imgur.com/AMFz23O.jpg'},
-  {userName:'subscriber3',image:'https://i.imgur.com/AMFz23O.jpg'},
-  {userName:'subscriber4',image:'https://i.imgur.com/AMFz23O.jpg'}
+var subscribers=[
+  {
+      id: "t2_1017",
+      fullname: null,
+      username: "ms16",
+      avatar: "https://i.imgur.com/AMFz23O.jpg",
+  }
 ]
 var promise = new Promise(function(resolve) {
   setTimeout(function() {
-    resolve(subscribersList);
+    resolve(subscribers);
   }, 300);
 });
 return promise;
 }
 else {
  return axios.post(baseUrl + 'api/GetSubscribers', {
-      ApexCom_id :apexComName,
+      ApexCommID :apexComName,
       token:this.$localStorage.get('token')
   })
   .then(response => {
@@ -113,7 +131,7 @@ blockSubscriber: function(mimic,userName,apexComName, baseUrl){
 return true;
 }
 else {
-  axios.post(baseUrl + 'api/BlockUser', {
+        axios.post(baseUrl + 'api/BlockUser', {
         ApexCom_id:apexComName,
         user_id:userName,
         token:this.$localStorage.get('token')
@@ -136,7 +154,7 @@ deleteApexCom: function(mimic,apexComName, baseUrl){
     else {
       axios.delete(baseUrl + 'api/DeleteApexcom',{
         params: {
-         ApexCom_id:apexComName,
+         Apex_ID:apexComName,
          token:this.$localStorage.get('token')
     }
         })
@@ -150,17 +168,19 @@ deleteApexCom: function(mimic,apexComName, baseUrl){
     },
 subscribe: function(mimic,apexComName, baseUrl){
   // alert(apexComName);
+  console.log(apexComName+'nnnn');
       if(mimic){
         return true;
     }
     else {
-      axios.post(baseUrl + 'api/Subscribe', {
-      ApexCom_id:apexComName,
+      return axios.post(baseUrl + 'api/Subscribe', {
+      ApexCom_ID:apexComName,
       token:this.$localStorage.get('token')
       })
-      .then(function (response) {
-        return response;
-      })
+      .then(response => {
+        console.log(response+'server');
+        return response.data;
+       })
       .catch(function (error) {
         // console.log(error);
       });
@@ -174,9 +194,9 @@ addOrDeleteModerator: function(mimic,userName,apexComName, baseUrl){
   }
 else {
    axios.post(baseUrl + 'api/AddModerator', {
-        ApexCom_id:apexComName,
-        user_id:userName,
-        Token:this.$localStorage.get('token')
+        ApexComID:apexComName,
+        UserID:userName,
+        token:this.$localStorage.get('token')
       })
       .then(function (response) {
         return response;
@@ -188,6 +208,7 @@ else {
     },
 reviewReports: function(mimic,apexComName, baseUrl){
   // alert(apexComName);
+  console.log(apexComName);
       if(mimic){
         var report={
           reportedComment:[{post:{
@@ -266,9 +287,10 @@ reviewReports: function(mimic,apexComName, baseUrl){
     else {
        return axios.post(baseUrl + 'api/ReviewReports', {
             ApexCom_id:apexComName,
-            Token:this.$localStorage.get('token')
+            token:this.$localStorage.get('token')
           })
           .then(response => {
+            console.log(response+'server');
             return response.data;
            })
           .catch(function (error) {
@@ -284,8 +306,8 @@ ignoreReport:function(mimic,userID,reportID, baseUrl){
   else{
             axios.post(baseUrl + 'api/IgnoreReport', {
             user_id:userID,
-            repoer_id:reportID,
-            Token:this.$localStorage.get('token')
+            reported_id:reportID,
+            token:this.$localStorage.get('token')
           })
           .then(function (response) {
             return response;
@@ -296,7 +318,7 @@ ignoreReport:function(mimic,userID,reportID, baseUrl){
   }
 
 },
-searchU: function(mimic, baseUrl)
+searchU: function(mimic, query,baseUrl)
 {
   if(mimic ==  true)
   {
@@ -349,7 +371,7 @@ searchU: function(mimic, baseUrl)
           resolve(result);
         }, 300)
         });
-      return result
+      return promise1
     }
     else{
       return 'Sorry, there were no results for'
@@ -357,15 +379,18 @@ searchU: function(mimic, baseUrl)
   }
   else
   {
-    return axios.post(baseUrl + 'api/Search',{
-    query: this.$localStorage.get('searchModerator'),
-    token: this.$localStorage.get('token')
-    }).then(response => {
-      var result= response.data;
-      return result
-    }).catch(error => {
-      return error
-    })
+    console.log(query+'mk');
+        return axios.get(baseUrl + 'api/Search',{
+        params: {
+          query: query,
+          token: this.$localStorage.get('token')
+        }
+        }).then(response => {
+          return response.data;
+        }).catch(error => {
+          return error
+        })
+      
   }
 },
   }
