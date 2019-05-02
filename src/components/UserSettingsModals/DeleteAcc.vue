@@ -37,7 +37,8 @@ import {AllServices} from '../../MimicServices/AllServices.js'
 export default {
   data () {
     return {
-password:''
+password:'',
+id:''
     }
   },
 methods:{
@@ -45,10 +46,12 @@ hide(){
   this.$modal.hide('DeleteAcount')
 },
 deleteacc(){
-  AllServices.deleteAcc(this.password).then((data) => {
+  AllServices.userType().then((data)=>{
+    this.id=data.user.id
+  });
+  AllServices.deleteAcc(this.id,this.password).then((data) => {
    this.error= data;
-   this.ErrorCheck();
- });
+console.log(data) });
 },
 ErrorCheck(){
 // todo check error type and do behavior

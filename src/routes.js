@@ -16,6 +16,9 @@ import SubmitPost from './components/SubmitPost.vue'
 import Hot from './components/SortHot.vue'
 import New from './components/SortNew.vue'
 import Controversial from './components/SortControversial.vue'
+import Hidden from './components/HiddenPosts.vue'
+import UserPosts from './components/UserPosts.vue'
+import Saved from './components/SavedPosts.vue'
 export default[
       {path:'/ApexCom/:apexComId',name:'ApexCom',props:true,component:ApexCom , children :
       [
@@ -28,7 +31,7 @@ export default[
         ]},
         {path:'ApexSubscribers',name:'Subscribers',component:ApexComSubscribers,props:true},
         {path:'ApexReports',name:'Reports',component:Reports,props:true},
-        {path:'AddModerators',name:'AddModerators',component:ApexComModerator,props:true, 
+        {path:'AddModerators',name:'AddModerators',component:ApexComModerator,props:true,
         children :[
           {path:'searchUser/:query',name:'Moderators', component:ApexComAddModerator,props:true },
         ]},
@@ -47,6 +50,9 @@ export default[
         {path:'users', component:Users } ]},
     {path:'/Messages' ,name:'Messages',component:MessageBar},
     {path:'/userprofile/:userName',name:'UserProfile',component:userprofile,props:true,children :[
+      {path:'Hidden',name:'Hidden', component:Hidden,props:true },
+      {path:'UserPosts',name:'UserPosts', component:UserPosts,props:true },
+      {path:'Saved',name:'Saved', component:Saved,props:true },
       {path:'Report',name:'Report', component:Reports,props:true },
       {path:'blockedlist',name:'blockLlist', component:userprofileBlockList,props:true }
     ]

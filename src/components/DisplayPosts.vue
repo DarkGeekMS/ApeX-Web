@@ -5,10 +5,10 @@
       v-bind:postData="onePost"
       v-on:showUp="showPost"
       v-on:lockComment="ifLock"
-  
+
       >
       </post>
-  
+
     </div>
     <OnePost  id="PostModal" :onePostData="postInfo"  ></OnePost>
     <!-- v-bind:style="{width: 80 +'%'}" -->
@@ -29,12 +29,16 @@ export default {
   props:{
     apexComName:String,
     sortparam:String,
+    user:Boolean,
+
     postData:{}// VERY IMPORTANT TO PREVENT THE ERRORS IN CONSOLE
-    
+
     },
 data(){
 return{
-
+  savedPosts:{},
+  hiddenPosts:{},
+  personalPosts:{},
   posts:'',
   postInfo:''
 
@@ -70,12 +74,29 @@ methods:
     * request gets posts from a certain ApexCom
     */
    getPosts(){
+if(this.user){
+  if(this.sortparam=="saved"){
+  AllServices.getUserInfo().then((data) =>{
+  this.posts = data.saved_posts;
+})
+}
+else if(this.sortparam=="hidden"){
+  AllServices.getUserInfo().then((data) =>{
+  this.posts = data.hidden_posts;
+})
+}
 
-
+else if(this.sortparam=="personal"){
+  AllServices.getUserInfo().then((data) =>{
+  this.posts = data.posts;
+})
+}
+}
+else{
          AllServices.getPosts(this.apexComName,this.sortparam).then((data) => {
-           this.posts= data;
-                
-         })
+          this.posts= data;
+          })
+      }
 
 }
 },

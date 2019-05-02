@@ -39,35 +39,35 @@ token:'1',
         token:this.$localStorage.get('token'),
         general:0
         }).then(response => {
-          
+
           return response.data;
-          
+
         }).catch(function () {
-            
+
            return false
         });
       }
       else{
         return axios.get(baseUrl + 'api/ApexComs', {
-        
+
         }).then(response => {
-       
+
           return response.data;
-          
+
         }).catch(function () {
            return false
         });
       }
-      
+
       }
-    
+
     },
     submitPost: function(fd, mimic, baseUrl){
 
       if(mimic){
          if(this.$localStorage.login){
 
-     
+
 
          var promise1 = new Promise(function(resolve) {
           setTimeout(function() {
@@ -85,10 +85,9 @@ token:'1',
 else {
 
   if((fd.get('video_url')==null) &&(fd.get('img_name')==null)){
-
    return axios.post(baseUrl + "api/SubmitPost", fd)
     .then(response=>{
-    
+
       swal({
         title: "Submitted Successfully!",
         text: "You clicked the button!",
@@ -106,7 +105,7 @@ else {
   else if(fd.get('img_name')==null){
    return axios.post(baseUrl + "api/SubmitPost", fd)
     .then(response=>{
-     
+
       swal("Post Submitted successfully", "You clicked the button!", "success");
       return response.data;
    }).catch(function (){
@@ -140,4 +139,3 @@ else {
     }
   }
 })
-
