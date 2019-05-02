@@ -34,13 +34,13 @@
       <router-link class="postby" id="user" :to="{name:'UserProfile' , params: {userName:postData.post_writer_username}}"> {{postData.post_writer_username}}</router-link>
 
       <font class="postby" id="fontpost"> </font>
-      <a href="#" class="postby" id="timeAgo">  {{moment(postData.created_at).fromNow()}}</a>
+      <a href="#" class="postby" id="timeAgo">  {{moment(this.postData.created_at).fromNow()}}</a>
       <h3>{{postData.title}}</h3>
       <p id="postBody" class="hPost" v-if="!this.showEditTextArea">
 
         {{postData.content}}
          </p>
-          <textarea  @keyup="store" v-if="this.showEditTextArea" class="form-control" rows="7" id="textarea">{{postData.content}}</textarea>
+          <textarea  @keyup="store" v-if="this.showEditTextArea" class="form-control" rows="7" id="textarea" v-model="postData.content"></textarea>
 
           <button @click="saveChange" v-if="this.showEditTextArea" class="btn btn-primary postButton" id="saveEdit">SAVE</button>
 
@@ -71,12 +71,11 @@ Comments</button>
     </button>
     <ul class="dropdown-menu" id="dropMenu">
       <li ><a href="#"  @click="Hide" class="HIDE"><i class="fa fa-ban" id="HideIcon"></i>Hide</a></li>
-      <li><a  @click="report" class="HIDE"><i class="glyphicon glyphicon-flag" id="ReportIcon" ></i>Report</a></li>
+      <li><a  href="#" @click="report" class="HIDE"><i class="glyphicon glyphicon-flag" id="ReportIcon" ></i>Report</a></li>
       <li v-if="postData.canEdit"><a href="#" @click="editText" ><i class="glyphicon glyphicon-pencil" id="ReportIcon"></i>edit</a></li>
-      <!-- <li v-if="postData.canEdit"><a href="#" @click="deletePost" ><i class="glyphicon glyphicon-pencil"></i>delete</a></li> -->
       <li v-if="postData.canEdit"><a href="#" @click="deletePost" ><i class="glyphicon glyphicon-trash"></i>delete</a></li>
       <!-- <li><a href="#" @click="isLocked" v-show="isAdmin() || isModerator()"> -->
-      <li><a href="#" @click="isLocked" v-show="false">
+      <li v-if="postData.canEdit"><a href="#" @click="isLocked" >
       <!-- <li><a href="#" @click="isLocked" v-show="owner"> -->
 
         <i v-if="Locked=='unlock'" class="fa fa-lock" id="ReportIcon"></i>
@@ -182,14 +181,14 @@ export default {
         this.ToggleShowModalVar();
          }
 
-     this.onlyOneTime=false;
-      this.$emit('Report',this.ID,this.idx);
+      this.onlyOneTime=false;
+      this.$emit('Report',this.postData.id,this.idx);
       this.$modal.show('reportBox');
       this.showReport=true;
 
     }
     else{
-      alert('Login First!!');
+       swal('Login First!!');
     }
     },
     isLocked(){
@@ -214,7 +213,7 @@ export default {
 
     }
     else{
-      alert('Login First!!');
+       swal('Login First!!');
     }
     },
 
@@ -255,16 +254,18 @@ export default {
             this.Not_Hide=false;
             this.is_Hide=true;
 
-            this.$emit('HIDE','nada');
+          //  this.$emit('HIDE',true);
+           this.$modal.hide('Demo-OnePost');
+           this.ShowModalVar=false;
+           
 
             }
 
           this.PostId=this.postData.id;
           AllServices.Hide(this.PostId,this.$localStorage.get('token'));
-
          }
          else{
-         alert('login first');
+          swal('login first');
        }
        }
        ,
@@ -288,7 +289,7 @@ export default {
 
                       this.className_up    = 'btn btn-light btn-sm is-red';
                       this.pressed_up      =true;
-                        this.postData.upvoted=true;
+                      this.postData.upvoted=true;
 
 
                        this.PostId=this.postData.id;
@@ -303,8 +304,8 @@ export default {
 
 
                }
-                 this.upVoted = !this.upVoted;
-                var downState = this.downVoted;
+               this.upVoted = !this.upVoted;
+               var downState = this.downVoted;
                this.downVoted = false;
                AllServices.upvote(this.PostId,this.points,this.upVoted,downState).then((data) => {
             if(data){
@@ -318,13 +319,13 @@ export default {
       }
 
       else{
-        alert('Login First !!');
+         swal('Login First !!');
       }
        this.postData.votes=this.points;
       }
       ,
      changeColor_down(){
-       // alert('before '+this.points);
+
         this.downVoted = !this.downVoted;
         var upState = this.upVoted;
         this.upVoted = false;
@@ -373,7 +374,7 @@ export default {
 
               }
               else{
-                alert('Login First !!');
+                 swal('Login First !!');
               }
                 this.postData.votes=this.points;
               },
@@ -413,7 +414,7 @@ export default {
 
     }
     else{
-      alert('login First !!');
+       swal('login First !!');
     }
     },
 
@@ -478,17 +479,10 @@ components:{
 
   },
   mounted(){
-
-
-  },
-  updated() {
-
-
-     if(this.postData.upvoted){
-        this.className_up    = 'btn btn-light btn-sm is-red';
-        this.pressed_up      =true;
-        this.className_down = 'btn btn-light btn-sm is-gray';
-        this.pressed_down=false;
+  if( this.upVoted==true ||this.postData.upvoted){
+     
+       this.className_up    = 'btn btn-light btn-sm is-red';
+       this.pressed_up      =true;
     }
     else if(this.postData.downvoted){
       this.className_up    = 'btn btn-light btn-sm is-gray';
@@ -497,12 +491,20 @@ components:{
       this.pressed_up      =false;
     }
 
-  this.postData.votes=this.points;
-
-
-  this.postData.upvoted=this.upVoted;
-
   },
+  beforeUpdated() {
+
+
+  this.postData.votes=this.points;
+  this.postData.upvoted=this.upVoted;
+  if(this.Saved=='Saved'){
+     this.postData.saved="Saved";
+  }
+  else{
+    this.postData.saved="unsaved";
+  }
+ 
+  }
 }
 
 

@@ -111,33 +111,14 @@ props:['apexComId','userName'],
 </script>
 
 <style scoped>
-* {
-  /* box-sizing: border-box; */
-
-  /* padding: 0;
-  margin: 0;
-  list-style: none;
-  
-  display: -webkit-box;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
-  
-  -webkit-flex-flow: row wrap;
-  justify-content: space-around; */
-}
 .main{
   width:60%;
   margin-top:4%;
   
 }
 .report{
-  /* width:100%; */
   margin-bottom:2%;
   padding:3% 9%;
-  /* border-radius: 20%; */
-  /* background-color:white; */
   display: inline-block;
 }
 .post{

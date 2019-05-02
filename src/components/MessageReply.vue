@@ -93,7 +93,6 @@ this.time=fuzzy;
 }
 
 .container4{
-    background-color:white;
     margin-top:5%;
     width:70%;
     

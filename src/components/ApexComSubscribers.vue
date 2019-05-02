@@ -92,14 +92,12 @@ export default {
   font-weight: 500;
   letter-spacing: 0.5px;
   text-transform: uppercase;
-  /* height: auto; */
   overflow: hidden;
 }
 
 .removeButton:hover {opacity: 0.75;}
 .accountLink{
   text-decoration: none;
-  /* color:black; */
   font-size: 16px;
   
 }

@@ -32,7 +32,7 @@
       <h3 class="Header" id="moderators box header">Moderators</h3>
       <div class="content" >
         <div id="moderatorsbox" class="box2" v-for="(moderator,index) in moderators" :key="moderator.id">
-          <router-link style="font-size: 14px;" class="accountLink" :to="{name:'UserProfile' , params: {userName:moderator.username}}"> {{moderator.username}}</router-link>
+          <router-link style="font-size: 14px;" class="accountLink" v-if="moderator.username" :to="{name:'UserProfile' , params: {userName:moderator.username}}"> {{moderator.username}}</router-link>
           <button v-show="isAdmin" style="width:35%; float: right; margin:0%" id="remove button" class="button1" v-on:click="deleteModerator(moderator.userID,index)">delete</button>
         </div>
 
@@ -66,10 +66,6 @@ import { constants } from 'crypto';
 export default {
     props:{
        apexComId:String,
-      //  description:String,
-      //  moderators:Array,
-      //  rules:Array,
-      //  subscribersCount: Number,
        },
     data(){
         return{
@@ -79,7 +75,6 @@ export default {
             state:'subscribe',
             userName:this.$localStorage.get('userName'),
             loggedIn:this.$localStorage.get('login'),
-            //userName:'subscriber1',
             apexComName:'',
             description:'',
             moderators:[],
@@ -121,7 +116,6 @@ export default {
       */
       CheckUser:function(name)
     {
-      // console.log(name+'hello');
       if( name.username == this.userName){
       return true;
       }
@@ -131,9 +125,6 @@ export default {
     */
     getSubscribers(){
         AllServices.getSubscribers(this.apexComId).then((data) =>{
-          console.log(this.userName);
-          console.log(data+'meeeee');
-          // console.log(data.subscribers[0].id+'side');
         this.subscribers=data.subscribers;
       
         var subscribe = this.subscribers.find(this.CheckUser);
@@ -146,11 +137,6 @@ export default {
           this.state='subscribe';   
     }
     })
-    //   }
-    //   else{
-    //       this.subscribed=false;
-    //       this.state='subscribe';
-    // }
    },
    /**
        * if user is logged in , can go to create post 
@@ -169,24 +155,14 @@ export default {
       */
       isAdminFunction:function()
       {
-        // AllServices.userType().then((data) =>{
-        //   console.log(data[0]+'meeeee');
-        // if(data.type == 1){
-        //   this.isAdmin= true;
-        //   }
-        // else{
-        //   this.isAdmin= false;
-        // }
-        // })
-        var data= AllServices.userType();
-          console.log(data+'meeeee');
-        // if(data.type == 1){
-        //   this.isAdmin= true;
-        //   }
-        // else{
-        //   this.isAdmin= false;
-        // }
-        
+        AllServices.userType().then((data) =>{
+        if(data.user.type == 3){
+          this.isAdmin= true;
+          }
+        else{
+          this.isAdmin= false;
+        }
+        })
       },
       /**
       *send request to subscribe or unsubsribe certain community
@@ -267,24 +243,6 @@ export default {
      this.getAboutGuest();
    }
  },
-//  beforeUpdate(){
-//    this.getSubscribers();
-//    if(this.loggedIn){
-//    this.getAbout();
-//    }
-//    else{
-//      this.getAboutGuest();
-//    }
-//  }
-//  beforeUpdate(){
-//    this.getSubscribers();
-//    if(this.loggedIn){
-//    this.getAbout();
-//    }
-//    else{
-//      this.getAboutGuest();
-//    }
-//  },
 
 }
 </script>
@@ -296,11 +254,6 @@ export default {
 #main{
   width:22%;
   float:right;
-   /* width:23%; */
-   /* position:absolute; */
-   /* max-height:50%; */
-   /* max-width:80%; */
-  /* height: auto; */
   margin-top:4%;
   margin-bottom: 0%;
   margin-left: 3%;
@@ -340,12 +293,10 @@ color:#1a1a1b; font-size: 12px;
   font-weight: 400;
   line-height: 21px;
   overflow-wrap: break-word;
-  /* overflow-wrap: break-word; */
 }
 .box{
   margin-top: 0%;
   margin-bottom: 5%;
-  /* display:flow-root; */
   display:block;
 }
 .box2{
@@ -418,7 +369,6 @@ img{
 }
 .accountLink{
   text-decoration: none;
-  /* color: black; */
 }
 .list{
   padding-left: 0%;
@@ -447,24 +397,6 @@ color:#1a1a1b;
 }
 #remove-button{
   float: right;
-  /* display: inline; */
 }
-p{
-  /* color:#7c7c7c;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 21px;
-  overflow-wrap: break-word; */
-}
-/* @media (max-width: 605px){
-img{
-  margin-top:4px;
-}
-}
-@media (max-width: 529px){
-img{
-  margin-top:8px;
-}
-} */
 
 </style>

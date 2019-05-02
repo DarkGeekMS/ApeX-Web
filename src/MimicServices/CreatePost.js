@@ -17,28 +17,36 @@ token:'1',
       if(mimic){
          if(this.$localStorage.login){
 
-         //   return true;
+     
 
-         var promise1 = new Promise(function(resolve, reject) {
+         var promise1 = new Promise(function(resolve) {
           setTimeout(function() {
             resolve(true);
           }, 300);
         });
         return promise1;
       }
-      var promise1 = new Promise(function(resolve, reject) {
+       promise1 = new Promise(function(resolve) {
           setTimeout(function() {
             resolve(false);
           }, 300);
         });
       }
 else {
+
   if((fd.get('video_url')==null) &&(fd.get('img_name')==null)){
-    axios.post(baseUrl + "api/SubmitPost", fd)
+
+   return axios.post(baseUrl + "api/SubmitPost", fd)
     .then(response=>{
-      swal('Post Submitted successfully');
+    
+      swal({
+        title: "Submitted Successfully!",
+        text: "You clicked the button!",
+        icon: "success",
+        button: "Aww yiss!",
+      });
       return  response.data;
-       }).catch(function (error){
+       }).catch(function (){
       swal("Oops!", "Something went wrong!", "error");
       return false;
    })
@@ -46,33 +54,34 @@ else {
 
   }
   else if(fd.get('img_name')==null){
-    axios.post(baseUrl + "api/SubmitPost", fd)
+   return axios.post(baseUrl + "api/SubmitPost", fd)
     .then(response=>{
-      swal('Post Submitted successfully');
+     
+      swal("Post Submitted successfully", "You clicked the button!", "success");
       return response.data;
-   }).catch(function (error){
+   }).catch(function (){
     swal("Oops!", "Something went wrong!", "error");
      return false;
    })
 
   }
   else if(fd.get('video_url')==null){
-    axios.post(baseUrl + "api/SubmitPost", fd)
+   return axios.post(baseUrl + "api/SubmitPost", fd)
     .then(response=>{
-      swal('Post Submitted successfully');
+      swal("Post Submitted successfully", "You clicked the button!", "success");
       return response.data;
-   }).catch(function (error){
+   }).catch(function (){
      swal("Oops!", "Something went wrong!", "error");
      return false;
    })
 
   }
   else {
-    axios.post(baseUrl + "api/SubmitPost", fd)
+  return  axios.post(baseUrl + "api/SubmitPost", fd)
     .then(response=>{
-      swal('Post Submitted successfully');
+      swal("Post Submitted successfully", "You clicked the button!", "success");
       return response.data;
-   }).catch(function (error){
+   }).catch(function (){
     swal("Oops!", "Something went wrong!", "error");
      return false;
    })

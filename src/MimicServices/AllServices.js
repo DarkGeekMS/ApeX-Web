@@ -160,6 +160,7 @@ subscribe:function(apexComName){
 },
 WriteComment: function(content,parentID){
   var data=MimicComment.WriteComment(content,parentID,this.mimic, this.baseUrl);
+  console.log(data);
   return data;
 },
 DeleteComment: function(ID){
@@ -193,6 +194,7 @@ reportComment: function(ID,reason){
 },
 sendMessage: function(rec,title,cont){
   var data=MimicMessage.sendMessage(rec,title,cont,this.mimic, this.baseUrl);
+  console.log(data.user);
   return data;
 },
 deleteMessage: function(ID){
@@ -245,11 +247,11 @@ deleteAcc:function(Pass) {
 getPrefs:function(){
   return MimicUserSettings.getPrefs(this.mimic, this.baseUrl);
 },
-updatePrefs:function(username,email,avatar,notifie) {
-  return MimicUserSettings.updatePrefs(this.mimic,username,email,avatar,notifie,this.baseUrl);
+updatePrefs:function(fd) {
+  return MimicUserSettings.updatePrefs(this.mimic,fd,this.baseUrl);
 },
-changePass:function (password,withCode,username,key){
-    return MimicUserSettings.changePass(this.mimic,password,withCode,username,key, this.baseUrl);
+changePass:function (password,username,key){
+    return MimicUserSettings.changePass(this.mimic,password,username,key, this.baseUrl);
 },
 searchU:function(query){
   var data=MimicApexCom.searchU(this.mimic,query, this.baseUrl);

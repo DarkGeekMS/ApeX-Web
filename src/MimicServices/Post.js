@@ -10,14 +10,14 @@ methods:{
     {
         if(this.$localStorage.login)
         {
-        var promise1 = new Promise(function(resolve, reject) {
+        var promise1 = new Promise(function(resolve) {
             setTimeout(function() {
               resolve(true);
             }, 300);
           });
 return promise1;
         }
-        var promise1 = new Promise(function(resolve, reject) {
+         promise1 = new Promise(function(resolve) {
             setTimeout(function() {
               resolve(false);
             }, 300);
@@ -38,7 +38,7 @@ return promise1;
          return response;
        
         })
-       .catch(function (error) {
+       .catch(function () {
         swal("Oops!", "Something went wrong!", "error");
    
            return false;
@@ -65,9 +65,9 @@ return promise1;
                 token:token
             }).then(response => {
               swal('success :)');
-            //return true;
+           
             return response;
-            }).catch(function(error){
+            }).catch(function(){
                swal('wrong :(');
               return false;
             })
@@ -89,7 +89,7 @@ return promise1;
 
             else{
              
-                axios.DELETE(baseUrl + "api/Delete",{
+                axios.delete(baseUrl + "api/Delete",{
                     name    : postID,
                     token : token
 
@@ -100,10 +100,11 @@ return promise1;
              
 
 
-            }).catch(function ()
+            }).catch(function (error)
             {
             
              swal("Oops!", "Something went wrong!", "error");
+             alert(error);
              return false;
 
 
@@ -133,11 +134,16 @@ return promise1;
                     token : ID
 
                 }).then(response => {
-                  
-                  swal('Post Hidden Successfully :)');
+                  swal({
+                    title: "Post Hidden Successfully!",
+                    text: "You clicked the button!",
+                    icon: "success",
+                    button: "Aww yiss!",
+                  });
+               
 
                  return response.data;
-                }).catch(function (error)
+                }).catch(function ()
                 {
                   swal("Oops!", "Something went wrong!", "error");
                    return false;
@@ -165,7 +171,7 @@ return promise1;
                       p--;
                   if(this.$localStorage.login)
                   {
-                  var promise1 = new Promise(function(resolve, reject) {
+                  var promise1 = new Promise(function(resolve) {
                       setTimeout(function() {
                         resolve({votes:p});
                       }, 300);
@@ -188,7 +194,7 @@ return promise1;
               return response.data;
       
              })
-            .catch(function (error)
+            .catch(function ()
             {
               return {
                   done:false,
@@ -215,7 +221,7 @@ return promise1;
           p++;
           if(this.$localStorage.login)
           {
-          var promise1 = new Promise(function(resolve, reject) {
+          var promise1 = new Promise(function(resolve) {
               setTimeout(function() {
                 resolve({votes:p});
               }, 300);
@@ -238,13 +244,14 @@ return promise1;
   return response.data;
 
  })
-.catch(function (error)
+.catch(function ()
 { 
   return false;
  });
   }
 },
   isLocked(ID,mimic, baseUrl){
+   
     if( mimic == true)
     {
         if(this.$localStorage.login)
@@ -252,16 +259,18 @@ return promise1;
         return true;
     }
     else
-    {
+    { 
         axios.post(baseUrl + 'api/LockPost', {
-        ID: ID,
+        name: ID,
         token:this.$localStorage.get('token')
          })
-       .then(function (response) {
+       .then(response=> {
+        swal('Successfully :)');
            return response.data;
         })
        .catch(function (error) {
-          
+        swal("Oops!", "Something went wrong!", "error");
+        alert(error);
            return false;
         });
     }

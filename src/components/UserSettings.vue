@@ -18,8 +18,10 @@
   <div class="partition" id="partition-register">
     <div class="partition-form">
       <form autocomplete="false">
-        <input id="n-password2" type="password" placeholder="Password">
-        <input id="n-email" type="text" placeholder="Email">
+        <label>Enter your new username here:</label>
+        <input id="newusername" v-model="userName" type="text" placeholder="enter your new username here">
+        <label>Enter your new email here:</label>
+        <input id="newemail" v-model="email" type="text" placeholder="enter your new email here">
       </form>
     </div>
   </div>
@@ -33,7 +35,7 @@
 
 <div class="upload photos">
   <div class="samerow">
-    <div class="box" @dragover.prevent >
+    <div class="box" @dragover.prevent v-if="this.image==''">
       <label id='profilephoto' class="borderbox view">
         <div class=" margins">
           <svg class=" photo" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -46,14 +48,23 @@
         </div>
         <div class=" words">Drag and Drop or Upload Avatar Image</div>
         <div class="display">
-          <input name="profileIcon" type="file" accept="image/x-png,image/jpeg" >
+          <input  name="profileIcon" type="file" @dragover.prevent  @change="onChange" accept="image/x-png,image/jpeg" >
+           
+           
         </div>
+       
       </label>
+      
     </div>
+      <img v-else :src="this.image" alt="" class="img" id="imgId" />
     </div>
 </div>
 
-<button :disabled="check"  type="submit" style="margin-left:450px" @click.prevent="post()" id="SaveButton">Save</button>
+<button
+ class="btn btn-info" data-toggle="button" type="submit"
+ aria-pressed="true" autocomplete="off" @click="updateprefs()" id="ChangeButton">Save</button>
+
+
 </div>
 <h6  class="page-header"><b>DEACTIVATE ACCOUNT</b></h6>
 <div class="">
@@ -89,13 +100,63 @@ export default {
   },
   data(){
     return{
-      notifie:0,
-        avatar:'',
-    email:'',
+  notifie:0,
+  avatar:'',
+  email:'',
   userName:'',
+  imgName:'',
+  imgContent:'',
+  image:''
     }
   },
   methods:{
+    onDrop: function(e) {
+         e.stopPropagation();
+         e.preventDefault();
+         var files = e.dataTransfer.files;
+         this.createFile(files[0]);
+       },
+        /**
+      * when the user upload the img it enable the post button and store the img src
+      */
+       onChange(e) {
+         this.imgContent = e.target.files[0];
+         var files = e.target.files;
+         this.createFile(files[0]);
+         this.imagable=true;
+         this.Enable();
+
+       },
+        /**
+      * it create file to be stored in img src
+      */
+       createFile(file) {
+         if (!file.type.match('image.*')) {
+
+           return;
+         }
+
+         var reader = new FileReader();
+         var vm = this;
+
+         reader.onload = function(e) {
+           vm.image = e.target.result;
+
+           this.imgName=vm.image;
+          this.image=vm.image;
+         }
+         reader.readAsDataURL(file);
+
+       },
+        /**
+      * it remove the img if the user upload an img from browser and want to remove it so it make the src empty.
+      */
+       removeFile() {
+         this.image = '';
+         this.imagable=false;
+         this.Enable();
+       },
+
     showpass(){
       this.$modal.show('changepass')
     },
@@ -104,9 +165,23 @@ export default {
     this.$modal.show('DeleteAcount')
     },
 updateprefs(){
-  AllServices.updatePrefs(this.username,this.email,this.avatar,this.notifie).then((data)=>{
+
+  let formData = new FormData();
+
+  if(this.imgName!=null){
+       formData.append('avatar', this.imgContent, this.imgContent.name);
+  }
 
 
+
+  formData.append('username', this.userName);
+  formData.append('email', this.email);
+  formData.append('notifications', this.notifie);
+  formData.append('token', this.$localStorage.get('token'));
+
+
+
+  AllServices.updatePrefs(formData).then((data)=>{
   });
 }
   },
@@ -116,9 +191,8 @@ updateprefs(){
   this.email = data.userData.email,
   this.notifie=data.userData.notification,
   this.avatar=data.userData.avatar,
-  this.username=data.userData.username
+  this.userName=data.userData.username
     });
-    // AllServices.changePass();
 
 
     $('#selectted').text('User Settings');
@@ -347,6 +421,9 @@ input:checked + .slider:before {
      height: 300px;
      width: 70%;
 }
+.img{
+  width:30%
+}
 .helper {
   height: 100%;
   display: inline-block;
@@ -376,7 +453,7 @@ input[type=text] {
   display: block;
   box-sizing: border-box;
   margin-bottom: 1%;
-  width: 25%;
+  width: 35%;
   font-size: 12px;
   line-height: 2;
   border: 0;
