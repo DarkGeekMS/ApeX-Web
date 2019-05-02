@@ -52,7 +52,7 @@ export  const AllServices =new Vue({
 
     logOut: function()
     {
-    	MimicAuth.LogOut(this.mimic, this.baseUrl);
+    MimicAuth.LogOut(this.mimic, this.baseUrl);
     },
 
     logIn: function(user,pass)
