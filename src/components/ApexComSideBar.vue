@@ -171,7 +171,7 @@ export default {
     {
       if(this.loggedIn){
       AllServices.subscribe(this.apexComId).then((data) =>{
-        console.log(data);
+        // console.log(data);
       if(data){
       if(this.subscribed){
       this.subscribed = false;
@@ -208,7 +208,7 @@ export default {
       */
     getAbout(){
          AllServices.getAbout(this.apexComId).then((about) => {
-           console.log(about);
+          //  console.log(about);
          this.description=about.description;
          this.moderators=about.moderators;
          this.rules=about.rules;
@@ -222,7 +222,7 @@ export default {
       */
    getAboutGuest(){
          AllServices.getAboutGuest(this.apexComId).then((about) =>{
-           console.log(about);
+          //  console.log(about);
          this.description=about.description;
          this.moderators=about.moderators;
          this.apexComName=about.name;

@@ -49,14 +49,16 @@ return promise1;
    
         if(mimic){
           if(this.$localStorage.login){
-             if(token=="1" && ID=="1"){
-                return true;
-              }
+              swal('success :)');
+               return true;
+          }
+           else{   
 
                 swal("Log In First!!");
                 return false;
-             }
-            }
+           }
+          } 
+            
 
              else {
                 axios.post(baseUrl + "api/Save",
@@ -76,7 +78,7 @@ return promise1;
 
   deletePost:function(postID,token,mimic,baseUrl){
                     if(mimic){
-                        if(postID=="1" && token=="1"){
+                        if(this.$localStorage.login){
 
                             return true;
 
@@ -119,8 +121,13 @@ return promise1;
               
                    if(mimic===true){
 
-                    if(name==="1" && ID==="1"){
-
+                    if(this.$localStorage.login){
+                      swal({
+                        title: "Post Hidden Successfully!",
+                        text: "You clicked the button!",
+                        icon: "success",
+                        button: "Aww yiss!",
+                      });
                         return true;
                     }
                     return false;

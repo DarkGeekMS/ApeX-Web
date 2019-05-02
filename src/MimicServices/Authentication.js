@@ -39,7 +39,7 @@ export  const MimicAuth =new Vue({
             this.$localStorage.set('token', response.data.token);
             this.$localStorage.set('login', true);
             return true;
-          }).catch(function (error) {
+          }).catch(function () {
             self.$localStorage.set('error','That username is already taken');
             return false;
           });
@@ -91,7 +91,6 @@ export  const MimicAuth =new Vue({
         }
       }
       else{
-        var self = this;
         return axios.post(baseUrl + 'api/SignIn', {
             username : user,
             password : pass
@@ -176,7 +175,7 @@ export  const MimicAuth =new Vue({
       else{
         var self = this;
         return axios.post(baseUrl + 'api/ChangePassword', {
-            withcode:true,
+            withcode: true,
             password : pass,
             username: ''  ,
             key: ''  ,
@@ -278,30 +277,22 @@ export  const MimicAuth =new Vue({
       }
       else
       {
-      //  if (this.$localStorage.get('token') == null)
-        //{
-          return axios.get(baseUrl + 'api/ApexComs', {
-          }).then(response => {
-            return response.data;
-
-          }).catch(function (error) {
+        if(this.$localStorage.login){
+   
+        return axios.get(baseUrl + 'api/ApexComs', {
+        
+        }).then(response => {
+       
+          return response.data.apexcoms;
+          
+        }).catch(function (error) {
+   
             this.$localStorage.set('error',error);
-            return false
-          });
-      /*  }
-        else
-        {
-          return axios.post(baseUrl + 'api/GetApexcoms'), {
-            token: this.$localStorage.get('token'),
-            general:0
-          }.then(response => {
-            return response.data;
-
-          }).catch(function (error) {
-            this.$localStorage.set('error',error);
-            return false
-          });
-        }*/
+       
+           return false
+        });
+      }
+      
       }
     }
   }
