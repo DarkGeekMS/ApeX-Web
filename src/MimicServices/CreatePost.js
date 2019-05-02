@@ -39,7 +39,12 @@ else {
    return axios.post(baseUrl + "api/SubmitPost", fd)
     .then(response=>{
     
-      swal('Post Submitted successfully');
+      swal({
+        title: "Submitted Successfully!",
+        text: "You clicked the button!",
+        icon: "success",
+        button: "Aww yiss!",
+      });
       return  response.data;
        }).catch(function (){
       swal("Oops!", "Something went wrong!", "error");
@@ -51,7 +56,8 @@ else {
   else if(fd.get('img_name')==null){
    return axios.post(baseUrl + "api/SubmitPost", fd)
     .then(response=>{
-      swal('Post Submitted successfully');
+     
+      swal("Post Submitted successfully", "You clicked the button!", "success");
       return response.data;
    }).catch(function (){
     swal("Oops!", "Something went wrong!", "error");
@@ -62,7 +68,7 @@ else {
   else if(fd.get('video_url')==null){
    return axios.post(baseUrl + "api/SubmitPost", fd)
     .then(response=>{
-      swal('Post Submitted successfully');
+      swal("Post Submitted successfully", "You clicked the button!", "success");
       return response.data;
    }).catch(function (){
      swal("Oops!", "Something went wrong!", "error");
@@ -73,7 +79,7 @@ else {
   else {
   return  axios.post(baseUrl + "api/SubmitPost", fd)
     .then(response=>{
-      swal('Post Submitted successfully');
+      swal("Post Submitted successfully", "You clicked the button!", "success");
       return response.data;
    }).catch(function (){
     swal("Oops!", "Something went wrong!", "error");

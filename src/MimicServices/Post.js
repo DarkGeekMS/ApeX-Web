@@ -134,8 +134,13 @@ return promise1;
                     token : ID
 
                 }).then(response => {
-                  
-                  swal('Post Hidden Successfully :)');
+                  swal({
+                    title: "Post Hidden Successfully!",
+                    text: "You clicked the button!",
+                    icon: "success",
+                    button: "Aww yiss!",
+                  });
+               
 
                  return response.data;
                 }).catch(function ()

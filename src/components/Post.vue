@@ -181,14 +181,14 @@ export default {
         this.ToggleShowModalVar();
          }
 
-     this.onlyOneTime=false;
+      this.onlyOneTime=false;
       this.$emit('Report',this.postData.id,this.idx);
       this.$modal.show('reportBox');
       this.showReport=true;
 
     }
     else{
-      alert('Login First!!');
+       swal('Login First!!');
     }
     },
     isLocked(){
@@ -213,7 +213,7 @@ export default {
 
     }
     else{
-      alert('Login First!!');
+       swal('Login First!!');
     }
     },
 
@@ -255,18 +255,17 @@ export default {
             this.is_Hide=true;
 
           //  this.$emit('HIDE',true);
-          this.$modal.hide('Demo-OnePost');
+           this.$modal.hide('Demo-OnePost');
            this.ShowModalVar=false;
-         
+           
 
             }
 
           this.PostId=this.postData.id;
           AllServices.Hide(this.PostId,this.$localStorage.get('token'));
-
          }
          else{
-         alert('login first');
+          swal('login first');
        }
        }
        ,
@@ -290,7 +289,7 @@ export default {
 
                       this.className_up    = 'btn btn-light btn-sm is-red';
                       this.pressed_up      =true;
-                        this.postData.upvoted=true;
+                      this.postData.upvoted=true;
 
 
                        this.PostId=this.postData.id;
@@ -305,8 +304,8 @@ export default {
 
 
                }
-                 this.upVoted = !this.upVoted;
-                var downState = this.downVoted;
+               this.upVoted = !this.upVoted;
+               var downState = this.downVoted;
                this.downVoted = false;
                AllServices.upvote(this.PostId,this.points,this.upVoted,downState).then((data) => {
             if(data){
@@ -320,7 +319,7 @@ export default {
       }
 
       else{
-        alert('Login First !!');
+         swal('Login First !!');
       }
        this.postData.votes=this.points;
       }
@@ -375,7 +374,7 @@ export default {
 
               }
               else{
-                alert('Login First !!');
+                 swal('Login First !!');
               }
                 this.postData.votes=this.points;
               },
@@ -415,7 +414,7 @@ export default {
 
     }
     else{
-      alert('login First !!');
+       swal('login First !!');
     }
     },
 
@@ -480,17 +479,10 @@ components:{
 
   },
   mounted(){
-
-
-  },
-  updated() {
-
-
-     if(this.postData.upvoted){
-        this.className_up    = 'btn btn-light btn-sm is-red';
-        this.pressed_up      =true;
-        this.className_down = 'btn btn-light btn-sm is-gray';
-        this.pressed_down=false;
+  if( this.upVoted==true ||this.postData.upvoted){
+     
+       this.className_up    = 'btn btn-light btn-sm is-red';
+       this.pressed_up      =true;
     }
     else if(this.postData.downvoted){
       this.className_up    = 'btn btn-light btn-sm is-gray';
@@ -499,10 +491,20 @@ components:{
       this.pressed_up      =false;
     }
 
+  },
+  beforeUpdated() {
+
+
   this.postData.votes=this.points;
   this.postData.upvoted=this.upVoted;
-
-  },
+  if(this.Saved=='Saved'){
+     this.postData.saved="Saved";
+  }
+  else{
+    this.postData.saved="unsaved";
+  }
+ 
+  }
 }
 
 

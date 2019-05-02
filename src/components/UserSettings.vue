@@ -35,7 +35,7 @@
 
 <div class="upload photos">
   <div class="samerow">
-    <div class="box" @dragover.prevent >
+    <div class="box" @dragover.prevent v-if="this.image==''">
       <label id='profilephoto' class="borderbox view">
         <div class=" margins">
           <svg class=" photo" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -48,10 +48,15 @@
         </div>
         <div class=" words">Drag and Drop or Upload Avatar Image</div>
         <div class="display">
-          <input name="profileIcon" type="file" @dragover.prevent @drop="onDrop" @change="onChange" accept="image/x-png,image/jpeg" >
+          <input  name="profileIcon" type="file" @dragover.prevent  @change="onChange" accept="image/x-png,image/jpeg" >
+           
+           
         </div>
+       
       </label>
+      
     </div>
+      <img v-else :src="this.image" alt="" class="img" id="imgId" />
     </div>
 </div>
 
@@ -101,6 +106,7 @@ export default {
   userName:'',
   imgName:'',
   imgContent:'',
+  image:''
     }
   },
   methods:{
@@ -137,7 +143,7 @@ export default {
            vm.image = e.target.result;
 
            this.imgName=vm.image;
-
+          this.image=vm.image;
          }
          reader.readAsDataURL(file);
 
@@ -414,6 +420,9 @@ input:checked + .slider:before {
 
      height: 300px;
      width: 70%;
+}
+.img{
+  width:30%
 }
 .helper {
   height: 100%;

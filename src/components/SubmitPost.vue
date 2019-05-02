@@ -6,7 +6,7 @@
 <CommentParent 
   
      
-      postID='t3_10'  
+       v-bind:postID= createPostData.id  
       v-if="isCreated" class="comment"
 ></CommentParent>
 
