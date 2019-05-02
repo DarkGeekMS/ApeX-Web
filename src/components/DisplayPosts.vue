@@ -5,13 +5,10 @@
       v-bind:postData="onePost"
       v-on:showUp="showPost"
       v-on:lockComment="ifLock"
-      v-on:HIDE="hide_Post"
-     v-show="!(onePost.id=='')"
+  
       >
       </post>
-    <!-- <div :id="'PostContainer'+i++" v-for="onePost in posts">
-     <post v-bind:postData="onePost" v-on:showUp="showPost" v-on:lockComment="ifLock"></post>
-    </div> -->
+  
     </div>
     <OnePost  id="PostModal" :onePostData="postInfo"   v-on:HIDE="hide_Post" ></OnePost>
     <!-- v-bind:style="{width: 80 +'%'}" -->
@@ -41,10 +38,7 @@ data(){
 return{
 
   posts:'',
-  // hide:false,
-  id:'0',
 
-  // i:0
 
      }
 },
@@ -56,9 +50,6 @@ beforeUpdate(){
 
 this.getPosts();
 
-
-},
-created(){
 
 },
 
@@ -74,13 +65,6 @@ methods:
   showPost:function(post)
     {
     this.postInfo=post;
-
-    },
-    hide_Post(e){
-      return e;
-
-    //  this.id=e;
-
 
     },
     /**

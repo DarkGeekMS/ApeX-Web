@@ -57,14 +57,18 @@
     <i class="far fa-comment-alt" id="commentIcon"></i>
         Comments
 </button>
-  <button  type="button" class="btn btn-default  SAVE"  @click="Save()" id="SaveButton">
+  <button v-if="postData.current_user_saved_post===false" type="button" class="btn btn-default  SAVE"  @click="Save()" id="SaveButton">
 
-    <i class="fa fa-plus-square" v-if="postData.current_user_saved_post===false" id="SaveIcon"></i>
-    <i v-if="postData.current_user_saved_post===true"  class="glyphicon glyphicon-check" id="UnsaveIcon"></i>
-
-
+    <i class="fa fa-plus-square"  id="SaveIcon"></i>
+    <!-- <i v-if="postData.current_user_saved_post===true"  class="glyphicon glyphicon-check" id="UnsaveIcon"></i> -->
 
     {{Saved}}</button>
+  <button v-if="postData.current_user_saved_post===true" type="button" class="btn btn-default  SAVE"  @click="Save()" id="SaveButton">
+
+    <!-- <i class="fa fa-plus-square"  id="SaveIcon"></i> -->
+    <i  class="glyphicon glyphicon-check" id="UnsaveIcon"></i>
+
+    {{unsave}}</button>
 
   <div class="btn-group" role="group" id="DropDiv">
     <button @click="ToggleShowModalVar()" type="button" class="btn btn-default " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="DropButton">
@@ -143,6 +147,7 @@ export default {
 
              points  :this.postData.votes,
              Saved  :"Save",
+             unsave:"unsave",
              PostId   :this.postData.id,
              token  :this.$localStorage.get('token'),
              showReport:false,
@@ -336,9 +341,10 @@ export default {
        this.PostId=this.postData.id;
 
         AllServices.save(this.$localStorage.get('token'),this.PostId);
+         
 
         }
-
+      
     
     else{
        swal('login First !!');
@@ -399,12 +405,7 @@ components:{
 
 
   },
-  mounted(){
-    
-
- 
-
-  },
+  
  
 }
 
