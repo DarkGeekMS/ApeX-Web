@@ -22,7 +22,7 @@ export  const MimicComment =new Vue({
       }
       else
       {
-        console.log(cont,parentID);
+      //  console.log(cont,parentID);
         return axios.post(baseUrl + 'api/AddReply', {
             content: cont,
             parent: parentID,
@@ -298,7 +298,7 @@ export  const MimicComment =new Vue({
             var children = [comment1,comment2,comment3,comment4,comment5,comment6];
             var promise1 = new Promise(function(resolve, reject) {
                 setTimeout(function() {
-                  resolve(children);
+                  resolve({comments:children});
                 }, 300);
               });
     return promise1;
@@ -308,6 +308,8 @@ export  const MimicComment =new Vue({
       {
         if(this.$localStorage.login)
           {
+            console.log(ID,"bossssss");
+
         return axios.post('http://35.232.3.8/api/RetrieveComments', {
             parent:ID,
             token:this.$localStorage.get('token')
@@ -320,8 +322,9 @@ export  const MimicComment =new Vue({
             });
           }
           else{
+            console.log(ID,"bossssss");
             return axios.get('http://35.232.3.8/api/RetrieveComments', {
-            parent:ID,
+            parent:ID
         })
            .then(response=> {
             return response.data;
@@ -345,7 +348,8 @@ export  const MimicComment =new Vue({
         return promise1;
       }
       else{
-        return axios.post(this.$localStorage.get('baseUrl') + 'api/report', {
+        console.log('ffffff',ID);
+        return axios.post(this.$localStorage.get('baseUrl') + 'api/Report', {
           name: ID,
           content: reason,
           token:this.$localStorage.get('token')

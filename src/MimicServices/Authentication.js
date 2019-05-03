@@ -142,11 +142,11 @@ export  const MimicAuth =new Vue({
           });
       }
     },
-    forgetPass2: function(code,user,mimic, baseUrl)
+    forgetPass2: function(code,email,user,mimic, baseUrl)
     {
       if(mimic == true)
       {
-        if( code == this.code && user == this.username )
+        if( code == this.code && email == this.email )
         {
           return true;
         }
@@ -160,9 +160,9 @@ export  const MimicAuth =new Vue({
         var self = this;
         return axios.post(baseUrl + 'api/CheckCode', {
             code : code,
-            username: user
+            email: email
           }).then(response => {
-            if( response.data.authorized == true)
+            if( response.data == user)
             {
               return true;
             }
@@ -176,15 +176,18 @@ export  const MimicAuth =new Vue({
     {
       if(mimic == true)
       {
-        return true;
+        if(  user == this.user && code == this.code)
+        {
+          return true;
+        }
       }
       else{
         var self = this;
-        return axios.post(baseUrl + 'api/ChangePassword', {
-            withcode: true,
+        return axios.patch(baseUrl + 'api/ChangePassword', { 
+            withCode: 1,
             password : pass,
-            username: user  ,
-            key: code  ,
+            username: user,
+            key: code ,
           }).then(response => {
             if(response.data.changed == true)
             {
@@ -227,19 +230,13 @@ export  const MimicAuth =new Vue({
           });
       }
     },
-    ForgetUser2: function(code,mimic, baseUrl)
+    ForgetUser2: function(code,email,mimic, baseUrl)
     {
       if(mimic == true)
       {
-        if( code == this.code )
+        if( code == this.code && email == this.email)
         {
-         /* var name = this.username;
-          var promise1 = new Promise(function(resolve){
-            setTimeout(function() {
-              resolve(name);
-            }, 300)
-        }); */
-        return this.username
+          return this.username;
         }
         else
         {
@@ -251,12 +248,9 @@ export  const MimicAuth =new Vue({
         var self = this;
         return axios.post(baseUrl + 'api/CheckCode', {
             code : code,
-           // email : email
+            email : email
           }).then(response => {
-            if( response.data.authorized == true)
-            {
-              return response.data.username;
-            }
+            return response.data;
           }).catch(function () {
             self.$localStorage.set('error','There was an error sending your request. Please try again');
              return false;
@@ -288,7 +282,7 @@ export  const MimicAuth =new Vue({
       {
         return axios.get(baseUrl + 'api/ApexComs', {  
         }).then(response => {
-          return response.data.apexcoms;
+          return response.data.apexComs;
         }).catch(function () {
           return false
         });

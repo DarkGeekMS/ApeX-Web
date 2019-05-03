@@ -38,10 +38,10 @@
 
     <div class="btn-toolbar tool1" role="toolbar">
     <div class="btn-group">
-    <button type="button" class="btn btn-default b1" @click="$router.push({ name: 'HotHomePage', params:'' })">
+    <button type="button" class="btn btn-default b1" @click="NavHot()">
     <i class="glyphicon glyphicon-arrow-up"></i>
     </button>
-    <button type="button" class="btn btn-default b2" @click="$router.push({ name: 'NewHomePage', params:''})">
+    <button type="button" class="btn btn-default b2" @click="NavAll()">
     <i class="glyphicon glyphicon-stats"></i>
     </button>
     <button type="button" class="btn btn-default b3">
@@ -74,7 +74,7 @@
       <ul class="dropdown-menu">
         <li class="dropdown-header">MY STUFF</li>
         <li><router-link :to="{ name: 'UserProfile', params: {userName:userLog} } "><i class="glyphicon glyphicon-user"/> My Profile</router-link></li>
-        <li><router-link :to="{ name: 'UserSettings'}" ><i class="glyphicon glyphicon-cog"></i> User Settings</router-link></li>
+        <li><router-link :to="{ name: 'UserSettings',params:{user:userLog}}" ><i class="glyphicon glyphicon-cog"></i> User Settings</router-link></li>
         <li class="divider"></li>
         <li><a style="cursor:pointer" class="logOut" @click="Logout()"> <i class="glyphicon glyphicon-log-out"></i>   Log Out</a></li>
       </ul>
@@ -104,7 +104,8 @@ import $ from'jquery/dist/jquery.min.js'
  * @vue-data {string} [userLog=""] name of user logged in
  * @vue-data {string} [searchVal=""] search value
  * @vue-data {boolean} [canBeShown=false] check shownModal
- * @vue-data {object} [apexs] names op apexComs
+ * @vue-data {object} [apexs] names of apexComs
+ * @vue-data {boolean} [log=false] if user logged in
 */
 
   export default {
@@ -207,14 +208,14 @@ import $ from'jquery/dist/jquery.min.js'
         AllServices.logOut().then((data) =>{
           if(data)
           {
-            this.$router.replace({ name: 'NewHomePage' , params: {sortingparam:'hot'}}); 
+            this.$router.replace({ name: 'NewHomePage' , params: {sortingparam:'hot'}});
           }
         })
 
       },
       /**
-     * when search value isn't empty transfer to localStorage and go to route search
-     */
+       * when search value isn't empty transfer to localStorage and go to route search
+      */
       search: function(){
         if( (this.searchVal != '') && (this.searchVal.length >= 3) )
         {
@@ -222,9 +223,27 @@ import $ from'jquery/dist/jquery.min.js'
           this.$router.push({ name:'Search'} )
         }
       },
-      fun: function()
+      /**
+       * when user or guest click at popular sort at navbar  
+      */      
+      NavHot:function()
       {
-        document.getElementById('pop').style.display='block'
+        this.$router.push({ name: 'HotHomePage', params:'' });
+        $('#selectted').text('Popular');
+        var remclass = $('#classed').prop('class');
+        $('#classed').removeClass(remclass);
+        $('#classed').addClass("glyphicon glyphicon-arrow-up");
+      },
+      /**
+       * when user or guest click at All sort at navbar  
+      */  
+      NavAll:function()
+      {
+        this.$router.push({ name: 'NewHomePage', params:''});
+        $('#selectted').text('All');
+        var remclass = $('#classed').prop('class');
+        $('#classed').removeClass(remclass);
+        $('#classed').addClass("glyphicon glyphicon-stats");
       }
     },
 }

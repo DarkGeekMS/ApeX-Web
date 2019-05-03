@@ -13,6 +13,4 @@ describe ('SignUp3' , () =>{
  		expect(wrapper.contains('button')).toBe(true);
     });
 
-
-
 });

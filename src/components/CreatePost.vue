@@ -394,7 +394,7 @@ created(){
         if(data)
         {
           this.apexs = data.apexComs;
-
+         
 
         }
       });

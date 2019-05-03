@@ -1,6 +1,6 @@
 <template>
   <div id="SavedPosts" >
-    <DisplayPosts :user="true" :sortparam="'saved'" class='ds'></DisplayPosts>
+    <DisplayPosts :user="true" :userName="userName" :sortparam="'saved'" class='ds'></DisplayPosts>
   </div>
 </template>
 
@@ -11,6 +11,7 @@ import DisplayPosts from "./DisplayPosts.vue"
 
 export default {
 name: 'SavedPosts',
+props:['userName'],
 
   components:{
     'DisplayPosts':DisplayPosts,

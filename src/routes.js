@@ -31,13 +31,13 @@ export default[
         ]},
         {path:'ApexSubscribers',name:'Subscribers',component:ApexComSubscribers,props:true},
         {path:'ApexReports',name:'Reports',component:Reports},
-        {path:'AddModerators',name:'AddModerators',component:ApexComModerator,props:true, 
+        {path:'AddModerators',name:'AddModerators',component:ApexComModerator,props:true,
         children :[
           {path:'searchUser/:query',name:'Moderators', component:ApexComAddModerator,props:true },
         ]},
       ]
       },
-    {path:'/',component:HomePage},
+    {path:'/',redirect: { name: 'HotHomePage' }},
     {path:'/HomePage',name:'HomePage',component:HomePage,props:true,children:[
     {path:'Hot',name:'HotHomePage',component:Hot,props:true},
     {path:'New',name:'NewHomePage',component:New,props:true},
@@ -57,7 +57,7 @@ export default[
     ]
   },
 
-    {path:'/UserSettings',name:'UserSettings',component:UserSettings},
+    {path:'/UserSettings/:user',name:'UserSettings',component:UserSettings,props:true},
     {path:'/CreateApexCom',name:'CreateApexCom',component:CreateApexCom},
 
 ]

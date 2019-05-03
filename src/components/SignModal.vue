@@ -52,9 +52,6 @@ export default {
         error: ''
       }
   },
- /* updated(){
-    this.$localStorage.set('emailVal', this.email)
-  }, */
   methods:{
     /**
      * check out if the email is valid or not
@@ -80,6 +77,9 @@ export default {
         this.error = ''
       }
     },
+    /**
+     * function to close all modal which opened
+    */
     close:function(){
       this.$modal.hide('demo-sign');
       this.$modal.hide('demo-login');

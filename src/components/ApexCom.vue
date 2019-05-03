@@ -5,17 +5,17 @@
       <div class="imagediv">
         <h1 style=" font-size: 28px; display:inline;" id="Name">{{apexComName}}</h1>
         <div class="img">
-          <img style="box-sizing: border-box; border-radius: 50%;" class="image" :src="'http://35.232.3.8' + image" >
+          <img style="box-sizing: border-box; border-radius: 50%;" class="image" :src="image" >
         </div>
       </div>
     </div>
 
       <div class="navBar" id="navbar">
       <router-link id="postslink" class="navbarLinks" :to="{name:'Posts'}">Posts</router-link>
-      <router-link  v-show="isModerator" id="subscribersListlink" class="navbarLinks" :to="{name:'Subscribers'}">subscribers</router-link> 
+      <router-link  v-show="isModerator" id="subscribersListlink" class="navbarLinks" :to="{name:'Subscribers'}">subscribers</router-link>
       <router-link  v-show="isModerator" id="reportlink" class="navbarLinks" :to="{name:'Reports'}">view reports</router-link>
       <router-link v-show="isAdmin" id="addmoderatorlink" class="navbarLinks"  :to="{name:'AddModerators'}">add moderator</router-link>
-      
+
     </div>
       </div>
   <SideBar class="sidebar" v-bind:apexComId="apexComId"></SideBar>
@@ -83,7 +83,7 @@ export default {
     isModeratorFunction:function(){
       for (let i = 0; i < this.moderators.length; i++){
         if(this.moderators[i].username===this.userName){
-           this.isModerator= true; 
+           this.isModerator= true;
            return;
         }
          }
@@ -109,7 +109,7 @@ export default {
   if(this.loggedIn){
    this.getAbout();
    this.isAdminFunction();
-   
+
    }
    else{
      this.getAboutGuest();

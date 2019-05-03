@@ -16,15 +16,24 @@ token:'1',
     {
       if(mimic ==  true)
       {
-        var names = [
+    
+        var names ={
+          apexComs:[
           {
+            
             id : '1',
             name : 'apex1'
+            
           },
           {
+            
             id : '2',
             name : 'apex2'
-          }];
+            
+          }
+         ]
+        }
+          ;
         var promise1 = new Promise(function(resolve){
             setTimeout(function() {
               resolve(names);
@@ -63,6 +72,7 @@ token:'1',
 
     },
     submitPost: function(fd, mimic, baseUrl){
+     
 
       if(mimic){
          if(this.$localStorage.login){
