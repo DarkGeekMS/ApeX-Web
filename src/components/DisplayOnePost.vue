@@ -9,6 +9,7 @@
     class="mainpost"
     id="postModal"
 
+
   ></post>
   </div>
  <ApexComSideBar
@@ -43,7 +44,9 @@ name: 'DemoOnePost',
 props:{
   onePostData:{
 
-  }
+  },
+
+  
 },
 components:
 {
@@ -53,13 +56,13 @@ components:
 },
 methods:{
 
-
 },
 updated(){
 
 
 },
 created(){
+  
     //  setInterval(() => console.log(this.onePostData.id ),1000);
 
 },
@@ -69,7 +72,6 @@ created(){
       locked:false,
       postOwnerUserName : "hohoho",
       moderatorUserName : 'FF',
-
     };
       }
 

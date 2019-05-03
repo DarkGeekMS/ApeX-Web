@@ -2,11 +2,10 @@
 <div id='userprofile'>
     <div id='firstnavbar'>
 
-        <router-link :to="{ name: 'UserPosts'}" style="font-size: 16px;"  id="posttab" class="navbarlinks">posts</router-link>
-        <router-link :to="{ name: 'Saved'}" style="font-size: 16px;"  id="savedtab" v-show="notGuest" class="navbarlinks" >saved</router-link>
-        <router-link :to="{ name: 'Hidden'}" style="font-size: 16px;"  id="hidden tab" v-show="notGuest" class="navbarlinks">hidden</router-link>
-        <router-link style="font-size: 16px;" v-show="isModerator && notGuest" id="reportlink" class="navbarlinks" :to="{name:'Report'}">view reports</router-link>
-        <router-link style="font-size: 16px;" v-show="notGuest" id="reportlink" class="navbarlinks" :to="{name:'blockLlist'}">block list</router-link>
+        <router-link  style="font-size: 16px;"  id="posttab" class="navbarlinks":to="{ name: 'UserPosts'}">posts</router-link>
+        <router-link  style="font-size: 16px;"  id="savedtab" v-show="notGuest" class="navbarlinks" :to="{ name: 'Saved'}" >saved</router-link>
+        <router-link  style="font-size: 16px;"  id="hidden tab" v-show="notGuest" class="navbarlinks" :to="{ name: 'Hidden'}">hidden</router-link>
+        <router-link style="font-size: 16px;" v-show="notGuest" id="blocklistab" class="navbarlinks" :to="{name:'blockLlist'}">block list</router-link>
     </div>
         <SideBar
         v-bind:settings="false"
@@ -27,7 +26,6 @@ import $ from'jquery/dist/jquery.min.js'
  * @vue-data {string} [loggeduser='']  name of logged in user
  * @vue-data {boolean} loggedIn  check if user is logged in
  * @vue-prop  {string} userName - user name
- * @vue-data  {boolean} [isModerator=false] - boolean indicates if the user is moderator or not
  * @vue-data  {boolean} [notGuest=false] - boolean indicates if the user is in his profile or other user profile
  */
 
@@ -40,26 +38,11 @@ export default {
     return {
       loggeduser:this.$localStorage.get('userName'),
       loggedIn:this.$localStorage.get('login'),
-      isModerator:false,
       notGuest:false,
     }
   },
   methods:
   {
-    /**
-     *check if user is moderator
-    */
-    isModeratorFunction:function()
-      {
-        AllServices.userType().then((data) =>{
-        if(data.user.type ==2){
-          this.isModerator= true;
-          }
-        else{
-          this.isModerator= false;
-          }
-        })
-      },
     /**
     * check if the user requesting his profile or other user profile
     */
@@ -71,53 +54,9 @@ export default {
         this.notGuest= true;
       }
     },
-    /**
-    * get user profile info
-    */
-    getUserProfile:function(){
-      AllServices.getUserInfo().then((data) =>{
-        console.log(data);
-
-      this.savedPosts = data.posts.saved_posts;
-      this.hiddenPosts = data.hidden_posts;
-      this.personalPosts = data.posts;
-      })
-   },
-    /**
-    * get user account data for another user
-    */
-   getUserData:function(){
-      AllServices.getUserInfoById(this.userName).then((data) =>{
-      this.personalPosts = data.posts;
-      })
-   },
-   /**
-    * get user account data for a guset
-    */
-   getUserDataForGuest:function(){
-     AllServices.getUserInfoByIdforGuest(this.userName).then((data) =>{
-      this.personalPosts = data.posts;
-     })
-   }
-
   },
   mounted()
   {
-    if(this.loggedIn){
-    this.notGuestFunction();
-    this.isModeratorFunction();
-    }
-    if(this.loggedIn){
-    if(this.userName == this.loggeduser){
-      this.getUserProfile();
-    }
-    else{
-      this.getUserData();
-    }
-    }
-    else{
-      this.getUserDataForGuest();
-    }
     $('#selectted').text('u/' + this.$localStorage.get('userName') );
     var remclass = $('#classed').prop('class');
     $('#classed').removeClass(remclass);

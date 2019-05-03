@@ -6,18 +6,16 @@
        <p> Search results </p>
     </div>
   <div id="main" v-for='(user,index) in users' :key="'A'+index" v-show="exist">
-  <router-link id="subDiv" :to="{ name: 'UserProfile', params: {userName:user.username}}"> 
+  <router-link  id="subDiv" :to="{ name: 'UserProfile', params: {userName:user.username}}"> 
       <div id="sub1">
          <img width="45px" :src="'http://35.232.3.8'+user.avatar" />
          <a class="name"> {{user.username}} <br/> <span class="memb"> {{user.karma}} karma </span> </a>       
        </div> 
        <br/><br/>
        </router-link>
-       <button v-bind:class="{button1:isModerator(user.username),button:!isModerator(user.username)}" type="button" v-on:click="addModerator(user.id)">{{state}}</button>
-    
+       <button v-bind:class="{button1:(isModerator(user.username)),button:!(isModerator(user.username))}" type="button" v-on:click="addModerator(user.id)">{{state}}</button>
   </div> 
     <div id="subDiv" style="text-align:center;font-size: 17px;font-weight: 600; " v-show="!exist"> {{error}} ''{{query}}'' </div>
-  
 </div>
 </template>
 
@@ -28,10 +26,11 @@ import { EventBus } from '../main.js'
 import swal from 'sweetalert'
 
 /**
- * @vue-data {string} users users that reflect with search value  
+ * @vue-data {string} state bytton state delete or add 
  * @vue-data {boolean} [exist=true] if there is matching
  * @vue-data {string} [error=''] if there is no matching
  * @vue-prop  {string} apexComId - community Id
+ * @vue-data {string} state bytton state delete or add
  * @vue-prop  {string} query - stores the string that user wants to search for
 */
 export default {
@@ -42,7 +41,7 @@ props:['apexComId','query'],
       error:'',
       users:[],
       moderators:[],
-      state:'add moderator'
+      state:'add moderator',
     }
   },
   methods:
@@ -51,19 +50,16 @@ props:['apexComId','query'],
       *used by admin to add moderator
       */
       addModerator:function(userId){
-        console.log(userId);
-          console.log(this.apexComId);
           AllServices.addOrDeleteModerator(userId,this.apexComId).then((data) =>{
           if(data){ 
             swal('Done :)');
-            this.searchUser(this.query);
-            this.getAbout();
+            this. getAbout();
             EventBus.$emit('changeModeratot',true);
           }
           else{
             swal('sorry something went wrong');
               }
-        }) 
+        })
       },
       isModerator:function(name){
       for (let i = 0; i < this.moderators.length; i++){
@@ -74,13 +70,13 @@ props:['apexComId','query'],
          }
          this.state='add moderator'
          return false;
+
       },
       /**
       *get the details of certain community for user
       */
      getAbout(){
          AllServices.getAbout(this.apexComId).then((about) =>{
-         console.log(about);
          this.moderators=about.moderators;
          })
      },
@@ -88,9 +84,7 @@ props:['apexComId','query'],
       *send the query to be searched for
       */
       searchUser:function(searchVal){
-        console.log(searchVal+'sent'); 
         AllServices.searchU(searchVal).then((data) =>{
-          console.log(data);
           if(data.users.length == 0)
           {
             this.exist = false,
@@ -112,7 +106,6 @@ props:['apexComId','query'],
   beforeRouteUpdate (to, from, next) {
     this.searchUser(to.params.query);
     this.getAbout();
-    console.log('route updated search');
     next();
   }
 }

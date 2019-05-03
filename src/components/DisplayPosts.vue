@@ -4,13 +4,16 @@
      <post
       v-bind:postData="onePost"
       v-on:showUp="showPost"
-
-
+    
       >
       </post>
 
     </div>
-    <OnePost  id="PostModal" :onePostData="postInfo"  ></OnePost>
+    <OnePost  
+     id="PostModal" 
+     :onePostData="postInfo"  
+     v-bind:upVoted="upVoted"
+     v-bind:downVoted="downVoted"></OnePost>
     <!-- v-bind:style="{width: 80 +'%'}" -->
 
   </div>
@@ -41,8 +44,9 @@ return{
   hiddenPosts:{},
   personalPosts:{},
   posts:'',
-  postInfo:''
-
+  postInfo:'',
+  upVoted:false,
+  downVoted:false
 
      }
 },
@@ -50,6 +54,7 @@ mounted () {
   this.getPosts();
 
   },
+  
 // beforeUpdate(){
 //
 // this.getPosts();

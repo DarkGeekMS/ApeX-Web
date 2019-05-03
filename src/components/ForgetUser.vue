@@ -104,7 +104,7 @@ export default {
           if(check)
           {
             this.congra = "If the provided email address matches that account's verified email address, you'll receive a code to login in." ;
-            setTimeout(() =>  this.$modal.show('ForgetUser2',{pass: this.pass}) , 2000);
+            setTimeout(() =>  this.$modal.show('ForgetUser2',{pass: this.pass, email:this.email}) , 2000);
           }
           else{
             this.validate =  this.$localStorage.get('error');
@@ -116,7 +116,7 @@ export default {
          if(data)
           {
             this.congra = "If the provided email address matches that account's verified email address, you'll receive a code to log in." ;
-            setTimeout(() =>  this.$modal.show('ForgetUser2',{pass: this.pass}) , 2000);
+            setTimeout(() =>  this.$modal.show('ForgetUser2',{pass: this.pass, email:this.email}) , 2000);
 
           }
           else{

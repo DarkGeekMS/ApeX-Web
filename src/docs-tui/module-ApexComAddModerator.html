@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Module: ApexComAddModerator | Module: ApexComAddModerator</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-jsdoc.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/tui-doc.css">
+
+    
+</head>
+<body>
+<nav class="lnb" id="lnb">
+    <div class="logo" style="">
+        
+            <img src="img/toast-ui.png" width="100%" height="100%">
+        
+    </div>
+    <div class="title">
+        <h1><a href="index.html" class="link">Module: ApexComAddModerator</a></h1>
+        
+    </div>
+    <div class="search-container" id="search-container">
+        <input type="text" placeholder="Search">
+        <ul></ul>
+    </div>
+    
+    <div class="lnb-api hidden"><h3>Modules</h3><ul><li><a href="module-ApexCom.html">ApexCom</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:ApexCom_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-ApexCom.html#getAbout">getAbout</a></li><li><a href="module-ApexCom.html#getAboutGuest">getAboutGuest</a></li><li><a href="module-ApexCom.html#isAdminFunction">isAdminFunction</a></li><li><a href="module-ApexCom.html#isModeratorFunction">isModeratorFunction</a></li></ul></div></li><li><a href="module-ApexComAddModerator.html">ApexComAddModerator</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:ApexComAddModerator_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-ApexComAddModerator.html#addModerator">addModerator</a></li><li><a href="module-ApexComAddModerator.html#getAbout">getAbout</a></li><li><a href="module-ApexComAddModerator.html#searchUser">searchUser</a></li></ul></div></li><li><a href="module-ApexComModerator.html">ApexComModerator</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:ApexComModerator_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-ApexComModerator.html#search">search</a></li></ul></div></li><li><a href="module-ApexComPosts.html">ApexComPosts</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:ApexComPosts_sub"></div></li><li><a href="module-ApexComSideBar.html">ApexComSideBar</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:ApexComSideBar_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-ApexComSideBar.html#changeState">changeState</a></li><li><a href="module-ApexComSideBar.html#CheckUser">CheckUser</a></li><li><a href="module-ApexComSideBar.html#createPost">createPost</a></li><li><a href="module-ApexComSideBar.html#deleteAC">deleteAC</a></li><li><a href="module-ApexComSideBar.html#deleteModerator">deleteModerator</a></li><li><a href="module-ApexComSideBar.html#getAbout">getAbout</a></li><li><a href="module-ApexComSideBar.html#getAboutGuest">getAboutGuest</a></li><li><a href="module-ApexComSideBar.html#getSubscribers">getSubscribers</a></li><li><a href="module-ApexComSideBar.html#isAdminFunction">isAdminFunction</a></li><li><a href="module-ApexComSideBar.html#subscribe">subscribe</a></li></ul></div></li><li><a href="module-ApexComSubscribers.html">ApexComSubscribers</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:ApexComSubscribers_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-ApexComSubscribers.html#blockUser">blockUser</a></li><li><a href="module-ApexComSubscribers.html#getsubscribers">getsubscribers</a></li></ul></div></li><li><a href="module-CommunitiesAndUsers.html">CommunitiesAndUsers</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:CommunitiesAndUsers_sub"></div></li><li><a href="module-CreatePost.html">CreatePost</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:CreatePost_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-CreatePost.html#createFile">createFile</a></li><li><a href="module-CreatePost.html#Enable">Enable</a></li><li><a href="module-CreatePost.html#onChange">onChange</a></li><li><a href="module-CreatePost.html#onDrop">onDrop</a></li><li><a href="module-CreatePost.html#removeFile">removeFile</a></li><li><a href="module-CreatePost.html#submitPost">submitPost</a></li></ul></div></li><li><a href="module-CreatePostSideBar.html">CreatePostSideBar</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:CreatePostSideBar_sub"></div></li><li><a href="module-DisplayOnePost.html">DisplayOnePost</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:DisplayOnePost_sub"></div></li><li><a href="module-DisplayPosts.html">DisplayPosts</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:DisplayPosts_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-DisplayPosts.html#getPosts">getPosts</a></li><li><a href="module-DisplayPosts.html#showPost">showPost</a></li></ul></div></li><li><a href="module-ForgetPass.html">ForgetPass</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:ForgetPass_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-ForgetPass.html#close">close</a></li><li><a href="module-ForgetPass.html#post">post</a></li><li><a href="module-ForgetPass.html#restart">restart</a></li><li><a href="module-ForgetPass.html#validateEmail">validateEmail</a></li></ul></div></li><li><a href="module-ForgetUser.html">ForgetUser</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:ForgetUser_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-ForgetUser.html#close">close</a></li><li><a href="module-ForgetUser.html#post">post</a></li><li><a href="module-ForgetUser.html#restart">restart</a></li><li><a href="module-ForgetUser.html#validateEmail">validateEmail</a></li></ul></div></li><li><a href="module-ForgetUser2.html">ForgetUser2</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:ForgetUser2_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-ForgetUser2.html#beforeOpen">beforeOpen</a></li><li><a href="module-ForgetUser2.html#close">close</a></li><li><a href="module-ForgetUser2.html#post">post</a></li><li><a href="module-ForgetUser2.html#restart">restart</a></li></ul></div></li><li><a href="module-HomeSideBar.html">HomeSideBar</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:HomeSideBar_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-HomeSideBar.html#create">create</a></li><li><a href="module-HomeSideBar.html#post">post</a></li></ul></div></li><li><a href="module-LoginModal.html">LoginModal</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:LoginModal_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-LoginModal.html#beforeOpen">beforeOpen</a></li><li><a href="module-LoginModal.html#close">close</a></li><li><a href="module-LoginModal.html#post">post</a></li><li><a href="module-LoginModal.html#restart">restart</a></li></ul></div></li><li><a href="module-NavBar.html">NavBar</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:NavBar_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-NavBar.html#conditionalShow">conditionalShow</a></li><li><a href="module-NavBar.html#Logout">Logout</a></li><li><a href="module-NavBar.html#NavAll">NavAll</a></li><li><a href="module-NavBar.html#NavHot">NavHot</a></li><li><a href="module-NavBar.html#search">search</a></li></ul></div></li><li><a href="module-Post.html">Post</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:Post_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-Post.html#CheckModerator">CheckModerator</a></li><li><a href="module-Post.html#deletePost">deletePost</a></li><li><a href="module-Post.html#Hide">Hide</a></li><li><a href="module-Post.html#isAdminFunction">isAdminFunction</a></li><li><a href="module-Post.html#isModeratorFunction">isModeratorFunction</a></li><li><a href="module-Post.html#Save">Save</a></li><li><a href="module-Post.html#ShowModal">ShowModal</a></li></ul></div></li><li><a href="module-Reports.html">Reports</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:Reports_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-Reports.html#ignoreReport">ignoreReport</a></li><li><a href="module-Reports.html#reviewReportsAC">reviewReportsAC</a></li><li><a href="module-Reports.html#reviewReportsUP">reviewReportsUP</a></li></ul></div></li><li><a href="module-ResetCode.html">ResetCode</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:ResetCode_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-ResetCode.html#beforeOpen">beforeOpen</a></li><li><a href="module-ResetCode.html#close">close</a></li><li><a href="module-ResetCode.html#post">post</a></li><li><a href="module-ResetCode.html#restart">restart</a></li></ul></div></li><li><a href="module-ResetPass.html">ResetPass</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:ResetPass_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-ResetPass.html#beforeOpen">beforeOpen</a></li><li><a href="module-ResetPass.html#close">close</a></li><li><a href="module-ResetPass.html#post">post</a></li><li><a href="module-ResetPass.html#restart">restart</a></li></ul></div></li><li><a href="module-Search.html">Search</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:Search_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-Search.html#showPost">showPost</a></li></ul></div></li><li><a href="module-SearchSideBar.html">SearchSideBar</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:SearchSideBar_sub"><div class="member-type">Members</div><ul class="inner"><li><a href="module-SearchSideBar.html#.methods">methods</a></li></ul></div></li><li><a href="module-Sign2Modal.html">Sign2Modal</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:Sign2Modal_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-Sign2Modal.html#beforeOpen">beforeOpen</a></li><li><a href="module-Sign2Modal.html#close">close</a></li><li><a href="module-Sign2Modal.html#post">post</a></li><li><a href="module-Sign2Modal.html#restart">restart</a></li></ul></div></li><li><a href="module-SignModal.html">SignModal</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:SignModal_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-SignModal.html#checkEmail">checkEmail</a></li><li><a href="module-SignModal.html#close">close</a></li><li><a href="module-SignModal.html#validateEmail">validateEmail</a></li></ul></div></li><li><a href="module-test.html">test</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:test_sub"></div></li><li><a href="module-UserProfile.html">UserProfile</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:UserProfile_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-UserProfile.html#getUserData">getUserData</a></li><li><a href="module-UserProfile.html#getUserDataForGuest">getUserDataForGuest</a></li><li><a href="module-UserProfile.html#getUserProfile">getUserProfile</a></li><li><a href="module-UserProfile.html#isModeratorFunction">isModeratorFunction</a></li><li><a href="module-UserProfile.html#notGuestFunction">notGuestFunction</a></li></ul></div></li><li><a href="module-UserProfileBlockList.html">UserProfileBlockList</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:UserProfileBlockList_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-UserProfileBlockList.html#getBlockList">getBlockList</a></li><li><a href="module-UserProfileBlockList.html#unblockUser">unblockUser</a></li></ul></div></li><li><a href="module-UserProfileSideBar.html">UserProfileSideBar</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:UserProfileSideBar_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-UserProfileSideBar.html#blockUser">blockUser</a></li><li><a href="module-UserProfileSideBar.html#createPost">createPost</a></li><li><a href="module-UserProfileSideBar.html#deleteUser">deleteUser</a></li><li><a href="module-UserProfileSideBar.html#getUserData">getUserData</a></li><li><a href="module-UserProfileSideBar.html#getUserDataForGuest">getUserDataForGuest</a></li><li><a href="module-UserProfileSideBar.html#getUserProfile">getUserProfile</a></li><li><a href="module-UserProfileSideBar.html#isAdminFunction">isAdminFunction</a></li><li><a href="module-UserProfileSideBar.html#notGuestFunction">notGuestFunction</a></li></ul></div></li></ul></div>
+</nav>
+<div id="resizer"></div>
+
+<div class="main" id="main">
+    
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>ApexComAddModerator</h2>
+        
+            
+        
+    
+</header>
+
+<article>
+    
+        <div class="container-overview">
+        
+            
+                <div class="description"><p></p></div></div> </p>
+<style>
+.container-overview {
+    display: none;
+}
+
+.main section article table td.name,
+.main section article table td.type,
+.main section article table td.attributes,
+.main section article table td.default {
+    max-width: none;
+}
+</style>
+
+
+<p><h3 class="subsection-title" style="margin-top: 1em" data-jsdoc-vuejs="section-props">Props</h3></p>
+<div class="container-params">
+    <table class="params" data-jsdoc-vuejs="table-props">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Default value</th>
+            <th>Required?</th>
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr>
+            <td class="name"><code>apexComId</code></td>
+            <td class="type"><span class="param-type">string</span></td>
+            <td class="description">-</td>
+            <td class="description"><b>Yes</b></td>
+            <td class="description last">community Id</td>
+        </tr>
+
+        <tr>
+            <td class="name"><code>query</code></td>
+            <td class="type"><span class="param-type">string</span></td>
+            <td class="description">-</td>
+            <td class="description"><b>Yes</b></td>
+            <td class="description last">stores the string that user wants to search for</td>
+        </tr>
+
+        </tbody>
+    </table>
+</div>
+
+
+
+<p><h3 class="subsection-title" style="margin-top: 1em" data-jsdoc-vuejs="section-data">Data</h3></p>
+<div class="container-params">
+    <table class="params" data-jsdoc-vuejs="table-data">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Default value</th>
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr>
+            <td class="name"><code>users</code></td>
+            <td class="type"><span class="param-type">string</span></td>
+            <td class="description">-</td>
+            <td class="description last">users that reflect with search value</td>
+        </tr>
+
+        <tr>
+            <td class="name"><code>exist</code></td>
+            <td class="type"><span class="param-type">boolean</span></td>
+            <td class="description"><code>true</code></td>
+            <td class="description last">if there is matching</td>
+        </tr>
+
+        <tr>
+            <td class="name"><code>error</code></td>
+            <td class="type"><span class="param-type">string</span></td>
+            <td class="description"><code>''</code></td>
+            <td class="description last">if there is no matching</td>
+        </tr>
+
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+
+<p><div class="container-overview"><div><p> </p></div>
+            
+
+            
+                
+
+<dt>
+    
+</dt>
+<dd>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+        
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        <dl>
+                
+
+<dt>
+    
+        <h4 class="name" id="addModerator">
+            
+                <span class="type-signature"></span>addModerator<span class="signature">()</span><span class="type-signature"></span>
+                
+            
+            <div class="container-source members">
+                <code><a href="ApexComAddModerator.vue.html">ApexComAddModerator.vue</a></code>,
+                <code><a href="ApexComAddModerator.vue.html#line53">line 53</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>used by admin to add moderator</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id="getAbout">
+            
+                <span class="type-signature"></span>getAbout<span class="signature">()</span><span class="type-signature"></span>
+                
+            
+            <div class="container-source members">
+                <code><a href="ApexComAddModerator.vue.html">ApexComAddModerator.vue</a></code>,
+                <code><a href="ApexComAddModerator.vue.html#line81">line 81</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>get the details of certain community for user</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id="searchUser">
+            
+                <span class="type-signature"></span>searchUser<span class="signature">()</span><span class="type-signature"></span>
+                
+            
+            <div class="container-source members">
+                <code><a href="ApexComAddModerator.vue.html">ApexComAddModerator.vue</a></code>,
+                <code><a href="ApexComAddModerator.vue.html#line90">line 90</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>send the query to be searched for</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            </dl>
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+</div>
+
+<footer>
+    <img class="logo" src="img/toast-ui.png" style="">
+    <div class="footer-text">NHN Entertainment. Frontend Development Lab</div>
+</footer>
+<script>prettyPrint();</script>
+<script src="scripts/jquery.min.js"></script>
+<script src="scripts/tui-doc.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+    <script>
+        var id = 'module:ApexComAddModerator_sub'.replace(/"/g, '_');
+        var selectedApi = document.getElementById(id); // do not use jquery selector
+        var $selectedApi = $(selectedApi);
+
+        $selectedApi.removeClass('hidden');
+        $selectedApi.parent().find('.glyphicon').removeClass('glyphicon-plus').addClass('glyphicon-minus');
+        showLnbApi();
+    </script>
+
+</body>
+</html>

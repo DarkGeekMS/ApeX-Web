@@ -34,4 +34,11 @@ describe ('SignUp' , () =>{
 
     });
 
+    it('close Modal' , () =>{
+        const close = wrapper.find('#closebtn');
+        close.trigger('click');
+        expect(wrapper.contains('div .box')).toBe(false);
+    });
+
+
 });

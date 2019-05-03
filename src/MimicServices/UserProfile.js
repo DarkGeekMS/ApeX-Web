@@ -7,7 +7,7 @@ export  const MimicUserProfile =new Vue({
       if(mimic){
   var profileInfo={
       userName:'',
-      image:'https://i.imgur.com/AMFz23O.jpg',
+      image:'',
       karma:9,
       saved:[{},{}],
       hidden:[{},{}],
@@ -42,7 +42,7 @@ var profileInfo={
     username: "King",
     fullname: "Martin Luther King",
     karma: 1,
-    avatar: "https://i.imgur.com/AMFz23O.jpg"
+    avatar: ""
 },
 posts: [
     {
@@ -88,96 +88,7 @@ else {
   });
   }
 },
-reviewReports: function(mimic,userName, baseUrl){
-  if(mimic){
-    var report={
-      reportedComment:[{post:{
-        id:'333',
-        posted_by:'Nada',
-        apex_id:'333',
-        title:'dj',
-        content:'I love javascript ,vue ,html ,css 🐸🐸🐸',
-        videolink:'',
-        img:'https://i.ytimg.com/vi/inYarqDCCGA/maxresdefault.jpg',
-        created_at:"2019-03-23 17:20:45",
-        updates_at:null,
-        apex_com_name:"health aware",
-        post_writer_user:"Nada"},
-        reason:"It's threatening self-harm or suicide",
-      id:8099,
-      comment:{
-        user:'double',
-        content:'this is the review report mimic service',
-        idx:0,
-        level:1,
-        parentIdx:0,
-        parentID:'o0',
-        ID:'0-',
-        // date:'march 9 2019'
-        },
-        userName:'nourhan'
-    }],
-    reportedpost:[
-      {post:{
-        id:'333',
-        posted_by:'Nada',
-        apex_id:'333',
-        title:'dj',
-        content:'I love javascript ,vue ,html ,css 🐸🐸🐸',
-        videolink:'',
-        img:'',
-        created_at:"2019-03-23 17:20:45",
-        updates_at:null,
-        apex_com_name:"health aware",
-        post_writer_user:"Nada"},
-        reason:"It's threatening self-harm or suicide",
-        id:8099,
-        userName:'nourhan'
-    },
-    {post:{
-      id:'555',
-      posted_by:'Nada',
-      apex_id:'555',
-      title:'dj',
-      content:'Experience enjoyable JavaScript development with WebStorm. With smart code completion, safe refactoring, and first-class support for Node.js, Angular and React. Download free trial 😀😂🍔😍',
-      locked:false,
-      commenets_count:5,
-      votes:9,
-      img:'',
-      videolink:'https://www.youtube.com/embed/Va0Rq147SRU',
-      created_at:"2019-03-23 17:20:45",
-      updates_at:null,
-      apex_com_name:"health care",
-      post_writer_user:"double"
 
-    },
-      reason:"It's threatening self-harm or suicide",
-      id:8099,
-      userName:'nourhan'
-  }
-    ]};
-
-  var promise = new Promise(function(resolve) {
-    setTimeout(function() {
-      resolve(report);
-    }, 300);
-  });
-  return promise;
-}
-else {
-   return axios.post(baseUrl + 'api/ReviewReports', {
-        ApexCom_id:userName,
-        token:this.$localStorage.get('token')
-      })
-      .then(response => {
-        return response.data;
-       })
-      .catch(function (error) {
-        alert(error)
-        // console.log(error);
-      });
-    }
-    },
 getUserType: function(mimic, baseUrl){
 
   if(mimic){
@@ -219,18 +130,22 @@ else {
 deleteUser: function(mimic,userName, baseUrl){
 
   if(mimic){
-    return true;
+    var promise1 = new Promise(function(resolve, reject) {
+      setTimeout(function() {
+        resolve(true);
+      }, 300);
+    });
+    return promise1;
 }
 else {
-    axios.delete(baseUrl + 'api/DeleteUser',{params: {
+   return axios.delete(baseUrl + 'api/DeleteUser',{params: {
     UserID:userName,
     token:this.$localStorage.get('token')}
 })
-.then(function (response) {
-  return response;
-})
+.then(response=> {
+  return response.data;
+ })
 .catch(function (error) {
-  alert(error);
   // console.log(error);
 });
 }
@@ -313,7 +228,7 @@ blockUser:function(mimic,userName, baseUrl){
 },
 getBlockList(mimic, baseUrl){
   if(mimic){
-    var info=[{username:'user1'},{username:'user1'},{username:'user1'},{username:'user1'},{username:'user1'},{username:'user1'}]
+    var info=[{username:'user1',id:'t2'},{username:'user1',id:'t2'},{username:'user1',id:'t2'},{username:'user1',id:'t2'},{username:'user1',id:'t2'},{username:'user1',id:'t2'}]
 
       var promise = new Promise(function(resolve) {
         setTimeout(function() {

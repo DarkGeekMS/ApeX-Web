@@ -48,7 +48,6 @@ export default {
     */
     getBlockList:function(){
         AllServices.getBlockList().then((data) =>{
-          console.log(data);
         this.blockList=data.blocklist;
       })
     }
