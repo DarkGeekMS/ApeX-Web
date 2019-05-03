@@ -63,6 +63,7 @@ token:'1',
 
     },
     submitPost: function(fd, mimic, baseUrl){
+      console.log(fd)
 
       if(mimic){
          if(this.$localStorage.login){

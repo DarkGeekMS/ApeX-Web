@@ -74,7 +74,7 @@
       <ul class="dropdown-menu">
         <li class="dropdown-header">MY STUFF</li>
         <li><router-link :to="{ name: 'UserProfile', params: {userName:userLog} } "><i class="glyphicon glyphicon-user"/> My Profile</router-link></li>
-        <li><router-link :to="{ name: 'UserSettings'}" ><i class="glyphicon glyphicon-cog"></i> User Settings</router-link></li>
+        <li><router-link :to="{ name: 'UserSettings',params:{user:userLog}}" ><i class="glyphicon glyphicon-cog"></i> User Settings</router-link></li>
         <li class="divider"></li>
         <li><a style="cursor:pointer" class="logOut" @click="Logout()"> <i class="glyphicon glyphicon-log-out"></i>   Log Out</a></li>
       </ul>
@@ -207,7 +207,7 @@ import $ from'jquery/dist/jquery.min.js'
         AllServices.logOut().then((data) =>{
           if(data)
           {
-            this.$router.replace({ name: 'NewHomePage' , params: {sortingparam:'hot'}}); 
+            this.$router.replace({ name: 'NewHomePage' , params: {sortingparam:'hot'}});
           }
         })
 

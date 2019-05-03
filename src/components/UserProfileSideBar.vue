@@ -4,7 +4,7 @@
     <div class="box" id="infobox">
         <div class="bluebackgroung">
           <div class="img">
-             <img width="100%" class="image" :src="'http://35.232.3.8' + image" />
+             <img width="100%" class="image" :src="image" />
           </div>
         </div>
         <div class="content">

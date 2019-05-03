@@ -1,10 +1,10 @@
 <template>
   <div id="DisplayPosts">
-    <div id="PostContainer" v-for="onePost in posts" :key="onePost.id">
+    <div :id="onePost.id" v-for="onePost in posts" :key="onePost.id">
      <post
       v-bind:postData="onePost"
       v-on:showUp="showPost"
-    
+
 
       >
       </post>
@@ -49,19 +49,16 @@ mounted () {
   this.getPosts();
 
   },
-beforeUpdate(){
-
+// beforeUpdate(){
+//
 // this.getPosts();
-
-
-},
-updated(){
-  // this.getPosts();
-},
+//
+//
+// },
 
 methods:
 {
-   
+
   /**
   * assign the post to be shown in the modal
   */

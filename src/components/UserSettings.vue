@@ -1,6 +1,6 @@
 <template>
 <div class="UserSettings">
-  <UserProfileSideBar class="sidebar" v-bind:settings="true" v-bind:userName="userName"></UserProfileSideBar>
+  <UserProfileSideBar class="sidebar" v-bind:settings="true" v-bind:userName="user"></UserProfileSideBar>
 <div class='settings'>
   <ChangePass></ChangePass>
   <DelAcc></DelAcc>
@@ -57,7 +57,7 @@
 
     </div>
     <div v-else>
-      <img  :src="'http://35.232.3.8' + this.image" alt="" class="img" id="imgId" />
+      <img  :src=" this.image" alt="" class="img" id="imgId" />
       <button class="ChangeButton" @click="removeFile">REMOVE</button>
     </div>
 
@@ -97,6 +97,7 @@ import {AllServices} from '../MimicServices/AllServices.js'
 import $ from'jquery/dist/jquery.min.js'
 
 export default {
+  props:['user'],
   components:{
     DelAcc,
     ChangePass,
@@ -158,6 +159,7 @@ export default {
        removeFile() {
          this.image = '';
          this.imagable=false;
+         this.imgContent=null;
          this.Enable();
        },
 
@@ -171,15 +173,17 @@ export default {
 updateprefs(){
 
   let formData = new FormData();
+  formData.append('username', this.userName);
+  formData.append('fullname', this.userName);
+  formData.append('email', this.email);
 
   if(this.imgName!=null){
-       formData.append('avatar', this.imgContent, this.imgContent.name);
+    formData.append('avatar', this.imgContent, this.imgContent.name);
+  }
+  else{
+    formData.append('avatar', this.avatar);
   }
 
-
-
-  formData.append('username', this.userName);
-  formData.append('email', this.email);
   formData.append('notifications', this.notifie);
   formData.append('token', this.$localStorage.get('token'));
 
@@ -189,7 +193,7 @@ updateprefs(){
   });
 }
   },
-  mounted:function () {
+  created:function () {
     AllServices.getPrefs().then((data)=> {
       console.log(data);
   this.email = data.userData.email,
