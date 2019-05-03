@@ -18,6 +18,13 @@ import CommentParent from "./CommentParent.vue"
 import Post from './Post.vue'
 import CreatePost from './CreatePost.vue'
 import CreatePostSideBar from './CreatePostSideBar.vue'
+/**
+ * @vue-data {boolean} [showCreateEdit=false] showEditButton
+ * @vue-data {boolean} [isCreated=false]    check if the post is created or not
+ * @vue-data {boolean} [firstTime=true]    check if it is the first time to show the create form
+ *@vue-prop {object} [createPostData] the data of the post
+ *@vue-prop {object} [postData] the data of the post
+ */
 export default {
     data(){
      return{
@@ -62,6 +69,9 @@ export default {
   },
 
   methods:{
+   /**
+    * it emit methods which receive the data which is just created to display the post
+    */
     getData(id,d,title,content,img,video,author,apex){
 
     
@@ -89,6 +99,9 @@ export default {
       
    
     },
+    /**
+    * it just show the edit textarea
+    */
     EditPost(){
    
       this.showCreateEdit=true;
@@ -97,16 +110,7 @@ export default {
   },
   props:{
     postData:{},
-    retriveData:{
-      retriveContent:'',
-      retriveImg:'',
-      retriveVideo:'',
-      retriveAuthor:'',
-      retriveTitle:'',
-      retriveApexId:'',
-      Edit:true
-
-    }
+    
   }
 
 }
