@@ -394,6 +394,12 @@ created(){
         if(data)
         {
           this.apexs = data.apexComs;
+          console.log('hennnna ahhoooo');
+          console.log('hennnna ahhoooo');
+          console.log('hennnna ahhoooo');
+          console.log('hennnna ahhoooo');
+          console.log('hennnna ahhoooo');
+          console.log(data);
 
 
         }

@@ -4,7 +4,7 @@
     <!-- VERY IMPORTANT! REPORT MODAL APPEARS MULTIPLE TIMES FOR EACH POST  -->
    <reportBox v-show="showReport"> </reportBox>
 
-<div class="panel panel-default"  @click="ShowModal()"  id="post" v-show="!Not_Hide">
+<div class="panel panel-default"  @click="ShowModal()"  id="post" v-show="showPost()">
 
     <div class="panel-body">
     <div class="panel2 panel-default"  id="postSide">
@@ -128,6 +128,7 @@ var moment =require('moment');
  * @vue-data  {boolean} [moderator=false] check if the user is moderator
  * @vue-data  {boolean} [Deleted=false] check if the post is Deleted
  *@vue-prop {object} [postdata] the data of the post
+ *@vue-prop {boolean} [isAdmin=false] check for the user ID if he is admin or not
  */
 export default {
 
@@ -157,6 +158,7 @@ export default {
              moderator:false,
              ShowModalVar:true,
              Deleted:false,
+             Reported:false,
              video:true ,
              image:false ,
              Locked:'Lock',
@@ -164,12 +166,30 @@ export default {
              userName:this.$localStorage.get('userName'),
              moderators:[]
              ,isAdmin:false,
-             saveCheck:false
+             saveCheck:false,
+             upVoted:false,
+             downVoted:false
           
             };
          },
 
   methods: {
+     /**
+    * check if this post will be displayed or not
+    */
+    showPost(){
+      if(this.Not_Hide){
+        return true;
+      }
+      if(this.Deleted){
+        return true;
+      }
+      if(this.Reported){
+        return true;
+      }
+      return false;
+
+    },
      /**
     * show the buttons lock,display,which will be displayed to the user,moderator,admin
     */
@@ -461,8 +481,8 @@ props: {
 postData:{
 
 },
-    upVoted:Boolean,
-    downVoted:Boolean,
+    // upVoted:Boolean,
+    // downVoted:Boolean,
 
        },
 created(){
@@ -672,6 +692,10 @@ width: 30%;
  #post{
       width:158%;
       margin-left:4.6%;
+
+  }
+  #dropMenu{
+    width:0%;
   }
 }
 </style>
