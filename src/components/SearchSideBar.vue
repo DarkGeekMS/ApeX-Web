@@ -13,6 +13,8 @@
 
 <script>
 import {AllServices} from '../MimicServices/AllServices.js'
+import $ from'jquery/dist/jquery.min.js'
+
 
   export default {
 

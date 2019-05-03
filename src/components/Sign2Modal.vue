@@ -19,7 +19,7 @@
 
             <div class="add" >
               <input id="SignUpUserName" type="text" class="form-control" name="username"
-               placeholder="CHOOSE A USERNAME" v-model="username"v-on:keyup="restart()" required autofocus />
+               placeholder="CHOOSE A USERNAME" v-model="username" v-on:keyup="restart()" required autofocus />
 
                <span class="lead" style = "fontSize:10px" v-show="invalidUser" >Username must be between 3 and 17 characters without spaces </span>
 
