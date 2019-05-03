@@ -1,5 +1,6 @@
 import { mount } from '@vue/test-utils'
 import Post from '../src/components/Post.vue'
+import DisplayPosts from '../src/components/DisplayPosts.vue';
 import expect from 'expect'
 import moxios from 'moxios'
 // import sinon from 'sinon'
@@ -7,7 +8,7 @@ import VueLocalStorage from 'vue-localstorage'
 import Vue from 'vue'
 Vue.use(VueLocalStorage);
 
-describe('Post' , (done)=>{
+describe('Post' , ()=>{
   let wrapper;
 
   beforeEach(() => {

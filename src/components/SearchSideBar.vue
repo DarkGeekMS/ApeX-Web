@@ -15,30 +15,43 @@
 import {AllServices} from '../MimicServices/AllServices.js'
 import $ from'jquery/dist/jquery.min.js'
 
-
+  /**
+  * @vue-data {integer} [type=1] type of the user
+  */
   export default {
 
     data () {
       return {
+        type:1
       }
     },
     mounted(){
-      $('#comm').hover(function() {
-      $('.warn2').show();
-        }, function() {
-      $('.warn2').hide();
-      });
+      AllServices.userType().then((data)=>{
+        this.type = data.user.type;
+        if(this.type == 3){
+          $('#comm').css('cursor','pointer');
+        }
+        else{
+          $('#comm').css('cursor','no-drop');
+        }
+      })
+      if(this.type != 3)
+      {
+        $('#comm').hover(function() {
+        $('.warn2').show();
+          }, function() {
+        $('.warn2').hide();
+        });
+      }
     },
+    /**
+      *  must be an admin to create community
+    */  
     methods:{
       create: function() {
-          AllServices.userType().then((data)=>{
-          if(data.type == 1){
-            this.$router.push({ name:'CreateApexCom'} );
-            $('#comm').css('cursor','pointer');
-          }else{
-            $('#comm').css('cursor','no-drop')
-          }
-        })
+          if(this.type == 3){
+          this.$router.push({ name:'CreateApexCom'} ); 
+        }
       }
     }
 }

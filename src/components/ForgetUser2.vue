@@ -34,8 +34,11 @@
 import {AllServices} from '../MimicServices/AllServices.js'
 
 /**
- * @vue-data {string} [email=""] Email value
+ * @vue-data {string} [pass=""] password of user
+ * @vue-data {string} [code=""] code value
  * @vue-data {string} [error=""] error value
+ * @vue-data {string} [congra=''] congratulation when code is correct 
+
  */
 export default {
   name: 'ForgetUser2',
@@ -49,7 +52,7 @@ export default {
   },
   methods:{
     /**
-     * check out the value of email is empty or invalid, and generate an error in this case, if not show the second modal and send value   
+     * check out the value of code is empty or invalid, and generate an error in this case, if not user are logged in with username    
     */
     post: function(){
       if(this.code == '')
@@ -93,7 +96,7 @@ export default {
                   this.error =  this.$localStorage.get('error');
               }
             })
-            setTimeout(() =>this.close() , 2000);
+            setTimeout(() =>this.close() , 4000);
           }
           else{
             this.error =  this.$localStorage.get('error');
@@ -102,16 +105,25 @@ export default {
         }
       }
     },
+     /**
+     * function to restart parameters every time you open login
+    */
     restart: function()
     {
       this.error = '',
       this.congra=''
     },
+    /**
+     * function to close all modal which opened
+    */
     close: function(){
       this.$modal.hide('ForgetUser2');
       this.$modal.hide('ForgetPass');
       this.$modal.hide('demo-login');
     },
+    /**
+      * take parameter password from forgetUser modal
+    */
     beforeOpen:function (event) {
       this.pass = event.params.pass;
     }

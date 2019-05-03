@@ -75,9 +75,6 @@ export default {
       congra: ''
     }
   },
-  created () {
-    this.congra = ''
-  },
   methods:{
     /**
      * axios post request to send username and password to the server to log in user
@@ -110,18 +107,24 @@ export default {
        }
     },
     /**
-     * function to restart parameters every time
+     * function to restart parameters every time you open login
     */
     restart: function()
     {
       this.congra = ''
       this.error = ''
     },
+    /**
+     * function to close all modal which opened
+    */
     close: function(){
       this.$modal.hide('demo-login');
       this.$modal.hide('forget-user');
       this.$modal.hide('ForgetPass');
     },
+    /**
+     * before open modal restart parameters
+    */
     beforeOpen:function(){
       this.congra = ''
       this.error = ''
