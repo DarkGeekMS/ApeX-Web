@@ -34,9 +34,9 @@
       </div>
 
 
-      <router-link class="fontUser" id="subred" :to="{name:'ApexCom' , params: {apexComId:postData.apex_id}}">{{postData.apex_com_name}}</router-link>
+      <router-link class="fontUser" id="subred" :to="{name:'NewApexCom' , params: {apexComId:postData.apex_id}}">{{postData.apex_com_name}}</router-link>
       <font class="postby" id="fontPostby">. Posted by</font>
-      <router-link class="postby" id="user" :to="{name:'UserProfile' , params: {userName:postData.post_writer_username}}"> {{postData.post_writer_username}}</router-link>
+      <router-link class="postby" id="user" :to="{name:'UserPosts' , params: {userName:postData.post_writer_username}}"> {{postData.post_writer_username}}</router-link>
 
       <font class="postby" id="fontpost"> </font>
       <a href="#" class="postby" id="timeAgo">  {{moment(postData.created_at).fromNow()}}</a>
@@ -59,11 +59,11 @@
 <div class="btn-group" role="group" aria-label="..." id="drop">
 
   <button type="button" class="btn btn-default " id="commentButton" v-if="this.ShowModalVar == true">
-   
+
     <i class="far fa-comment-alt" id="commentIcon"></i>
        {{postData.comments_count}}
         Comments
-      
+
 </button>
   <button v-if="!this.saveCheck" type="button" class="btn btn-default  SAVE"  @click="Save()" id="SaveButton">
 
@@ -87,7 +87,7 @@
       <li v-if="owner()"><a href="#" @click="editText" ><i class="glyphicon glyphicon-pencil" id="ReportIcon"></i>edit</a></li>
       <li v-if="showButtons()"><a href="#" @click="deletePost" ><i class="glyphicon glyphicon-trash"></i>delete</a></li>
       <li v-if="showButtons()"><a href="#" @click="isLocked" >
-     
+
 
         <i v-if="Locked=='unlock'" class="fa fa-lock" id="ReportIcon"></i>
         <i v-if="Locked=='Lock'" class="fa fa-unlock" id="ReportIcon"></i>
@@ -221,7 +221,7 @@ export default {
       return true;
       }
     },
-    
+
     // },
     /**
     * loop on moderators to check if user is moderator for this community
@@ -252,7 +252,7 @@ export default {
  /**
       *check if user is an the writer of the post
       */
-  
+
    owner(){
       if(this.userName==this.postData.post_writer_username){
 
@@ -266,11 +266,11 @@ export default {
     saveChange(){
 
           this.postData.content= document.getElementById("textarea").value;
-     
+
           AllServices.EditPost(this.postData.id, this.postData.content);
-           
-    
-         
+
+
+
 
 
     },
@@ -294,7 +294,7 @@ export default {
     }
     },
     /**
-      *it stop the receiving comments 
+      *it stop the receiving comments
       */
     isLocked(){
       if(this.$localStorage.get('login')){
@@ -330,7 +330,7 @@ export default {
         }
 
         this.showEditTextArea=true;
-        
+
 
 
     },
@@ -364,7 +364,7 @@ export default {
           //  this.$emit('HIDE',true);
            this.$modal.hide('Demo-OnePost');
            this.ShowModalVar=false;
-           
+
 
             }
 
@@ -381,12 +381,12 @@ export default {
     */
     changeColor_up()
     {
-    
+
       if(this.$localStorage.get('login') ){
       if(this.ShowModalVar == true){
       this.ToggleShowModalVar();
     }
-         
+
                this.PostId=this.postData.id;
                this.upVoted = !this.upVoted;
                var downState = this.downVoted;
@@ -409,7 +409,7 @@ export default {
     * the user press the downvote button,so send the request and change the votes.
     */
      changeColor_down(){
-        
+
         this.downVoted = !this.downVoted;
         var upState = this.upVoted;
         this.upVoted = false;
@@ -417,9 +417,9 @@ export default {
        if(this.ShowModalVar == true){
        this.ToggleShowModalVar();
      }
-                                              
+
           this.PostId=this.postData.id;
-                       
+
           AllServices.downvote(this.PostId,this.points,this.downVoted,upState).then((data) => {
            if(data){
              this.points=data.votes;
@@ -441,16 +441,16 @@ export default {
         if( this.$localStorage.get('login') ){
         if(this.ShowModalVar == true){
         this.ToggleShowModalVar();
-       
+
       }
         this.PostId=this.postData.id;
         this.saveCheck=!this.saveCheck;
         AllServices.save(this.$localStorage.get('token'),this.PostId);
-         
+
 
         }
-      
-    
+
+
     else{
        swal('login First !!');
     }
@@ -478,7 +478,7 @@ export default {
       },
       ToggleShowModalVar(){
         this.ShowModalVar=!this.ShowModalVar;
-       
+
               },
 },
 props: {
@@ -492,7 +492,7 @@ postData:{
 
        },
 created(){
-  
+
 if(this.postData.current_user_saved_post==true){
     this.saveCheck=true;
   }
@@ -500,7 +500,7 @@ if(this.postData.current_user_saved_post==true){
     this.saveCheck=false;
   }
   if(this.postData.current_user_vote==1){
-  
+
     this.upVoted=true;
     this.downVoted=false;
   }
@@ -509,8 +509,8 @@ if(this.postData.current_user_saved_post==true){
     this.upVoted=false;
   }
 
- 
-  
+
+
 },
 
 
@@ -525,8 +525,8 @@ components:{
 
 
   },
-  
- 
+
+
 }
 
 

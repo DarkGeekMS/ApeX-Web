@@ -1,6 +1,6 @@
 <template>
   <div id="hiddenposts" >
-    <DisplayPosts :user="true" :sortparam="'personal'" class='ds'></DisplayPosts>
+    <DisplayPosts :user="true" :userName="userName" :sortparam="'hidden'" class='ds'></DisplayPosts>
   </div>
 </template>
 
@@ -11,6 +11,7 @@ import DisplayPosts from "./DisplayPosts.vue"
 
 export default {
 name: 'HiddenPosts',
+props:['userName'],
 
   components:{
     'DisplayPosts':DisplayPosts,

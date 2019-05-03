@@ -33,7 +33,8 @@ export default {
     apexComName:String,
     sortparam:String,
     user:Boolean,
- 
+    userName:'',
+
     postData:{}// VERY IMPORTANT TO PREVENT THE ERRORS IN CONSOLE
 
     },
@@ -77,6 +78,8 @@ methods:
     */
    getPosts(){
 if(this.user){
+  if(this.userName==this.$localStorage.get('userName')){
+
   if(this.sortparam=="saved"){
   AllServices.getUserInfo().then((data) =>{
   this.posts = data.saved_posts;
@@ -92,6 +95,17 @@ else if(this.sortparam=="personal"){
   AllServices.getUserInfo().then((data) =>{
   this.posts = data.posts;
 })
+}
+}
+else{
+  if (this.$localStorage.get('token') == null)
+{
+  AllServices.getUserInfoByIdforGuest(this.userName).then((data) =>{ this.posts = data.posts;})
+}
+else{
+  alert("hena keda 3azama awy")
+  AllServices.getUserInfoById(this.userName).then((data) =>{this.posts = data.posts;})
+}
 }
 }
 else{
