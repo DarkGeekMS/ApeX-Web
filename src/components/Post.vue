@@ -81,7 +81,7 @@
     <ul class="dropdown-menu" id="dropMenu">
       <li ><a href="#"  @click="Hide" class="HIDE"><i class="fa fa-ban" id="HideIcon"></i>Hide</a></li>
       <li><a  href="#" @click="report" class="HIDE"><i class="glyphicon glyphicon-flag" id="ReportIcon" ></i>Report</a></li>
-      <li v-if="postData.canEdit || postData.post_writer_username==this.postedBy"><a href="#" @click="editText" ><i class="glyphicon glyphicon-pencil" id="ReportIcon"></i>edit</a></li>
+      <li v-if="owner()"><a href="#" @click="editText" ><i class="glyphicon glyphicon-pencil" id="ReportIcon"></i>edit</a></li>
       <li v-if="showButtons()"><a href="#" @click="deletePost" ><i class="glyphicon glyphicon-trash"></i>delete</a></li>
       <li v-if="showButtons()"><a href="#" @click="isLocked" >
      
@@ -168,6 +168,7 @@ export default {
          },
 
   methods: {
+   
     showButtons(){
         if(this.isModeratorFunction()==true){
           return true;
@@ -231,8 +232,11 @@ export default {
     saveChange(){
 
           this.postData.content= document.getElementById("textarea").value;
-          this.showEditTextArea=false;
+     
           AllServices.EditPost(this.postData.id, this.postData.content);
+           
+    
+         
 
 
     },
@@ -442,9 +446,9 @@ created(){
 
   
 },
-updated(){
 
-},
+
+
 computed: {
 
 }
@@ -610,7 +614,7 @@ width: 100%;
   width: 100%;
 }
 #saveEdit{
-  margin-left:92.5%;
+  margin-left:91%;
 }
 #cancel{
   margin-left:80%;

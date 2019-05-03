@@ -34,7 +34,7 @@ return promise1;
 
          })
        .then(function (response) {
-         swal('edited successfully :)');
+        swal("Post edited successfully", "You clicked the button!", "success");
          return response;
        
         })

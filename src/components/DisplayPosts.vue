@@ -4,7 +4,7 @@
      <post
       v-bind:postData="onePost"
       v-on:showUp="showPost"
-      v-on:lockComment="ifLock"
+    
 
       >
       </post>
@@ -61,10 +61,7 @@ updated(){
 
 methods:
 {
-   ifLock(e){
-     return e;
-
-   },
+   
   /**
   * assign the post to be shown in the modal
   */
