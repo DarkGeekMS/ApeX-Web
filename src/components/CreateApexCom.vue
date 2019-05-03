@@ -1,4 +1,4 @@
-<template>
+<template class='temp'>
   <div class="ApexComm">
 
 <div class="CreateApexCom">
@@ -30,10 +30,11 @@
 </div>
 
 <!-- image update -->
+
 <div class="upload photos">
   <div class="samerow">
-    <div class="box" @dragover.prevent @drop="onDrop">
-      <label class="borderbox view">
+    <div class="box" @dragover.prevent v-if="this.image==''">
+      <label id='profilephoto' class="borderbox view">
         <div class=" margins">
           <svg class=" photo" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
             <g>
@@ -45,20 +46,23 @@
         </div>
         <div class=" words">Drag and Drop or Upload Avatar Image</div>
         <div class="display">
-          <input name="profileIcon" type="file" accept="image/x-png,image/jpeg"  @change="onChange">
+          <input  name="profileIcon" type="file" @dragover.prevent  @change="onChange" accept="image/x-png,image/jpeg" >
+
+
         </div>
+
       </label>
+
     </div>
-  </div>
+    <div v-else>
+      <img  :src=" this.image" alt="" class="img" id="imgId" />
+      <button class="ChangeButton" @click="removeFile">REMOVE</button>
+    </div>
+
+    </div>
 </div>
-
 <!-- create bottum -->
-<button  type="submit" style="margin-left:450px"  id="Button" @click="CreateApex()">Create</button>
-
-<h3 v-if="error">the ApexCom is created successfully</h3>
-<h5 v-if="error">To Go to your new ApexCom , Press the below buttom </h5>
-
-<button  type="submit" style="margin-left:450px"  id="Button" v-if="error">Go to your new ApexCom</button>
+<button  type="submit" style="margin-left:80%"   id="Button" @click="CreateApex()">Create</button>
 
 
 </div>
@@ -68,6 +72,7 @@
 <script>
 import {AllServices} from '../MimicServices/AllServices.js'
 import $ from'jquery/dist/jquery.min.js'
+import swal from 'sweetalert';
 
 export default {
   data(){
@@ -75,7 +80,11 @@ export default {
     name:"",
     description:"",
     rule:"",
-    error:false
+    error:false,
+    imgName:'',
+    imgContent:'',
+    image:''
+
   }
 },
  mounted(){
@@ -87,40 +96,97 @@ export default {
 computed:{
 },
 methods:{
+  onDrop: function(e) {
+       e.stopPropagation();
+       e.preventDefault();
+       var files = e.dataTransfer.files;
+       this.createFile(files[0]);
+     },
+      /**
+    * when the user upload the img it enable the post button and store the img src
+    */
+     onChange(e) {
+       this.imgContent = e.target.files[0];
+       var files = e.target.files;
+       this.createFile(files[0]);
+       this.imagable=true;
+       this.Enable();
+
+     },
+      /**
+    * it create file to be stored in img src
+    */
+     createFile(file) {
+       if (!file.type.match('image.*')) {
+
+         return;
+       }
+
+       var reader = new FileReader();
+       var vm = this;
+
+       reader.onload = function(e) {
+         vm.image = e.target.result;
+
+         this.imgName=vm.image;
+        this.image=vm.image;
+       }
+       reader.readAsDataURL(file);
+
+     },
+      /**
+    * it remove the img if the user upload an img from browser and want to remove it so it make the src empty.
+    */
+     removeFile() {
+       this.image = '';
+       this.imagable=false;
+       this.imgContent=null;
+       this.Enable();
+     },
+
   CreateApex:function() {
-    if(this.name!=""&&this.description!=""&&this.rule!=""){
-    AllServices.CreateApexCom(this.name,this.description,this.rule,"","").then((data) => {
-     this.error= data;
+    if(this.name.length>3&&this.description.length>3&&this.rule.length>3){
+      let formData = new FormData();
+      formData.append('name', this.name);
+      formData.append('description', this.description);
+      formData.append('rules', this.rule);
+      formData.append('token', this.$localStorage.get('token'));
+
+
+      if(this.imgName!=''){
+        formData.append('avatar', this.imgContent, this.imgContent.name);
+      }
+    AllServices.CreateApexCom(formData).then((data) => {
+     this.error= data.state;
      this.ErrorCheck();
    });
  }
+ else{
+swal('Please fill all the boxes with more than 3 letter')
+ }
   },
   ErrorCheck:function(){
-    // if(this.error == true){
-        alert(this.error);
-     // this.$router.push({ path: '/HomePage'});
-     // location.replace('/HomePage')
-    // params: { apexComName: 'this.name' } })
-    // }
-    // else{
-      // alert("Noooooo")
-    // }
+swal(this.error)
 }
 }
 }
 </script>
 
 <style scoped>
+.temp{
+  background: white
+}
 .CreateApexCom{
   margin-top: 5%;
   margin-left: 10%;
   margin-right: 40%;
   background:white;
+  height: 110%;
 }
 
 .ApexComm{
   width: 100%;
-  height: 100%;
+
   background:white;
 }
 
@@ -144,6 +210,7 @@ border-radius: 4px;
 text-decoration: none;
 padding: 3px 16px;
 border-color: rgb(0, 121, 211);
+
 }
 
 
