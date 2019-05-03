@@ -3,6 +3,11 @@ import SignUp2 from '../src/components/Sign2Modal.vue';
 import expect from 'expect';
 import moxios from 'moxios'
 
+
+import VueLocalStorage from 'vue-localstorage'
+import Vue from 'vue'
+Vue.use(VueLocalStorage);
+
 describe ('SignUp2' , () =>{
     let wrapper;
 

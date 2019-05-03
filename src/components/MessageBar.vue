@@ -36,6 +36,19 @@
 </template>
 
 <script>
+/**
+ * @vue-data {boolean} [send] opens the "send a private message" box
+ * @vue-data {boolean} [all] opens the "all messages" box
+ * @vue-data {boolean} [read] opens the "read messages" box
+ * @vue-data {boolean} [unread] opens the "unread messages" box
+ * @vue-data {boolean} [sent] opens the "sent messages" box
+ * @vue-data {boolean} [inbox] opens the "inbox messages" box
+ * @vue-data {array} [sentArr] array of sent messages
+ * @vue-data {array} [allArr] array of all received messages
+ * @vue-data {array} [readArr] array of read messages
+ * @vue-data {array} [unreadArr] array of unread messages
+
+ */
 import axios from 'axios'
 import WriteMessage from "./WriteMessage.vue"
 import Message from "./Message.vue"
@@ -68,6 +81,9 @@ export default {
         $('#classed').addClass("glyphicon glyphicon-envelope");
   },
   methods:{
+      /**
+     * opens the "send a private message" box
+     */
       sendMessage:function() {
          this.send=true;
          this.all=false;
@@ -77,12 +93,14 @@ export default {
         this.inbox=false;
 
       },
+        /**
+     * opens the "inbox messages" box
+     */
       showInbox:function() {
         
          this.inbox=true;
          AllServices.getAllMessages().then((data) => {
          if(data){
-             console.log(data);
              this.sentArr=data.sent;
              this.allArr=data.received.all;
              this.readArr=data.received.read;
@@ -92,6 +110,9 @@ export default {
                this.showAll();
 
       },
+       /**
+     * opens the "read messages" box
+     */
       showRead:function() {
         this.send=false;
          this.all=false;
@@ -100,6 +121,9 @@ export default {
          this.sent=false;
         
       },
+       /**
+     * opens the "unread messages" box
+     */
       showUnread:function() {
         this.send=false;
          this.all=false;
@@ -108,6 +132,9 @@ export default {
          this.sent=false;
          
       },
+       /**
+     * opens the "all messages" box
+     */
       showAll:function() {
         this.send=false;
          this.all=true;
@@ -117,6 +144,9 @@ export default {
          
     
       },
+       /**
+     * opens the "sent messages" box
+     */
       showSent:function() {
          this.send=false;
          this.all=false;
@@ -126,7 +156,6 @@ export default {
         this.inbox=false;
           AllServices.getAllMessages().then((data) => {
          if(data){
-             console.log(data);
              this.sentArr=data.sent;
              this.allArr=data.received.all;
              this.readArr=data.received.read;

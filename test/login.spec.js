@@ -3,6 +3,11 @@ import LogIn from '../src/components/DemoLoginModal.vue'
 import expect from 'expect'
 import moxios from 'moxios'
 
+
+import VueLocalStorage from 'vue-localstorage'
+import Vue from 'vue'
+Vue.use(VueLocalStorage);
+
 describe ('Login' , () =>{
     let wrapper;
 

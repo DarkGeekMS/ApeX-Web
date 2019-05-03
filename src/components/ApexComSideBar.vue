@@ -254,6 +254,7 @@ export default {
    this.getAbout();
    this.isAdminFunction();
    this.getSubscribers();
+   this.$emit('mod',this.moderators );
    }
    else{
      this.getAboutGuest();
@@ -262,6 +263,7 @@ export default {
      console.log('event ya basha');
         this.getAbout();
     });
+
  },
 }
 </script>

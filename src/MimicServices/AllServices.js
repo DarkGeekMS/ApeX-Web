@@ -163,7 +163,6 @@ subscribe:function(apexComName){
 },
 WriteComment: function(content,parentID){
   var data=MimicComment.WriteComment(content,parentID,this.mimic, this.baseUrl);
-  console.log(data);
   return data;
 },
 DeleteComment: function(ID){
@@ -188,7 +187,7 @@ EditComment: function(ID,content){
   return data;
 },
 getComments: function(ID){
-  var data=MimicComment.getComments(ID,this.mimic);
+  var data=MimicComment.getComments(ID,this.mimic,this.baseUrl);
   return data;
 },
 reportComment: function(ID,reason){
@@ -197,7 +196,6 @@ reportComment: function(ID,reason){
 },
 sendMessage: function(rec,title,cont){
   var data=MimicMessage.sendMessage(rec,title,cont,this.mimic, this.baseUrl);
-  console.log(data.user);
   return data;
 },
 deleteMessage: function(ID){
@@ -210,7 +208,6 @@ blockSender:function(ID){
 },
 getAllMessages:function(){
   var data=MimicMessage.getAllMessages(this.mimic, this.baseUrl);
-  // console.log(data);
   return data;
 },
 getUserInfoByIdforGuest:function(userName){

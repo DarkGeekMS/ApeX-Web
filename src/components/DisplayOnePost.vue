@@ -13,15 +13,16 @@
   </div>
  <ApexComSideBar 
    v-bind:apexComId= onePostData.apex_id
+      v-on:mod = moderators
  class="sidebar"></ApexComSideBar>
-   
+
       <CommentParent 
      
       v-show="onePostData.locked==0" 
       v-bind:postID= onePostData.id 
       class="cmt"  
       v-bind:postOwnerUserName = 'postOwnerUserName'
-      v-bind:moderatorUserName = 'moderatorUserName'
+      v-bind:moderatorsUserNames = 'moderatorsUserNames'
       >
       </CommentParent>
 
@@ -52,7 +53,9 @@ components:
   'ApexComSideBar':ApexComSideBar
 },
 methods:{
-
+moderators:function(m){
+  this.moderatorsUserNames = m;
+}
 
 },
 updated(){
@@ -67,8 +70,8 @@ created(){
     return{
 
       locked:false,
-      postOwnerUserName : "hohoho",
-      moderatorUserName : 'FF',
+      postOwnerUserName : this.onePostData.posted_by,
+      moderatorsUserNames : []
       
     };
       }
