@@ -55,6 +55,9 @@ export default {
   },
   mounted()
   {
+    if(this.loggedIn){
+      this.notGuestFunction();
+    }
     $('#selectted').text('u/' + this.$localStorage.get('userName') );
     var remclass = $('#classed').prop('class');
     $('#classed').removeClass(remclass);
