@@ -5,11 +5,11 @@
       <div class="imagediv">
         <h1 style=" font-size: 28px; display:inline;" id="Name">{{apexComName}}</h1>
         <div class="img">
-          <img style="box-sizing: border-box; border-radius: 50%;" class="image" :src="image" >
+          <img style="box-sizing: border-box; border-radius: 50%;" class="image" :src="'http://35.232.3.8' + image" >
         </div>
       </div>
     </div>
-    
+
       <div class="navBar" id="navbar">
       <router-link id="postslink" class="navbarLinks" :to="{name:'Posts'}">Posts</router-link>
       <router-link  v-show="isModerator" id="subscribersListlink" class="navbarLinks" :to="{name:'Subscribers'}">subscribers</router-link> 
@@ -105,9 +105,6 @@ export default {
         }
         })
       },
-      sendApexId:function(){
-        EventBus.$emit('sendApexId',this.apexComId);
-      },
   },
   mounted()
   {
@@ -120,7 +117,7 @@ export default {
      this.getAboutGuest();
    }
   },
-   beforeRouteUpdate (to, from, next) {
+  beforeRouteUpdate (to, from, next) {
     // this.getContent(to.params.uid);
     if(to.params.apexComId !==from.params.apexComId){
       if(this.loggedIn){

@@ -10,7 +10,7 @@ import VueLocalStorage from 'vue-localstorage'
 import vuejquery from 'vue-jquery'
 
 Vue.use(vuejquery);
-Vue.use(VueLocalStorage)
+Vue.use(VueLocalStorage);
 Vue.use(VueResource);
 Vue.use(VueRouter);
 Vue.use(VModal);
@@ -54,3 +54,4 @@ new Vue({
 Vue.config.productionTip = false
 
 new Vue({render: h => h(App),router:router,}).$mount('#app')
+

@@ -4,7 +4,7 @@
     <div class="box" id="infobox">
         <div class="bluebackgroung">
           <div class="img">
-             <img width="100%" class="image" :src="image" />
+             <img width="100%" class="image" :src="'http://35.232.3.8' + image" />
           </div>
         </div>
         <div class="content">
@@ -183,7 +183,7 @@ export default {
     }
     },
     /**
-       * if user is logged in , can go to create post or create community   
+       * if user is logged in , can go to create post or create community
       */
       createPost: function(){
         if( this.loggedIn )
@@ -207,7 +207,7 @@ export default {
       this.savedPosts = data.posts.saved_posts;
       this.hiddenPosts = data.hidden_posts;
       this.personalPosts = data.posts;
-      
+
       })
    },
     /**

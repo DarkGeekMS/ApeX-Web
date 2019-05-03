@@ -6,7 +6,7 @@
 <CommentParent 
   
      
-      postID='t3_10'  
+       v-bind:postID= createPostData.id  
       v-if="isCreated" class="comment"
 ></CommentParent>
 
@@ -43,7 +43,9 @@ export default {
               created_at:"",
               updates_at:null,
               apex_com_name:"",
-              post_writer_user:""
+              post_writer_user:"",
+              current_user_vote:1,
+              current_user_saved_post:false
      }
 
     }

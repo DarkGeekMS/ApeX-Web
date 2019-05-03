@@ -2,9 +2,9 @@
 <div id='userprofile'>
     <div id='firstnavbar'>
 
-        <a style="font-size: 16px;"  id="posttab" class="navbarlinks" href="#">posts</a>
-        <a style="font-size: 16px;"  id="savedtab" v-show="notGuest" class="navbarlinks" href="#">saved</a>
-        <a style="font-size: 16px;"  id="hiddentab" v-show="notGuest" class="navbarlinks" href="#">hidden</a>
+        <router-link :to="{ name: 'UserPosts'}" style="font-size: 16px;"  id="posttab" class="navbarlinks">posts</router-link>
+        <router-link :to="{ name: 'Saved'}" style="font-size: 16px;"  id="savedtab" v-show="notGuest" class="navbarlinks" >saved</router-link>
+        <router-link :to="{ name: 'Hidden'}" style="font-size: 16px;"  id="hidden tab" v-show="notGuest" class="navbarlinks">hidden</router-link>
         <router-link style="font-size: 16px;" v-show="isModerator && notGuest" id="reportlink" class="navbarlinks" :to="{name:'Report'}">view reports</router-link>
         <router-link style="font-size: 16px;" v-show="notGuest" id="reportlink" class="navbarlinks" :to="{name:'blockLlist'}">block list</router-link>
     </div>

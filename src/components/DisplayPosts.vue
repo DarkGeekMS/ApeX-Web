@@ -4,16 +4,13 @@
      <post
       v-bind:postData="onePost"
       v-on:showUp="showPost"
-      v-on:lockComment="ifLock"
-      v-on:HIDE="hide_Post"
-      v-show="!(onePost.id=='')"
+    
+
       >
       </post>
-    <!-- <div :id="'PostContainer'+i++" v-for="onePost in posts">
-     <post v-bind:postData="onePost" v-on:showUp="showPost" v-on:lockComment="ifLock"></post>
-    </div> -->
+
     </div>
-    <OnePost  id="PostModal" :onePostData="postInfo"   v-on:HIDE="hide_Post" ></OnePost>
+    <OnePost  id="PostModal" :onePostData="postInfo"  ></OnePost>
     <!-- v-bind:style="{width: 80 +'%'}" -->
 
   </div>
@@ -32,42 +29,39 @@ export default {
   props:{
     apexComName:String,
     sortparam:String,
+    user:Boolean,
+
     postData:{}// VERY IMPORTANT TO PREVENT THE ERRORS IN CONSOLE
-    ,postInfo:{
-      ID:'0'
-    }
+
     },
 data(){
 return{
-
+  savedPosts:{},
+  hiddenPosts:{},
+  personalPosts:{},
   posts:'',
-  // hide:false,
-  id:'0',
+  postInfo:''
 
-  // i:0
 
      }
 },
-mounted:function () {
+mounted () {
   this.getPosts();
 
   },
-updated(){
+beforeUpdate(){
 
-
+this.getPosts();
 
 
 },
-created(){
-
+updated(){
+  this.getPosts();
 },
 
 methods:
 {
-   ifLock(e){
-     return e;
-
-   },
+   
   /**
   * assign the post to be shown in the modal
   */
@@ -76,22 +70,33 @@ methods:
     this.postInfo=post;
 
     },
-    hide_Post(e){
-      return e;
-
-    //  this.id=e;
-
-
-    },
     /**
     * request gets posts from a certain ApexCom
     */
    getPosts(){
+if(this.user){
+  if(this.sortparam=="saved"){
+  AllServices.getUserInfo().then((data) =>{
+  this.posts = data.saved_posts;
+})
+}
+else if(this.sortparam=="hidden"){
+  AllServices.getUserInfo().then((data) =>{
+  this.posts = data.hidden_posts;
+})
+}
 
-
+else if(this.sortparam=="personal"){
+  AllServices.getUserInfo().then((data) =>{
+  this.posts = data.posts;
+})
+}
+}
+else{
          AllServices.getPosts(this.apexComName,this.sortparam).then((data) => {
           this.posts= data;
-         })
+          })
+      }
 
 }
 },
@@ -121,7 +126,7 @@ components:{
    /* width: 100%; */
   display: inline-block;
   padding-top: 0%;
-  margin-top: 6%;
+  margin-top: 0.5%;
 }
 
 </style>

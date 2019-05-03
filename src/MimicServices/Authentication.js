@@ -40,7 +40,7 @@ export  const MimicAuth =new Vue({
             this.$localStorage.set('login', true);
             return true;
           }).catch(function (error) {
-            self.$localStorage.set('error','That username is already taken');
+            self.$localStorage.set('error',error.response.data.error);
             return false;
           });
       }
@@ -54,10 +54,15 @@ export  const MimicAuth =new Vue({
             this.$localStorage.set('login', false);
             this.$localStorage.set('token', '');
             this.$localStorage.set('userName', '');
+            var promise1 = new Promise(function(resolve){
+            setTimeout(function() {
+              resolve(true);
+            }, 300) });
+            return promise1;
           }
         }
         else{
-          axios.post(baseUrl + 'api/SignOut',{
+          return axios.post(baseUrl + 'api/SignOut',{
             token : this.$localStorage.get('token')
           }).then(response =>{
             if(response.data.token == null)
@@ -65,6 +70,7 @@ export  const MimicAuth =new Vue({
               this.$localStorage.set('login', false);
               this.$localStorage.set('token', '');
               this.$localStorage.set('userName', '');
+              return true;
             }
           })
         }
@@ -91,7 +97,6 @@ export  const MimicAuth =new Vue({
         }
       }
       else{
-        var self = this;
         return axios.post(baseUrl + 'api/SignIn', {
             username : user,
             password : pass
@@ -167,7 +172,7 @@ export  const MimicAuth =new Vue({
           });
       }
     },
-    forgetPass3: function(pass,mimic, baseUrl)
+    forgetPass3: function(pass,user,code,mimic, baseUrl)
     {
       if(mimic == true)
       {
@@ -176,12 +181,15 @@ export  const MimicAuth =new Vue({
       else{
         var self = this;
         return axios.post(baseUrl + 'api/ChangePassword', {
-            withcode:true,
+            withcode: true,
             password : pass,
-            username: ''  ,
-            key: ''  ,
+            username: user  ,
+            key: code  ,
           }).then(response => {
-            return true;
+            if(response.data.changed == true)
+            {
+              return true;
+            }    
           }).catch(function () {
             self.$localStorage.set('error','Invalid password');
             return false;
@@ -278,30 +286,12 @@ export  const MimicAuth =new Vue({
       }
       else
       {
-      //  if (this.$localStorage.get('token') == null)
-        //{
-          return axios.get(baseUrl + 'api/ApexComs', {
-          }).then(response => {
-            return response.data;
-
-          }).catch(function (error) {
-            this.$localStorage.set('error',error);
-            return false
-          });
-      /*  }
-        else
-        {
-          return axios.post(baseUrl + 'api/GetApexcoms'), {
-            token: this.$localStorage.get('token'),
-            general:0
-          }.then(response => {
-            return response.data;
-
-          }).catch(function (error) {
-            this.$localStorage.set('error',error);
-            return false
-          });
-        }*/
+        return axios.get(baseUrl + 'api/ApexComs', {  
+        }).then(response => {
+          return response.data.apexcoms;
+        }).catch(function () {
+          return false
+        });
       }
     }
   }

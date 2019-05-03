@@ -100,9 +100,9 @@ export default {
 
       },
       editComment:function(content,i){
-          console.log(con);
-          console.log(content);
-          console.log(i);
+          // console.log(con);
+          // console.log(content);
+          // console.log(i);
 
          if (content!=''){
           this.comments[i].content=content;
@@ -166,11 +166,11 @@ export default {
         AllServices.getComments(this.postID).then((data) => {
        if(data){
           arr = data.comments;
-          console.log('data',data);
+          // console.log('data',data);
           this.comments =[];
-          console.log('gggg',arr);
+          // console.log('gggg',arr);
         for(var i = 0; i < arr.length; i++){
-          console.log("aho ya 3m");
+          // console.log("aho ya 3m");
           // var d = new Date(arr[i].created_at.getTime()+(arr[i].created_at.getTimezoneOffset()*60000));
           // console.log('gogo',d);
           var d = new Date (arr[i].created_at).getTime();
@@ -193,9 +193,9 @@ var dd = new Date(d-n);
           ///
           obj.unSaved = arr[i].Saved?"Unsave":"Save";
           ///
-          console.log('FFFF',obj.date);
-          console.log('WWW',arr[i].created_at);
-          console.log(data);
+          // console.log('FFFF',obj.date);
+          // console.log('WWW',arr[i].created_at);
+          // console.log(data);
 
           this.comments[i] = obj;
           this.comments[i].parentIdx = this.getParentIdx(this.comments,i);
