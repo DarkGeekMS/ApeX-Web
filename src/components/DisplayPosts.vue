@@ -4,13 +4,16 @@
      <post
       v-bind:postData="onePost"
       v-on:showUp="showPost"
-
-
+    
       >
       </post>
 
     </div>
-    <OnePost  id="PostModal" :onePostData="postInfo"  ></OnePost>
+    <OnePost  
+     id="PostModal" 
+     :onePostData="postInfo"  
+     v-bind:upVoted="upVoted"
+     v-bind:downVoted="downVoted"></OnePost>
     <!-- v-bind:style="{width: 80 +'%'}" -->
 
   </div>
@@ -30,7 +33,7 @@ export default {
     apexComName:String,
     sortparam:String,
     user:Boolean,
-
+ 
     postData:{}// VERY IMPORTANT TO PREVENT THE ERRORS IN CONSOLE
 
     },
@@ -40,8 +43,9 @@ return{
   hiddenPosts:{},
   personalPosts:{},
   posts:'',
-  postInfo:''
-
+  postInfo:'',
+  upVoted:false,
+  downVoted:false
 
      }
 },
@@ -49,6 +53,7 @@ mounted () {
   this.getPosts();
 
   },
+  
 // beforeUpdate(){
 //
 // this.getPosts();

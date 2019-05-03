@@ -2,9 +2,14 @@
 
   <div class="postMod" >
     <!-- VERY IMPORTANT! REPORT MODAL APPEARS MULTIPLE TIMES FOR EACH POST  -->
-   <reportBox v-show="showReport"> </reportBox>
+   <reportBox 
+     v-show="showReport"
+     v-bind:ID ='postData.id'
+     v-bind:idx ='idx'
+     
+     > </reportBox>
 
-<div class="panel panel-default"  @click="ShowModal()"  id="post" v-show="showPost()">
+<div class="panel panel-default"  @click="ShowModal()"  id="post" v-show="!this.Deleted&&this.Not_Hide&&!this.Reported">
 
     <div class="panel-body">
     <div class="panel2 panel-default"  id="postSide">
@@ -63,12 +68,10 @@
   <button v-if="!this.saveCheck" type="button" class="btn btn-default  SAVE"  @click="Save()" id="SaveButton">
 
     <i class="fa fa-plus-square"  id="SaveIcon"></i>
-    <!-- <i v-if="postData.current_user_saved_post===true"  class="glyphicon glyphicon-check" id="UnsaveIcon"></i> -->
 
     {{Saved}}</button>
   <button v-else type="button" class="btn btn-default  SAVE"  @click="Save()" id="SaveButton">
 
-    <!-- <i class="fa fa-plus-square"  id="SaveIcon"></i> -->
     <i  class="glyphicon glyphicon-check" id="UnsaveIcon"></i>
 
     {{unsave}}</button>
@@ -168,7 +171,9 @@ export default {
              ,isAdmin:false,
              saveCheck:false,
              upVoted:false,
-             downVoted:false
+             downVoted:false,
+             idx:0,
+          
           
             };
          },
@@ -282,7 +287,7 @@ export default {
       this.$emit('Report',this.postData.id,this.idx);
       this.$modal.show('reportBox');
       this.showReport=true;
-
+      this.Reported=true;
     }
     else{
        swal('Login First!!');
@@ -337,7 +342,7 @@ export default {
          if(this.ShowModalVar == true){
          this.ToggleShowModalVar();
        }
-
+        this.Deleted=true;
         this.PostId=this.postData.id;
         AllServices.deletePost(this.PostId);
 
@@ -481,6 +486,7 @@ props: {
 postData:{
 
 },
+
     // upVoted:Boolean,
     // downVoted:Boolean,
 
