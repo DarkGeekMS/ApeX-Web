@@ -431,6 +431,7 @@ export default {
       },
       ToggleShowModalVar(){
         this.ShowModalVar=!this.ShowModalVar;
+       
               },
 },
 props: {

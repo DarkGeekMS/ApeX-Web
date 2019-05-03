@@ -8,6 +8,7 @@ import VueLocalStorage from 'vue-localstorage'
 import Vue from 'vue'
 Vue.use(VueLocalStorage);
 
+
 describe('CreatePost' , (done)=>{
   let wrapper;
   wrapper = shallowMount(CreatePost);
@@ -23,7 +24,7 @@ describe('CreatePost' , (done)=>{
 
   });
 
-it.only('test submit post function is called', () => {
+it('test submit post function is called', () => {
  
   const button = wrapper.find('#button2')
   button.trigger('click')
@@ -46,14 +47,14 @@ it('has Post button', () => {
   expect(wrapper.contains('#button3')).toBe(true);
 
 });
-const wrapper = shallowMount(CreatePost, {
+ wrapper = shallowMount(CreatePost, {
   parentComponent: CreatePost
 })
 expect(wrapper.vm.$parent.$options.name).toBe('foo')
 
 
 
-it('div test',()=>{
+it.only('div test',()=>{
   expect(wrapper.is('div')).toBe(true)
 
 });

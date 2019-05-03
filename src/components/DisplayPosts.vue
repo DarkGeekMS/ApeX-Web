@@ -4,8 +4,6 @@
      <post
       v-bind:postData="onePost"
       v-on:showUp="showPost"
-    
-
       >
       </post>
 
