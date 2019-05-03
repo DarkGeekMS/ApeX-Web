@@ -29,9 +29,9 @@
       </div>
 
 
-      <router-link class="fontUser" id="subred" :to="{name:'ApexCom' , params: {apexComId:postData.apex_id}}">{{postData.apex_com_name}}</router-link>
+      <router-link class="fontUser" id="subred" :to="{name:'NewApexCom' , params: {apexComId:postData.apex_id}}">{{postData.apex_com_name}}</router-link>
       <font class="postby" id="fontPostby">. Posted by</font>
-      <router-link class="postby" id="user" :to="{name:'UserProfile' , params: {userName:postData.post_writer_username}}"> {{postData.post_writer_username}}</router-link>
+      <router-link class="postby" id="user" :to="{name:'UserPosts' , params: {userName:postData.post_writer_username}}"> {{postData.post_writer_username}}</router-link>
 
       <font class="postby" id="fontpost"> </font>
       <a href="#" class="postby" id="timeAgo">  {{moment(postData.created_at).fromNow()}}</a>
@@ -54,11 +54,11 @@
 <div class="btn-group" role="group" aria-label="..." id="drop">
 
   <button type="button" class="btn btn-default " id="commentButton" v-if="this.ShowModalVar == true">
-   
+
     <i class="far fa-comment-alt" id="commentIcon"></i>
        {{postData.comments_count}}
         Comments
-      
+
 </button>
   <button v-if="postData.current_user_saved_post===false" type="button" class="btn btn-default  SAVE"  @click="Save()" id="SaveButton">
 
@@ -84,7 +84,7 @@
       <li v-if="owner()"><a href="#" @click="editText" ><i class="glyphicon glyphicon-pencil" id="ReportIcon"></i>edit</a></li>
       <li v-if="showButtons()"><a href="#" @click="deletePost" ><i class="glyphicon glyphicon-trash"></i>delete</a></li>
       <li v-if="showButtons()"><a href="#" @click="isLocked" >
-     
+
 
         <i v-if="Locked=='unlock'" class="fa fa-lock" id="ReportIcon"></i>
         <i v-if="Locked=='Lock'" class="fa fa-unlock" id="ReportIcon"></i>
@@ -163,12 +163,12 @@ export default {
              userName:this.$localStorage.get('userName'),
              moderators:[]
              ,isAdmin:false
-          
+
             };
          },
 
   methods: {
-   
+
     showButtons(){
         if(this.isModeratorFunction()==true){
           return true;
@@ -192,7 +192,7 @@ export default {
       return true;
       }
     },
-    
+
     // },
     /**
     * loop on moderators to check if user is moderator for this community
@@ -220,8 +220,8 @@ export default {
         }
         })
       },
- 
-  
+
+
    owner(){
       if(this.userName==this.postData.post_writer_username){
 
@@ -232,11 +232,11 @@ export default {
     saveChange(){
 
           this.postData.content= document.getElementById("textarea").value;
-     
+
           AllServices.EditPost(this.postData.id, this.postData.content);
-           
-    
-         
+
+
+
 
 
     },
@@ -289,7 +289,7 @@ export default {
         }
 
         this.showEditTextArea=true;
-        
+
 
 
     },
@@ -323,7 +323,7 @@ export default {
           //  this.$emit('HIDE',true);
            this.$modal.hide('Demo-OnePost');
            this.ShowModalVar=false;
-           
+
 
             }
 
@@ -337,12 +337,12 @@ export default {
        ,
     changeColor_up()
     {
-    
+
       if(this.$localStorage.get('login') ){
       if(this.ShowModalVar == true){
       this.ToggleShowModalVar();
     }
-         
+
                this.PostId=this.postData.id;
                this.upVoted = !this.upVoted;
                var downState = this.downVoted;
@@ -362,7 +362,7 @@ export default {
       }
       ,
      changeColor_down(){
-        
+
         this.downVoted = !this.downVoted;
         var upState = this.upVoted;
         this.upVoted = false;
@@ -370,9 +370,9 @@ export default {
        if(this.ShowModalVar == true){
        this.ToggleShowModalVar();
      }
-                                              
+
           this.PostId=this.postData.id;
-                       
+
           AllServices.downvote(this.PostId,this.points,this.downVoted,upState).then((data) => {
            if(data){
              this.points=data.votes;
@@ -394,16 +394,16 @@ export default {
         if( this.$localStorage.get('login') ){
         if(this.ShowModalVar == true){
         this.ToggleShowModalVar();
-       
+
       }
        this.PostId=this.postData.id;
 
         AllServices.save(this.$localStorage.get('token'),this.PostId);
-         
+
 
         }
-      
-    
+
+
     else{
        swal('login First !!');
     }
@@ -444,7 +444,7 @@ postData:{
        },
 created(){
 
-  
+
 },
 
 
@@ -458,8 +458,8 @@ components:{
 
 
   },
-  
- 
+
+
 }
 
 
