@@ -8,7 +8,7 @@
     v-bind:postData="onePostData"
     class="mainpost" 
     id="postModal"
-    v-on:lockComment="lock($event)"
+
   ></post>
   </div>
  <ApexComSideBar 
@@ -20,7 +20,6 @@
       v-show="onePostData.locked==0" 
       v-bind:postID= onePostData.id 
       class="cmt"  
-      v-on:lockComment="lock($event)" 
       v-bind:postOwnerUserName = 'postOwnerUserName'
       v-bind:moderatorUserName = 'moderatorUserName'
       >
@@ -53,15 +52,7 @@ components:
   'ApexComSideBar':ApexComSideBar
 },
 methods:{
-  lock:function(event){
 
-if(event=='Lock'){
-     this.locked=false;
-    
-}
-else{this.locked=true;
-     }
-  }
 
 },
 updated(){

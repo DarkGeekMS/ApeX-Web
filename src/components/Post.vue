@@ -54,9 +54,11 @@
 <div class="btn-group" role="group" aria-label="..." id="drop">
 
   <button type="button" class="btn btn-default " id="commentButton" v-if="this.ShowModalVar == true">
-    {{postData.comments_count}}
+   
     <i class="far fa-comment-alt" id="commentIcon"></i>
+       {{postData.comments_count}}
         Comments
+      
 </button>
   <button v-if="postData.current_user_saved_post===false" type="button" class="btn btn-default  SAVE"  @click="Save()" id="SaveButton">
 
@@ -80,8 +82,8 @@
       <li ><a href="#"  @click="Hide" class="HIDE"><i class="fa fa-ban" id="HideIcon"></i>Hide</a></li>
       <li><a  href="#" @click="report" class="HIDE"><i class="glyphicon glyphicon-flag" id="ReportIcon" ></i>Report</a></li>
       <li v-if="postData.canEdit || postData.post_writer_username==this.postedBy"><a href="#" @click="editText" ><i class="glyphicon glyphicon-pencil" id="ReportIcon"></i>edit</a></li>
-      <li v-if="showDeleteButtons"><a href="#" @click="deletePost" ><i class="glyphicon glyphicon-trash"></i>delete</a></li>
-      <li v-if="showDeleteButtons"><a href="#" @click="isLocked" >
+      <li v-if="showButtons()"><a href="#" @click="deletePost" ><i class="glyphicon glyphicon-trash"></i>delete</a></li>
+      <li v-if="showButtons()"><a href="#" @click="isLocked" >
      
 
         <i v-if="Locked=='unlock'" class="fa fa-lock" id="ReportIcon"></i>
@@ -158,57 +160,73 @@ export default {
              image:false ,
              Locked:'Lock',
              ago:'',
-             postedBy:this.$localStorage.get('userName'),
+             userName:this.$localStorage.get('userName'),
              moderators:[]
-             ,admin:false
+             ,isAdmin:false
           
             };
          },
 
   methods: {
-  showDeleteButtons(){
-    AllServices.getAbout(this.postData.apex_id).then((about) =>{
-      
-         this.moderators=about.moderators;
-       
-       
-         })
-  
-         for(var i;i<this.moderators.length;i++){
-            if(this.moderators[i]==this.$localStorage.get('userName')){
-                return true;
-            }
-          
-         }
-    if(postData.post_writer_username==this.postedBy){
-      return true;
-    }
-     
-
-        AllServices.userType().then((data) =>{
-        if(data.user.type ==3){
-         this.admin=true;
-          }
-          else{
-            this.admin=false;
-          }
-       
-        })
-        if(this.admin){
+    showButtons(){
+        if(this.isModeratorFunction()==true){
           return true;
         }
+        if(this.isAdmin==true){
+          return true;
+        }
+        if(this.owner()==true){
+            return true;
+        }
         return false;
-      
+
     },
+     /**
+    * check if the user is moderator
+    */
+    CheckModerator:function(name)
+    {
+      if( name.username == this.userName){
+
+      return true;
+      }
+    },
+    
+    // },
+    /**
+    * loop on moderators to check if user is moderator for this community
+    */
+    isModeratorFunction:function(){
+      var moderator = this.moderators.find(this.CheckModerator)
+      if(moderator !== undefined){
+          return true;
+        }
+      else{
+          return false;
+        }
+    },
+    /**
+      *check if user is an admin
+      */
+      isAdminFunction:function()
+      {
+        AllServices.userType().then((data) =>{
+        if(data.user.type ==3){
+          this.isAdmin= true;
+          }
+        else{
+          this.isAdmin= false;
+        }
+        })
+      },
+ 
+  
    owner(){
-      if(this.$localStorage.get('userName')==this.postData.post_writer_username){
+      if(this.userName==this.postData.post_writer_username){
 
         return true;
       }
-      if(this.postData.canEdit){
-        return true;
-      }
-      return false;
+     return false;
    },
     saveChange(){
 
@@ -281,7 +299,7 @@ export default {
        }
 
         this.PostId=this.postData.id;
-        AllServices.deletePost(this.PostId,this.$localStorage.get('token'));
+        AllServices.deletePost(this.PostId);
 
    },
   /**
@@ -422,14 +440,10 @@ postData:{
        },
 created(){
 
-
-       if(this.userId==2){
-        this.moderator=true;
-       }
   
 },
 updated(){
-  this.showEditTextArea=!this.showEditTextArea;;
+
 },
 computed: {
 

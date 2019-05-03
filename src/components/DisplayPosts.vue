@@ -45,7 +45,7 @@ return{
 
      }
 },
-mounted:function () {
+mounted () {
   this.getPosts();
 
   },
@@ -54,6 +54,9 @@ beforeUpdate(){
 this.getPosts();
 
 
+},
+updated(){
+  this.getPosts();
 },
 
 methods:

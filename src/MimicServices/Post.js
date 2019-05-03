@@ -76,7 +76,7 @@ return promise1;
              }
               },
 
-  deletePost:function(postID,token,mimic,baseUrl){
+  deletePost:function(postID,mimic,baseUrl){
                     if(mimic){
                         if(this.$localStorage.login){
 
@@ -92,8 +92,10 @@ return promise1;
             else{
              
                 axios.delete(baseUrl + "api/Delete",{
+                  params: {
                     name    : postID,
                     token :this.$localStorage.get('token')
+                  }
 
             }).then(response =>{
             
@@ -102,11 +104,11 @@ return promise1;
              
 
 
-            }).catch(function (error)
+            }).catch(function ()
             {
             
              swal("Oops!", "Something went wrong!", "error");
-             alert(error);
+            
              return false;
 
 
@@ -275,9 +277,9 @@ return promise1;
         swal('Successfully :)');
            return response.data;
         })
-       .catch(function (error) {
+       .catch(function () {
         swal("Oops!", "Something went wrong!", "error");
-        alert(error);
+       
            return false;
         });
     }

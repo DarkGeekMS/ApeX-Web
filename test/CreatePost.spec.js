@@ -4,6 +4,10 @@ import expect from 'expect'
 import moxios from 'moxios'
 // import { RichTextEditorPlugin, Toolbar, HtmlEditor } from "@syncfusion/ej2-vue-richtexteditor";
 // import sinon from 'sinon'
+import VueLocalStorage from 'vue-localstorage'
+import Vue from 'vue'
+Vue.use(VueLocalStorage);
+
 describe('CreatePost' , (done)=>{
   let wrapper;
   wrapper = shallowMount(CreatePost);
