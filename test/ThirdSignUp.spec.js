@@ -2,6 +2,11 @@ import { shallowMount } from '@vue/test-utils'
 import SignUp3 from '../src/components/Sign3Modal.vue';
 import expect from 'expect';
 
+
+import VueLocalStorage from 'vue-localstorage'
+import Vue from 'vue'
+Vue.use(VueLocalStorage);
+
 describe ('SignUp3' , () =>{
     let wrapper;
 

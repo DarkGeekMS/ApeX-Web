@@ -5,6 +5,11 @@ import moxios from 'moxios'
 import axios from 'axios'
 
 
+import VueLocalStorage from 'vue-localstorage'
+import Vue from 'vue'
+Vue.use(VueLocalStorage);
+
+
 describe('ApexComSideBar test',()=>{
     const wrapper = shallowMount(ApexComSideBar);
     beforeEach(()=> {

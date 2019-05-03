@@ -17,7 +17,20 @@
 </template>
 
 <script>
+
+/**
+ * @vue-data {string} [buttonType] 1:Comment -- 2:Reply -- 3:Edit
+ * @vue-data {string} [content]   content entered by the user
+ * @vue-data {integer} [parentLevel]   level of indentation of the parent comment in the view to create the current comment's level
+ * @vue-data {integer} [parentIdx]    idx of the parent of the comment in the array of comments
+ * @vue-data {string} [parentID]  ID of the parent component
+ * @vue-data {string} [currentID]  ID of the the current comment
+ * @vue-data {boolean} [editClicked=false] to hide edit box after editing
+ * @vue-data {boolean} [replyClicked=false] to hide reply box after replying
+ */
+
 import {AllServices} from '../MimicServices/AllServices.js'
+import swal from 'sweetalert'
 
 
 export default {
@@ -40,26 +53,27 @@ export default {
     }
   },
   methods:{
+    /**
+     * sends to the comment parent to update the comment's content in the array
+ */
     edit:function(){
       this.editClicked=!this.editClicked;
       this.OpString();
       if (this.content!='')
       {
-        console.log('pp',this.parentID);
 AllServices.EditComment(this.parentID,this.content).then((data) => {
         if(data){
-        console.log(this.content,"content in writecomment");
         this.$emit('editParent',this.content);
         }
         else
-          alert("Log In First!!");
+          swal("Log In First!!");
 
       });
 
       }
       else
       {
-      alert("Empty Text cannot be submitted!");
+      swal("Empty Text cannot be submitted!");
       this.$emit('noEdit');
       }
     },
@@ -96,15 +110,16 @@ OpString:function(){
               
           }
 },
+ /**
+     * sends to the comment parent to add the comment in the array and sends the details to the database
+ */
     comment:function(){
       this.OpString();
        if (this.content!=null)
       {
-console.log("hah");
       //TODO:send request and get currentID
       AllServices.WriteComment(this.content,this.parentID).then((data) => {
         if(data){
-        console.log(data);
          this.currentID=data.comment;
          this.$emit('Comment',this.content,this.con,this.$localStorage.get('token'),this.parentID,this.currentID );
         }
@@ -114,10 +129,14 @@ console.log("hah");
 
       }
       else
-      alert("Empty Text cannot be submitted!");
+      swal("Empty Text cannot be submitted!");
     }
     ,
+     /**
+     * sends to the comment parent to add the reply in the array and sends the details to the database
+ */
     reply:function(){
+      this.replyClicked=!this.replyClicked;
       this.OpString();
 
        if (this.content!=null)
@@ -126,8 +145,6 @@ console.log("hah");
       //TODO:send request and get currentID
       AllServices.WriteComment(this.content,this.parentID).then((data) => {
         if(data){
-        console.log(data);
-        this.replyClicked=!this.replyClicked;
         this.currentID=data.reply;
         this.$emit('Reply',this.content,this.con,this.$localStorage.get('token'),this.parentIdx,this.parentLevel,this.parentID,this.currentID );
         }
@@ -142,22 +159,24 @@ console.log("hah");
 
       }
       else
-      alert("Empty Text cannot be submitted!");
+      swal("Empty Text cannot be submitted!");
     },
+     /**
+     * sends to the Message to add the reply in the array and sends the details to the database
+ */
      sendReplyOnMessage:function(){
     
        if (this.content!=null)
       {
       AllServices.WriteComment(this.content,this.parentID).then((data) => {
         if(data){
-          console.log(data);
         this.replyClicked=!this.replyClicked;
         this.$emit('ReplyOnMessage',this.content);
         }
       });
       }
       else
-      alert("Empty Text cannot be submitted!");
+      swal("Empty Text cannot be submitted!");
     }
   }
 }

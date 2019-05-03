@@ -4,6 +4,11 @@ import expect from 'expect';
 import moxios from 'moxios'
 import axios from 'axios'
 
+
+import VueLocalStorage from 'vue-localstorage'
+import Vue from 'vue'
+Vue.use(VueLocalStorage);
+
 describe('ApexCom test',()=>{
     const wrapper = shallowMount(ApexCom);
     beforeEach(()=> {

@@ -21,7 +21,7 @@
       v-bind:upVoted = comment.upVoted
       v-bind:downVoted = comment.downVoted
       v-bind:postOwnerUserName = 'postOwnerUserName'
-      v-bind:moderatorUserName = 'moderatorUserName'
+      v-bind:moderatorsUserNames = 'moderatorsUserNames'
       ></Comment>
     </div>
 
@@ -31,18 +31,26 @@
 </template>
 
 <script>
+/**
+ * @vue-data {string} [postID] ID of the post that the comments will be on
+ * @vue-data {array} [comments]   array that includes all comments that should be rendered
+ * @vue-data {array} [moderatorsUserNames]   array that includes all moderators of the apex-com of the post
+ * @vue-data {string} [postOwnerUserName]  name of the post owner
+ 
+ */
 import WriteComment from './WriteComment.vue'
 import Comment from './Comment.vue'
 import {AllServices} from '../MimicServices/AllServices.js'
 import reportBox from './ReportModal.vue'
 
+import swal from 'sweetalert'
 
 
 export default {
   name:'CommentParentItem',
   props:{
     postID:String,
-    moderatorUserName:String,
+    moderatorsUserNames:Array,
     postOwnerUserName:String
   },
  components: {
@@ -74,17 +82,34 @@ export default {
   /////
   },
   methods:{
+     /**
+     * adds a comment from the comment box in the array
+     * @param {string} cont content of the added comment
+     * @param {array} con content of the added comment split to view mentions
+     * @param {string} use user name of the comment owner
+     * @param {string} pID parent ID
+     * @param {string} cID current ID
+ */
       addComment:function(cont,con,use,pID,cID){
         if (cont!='')
           this.comments.push({user:this.$localStorage.get('userName'), content:cont,con:con , idx:this.comments.length,level:0,parentIdx:-1,parentID:pID,currentID:cID, date:new Date(),points:0 , unSaved :"Save", upVoted :false,downVoted:false});
           else
-          alert("empty text not allowed!");
+          swal("empty text not allowed!");
       },
+       /**
+     * adds a reply from the reply box in the array in the correct index 
+     * @param {string} cont content of the added comment
+     * @param {array} con content of the added comment split to view mentions
+     * @param {integer} parent parent index in the array 
+     * @param {integer} l level of the comment
+     * @param {string} pID parent ID
+     * @param {string} cID current ID
+ */
       addReply:function(cont,con,parent,l,pID,cID){
         if (cont!='')
         {
           var i = parent+1;
-          this.comments.push({user:this.$localStorage.get('userName'), content:cont,con:con ,idx:i ,level:l,parentIdx:parent,parentID:pID,currentID:cID, date:new Date(),points:0, unSaved :"Save", upVoted :false,downVoted:false });
+          this.comments.push({user:this.$localStorage.get('userName'), content:cont,con:this.OpString(cont) ,idx:i ,level:l,parentIdx:parent,parentID:pID,currentID:cID, date:new Date(),points:0, unSaved :"Save", upVoted :false,downVoted:false });
           var rep = this.comments.pop();
           for (var x = this.comments.length;x>i;x--){
             this.comments[x]=this.comments[x-1];
@@ -94,29 +119,43 @@ export default {
         this.comments[i]=rep;
         }
         else{
-          alert("empty text not allowed!");
+          swal("empty text not allowed!");
 
         }
 
       },
+
+       /**
+     * edits a comment from the edit box in the array
+     * @param {string} content new content of the comment
+     * @param {integer} i index of comment to be updated
+  */
       editComment:function(content,i){
-          // console.log(con);
-          // console.log(content);
-          // console.log(i);
+         
 
          if (content!=''){
           this.comments[i].content=content;
           this.comments[i].con=this.OpString(content);
          }
           else
-        alert("empty text not allowed!");
+        swal("empty text not allowed!");
 
       },
+       /**
+     * show the report modal of that comment
+          * @param {string} ID ID of the comment to be reported
+          * @param {integer} idx idx of the comment to be reported in the array
+
+ */
       reportComment:function(ID,idx){
         this.IDreported=ID;
         this.idxReported=idx;
         this.$modal.show('reportBox');
       },
+        /**
+     * deletes a comment in the array without deleting its children
+     * @param {integer} x index of the comment to be deleted
+ */
       deleteCommentByIdx:function(x){
         for(var i = x;i<this.comments.length-1;i++)
         {
@@ -126,6 +165,12 @@ export default {
         this.comments.pop();
 
       },
+
+       /**
+     * deletes a comment in the array with deleting its children
+          * @param {integer} x index of the comment to be deleted
+
+ */
       deleteComment:function(x){
 
         var maxDeletedIdx = x;
@@ -166,17 +211,12 @@ export default {
         AllServices.getComments(this.postID).then((data) => {
        if(data){
           arr = data.comments;
-         // console.log('data',data);
           this.comments =[];
-       //   console.log('gggg',arr);
         for(var i = 0; i < arr.length; i++){
-       //   console.log("aho ya 3m");
-          // var d = new Date(arr[i].created_at.getTime()+(arr[i].created_at.getTimezoneOffset()*60000));
-          // console.log('gogo',d);
+          
           var d = new Date (arr[i].created_at).getTime();
 var n = new Date().getTimezoneOffset()*60000;
 var dd = new Date(d-n);
-// console.log(n,'raaaaaaakzzzzzz',dd);
           var obj = {};
           obj.user = arr[i].writerUsername;
           obj.content = arr[i].content;
@@ -193,9 +233,7 @@ var dd = new Date(d-n);
           ///
           obj.unSaved = arr[i].Saved?"Unsave":"Save";
           ///
-        //  console.log('FFFF',obj.date);
-        //  console.log('WWW',arr[i].created_at);
-        //  console.log(data);
+         
 
           this.comments[i] = obj;
           this.comments[i].parentIdx = this.getParentIdx(this.comments,i);

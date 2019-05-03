@@ -13,6 +13,12 @@
     </div>
 </template>
 <script>
+/**
+ * @vue-data {string} [content] content of the message
+ * @vue-data {string} [reciever] reciever of the message
+ * @vue-data {string} [subject] subject of the message
+ 
+ */
 import axios from 'axios'
 import {AllServices} from '../MimicServices/AllServices.js'
 import swal from 'sweetalert'
@@ -29,6 +35,9 @@ export default {
   created () {
   },
   methods:{
+    /**
+     *sends the message if all boxes are filled
+     */
       send:function() {
          //TODD:request to backend 
         if (this.reciever==''){

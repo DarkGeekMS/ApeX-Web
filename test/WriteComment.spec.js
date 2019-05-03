@@ -4,6 +4,10 @@ import expect from 'expect';
 import moxios from 'moxios'
 
 
+import VueLocalStorage from 'vue-localstorage'
+import Vue from 'vue'
+Vue.use(VueLocalStorage);
+
 describe ('WriteComment' , () =>{
     let wrapper;
     beforeEach(() => {

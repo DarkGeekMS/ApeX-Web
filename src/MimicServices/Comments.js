@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import axios from 'axios'
 import App from '../App.vue'
+import swal from 'sweetalert'
 
 export  const MimicComment =new Vue({
 
@@ -17,12 +18,11 @@ export  const MimicComment =new Vue({
               });
     return promise1;
           }
-          alert("Log In First!!");
+          swal("Log In First!!");
           return false;
       }
       else
       {
-      //  console.log(cont,parentID);
         return axios.post(baseUrl + 'api/AddReply', {
             content: cont,
             parent: parentID,
@@ -33,7 +33,7 @@ export  const MimicComment =new Vue({
             return response.data;
            })
            .catch(function (error) {
-            alert("Log In First!!");
+            swal("Log In First!!");
             return false;
 
             });
@@ -217,7 +217,7 @@ export  const MimicComment =new Vue({
        });
         }
     },
-    getComments: function(ID,mimic){
+    getComments: function(ID,mimic,baseUrl){
       if(mimic == true){
          
             var comment1 = {
@@ -308,7 +308,6 @@ export  const MimicComment =new Vue({
       {
         if(this.$localStorage.login)
           {
-            console.log(ID,"bossssss");
 
         return axios.post('http://35.232.3.8/api/RetrieveComments', {
             parent:ID,
@@ -322,9 +321,10 @@ export  const MimicComment =new Vue({
             });
           }
           else{
-            console.log(ID,"bossssss");
-            return axios.get('http://35.232.3.8/api/RetrieveComments', {
-            parent:ID
+            return axios.get(baseUrl + 'api/RetrieveComments', {
+            params: {
+              parent:ID
+            }
         })
            .then(response=> {
             return response.data;
@@ -348,7 +348,6 @@ export  const MimicComment =new Vue({
         return promise1;
       }
       else{
-        console.log('ffffff',ID);
         return axios.post(this.$localStorage.get('baseUrl') + 'api/Report', {
           name: ID,
           content: reason,
@@ -358,14 +357,14 @@ export  const MimicComment =new Vue({
           return response.data;
          })
          .catch(function (error) {
-          alert("Log In First!!");
+          swal("Log In First!!");
           return false;
 
           });
       }
       }
       else{
-        alert("Log In First!!");
+        swal("Log In First!!");
         var promise1 = new Promise(function(resolve, reject) {
           setTimeout(function() {
             resolve(true);

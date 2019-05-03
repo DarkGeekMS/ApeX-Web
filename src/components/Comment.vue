@@ -49,6 +49,26 @@
 </template>
 
 <script>
+/**
+ * @vue-data {string} [content] content of the comment
+ * @vue-data {integer} [idx]    idx of the comment in the array of comments
+ * @vue-data {integer} [level]   level of indentation of the comment in the view
+ * @vue-data {integer} [parentIdx]    idx of the parent of the comment in the array of comments
+ * @vue-data {string} [parentID]  ID of the parent component
+ * @vue-data {string} [ID]  ID of the the current comment
+ * @vue-data {string} [user] user name of the current logged-in user
+ * @vue-data {boolean} [upVoted=false] check if the Post is upVoted by the user
+ * @vue-data {boolean} [downVoted=false] check if the Post is downVoted by the user
+ * @vue-data  {integer} [Points=0] # of points the the comment got
+ * @vue-data  {boolean} [showReplyBox=0] to show the reply box
+ * @vue-data  {boolean} [showEditBox=0] to show the edit box
+ * @vue-data  {boolean} [showDeleteButton=false] to show the delete button to some specific users
+ * @vue-data  {boolean} [showEditButton=false] to show the edit button to some specific users
+ * @vue-data  {boolean} [showReportButton=false] to show the report button to some specific users
+ * @vue-data  {boolean} [deleted=1] check if the comment is Deleted
+ * @vue-data  {string} [unSaved='Save'] check if the comment is Saved
+ */
+
 import WriteComment from './WriteComment.vue'
 import reportBox from './ReportModal.vue'
 import {AllServices} from '../MimicServices/AllServices.js'
@@ -62,7 +82,8 @@ export default {
     content:String,
     idx:Number,
     level:Number,
-    parentIdx:Number,
+    parentIdx:{type:Number, 
+    default: function () { return -1 }},
     parentID:String,
     ID:String,
     date:Date,
@@ -73,9 +94,12 @@ export default {
     user:String,
     upVoted:Boolean,
     downVoted:Boolean,
-    points:Number,
-    unSaved:String,
-    moderatorUserName:String,
+    points:{type:Number,
+    default:0},
+    unSaved:{type:String,
+    default: function(){return 'Save'}}
+    ,
+    moderatorsUserNames:Array,
     postOwnerUserName:String
   },
   data(){
@@ -99,12 +123,19 @@ export default {
   },
   mounted(){
           
-          // console.log("mounted");
+          var isModerator = false;
+          for(var i = 0;i<this.moderatorsUserNames.length;i++)
+          {
+            if (this.$localStorage.get('userName') == this.moderatorsUserNames[i]){
+              isModerator=true;
+              break;
+            }
+          }
     if(this.$localStorage.get('userName') == this.user){
       // comment owner
       this.commentOwnerButtons();
     }
-    else if (this.$localStorage.get('userName') == this.moderatorUserName)
+    else if (isModerator)
     {
       // moderator
       this.moderatorButtons();
@@ -119,14 +150,13 @@ export default {
       // guest
       this.guestButtons();
     }
-    ///this.DateFormat(this.date);
-    //console.log('date',this.date,'time',this.time);
-   // setInterval(() => this.DateFormat(this.date), 1000);
-  /////
   },
   methods:{
+    /**
+     * edits the comment's content
+     * @param {string} updatedContent the updated content of the comment to be rendered
+     */
 edit:function(updatedContent){
-    //  console.log(updatedContent,'bos ya sedy');
   this.content=updatedContent;
   this.OpString();
   this.showEditBox =0;
@@ -136,20 +166,33 @@ edit:function(updatedContent){
 
 
 },
+ /**
+     * hides the edit box and do nothing if it's empty
+     */
 retrieveWithNoEdit:function(){
   this.showEditBox =0;
 },
+/**
+     * deletes the the comment and sends to the CommentParent to delete it and its children from the array
+     */
 Delete:function(){
 
 
 
   if(AllServices.DeleteComment(this.ID))
-    alert("Log In First!!");
+    swal("Log In First!!");
     else{
       this.$emit('Delete',this.idx );
     }
 
 },
+/**
+     * slices the content into seperate parts due to mentions
+     * example:
+     * "mohamed is u/mohamed"
+     * part 1: "mohamed is"
+     * part 2: "u/mohamed"
+     */
 OpString:function(){
     this.con = [];
    for (var i = 0;i<this.content.length;i++)
@@ -182,9 +225,15 @@ OpString:function(){
 
           }
 },
+/**
+     * to hide the reported comment "delete the comment from the array"
+     */
 Report:function(){
     this.$emit('Report',this.ID,this.idx);
 },
+/**
+     * saves the the comment 
+     */
 Save:function(){
   if(this.unSaved=='Save')
     this.unSaved='Unsave';
@@ -192,8 +241,11 @@ Save:function(){
     this.unSaved='Save';
 
   if(AllServices.SaveComment(this.ID))
-    alert("Log In First!!");
+    swal("Log In First!!");
 },
+/**
+     * upvotes the comment
+     */
 Upvote:function(){
   this.upVoted = !this.upVoted;
   var downState = this.downVoted;
@@ -204,6 +256,9 @@ Upvote:function(){
           this.points=data.votes;
         }});
 },
+/**
+     * downvotes the comment
+     */
 Downvote:function(){
   this.downVoted = !this.downVoted;
   var upState = this.upVoted;
@@ -213,6 +268,16 @@ Downvote:function(){
           this.points=data.votes;
         }});
 },
+/**
+     * function due to the response of the reply box to send the data to the CommentParent to be set in the array
+     * @param {string} cont content of the added comment
+     * @param {array} con content of the added comment split to make the mentions work
+     * @param {string} use user-name of the writer of the added comment
+     * @param {integer} parent parent index in the array 
+     * @param {integer} parentLevel level of the parent comment
+     * @param {string} parentID parent ID
+     * @param {string} currentID current ID
+     */
 addReply:function(cont,con,use,parent,parentLevel,parentID,currentID){
   // send to comment parent to push in the array!!!!!
   this.$emit('Reply2',cont,con,parent ,parentLevel+1,parentID,currentID );
@@ -222,7 +287,6 @@ addReply:function(cont,con,use,parent,parentLevel,parentID,currentID){
 DateFormat:function(date){
   // Make a fuzzy time
 var delta = Math.round((+new Date - date) / 1000);
-// console.log(new Date-date);
 var minute = 60,
     hour = minute * 60,
     day = hour * 24,
@@ -246,28 +310,40 @@ if (delta < 60) {
 this.time=fuzzy;
 },
 
+/**
+     * to show buttons under comments for comments owners 
+     */
 commentOwnerButtons:function(){
   this.showReportButton = false;
   this.showDeleteButton = false;
   this.showEditButton = true;
 },
+/**
+     * to show buttons under comments for moderators
+     */
 moderatorButtons:function(){
   this.showReportButton = false;
   this.showDeleteButton = true;
   this.showEditButton = false;
 },
+/**
+     * to show buttons under comments for post owner
+     */
 postOwnerButtons:function(){
    this.showReportButton = true;
   this.showDeleteButton = true;
   this.showEditButton = false;
 },
+/**
+     * to show buttons under comments for guest
+     */
 guestButtons:function(){
   this.showReportButton = true;
   this.showDeleteButton = false;
   this.showEditButton = false;
 },
+
 deleteReportedComment:function(idx){
-  // console.log(idx);
   this.$emit('Delete',idx );
 }
   },

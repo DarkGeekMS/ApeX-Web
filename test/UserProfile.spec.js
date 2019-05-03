@@ -5,6 +5,10 @@ import moxios from 'moxios'
 import axios from 'axios'
 
 
+import VueLocalStorage from 'vue-localstorage'
+import Vue from 'vue'
+Vue.use(VueLocalStorage);
+
 describe('user profile test', () => {
   const wrapper = shallowMount(UserProfile);
         beforeEach(() => {
