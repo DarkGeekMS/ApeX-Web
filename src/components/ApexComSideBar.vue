@@ -5,7 +5,7 @@
       <div class="content">
           <h3 style="color:#1a1a1b; display:inline; font-size: 20px;" id="Apexcomname">{{apexComName}}</h3>
           <div class="img">
-        <img style="box-sizing: border-box; border-radius: 50%;" class="image" :src="image" >
+        <img style="box-sizing: border-box; border-radius: 50%;" class="image" :src="'http://35.232.3.8'+image" >
       </div>
 
       <div class="sub">

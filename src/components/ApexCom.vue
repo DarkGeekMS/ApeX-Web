@@ -5,7 +5,7 @@
       <div class="imagediv">
         <h1 style=" font-size: 28px; display:inline;" id="Name">{{apexComName}}</h1>
         <div class="img">
-          <img style="box-sizing: border-box; border-radius: 50%;" class="image" :src="image" >
+          <img style="box-sizing: border-box; border-radius: 50%;" class="image" :src="'http://35.232.3.8'+image" >
         </div>
       </div>
     </div>
