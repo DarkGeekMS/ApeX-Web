@@ -3,25 +3,27 @@
 <modal id="PopupModal" name="Demo-OnePost" :scrollable="true"  transition="pop-out"  width="90%" height="auto">
   <div id="PostContent" class="postContent">
     <div>
-      
+
   <post
     v-bind:postData="onePostData"
-    class="mainpost" 
+    class="mainpost"
     id="postModal"
+
 
   ></post>
   </div>
- <ApexComSideBar 
+ <ApexComSideBar
    v-bind:apexComId= onePostData.apex_id
+      v-on:mod = moderators
  class="sidebar"></ApexComSideBar>
-   
+
       <CommentParent 
      
       v-show="onePostData.locked==0" 
       v-bind:postID= onePostData.id 
       class="cmt"  
       v-bind:postOwnerUserName = 'postOwnerUserName'
-      v-bind:moderatorUserName = 'moderatorUserName'
+      v-bind:moderatorsUserNames = 'moderatorsUserNames'
       >
       </CommentParent>
 
@@ -43,7 +45,9 @@ name: 'DemoOnePost',
 props:{
   onePostData:{
 
-  }
+  },
+
+  
 },
 components:
 {
@@ -52,7 +56,9 @@ components:
   'ApexComSideBar':ApexComSideBar
 },
 methods:{
-
+moderators:function(m){
+  this.moderatorsUserNames = m;
+}
 
 },
 updated(){
@@ -60,6 +66,7 @@ updated(){
 
 },
 created(){
+  
     //  setInterval(() => console.log(this.onePostData.id ),1000);
 
 },
@@ -67,12 +74,12 @@ created(){
     return{
 
       locked:false,
-      postOwnerUserName : "hohoho",
-      moderatorUserName : 'FF',
+      postOwnerUserName : this.onePostData.posted_by,
+      moderatorsUserNames : []
       
     };
       }
-      
+
 }
 </script>
 
@@ -85,7 +92,7 @@ created(){
 overflow: scroll;
 height: 100%;
 width: 100%;
-background-color: #DAE0E6; 
+background-color: #DAE0E6;
 }
 .cmt{
 // padding-top: 3%;
@@ -93,7 +100,7 @@ background-color: #DAE0E6;
  padding-left: 10%;
  margin-top: 23%;
  width: 100%;
- 
+
 }
 .sidebar{
 
@@ -109,13 +116,13 @@ background-color: #DAE0E6;
   margin-top: 0%;
   float:left;
    display: inline-block;
- 
+
 
 
 }
 #modalView{
 
-    
+
 }
 
 

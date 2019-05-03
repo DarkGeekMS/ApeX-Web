@@ -4,13 +4,16 @@
      <post
       v-bind:postData="onePost"
       v-on:showUp="showPost"
-
-
+    
       >
       </post>
 
     </div>
-    <OnePost  id="PostModal" :onePostData="postInfo"  ></OnePost>
+    <OnePost  
+     id="PostModal" 
+     :onePostData="postInfo"  
+     v-bind:upVoted="upVoted"
+     v-bind:downVoted="downVoted"></OnePost>
     <!-- v-bind:style="{width: 80 +'%'}" -->
 
   </div>
@@ -30,6 +33,7 @@ export default {
     apexComName:String,
     sortparam:String,
     user:Boolean,
+    userName:'',
 
     postData:{}// VERY IMPORTANT TO PREVENT THE ERRORS IN CONSOLE
 
@@ -40,8 +44,9 @@ return{
   hiddenPosts:{},
   personalPosts:{},
   posts:'',
-  postInfo:''
-
+  postInfo:'',
+  upVoted:false,
+  downVoted:false
 
      }
 },
@@ -49,6 +54,7 @@ mounted () {
   this.getPosts();
 
   },
+  
 // beforeUpdate(){
 //
 // this.getPosts();
@@ -72,6 +78,8 @@ methods:
     */
    getPosts(){
 if(this.user){
+  if(this.userName==this.$localStorage.get('userName')){
+
   if(this.sortparam=="saved"){
   AllServices.getUserInfo().then((data) =>{
   this.posts = data.saved_posts;
@@ -87,6 +95,17 @@ else if(this.sortparam=="personal"){
   AllServices.getUserInfo().then((data) =>{
   this.posts = data.posts;
 })
+}
+}
+else{
+  if (this.$localStorage.get('token') == null)
+{
+  AllServices.getUserInfoByIdforGuest(this.userName).then((data) =>{ this.posts = data.posts;})
+}
+else{
+  alert("hena keda 3azama awy")
+  AllServices.getUserInfoById(this.userName).then((data) =>{this.posts = data.posts;})
+}
 }
 }
 else{

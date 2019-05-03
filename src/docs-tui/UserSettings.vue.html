@@ -1,0 +1,553 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Source: UserSettings.vue | Source: UserSettings.vue</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-jsdoc.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/tui-doc.css">
+
+    
+</head>
+<body>
+<nav class="lnb" id="lnb">
+    <div class="logo" style="">
+        
+            <img src="img/toast-ui.png" width="100%" height="100%">
+        
+    </div>
+    <div class="title">
+        <h1><a href="index.html" class="link">Source: UserSettings.vue</a></h1>
+        
+    </div>
+    <div class="search-container" id="search-container">
+        <input type="text" placeholder="Search">
+        <ul></ul>
+    </div>
+    
+    <div class="lnb-api hidden"><h3>Modules</h3><ul><li><a href="module-ApexCom.html">ApexCom</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:ApexCom_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-ApexCom.html#getAbout">getAbout</a></li><li><a href="module-ApexCom.html#getAboutGuest">getAboutGuest</a></li><li><a href="module-ApexCom.html#isAdminFunction">isAdminFunction</a></li><li><a href="module-ApexCom.html#isModeratorFunction">isModeratorFunction</a></li></ul></div></li><li><a href="module-ApexComAddModerator.html">ApexComAddModerator</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:ApexComAddModerator_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-ApexComAddModerator.html#addModerator">addModerator</a></li><li><a href="module-ApexComAddModerator.html#getAbout">getAbout</a></li><li><a href="module-ApexComAddModerator.html#searchUser">searchUser</a></li></ul></div></li><li><a href="module-ApexComModerator.html">ApexComModerator</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:ApexComModerator_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-ApexComModerator.html#search">search</a></li></ul></div></li><li><a href="module-ApexComPosts.html">ApexComPosts</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:ApexComPosts_sub"></div></li><li><a href="module-ApexComSideBar.html">ApexComSideBar</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:ApexComSideBar_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-ApexComSideBar.html#changeState">changeState</a></li><li><a href="module-ApexComSideBar.html#CheckUser">CheckUser</a></li><li><a href="module-ApexComSideBar.html#createPost">createPost</a></li><li><a href="module-ApexComSideBar.html#deleteAC">deleteAC</a></li><li><a href="module-ApexComSideBar.html#deleteModerator">deleteModerator</a></li><li><a href="module-ApexComSideBar.html#getAbout">getAbout</a></li><li><a href="module-ApexComSideBar.html#getAboutGuest">getAboutGuest</a></li><li><a href="module-ApexComSideBar.html#getSubscribers">getSubscribers</a></li><li><a href="module-ApexComSideBar.html#isAdminFunction">isAdminFunction</a></li><li><a href="module-ApexComSideBar.html#subscribe">subscribe</a></li></ul></div></li><li><a href="module-ApexComSubscribers.html">ApexComSubscribers</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:ApexComSubscribers_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-ApexComSubscribers.html#blockUser">blockUser</a></li><li><a href="module-ApexComSubscribers.html#getsubscribers">getsubscribers</a></li></ul></div></li><li><a href="module-CommunitiesAndUsers.html">CommunitiesAndUsers</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:CommunitiesAndUsers_sub"></div></li><li><a href="module-CreatePost.html">CreatePost</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:CreatePost_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-CreatePost.html#createFile">createFile</a></li><li><a href="module-CreatePost.html#Enable">Enable</a></li><li><a href="module-CreatePost.html#onChange">onChange</a></li><li><a href="module-CreatePost.html#onDrop">onDrop</a></li><li><a href="module-CreatePost.html#removeFile">removeFile</a></li><li><a href="module-CreatePost.html#submitPost">submitPost</a></li></ul></div></li><li><a href="module-CreatePostSideBar.html">CreatePostSideBar</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:CreatePostSideBar_sub"></div></li><li><a href="module-DisplayOnePost.html">DisplayOnePost</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:DisplayOnePost_sub"></div></li><li><a href="module-DisplayPosts.html">DisplayPosts</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:DisplayPosts_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-DisplayPosts.html#getPosts">getPosts</a></li><li><a href="module-DisplayPosts.html#showPost">showPost</a></li></ul></div></li><li><a href="module-ForgetPass.html">ForgetPass</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:ForgetPass_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-ForgetPass.html#close">close</a></li><li><a href="module-ForgetPass.html#post">post</a></li><li><a href="module-ForgetPass.html#restart">restart</a></li><li><a href="module-ForgetPass.html#validateEmail">validateEmail</a></li></ul></div></li><li><a href="module-ForgetUser.html">ForgetUser</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:ForgetUser_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-ForgetUser.html#close">close</a></li><li><a href="module-ForgetUser.html#post">post</a></li><li><a href="module-ForgetUser.html#restart">restart</a></li><li><a href="module-ForgetUser.html#validateEmail">validateEmail</a></li></ul></div></li><li><a href="module-ForgetUser2.html">ForgetUser2</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:ForgetUser2_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-ForgetUser2.html#beforeOpen">beforeOpen</a></li><li><a href="module-ForgetUser2.html#close">close</a></li><li><a href="module-ForgetUser2.html#post">post</a></li><li><a href="module-ForgetUser2.html#restart">restart</a></li></ul></div></li><li><a href="module-HomeSideBar.html">HomeSideBar</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:HomeSideBar_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-HomeSideBar.html#create">create</a></li><li><a href="module-HomeSideBar.html#post">post</a></li></ul></div></li><li><a href="module-LoginModal.html">LoginModal</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:LoginModal_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-LoginModal.html#beforeOpen">beforeOpen</a></li><li><a href="module-LoginModal.html#close">close</a></li><li><a href="module-LoginModal.html#post">post</a></li><li><a href="module-LoginModal.html#restart">restart</a></li></ul></div></li><li><a href="module-NavBar.html">NavBar</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:NavBar_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-NavBar.html#conditionalShow">conditionalShow</a></li><li><a href="module-NavBar.html#Logout">Logout</a></li><li><a href="module-NavBar.html#NavAll">NavAll</a></li><li><a href="module-NavBar.html#NavHot">NavHot</a></li><li><a href="module-NavBar.html#search">search</a></li></ul></div></li><li><a href="module-Post.html">Post</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:Post_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-Post.html#CheckModerator">CheckModerator</a></li><li><a href="module-Post.html#deletePost">deletePost</a></li><li><a href="module-Post.html#Hide">Hide</a></li><li><a href="module-Post.html#isAdminFunction">isAdminFunction</a></li><li><a href="module-Post.html#isModeratorFunction">isModeratorFunction</a></li><li><a href="module-Post.html#Save">Save</a></li><li><a href="module-Post.html#ShowModal">ShowModal</a></li></ul></div></li><li><a href="module-Reports.html">Reports</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:Reports_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-Reports.html#ignoreReport">ignoreReport</a></li><li><a href="module-Reports.html#reviewReportsAC">reviewReportsAC</a></li><li><a href="module-Reports.html#reviewReportsUP">reviewReportsUP</a></li></ul></div></li><li><a href="module-ResetCode.html">ResetCode</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:ResetCode_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-ResetCode.html#beforeOpen">beforeOpen</a></li><li><a href="module-ResetCode.html#close">close</a></li><li><a href="module-ResetCode.html#post">post</a></li><li><a href="module-ResetCode.html#restart">restart</a></li></ul></div></li><li><a href="module-ResetPass.html">ResetPass</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:ResetPass_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-ResetPass.html#beforeOpen">beforeOpen</a></li><li><a href="module-ResetPass.html#close">close</a></li><li><a href="module-ResetPass.html#post">post</a></li><li><a href="module-ResetPass.html#restart">restart</a></li></ul></div></li><li><a href="module-Search.html">Search</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:Search_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-Search.html#showPost">showPost</a></li></ul></div></li><li><a href="module-SearchSideBar.html">SearchSideBar</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:SearchSideBar_sub"><div class="member-type">Members</div><ul class="inner"><li><a href="module-SearchSideBar.html#.methods">methods</a></li></ul></div></li><li><a href="module-Sign2Modal.html">Sign2Modal</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:Sign2Modal_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-Sign2Modal.html#beforeOpen">beforeOpen</a></li><li><a href="module-Sign2Modal.html#close">close</a></li><li><a href="module-Sign2Modal.html#post">post</a></li><li><a href="module-Sign2Modal.html#restart">restart</a></li></ul></div></li><li><a href="module-SignModal.html">SignModal</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:SignModal_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-SignModal.html#checkEmail">checkEmail</a></li><li><a href="module-SignModal.html#close">close</a></li><li><a href="module-SignModal.html#validateEmail">validateEmail</a></li></ul></div></li><li><a href="module-test.html">test</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:test_sub"></div></li><li><a href="module-UserProfile.html">UserProfile</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:UserProfile_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-UserProfile.html#getUserData">getUserData</a></li><li><a href="module-UserProfile.html#getUserDataForGuest">getUserDataForGuest</a></li><li><a href="module-UserProfile.html#getUserProfile">getUserProfile</a></li><li><a href="module-UserProfile.html#isModeratorFunction">isModeratorFunction</a></li><li><a href="module-UserProfile.html#notGuestFunction">notGuestFunction</a></li></ul></div></li><li><a href="module-UserProfileBlockList.html">UserProfileBlockList</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:UserProfileBlockList_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-UserProfileBlockList.html#getBlockList">getBlockList</a></li><li><a href="module-UserProfileBlockList.html#unblockUser">unblockUser</a></li></ul></div></li><li><a href="module-UserProfileSideBar.html">UserProfileSideBar</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:UserProfileSideBar_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-UserProfileSideBar.html#blockUser">blockUser</a></li><li><a href="module-UserProfileSideBar.html#createPost">createPost</a></li><li><a href="module-UserProfileSideBar.html#deleteUser">deleteUser</a></li><li><a href="module-UserProfileSideBar.html#getUserData">getUserData</a></li><li><a href="module-UserProfileSideBar.html#getUserDataForGuest">getUserDataForGuest</a></li><li><a href="module-UserProfileSideBar.html#getUserProfile">getUserProfile</a></li><li><a href="module-UserProfileSideBar.html#isAdminFunction">isAdminFunction</a></li><li><a href="module-UserProfileSideBar.html#notGuestFunction">notGuestFunction</a></li></ul></div></li></ul></div>
+</nav>
+<div id="resizer"></div>
+
+<div class="main" id="main">
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>&lt;template>
+&lt;div class="UserSettings">
+  &lt;UserProfileSideBar class="sidebar" v-bind:settings="true" v-bind:userName="user">&lt;/UserProfileSideBar>
+&lt;div class='settings'>
+  &lt;ChangePass>&lt;/ChangePass>
+  &lt;DelAcc>&lt;/DelAcc>
+&lt;h2 id='settingshead' class="page-header">User settings&lt;/h2>
+&lt;h6  class="page-header">&lt;b>ACCOUNT PREFERENCES&lt;/b>&lt;/h6>
+&lt;div>
+  &lt;h2>&lt;button  id ="ChangeButton" type="button"  @click="showpass()">CHANGE&lt;/button>&lt;/h2>
+  &lt;h2>Change password&lt;/h2>
+  &lt;h6 id='notepassword'>Password must be at least 6 characters long&lt;/h6>
+&lt;/div>
+&lt;h6  class="page-header">&lt;b>PROFILE INFORMATION&lt;/b>&lt;/h6>
+&lt;div>
+  &lt;h2>Email Address&lt;/h2>
+  &lt;h6>{{email}}&lt;/h6>
+  &lt;div class="partition" id="partition-register">
+    &lt;div class="partition-form">
+      &lt;form autocomplete="false">
+        &lt;label>Enter your new username here:&lt;/label>
+        &lt;input id="newusername" v-model="userName" type="text" placeholder="enter your new username here">
+        &lt;label>Enter your new email here:&lt;/label>
+        &lt;input id="newemail" v-model="email" type="text" placeholder="enter your new email here">
+      &lt;/form>
+    &lt;/div>
+  &lt;/div>
+
+  &lt;!-- &lt;h2>&lt;button  id ="ChangeButton" type="button"  @click="showmail()">CHANGE&lt;/button>&lt;/h2> -->
+&lt;div class="noti">
+  &lt;label id='checkboxnotifie' class="switch">&lt;input v-model="notifie" type="checkbox">&lt;span class="slider round">&lt;/span>&lt;/label>
+  &lt;h2>Allow Notifications&lt;/h2>
+&lt;/div>
+
+
+&lt;div class="upload photos">
+  &lt;div class="samerow">
+    &lt;div class="box" @dragover.prevent v-if="this.image==''">
+      &lt;label id='profilephoto' class="borderbox view">
+        &lt;div class=" margins">
+          &lt;svg class=" photo" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+            &lt;g>
+              &lt;polygon fill="inherit" opacity="0" points="0.610673352 20 20.625 20 20.625 0 0.610673352 0">&lt;/polygon>
+              &lt;path d="M17.451,9.14823765 C17.03,5.40791696 13.8555,2.5 10,2.5 C6.1445,2.5 2.97,5.40791696 2.549,9.14823765 C1.0455,9.84024195 0,11.3551568 0,13.1173944 C0,15.531665 1.959,17.4892627 4.375,17.4892627 L7.8125,17.4892627 L7.8125,12.8051181 L5,12.8051181 C4.8735,12.8051181 4.7595,12.7291725 4.7115,12.6122563 C4.6625,12.49534 4.6895,12.3614359 4.779,12.272 L9.779,7.2755791 C9.901,7.15366643 10.099,7.15366643 10.221,7.2755791 L15.187,12.2375247 C15.2665,12.2944839 15.3185,12.3874173 15.3185,12.4928418 C15.3185,12.6652183 15.1785,12.8051181 15.006,12.8051181 L15,12.8051181 L12.1875,12.8051181 L12.1875,17.4892627 L15.625,17.4892627 C18.041,17.4892627 20,15.531665 20,13.1173944 C20,11.3551568 18.954,9.84024195 17.451,9.14823765" fill="inherit">
+              &lt;/path>
+            &lt;/g>
+          &lt;/svg>
+        &lt;/div>
+        &lt;div class=" words">Drag and Drop or Upload Avatar Image&lt;/div>
+        &lt;div class="display">
+          &lt;input  name="profileIcon" type="file" @dragover.prevent  @change="onChange" accept="image/x-png,image/jpeg" >
+
+
+        &lt;/div>
+
+      &lt;/label>
+
+    &lt;/div>
+    &lt;div v-else>
+      &lt;img  :src=" this.image" alt="" class="img" id="imgId" />
+      &lt;button class="ChangeButton" @click="removeFile">REMOVE&lt;/button>
+    &lt;/div>
+
+    &lt;/div>
+&lt;/div>
+
+&lt;button
+ class="btn btn-info" data-toggle="button" type="submit"
+ aria-pressed="true" autocomplete="off" @click="updateprefs()" id="ChangeButton">Save&lt;/button>
+
+
+&lt;/div>
+&lt;h6  class="page-header">&lt;b>DEACTIVATE ACCOUNT&lt;/b>&lt;/h6>
+&lt;div class="">
+&lt;/div>
+
+&lt;div class="s19ceyn0-2 htFOkz">
+  &lt;button id='deactivateaccount' class="s19ceyn0-1 knawbn" @click="showDel()">
+    &lt;svg class="s19ceyn0-0 iFmWTj" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+      &lt;path d="M16.5,2H12.71l-.85-.85A.5.5,0,0,0,11.5,1h-3a.5.5,0,0,0-.35.15L7.29,2H3.5a.5.5,0,0,0-.5.5v1a.5.5,0,0,0,.5.5h13a.5.5,0,0,0,.5-.5v-1A.5.5,0,0,0,16.5,2Z">&lt;/path>
+      &lt;path d="M16.5,5H3.5a.5.5,0,0,0-.5.5v12A1.5,1.5,0,0,0,4.5,19h11A1.5,1.5,0,0,0,17,17.5V5.5A.5.5,0,0,0,16.5,5ZM6.75,15.5a.75.75,0,0,1-1.5,0v-7a.75.75,0,0,1,1.5,0Zm4,0a.75.75,0,0,1-1.5,0v-7a.75.75,0,0,1,1.5,0Zm4,0a.75.75,0,0,1-1.5,0v-7a.75.75,0,0,1,1.5,0Z">&lt;/path>
+    &lt;/svg>deactivate account&lt;/button>
+  &lt;/div>
+&lt;/div>
+
+&lt;/div>
+&lt;/template>
+
+&lt;script>
+
+
+import DelAcc from './UserSettingsModals/DeleteAcc.vue'
+import ChangePass from './UserSettingsModals/ChangePass.vue'
+import UserProfileSideBar from './UserProfileSideBar.vue'
+
+import {AllServices} from '../MimicServices/AllServices.js'
+import $ from'jquery/dist/jquery.min.js'
+
+export default {
+  props:['user'],
+  components:{
+    DelAcc,
+    ChangePass,
+    UserProfileSideBar
+  },
+  data(){
+    return{
+  notifie:0,
+  avatar:'',
+  email:'',
+  userName:'',
+  imgName:'',
+  imgContent:'',
+  image:''
+    }
+  },
+  methods:{
+    onDrop: function(e) {
+         e.stopPropagation();
+         e.preventDefault();
+         var files = e.dataTransfer.files;
+         this.createFile(files[0]);
+       },
+        /**
+      * when the user upload the img it enable the post button and store the img src
+      */
+       onChange(e) {
+         this.imgContent = e.target.files[0];
+         var files = e.target.files;
+         this.createFile(files[0]);
+         this.imagable=true;
+         this.Enable();
+
+       },
+        /**
+      * it create file to be stored in img src
+      */
+       createFile(file) {
+         if (!file.type.match('image.*')) {
+
+           return;
+         }
+
+         var reader = new FileReader();
+         var vm = this;
+
+         reader.onload = function(e) {
+           vm.image = e.target.result;
+
+           this.imgName=vm.image;
+          this.image=vm.image;
+         }
+         reader.readAsDataURL(file);
+
+       },
+        /**
+      * it remove the img if the user upload an img from browser and want to remove it so it make the src empty.
+      */
+       removeFile() {
+         this.image = '';
+         this.imagable=false;
+         this.imgContent=null;
+         this.Enable();
+       },
+
+    showpass(){
+      this.$modal.show('changepass')
+    },
+    showDel()
+    {
+    this.$modal.show('DeleteAcount')
+    },
+updateprefs(){
+
+  let formData = new FormData();
+  formData.append('username', this.userName);
+  formData.append('fullname', this.userName);
+  formData.append('email', this.email);
+
+  if(this.imgName!=null){
+    formData.append('avatar', this.imgContent, this.imgContent.name);
+  }
+  else{
+    formData.append('avatar', this.avatar);
+  }
+
+  formData.append('notifications', this.notifie);
+  formData.append('token', this.$localStorage.get('token'));
+
+
+
+  AllServices.updatePrefs(formData).then((data)=>{
+  });
+}
+  },
+  created:function () {
+    AllServices.getPrefs().then((data)=> {
+      console.log(data);
+  this.email = data.userData.email,
+  this.notifie=data.userData.notification,
+  this.avatar=data.userData.avatar,
+  this.userName=data.userData.username
+    });
+
+
+    $('#selectted').text('User Settings');
+    var remclass = $('#classed').prop('class');
+    $('#classed').removeClass(remclass);
+    $('#classed').addClass("glyphicon glyphicon-cog");
+  },
+}
+&lt;/script>
+
+&lt;style scoped>
+.settings{
+  margin-top: 5%;
+  margin-left: 10%;
+  margin-right: 40%;
+  background:white;
+}
+
+
+
+
+#ChangeButton{
+
+box-sizing: border-box;
+text-align: center;
+font-size: 12px;
+font-weight: 700;
+letter-spacing: 0.5px;
+line-height: 24px;
+text-transform: uppercase;
+background-color: transparent;
+color: rgb(0, 121, 211);
+fill: rgb(0, 121, 211);
+border-width: 1px;
+border-style: solid;
+border-image: initial;
+border-radius: 4px;
+text-decoration: none;
+padding: 3px 16px;
+border-color: rgb(0, 121, 211);
+}
+
+.UserSettings{
+width: 100% ;
+background: white;
+}
+
+.view {
+    -webkit-box-align: center;
+    align-items: center;
+    box-sizing: border-box;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    -webkit-box-pack: center;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+    background-color: rgb(246, 247, 248);
+    border-radius: 4px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(237, 239, 241);
+    border-image: initial;
+}
+.words {
+    color: rgb(164, 167, 168);
+    font-size: 11px;
+}
+.photo {
+    fill: rgb(135, 138, 140);
+    height: 40px;
+    width: 42px;
+}
+.box2.box2.box2 {
+    width: 412px;
+    height: 100%;
+    margin: 0px;
+}
+.box2 .borderbox {
+    box-sizing: border-box;
+    padding: 4px;
+}
+.samerow {
+    display: flex;
+    height: 120px;
+}
+.box.box.box {
+    width: 120px;
+    height: 100%;
+    margin: 0px 12px 0px 0px;
+}
+.box .borderbox {
+    box-sizing: border-box;
+    padding: 4px;
+}
+.display {
+    display: none;
+}
+.margins {
+    margin-top: -8px;
+    margin-bottom: 4px;
+}
+
+
+
+
+.htFOkz {
+    display: flex;
+    -webkit-box-pack: end;
+    justify-content: flex-end;
+}
+
+
+.knawbn {
+    display: flex;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    line-height: 24px;
+    text-transform: uppercase;
+    color: rgb(255, 88, 91);
+}
+
+
+
+.iFmWTj {
+    width: 20px;
+    margin-right: 4px;
+    fill: rgb(255, 88, 91);
+}
+
+
+
+
+
+button {
+    background: transparent;
+    border: none;
+    color: inherit;
+    cursor: pointer;
+    padding: initial;
+    float: right;
+    display: inline-block;
+}
+
+
+.noti{
+display: inline;
+
+}
+.switch {
+  margin-top: 20px;
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+  float:right;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+.btnImage {
+
+  cursor: pointer;
+  display: inline-block;
+  font-weight: bold;
+  padding: 10px 25px;
+  position: relative;
+   border-color: rgb(0, 121, 211);
+   color: rgb(0, 121, 211);
+}
+.imgBox{
+
+     height: 300px;
+     width: 70%;
+}
+.img{
+  width:30%
+}
+.helper {
+  height: 100%;
+  display: inline-block;
+  vertical-align: middle;
+  width: 0;
+}
+
+.partition {
+  width: 100%;
+  height: 100%;
+  .partition-title {
+    box-sizing: border-box;
+    padding: 30px;
+    width: 100%;
+    text-align: center;
+    letter-spacing: 1px;
+    font-size: 20px;
+    font-weight: 300;
+  }
+  .partition-form {
+    padding: 0 20px;
+    box-sizing: border-box;
+  }
+}
+input[type=password],
+input[type=text] {
+  display: block;
+  box-sizing: border-box;
+  margin-bottom: 1%;
+  width: 35%;
+  font-size: 12px;
+  line-height: 2;
+  border: 0;
+  border-bottom: 1px solid #DDDEDF;
+  padding: 4px 8px;
+  font-family: inherit;
+  transition: 0.5s all;
+  outline: none;
+}
+
+&lt;/style>
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<footer>
+    <img class="logo" src="img/toast-ui.png" style="">
+    <div class="footer-text">NHN Entertainment. Frontend Development Lab</div>
+</footer>
+<script>prettyPrint();</script>
+<script src="scripts/jquery.min.js"></script>
+<script src="scripts/tui-doc.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+    <script>
+        var id = '_sub'.replace(/"/g, '_');
+        var selectedApi = document.getElementById(id); // do not use jquery selector
+        var $selectedApi = $(selectedApi);
+
+        $selectedApi.removeClass('hidden');
+        $selectedApi.parent().find('.glyphicon').removeClass('glyphicon-plus').addClass('glyphicon-minus');
+        showLnbApi();
+    </script>
+
+</body>
+</html>

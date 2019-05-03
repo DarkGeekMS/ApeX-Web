@@ -1,4 +1,4 @@
-<template>
+<template class='temp'>
   <div class="ApexComm">
 
 <div class="CreateApexCom">
@@ -30,10 +30,11 @@
 </div>
 
 <!-- image update -->
+
 <div class="upload photos">
   <div class="samerow">
-    <div class="box" @dragover.prevent @drop="onDrop">
-      <label class="borderbox view">
+    <div class="box" @dragover.prevent v-if="this.image==''">
+      <label id='profilephoto' class="borderbox view">
         <div class=" margins">
           <svg class=" photo" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
             <g>
@@ -45,36 +46,23 @@
         </div>
         <div class=" words">Drag and Drop or Upload Avatar Image</div>
         <div class="display">
-          <input name="profileIcon" type="file" accept="image/x-png,image/jpeg"  @change="onChange">
+          <input  name="profileIcon" type="file" @dragover.prevent  @change="onChange" accept="image/x-png,image/jpeg" >
+
+
         </div>
+
       </label>
+
     </div>
-    <div class="box2">
-      <label class="borderbox view">
-        <div class=" margins">
-          <svg class=" photo" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-            <g><polygon fill="inherit" opacity="0" points="0.610673352 20 20.625 20 20.625 0 0.610673352 0"></polygon>
-              <path d="M17.451,9.14823765 C17.03,5.40791696 13.8555,2.5 10,2.5 C6.1445,2.5 2.97,5.40791696 2.549,9.14823765 C1.0455,9.84024195 0,11.3551568 0,13.1173944 C0,15.531665 1.959,17.4892627 4.375,17.4892627 L7.8125,17.4892627 L7.8125,12.8051181 L5,12.8051181 C4.8735,12.8051181 4.7595,12.7291725 4.7115,12.6122563 C4.6625,12.49534 4.6895,12.3614359 4.779,12.272 L9.779,7.2755791 C9.901,7.15366643 10.099,7.15366643 10.221,7.2755791 L15.187,12.2375247 C15.2665,12.2944839 15.3185,12.3874173 15.3185,12.4928418 C15.3185,12.6652183 15.1785,12.8051181 15.006,12.8051181 L15,12.8051181 L12.1875,12.8051181 L12.1875,17.4892627 L15.625,17.4892627 C18.041,17.4892627 20,15.531665 20,13.1173944 C20,11.3551568 18.954,9.84024195 17.451,9.14823765" fill="inherit">
-              </path>
-            </g>
-          </svg>
-        </div>
-        <div class="words">Drag and Drop or Upload Banner Image</div>
-        <div class="display">
-          <input name="profileBanner" type="file" accept="image/x-png,image/jpeg">
-        </div>
-      </label>
+    <div v-else>
+      <img  :src=" this.image" alt="" class="img" id="imgId" />
+      <button class="ChangeButton" @click="removeFile">REMOVE</button>
     </div>
-  </div>
+
+    </div>
 </div>
-
 <!-- create bottum -->
-<button  type="submit" style="margin-left:450px"  id="Button" @click="CreateApex()">Create</button>
-
-<h3 v-if="error">the ApexCom is created successfully</h3>
-<h5 v-if="error">To Go to your new ApexCom , Press the below buttom </h5>
-
-<button  type="submit" style="margin-left:450px"  id="Button" v-if="error">Go to your new ApexCom</button>
+<button  type="submit" style="margin-left:80%"   id="Button" @click="CreateApex()">Create</button>
 
 
 </div>
@@ -84,6 +72,7 @@
 <script>
 import {AllServices} from '../MimicServices/AllServices.js'
 import $ from'jquery/dist/jquery.min.js'
+import swal from 'sweetalert';
 
 export default {
   data(){
@@ -91,7 +80,11 @@ export default {
     name:"",
     description:"",
     rule:"",
-    error:false
+    error:false,
+    imgName:'',
+    imgContent:'',
+    image:''
+
   }
 },
  mounted(){
@@ -103,40 +96,97 @@ export default {
 computed:{
 },
 methods:{
+  onDrop: function(e) {
+       e.stopPropagation();
+       e.preventDefault();
+       var files = e.dataTransfer.files;
+       this.createFile(files[0]);
+     },
+      /**
+    * when the user upload the img it enable the post button and store the img src
+    */
+     onChange(e) {
+       this.imgContent = e.target.files[0];
+       var files = e.target.files;
+       this.createFile(files[0]);
+       this.imagable=true;
+       this.Enable();
+
+     },
+      /**
+    * it create file to be stored in img src
+    */
+     createFile(file) {
+       if (!file.type.match('image.*')) {
+
+         return;
+       }
+
+       var reader = new FileReader();
+       var vm = this;
+
+       reader.onload = function(e) {
+         vm.image = e.target.result;
+
+         this.imgName=vm.image;
+        this.image=vm.image;
+       }
+       reader.readAsDataURL(file);
+
+     },
+      /**
+    * it remove the img if the user upload an img from browser and want to remove it so it make the src empty.
+    */
+     removeFile() {
+       this.image = '';
+       this.imagable=false;
+       this.imgContent=null;
+       this.Enable();
+     },
+
   CreateApex:function() {
-    if(this.name!=""&&this.description!=""&&this.rule!=""){
-    AllServices.CreateApexCom(this.name,this.description,this.rule,"","").then((data) => {
-     this.error= data;
+    if(this.name.length>3&&this.description.length>3&&this.rule.length>3){
+      let formData = new FormData();
+      formData.append('name', this.name);
+      formData.append('description', this.description);
+      formData.append('rules', this.rule);
+      formData.append('token', this.$localStorage.get('token'));
+
+
+      if(this.imgName!=''){
+        formData.append('avatar', this.imgContent, this.imgContent.name);
+      }
+    AllServices.CreateApexCom(formData).then((data) => {
+     this.error= data.state;
      this.ErrorCheck();
    });
  }
+ else{
+swal('Please fill all the boxes with more than 3 letter')
+ }
   },
   ErrorCheck:function(){
-    // if(this.error == true){
-        alert(this.error);
-     // this.$router.push({ path: '/HomePage'});
-     // location.replace('/HomePage')
-    // params: { apexComName: 'this.name' } })
-    // }
-    // else{
-      // alert("Noooooo")
-    // }
+swal(this.error)
 }
 }
 }
 </script>
 
 <style scoped>
+.temp{
+  background: white
+}
 .CreateApexCom{
   margin-top: 5%;
   margin-left: 10%;
   margin-right: 40%;
   background:white;
+  height: 110%;
 }
 
 .ApexComm{
   width: 100%;
-  height: 100%;
+
   background:white;
 }
 
@@ -160,6 +210,7 @@ border-radius: 4px;
 text-decoration: none;
 padding: 3px 16px;
 border-color: rgb(0, 121, 211);
+
 }
 
 

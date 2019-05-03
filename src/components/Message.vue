@@ -20,9 +20,9 @@
        <br>
        <div class = "first-line">
         <button class = "buttons"  id = "Permalink" v-on:click="showReplies">Permalink</button>
-        <div class="block-container" v-if="this.type">
+        <div class="block-container" v-show="this.type">
         <button class = "buttons"  id = "Delete" v-on:click="deleteMsg">Delete</button>
-        <button class = "buttons"  id = "BlockUser"  v-on:click="blockButton"  v-show="!this.block">Block User</button>
+        <button class = "buttons"  id = "BlockUserBut"  v-on:click="blockButton"  v-show="!this.block">Block User</button>
 
         <div class="block-container" v-if="this.block">
             Are You Sure?
@@ -45,6 +45,17 @@
     </template>
 
 <script>
+/**
+ * @vue-data {string} [content] content of the message
+ * @vue-data {date} [date]   date of the message
+ * @vue-data {string} [title]  title of the message
+ * @vue-data {string} [sender] sender of the message
+ * @vue-data {string} [ID] ID of the message
+  * @vue-data {string} [senderID] ID of the sender of the message
+  * @vue-data {integer} [type] type of the message (inbox"1" or sent"0")
+
+
+ */
 import axios from 'axios'
 import WriteComment from "./WriteComment.vue"
 import MessageReply from "./MessageReply.vue"
@@ -109,14 +120,19 @@ if (delta < 60) {
 }
 this.time=fuzzy;
 },
+/**
+     * shows the reply box after pressing reply button
+     */
 showReply:function(){
     this.showReplyBox=!this.showReplyBox;
     },
+    /**
+     * deletes the message
+     */
 deleteMsg:function(){
     AllServices.deleteMessage(this.ID).then((data) => {
     if(data)
         {
-        console.log(data);
         this.showMessage=!this.showMessage;
         }
    
@@ -124,16 +140,23 @@ deleteMsg:function(){
     });
     
 },
+/**
+     * makes sure that you want to block the sender
+     */
 blockButton:function(){
     this.block=!this.block;
 },
+/**
+     * blocks the sender
+     */
 blockUser:function(){
-    console.log(this.ID);
     this.showMessage = false;
     AllServices.blockSender(this.senderID).then((data) => {
-        console.log('blocked',data);
       });
 },
+/**
+     * shows the replies of the message
+     */
 showReplies:function(){
     this.permalink = !this.permalink;
     if(this.permalink){
@@ -144,12 +167,15 @@ showReplies:function(){
     else
         this.typeBar =1;
     this.replies = data.replies;
-    console.log(data.replies);
         }
       });
     }
 },
+/**
+     *allows you to see your reply without getting all replies from the database
+     */
 addDemoReply:function(con){
+    this.permalink = true;
     this.replies.push(
         {
              id:Math.random().toString(36).substr(2, 5),

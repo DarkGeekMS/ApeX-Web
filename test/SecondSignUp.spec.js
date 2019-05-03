@@ -3,6 +3,11 @@ import SignUp2 from '../src/components/Sign2Modal.vue';
 import expect from 'expect';
 import moxios from 'moxios'
 
+
+import VueLocalStorage from 'vue-localstorage'
+import Vue from 'vue'
+Vue.use(VueLocalStorage);
+
 describe ('SignUp2' , () =>{
     let wrapper;
 
@@ -46,7 +51,7 @@ describe ('SignUp2' , () =>{
       expect(wrapper.contains('button')).toBe(true);
       wrapper.find('button').trigger('click');
 
-     	moxios.stubRequest('https://jsonplaceholder.typicode.com/',{
+     /*	moxios.stubRequest('https://jsonplaceholder.typicode.com/',{
      		status:200,
      		response:{
      			Username : wrapper.vm.username,
@@ -57,8 +62,14 @@ describe ('SignUp2' , () =>{
       moxios.wait(() => {
         expect(wrapper.contains('button')).toBe(false);
         done()
-      });
+      }); */
 
+    });
+
+    it('close Modal' , () =>{
+        const close = wrapper.find('#closebtn');
+        close.trigger('click');
+        expect(wrapper.contains('div .box')).toBe(false);
     });
 
 });
