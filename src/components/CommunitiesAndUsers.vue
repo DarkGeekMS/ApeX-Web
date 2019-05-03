@@ -33,11 +33,6 @@ import {AllServices} from '../MimicServices/AllServices.js'
 */
 
 export default {
- /* props:{
-    myProperty:{
-      type: Object
-    }
-  }, */
   data(){
     return{
       exist:true,

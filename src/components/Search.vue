@@ -39,6 +39,10 @@ import $ from'jquery/dist/jquery.min.js'
  * @vue-data {string} [error=""] if there is no matching
  * @vue-data {string} [searchVal=""] search value  
  * @vue-data {object} [posts] posts that reflect with search value
+ * @vue-data {boolean} [login=false] if user logged in 
+ * @vue-data {boolean} [exist=true] if there is matching between searchValue and data 
+ * @vue-data {string} [postInfo] the content of the post to be displayed on the modal
+ * @vue-data {string} [wid="80%"] width of sort component
 */
 export default {
   components:{
