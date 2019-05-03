@@ -2,7 +2,7 @@
 <div id='userprofile'>
     <div id='firstnavbar'>
 
-        <router-link  style="font-size: 16px;"  id="posttab" class="navbarlinks":to="{ name: 'UserPosts'}">posts</router-link>
+        <router-link  style="font-size: 16px;"  id="posttab" class="navbarlinks" :to="{ name: 'UserPosts'}">posts</router-link>
         <router-link  style="font-size: 16px;"  id="savedtab" v-show="notGuest" class="navbarlinks" :to="{ name: 'Saved'}" >saved</router-link>
         <router-link  style="font-size: 16px;"  id="hidden tab" v-show="notGuest" class="navbarlinks" :to="{ name: 'Hidden'}">hidden</router-link>
         <router-link style="font-size: 16px;" v-show="notGuest" id="blocklistab" class="navbarlinks" :to="{name:'blockLlist'}">block list</router-link>
@@ -17,8 +17,6 @@
 
 <script>
 import SideBar from './UserProfileSideBar.vue'
-import Sort from './Sort.vue'
-import {AllServices} from '../MimicServices/AllServices.js'
 import $ from'jquery/dist/jquery.min.js'
 
 

@@ -18,7 +18,8 @@ import New from './components/SortNew.vue'
 import Controversial from './components/SortControversial.vue'
 import Hidden from './components/HiddenPosts.vue'
 import UserPosts from './components/UserPosts.vue'
-import Saved from './components/SavedPosts.vue'
+import Saved from './components/SavedPosts.vue';
+
 export default[
       {path:'/ApexCom/:apexComId',name:'ApexCom',props:true,component:ApexCom , children :
       [
