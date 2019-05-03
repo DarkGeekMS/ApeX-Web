@@ -36,8 +36,11 @@ import {AllServices} from '../MimicServices/AllServices.js'
 import ResetPass  from './ResetPass.vue'
 
 /**
- * @vue-data {string} [email=""] Email value
+ * @vue-data {string} [username=""] username of user
+ * @vue-data {string} [code=""] code value
  * @vue-data {string} [error=""] error value
+ * @vue-data {string} [congra=''] congratulation when code is correct 
+
  */
 export default {
   name: 'ResetCode',
@@ -54,7 +57,7 @@ export default {
   },
   methods:{
     /**
-     * check out the value of email is empty or invalid, and generate an error in this case, if not show the second modal and send value   
+     * check out the value of code is empty or invalid, and generate an error in this case, if not show the third modal and send value to change password   
     */
     post: function(){
       if(this.code == '')
@@ -68,7 +71,7 @@ export default {
           if(check)
           {
             this.congra = "your code is correct, Now set your password" ;
-            setTimeout(() =>this.$modal.show('ResetPass') , 2000)
+            setTimeout(() =>this.$modal.show('ResetPass',{user: this.username}) , 2000)
 
           }
           else{
@@ -80,7 +83,7 @@ export default {
          if(data)
           {
             this.congra = "your code is correct, Now set your password " ;
-            setTimeout(() =>this.$modal.show('ResetPass') , 2000)
+            setTimeout(() =>this.$modal.show('ResetPass',{user: this.username,code:this.code}) , 2000)
 
           }
           else{
@@ -90,16 +93,25 @@ export default {
         }
       }
     },
+    /**
+     * function to restart parameters every time you open login
+    */
     restart: function()
     {
       this.error = '',
       this.congra=''
     },
+     /**
+     * function to close all modal which opened
+    */
     close: function(){
       this.$modal.hide('ResetCode');
       this.$modal.hide('ForgetPass');
       this.$modal.hide('demo-login');
-    },
+    }, 
+    /**
+      * take parameter username from forget password modal
+    */
     beforeOpen:function (event) {
       this.username = event.params.user;
     }

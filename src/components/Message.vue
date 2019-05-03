@@ -1,6 +1,5 @@
 <template>
 <div class = "container2" v-if="this.showMessage">
-     "ggg" {{ID}}
    <p class = "title">{{title}}:</P>
    <div class = "sub">
        <div class="first-line">
@@ -34,11 +33,11 @@
         </div>
    </div>
    <div class="block-container2">
-    <WriteReply v-on:ReplyOnMessage="addDemoReply" class="box" buttonType="3" v-bind:parentID=ID  v-show = "showReplyBox" v-bind:style="{width:'70%'}"></WriteReply>
+    <WriteReply class="rep" v-on:ReplyOnMessage="addDemoReply"  buttonType="3" v-bind:parentID=ID  v-show = "showReplyBox" v-bind:style="{width:'70%'}"></WriteReply>
 </div>
 <br>
     <div class="block-container" v-show="permalink" v-for="msg in replies" v-bind:key="msg.id">
-    <Reply  v-bind:date= msg.date  v-bind:content= msg.content v-bind:sender= msg.user v-bind:type= "typeBar"></Reply>
+    <Reply  v-bind:date= msg.date  v-bind:content= msg.content v-bind:sender= sender v-bind:type= "typeBar"></Reply>
     </div>
 
 </div>
@@ -59,6 +58,7 @@ export default {
     title:String,
     sender:String,
     ID:String,
+    senderID:String,
     type:Number   // sent : 0   // inbox : 1
     
     
@@ -128,7 +128,10 @@ blockButton:function(){
     this.block=!this.block;
 },
 blockUser:function(){
-    AllServices.blockSender(this.ID).then((data) => {
+    console.log(this.ID);
+    this.showMessage = false;
+    AllServices.blockSender(this.senderID).then((data) => {
+        console.log('blocked',data);
       });
 },
 showReplies:function(){
@@ -140,8 +143,8 @@ showReplies:function(){
         this.typeBar = 0;
     else
         this.typeBar =1;
-    this.replies = data;
-    console.log(data);
+    this.replies = data.replies;
+    console.log(data.replies);
         }
       });
     }
@@ -151,7 +154,7 @@ addDemoReply:function(con){
         {
              id:Math.random().toString(36).substr(2, 5),
              content:con,
-             user:this.sender,
+             sender_name:this.sender,
              date:new Date()
         }
     );
@@ -203,6 +206,10 @@ addDemoReply:function(con){
 }
 .block-container2{
     display:flex;
+}
+.rep{
+    background-color:rgb(181, 241, 213);
+
 }
 .second-line{
     font-size:95%;

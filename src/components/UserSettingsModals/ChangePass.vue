@@ -14,16 +14,16 @@
               <input type="password">
             </div>
 
-            <input id="n-password2" type="password" placeholder="Old Password">
-            <input id="n-password2" type="password" placeholder="New Password">
-            <input id="n-password2" type="password" placeholder="Confirm Password">
+            <input v-model="username" id="username" type="text" placeholder="your username">
+            <input v-model="key" id="n-password2" type="password" placeholder="Old Password">
+            <input v-model="password" id="n-password2" type="password" placeholder="New Password">
 
           </form>
 
 
           <div class="button-set">
             <button id="goto-signin-btn" class="Button" @click="hide()">Cancel</button>
-            <button id="register-btn" class="Button" >Save</button>
+            <button id="register-btn" class="Button" @click="change()">Save</button>
           </div>
 
         </div>
@@ -33,22 +33,23 @@
 </modal>
 </template>
 <script>
-const MODAL_WIDTH = 656
+import {AllServices} from '../../MimicServices/AllServices.js'
 export default {
-  name: 'DemoLoginModal',
+  name: 'Changepass',
   data () {
     return {
-      modalWidth: MODAL_WIDTH
+      password:'',
+      username:'',
+      key:'',
     }
   },
-  created () {
-    this.modalWidth = window.innerWidth < MODAL_WIDTH
-      ? MODAL_WIDTH / 2
-      : MODAL_WIDTH
-  },
+
 
   methods:{
-
+    change(){
+    AllServices.changePass(this.password,this.username,this.key).then((data)=> {});
+    this.$modal.hide('changepass');
+},
     hide () {
     this.$modal.hide('changepass');
   }

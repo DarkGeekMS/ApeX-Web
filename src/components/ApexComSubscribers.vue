@@ -4,9 +4,6 @@
   <div v-show="subscribersList.length !==0" id="subscribers box" class="box" v-for="(subscriber,index) in subscribersList" :key="subscriber.id">
     <div class="name">
     <router-link class="accountLink" :to="{name:'UserProfile' , params: {userName:subscriber.username}}"> {{subscriber.username}}</router-link>
-    <div class="img">
-        <img style="box-sizing: border-box; border-radius: 50%;" class="image" :src="subscriber.avatar" > 
-      </div>
       </div>
     <button id="removebutton" class="removeButton" v-on:click="blockUser(subscriber.id,index)">block</button>
   </div>
@@ -15,7 +12,8 @@
 
 <script>
 import {AllServices} from '../MimicServices/AllServices.js'
-
+import { EventBus } from '../main.js'
+import swal from 'sweetalert'
 /**
  * @vue-data {JWT} [token='']  user Token
  * @vue-data {array}   subscribersList - list of community subscribers
@@ -37,12 +35,18 @@ export default {
       */
     blockUser:function(userid,index)
     {
-      console.log(userid);
+      console.log(userid+'blooock');
       console.log(this.apexComId);
-      var data = AllServices.blockSubscriber(userid,this.apexComId);
-      if(data){
+      AllServices.blockSubscriber(userid,this.apexComId).then((data) =>{
+        console.log(data.state);
+      if(data.state=='Blocked'){
+        swal('Blocked');
       this.subscribersList.splice(index, 1);
       }
+      else{
+        swal('sorry something went wrong');
+      }
+      })
     },
     /**
     * get the list of subscribers to this community
@@ -57,6 +61,10 @@ export default {
   mounted()
   {
   this.getsubscribers();
+  EventBus.$on('changeSubscribers', data => {
+     console.log('event ya basha');
+         this.getsubscribers();
+    });
   }
 }
 </script>
@@ -92,28 +100,14 @@ export default {
   font-weight: 500;
   letter-spacing: 0.5px;
   text-transform: uppercase;
-  /* height: auto; */
   overflow: hidden;
 }
 
 .removeButton:hover {opacity: 0.75;}
 .accountLink{
   text-decoration: none;
-  /* color:black; */
   font-size: 16px;
   
-}
-img{
-  width: 100%;
-}
-.img{
-  width: 10%;
-  display:inline;
-  margin-top:-2%;
-  margin-bottom:0%;
-  margin-right:2%;
-  margin-left:0%;
-  float: left;
 }
 .name{
   width:50%;

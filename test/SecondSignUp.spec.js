@@ -1,5 +1,5 @@
 import { shallowMount } from '@vue/test-utils'
-import SignUp2 from '../src/components/DemoSign2Modal.vue';
+import SignUp2 from '../src/components/Sign2Modal.vue';
 import expect from 'expect';
 import moxios from 'moxios'
 

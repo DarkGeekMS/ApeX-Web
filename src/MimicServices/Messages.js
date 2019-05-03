@@ -21,24 +21,23 @@ export  const MimicMessage =new Vue({
       }
       else
       {
+//         axios.post(baseUrl + 'api/Me', {
+//           token:this.$localStorage.get('token')
+//       })
+//          .then(response=> {
+//            console.log("me",response);
+//          })
+//          .catch(function (error) {
+//           return false;
 
-        axios.post(baseUrl + 'api/Me', {
-          token:this.$localStorage.get('token')
-      })
-         .then(response=> {
-           console.log("me",response);
-         })
-         .catch(function (error) {
-          return false;
-
-          });
-
+//           });
 
 
-console.log("rec",rec);
+
+// console.log("rec",rec);
 
 
-          console.log(title);
+//           console.log(title);
         return axios.post(baseUrl + 'api/ComposeMessage', {
             receiver:rec,
             subject:title,
@@ -94,6 +93,8 @@ console.log("rec",rec);
       }
       else
       {
+        console.log(ID);
+
         return axios.post(baseUrl + 'api/BlockUser', {
             blockedID:ID,
             token:this.$localStorage.get('token')
@@ -115,21 +116,21 @@ console.log("rec",rec);
           id:"1",
           subject:"sent1",
           content:"content1",
-          user:"user1",
+          receiver:{username:"user1"},
           date:new Date()
         };
         var sent2 = {
           id:"2",
           subject:"sent2",
           content:"content2",
-          user:"user2",
+          receiver:{username:"user2"},
           date:new Date()
         };
         var sent3 = {
           id:"3",
           subject:"sent3",
           content:"content3",
-          user:"user3",
+          receiver:{username:"user3"},
           date:new Date()
         };
         var sent = [sent1,sent2,sent3];
@@ -138,21 +139,21 @@ console.log("rec",rec);
           id:"4",
           subject:"in1",
           content:"content1",
-          user:"user1",
+          sender:{username:"user1"},
           date:new Date()
         };
         var in2 = {
           id:"5",
           subject:"in2",
           content:"content2",
-          user:"user2",
+          sender:{username:"user2"},
           date:new Date()
         };
         var in3 = {
           id:"6",
           subject:"in3",
           content:"content3",
-          user:"user3",
+          sender:{username:"user3"},
           date:new Date()
         };
         
@@ -220,7 +221,7 @@ return promise1;
             var children = [reply1,reply2,reply3,reply4];
             var promise1 = new Promise(function(resolve, reject) {
                 setTimeout(function() {
-                  resolve(children);
+                  resolve({replies:children});
                 }, 300);
               });
     return promise1;

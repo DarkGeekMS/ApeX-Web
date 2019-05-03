@@ -32,8 +32,8 @@
       <h3 class="Header" id="moderators box header">Moderators</h3>
       <div class="content" >
         <div id="moderatorsbox" class="box2" v-for="(moderator,index) in moderators" :key="moderator.id">
-          <router-link style="font-size: 14px;" class="accountLink" :to="{name:'UserProfile' , params: {userName:moderator.username}}"> {{moderator.username}}</router-link>
-          <button v-show="isAdmin" style="width:35%; float: right; margin:0%" id="remove button" class="button1" v-on:click="deleteModerator(moderator.userID,index)">delete</button>
+          <router-link style="font-size: 14px;" class="accountLink" v-if="moderator.username" :to="{name:'UserProfile' , params: {userName:moderator.username}}"> {{moderator.username}}</router-link>
+          <button v-show="isAdmin" style="width:35%; float: right; margin:0%" id="remove button" class="button1" v-on:click="deleteModerator(moderator.id,index)">delete</button>
         </div>
 
     </div>
@@ -45,7 +45,7 @@
 <script>
 import {AllServices} from '../MimicServices/AllServices.js'
 import { constants } from 'crypto';
-
+import { EventBus } from '../main.js'
 /**
  * @vue-data {JWT} [token='']  user Token
  * @vue-data {string} [userName='']  user name
@@ -66,10 +66,6 @@ import { constants } from 'crypto';
 export default {
     props:{
        apexComId:String,
-      //  description:String,
-      //  moderators:Array,
-      //  rules:Array,
-      //  subscribersCount: Number,
        },
     data(){
         return{
@@ -79,7 +75,6 @@ export default {
             state:'subscribe',
             userName:this.$localStorage.get('userName'),
             loggedIn:this.$localStorage.get('login'),
-            //userName:'subscriber1',
             apexComName:'',
             description:'',
             moderators:[],
@@ -108,20 +103,21 @@ export default {
       deleteAC:function()
       {
 
-        var response = AllServices.deleteApexCom(this.apexComId);
-      if(response){
+        AllServices.deleteApexCom(this.apexComId).then((data) =>{
+      if(data){
       alert('Done :)')
+      this.$router.push({name:'HomePage'});
     }
     else{
       alert('sorry something went wrong :)')
     }
+    })
       },
       /**
       *check if user is subscribed or not
       */
       CheckUser:function(name)
     {
-      // console.log(name+'hello');
       if( name.username == this.userName){
       return true;
       }
@@ -131,11 +127,8 @@ export default {
     */
     getSubscribers(){
         AllServices.getSubscribers(this.apexComId).then((data) =>{
-          console.log(this.userName);
-          console.log(data+'meeeee');
-          // console.log(data.subscribers[0].id+'side');
         this.subscribers=data.subscribers;
-      
+
         var subscribe = this.subscribers.find(this.CheckUser);
         if(subscribe !== undefined){
           this.subscribed = true;
@@ -143,17 +136,12 @@ export default {
         }
         else{
           this.subscribed=false;
-          this.state='subscribe';   
+          this.state='subscribe';
     }
     })
-    //   }
-    //   else{
-    //       this.subscribed=false;
-    //       this.state='subscribe';
-    // }
    },
    /**
-       * if user is logged in , can go to create post 
+       * if user is logged in , can go to create post
       */
       createPost: function(){
         if( this.loggedIn )
@@ -169,24 +157,14 @@ export default {
       */
       isAdminFunction:function()
       {
-        // AllServices.userType().then((data) =>{
-        //   console.log(data[0]+'meeeee');
-        // if(data.type == 1){
-        //   this.isAdmin= true;
-        //   }
-        // else{
-        //   this.isAdmin= false;
-        // }
-        // })
-        var data= AllServices.userType();
-          console.log(data+'meeeee');
-        // if(data.type == 1){
-        //   this.isAdmin= true;
-        //   }
-        // else{
-        //   this.isAdmin= false;
-        // }
-        
+        AllServices.userType().then((data) =>{
+        if(data.user.type == 3){
+          this.isAdmin= true;
+          }
+        else{
+          this.isAdmin= false;
+        }
+        })
       },
       /**
       *send request to subscribe or unsubsribe certain community
@@ -195,7 +173,7 @@ export default {
     {
       if(this.loggedIn){
       AllServices.subscribe(this.apexComId).then((data) =>{
-        console.log(data);
+        // console.log(data);
       if(data){
       if(this.subscribed){
       this.subscribed = false;
@@ -205,6 +183,7 @@ export default {
       this.subscribed=true;
       this.state='subscribed';
     }
+    EventBus.$emit('changeSubscribers',true);
     }
     else{
       alert('something wrong happened try again later');
@@ -221,7 +200,8 @@ export default {
     deleteModerator:function(userName,index){
           var data = AllServices.addOrDeleteModerator(userName,this.apexComId);
           if(data){
-          this.moderators.splice(index, 1);
+            console.log(data);
+            this.moderators.splice(index, 1);
           }
           else{
               alert('sorry something went wrong');
@@ -232,12 +212,11 @@ export default {
       */
     getAbout(){
          AllServices.getAbout(this.apexComId).then((about) => {
-           console.log(about);
          this.description=about.description;
          this.moderators=about.moderators;
          this.rules=about.rules;
          this.apexComName=about.name;
-         this.image=about.avatar;
+         this.image='http://35.232.3.8'+about.avatar;
          this.subscribersCount=about.subscribers_count;
          });
    },
@@ -246,18 +225,31 @@ export default {
       */
    getAboutGuest(){
          AllServices.getAboutGuest(this.apexComId).then((about) =>{
-           console.log(about);
+          //  console.log(about);
          this.description=about.description;
          this.moderators=about.moderators;
          this.apexComName=about.name;
          this.rules=about.rules;
-         this.image=about.avatar;
+         this.image='http://35.232.3.8'+about.avatar;
          this.subscribersCount=about.subscribers_count;
          });
    },
+   beforeRouteUpdate (to, from, next) {
+    if(to.params.apexComId !==from.params.apexComId){
+      if(this.loggedIn){
+          this.getAbout();
+          this.isAdminFunction();
+   }
+   else{
+     this.getAboutGuest();
+   }
+    }
+    console.log('route updated');
+    next();
+  }
 
   },
- mounted(){ 
+ mounted(){
    if(this.loggedIn){
    this.getAbout();
    this.isAdminFunction();
@@ -266,26 +258,11 @@ export default {
    else{
      this.getAboutGuest();
    }
+   EventBus.$on('changeModeratot', data => {
+     console.log('event ya basha');
+        this.getAbout();
+    });
  },
-//  beforeUpdate(){
-//    this.getSubscribers();
-//    if(this.loggedIn){
-//    this.getAbout();
-//    }
-//    else{
-//      this.getAboutGuest();
-//    }
-//  }
-//  beforeUpdate(){
-//    this.getSubscribers();
-//    if(this.loggedIn){
-//    this.getAbout();
-//    }
-//    else{
-//      this.getAboutGuest();
-//    }
-//  },
-
 }
 </script>
 
@@ -296,11 +273,6 @@ export default {
 #main{
   width:22%;
   float:right;
-   /* width:23%; */
-   /* position:absolute; */
-   /* max-height:50%; */
-   /* max-width:80%; */
-  /* height: auto; */
   margin-top:4%;
   margin-bottom: 0%;
   margin-left: 3%;
@@ -340,12 +312,10 @@ color:#1a1a1b; font-size: 12px;
   font-weight: 400;
   line-height: 21px;
   overflow-wrap: break-word;
-  /* overflow-wrap: break-word; */
 }
 .box{
   margin-top: 0%;
   margin-bottom: 5%;
-  /* display:flow-root; */
   display:block;
 }
 .box2{
@@ -418,7 +388,6 @@ img{
 }
 .accountLink{
   text-decoration: none;
-  /* color: black; */
 }
 .list{
   padding-left: 0%;
@@ -447,24 +416,6 @@ color:#1a1a1b;
 }
 #remove-button{
   float: right;
-  /* display: inline; */
 }
-p{
-  /* color:#7c7c7c;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 21px;
-  overflow-wrap: break-word; */
-}
-/* @media (max-width: 605px){
-img{
-  margin-top:4px;
-}
-}
-@media (max-width: 529px){
-img{
-  margin-top:8px;
-}
-} */
 
 </style>

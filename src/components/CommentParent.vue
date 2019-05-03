@@ -1,7 +1,7 @@
 <template>
   <div id = "CommentParent">
     <WriteComment buttonType="0" v-bind:parentID="postID" v-on:Comment="addComment" ></WriteComment>
-    <div v-for = "comment in comments" :key="comment.user">
+    <div v-for = "comment in comments" :key="comment.id">
       <Comment 
       v-on:Delete="deleteComment"  
       v-on:Reply2="addReply" 
@@ -165,13 +165,20 @@ export default {
         var arr;
         AllServices.getComments(this.postID).then((data) => {
        if(data){
-          arr = data;
+          arr = data.comments;
           console.log('data',data);
           this.comments =[];
           console.log('gggg',arr);
         for(var i = 0; i < arr.length; i++){
+          console.log("aho ya 3m");
+          // var d = new Date(arr[i].created_at.getTime()+(arr[i].created_at.getTimezoneOffset()*60000));
+          // console.log('gogo',d);
+          var d = new Date (arr[i].created_at).getTime();
+var n = new Date().getTimezoneOffset()*60000;
+var dd = new Date(d-n);
+// console.log(n,'raaaaaaakzzzzzz',dd);
           var obj = {};
-          obj.user = arr[i].writerUserName;
+          obj.user = arr[i].writerUsername;
           obj.content = arr[i].content;
           obj.con = this.OpString(arr[i].content);
           obj.idx=i;
@@ -179,13 +186,17 @@ export default {
           obj.parentIdx = -1;
           obj.parentID = arr[i].parent;
           obj.currentID = arr[i].id;
-          obj.date = arr[i].created_at;
+          obj.date = dd;
           obj.points = arr[i].votes;
           obj.upVoted = arr[i].userVote==1?true:false;
           obj.downVoted = arr[i].userVote==-1?true:false;
           ///
           obj.unSaved = arr[i].Saved?"Unsave":"Save";
           ///
+          console.log('FFFF',obj.date);
+          console.log('WWW',arr[i].created_at);
+          console.log(data);
+
           this.comments[i] = obj;
           this.comments[i].parentIdx = this.getParentIdx(this.comments,i);
 

@@ -4,7 +4,7 @@
     <!-- VERY IMPORTANT! REPORT MODAL APPEARS MULTIPLE TIMES FOR EACH POST  -->
    <reportBox v-show="showReport"> </reportBox>
 
-<div class="panel panel-default"  @click="ShowModal()"  id="post" v-show="Not_Hide">
+<div class="panel panel-default"  @click="ShowModal()"  id="post" v-show="!postData.hide">
 
     <div class="panel-body">
     <div class="panel2 panel-default"  id="postSide">
@@ -13,13 +13,13 @@
           <div class="column1" id="postCol1">
 
 
-<button @click="changeColor_up" type="button" :class="className_up" id="up" >
+<button @click="changeColor_up" type="button"  v-bind:class="[postData.current_user_vote==1? 'btn btn-light btn-sm is-red' : 'btn btn-light btn-sm is-gray']"  id="up" >
         <i class="glyphicon glyphicon-arrow-up"></i>
 </button>
 
 <h5 id="PostVote">{{this.points}}</h5>
 
-<button @click="changeColor_down" type="button" :class="className_down" id="down" class="DOWN">
+<button @click="changeColor_down" type="button" v-bind:class="[postData.current_user_vote==-1? 'btn btn-light btn-sm is-blue' : 'btn btn-light btn-sm is-gray']" id="down" class="DOWN">
          <i class="glyphicon glyphicon-arrow-down" id="upArrow"></i>
 </button>
 
@@ -40,7 +40,7 @@
 
         {{postData.content}}
          </p>
-          <textarea  @keyup="store" v-if="this.showEditTextArea" class="form-control" rows="7" id="textarea">{{postData.content}}</textarea>
+          <textarea  @keyup="store" v-if="this.showEditTextArea" class="form-control" rows="7" id="textarea" v-model="postData.content"></textarea>
 
           <button @click="saveChange" v-if="this.showEditTextArea" class="btn btn-primary postButton" id="saveEdit">SAVE</button>
 
@@ -53,16 +53,25 @@
 
 <div class="btn-group" role="group" aria-label="..." id="drop">
 
-  <button type="button" class="btn btn-default " id="commentButton" ><i class="far fa-comment-alt" id="commentIcon"></i>
-Comments</button>
-  <button  type="button" class="btn btn-default  SAVE"  @click="Save()" id="SaveButton" >
+  <button type="button" class="btn btn-default " id="commentButton" v-if="this.ShowModalVar == true">
+   
+    <i class="far fa-comment-alt" id="commentIcon"></i>
+       {{postData.comments_count}}
+        Comments
+      
+</button>
+  <button v-if="postData.current_user_saved_post===false" type="button" class="btn btn-default  SAVE"  @click="Save()" id="SaveButton">
 
-    <i class="fa fa-plus-square" v-if="Saved=='Save'" id="SaveIcon"></i>
-    <i class="glyphicon glyphicon-check" v-if="Saved!='Save'" id="UnsaveIcon"></i>
-
-
+    <i class="fa fa-plus-square"  id="SaveIcon"></i>
+    <!-- <i v-if="postData.current_user_saved_post===true"  class="glyphicon glyphicon-check" id="UnsaveIcon"></i> -->
 
     {{Saved}}</button>
+  <button v-if="postData.current_user_saved_post===true" type="button" class="btn btn-default  SAVE"  @click="Save()" id="SaveButton">
+
+    <!-- <i class="fa fa-plus-square"  id="SaveIcon"></i> -->
+    <i  class="glyphicon glyphicon-check" id="UnsaveIcon"></i>
+
+    {{unsave}}</button>
 
   <div class="btn-group" role="group" id="DropDiv">
     <button @click="ToggleShowModalVar()" type="button" class="btn btn-default " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="DropButton">
@@ -71,13 +80,11 @@ Comments</button>
     </button>
     <ul class="dropdown-menu" id="dropMenu">
       <li ><a href="#"  @click="Hide" class="HIDE"><i class="fa fa-ban" id="HideIcon"></i>Hide</a></li>
-      <li><a  @click="report" class="HIDE"><i class="glyphicon glyphicon-flag" id="ReportIcon" ></i>Report</a></li>
-      <li v-if="postData.canEdit"><a href="#" @click="editText" ><i class="glyphicon glyphicon-pencil" id="ReportIcon"></i>edit</a></li>
-      <!-- <li v-if="postData.canEdit"><a href="#" @click="deletePost" ><i class="glyphicon glyphicon-pencil"></i>delete</a></li> -->
-      <li v-if="postData.canEdit"><a href="#" @click="deletePost" ><i class="glyphicon glyphicon-trash"></i>delete</a></li>
-      <!-- <li><a href="#" @click="isLocked" v-show="isAdmin() || isModerator()"> -->
-      <li><a href="#" @click="isLocked" v-show="false">
-      <!-- <li><a href="#" @click="isLocked" v-show="owner"> -->
+      <li><a  href="#" @click="report" class="HIDE"><i class="glyphicon glyphicon-flag" id="ReportIcon" ></i>Report</a></li>
+      <li v-if="owner()"><a href="#" @click="editText" ><i class="glyphicon glyphicon-pencil" id="ReportIcon"></i>edit</a></li>
+      <li v-if="showButtons()"><a href="#" @click="deletePost" ><i class="glyphicon glyphicon-trash"></i>delete</a></li>
+      <li v-if="showButtons()"><a href="#" @click="isLocked" >
+     
 
         <i v-if="Locked=='unlock'" class="fa fa-lock" id="ReportIcon"></i>
         <i v-if="Locked=='Lock'" class="fa fa-unlock" id="ReportIcon"></i>
@@ -142,6 +149,7 @@ export default {
 
              points  :this.postData.votes,
              Saved  :"Save",
+             unsave:"unsave",
              PostId   :this.postData.id,
              token  :this.$localStorage.get('token'),
              showReport:false,
@@ -151,27 +159,84 @@ export default {
              video:true ,
              image:false ,
              Locked:'Lock',
-             ago:''
+             ago:'',
+             userName:this.$localStorage.get('userName'),
+             moderators:[]
+             ,isAdmin:false
+          
             };
          },
 
   methods: {
+   
+    showButtons(){
+        if(this.isModeratorFunction()==true){
+          return true;
+        }
+        if(this.isAdmin==true){
+          return true;
+        }
+        if(this.owner()==true){
+            return true;
+        }
+        return false;
 
+    },
+     /**
+    * check if the user is moderator
+    */
+    CheckModerator:function(name)
+    {
+      if( name.username == this.userName){
+
+      return true;
+      }
+    },
+    
+    // },
+    /**
+    * loop on moderators to check if user is moderator for this community
+    */
+    isModeratorFunction:function(){
+      var moderator = this.moderators.find(this.CheckModerator)
+      if(moderator !== undefined){
+          return true;
+        }
+      else{
+          return false;
+        }
+    },
+    /**
+      *check if user is an admin
+      */
+      isAdminFunction:function()
+      {
+        AllServices.userType().then((data) =>{
+        if(data.user.type ==3){
+          this.isAdmin= true;
+          }
+        else{
+          this.isAdmin= false;
+        }
+        })
+      },
+ 
+  
    owner(){
-      if(this.$localStorage.get('userName')==this.postData.post_writer_username){
+      if(this.userName==this.postData.post_writer_username){
 
         return true;
       }
-      if(this.postData.canEdit){
-        return true;
-      }
-      return false;
+     return false;
    },
     saveChange(){
 
           this.postData.content= document.getElementById("textarea").value;
-          this.showEditTextArea=false;
+     
           AllServices.EditPost(this.postData.id, this.postData.content);
+           
+    
+         
 
 
     },
@@ -182,14 +247,14 @@ export default {
         this.ToggleShowModalVar();
          }
 
-     this.onlyOneTime=false;
-      this.$emit('Report',this.ID,this.idx);
+      this.onlyOneTime=false;
+      this.$emit('Report',this.postData.id,this.idx);
       this.$modal.show('reportBox');
       this.showReport=true;
 
     }
     else{
-      alert('Login First!!');
+       swal('Login First!!');
     }
     },
     isLocked(){
@@ -214,7 +279,7 @@ export default {
 
     }
     else{
-      alert('Login First!!');
+       swal('Login First!!');
     }
     },
 
@@ -224,7 +289,7 @@ export default {
         }
 
         this.showEditTextArea=true;
-
+        
 
 
     },
@@ -238,7 +303,7 @@ export default {
        }
 
         this.PostId=this.postData.id;
-        AllServices.deletePost(this.PostId,this.$localStorage.get('token'));
+        AllServices.deletePost(this.PostId);
 
    },
   /**
@@ -255,76 +320,49 @@ export default {
             this.Not_Hide=false;
             this.is_Hide=true;
 
-            this.$emit('HIDE','nada');
+          //  this.$emit('HIDE',true);
+           this.$modal.hide('Demo-OnePost');
+           this.ShowModalVar=false;
+           
 
             }
 
           this.PostId=this.postData.id;
           AllServices.Hide(this.PostId,this.$localStorage.get('token'));
-
          }
          else{
-         alert('login first');
+          swal('login first');
        }
        }
        ,
     changeColor_up()
     {
-
+    
       if(this.$localStorage.get('login') ){
       if(this.ShowModalVar == true){
       this.ToggleShowModalVar();
     }
-          if(!this.pressed_up)
-          {
-
-                      if(this.pressed_down)
-                      {
-
-                      this.pressed_down   = false;
-                      this.className_down = 'btn btn-light btn-sm is-gray';
-
-                      }
-
-                      this.className_up    = 'btn btn-light btn-sm is-red';
-                      this.pressed_up      =true;
-                        this.postData.upvoted=true;
-
-
-                       this.PostId=this.postData.id;
-                       this.postData.up=true;
-
-                }
-              else {
-                    this.className_up = 'btn btn-light btn-sm is-gray';
-                    this.pressed_up = false;
-                    this.PostId=this.postData.id;
-
-
-
-               }
-                 this.upVoted = !this.upVoted;
-                var downState = this.downVoted;
+         
+               this.PostId=this.postData.id;
+               this.upVoted = !this.upVoted;
+               var downState = this.downVoted;
                this.downVoted = false;
                AllServices.upvote(this.PostId,this.points,this.upVoted,downState).then((data) => {
-            if(data){
+                 if(data){
 
-                this.points=data.votes;
+                   this.points=data.votes;
 
                   }});
-
-
-
       }
 
       else{
-        alert('Login First !!');
+         swal('Login First !!');
       }
        this.postData.votes=this.points;
       }
       ,
      changeColor_down(){
-       // alert('before '+this.points);
+        
         this.downVoted = !this.downVoted;
         var upState = this.upVoted;
         this.upVoted = false;
@@ -332,48 +370,19 @@ export default {
        if(this.ShowModalVar == true){
        this.ToggleShowModalVar();
      }
-                  if(!this.pressed_down)
-                  {
-                      if(this.pressed_up)
-                      {
+                                              
+          this.PostId=this.postData.id;
+                       
+          AllServices.downvote(this.PostId,this.points,this.downVoted,upState).then((data) => {
+           if(data){
+             this.points=data.votes;
 
-                          this.pressed_up=false;
-                          this.className_up = 'btn btn-light btn-sm is-gray';
-
-                      }
-                         this.className_down = 'btn btn-light btn-sm is-blue';
-                         this.pressed_down=true;
-                        this.postData.downvoted=true;
-
-                         this.PostId=this.postData.id;
-
-
-
-
-                  }
-              else {
-                  this.className_down = 'btn btn-light btn-sm is-gray';
-
-
-
-                   this.pressed_down = false;
-                   this.PostId=this.postData.id;
-
-
-
-
-
-                 }
-                  AllServices.downvote(this.PostId,this.points,this.downVoted,upState).then((data) => {
-                 if(data){
-                   this.points=data.votes;
-
-                 }});
+              }});
 
 
               }
               else{
-                alert('Login First !!');
+                 swal('Login First !!');
               }
                 this.postData.votes=this.points;
               },
@@ -383,37 +392,20 @@ export default {
     Save(){
 
         if( this.$localStorage.get('login') ){
-      if(this.ShowModalVar == true){
-      this.ToggleShowModalVar();
-    }
-
-        if(this.Saved=="Save")
-        {
-
-        this.Saved="unsave";
-        this.postData.saved=this.Saved;
-        this.PostId=this.postData.id;
+        if(this.ShowModalVar == true){
+        this.ToggleShowModalVar();
+       
+      }
+       this.PostId=this.postData.id;
 
         AllServices.save(this.$localStorage.get('token'),this.PostId);
+         
 
-      }
-        else if(this.Saved=="unsave"){
-            this.Saved="Save";
-            this.postData.saved=this.Saved;
-            this.PostId=this.postData.id;
-
-
-
-
-             AllServices.save(this.$localStorage.get('token'),this.PostId);
-           }
-
-
-
-
-    }
+        }
+      
+    
     else{
-      alert('login First !!');
+       swal('login First !!');
     }
     },
 
@@ -445,10 +437,6 @@ props: {
 
 postData:{
 
-
-  upvoted:false,
-  downvoted:false,
-  saved:"unsave"
 },
     upVoted:Boolean,
     downVoted:Boolean,
@@ -456,18 +444,11 @@ postData:{
        },
 created(){
 
-   if(this.postData.canEdit){
-      this.className_up    = 'btn btn-light btn-sm is-red';
-        this.pressed_up      =true;
-   }
-
-
-
-       if(this.userId==2){
-        this.moderator=true;
-       }
-
+  
 },
+
+
+
 computed: {
 
 }
@@ -477,32 +458,8 @@ components:{
 
 
   },
-  mounted(){
-
-
-  },
-  updated() {
-
-
-     if(this.postData.upvoted){
-        this.className_up    = 'btn btn-light btn-sm is-red';
-        this.pressed_up      =true;
-        this.className_down = 'btn btn-light btn-sm is-gray';
-        this.pressed_down=false;
-    }
-    else if(this.postData.downvoted){
-      this.className_up    = 'btn btn-light btn-sm is-gray';
-      this.className_down = 'btn btn-light btn-sm is-blue';
-      this.pressed_down=true;
-      this.pressed_up      =false;
-    }
-
-  this.postData.votes=this.points;
-
-
-  this.postData.upvoted=this.upVoted;
-
-  },
+  
+ 
 }
 
 
@@ -657,7 +614,7 @@ width: 100%;
   width: 100%;
 }
 #saveEdit{
-  margin-left:92.5%;
+  margin-left:91%;
 }
 #cancel{
   margin-left:80%;

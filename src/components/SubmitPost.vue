@@ -1,9 +1,14 @@
 <template>
   <div id="submitPage" >  
 <CreatePostSideBar></CreatePostSideBar>
-<Post v-bind:postData="createPostData" class="postStyle" v-if="isCreated"> </Post>
+<Post v-bind:postData="createPostData" class="postStyle" v-if="isCreated"></Post>
 <CreatePost v-on:PostEmit="getData" v-if="firstTime" id="createPost"></CreatePost>
-<CommentParent v-if="isCreated" class="comment"></CommentParent>
+<CommentParent 
+  
+     
+       v-bind:postID= createPostData.id  
+      v-if="isCreated" class="comment"
+></CommentParent>
 
   </div>
 </template>
@@ -38,7 +43,9 @@ export default {
               created_at:"",
               updates_at:null,
               apex_com_name:"",
-              post_writer_user:""
+              post_writer_user:"",
+              current_user_vote:1,
+              current_user_saved_post:false
      }
 
     }
@@ -56,7 +63,7 @@ export default {
 
   methods:{
     getData(id,d,title,content,img,video,author,apex){
-  
+
     
         if(content || img ||video){
        
@@ -87,10 +94,6 @@ export default {
       this.showCreateEdit=true;
       this.isCreated=true;
     }
-  },
-  created(){
-
- 
   },
   props:{
     postData:{},

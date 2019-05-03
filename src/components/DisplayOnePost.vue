@@ -1,25 +1,25 @@
 <template>
 <div id="DisplayOnePost" class="modalview">
-<modal id="PopupModal" name="Demo-OnePost" :scrollable="true"  transition="pop-out"  width="90%" height="90%">
+<modal id="PopupModal" name="Demo-OnePost" :scrollable="true"  transition="pop-out"  width="90%" height="auto">
   <div id="PostContent" class="postContent">
     <div>
       
   <post
     v-bind:postData="onePostData"
-    v-on:HIDE="hide"
     class="mainpost" 
     id="postModal"
-    v-on:lockComment="lock($event)"
+
   ></post>
   </div>
- <ApexComSideBar class="sidebar"></ApexComSideBar>
+ <ApexComSideBar 
+   v-bind:apexComId= onePostData.apex_id
+ class="sidebar"></ApexComSideBar>
    
       <CommentParent 
      
-      v-show="!this.locked" 
-      postID='t3_10' 
+      v-show="onePostData.locked==0" 
+      v-bind:postID= onePostData.id 
       class="cmt"  
-      v-on:lockComment="lock($event)" 
       v-bind:postOwnerUserName = 'postOwnerUserName'
       v-bind:moderatorUserName = 'moderatorUserName'
       >
@@ -42,7 +42,7 @@ export default {
 name: 'DemoOnePost',
 props:{
   onePostData:{
-    
+
   }
 },
 components:
@@ -52,18 +52,7 @@ components:
   'ApexComSideBar':ApexComSideBar
 },
 methods:{
-  lock:function(event){
 
-if(event=='Lock'){
-     this.locked=false;
-    
-}
-else{this.locked=true;
-     }
-  },
-  hide(e){
-  this.Hide=e;
-  }
 
 },
 updated(){
@@ -71,7 +60,8 @@ updated(){
 
 },
 created(){
- 
+    //  setInterval(() => console.log(this.onePostData.id ),1000);
+
 },
   data(){
     return{
@@ -79,7 +69,7 @@ created(){
       locked:false,
       postOwnerUserName : "hohoho",
       moderatorUserName : 'FF',
-       Hide:false
+      
     };
       }
       
