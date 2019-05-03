@@ -4,7 +4,7 @@
     <div class="box" id="infobox">
         <div class="bluebackgroung">
           <div class="img">
-             <img width="100%" class="image" :src="'http://35.232.3.8' + image" />
+             <img width="100%" class="image" :src="image" />
           </div>
         </div>
         <div class="content">
@@ -78,7 +78,7 @@
 </div>
           <button v-show="notGuest&&!settings" id="createpostbutton" class="button" type="button" v-on:click="createPost()">new post</button>
           <button v-show="!notGuest&&!settings" v-on:click="blockUser()" id="blocktbutton" class="button" type="button">block</button>
-          <button v-show="isAdmin&&!settings" v-on:click="deleteUser()" id="deletebutton" class="button" type="button">delete user</button>
+          <button v-show="isAdmin&&!settings&&!notGuest" v-on:click="deleteUser()" id="deletebutton" class="button" type="button">delete user</button>
         </div>
     </div>
     </div>
@@ -87,7 +87,7 @@
 
 <script>
 import {AllServices} from '../MimicServices/AllServices.js'
-
+import swal from 'sweetalert'
 
 /**
  * @vue-data {JWT} [token='']  user Token
@@ -146,11 +146,11 @@ export default {
     if(this.loggedIn){
      AllServices.blockUser(this.id).then((data) =>{
      if(data){
-         alert('this user have been blocked successfully');
+         swal('this user have been blocked successfully');
          this.$router.push({name:'HomePage'});
        }
        else{
-         alert('sorry something worng happend');
+         swal('sorry something worng happend');
        }
        })
        }
@@ -175,10 +175,11 @@ export default {
     deleteUser:function(){
       var response = AllServices.deleteUser(this.id);
       if(response){
-      alert('Done :)')
+      swal('Done :)');
+      this.$router.push({name:'HomePage'});
     }
     else{
-      alert('sorry something went wrong :)')
+      swal('sorry something went wrong :)')
     }
     },
     /**
@@ -198,8 +199,9 @@ export default {
     */
     getUserProfile:function(){
       AllServices.getUserInfo().then((data) =>{
+        console.log('helloo');
       this.karmaCount = data.user_info[0].karma;
-      this.image = data.user_info[0].avatar;
+      this.image = 'http://35.232.3.8'+data.user_info[0].avatar;
       this.id = data.user_info[0].id;
       this.fullName = data.user_info[0].fullname;
       this.savedPosts = data.posts.saved_posts;
@@ -215,7 +217,7 @@ export default {
      console.log(this.userName);
       AllServices.getUserInfoById(this.userName).then((data) =>{
       this.karmaCount = data.userData.karma;
-      this.image = data.userData.avatar;
+      this.image = 'http://35.232.3.8'+data.userData.avatar;
       this.id = data.userData.id;
       this.fullName = data.userData.fullname;
       this.personalPosts = data.posts;
@@ -228,7 +230,7 @@ export default {
    getUserDataForGuest:function(){
      AllServices.getUserInfoByIdforGuest(this.userName).then((data) =>{
       this.karmaCount = data.userData.karma;
-      this.image = data.userData.avatar;
+      this.image ='http://35.232.3.8'+ data.userData.avatar;
       this.id = data.userData.id;
       this.fullName = data.userData.fullname;
       this.personalPosts = data.posts;

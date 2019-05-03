@@ -78,20 +78,19 @@ export default {
 
       },
       showInbox:function() {
-        this.send=false;
-         this.all=false;
-         this.read=false;
-         this.unread=false;
-         this.sent=false;
+        
          this.inbox=true;
          AllServices.getAllMessages().then((data) => {
          if(data){
+             console.log(data);
              this.sentArr=data.sent;
              this.allArr=data.received.all;
              this.readArr=data.received.read;
              this.unreadArr =data.received.unread;
                   }
       });
+               this.showAll();
+
       },
       showRead:function() {
         this.send=false;

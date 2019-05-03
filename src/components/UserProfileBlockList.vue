@@ -12,7 +12,7 @@
 
 <script>
 import {AllServices} from '../MimicServices/AllServices.js'
-
+import swal from 'sweetalert'
 /**
  * @vue-data {JWT} [token='']  user Token
  * @vue-data {array}   blockList - list of blocked user
@@ -35,11 +35,11 @@ export default {
     unblockUser:function(name,index){
     AllServices.blockUser(name).then((data) =>{
      if(data){
-         alert('this user have been unblocked successfully');
+         swal('this user have been unblocked successfully');
          this.blockList.splice(index, 1);
        }
        else{
-         alert('sorry something worng happend');
+         swal('sorry something worng happend');
        }
        })
     },

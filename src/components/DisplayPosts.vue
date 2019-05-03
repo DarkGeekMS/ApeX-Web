@@ -4,7 +4,7 @@
      <post
       v-bind:postData="onePost"
       v-on:showUp="showPost"
-      v-on:lockComment="ifLock"
+
 
       >
       </post>
@@ -45,7 +45,7 @@ return{
 
      }
 },
-mounted:function () {
+mounted () {
   this.getPosts();
 
   },
@@ -58,10 +58,7 @@ mounted:function () {
 
 methods:
 {
-   ifLock(e){
-     return e;
 
-   },
   /**
   * assign the post to be shown in the modal
   */
