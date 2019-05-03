@@ -1,4 +1,4 @@
-<template id="profiledesign" v-if="this.userName">
+<template id="profiledesign">
 <div id='userprofile'>
     <div id='firstnavbar'>
 
@@ -76,6 +76,8 @@ export default {
     */
     getUserProfile:function(){
       AllServices.getUserInfo().then((data) =>{
+        console.log(data);
+        
       this.savedPosts = data.posts.saved_posts;
       this.hiddenPosts = data.hidden_posts;
       this.personalPosts = data.posts;
@@ -86,10 +88,10 @@ export default {
     */
    getUserData:function(){
       AllServices.getUserInfoById(this.userName).then((data) =>{
-      this.karmaCount = data.userData.karma;
-      this.image = data.userData.avatar;
-      this.id = data.userData.id;
-      this.fullName = data.userData.fullname;
+      // this.karmaCount = data.userData.karma;
+      // this.image = data.userData.avatar;
+      // this.id = data.userData.id;
+      // this.fullName = data.userData.fullname;
       this.personalPosts = data.posts;
       })
    },
@@ -98,10 +100,10 @@ export default {
     */
    getUserDataForGuest:function(){
      AllServices.getUserInfoByIdforGuest(this.userName).then((data) =>{
-      this.karmaCount = data.userData.karma;
-      this.image = data.userData.avatar;
-      this.id = data.userData.id;
-      this.fullName = data.userData.fullname;
+      // this.karmaCount = data.userData.karma;
+      // this.image = data.userData.avatar;
+      // this.id = data.userData.id;
+      // this.fullName = data.userData.fullname;
       this.personalPosts = data.posts;
      })
    }

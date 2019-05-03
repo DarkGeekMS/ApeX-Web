@@ -1,6 +1,6 @@
 <template>
 <div class="UserSettings">
-  <UserProfileSideBar class="sidebar" v-bind:settings="false" v-bind:userName="userName"></UserProfileSideBar>
+  <UserProfileSideBar class="sidebar" v-bind:settings="true" v-bind:userName="userName"></UserProfileSideBar>
 <div class='settings'>
   <ChangePass></ChangePass>
   <DelAcc></DelAcc>

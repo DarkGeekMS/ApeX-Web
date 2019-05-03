@@ -27,7 +27,7 @@ export default[
         {path:'Rising',name:'RisingApexCom',component:New,props:true}
         ]},
         {path:'ApexSubscribers',name:'Subscribers',component:ApexComSubscribers,props:true},
-        {path:'ApexReports',name:'Reports',component:Reports,props:true},
+        {path:'ApexReports',name:'Reports',component:Reports},
         {path:'AddModerators',name:'AddModerators',component:ApexComModerator,props:true, 
         children :[
           {path:'searchUser/:query',name:'Moderators', component:ApexComAddModerator,props:true },
@@ -47,7 +47,7 @@ export default[
         {path:'users', component:Users } ]},
     {path:'/Messages' ,name:'Messages',component:MessageBar},
     {path:'/userprofile/:userName',name:'UserProfile',component:userprofile,props:true,children :[
-      {path:'Report',name:'Report', component:Reports,props:true },
+      {path:'Report',name:'Report', component:Reports},
       {path:'blockedlist',name:'blockLlist', component:userprofileBlockList,props:true }
     ]
   },

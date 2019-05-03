@@ -33,7 +33,7 @@
       <div class="content" >
         <div id="moderatorsbox" class="box2" v-for="(moderator,index) in moderators" :key="moderator.id">
           <router-link style="font-size: 14px;" class="accountLink" v-if="moderator.username" :to="{name:'UserProfile' , params: {userName:moderator.username}}"> {{moderator.username}}</router-link>
-          <button v-show="isAdmin" style="width:35%; float: right; margin:0%" id="remove button" class="button1" v-on:click="deleteModerator(moderator.userID,index)">delete</button>
+          <button v-show="isAdmin" style="width:35%; float: right; margin:0%" id="remove button" class="button1" v-on:click="deleteModerator(moderator.id,index)">delete</button>
         </div>
 
     </div>
@@ -45,7 +45,7 @@
 <script>
 import {AllServices} from '../MimicServices/AllServices.js'
 import { constants } from 'crypto';
-
+import { EventBus } from '../main.js'
 /**
  * @vue-data {JWT} [token='']  user Token
  * @vue-data {string} [userName='']  user name
@@ -103,13 +103,15 @@ export default {
       deleteAC:function()
       {
 
-        var response = AllServices.deleteApexCom(this.apexComId);
-      if(response){
+        AllServices.deleteApexCom(this.apexComId).then((data) =>{
+      if(data){
       alert('Done :)')
+      this.$router.push({name:'HomePage'});
     }
     else{
       alert('sorry something went wrong :)')
     }
+    })
       },
       /**
       *check if user is subscribed or not
@@ -181,6 +183,7 @@ export default {
       this.subscribed=true;
       this.state='subscribed';
     }
+    EventBus.$emit('changeSubscribers',true);
     }
     else{
       alert('something wrong happened try again later');
@@ -197,7 +200,8 @@ export default {
     deleteModerator:function(userName,index){
           var data = AllServices.addOrDeleteModerator(userName,this.apexComId);
           if(data){
-          this.moderators.splice(index, 1);
+            console.log(data);
+            this.moderators.splice(index, 1);
           }
           else{
               alert('sorry something went wrong');
@@ -208,12 +212,11 @@ export default {
       */
     getAbout(){
          AllServices.getAbout(this.apexComId).then((about) => {
-           console.log(about);
          this.description=about.description;
          this.moderators=about.moderators;
          this.rules=about.rules;
          this.apexComName=about.name;
-         this.image=about.avatar;
+         this.image='http://35.232.3.8'+about.avatar;
          this.subscribersCount=about.subscribers_count;
          });
    },
@@ -227,10 +230,23 @@ export default {
          this.moderators=about.moderators;
          this.apexComName=about.name;
          this.rules=about.rules;
-         this.image=about.avatar;
+         this.image='http://35.232.3.8'+about.avatar;
          this.subscribersCount=about.subscribers_count;
          });
    },
+   beforeRouteUpdate (to, from, next) {
+    if(to.params.apexComId !==from.params.apexComId){
+      if(this.loggedIn){
+          this.getAbout();
+          this.isAdminFunction();
+   }
+   else{
+     this.getAboutGuest();
+   }
+    }
+    console.log('route updated');
+    next();
+  }
 
   },
  mounted(){ 
@@ -242,8 +258,11 @@ export default {
    else{
      this.getAboutGuest();
    }
+   EventBus.$on('changeModeratot', data => {
+     console.log('event ya basha');
+        this.getAbout();
+    });
  },
-
 }
 </script>
 

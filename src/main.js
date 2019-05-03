@@ -19,7 +19,7 @@ const router = new VueRouter({
   routes:Routes,
   mode:'history'
 });
-
+export const EventBus = new Vue();
 
 new Vue({
   localStorage: {
