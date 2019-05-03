@@ -241,8 +241,8 @@ ignoreReport:function(user,id){
   var data=MimicApexCom.ignoreReport(this.mimic,user,id, this.baseUrl);
   return data;
 },
-CreateApexCom:function(Name,Description,Rules,Avatar,Banner) {
-return MimicCreateApexCom.CreateApexCom(this.mimic,Name,Description,Rules,Avatar,Banner, this.baseUrl);
+CreateApexCom:function(fd) {
+return MimicCreateApexCom.CreateApexCom(this.mimic,fd, this.baseUrl);
 },
 deleteAcc:function(Pass,id) {
   return MimicUserSettings.deleteAcc(this.mimic,Pass,id, this.baseUrl);
