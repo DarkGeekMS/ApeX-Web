@@ -13,7 +13,7 @@ import {MimicUserSettings} from './UserSettings.js'
 export  const AllServices =new Vue({
   data(){
     return{
-      mimic:false,
+      mimic:true,
       baseUrl:'http://35.232.3.8/'
     }
   },
