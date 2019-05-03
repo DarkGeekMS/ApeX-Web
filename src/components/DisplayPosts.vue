@@ -1,6 +1,6 @@
 <template>
   <div id="DisplayPosts">
-    <div id="PostContainer" v-for="onePost in posts" :key="onePost.id">
+    <div :id="onePost.id" v-for="onePost in posts" :key="onePost.id">
      <post
       v-bind:postData="onePost"
       v-on:showUp="showPost"
@@ -49,12 +49,12 @@ mounted:function () {
   this.getPosts();
 
   },
-beforeUpdate(){
-
-this.getPosts();
-
-
-},
+// beforeUpdate(){
+//
+// this.getPosts();
+//
+//
+// },
 
 methods:
 {

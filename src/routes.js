@@ -58,7 +58,7 @@ export default[
     ]
   },
 
-    {path:'/UserSettings',name:'UserSettings',component:UserSettings},
+    {path:'/UserSettings/:user',name:'UserSettings',component:UserSettings,props:true},
     {path:'/CreateApexCom',name:'CreateApexCom',component:CreateApexCom},
 
 ]
