@@ -99,7 +99,7 @@ export default {
   },
   mounted(){
           
-          console.log("mounted");
+          // console.log("mounted");
     if(this.$localStorage.get('userName') == this.user){
       // comment owner
       this.commentOwnerButtons();
@@ -126,7 +126,7 @@ export default {
   },
   methods:{
 edit:function(updatedContent){
-     console.log(updatedContent,'bos ya sedy');
+    //  console.log(updatedContent,'bos ya sedy');
   this.content=updatedContent;
   this.OpString();
   this.showEditBox =0;
@@ -222,7 +222,7 @@ addReply:function(cont,con,use,parent,parentLevel,parentID,currentID){
 DateFormat:function(date){
   // Make a fuzzy time
 var delta = Math.round((+new Date - date) / 1000);
-console.log(new Date-date);
+// console.log(new Date-date);
 var minute = 60,
     hour = minute * 60,
     day = hour * 24,
@@ -267,7 +267,7 @@ guestButtons:function(){
   this.showEditButton = false;
 },
 deleteReportedComment:function(idx){
-  console.log(idx);
+  // console.log(idx);
   this.$emit('Delete',idx );
 }
   },

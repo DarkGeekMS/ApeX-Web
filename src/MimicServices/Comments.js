@@ -22,7 +22,7 @@ export  const MimicComment =new Vue({
       }
       else
       {
-        console.log(cont,parentID);
+      //  console.log(cont,parentID);
         return axios.post(baseUrl + 'api/AddReply', {
             content: cont,
             parent: parentID,
