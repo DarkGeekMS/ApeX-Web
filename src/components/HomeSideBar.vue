@@ -29,12 +29,14 @@ import $ from'jquery/dist/jquery.min.js'
 
   /**
   * @vue-data {boolean} [login=false] if user is logged in 
+  * @vue-data {integer} [type=1] type of the user
   */
   export default {
 
     data () {
       return {
-        login: false
+        login: false,
+        type: 1
       }
     },
     created () {
@@ -43,11 +45,26 @@ import $ from'jquery/dist/jquery.min.js'
       }, 1000)
     },
     mounted(){
-      $('#Communtitii').hover(function() {
-      $('.warn1').show();
-        }, function() {
-      $('.warn1').hide();
-      });
+      if(this.$localStorage.get('login'))
+      {
+        AllServices.userType().then((data)=>{
+          this.type = data.user.type;
+          if(this.type == 3){
+            $('#Communtitii').css('cursor','pointer');
+          }
+          else{
+            $('#Communtitii').css('cursor','no-drop');
+          }
+        })
+      }
+      if(this.type != 3)
+      {
+        $('#Communtitii').hover(function() {
+          $('.warn1').show();
+            }, function() {
+          $('.warn1').hide();
+        });
+      }
     },
     methods:{
       /**
@@ -62,16 +79,13 @@ import $ from'jquery/dist/jquery.min.js'
            this.$modal.show('demo-login');
         }
       },
+      /**
+       * if user is logged in , must be an admin to create community
+      */      
       create: function() {
-        AllServices.userType().then((data)=>{
-          if(data.type == 1){
-            this.$router.push({ name:'CreateApexCom'} );
-            $('#Communtitii').css('cursor','pointer');
-          }
-          else{
-            $('#Communtitii').css('cursor','no-drop');
-          }
-        })
+        if(this.type == 3){
+          this.$router.push({ name:'CreateApexCom'} ); 
+        }
       }
     }
 }

@@ -38,10 +38,10 @@
 
     <div class="btn-toolbar tool1" role="toolbar">
     <div class="btn-group">
-    <button type="button" class="btn btn-default b1" @click="$router.push({ name: 'HotHomePage', params:'' })">
+    <button type="button" class="btn btn-default b1" @click="NavHot()">
     <i class="glyphicon glyphicon-arrow-up"></i>
     </button>
-    <button type="button" class="btn btn-default b2" @click="$router.push({ name: 'NewHomePage', params:''})">
+    <button type="button" class="btn btn-default b2" @click="NavAll()">
     <i class="glyphicon glyphicon-stats"></i>
     </button>
     <button type="button" class="btn btn-default b3">
@@ -104,7 +104,8 @@ import $ from'jquery/dist/jquery.min.js'
  * @vue-data {string} [userLog=""] name of user logged in
  * @vue-data {string} [searchVal=""] search value
  * @vue-data {boolean} [canBeShown=false] check shownModal
- * @vue-data {object} [apexs] names op apexComs
+ * @vue-data {object} [apexs] names of apexComs
+ * @vue-data {boolean} [log=false] if user logged in
 */
 
   export default {
@@ -213,8 +214,8 @@ import $ from'jquery/dist/jquery.min.js'
 
       },
       /**
-     * when search value isn't empty transfer to localStorage and go to route search
-     */
+       * when search value isn't empty transfer to localStorage and go to route search
+      */
       search: function(){
         if( (this.searchVal != '') && (this.searchVal.length >= 3) )
         {
@@ -222,9 +223,27 @@ import $ from'jquery/dist/jquery.min.js'
           this.$router.push({ name:'Search'} )
         }
       },
-      fun: function()
+      /**
+       * when user or guest click at popular sort at navbar  
+      */      
+      NavHot:function()
       {
-        document.getElementById('pop').style.display='block'
+        this.$router.push({ name: 'HotHomePage', params:'' });
+        $('#selectted').text('Popular');
+        var remclass = $('#classed').prop('class');
+        $('#classed').removeClass(remclass);
+        $('#classed').addClass("glyphicon glyphicon-arrow-up");
+      },
+      /**
+       * when user or guest click at All sort at navbar  
+      */  
+      NavAll:function()
+      {
+        this.$router.push({ name: 'NewHomePage', params:''});
+        $('#selectted').text('All');
+        var remclass = $('#classed').prop('class');
+        $('#classed').removeClass(remclass);
+        $('#classed').addClass("glyphicon glyphicon-stats");
       }
     },
 }

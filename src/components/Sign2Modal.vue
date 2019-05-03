@@ -55,6 +55,7 @@ import {AllServices} from '../MimicServices/AllServices.js'
 /**
  * @vue-data {string} [username=""] name of user sign up
  * @vue-data {string} [pass=""] password of user sign up
+ * @vue-data {string} [email=''] email of user sign up
  * @vue-data {boolean} [invalidUser=false] invaliduser
  * @vue-data {boolean} [invalidPass=false] invalidPass
  * @vue-data {boolean} [invalidUserAndPass=false] invalidUserAndPass
@@ -147,6 +148,9 @@ export default {
         this.invalidPass=true;
         }
       },
+      /**
+      * function to restart parameters every time you open login
+      */
       restart: function()
       {
         this.invalidUser = false,
@@ -155,6 +159,9 @@ export default {
         this.error = '',
         this.congra = ''
       },
+      /**
+       * function to close all modal which opened
+      */
       close: function(){
         this.$modal.hide('demo-sign');
         this.$modal.hide('demo-sign2');
@@ -162,6 +169,9 @@ export default {
         this.$modal.hide('ForgetUser');
         this.$modal.hide('ForgetPass');
       },
+      /**
+       * take parameter email from sign up modal
+      */
       beforeOpen:function (event) {
        this.email = event.params.email;
       }
