@@ -4,7 +4,7 @@
     <!-- VERY IMPORTANT! REPORT MODAL APPEARS MULTIPLE TIMES FOR EACH POST  -->
    <reportBox v-show="showReport"> </reportBox>
 
-<div class="panel panel-default"  @click="ShowModal()"  id="post" v-show="!postData.hide">
+<div class="panel panel-default"  @click="ShowModal()"  id="post" v-show="!Not_Hide">
 
     <div class="panel-body">
     <div class="panel2 panel-default"  id="postSide">
@@ -13,13 +13,13 @@
           <div class="column1" id="postCol1">
 
 
-<button @click="changeColor_up" type="button"  v-bind:class="[postData.current_user_vote==1? 'btn btn-light btn-sm is-red' : 'btn btn-light btn-sm is-gray']"  id="up" >
+<button @click="changeColor_up" type="button"  v-bind:class="[this.upVoted? 'btn btn-light btn-sm is-red' : 'btn btn-light btn-sm is-gray']"  id="up" >
         <i class="glyphicon glyphicon-arrow-up"></i>
 </button>
 
 <h5 id="PostVote">{{this.points}}</h5>
 
-<button @click="changeColor_down" type="button" v-bind:class="[postData.current_user_vote==-1? 'btn btn-light btn-sm is-blue' : 'btn btn-light btn-sm is-gray']" id="down" class="DOWN">
+<button @click="changeColor_down" type="button" v-bind:class="[this.downVoted? 'btn btn-light btn-sm is-blue' : 'btn btn-light btn-sm is-gray']" id="down" class="DOWN">
          <i class="glyphicon glyphicon-arrow-down" id="upArrow"></i>
 </button>
 
@@ -60,13 +60,13 @@
         Comments
       
 </button>
-  <button v-if="postData.current_user_saved_post===false" type="button" class="btn btn-default  SAVE"  @click="Save()" id="SaveButton">
+  <button v-if="!this.saveCheck" type="button" class="btn btn-default  SAVE"  @click="Save()" id="SaveButton">
 
     <i class="fa fa-plus-square"  id="SaveIcon"></i>
     <!-- <i v-if="postData.current_user_saved_post===true"  class="glyphicon glyphicon-check" id="UnsaveIcon"></i> -->
 
     {{Saved}}</button>
-  <button v-if="postData.current_user_saved_post===true" type="button" class="btn btn-default  SAVE"  @click="Save()" id="SaveButton">
+  <button v-else type="button" class="btn btn-default  SAVE"  @click="Save()" id="SaveButton">
 
     <!-- <i class="fa fa-plus-square"  id="SaveIcon"></i> -->
     <i  class="glyphicon glyphicon-check" id="UnsaveIcon"></i>
@@ -116,6 +116,7 @@ import swal from 'sweetalert';
 var moment =require('moment');
 /**
  * @vue-data {string} [Save="Save"] Save value
+ * @vue-data {string} [userName="userName"] contain the userName of the user
  * @vue-data {boolean} [Not_Hide=true]    check if post not hide
  * @vue-data {boolean} [is_Hide=false]    check if post is hide
  * @vue-data {boolean} [pressed_up=false]  check pressed uparrow
@@ -162,13 +163,16 @@ export default {
              ago:'',
              userName:this.$localStorage.get('userName'),
              moderators:[]
-             ,isAdmin:false
+             ,isAdmin:false,
+             saveCheck:false
           
             };
          },
 
   methods: {
-   
+     /**
+    * show the buttons lock,display,which will be displayed to the user,moderator,admin
+    */
     showButtons(){
         if(this.isModeratorFunction()==true){
           return true;
@@ -220,7 +224,9 @@ export default {
         }
         })
       },
- 
+ /**
+      *check if user is an the writer of the post
+      */
   
    owner(){
       if(this.userName==this.postData.post_writer_username){
@@ -229,6 +235,9 @@ export default {
       }
      return false;
    },
+   /**
+      *when the the user edit the post and press save button it send the edit request
+      */
     saveChange(){
 
           this.postData.content= document.getElementById("textarea").value;
@@ -240,7 +249,9 @@ export default {
 
 
     },
-
+    /**
+      *it sends the reports to the moderators
+      */
     report(){
     if(this.$localStorage.get('login') ){
         if(this.ShowModalVar == true){
@@ -257,6 +268,9 @@ export default {
        swal('Login First!!');
     }
     },
+    /**
+      *it stop the receiving comments 
+      */
     isLocked(){
       if(this.$localStorage.get('login')){
         if(this.ShowModalVar == true){
@@ -282,7 +296,9 @@ export default {
        swal('Login First!!');
     }
     },
-
+     /**
+      *it show the textarea to edit the post
+      */
     editText(){
        if(this.ShowModalVar == true){
            this.ToggleShowModalVar();
@@ -335,6 +351,9 @@ export default {
        }
        }
        ,
+   /**
+    * the user press the upvote button,so send the request and change the votes
+    */
     changeColor_up()
     {
     
@@ -361,6 +380,9 @@ export default {
        this.postData.votes=this.points;
       }
       ,
+   /**
+    * the user press the downvote button,so send the request and change the votes.
+    */
      changeColor_down(){
         
         this.downVoted = !this.downVoted;
@@ -396,8 +418,8 @@ export default {
         this.ToggleShowModalVar();
        
       }
-       this.PostId=this.postData.id;
-
+        this.PostId=this.postData.id;
+        this.saveCheck=!this.saveCheck;
         AllServices.save(this.$localStorage.get('token'),this.PostId);
          
 
@@ -444,9 +466,27 @@ postData:{
 
        },
 created(){
+  
+if(this.postData.current_user_saved_post==true){
+    this.saveCheck=true;
+  }
+  else{
+    this.saveCheck=false;
+  }
+  if(this.postData.current_user_vote==1){
+  
+    this.upVoted=true;
+    this.downVoted=false;
+  }
+  else if(this.postData.current_user_vote==-1){
+    this.downVoted=true;
+    this.upVoted=false;
+  }
 
+ 
   
 },
+
 
 
 

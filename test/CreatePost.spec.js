@@ -24,14 +24,7 @@ describe('CreatePost' , (done)=>{
 
   });
 
-it('test submit post function is called', () => {
- 
-  const button = wrapper.find('#button2')
-  button.trigger('click')
-  expect(wrapper.vm.submitPost).toBeCalled();
 
-  // expect(wrapper.findAll('div').exists()).toBe(true)
-});
 
 it('CreatePost component has div tags', () => {
  
@@ -43,20 +36,27 @@ it('emit is working', () => {
 
 });
 
-it('has Post button', () => {
+it('has Post button3', () => {
   expect(wrapper.contains('#button3')).toBe(true);
 
 });
- wrapper = shallowMount(CreatePost, {
-  parentComponent: CreatePost
-})
-expect(wrapper.vm.$parent.$options.name).toBe('foo')
+it('has Post button', () => {
+  expect(wrapper.contains('#button')).toBe(true);
 
+});
 
-
-it.only('div test',()=>{
+it('div test',()=>{
   expect(wrapper.is('div')).toBe(true)
 
 });
+it('has Post button user', () => {
+  expect(wrapper.contains('#usr')).toBe(true);
+
+});
+it('has Post button ListBox', () => {
+  expect(wrapper.contains('#selectList')).toBe(true);
+
+});
+
 });
 

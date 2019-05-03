@@ -4,11 +4,8 @@
      <post
       v-bind:postData="onePost"
       v-on:showUp="showPost"
-<<<<<<< HEAD
-=======
 
 
->>>>>>> 245f70ec9dcd8baee4924f613e9cae993ce933eb
       >
       </post>
 

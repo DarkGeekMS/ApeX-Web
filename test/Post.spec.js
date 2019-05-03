@@ -1,5 +1,6 @@
 import { mount } from '@vue/test-utils'
 import Post from '../src/components/Post.vue'
+import DisplayPosts from '../src/components/DisplayPosts.vue';
 import expect from 'expect'
 import moxios from 'moxios'
 // import sinon from 'sinon'
