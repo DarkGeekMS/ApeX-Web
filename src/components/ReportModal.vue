@@ -1,9 +1,16 @@
 <template>
 <div>
-<modal name="reportBox" transition="pop-out" width="50%" height="62%" :clickToClose="false">
-  <div v-bind:style="{marginTop: 1.3+'%'}">
-  <div class = "checked" v-show = "checked"  v-bind:style="{marginTop: checkedLevel*8 +'%'}"></div>
-  </div>
+<modal name="reportBox" transition="pop-out" width="50%" height="80%" :clickToClose="false">
+ 
+  <div class = "checked" v-show = "checked && checkedLevel == 0"  v-bind:style="{marginTop: 2 +'px'}"></div>
+  <div class = "checked" v-show = "checked && checkedLevel == 1"  v-bind:style="{marginTop: 54 +'px'}"></div>
+  <div class = "checked" v-show = "checked && checkedLevel == 2"  v-bind:style="{marginTop: 107 +'px'}"></div>
+  <div class = "checked" v-show = "checked && checkedLevel == 3"  v-bind:style="{marginTop: 160 +'px'}"></div>
+  <div class = "checked" v-show = "checked && checkedLevel == 4"  v-bind:style="{marginTop: 214 +'px'}"></div>
+  <div class = "checked" v-show = "checked && checkedLevel == 5"  v-bind:style="{marginTop: 267 +'px'}"></div>
+  <div class = "checked" v-show = "checked && checkedLevel == 6"  v-bind:style="{marginTop: 320 +'px'}"></div>
+  <div class = "checked" v-show = "checked && checkedLevel == 7"  v-bind:style="{marginTop: 373 +'px'}"></div>
+
   <div class = "loop">
      <input v-on:click = "first" id = "1" class = "radio" type="button" name="gender" value="It's spam or abuse">
       <input v-on:click = "second" class = "radio" type="button" name="gender" value="It infringes my copyright">
@@ -237,7 +244,7 @@ label{
     display:inline;
 }
 .loop{
-  margin-top:5%;
+  margin-top:25px;
 }
 
 #report{

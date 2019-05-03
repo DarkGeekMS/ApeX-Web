@@ -99,6 +99,7 @@ export default {
   },
   mounted(){
           
+          console.log("mounted");
     if(this.$localStorage.get('userName') == this.user){
       // comment owner
       this.commentOwnerButtons();

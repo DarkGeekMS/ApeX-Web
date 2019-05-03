@@ -372,9 +372,9 @@ this.apexComId=this.apexs[this.indx-1].id;
       AllServices.submit(formData).then((data)=>{
 
        id=data.id;
-
+     
       });
-
+   
       this.$emit('PostEmit',id,dateTime,this.title,this.bodyPost,this.imgName,this.videoUrl,this.$localStorage.get('userName'),this.apexs[this.indx-1].name);
     }
     },

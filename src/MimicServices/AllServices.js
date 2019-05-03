@@ -127,10 +127,10 @@ var data= MimicPost.downvote(ID,points,downVoted,upState,this.mimic, this.baseUr
 return data;
 }
 ,
-deletePost:function(postID,token){
+deletePost:function(postID){
 
 
-  return MimicPost.deletePost(postID,token,this.mimic, this.baseUrl);
+  return MimicPost.deletePost(postID,this.mimic, this.baseUrl);
 },
 
 EditPost: function(ID,content){

@@ -1,10 +1,10 @@
 <template>
   <div id="DisplayPosts">
-    <div id="PostContainer" v-for="onePost in posts" :key="onePost.id">
+    <div :id="onePost.id" v-for="onePost in posts" :key="onePost.id">
      <post
       v-bind:postData="onePost"
       v-on:showUp="showPost"
-      v-on:lockComment="ifLock"
+
 
       >
       </post>
@@ -45,23 +45,20 @@ return{
 
      }
 },
-mounted:function () {
+mounted () {
   this.getPosts();
 
   },
-beforeUpdate(){
-
-this.getPosts();
-
-
-},
+// beforeUpdate(){
+//
+// this.getPosts();
+//
+//
+// },
 
 methods:
 {
-   ifLock(e){
-     return e;
 
-   },
   /**
   * assign the post to be shown in the modal
   */

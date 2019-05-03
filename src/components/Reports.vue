@@ -3,32 +3,36 @@
 <h4 v-show="(reportedPost.length ==0)&&(reportedComment.length ==0)" >there is nothing to show </h4>
  <div class='report' v-show="reportedComment.length !==0">
    <h4 class="title">Reported comments</h4>
-<div class="onereport" v-for="(report,index) in reportedComment" :key="report.id" id='onereport'>
+<div class="onereport" v-for="(report,index) in reportedComment" id='onereport'>
   <div class="box">
-  <h4>Reported by:</h4><router-link class="accountLink" :to="{name:'UserProfile' , params: {userName:report.userName}}"> {{report.userName}}</router-link>
+  <!-- <h4>Reported by:</h4><router-link class="accountLink" :to="{name:'UserProfile' , params: {userName:report.userName}}"> {{report.userName}}</router-link> -->
   </div>
   <post class="post" v-bind:postData="report.post" ></post>
   
   <Comment class="comment"
-  v-bind:user= report.comment.user  v-bind:level= report.comment.level 
-  v-bind:content= report.comment.content v-bind:con= report.comment.con
-   v-bind:idx= report.comment.idx v-bind:parentIdx= report.comment.parentIdx 
-  v-bind:parentID= report.comment.parentID v-bind:ID= report.comment.currentID ></Comment>
+   v-bind:user= report.comment.writerUsername  
+   v-bind:content= report.comment.content 
+   v-bind:parentID=report.comment.parent
+   v-bind:ID=report.comment.id
+   v-bind:con= OpString(report.comment.content) 
+   ></Comment>
 <div class="box">
-<h4>Reason:</h4> <h4>{{report.reason}}</h4>
+<h4>Reason:</h4> <h4>{{report.report.content}}</h4>
 </div>
-<button id="ignorebutton" class="button" type="button" v-on:click="ignoreReport(report.comment.user,report.id,index,'comment')">ignore report</button>
+<button id="ignorebutton" class="button" type="button" v-on:click="ignoreReport(report.comment.commented_by,report.comment.id,index,'comment')">ignore report</button>
 </div>
 </div>
+
+<!-- posts -->
  <div class='report' v-show="reportedPost.length !==0">
    <h4 class="title">Reported posts</h4>
-<div class="onereport" v-for="(report,index) in reportedPost" :key="report.id">
+<div class="onereport" v-for="(report,index) in reportedPost">
   <div class="box">
-  <h4>Reported by:</h4><router-link class="accountLink" :to="{name:'UserProfile' , params: {userName:report.userName}}"> {{report.userName}}</router-link>
+  <!-- <h4>Reported by:</h4><router-link class="accountLink" :to="{name:'UserProfile' , params: {userName:report.userName}}"> {{report.userName}}</router-link> -->
   </div>
   <post class="post" v-bind:postData="report.post" ></post>
 <div class="box">
-<h4>Reason:</h4> <h4>{{report.reason}}</h4>
+<h4>Reason:</h4> <h4>{{report.report.content}}</h4>
 </div>
 <button id="ignorebutton" class="button" type="button" v-on:click="ignoreReport(report.post.posted_by,report.id,index,'post')">ignore report</button>
 </div>
@@ -40,6 +44,7 @@
 import post from "./Post.vue"
 import Comment from "./Comment.vue"
 import {AllServices} from '../MimicServices/AllServices.js'
+import swal from 'sweetalert'
 /**
  * @vue-prop  {string} apexComId - community Id
  * @vue-prop  {string} userName - user name
@@ -53,13 +58,12 @@ export default {
   'Post':post,
   'Comment':Comment
 },
-props:['apexComId','userName'],
       
   data () {  
     return {
       token:this.$localStorage.get('token'),
       reportedComment:[],
-      reportedPost:[]
+      reportedPost:[],
     }
   },
   methods:
@@ -68,17 +72,17 @@ props:['apexComId','userName'],
      * returns list of reported comments and posts for certain community 
      */
     reviewReportsAC(){
-         AllServices.reviewReportsAC(this.apexComId).then((data) =>{
+         AllServices.reviewReportsAC(this.$route.params.apexComId).then((data) =>{
            console.log(data);
          this.reportedComment=data.ReportedComments;
          this.reportedPost=data.ReportedPosts;
-         });
+        });
    },
    /**
      * returns list of reported comments and posts for certain moderator 
     */
    reviewReportsUP(){
-         AllServices.reviewReportsUP(this.userName).then((data) =>{
+         AllServices.reviewReportsUP(this.$route.params.userName).then((data) =>{
          this.reportedComment=data.ReportedComments;
          this.reportedPost=data.ReportedPosts;
          });
@@ -87,20 +91,61 @@ props:['apexComId','userName'],
      * request to ignore certain report
      */
    ignoreReport(user,id,index,type){
-     var data=AllServices.ignoreReport(user,id);
+     console.log(user);
+     console.log(id);
+     AllServices.ignoreReport(user,id).then((data) =>{
+     console.log(data);
      if(data && type=='comment'){
+       swal('Done :)')
        this.reportedComment.splice(index, 1);
      }
      else if(data && type=='post'){
        this.reportedPost.splice(index, 1);
+       swal('Done :)')
      }
-   }
+    });
+
+   },
+         OpString:function(content){
+        var con = [];
+        for (var i = 0;i<content.length;i++)
+                {
+                    if (content[i]=='u' && content[i+1]=='/' && content[i+2]!=' ')
+                    {
+                      for (var x = i;x<content.length;x++)
+                      {
+                          if (content[x+1]==' '|| x==content.length-1)
+                          {
+                          var str = content.slice(i,x+1);
+                          con.push({c:str , type:1});
+                          i=x+1;
+                          break;
+                          }
+                      }
+                    }
+
+                          for (var x = i;x<content.length;x++)
+                          {
+                              if((content[x+1]=='u' && content[x+2]=='/' && content[x]==' ')||x==content.length-1)
+                              {
+                                  var str = content.slice(i,x+1);
+                                  con.push({c:str , type:0});
+                                  i=x;
+                                  break;
+                              }
+                          }
+
+
+                }
+                return con;
+}
   },
   mounted()
   {
-    console.log(this.apexComId);
-    console.log(this.userName);
-    if(this.apexComId!==undefined){
+    
+    console.log(this.$route.params.apexComId);
+    console.log(this.$route.params.userName);
+    if(this.$route.params.apexComId!==undefined){
     this.reviewReportsAC();
     }
     else{
@@ -120,6 +165,7 @@ props:['apexComId','userName'],
   margin-bottom:2%;
   padding:3% 9%;
   display: inline-block;
+  width: 100%;
 }
 .post{
   margin-left:-28%;

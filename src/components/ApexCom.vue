@@ -5,16 +5,16 @@
       <div class="imagediv">
         <h1 style=" font-size: 28px; display:inline;" id="Name">{{apexComName}}</h1>
         <div class="img">
-          <img style="box-sizing: border-box; border-radius: 50%;" class="image" :src="'http://35.232.3.8' + image" >
+          <img style="box-sizing: border-box; border-radius: 50%;" class="image" :src="image" >
         </div>
       </div>
     </div>
 
       <div class="navBar" id="navbar">
       <router-link id="postslink" class="navbarLinks" :to="{name:'Posts'}">Posts</router-link>
-      <router-link  v-show="isModerator || isAdmin" id="subscribersListlink" class="navbarLinks" :to="{name:'Subscribers'}">subscribers</router-link>
-      <router-link  v-show="isModerator || isAdmin" id="reportlink" class="navbarLinks" :to="{name:'Reports'}">view reports</router-link>
-      <router-link v-show="isAdmin" id="addmoderatorlink" class="navbarLinks" :to="{name:'AddModerators'}">add moderator</router-link>
+      <router-link  v-show="isModerator" id="subscribersListlink" class="navbarLinks" :to="{name:'Subscribers'}">subscribers</router-link>
+      <router-link  v-show="isModerator" id="reportlink" class="navbarLinks" :to="{name:'Reports'}">view reports</router-link>
+      <router-link v-show="isAdmin" id="addmoderatorlink" class="navbarLinks"  :to="{name:'AddModerators'}">add moderator</router-link>
 
     </div>
       </div>
@@ -26,8 +26,7 @@
 <script>
 import SideBar from './ApexComSideBar.vue'
 import {AllServices} from '../MimicServices/AllServices.js'
-import $ from'jquery/dist/jquery.min.js'
-
+import { EventBus } from '../main.js'
 /**
  * @vue-prop  {string} apexComId - community Id
  * @vue-data {JWT} [token='']  user Token
@@ -54,36 +53,43 @@ export default {
       isModerator:false,
       isAdmin:false,
       image:'',
-      banner:'',
     }
   },
   methods:{
-
     /**
-    * check if the user is moderator
-    */
-    CheckModerator:function(name)
-    {
-      if( name.username == this.userName){
-
-      return true;
-      }
-    },
-    // direct:function(){
-    //   this.$router.push({name:'AddModerators'});
-
-    // },
+      *get the details of certain community for user
+      */
+     getAbout(){
+         AllServices.getAbout(this.apexComId).then((about) =>{
+         this.apexComName=about.name;
+         this.moderators=about.moderators;
+         this.image='http://35.232.3.8'+about.avatar;
+         console.log(this.moderators);
+         this.isModeratorFunction();
+         })
+   },
+   /**
+      *get the details of certain community for guest
+      */
+   getAboutGuest(){
+         AllServices.getAboutGuest(this.apexComId).then((about) =>{
+         console.log(about);
+         this.apexComName=about.name;
+         this.moderators=about.moderators;
+         this.image='http://35.232.3.8'+about.avatar;
+         });
+   },
     /**
     * loop on moderators to check if user is moderator for this community
     */
     isModeratorFunction:function(){
-      var moderator = this.moderators.find(this.CheckModerator)
-      if(moderator !== undefined){
-          this.isModerator= true;
+      for (let i = 0; i < this.moderators.length; i++){
+        if(this.moderators[i].username===this.userName){
+           this.isModerator= true;
+           return;
         }
-      else{
-          this.isModerator= false;
-        }
+         }
+         this.isModerator= false;
     },
     /**
       *check if user is an admin
@@ -99,53 +105,29 @@ export default {
         }
         })
       },
-    /**
-      *get the details of certain community for user
-      */
-     getAbout(){
-         AllServices.getAbout(this.apexComId).then((about) =>{
-         console.log(about);
-         this.apexComName=about.name;
-         this.moderators=about.moderators;
-         this.image=about.avatar;
-         $('#selectted').text('a/' + this.apexComName );
-         })
-
-   },
-   /**
-      *get the details of certain community for guest
-      */
-   getAboutGuest(){
-         AllServices.getAboutGuest(this.apexComId).then((about) =>{
-         console.log(about);
-         this.apexComName=about.name;
-         this.moderators=about.moderators;
-         this.image=about.avatar;
-         $('#selectted').text('a/' + this.apexComName );
-         });
-
-
-   },
-
-
   },
   mounted()
   {
-    if(this.loggedIn){
-     this.getAbout();
-     this.isAdminFunction();
-     this.isModeratorFunction();
-     }
-    else{
-      this.getAboutGuest();
-    }
-  
-    var remclass = $('#classed').prop('class');
-    $('#classed').removeClass(remclass);
-    $('#classed').addClass("glyphicon glyphicon-globe");
+  if(this.loggedIn){
+   this.getAbout();
+   this.isAdminFunction();
+
+   }
+   else{
+     this.getAboutGuest();
+   }
   },
   beforeRouteUpdate (to, from, next) {
     // this.getContent(to.params.uid);
+    if(to.params.apexComId !==from.params.apexComId){
+      if(this.loggedIn){
+          this.getAbout();
+          this.isAdminFunction();
+   }
+   else{
+     this.getAboutGuest();
+   }
+    }
     console.log('route updated');
     next();
   }
