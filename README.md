@@ -35,8 +35,8 @@ http://35.232.3.8/
 
 ## Website Samples
 
-![](samples/Sample#1.PNG)
+![](samples/Sample#1.png)
 
-![](samples/Sample#2.PNG)
+![](samples/Sample#2.png)
 
 
