@@ -51,12 +51,12 @@ mounted () {
   },
 beforeUpdate(){
 
-this.getPosts();
+// this.getPosts();
 
 
 },
 updated(){
-  this.getPosts();
+  // this.getPosts();
 },
 
 methods:
