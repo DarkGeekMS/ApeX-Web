@@ -4,7 +4,7 @@
     <div class="box" id="infobox">
         <div class="bluebackgroung">
           <div class="img">
-             <img width="100%" class="image" :src="image" />
+             <img width="100%" class="image" :src="'http://35.232.3.8' + image" />
           </div>
         </div>
         <div class="content">
@@ -76,29 +76,18 @@
 <h5 style="display:inline; font-size: 14px; color:#7c7c7c;" id="cakedaynumber" > {{cakeDay}} </h5>
   </div>
 </div>
-          <button v-show="notGuest&&settings" id="createpostbutton" class="button" type="button" v-on:click="createPost()">new post</button>
-          <button v-show="!notGuest&&settings" v-on:click="blockUser()" id="blocktbutton" class="button" type="button">block</button>
-          <button v-show="isAdmin&&settings" v-on:click="deleteUser()" id="deletebutton" class="button" type="button">delete user</button>
+          <button v-show="notGuest&&!settings" id="createpostbutton" class="button" type="button" v-on:click="createPost()">new post</button>
+          <button v-show="!notGuest&&!settings" v-on:click="blockUser()" id="blocktbutton" class="button" type="button">block</button>
+          <button v-show="isAdmin&&!settings&&!notGuest" v-on:click="deleteUser()" id="deletebutton" class="button" type="button">delete user</button>
         </div>
     </div>
-<!-- 
-<div  id="blocklistbox" v-show="notGuest() && blockList.length !==0">
-      <h3 class="Header" id="blocklistheader">Block list</h3>
-      <div class="contentblocklist" >
-      <div id="blocklistitam" v-for="(blockedUser,index) in blockList" :key="blockedUser.id">
-    <h5 > {{blockedUser.userName}}</h5>
-    <button id="unblockbutton" class="unblockButton" v-on:click="unblockUser(blockedUser.userName,index)">unblock</button>
-
-  </div> -->
-    <!-- </div> -->
-    <!-- </div> -->
     </div>
 </div>
 </template>
 
 <script>
 import {AllServices} from '../MimicServices/AllServices.js'
-
+import swal from 'sweetalert'
 
 /**
  * @vue-data {JWT} [token='']  user Token
@@ -125,7 +114,6 @@ export default {
       token:this.$localStorage.get('token'),
       loggedIn:this.$localStorage.get('login'),
       loggeduser:this.$localStorage.get('userName'),
-      // userName:'',
       karmaCount:0,
       image:'',
       cakeDay:'',
@@ -141,14 +129,15 @@ export default {
     * check if the user if Admin
     */
     isAdminFunction:function(){
-      // AllServices.userType().then((data) =>{
-      //   if(data.type ==1){
-      //     this.isAdmin= true;
-      //     }
-      //   else{
-      //     this.isAdmin= false;
-      //   }
-      // })
+      AllServices.userType().then((data) =>{
+        console.log(data.user.type+'meside')
+        if(data.user.type ==3){
+          this.isAdmin= true;
+          }
+        else{
+          this.isAdmin= false;
+        }
+      })
     },
     /**
     * used to block user
@@ -157,11 +146,11 @@ export default {
     if(this.loggedIn){
      AllServices.blockUser(this.id).then((data) =>{
      if(data){
-         alert('this user have been blocked successfully');
+         swal('this user have been blocked successfully');
          this.$router.push({name:'HomePage'});
        }
        else{
-         alert('sorry something worng happend');
+         swal('sorry something worng happend');
        }
        })
        }
@@ -179,9 +168,6 @@ export default {
       else{
         this.notGuest= true;
       }
-      // }else{
-      //   this.notGuest=false;
-      // }
     },
     /**
     * send request to delete user
@@ -189,14 +175,15 @@ export default {
     deleteUser:function(){
       var response = AllServices.deleteUser(this.id);
       if(response){
-      alert('Done :)')
+      swal('Done :)');
+      this.$router.push({name:'HomePage'});
     }
     else{
-      alert('sorry something went wrong :)')
+      swal('sorry something went wrong :)')
     }
     },
     /**
-       * if user is logged in , can go to create post or create community   
+       * if user is logged in , can go to create post or create community
       */
       createPost: function(){
         if( this.loggedIn )
@@ -212,18 +199,15 @@ export default {
     */
     getUserProfile:function(){
       AllServices.getUserInfo().then((data) =>{
-        console.log(data.posts);
+        console.log('helloo');
       this.karmaCount = data.user_info[0].karma;
-      this.image = data.user_info[0].avatar;
+      this.image = 'http://35.232.3.8'+data.user_info[0].avatar;
       this.id = data.user_info[0].id;
       this.fullName = data.user_info[0].fullname;
-      // this.userName = data.userName;
       this.savedPosts = data.posts.saved_posts;
       this.hiddenPosts = data.hidden_posts;
       this.personalPosts = data.posts;
-      // this.reports = data.userData.reports;
-      // this.cakeDay = data.userData.cakeDay;
-      
+
       })
    },
     /**
@@ -232,12 +216,11 @@ export default {
    getUserData:function(){
      console.log(this.userName);
       AllServices.getUserInfoById(this.userName).then((data) =>{
-        console.log(data.karma+'j');
       this.karmaCount = data.userData.karma;
-      this.image = data.userData.avatar;
+      this.image = 'http://35.232.3.8'+data.userData.avatar;
       this.id = data.userData.id;
       this.fullName = data.userData.fullname;
-      this.personalPosts = data.userData.personalPosts;
+      this.personalPosts = data.posts;
       // this.cakeDay = data.userData.cakeDay;
       })
    },
@@ -246,29 +229,22 @@ export default {
     */
    getUserDataForGuest:function(){
      AllServices.getUserInfoByIdforGuest(this.userName).then((data) =>{
-       alert(this.userName+'inside');
       this.karmaCount = data.userData.karma;
-      this.image = data.userData.avatar;
+      this.image ='http://35.232.3.8'+ data.userData.avatar;
       this.id = data.userData.id;
       this.fullName = data.userData.fullname;
-      // this.userName = data.userName;
-      this.personalPosts = data.userData.personalPosts;
-      // this.cakeDay = data.userData.cakeDay;
+      this.personalPosts = data.posts;
      })
    },
   },
   mounted(){
     if(this.loggedIn){
     if(this.userName == this.loggeduser){
-      console.log(this.loggeduser);
-      console.log(this.userName);
       this.getUserProfile();
 
     }
     else{
       this.getUserData();
-      console.log(this.loggeduser);
-      console.log(this.userName);
     }
     this.notGuestFunction();
     this.isAdminFunction();
@@ -283,20 +259,6 @@ export default {
 <style scoped>
 *{
   box-sizing: border-box;
-    /* box-sizing: border-box;
-
-  padding: 0;
-  margin: 0;
-  list-style: none;
-  
-  display: -webkit-box;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
-  
-  -webkit-flex-flow: row wrap;
-  justify-content: space-around; */
 }
 #sidebar{
   width:22%;

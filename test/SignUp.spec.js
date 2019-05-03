@@ -1,6 +1,6 @@
 
 import { shallowMount } from '@vue/test-utils';
-import SignUp from '../src/components/DemoSignModal.vue';
+import SignUp from '../src/components/SignModal.vue';
 import expect from 'expect';
 
 describe ('SignUp' , () =>{

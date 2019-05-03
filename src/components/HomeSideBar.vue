@@ -14,13 +14,18 @@
 
 
      <button  type="button" class="btn btn-primary " data-toggle="button" aria-pressed="false" autocomplete="off" @click="post()">CREATE POST</button>
-     <button v-show="login" style=" cursor: no-drop" type="button" class="btn btn-info" data-toggle="button" aria-pressed="false" autocomplete="off" @click="create()">CREATE COMMUNITY</button>
+     <button v-show="login" style=" cursor: no-drop" type="button" class="btn btn-info" data-toggle="button" aria-pressed="false" autocomplete="off" @click="create()" id="Communtitii">CREATE COMMUNITY</button>
+
+      <div class="warn1">To prevent spam, you must be an admin to create communities. </div>
+
   </div>
 </div>
 </template>
 
 <script>
 import {AllServices} from '../MimicServices/AllServices.js'
+import $ from'jquery/dist/jquery.min.js'
+
 
   /**
   * @vue-data {boolean} [login=false] if user is logged in 
@@ -36,6 +41,13 @@ import {AllServices} from '../MimicServices/AllServices.js'
       setInterval(() => {
         this.login = this.$localStorage.get('login')
       }, 1000)
+    },
+    mounted(){
+      $('#Communtitii').hover(function() {
+      $('.warn1').show();
+        }, function() {
+      $('.warn1').hide();
+      });
     },
     methods:{
       /**
@@ -53,7 +65,11 @@ import {AllServices} from '../MimicServices/AllServices.js'
       create: function() {
         AllServices.userType().then((data)=>{
           if(data.type == 1){
-            this.$router.push({ name:'CreateApexCom'} )
+            this.$router.push({ name:'CreateApexCom'} );
+            $('#Communtitii').css('cursor','pointer');
+          }
+          else{
+            $('#Communtitii').css('cursor','no-drop');
           }
         })
       }
@@ -114,5 +130,24 @@ button{
   #one{
     display:none
   }
+}
+
+.warn1{
+  border: none;
+  width: 80%;
+  overflow: hidden;
+  line-height: 15px;
+  padding: 0.3%;
+  color:white;
+  background-color: #000;
+  border-radius: 10px;
+  padding: 7px;
+  padding-left: 15px;
+  font-size: 12px;
+  transition: all ease-in-out 0.5s;
+  margin-left:30px;
+  margin-top:5px;
+  text-align:center;
+  display:none;
 }
  </style>

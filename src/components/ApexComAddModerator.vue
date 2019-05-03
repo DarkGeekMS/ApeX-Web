@@ -5,15 +5,15 @@
        <br/> 
        <p> Search results </p>
     </div>
-  <div id="main" v-for='(user,index) in users' :key="'A'+index">
-  <router-link id="subDiv" v-show="exist" :to="{ name: 'UserProfile', params: {userName:user.username}}"> 
+  <div id="main" v-for='(user,index) in users' :key="'A'+index" v-show="exist">
+  <router-link id="subDiv" :to="{ name: 'UserProfile', params: {userName:user.username}}"> 
       <div id="sub1">
-         <img width="45px" :src=user.avatar />
+         <img width="45px" :src="'http://35.232.3.8'+user.avatar" />
          <a class="name"> {{user.username}} <br/> <span class="memb"> {{user.karma}} karma </span> </a>       
        </div> 
        <br/><br/>
        </router-link>
-       <button class="button" type="button" v-on:click="addModerator(user.id)">add moderator</button>
+       <button v-bind:class="{button1:isModerator(user.username),button:!isModerator(user.username)}" type="button" v-on:click="addModerator(user.id)">{{state}}</button>
     
   </div> 
     <div id="subDiv" style="text-align:center;font-size: 17px;font-weight: 600; " v-show="!exist"> {{error}} ''{{query}}'' </div>
@@ -24,6 +24,9 @@
 <script>
 import {AllServices} from '../MimicServices/AllServices.js'
 import { constants } from 'crypto';
+import { EventBus } from '../main.js'
+import swal from 'sweetalert'
+
 /**
  * @vue-data {string} users users that reflect with search value  
  * @vue-data {boolean} [exist=true] if there is matching
@@ -38,7 +41,8 @@ props:['apexComId','query'],
       exist:true,
       error:'',
       users:[],
-      // searchValue:''
+      moderators:[],
+      state:'add moderator'
     }
   },
   methods:
@@ -49,41 +53,68 @@ props:['apexComId','query'],
       addModerator:function(userId){
         console.log(userId);
           console.log(this.apexComId);
-          var data = AllServices.addOrDeleteModerator(userId,this.apexComId);
-          if(data){
+          AllServices.addOrDeleteModerator(userId,this.apexComId).then((data) =>{
+          if(data){ 
+            swal('Done :)');
+            this.searchUser(this.query);
+            this.getAbout();
+            EventBus.$emit('changeModeratot',true);
           }
           else{
-              console.log(data);
+            swal('sorry something went wrong');
               }
+        }) 
       },
-  },
-  mounted()
-  {
-    console.log(this.query+'koook'); 
-    /**
+      isModerator:function(name){
+      for (let i = 0; i < this.moderators.length; i++){
+        if(this.moderators[i].username==name){
+        this.state='delete'
+           return true; 
+        }
+         }
+         this.state='add moderator'
+         return false;
+      },
+      /**
+      *get the details of certain community for user
+      */
+     getAbout(){
+         AllServices.getAbout(this.apexComId).then((about) =>{
+         console.log(about);
+         this.moderators=about.moderators;
+         })
+     },
+      /**
       *send the query to be searched for
       */
-    AllServices.searchU(this.query).then((data) =>{
+      searchUser:function(searchVal){
+        console.log(searchVal+'sent'); 
+        AllServices.searchU(searchVal).then((data) =>{
           console.log(data);
           if(data.users.length == 0)
           {
             this.exist = false,
-            this.error = 'Sorry, there were no community results for'
+            this.error = 'Sorry, there were no users results for'
           }
           else{
             this.users = data.users,
             this.exist = true
           }
-        })   
-  },
-  // created(){
-  //   console.log('hey create');
-  //   setInterval(() => {
-  //       this.searchValue = this.$localStorage.get('searchModerator');
-  //   }, 1000)
+        })
 
-  // },
-  
+      }
+  },
+  mounted()
+  {
+    this.searchUser(this.query);
+    this.getAbout();
+  },
+  beforeRouteUpdate (to, from, next) {
+    this.searchUser(to.params.query);
+    this.getAbout();
+    console.log('route updated search');
+    next();
+  }
 }
 </script>
 
@@ -116,9 +147,31 @@ props:['apexComId','query'],
   height:auto;
   overflow: hidden;
 }
+.button1{
+  width:30%;
+  margin-top:0%;
+  margin-left:0%;
+  margin-right: 2%;
+  margin-bottom: 0%;
+  color:deepskyblue;
+  background-color:white;
+  padding: 1%;
+  float:right;
+  border-width: 3px;
+  border-radius: 20%;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  cursor:pointer;
+  border-color: skyblue;
+  border-style: solid;
+  text-transform: uppercase;
+  height:auto;
+  overflow: hidden;
+}
+.button1:hover {opacity: 0.7}
 .button:hover {opacity: 0.7}
 #subDiv{
-  display: contents;
   width:94%;
   height:100%;
   margin: 0% 6%;
@@ -153,7 +206,6 @@ img{
     color: rgb(135, 138, 140);
 }
 .header{
-  /* background-color: #DAE0E6; */
   width:100%;
   padding-left:2%;
   margin-top: 43px;

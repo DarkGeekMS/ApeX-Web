@@ -4,7 +4,6 @@ import HomePage from './components/HomePage.vue'
 import ApexCom from './components/ApexCom.vue'
 import userprofile from './components/UserProfile.vue'
 import userprofileBlockList from './components/UserProfileBlockList.vue'
-
 import Reports from './components/Reports.vue'
 import Search from './components/Search.vue'
 import Users from './components/CommunitiesAndUsers.vue'
@@ -17,14 +16,13 @@ import SubmitPost from './components/SubmitPost.vue'
 import Hot from './components/SortHot.vue'
 import New from './components/SortNew.vue'
 import Controversial from './components/SortControversial.vue'
+import Hidden from './components/HiddenPosts.vue'
+import UserPosts from './components/UserPosts.vue'
+import Saved from './components/SavedPosts.vue'
 export default[
       {path:'/ApexCom/:apexComId',name:'ApexCom',props:true,component:ApexCom , children :
       [
-        {path:'/' ,name:'ApexComPosts',component:ApexComPosts},
-        {path:'AddModerators',name:'AddModerators',component:ApexComModerator,props:true ,children :[
-          {path:'searchUser/:query',name:'Moderators', component:ApexComAddModerator,props:true },
-        ]},
-        {path:'ApexPosts/:apexComId',name:'Posts',component:ApexComPosts,props:true,children:[
+        {path:'ApexPosts',name:'Posts',component:ApexComPosts,props:true,children:[
         {path:'Hot',name:'HotApexCom',component:Hot,props:true},
         {path:'New',name:'NewApexCom',component:New,props:true},
         {path:'Controversial',name:'ControversialApexCom',component:Controversial,props:true},
@@ -32,8 +30,11 @@ export default[
         {path:'Rising',name:'RisingApexCom',component:New,props:true}
         ]},
         {path:'ApexSubscribers',name:'Subscribers',component:ApexComSubscribers,props:true},
-        {path:'ApexReports',name:'Reports',component:Reports,props:true},
-
+        {path:'ApexReports',name:'Reports',component:Reports},
+        {path:'AddModerators',name:'AddModerators',component:ApexComModerator,props:true, 
+        children :[
+          {path:'searchUser/:query',name:'Moderators', component:ApexComAddModerator,props:true },
+        ]},
       ]
       },
     {path:'/',component:HomePage},
@@ -49,7 +50,10 @@ export default[
         {path:'users', component:Users } ]},
     {path:'/Messages' ,name:'Messages',component:MessageBar},
     {path:'/userprofile/:userName',name:'UserProfile',component:userprofile,props:true,children :[
-      {path:'Report',name:'Report', component:Reports,props:true },
+      {path:'Hidden',name:'Hidden', component:Hidden,props:true },
+      {path:'UserPosts',name:'UserPosts', component:UserPosts,props:true },
+      {path:'Saved',name:'Saved', component:Saved,props:true },
+      {path:'Report',name:'Report', component:Reports},
       {path:'blockedlist',name:'blockLlist', component:userprofileBlockList,props:true }
     ]
   },

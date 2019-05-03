@@ -68,7 +68,7 @@ export default {
           if(check)
           {
             this.congra = "your code is correct, Now set your password" ;
-            setTimeout(() =>this.$modal.show('ResetPass') , 2000)
+            setTimeout(() =>this.$modal.show('ResetPass',{user: this.username}) , 2000)
 
           }
           else{
@@ -80,7 +80,7 @@ export default {
          if(data)
           {
             this.congra = "your code is correct, Now set your password " ;
-            setTimeout(() =>this.$modal.show('ResetPass') , 2000)
+            setTimeout(() =>this.$modal.show('ResetPass',{user: this.username,code:this.code}) , 2000)
 
           }
           else{

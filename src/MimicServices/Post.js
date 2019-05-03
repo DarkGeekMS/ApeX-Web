@@ -10,14 +10,14 @@ methods:{
     {
         if(this.$localStorage.login)
         {
-        var promise1 = new Promise(function(resolve, reject) {
+        var promise1 = new Promise(function(resolve) {
             setTimeout(function() {
               resolve(true);
             }, 300);
           });
 return promise1;
         }
-        var promise1 = new Promise(function(resolve, reject) {
+         promise1 = new Promise(function(resolve) {
             setTimeout(function() {
               resolve(false);
             }, 300);
@@ -34,11 +34,11 @@ return promise1;
 
          })
        .then(function (response) {
-         swal('edited successfully :)');
+        swal("Post edited successfully", "You clicked the button!", "success");
          return response;
        
         })
-       .catch(function (error) {
+       .catch(function () {
         swal("Oops!", "Something went wrong!", "error");
    
            return false;
@@ -49,14 +49,16 @@ return promise1;
    
         if(mimic){
           if(this.$localStorage.login){
-             if(token=="1" && ID=="1"){
-                return true;
-              }
+              swal('success :)');
+               return true;
+          }
+           else{   
 
                 swal("Log In First!!");
                 return false;
-             }
-            }
+           }
+          } 
+            
 
              else {
                 axios.post(baseUrl + "api/Save",
@@ -65,18 +67,18 @@ return promise1;
                 token:token
             }).then(response => {
               swal('success :)');
-            //return true;
+           
             return response;
-            }).catch(function(error){
+            }).catch(function(){
                swal('wrong :(');
               return false;
             })
              }
               },
 
-  deletePost:function(postID,token,mimic,baseUrl){
+  deletePost:function(postID,mimic,baseUrl){
                     if(mimic){
-                        if(postID=="1" && token=="1"){
+                        if(this.$localStorage.login){
 
                             return true;
 
@@ -89,13 +91,15 @@ return promise1;
 
             else{
              
-                axios.DELETE(baseUrl + "api/Delete",{
+                axios.delete(baseUrl + "api/Delete",{
+                  params: {
                     name    : postID,
-                    token : token
+                    token :this.$localStorage.get('token')
+                  }
 
             }).then(response =>{
             
-                  swal('deleted successfully :)');
+              swal("Post deleted successfully", "You clicked the button!", "success");
                   return response.data;
              
 
@@ -104,6 +108,7 @@ return promise1;
             {
             
              swal("Oops!", "Something went wrong!", "error");
+            
              return false;
 
 
@@ -118,8 +123,13 @@ return promise1;
               
                    if(mimic===true){
 
-                    if(name==="1" && ID==="1"){
-
+                    if(this.$localStorage.login){
+                      swal({
+                        title: "Post Hidden Successfully!",
+                        text: "You clicked the button!",
+                        icon: "success",
+                        button: "Aww yiss!",
+                      });
                         return true;
                     }
                     return false;
@@ -133,11 +143,16 @@ return promise1;
                     token : ID
 
                 }).then(response => {
-                  
-                  swal('Post Hidden Successfully :)');
+                  swal({
+                    title: "Post Hidden Successfully!",
+                    text: "You clicked the button!",
+                    icon: "success",
+                    button: "Aww yiss!",
+                  });
+               
 
                  return response.data;
-                }).catch(function (error)
+                }).catch(function ()
                 {
                   swal("Oops!", "Something went wrong!", "error");
                    return false;
@@ -165,7 +180,7 @@ return promise1;
                       p--;
                   if(this.$localStorage.login)
                   {
-                  var promise1 = new Promise(function(resolve, reject) {
+                  var promise1 = new Promise(function(resolve) {
                       setTimeout(function() {
                         resolve({votes:p});
                       }, 300);
@@ -188,7 +203,7 @@ return promise1;
               return response.data;
       
              })
-            .catch(function (error)
+            .catch(function ()
             {
               return {
                   done:false,
@@ -215,7 +230,7 @@ return promise1;
           p++;
           if(this.$localStorage.login)
           {
-          var promise1 = new Promise(function(resolve, reject) {
+          var promise1 = new Promise(function(resolve) {
               setTimeout(function() {
                 resolve({votes:p});
               }, 300);
@@ -238,13 +253,14 @@ return promise1;
   return response.data;
 
  })
-.catch(function (error)
+.catch(function ()
 { 
   return false;
  });
   }
 },
   isLocked(ID,mimic, baseUrl){
+   
     if( mimic == true)
     {
         if(this.$localStorage.login)
@@ -252,16 +268,18 @@ return promise1;
         return true;
     }
     else
-    {
+    { 
         axios.post(baseUrl + 'api/LockPost', {
-        ID: ID,
+        name: ID,
         token:this.$localStorage.get('token')
          })
-       .then(function (response) {
+       .then(response=> {
+        swal('Successfully :)');
            return response.data;
         })
-       .catch(function (error) {
-          
+       .catch(function () {
+        swal("Oops!", "Something went wrong!", "error");
+       
            return false;
         });
     }
