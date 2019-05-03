@@ -1,6 +1,5 @@
 <template>
 <div class = "container2" v-if="this.showMessage">
-     "ggg" {{ID}}
    <p class = "title">{{title}}:</P>
    <div class = "sub">
        <div class="first-line">

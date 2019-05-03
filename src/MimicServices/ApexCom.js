@@ -127,21 +127,30 @@ blockSubscriber: function(mimic,userName,apexComName, baseUrl){
   // alert(apexComName);
   // alert(userName);
   if(mimic){
-
-return true;
+    var data=[
+      {
+          state: "blocked",
+      }
+    ]
+    var promise = new Promise(function(resolve) {
+      setTimeout(function() {
+        resolve(data);
+      }, 300);
+    });
+    return promise;
 }
 else {
-        axios.post(baseUrl + 'api/BlockUser', {
+        return axios.post(baseUrl + 'api/ApexcomBlockUser', {
         ApexCom_id:apexComName,
         user_id:userName,
         token:this.$localStorage.get('token')
       })
-      .then(function (response) {
-        return response;
-          })
-          .catch(function (error) {
-            // console.log(error);
-          });
+      .then(response => {
+        return response.data;
+       })
+      .catch(function (error) {
+        // console.log(error);
+      });
     }
     },
 
@@ -152,25 +161,33 @@ deleteApexCom: function(mimic,apexComName, baseUrl){
     return true;
     }
     else {
-      axios.delete(baseUrl + 'api/DeleteApexcom',{
+      return axios.delete(baseUrl + 'api/DeleteApexcom',{
         params: {
          Apex_ID:apexComName,
          token:this.$localStorage.get('token')
     }
         })
-        .then(function (response) {
-          return response;
-            })
-            .catch(function (error) {
-              // console.log(error);
-            });
+        .then(response => {
+          return response.data;
+         })
+        .catch(function (error) {
+          // console.log(error);
+        });
 }
     },
 subscribe: function(mimic,apexComName, baseUrl){
-  // alert(apexComName);
-  console.log(apexComName+'nnnn');
-      if(mimic){
-        return true;
+        if(mimic){
+          var data=[
+            {
+                state: "subscribed",
+            }
+          ]
+          var promise = new Promise(function(resolve) {
+            setTimeout(function() {
+              resolve(data);
+            }, 300);
+          });
+          return promise;
     }
     else {
       return axios.post(baseUrl + 'api/Subscribe', {
@@ -178,7 +195,6 @@ subscribe: function(mimic,apexComName, baseUrl){
       token:this.$localStorage.get('token')
       })
       .then(response => {
-        console.log(response+'server');
         return response.data;
        })
       .catch(function (error) {
@@ -187,28 +203,34 @@ subscribe: function(mimic,apexComName, baseUrl){
 }
 },
 addOrDeleteModerator: function(mimic,userName,apexComName, baseUrl){
-  // alert(apexComName);
-  // alert(userName);
   if(mimic){
-    return true;
+    var data=[
+      {
+          state: "blocked",
+      }
+    ]
+    var promise = new Promise(function(resolve) {
+      setTimeout(function() {
+        resolve(data);
+      }, 300);
+    });
+    return promise;
   }
 else {
-   axios.post(baseUrl + 'api/AddModerator', {
+       return axios.post(baseUrl + 'api/AddModerator', {
         ApexComID:apexComName,
         UserID:userName,
         token:this.$localStorage.get('token')
       })
-      .then(function (response) {
-        return response;
-          })
-          .catch(function (error) {
-            // console.log(error);
-          });
+      .then(response => {
+        return response.data;
+       })
+      .catch(function (error) {
+        // console.log(error);
+      });
     }
     },
 reviewReports: function(mimic,apexComName, baseUrl){
-  // alert(apexComName);
-  console.log(apexComName);
       if(mimic){
         var report={
           reportedComment:[{post:{
@@ -304,17 +326,17 @@ ignoreReport:function(mimic,userID,reportID, baseUrl){
     return true;
   }
   else{
-            axios.post(baseUrl + 'api/IgnoreReport', {
+           return axios.post(baseUrl + 'api/IgnoreReport', {
             user_id:userID,
             reported_id:reportID,
             token:this.$localStorage.get('token')
           })
-          .then(function (response) {
-            return response;
-              })
-              .catch(function (error) {
-                // console.log(error);
-              });
+          .then(response => {
+            return response.data;
+           })
+          .catch(function (error) {
+            // console.log(error);
+          });
   }
 
 },

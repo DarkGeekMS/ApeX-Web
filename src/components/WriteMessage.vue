@@ -15,7 +15,7 @@
 <script>
 import axios from 'axios'
 import {AllServices} from '../MimicServices/AllServices.js'
-
+import swal from 'sweetalert'
 
 export default {
   name: 'WriteMessage',
@@ -31,7 +31,25 @@ export default {
   methods:{
       send:function() {
          //TODD:request to backend 
+        if (this.reciever==''){
+            swal('To box cannot be empty!');
+          }
+           else if (this.subject==''){
+            swal('Subject box cannot be empty!');
+          }
+          else if(this.content == ''){
+            swal('Message box cannot be empty!');
+          }
+          
+          else
         AllServices.sendMessage(this.reciever,this.subject,this.content).then((data) => {
+          
+          if(data){
+            swal('Message Sent!');
+            this.content = '';
+            this.subject = '';
+            this.reciever = '';
+          }
  
       });
 }
