@@ -36,6 +36,7 @@ import {AllServices} from '../MimicServices/AllServices.js'
 /**
  * @vue-data {string} [pass=""] password of user
  * @vue-data {string} [code=""] code value
+ * @vue-data {string} [email=""] email of user 
  * @vue-data {string} [error=""] error value
  * @vue-data {string} [congra=''] congratulation when code is correct 
 
@@ -46,6 +47,7 @@ export default {
     return{
       code:'',
       pass:'',
+      email:'',
       error:'',
       congra:''
     }
@@ -62,7 +64,7 @@ export default {
       else
       {
         if(AllServices.getState()){
-          var check = AllServices.forgetUser2(this.code);
+          var check = AllServices.forgetUser2(this.code,this.email);
           if(check)
           {
             this.congra = "your code is correct, Now your are logged in " ;
@@ -83,7 +85,7 @@ export default {
         }
         else {
 
-         AllServices.forgetUser2(this.code).then((data) => {
+         AllServices.forgetUser2(this.code,this.email).then((data) => {
          if(data)
           {
             this.congra = "your code is correct, Now your are logged in " ;
@@ -126,6 +128,8 @@ export default {
     */
     beforeOpen:function (event) {
       this.pass = event.params.pass;
+      this.email = event.params.email;
+
     }
   },
 }

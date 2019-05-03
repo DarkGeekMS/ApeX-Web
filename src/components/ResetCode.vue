@@ -36,8 +36,9 @@ import {AllServices} from '../MimicServices/AllServices.js'
 import ResetPass  from './ResetPass.vue'
 
 /**
- * @vue-data {string} [username=""] username of user
+ * @vue-data {string} [email=""] email of user
  * @vue-data {string} [code=""] code value
+ * @vue-data {string} [username=""] username of user 
  * @vue-data {string} [error=""] error value
  * @vue-data {string} [congra=''] congratulation when code is correct 
 
@@ -50,6 +51,7 @@ export default {
   data(){
     return{
       code:'',
+      email:'',
       username:'',
       error:'',
       congra:''
@@ -67,11 +69,11 @@ export default {
       else
       {
         if(AllServices.getState()){
-          var check = AllServices.setCode(this.code,this.username);
+          var check = AllServices.setCode(this.code,this.email,this.username);
           if(check)
           {
             this.congra = "your code is correct, Now set your password" ;
-            setTimeout(() =>this.$modal.show('ResetPass',{user: this.username}) , 2000)
+            setTimeout(() =>this.$modal.show('ResetPass',{user: this.username ,code:this.code}) , 2000)
 
           }
           else{
@@ -79,11 +81,11 @@ export default {
           }
         }
         else {
-         AllServices.setCode(this.code,this.username).then((data) => {
+         AllServices.setCode(this.code,this.email,this.username).then((data) => {
          if(data)
           {
             this.congra = "your code is correct, Now set your password " ;
-            setTimeout(() =>this.$modal.show('ResetPass',{user: this.username,code:this.code}) , 2000)
+            setTimeout(() =>this.$modal.show('ResetPass',{user: this.username, code:this.code}) , 2000)
 
           }
           else{
@@ -110,9 +112,10 @@ export default {
       this.$modal.hide('demo-login');
     }, 
     /**
-      * take parameter username from forget password modal
+      * take parameter email from forget password modal
     */
     beforeOpen:function (event) {
+      this.email = event.params.email;
       this.username = event.params.user;
     }
   },
