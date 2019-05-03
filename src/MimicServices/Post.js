@@ -93,7 +93,7 @@ return promise1;
              
                 axios.delete(baseUrl + "api/Delete",{
                     name    : postID,
-                    token : token
+                    token :this.$localStorage.get('token')
 
             }).then(response =>{
             

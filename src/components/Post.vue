@@ -54,8 +54,9 @@
 <div class="btn-group" role="group" aria-label="..." id="drop">
 
   <button type="button" class="btn btn-default " id="commentButton" v-if="this.ShowModalVar == true">
+    {{postData.comments_count}}
     <i class="far fa-comment-alt" id="commentIcon"></i>
-        {{postData.comments_count}}Comments
+        Comments
 </button>
   <button v-if="postData.current_user_saved_post===false" type="button" class="btn btn-default  SAVE"  @click="Save()" id="SaveButton">
 
@@ -79,10 +80,9 @@
       <li ><a href="#"  @click="Hide" class="HIDE"><i class="fa fa-ban" id="HideIcon"></i>Hide</a></li>
       <li><a  href="#" @click="report" class="HIDE"><i class="glyphicon glyphicon-flag" id="ReportIcon" ></i>Report</a></li>
       <li v-if="postData.canEdit || postData.post_writer_username==this.postedBy"><a href="#" @click="editText" ><i class="glyphicon glyphicon-pencil" id="ReportIcon"></i>edit</a></li>
-      <li v-if="postData.canEdit ||postData.post_writer_username==this.postedBy"><a href="#" @click="deletePost" ><i class="glyphicon glyphicon-trash"></i>delete</a></li>
-      <!-- <li><a href="#" @click="isLocked" v-show="isAdmin() || isModerator()"> -->
-      <li v-if="postData.canEdit"><a href="#" @click="isLocked" >
-      <!-- <li><a href="#" @click="isLocked" v-show="owner"> -->
+      <li v-if="showDeleteButtons"><a href="#" @click="deletePost" ><i class="glyphicon glyphicon-trash"></i>delete</a></li>
+      <li v-if="showDeleteButtons"><a href="#" @click="isLocked" >
+     
 
         <i v-if="Locked=='unlock'" class="fa fa-lock" id="ReportIcon"></i>
         <i v-if="Locked=='Lock'" class="fa fa-unlock" id="ReportIcon"></i>
@@ -158,13 +158,48 @@ export default {
              image:false ,
              Locked:'Lock',
              ago:'',
-             postedBy:this.$localStorage.get('userName')
+             postedBy:this.$localStorage.get('userName'),
+             moderators:[]
+             ,admin:false
           
             };
          },
 
   methods: {
+  showDeleteButtons(){
+    AllServices.getAbout(this.postData.apex_id).then((about) =>{
+      
+         this.moderators=about.moderators;
+       
+       
+         })
+  
+         for(var i;i<this.moderators.length;i++){
+            if(this.moderators[i]==this.$localStorage.get('userName')){
+                return true;
+            }
+          
+         }
+    if(postData.post_writer_username==this.postedBy){
+      return true;
+    }
+     
 
+        AllServices.userType().then((data) =>{
+        if(data.user.type ==3){
+         this.admin=true;
+          }
+          else{
+            this.admin=false;
+          }
+       
+        })
+        if(this.admin){
+          return true;
+        }
+        return false;
+      
+    },
    owner(){
       if(this.$localStorage.get('userName')==this.postData.post_writer_username){
 
