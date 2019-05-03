@@ -63,8 +63,7 @@ export default {
          AllServices.getAbout(this.apexComId).then((about) =>{
          this.apexComName=about.name;
          this.moderators=about.moderators;
-         this.image='http://35.232.3.8'+about.avatar;
-         console.log(this.moderators);
+         this.image=about.avatar;
          this.isModeratorFunction();
          })
    },
@@ -73,10 +72,9 @@ export default {
       */
    getAboutGuest(){
          AllServices.getAboutGuest(this.apexComId).then((about) =>{
-         console.log(about);
          this.apexComName=about.name;
          this.moderators=about.moderators;
-         this.image='http://35.232.3.8'+about.avatar;
+         this.image=about.avatar;
          });
    },
     /**
@@ -118,7 +116,6 @@ export default {
    }
   },
   beforeRouteUpdate (to, from, next) {
-    // this.getContent(to.params.uid);
     if(to.params.apexComId !==from.params.apexComId){
       if(this.loggedIn){
           this.getAbout();
@@ -128,7 +125,6 @@ export default {
      this.getAboutGuest();
    }
     }
-    console.log('route updated');
     next();
   }
 }
@@ -145,15 +141,6 @@ export default {
   color: white;
   box-sizing: border-box;
 }
-/* .navbarbutton{
-  padding-bottom: 1%;
-  margin-left: 3%;
-  display: inline-block;
-  background: none;
-  border-color: none;
-  border-width: 0px;
-  border-bottom: 3px solid;
-} */
 #Name{
   padding-left: 1%;
   padding-top: 1%;

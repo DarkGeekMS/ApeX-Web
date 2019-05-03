@@ -3,7 +3,7 @@
   <h4 v-show="subscribersList.length ==0" >there is nothing to show </h4>
   <div v-show="subscribersList.length !==0" id="subscribers box" class="box" v-for="(subscriber,index) in subscribersList" :key="subscriber.id">
     <div class="name">
-    <router-link class="accountLink" :to="{name:'UserProfile' , params: {userName:subscriber.username}}"> {{subscriber.username}}</router-link>
+    <router-link v-if="subscriber.username" class="accountLink" :to="{name:'UserProfile' , params: {userName:subscriber.username}}"> {{subscriber.username}}</router-link>
       </div>
     <button id="removebutton" class="removeButton" v-on:click="blockUser(subscriber.id,index)">block</button>
   </div>
@@ -35,13 +35,11 @@ export default {
       */
     blockUser:function(userid,index)
     {
-      console.log(userid+'blooock');
-      console.log(this.apexComId);
       AllServices.blockSubscriber(userid,this.apexComId).then((data) =>{
-        console.log(data.state);
       if(data.state=='Blocked'){
         swal('Blocked');
       this.subscribersList.splice(index, 1);
+      EventBus.$emit('subscribers',true);
       }
       else{
         swal('sorry something went wrong');
@@ -53,7 +51,6 @@ export default {
     */
       getsubscribers(){
         AllServices.getSubscribers(this.apexComId).then((data) =>{
-          console.log(data.subscribers);
         this.subscribersList=data.subscribers;
       })
     }
@@ -62,7 +59,6 @@ export default {
   {
   this.getsubscribers();
   EventBus.$on('changeSubscribers', data => {
-     console.log('event ya basha');
          this.getsubscribers();
     });
   }

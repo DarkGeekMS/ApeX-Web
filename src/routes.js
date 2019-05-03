@@ -53,7 +53,6 @@ export default[
       {path:'Hidden',name:'Hidden', component:Hidden,props:true },
       {path:'UserPosts',name:'UserPosts', component:UserPosts,props:true },
       {path:'Saved',name:'Saved', component:Saved,props:true },
-      {path:'Report',name:'Report', component:Reports},
       {path:'blockedlist',name:'blockLlist', component:userprofileBlockList,props:true }
     ]
   },
