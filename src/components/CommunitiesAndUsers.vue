@@ -65,7 +65,6 @@ export default {
       }
       else{
         AllServices.searchUser().then((data) =>{
-          console.log(data);
           if( (data.apexComs.length == 0 ) && (data.users.length == 0))
           {
             this.exist = false,

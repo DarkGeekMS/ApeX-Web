@@ -76,7 +76,7 @@
         <li><router-link :to="{ name: 'UserProfile', params: {userName:userLog} } "><i class="glyphicon glyphicon-user"/> My Profile</router-link></li>
         <li><router-link :to="{ name: 'UserSettings'}" ><i class="glyphicon glyphicon-cog"></i> User Settings</router-link></li>
         <li class="divider"></li>
-        <li><a href="#" class="logOut" @click="Logout()"> <i class="glyphicon glyphicon-log-out"></i>   Log Out</a></li>
+        <li><a style="cursor:pointer" class="logOut" @click="Logout()"> <i class="glyphicon glyphicon-log-out"></i>   Log Out</a></li>
       </ul>
     </div>
 
@@ -204,8 +204,13 @@ import $ from'jquery/dist/jquery.min.js'
        * axios post request to log out the user through send user's token, delete it from data ,delete username and set login false
       */
       Logout: function(){
-        AllServices.logOut();
-        this.$router.replace('/'); 
+        AllServices.logOut().then((data) =>{
+          if(data)
+          {
+            this.$router.replace({ name: 'NewHomePage' , params: {sortingparam:'hot'}}); 
+          }
+        })
+
       },
       /**
      * when search value isn't empty transfer to localStorage and go to route search

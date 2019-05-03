@@ -54,10 +54,15 @@ export  const MimicAuth =new Vue({
             this.$localStorage.set('login', false);
             this.$localStorage.set('token', '');
             this.$localStorage.set('userName', '');
+            var promise1 = new Promise(function(resolve){
+            setTimeout(function() {
+              resolve(true);
+            }, 300) });
+            return promise1;
           }
         }
         else{
-          axios.post(baseUrl + 'api/SignOut',{
+          return axios.post(baseUrl + 'api/SignOut',{
             token : this.$localStorage.get('token')
           }).then(response =>{
             if(response.data.token == null)
@@ -65,6 +70,7 @@ export  const MimicAuth =new Vue({
               this.$localStorage.set('login', false);
               this.$localStorage.set('token', '');
               this.$localStorage.set('userName', '');
+              return true;
             }
           })
         }
@@ -280,22 +286,12 @@ export  const MimicAuth =new Vue({
       }
       else
       {
-        if(this.$localStorage.login){
-   
-        return axios.get(baseUrl + 'api/ApexComs', {
-        
+        return axios.get(baseUrl + 'api/ApexComs', {  
         }).then(response => {
-       
           return response.data.apexcoms;
-          
-        }).catch(function (error) {
-   
-            this.$localStorage.set('error',error);
-       
-           return false
+        }).catch(function () {
+          return false
         });
-      }
-      
       }
     }
   }
