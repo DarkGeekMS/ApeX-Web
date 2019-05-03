@@ -97,7 +97,7 @@ return promise1;
 
             }).then(response =>{
             
-                  swal('deleted successfully :)');
+              swal("Post deleted successfully", "You clicked the button!", "success");
                   return response.data;
              
 

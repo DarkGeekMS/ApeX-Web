@@ -17,7 +17,7 @@
    
       <CommentParent 
      
-      v-show="!this.locked" 
+      v-show="onePostData.locked==0" 
       v-bind:postID= onePostData.id 
       class="cmt"  
       v-on:lockComment="lock($event)" 

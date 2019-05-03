@@ -55,7 +55,7 @@
 
   <button type="button" class="btn btn-default " id="commentButton" v-if="this.ShowModalVar == true">
     <i class="far fa-comment-alt" id="commentIcon"></i>
-        Comments
+        {{postData.comments_count}}Comments
 </button>
   <button v-if="postData.current_user_saved_post===false" type="button" class="btn btn-default  SAVE"  @click="Save()" id="SaveButton">
 
@@ -78,8 +78,8 @@
     <ul class="dropdown-menu" id="dropMenu">
       <li ><a href="#"  @click="Hide" class="HIDE"><i class="fa fa-ban" id="HideIcon"></i>Hide</a></li>
       <li><a  href="#" @click="report" class="HIDE"><i class="glyphicon glyphicon-flag" id="ReportIcon" ></i>Report</a></li>
-      <li v-if="postData.canEdit"><a href="#" @click="editText" ><i class="glyphicon glyphicon-pencil" id="ReportIcon"></i>edit</a></li>
-      <li v-if="postData.canEdit"><a href="#" @click="deletePost" ><i class="glyphicon glyphicon-trash"></i>delete</a></li>
+      <li v-if="postData.canEdit || postData.post_writer_username==this.postedBy"><a href="#" @click="editText" ><i class="glyphicon glyphicon-pencil" id="ReportIcon"></i>edit</a></li>
+      <li v-if="postData.canEdit ||postData.post_writer_username==this.postedBy"><a href="#" @click="deletePost" ><i class="glyphicon glyphicon-trash"></i>delete</a></li>
       <!-- <li><a href="#" @click="isLocked" v-show="isAdmin() || isModerator()"> -->
       <li v-if="postData.canEdit"><a href="#" @click="isLocked" >
       <!-- <li><a href="#" @click="isLocked" v-show="owner"> -->
@@ -158,6 +158,7 @@ export default {
              image:false ,
              Locked:'Lock',
              ago:'',
+             postedBy:this.$localStorage.get('userName')
           
             };
          },
@@ -231,7 +232,7 @@ export default {
         }
 
         this.showEditTextArea=true;
-
+        
 
 
     },
@@ -393,7 +394,7 @@ created(){
   
 },
 updated(){
-  
+  this.showEditTextArea=!this.showEditTextArea;;
 },
 computed: {
 
