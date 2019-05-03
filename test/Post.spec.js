@@ -1,28 +1,31 @@
 import { mount } from '@vue/test-utils'
 import Post from '../src/components/Post.vue'
+//import DisplayPosts from '../src/components/DisplayPosts.vue';
 import expect from 'expect'
 import moxios from 'moxios'
+
 // import sinon from 'sinon'
 import VueLocalStorage from 'vue-localstorage'
 import Vue from 'vue'
 Vue.use(VueLocalStorage);
 
-describe('Post' , (done)=>{
+describe('Post' , ()=>{
   let wrapper;
 
   beforeEach(() => {
      wrapper = mount(Post);
 
-    moxios.install();
+     moxios.install();
 
   });
 
   afterEach(() =>{
-      moxios.uninstall();
+     moxios.uninstall();
 
   });
 
 it('unit test of post', () => {
+  wrapper = mount(Post);
   const d=wrapper.find('button.buttonDelete');
 
   if(expect(wrapper.vm.moderator).toBe(false)){
@@ -38,6 +41,7 @@ it('unit test of post', () => {
 
 
 it('show the delete button for the moderator',()=>{
+  wrapper = mount(Post);
   const d2=wrapper.find('button.buttonDelete');
   if(wrapper.vm.moderator){
     expect((d2).isVisible()).toBe(true);
@@ -48,13 +52,14 @@ it('show the delete button for the moderator',()=>{
 
 
 it('has a button', () => {
+  wrapper = mount(Post);
   expect(wrapper.contains('button')).toBe(true)
 });
 
 
 
 it('has upvote button pressed ', () => {
-
+  wrapper = mount(Post);
      expect(wrapper.vm.votes).toBe(0)
      const button = wrapper.find('button')
      button.trigger('click')
@@ -68,7 +73,7 @@ it('has upvote button pressed ', () => {
 
 
 it('has downvote button pressed ', () => {
-
+  wrapper = mount(Post);
      expect(wrapper.vm.votes).toBe(0)
      const button = wrapper.find('button.DOWN')
      button.trigger('click')
@@ -80,6 +85,7 @@ it('has downvote button pressed ', () => {
 
 
 it('save button pressed',()  =>  {
+  wrapper = mount(Post);
   expect(wrapper.vm.Saved).toBe('Save');
   const button = wrapper.find('button.SAVE');
   button.trigger('click');
@@ -91,7 +97,7 @@ it('save button pressed',()  =>  {
 
 it('Hide button is pressed and the post has been Hidden',()=>{
 
-
+  wrapper = mount(Post);
 const post=wrapper.find('div.panel');
 expect((post).isVisible()).toBe(true);
 wrapper.find('a.HIDE').trigger('click');

@@ -21,28 +21,33 @@ describe('user profile test', () => {
           expect(wrapper.contains('#posttab')).toBe(true);
       });
       it('does not show saved tab for guests',()=>{
-        if(wrapper.vm.notGuest()){
-        expect(wrapper.contains('#savedtab')).toBe(true);
-      }
-      else{
-        expect(wrapper.contains('#savedtab')).toBe(true);
-      }
+        if(wrapper.vm.notGuest){
+          const link=wrapper.find('#savedtab');
+          expect((link).isVisible()).toBe(true);
+          }
+          else{
+              const link=wrapper.find('#savedtab');
+              expect((link).isVisible()).toBe(false);
+          }
+       
       });
       it('does not show hidden tab for guests',()=>{
-        if(wrapper.vm.notGuest()){
-        expect(wrapper.contains('#hiddentab')).toBe(true);
-      }
-      else{
-        expect(wrapper.contains('#hiddentab')).toBe(true);
-      }
+        if(wrapper.vm.notGuest){
+          const link=wrapper.find('#hiddentab');
+          expect((link).isVisible()).toBe(true);
+          }
+          else{
+              const link=wrapper.find('#hiddentab');
+              expect((link).isVisible()).toBe(false);
+          }
       });
-      it(' do not show the report tab for the user',()=>{
-          if(wrapper.vm.isModerator()){
-          const link=wrapper.find('#reportab');
+      it(' do not show block list tab for the user',()=>{
+        const link=wrapper.find('#blocklistab');
+          if(wrapper.vm.notGuest){
           expect((link).isVisible()).toBe(true);
             }
             else{
-               const link=wrapper.find('#reporttab');
+               const link=wrapper.find('#blocklistab');
                 expect((link).isVisible()).toBe(false);
             }
       });

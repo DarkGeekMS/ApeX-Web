@@ -1,23 +1,23 @@
 <template>
   <div id="mainDiv" >
-    <router-link  id="subDiv" v-show="exist" v-for='(apex,index) in apexs' :key="index" :to="{ name:'ApexCom', params: {ApexComId:apex.id} }" > 
+    <router-link  id="subDiv" v-show="exist" v-for='(apex,index) in apexs' :key="index" :to="{ name:'HotApexCom', params: {apexComId:apex.id} }" > 
       <div id="sub1">
          <img width="38px" :src="'http://35.232.3.8'+ apex.avatar" />
          <a class="name"> {{apex.name}} <br/> <span class="memb"> {{apex.numOfMeb}} Members </span></a>
          <span >  </span>
-       </div> 
+       </div>
        <div class="about"  style="display:inline-block;float:right">{{apex.description}} </div>
        <br/><br/>
     </router-link>
 
-    <router-link id="subDiv" v-show="exist" v-for='(user,index) in users' :key="'A'+index" :to="{ name: 'UserProfile', params: {userName:user.username}}"> 
+    <router-link id="subDiv" v-show="exist" v-for='(user,index) in users' :key="'A'+index" :to="{ name: 'UserProfile', params: {userName:user.username}}">
       <div id="sub1">
          <img width="45px" :src="'http://35.232.3.8' + user.avatar" />
-         <a class="name"> {{user.username}} <br/> <span class="memb"> {{user.karma}} karma </span> </a>       
-       </div> 
+         <a class="name"> {{user.username}} <br/> <span class="memb"> {{user.karma}} karma </span> </a>
+       </div>
        <br/><br/>
     </router-link>
-    
+
     <div id="subDiv" style="text-align:center;font-size: 17px;font-weight: 600; " v-show="!exist"> {{error}} ''{{this.$localStorage.get('search')}}'' </div>
   </div>
 
@@ -27,17 +27,12 @@
 import {AllServices} from '../MimicServices/AllServices.js'
 /**
  * @vue-data {string} [apexs=""] apexComs that reflect with search value
- * @vue-data {string} [users=""] users that reflect with search value  
+ * @vue-data {string} [users=""] users that reflect with search value
  * @vue-data {boolean} [exist=true] if there is matching
  * @vue-data {string} [error=''] if there is no matching
 */
 
 export default {
- /* props:{
-    myProperty:{
-      type: Object
-    }
-  }, */
   data(){
     return{
       exist:true,
@@ -76,7 +71,7 @@ export default {
             this.exist = true
           }
         })
-      }     
+      }
     }
     else{
       if(AllServices.getState())
@@ -106,7 +101,7 @@ export default {
             this.exist = true
           }
         })
-      } 
+      }
     }
   }
 }
@@ -115,7 +110,7 @@ export default {
 <style scoped>
 *{
   display: inline-block;
-  box-sizing: border-box; 
+  box-sizing: border-box;
   text-decoration: none;
   margin:0%;
 }
@@ -142,9 +137,9 @@ a{
   width:35%;
   height:100%;
   float:left;
-} 
+}
 img{
-  border-radius:50%; 
+  border-radius:50%;
   margin-top: -17px;
 }
 .name{
@@ -166,7 +161,7 @@ img{
   flex-grow: 1;
   overflow-wrap: break-word;
   overflow: hidden;
-  width:60%;  
+  width:60%;
 }
 @media(max-width:1250px){
   #mainDiv{
@@ -185,20 +180,20 @@ img{
     width:40%;
   }
 }
- 
+
 @media(max-width:529px){
   div #sub1{
     width: 40%
   }
-}  
+}
 @media(max-width:390px){
   div #sub1{
     width: 90%
   }
-}  
+}
 @media(max-width:204px){
   div #sub1{
     display: none
   }
-}  
+}
 </style>

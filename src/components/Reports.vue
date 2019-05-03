@@ -5,7 +5,7 @@
    <h4 class="title">Reported comments</h4>
 <div class="onereport" v-for="(report,index) in reportedComment" id='onereport'>
   <div class="box">
-  <!-- <h4>Reported by:</h4><router-link class="accountLink" :to="{name:'UserProfile' , params: {userName:report.userName}}"> {{report.userName}}</router-link> -->
+  <h4>Reported by:</h4><router-link v-if="report.report.reporter_username" class="accountLink" :to="{name:'UserProfile' , params: {userName:report.report.reporter_username}}"> {{report.report.reporter_username}}</router-link>
   </div>
   <post class="post" v-bind:postData="report.post" ></post>
   
@@ -28,13 +28,13 @@
    <h4 class="title">Reported posts</h4>
 <div class="onereport" v-for="(report,index) in reportedPost">
   <div class="box">
-  <!-- <h4>Reported by:</h4><router-link class="accountLink" :to="{name:'UserProfile' , params: {userName:report.userName}}"> {{report.userName}}</router-link> -->
+  <h4>Reported by:</h4><router-link v-if="report.report.reporter_username" class="accountLink" :to="{name:'UserProfile' , params: {userName:report.report.reporter_username}}"> {{report.report.reporter_username}}</router-link>
   </div>
   <post class="post" v-bind:postData="report.post" ></post>
 <div class="box">
 <h4>Reason:</h4> <h4>{{report.report.content}}</h4>
 </div>
-<button id="ignorebutton" class="button" type="button" v-on:click="ignoreReport(report.post.posted_by,report.id,index,'post')">ignore report</button>
+<button id="ignorebutton" class="button" type="button" v-on:click="ignoreReport(report.post.posted_by,report.post.id,index,'post')">ignore report</button>
 </div>
 </div>
 </div>
@@ -73,28 +73,15 @@ export default {
      */
     reviewReportsAC(){
          AllServices.reviewReportsAC(this.$route.params.apexComId).then((data) =>{
-           console.log(data);
-         this.reportedComment=data.ReportedComments;
-         this.reportedPost=data.ReportedPosts;
+         this.reportedComment=data.reported.ReportedComments;
+         this.reportedPost=data.reported.ReportedPosts;
         });
-   },
-   /**
-     * returns list of reported comments and posts for certain moderator 
-    */
-   reviewReportsUP(){
-         AllServices.reviewReportsUP(this.$route.params.userName).then((data) =>{
-         this.reportedComment=data.ReportedComments;
-         this.reportedPost=data.ReportedPosts;
-         });
    },
    /**
      * request to ignore certain report
      */
    ignoreReport(user,id,index,type){
-     console.log(user);
-     console.log(id);
      AllServices.ignoreReport(user,id).then((data) =>{
-     console.log(data);
      if(data && type=='comment'){
        swal('Done :)')
        this.reportedComment.splice(index, 1);
@@ -142,15 +129,7 @@ export default {
   },
   mounted()
   {
-    
-    console.log(this.$route.params.apexComId);
-    console.log(this.$route.params.userName);
-    if(this.$route.params.apexComId!==undefined){
     this.reviewReportsAC();
-    }
-    else{
-      this.reviewReportsUP();
-    }
   }
 }
 </script>

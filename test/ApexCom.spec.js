@@ -21,7 +21,7 @@ describe('ApexCom test',()=>{
         expect(wrapper.contains('#postslink')).toBe(true);
     });
     it(' do not show the report tab for the user',()=>{
-        if(wrapper.vm.isModerator()){
+        if(wrapper.vm.isModerator){
         const link=wrapper.find('#reportlink');
         expect((link).isVisible()).toBe(true);
         }
@@ -31,12 +31,22 @@ describe('ApexCom test',()=>{
         }
     });
     it(' do not show the subscribers list for the user',()=>{
-        if(wrapper.vm.isModerator()){
+        if(wrapper.vm.isModerator){
         const link=wrapper.find('#subscribersListlink');
         expect((link).isVisible()).toBe(true);
         }
         else{
             const link=wrapper.find('#subscribersListlink');
+            expect((link).isVisible()).toBe(false);
+        }
+    });
+    it(' do not show add moderator tab for the user',()=>{
+        if(wrapper.vm.isAdmin){
+        const link=wrapper.find('#addmoderatorlink');
+        expect((link).isVisible()).toBe(true);
+        }
+        else{
+            const link=wrapper.find('#addmoderatorlink');
             expect((link).isVisible()).toBe(false);
         }
     });

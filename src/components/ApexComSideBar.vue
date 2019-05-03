@@ -8,7 +8,6 @@
         <img style="box-sizing: border-box; border-radius: 50%;" class="image" :src="image" >
       </div>
 
-
       <div class="sub">
        <p id="subscribersCount">{{subscribersCount}}</p>
        <p id="subscribers">Members</p>
@@ -46,6 +45,7 @@
 import {AllServices} from '../MimicServices/AllServices.js'
 import { constants } from 'crypto';
 import { EventBus } from '../main.js'
+import swal from 'sweetalert'
 /**
  * @vue-data {JWT} [token='']  user Token
  * @vue-data {string} [userName='']  user name
@@ -105,11 +105,11 @@ export default {
 
         AllServices.deleteApexCom(this.apexComId).then((data) =>{
       if(data){
-      alert('Done :)')
+      swal('Done :)')
       this.$router.push({name:'HomePage'});
     }
     else{
-      alert('sorry something went wrong :)')
+      swal('sorry something went wrong :)')
     }
     })
       },
@@ -126,9 +126,9 @@ export default {
     * get the list of subscribers to this community
     */
     getSubscribers(){
+      if(!AllServices.getState()){
         AllServices.getSubscribers(this.apexComId).then((data) =>{
         this.subscribers=data.subscribers;
-
         var subscribe = this.subscribers.find(this.CheckUser);
         if(subscribe !== undefined){
           this.subscribed = true;
@@ -139,6 +139,7 @@ export default {
           this.state='subscribe';
     }
     })
+      }
    },
    /**
        * if user is logged in , can go to create post
@@ -173,39 +174,45 @@ export default {
     {
       if(this.loggedIn){
       AllServices.subscribe(this.apexComId).then((data) =>{
-        // console.log(data);
       if(data){
       if(this.subscribed){
       this.subscribed = false;
       this.state='subscribe';
+      if(this.subscribersCount!=0){
+           this.subscribersCount--;
+         }
     }
     else{
       this.subscribed=true;
       this.state='subscribed';
+      if(this.subscribersCount!=0){
+           this.subscribersCount++;
+         }
     }
     EventBus.$emit('changeSubscribers',true);
     }
     else{
-      alert('something wrong happened try again later');
+      swal('something wrong happened try again later');
     }
     })
       }
       else{
-        alert('you have to log in, first');
+        swal('you have to log in, first');
       }
     },
     /**
       *used by admin to delete moderator
       */
     deleteModerator:function(userName,index){
-          var data = AllServices.addOrDeleteModerator(userName,this.apexComId);
+          var data = AllServices.addOrDeleteModerator(userName,this.apexComId).then((data) =>{
           if(data){
-            console.log(data);
             this.moderators.splice(index, 1);
+            swal('Done :)')
           }
           else{
-              alert('sorry something went wrong');
+              swal('sorry something went wrong');
               }
+          })
       },
       /**
       *get the details of certain community for user
@@ -216,7 +223,7 @@ export default {
          this.moderators=about.moderators;
          this.rules=about.rules;
          this.apexComName=about.name;
-         this.image='http://35.232.3.8'+about.avatar;
+         this.image=about.avatar;
          this.subscribersCount=about.subscribers_count;
          });
    },
@@ -225,12 +232,11 @@ export default {
       */
    getAboutGuest(){
          AllServices.getAboutGuest(this.apexComId).then((about) =>{
-          //  console.log(about);
          this.description=about.description;
          this.moderators=about.moderators;
          this.apexComName=about.name;
          this.rules=about.rules;
-         this.image='http://35.232.3.8'+about.avatar;
+         this.image=about.avatar;
          this.subscribersCount=about.subscribers_count;
          });
    },
@@ -244,7 +250,6 @@ export default {
      this.getAboutGuest();
    }
     }
-    console.log('route updated');
     next();
   }
 
@@ -260,10 +265,13 @@ export default {
      this.getAboutGuest();
    }
    EventBus.$on('changeModeratot', data => {
-     console.log('event ya basha');
         this.getAbout();
     });
-
+    EventBus.$on('subscribers', data => {
+         if(this.subscribersCount!=0){
+           this.subscribersCount--;
+         }
+    });
  },
 }
 </script>
