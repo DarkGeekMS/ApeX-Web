@@ -34,7 +34,7 @@
       
 
       <div id = "thirdLine" v-show="!showEditBox">
-        <button class = "buttons" v-on:click = "showReplyBox = !showReplyBox  ,showEditBox = false"  id = "Reply">Reply</button>
+        <button class = "buttons" v-on:click = "replyClicked"  id = "Reply">Reply</button>
         <button class = "buttons" id = "Report" @click="Report" v-show = "showReportButton">Report</button>
         <button class = "buttons" v-on:click="Save" id = "Save" >{{unSaved}}</button>
         <button class = "buttons" v-on:click = "showEditBox = !showEditBox  ,showReplyBox = false" id = "Edit" v-show = "showEditButton">Edit</button>
@@ -104,10 +104,7 @@ export default {
   },
   data(){
     return{
-    // user:this.$localStorage.get('userName'),
-    // upVoted:false,
-    // downVoted:false,
-    // points:0,
+    
     time:'',
     showReplyBox:0,
     showEditBox:0,
@@ -118,7 +115,6 @@ export default {
     moment:moment
 
 
-    // unSaved:'Save'
     }
   },
   mounted(){
@@ -177,13 +173,22 @@ retrieveWithNoEdit:function(){
      */
 Delete:function(){
 
-
-
-  if(AllServices.DeleteComment(this.ID))
-    swal("Log In First!!");
-    else{
+    if(this.$localStorage.get('login')){
+      AllServices.DeleteComment(this.ID);
       this.$emit('Delete',this.idx );
     }
+    else{
+      swal("Log In First!!");
+    }
+
+},
+replyClicked:function(){
+if(this.$localStorage.get('login')){
+this.showReplyBox = !this.showReplyBox;
+this.showEditBox = false;
+}
+else
+      swal("Log In First!!");
 
 },
 /**
@@ -229,44 +234,60 @@ OpString:function(){
      * to hide the reported comment "delete the comment from the array"
      */
 Report:function(){
+    if(this.$localStorage.get('login')){
     this.$emit('Report',this.ID,this.idx);
+    }
+    else
+      swal("Log In First!!");
+
 },
 /**
      * saves the the comment 
      */
 Save:function(){
-  if(this.unSaved=='Save')
-    this.unSaved='Unsave';
-  else
-    this.unSaved='Save';
-
-  if(AllServices.SaveComment(this.ID))
-    swal("Log In First!!");
+    if(this.$localStorage.get('login')){
+      AllServices.SaveComment(this.ID);
+      if(this.unSaved=='Save')
+        this.unSaved='Unsave';
+      else
+        this.unSaved='Save';
+    }
+    else
+      swal("Log In First!!");
 },
 /**
      * upvotes the comment
      */
 Upvote:function(){
-  this.upVoted = !this.upVoted;
-  var downState = this.downVoted;
-  this.downVoted = false;
-  AllServices.UpVoteComment(this.ID,this.points,this.upVoted,downState).then((data) => {
-    
-       if(data){
-          this.points=data.votes;
-        }});
+
+  if(this.$localStorage.get('login')){
+    this.upVoted = !this.upVoted;
+    var downState = this.downVoted;
+    this.downVoted = false;
+    AllServices.UpVoteComment(this.ID,this.points,this.upVoted,downState).then((data) => {
+        if(data){
+            this.points=data.votes;
+          }});
+  }
+  else
+    swal("Log In First!!");
 },
 /**
      * downvotes the comment
      */
 Downvote:function(){
-  this.downVoted = !this.downVoted;
-  var upState = this.upVoted;
-  this.upVoted = false;
-  AllServices.DownVoteComment(this.ID,this.points,this.downVoted,upState).then((data) => {
-        if(data){
-          this.points=data.votes;
-        }});
+
+  if(this.$localStorage.get('login')){
+    this.downVoted = !this.downVoted;
+    var upState = this.upVoted;
+    this.upVoted = false;
+    AllServices.DownVoteComment(this.ID,this.points,this.downVoted,upState).then((data) => {
+          if(data){
+            this.points=data.votes;
+          }});
+  }
+  else
+    swal("Log In First!!");
 },
 /**
      * function due to the response of the reply box to send the data to the CommentParent to be set in the array
@@ -315,7 +336,7 @@ this.time=fuzzy;
      */
 commentOwnerButtons:function(){
   this.showReportButton = false;
-  this.showDeleteButton = false;
+  this.showDeleteButton = true;
   this.showEditButton = true;
 },
 /**

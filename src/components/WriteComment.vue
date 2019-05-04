@@ -114,6 +114,8 @@ OpString:function(){
      * sends to the comment parent to add the comment in the array and sends the details to the database
  */
     comment:function(){
+
+      if(this.$localStorage.get('login')){
       this.OpString();
        if (this.content!=null)
       {
@@ -131,7 +133,11 @@ OpString:function(){
       else
       swal("Empty Text cannot be submitted!");
     }
-    ,
+    else{
+      swal("Log In First!!");
+    }
+
+    },
      /**
      * sends to the comment parent to add the reply in the array and sends the details to the database
  */

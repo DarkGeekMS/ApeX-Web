@@ -178,13 +178,12 @@ updateprefs(){
   formData.append('username', this.userName);
   formData.append('fullname', this.userName);
   formData.append('email', this.email);
-
   if(this.imgName!=''){
     formData.append('avatar', this.imgContent, this.imgContent.name);
   }
 
 
-  formData.append('notifications', this.notifie);
+  formData.append('notification', this.notifie);
   formData.append('token', this.$localStorage.get('token'));
 
 
