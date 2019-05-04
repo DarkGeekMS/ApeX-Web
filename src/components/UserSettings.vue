@@ -88,11 +88,10 @@
 
 <script>
 
-
+import swal from 'sweetalert';
 import DelAcc from './UserSettingsModals/DeleteAcc.vue'
 import ChangePass from './UserSettingsModals/ChangePass.vue'
 import UserProfileSideBar from './UserProfileSideBar.vue'
-
 import {AllServices} from '../MimicServices/AllServices.js'
 import $ from'jquery/dist/jquery.min.js'
 
@@ -192,12 +191,12 @@ if(this.notifie){
 
 
   AllServices.updatePrefs(formData).then((data)=>{
+    swal('Settings updated successfully')
   });
 }
   },
   created:function () {
     AllServices.getPrefs().then((data)=> {
-      console.log(data);
   this.email = data.userData.email,
   this.notifie=data.userData.notification,
   this.avatar=data.userData.avatar,
