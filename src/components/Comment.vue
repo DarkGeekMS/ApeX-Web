@@ -69,17 +69,13 @@
  * @vue-data  {boolean} [deleted=1] check if the comment is Deleted
  * @vue-data  {string} [unSaved='Save'] check if the comment is Saved
  */
-
 import WriteComment from './WriteComment.vue'
 import reportBox from './ReportModal.vue'
 import {AllServices} from '../MimicServices/AllServices.js'
 var moment =require('moment');
-
-
 export default {
   name: 'CommentItem',
   props:{
-
     content:String,
     idx:Number,
     level:Number,
@@ -119,8 +115,6 @@ export default {
     showReportButton:false,
     moment:moment,
     showReplyButton:true
-
-
     }
   },
   mounted(){
@@ -169,9 +163,6 @@ edit:function(updatedContent){
   this.showEditBox =0;
   //EMIT EVENT TO COMMENT PARENT TO EDIT THE CONTENT OF THE IDX = idx  by updatedContent
   this.$emit('Edit',updatedContent,this.idx );
-
-
-
 },
  /**
      * hides the edit box and do nothing if it's empty
@@ -183,7 +174,6 @@ retrieveWithNoEdit:function(){
      * deletes the the comment and sends to the CommentParent to delete it and its children from the array
      */
 Delete:function(){
-
     if(this.$localStorage.get('login')){
       AllServices.DeleteComment(this.ID);
       this.$emit('Delete',this.idx );
@@ -191,7 +181,6 @@ Delete:function(){
     else{
       swal("Log In First!!");
     }
-
 },
 replyClicked:function(){
 if(this.$localStorage.get('login')){
@@ -200,7 +189,6 @@ this.showEditBox = false;
 }
 else
       swal("Log In First!!");
-
 },
 /**
      * slices the content into seperate parts due to mentions
@@ -226,7 +214,6 @@ OpString:function(){
                     }
                 }
               }
-
                     for (var x = i;x<this.content.length;x++)
                     {
                         if((this.content[x+1]=='u' && this.content[x+2]=='/' && this.content[x]==' ')||x==this.content.length-1)
@@ -237,8 +224,6 @@ OpString:function(){
                             break;
                         }
                     }
-
-
           }
 },
 /**
@@ -250,7 +235,6 @@ Report:function(){
     }
     else
       swal("Log In First!!");
-
 },
 /**
      * saves the the comment 
@@ -270,7 +254,6 @@ Save:function(){
      * upvotes the comment
      */
 Upvote:function(){
-
   if(this.$localStorage.get('login')){
     this.upVoted = !this.upVoted;
     var downState = this.downVoted;
@@ -287,7 +270,6 @@ Upvote:function(){
      * downvotes the comment
      */
 Downvote:function(){
-
   if(this.$localStorage.get('login')){
     this.downVoted = !this.downVoted;
     var upState = this.upVoted;
@@ -313,8 +295,6 @@ Downvote:function(){
 addReply:function(cont,con,use,parent,parentLevel,parentID,currentID){
   // send to comment parent to push in the array!!!!!
   this.$emit('Reply2',cont,con,parent ,parentLevel+1,parentID,currentID );
-
-
 },
 DateFormat:function(date){
   // Make a fuzzy time
@@ -323,9 +303,7 @@ var minute = 60,
     hour = minute * 60,
     day = hour * 24,
     week = day * 7;
-
 var fuzzy;
-
 if (delta < 60) {
     fuzzy = 'just now';
 }  else if (delta < 2 * minute) {
@@ -341,7 +319,6 @@ if (delta < 60) {
 }
 this.time=fuzzy;
 },
-
 /**
      * to show buttons under comments for comments owners 
      */
@@ -374,31 +351,25 @@ guestButtons:function(){
   this.showDeleteButton = false;
   this.showEditButton = false;
 },
-
 deleteReportedComment:function(idx){
   this.$emit('Delete',idx );
 }
   },
-
   components: {
     reportBox,
     WriteComment
   }
-
 }
 </script>
 
 <style scoped>
-
 #paragraphComment{
-
     text-overflow: ellipsis;
     overflow: hidden;
     float:left;
     text-align:left;
     width:70%;
     border:none;
-
 }
 #Comment{
     position: static;
@@ -406,8 +377,6 @@ deleteReportedComment:function(idx){
     float:left;
     background:transparent;
 }
-
-
 #Up{
   background:url(../assets/Up.png) no-repeat;
     border:none;
@@ -425,7 +394,6 @@ deleteReportedComment:function(idx){
 #Up:hover {
      background:url(../assets/UpActivated.png) no-repeat;
 }
-
 #Down{
   background:url(../assets/Down.png) no-repeat;
     border:none;
@@ -446,21 +414,17 @@ deleteReportedComment:function(idx){
 .arrows{
     margin-right:7px;
 }
-
-
 .smallText{
     font-size: 12px;
     font-family: 'Courier New', Courier, monospace;
     font-style:normal;
     margin-right: 7px;
-
 }
 .smallText:hover{
     background-color: rgb(235, 233, 233);
 }
 #firstLine{
         float:left;
-
 }
 #secondLine{
     padding-top: 4px;
@@ -475,13 +439,11 @@ deleteReportedComment:function(idx){
     align-items: center;
     float: right;
 }
-
 .outer{
     position: relative;
     border: 1px solid;
     padding: 200px;
 }
-
 .buttons{
     background: none;
     font-size: 13px;
@@ -492,7 +454,6 @@ deleteReportedComment:function(idx){
     -moz-osx-font-smoothing: grayscale;
     border: none;
     border-radius: 4px;
-
 }
 .buttons:hover{
     background-color: rgb(235, 233, 233);
@@ -504,11 +465,9 @@ deleteReportedComment:function(idx){
  .content  { 
 overflow: hidden;
    display: inline;
-
  }
  .user{
 display: inline;
-
  }
  .condiv{
    display: inline;

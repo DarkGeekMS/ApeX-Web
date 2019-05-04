@@ -106,6 +106,7 @@ export default {
      * @param {string} cID current ID
  */
       addReply:function(cont,con,parent,l,pID,cID){
+        console.log(cont);
         if (cont!='')
         {
           var i = parent+1;
