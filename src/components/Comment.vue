@@ -99,7 +99,8 @@ export default {
     unSaved:{type:String,
     default: function(){return 'Save'}}
     ,
-    moderatorsUserNames:Array,
+    moderatorsUserNames:{typr:Array,default: function () { return [] }
+},
     postOwnerUserName:String
   },
   data(){
