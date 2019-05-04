@@ -354,7 +354,7 @@ export  const MimicComment =new Vue({
           return response.data;
          })
          .catch(function (error) {
-          swal("Log In First!!");
+          swal("You can't report... you are a moderator!");
           return false;
 
           });
