@@ -34,8 +34,8 @@ props:['userName'],
   background-color: #DAE0E6;
   height: 100%;
   min-height:720px;
-  margin-top: 0px;
-  min-width: 100%;
+  width: 90%;
+  margin-top: 4%;
 }
 .ds{
   width:60%;

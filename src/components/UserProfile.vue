@@ -4,7 +4,7 @@
 
         <router-link  style="font-size: 16px;"  id="posttab" class="navbarlinks" :to="{ name: 'UserPosts'}">posts</router-link>
         <router-link  style="font-size: 16px;"  id="savedtab" v-show="notGuest" class="navbarlinks" :to="{ name: 'Saved'}" >saved</router-link>
-        <router-link  style="font-size: 16px;"  id="hidden tab" v-show="notGuest" class="navbarlinks" :to="{ name: 'Hidden'}">hidden</router-link>
+        <router-link  style="font-size: 16px;"  id="hiddentab" v-show="notGuest" class="navbarlinks" :to="{ name: 'Hidden'}">hidden</router-link>
         <router-link style="font-size: 16px;" v-show="notGuest" id="blocklistab" class="navbarlinks" :to="{name:'blockLlist'}">block list</router-link>
     </div>
         <SideBar

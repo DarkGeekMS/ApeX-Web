@@ -76,7 +76,7 @@ created(){
     return{
 
       locked:false,
-      postOwnerUserName : this.onePostData.posted_by,
+      postOwnerUserName : this.onePostData.post_writer_username,
       moderatorsUserNames : []
 
     };

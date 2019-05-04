@@ -282,7 +282,7 @@ ignoreReport:function(mimic,userID,reportID, baseUrl){
   else{
            return axios.post(baseUrl + 'api/IgnoreReport', {
             user_id:userID,
-            reported_id:reportID,
+            report_id:reportID,
             token:this.$localStorage.get('token')
           })
           .then(response => {

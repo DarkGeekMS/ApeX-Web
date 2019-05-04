@@ -27,6 +27,8 @@
 import SideBar from './ApexComSideBar.vue'
 import {AllServices} from '../MimicServices/AllServices.js'
 import { EventBus } from '../main.js'
+import $ from'jquery/dist/jquery.min.js'
+
 /**
  * @vue-prop  {string} apexComId - community Id
  * @vue-data {JWT} [token='']  user Token
@@ -65,6 +67,12 @@ export default {
          this.moderators=about.moderators;
          this.image=about.avatar;
          this.isModeratorFunction();
+          $('#selectted').text('a/' + this.apexComName );
+          var remclass = $('#classed').prop('class');
+          $('#classed').removeClass(remclass);
+          $('#classed').addClass("glyphicon glyphicon-globe");
+
+
          })
    },
    /**
@@ -75,6 +83,12 @@ export default {
          this.apexComName=about.name;
          this.moderators=about.moderators;
          this.image=about.avatar;
+         $('#selectted').text('a/' + this.apexComName );
+         var remclass = $('#classed').prop('class');
+         $('#classed').removeClass(remclass);
+         $('#classed').addClass("glyphicon glyphicon-globe");
+
+
          });
    },
     /**
@@ -109,12 +123,11 @@ export default {
   if(this.loggedIn){
    this.getAbout();
    this.isAdminFunction();
-
    }
    else{
      this.getAboutGuest();
    }
-  },
+      },
   beforeRouteUpdate (to, from, next) {
     if(to.params.apexComId !==from.params.apexComId){
       if(this.loggedIn){
