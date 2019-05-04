@@ -67,7 +67,6 @@ updated(){
 },
 created(){
   
-    //  setInterval(() => console.log(this.onePostData.id ),1000);
 
 },
   data(){
