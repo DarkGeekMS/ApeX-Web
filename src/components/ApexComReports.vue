@@ -3,7 +3,7 @@
 <h4 v-show="(reportedPost.length ==0)&&(reportedComment.length ==0)" >there is nothing to show </h4>
  <div class='report' v-show="reportedComment.length !==0">
    <h4 class="title">Reported comments</h4>
-<div class="onereport" v-for="(report,index) in reportedComment" id='onereport'>
+<div class="onereport" v-for="(report,index) in reportedComment" id='onereport' >
   <div class="box">
   <h4>Reported by:</h4><router-link v-if="report.report.reporter_username" class="accountLink" :to="{name:'UserProfile' , params: {userName:report.report.reporter_username}}"> {{report.report.reporter_username}}</router-link>
   </div>
@@ -12,15 +12,15 @@
   <Comment class="comment"
    v-bind:user= report.comment.writerUsername  
    v-bind:content= report.comment.content 
-   v-bind:parentID=report.comment.parent
-   v-bind:ID=report.comment.id
-   v-bind:inReported=true
-   v-bind:con= OpString(report.comment.content) 
+   v-bind:parentID= report.comment.parent
+   v-bind:ID= report.comment.id
+   v-bind:con= OpString(report.comment.content)
+   v-bind:inReported= "true" 
    ></Comment>
 <div class="box">
 <h4>Reason:</h4> <h4>{{report.report.content}}</h4>
 </div>
-<button id="ignorebutton" class="button" type="button" v-on:click="ignoreReport(report.comment.commented_by,report.comment.id,index,'comment')">ignore report</button>
+<button id="ignorebutton" class="button" type="button" v-on:click="ignoreReport(report.report.userID,report.report.comID,index,'comment')">ignore report</button>
 </div>
 </div>
 
@@ -35,7 +35,7 @@
 <div class="box">
 <h4>Reason:</h4> <h4>{{report.report.content}}</h4>
 </div>
-<button id="ignorebutton" class="button" type="button" v-on:click="ignoreReport(report.post.posted_by,report.post.id,index,'post')">ignore report</button>
+<button id="ignorebutton" class="button" type="button" v-on:click="ignoreReport(report.report.userID,report.report.postID,index,'post')">ignore report</button>
 </div>
 </div>
 </div>
@@ -74,6 +74,7 @@ export default {
      */
     reviewReportsAC(){
          AllServices.reviewReportsAC(this.$route.params.apexComId).then((data) =>{
+           console.log(data);
          this.reportedComment=data.reported.ReportedComments;
          this.reportedPost=data.reported.ReportedPosts;
         });
@@ -94,7 +95,7 @@ export default {
     });
 
    },
-         OpString:function(content){
+OpString:function(content){
         var con = [];
         for (var i = 0;i<content.length;i++)
                 {

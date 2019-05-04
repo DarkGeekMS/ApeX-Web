@@ -1,6 +1,7 @@
 <template>
 
   <div id="Comment" v-show = "deleted">
+    
      <div v-bind:style="{marginLeft: level*4 +'%'}">
       <div id = "firstLine">
         <button id ="Up" v-on:click="Upvote" v-show="!this.upVoted" class = "arrows,up"></button>
@@ -34,7 +35,7 @@
       
 
       <div id = "thirdLine" v-show="!showEditBox">
-        <button class = "buttons" v-on:click = "replyClicked"  id = "Reply">Reply</button>
+        <button class = "buttons" v-on:click = "replyClicked"  id = "Reply"  v-show = "showReplyButton">Reply</button>
         <button class = "buttons" id = "Report" @click="Report" v-show = "showReportButton">Report</button>
         <button class = "buttons" v-on:click="Save" id = "Save" >{{unSaved}}</button>
         <button class = "buttons" v-on:click = "showEditBox = !showEditBox  ,showReplyBox = false" id = "Edit" v-show = "showEditButton">Edit</button>
@@ -99,7 +100,11 @@ export default {
     unSaved:{type:String,
     default: function(){return 'Save'}}
     ,
-    moderatorsUserNames:Array,
+    inReported:{type:Boolean,
+    default:function(){return false}
+    },
+    moderatorsUserNames:{typr:Array,default: function () { return [] }
+},
     postOwnerUserName:String
   },
   data(){
@@ -112,7 +117,8 @@ export default {
     showDeleteButton:false,
     showEditButton:false,
     showReportButton:false,
-    moment:moment
+    moment:moment,
+    showReplyButton:true
 
 
     }
@@ -122,7 +128,7 @@ export default {
           var isModerator = false;
           for(var i = 0;i<this.moderatorsUserNames.length;i++)
           {
-            if (this.$localStorage.get('userName') == this.moderatorsUserNames[i]){
+            if (this.$localStorage.get('userName') == this.moderatorsUserNames[i].username){
               isModerator=true;
               break;
             }
@@ -145,6 +151,11 @@ export default {
     {
       // guest
       this.guestButtons();
+    }
+    if(this.inReported){
+      this.showEditButton=false;
+      this.showReportButton=false;
+      this.showReplyButton = false;
     }
   },
   methods:{

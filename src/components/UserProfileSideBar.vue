@@ -73,7 +73,7 @@
 		/>
 </g>
 </svg>
-<h5 style="display:inline; font-size: 14px; color:#7c7c7c;" id="cakedaynumber" > {{cakeDay}} </h5>
+<!-- <h5 style="display:inline; font-size: 14px; color:#7c7c7c;" id="cakedaynumber" > {{cakeDay}} </h5> -->
   </div>
 </div>
           <button v-show="notGuest&&!settings" id="createpostbutton" class="button" type="button" v-on:click="createPost()">new post</button>
@@ -116,7 +116,7 @@ export default {
       loggeduser:this.$localStorage.get('userName'),
       karmaCount:0,
       image:'',
-      cakeDay:'',
+      // cakeDay:'',
       fullName:'',
       id:'',
       isAdmin:false,
@@ -154,7 +154,7 @@ export default {
        })
        }
       else{
-        this.$modal.show('demo-login');
+        swal('you have to log in first');
       }
     },
     /**
@@ -196,7 +196,7 @@ export default {
     /**
     * get user profile info
     */
-    getUserProfile:function(){
+    getUserProfile:function(){ 
       AllServices.getUserInfo().then((data) =>{
       this.karmaCount = data.user_info[0].karma;
       this.image = data.user_info[0].avatar;
