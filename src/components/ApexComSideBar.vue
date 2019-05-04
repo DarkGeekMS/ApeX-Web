@@ -219,8 +219,12 @@ export default {
       */
     getAbout(){
          AllServices.getAbout(this.apexComId).then((about) => {
+           
          this.description=about.description;
          this.moderators=about.moderators;
+
+           this.$emit('mod',this.moderators );
+
          this.rules=about.rules;
          this.apexComName=about.name;
          this.image=about.avatar;
@@ -259,7 +263,7 @@ export default {
    this.getAbout();
    this.isAdminFunction();
    this.getSubscribers();
-   this.$emit('mod',this.moderators );
+   
    }
    else{
      this.getAboutGuest();

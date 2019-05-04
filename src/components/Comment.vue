@@ -99,7 +99,8 @@ export default {
     unSaved:{type:String,
     default: function(){return 'Save'}}
     ,
-    moderatorsUserNames:Array,
+    moderatorsUserNames:{typr:Array,default: function () { return [] }
+},
     postOwnerUserName:String
   },
   data(){
@@ -122,7 +123,7 @@ export default {
           var isModerator = false;
           for(var i = 0;i<this.moderatorsUserNames.length;i++)
           {
-            if (this.$localStorage.get('userName') == this.moderatorsUserNames[i]){
+            if (this.$localStorage.get('userName') == this.moderatorsUserNames[i].username){
               isModerator=true;
               break;
             }
