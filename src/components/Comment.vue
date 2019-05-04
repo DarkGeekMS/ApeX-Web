@@ -1,19 +1,18 @@
 <template>
 
   <div id="Comment" v-show = "deleted">
-    
      <div v-bind:style="{marginLeft: level*4 +'%'}">
       <div id = "firstLine">
         <button id ="Up" v-on:click="Upvote" v-show="!this.upVotedLocal" class = "arrows,up"></button>
         <button id ="Up2" v-on:click="Upvote" v-show="this.upVotedLocal" class = "arrows,up"></button>
-        <router-link
-          class ="smallText"
+        
+        <b class = "smallText">
+          <router-link
           :to="{name:'UserProfile' ,
            params: {userName:this.user}}">
             {{user}}
-          </router-link>
-        <b class = "smallText">{{pointsLocal}} points</b>
-        <b class = "smallText">{{moment(date).fromNow()}}</b>
+          </router-link>{{pointsLocal}} points {{moment(date).fromNow()}} </b>
+        <!-- <b class = "smallText"></b> -->
         </div>
 
       <br>
@@ -158,8 +157,10 @@ this.unSavedLocal=this.unSaved;
       // moderator
       this.moderatorButtons();
     }
+    
     else if (this.$localStorage.get('userName') == this.postOwnerUserName)
     {
+      console.log("aho");
       // post owner
       this.postOwnerButtons();
     }
@@ -421,6 +422,7 @@ deleteReportedComment:function(idx){
     width:53%;
     float:left;
     background:transparent;
+    margin-bottom:20px;
 }
 
 
@@ -469,7 +471,6 @@ deleteReportedComment:function(idx){
     font-family: 'Courier New', Courier, monospace;
     font-style:normal;
     margin-right: 7px;
-
 }
 .smallText:hover{
     background-color: rgb(235, 233, 233);
@@ -479,6 +480,7 @@ deleteReportedComment:function(idx){
 
 }
 #secondLine{
+  /* float:left; */
     padding-top: 4px;
 }
 #thirdLine{
@@ -536,4 +538,15 @@ width:60%;
 float:left;
 margin-top:5%;
 }
+@media only screen and (max-width: 500px) {
+    .smallText {
+        display: none;
+    }
+}
+@media only screen and (max-width: 500px) {
+    #thirdLine {
+        display: none;
+    }
+}
+
 </style>
