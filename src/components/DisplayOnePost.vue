@@ -1,6 +1,6 @@
 <template>
 <div id="DisplayOnePost" class="modalview">
-<modal id="PopupModal" name="Demo-OnePost" :scrollable="true" @before-close="close()"  transition="pop-out"  width="90%" height="auto">
+<modal id="PopupModal" name="Demo-OnePost" :scrollable="true"   transition="pop-out"  width="90%" height="auto">
   <div id="PostContent" class="postContent">
     <div>
 
@@ -55,9 +55,7 @@ components:
   'CommentParent':CommentParent,
   'ApexComSideBar':ApexComSideBar
 },
-close: function () {
-  alert("sss")
-},
+
 methods:{
 moderators:function(m){
   this.moderatorsUserNames = m;
