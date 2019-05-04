@@ -109,7 +109,6 @@ export default {
   if(this.loggedIn){
    this.getAbout();
    this.isAdminFunction();
-
    }
    else{
      this.getAboutGuest();
