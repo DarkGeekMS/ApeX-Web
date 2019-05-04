@@ -14,6 +14,7 @@
    v-bind:content= report.comment.content 
    v-bind:parentID=report.comment.parent
    v-bind:ID=report.comment.id
+   v-bind:inReported=true
    v-bind:con= OpString(report.comment.content) 
    ></Comment>
 <div class="box">

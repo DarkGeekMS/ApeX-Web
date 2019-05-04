@@ -1,5 +1,6 @@
 <template>
 <div id="DisplayOnePost" class="modalview">
+
 <modal id="PopupModal" name="Demo-OnePost" :scrollable="true"  transition="pop-out"  width="90%" height="auto">
   <div id="PostContent" class="postContent">
     <div>
@@ -73,7 +74,7 @@ created(){
     return{
 
       locked:false,
-      postOwnerUserName : this.onePostData.posted_by,
+      postOwnerUserName : this.onePostData.post_writer_username,
       moderatorsUserNames : []
       
     };
