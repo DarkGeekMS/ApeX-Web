@@ -2,11 +2,11 @@
 
   <div class="postMod" >
     <!-- VERY IMPORTANT! REPORT MODAL APPEARS MULTIPLE TIMES FOR EACH POST  -->
-   <reportBox 
+   <reportBox
      v-show="showReport"
      v-bind:ID ='postData.id'
      v-bind:idx ='idx'
-     
+
      > </reportBox>
 
 <div class="panel panel-default"  @click="ShowModal()"  id="post" v-show="!this.Deleted&&this.Not_Hide&&!this.Reported">
@@ -34,12 +34,21 @@
       </div>
 
 
-      <router-link class="fontUser" id="subred" :to="{name:'NewApexCom' , params: {apexComId:postData.apex_id}}">{{postData.apex_com_name}}</router-link>
-      <font class="postby" id="fontPostby">. Posted by</font>
-      <router-link class="postby" id="user" :to="{name:'UserPosts' , params: {userName:postData.post_writer_username}}"> {{postData.post_writer_username}}</router-link>
+<div class="posthead">
 
+  <div  class="fontUser" @click="ToggleShowModalVar()">
+      <router-link  class="fontUser" id="subred" :to="{name:'NewApexCom' , params: {apexComId:postData.apex_id}}">{{postData.apex_com_name}}</router-link>
+    </div>
+      <font class="postby" id="fontPostby">. Posted by u/</font>
+      <div class="postby" @click="ToggleShowModalVar()">
+      <router-link  class="postby" id="user" :to="{name:'UserPosts' , params: {userName:postData.post_writer_username}}"> {{postData.post_writer_username}}</router-link>
+    </div>
       <font class="postby" id="fontpost"> </font>
-      <a href="#" class="postby" id="timeAgo">  {{moment(postData.created_at).fromNow()}}</a>
+      <a  class="postby" id="timeAgo">  . {{moment(postData.created_at).fromNow()}}</a>
+
+    </div>
+
+
       <h3>{{postData.title}}</h3>
       <p id="postBody" class="hPost" v-if="!this.showEditTextArea">
 
@@ -140,7 +149,6 @@ export default {
    data(){
        return{
              moment:moment,
-              isModal:false,
              showEditTextArea:false,
              editShow:false,
              Not_Hide :true,
@@ -173,8 +181,8 @@ export default {
              upVoted:false,
              downVoted:false,
              idx:0,
-          
-          
+
+
             };
          },
 
@@ -460,7 +468,6 @@ export default {
 * show the clicked post on the modal.
 */
       ShowModal(){
-        this.isModal=true;
         if(this.ShowModalVar == true){
           this.postData.hide=this.is_Hide;
           this.postData.votes=this.points;
@@ -615,16 +622,20 @@ h5 {
         -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05);
         box-shadow: 0 1px 1px rgba(0,0,0,.05);
     }
-
+.posthead{
+  display: inline;
+}
 .fontUser{
     font-size: 12px;
     font-weight: 700;
     color: rgb(28, 28, 28);
+    display: inline-block;
          }
 .postby{
     font-size: 12px;
     color: rgb(120, 124, 126);
     cursor: pointer;
+    display: inline-block;
 }
 .buttonDelete{
       background-color: #f4511e;
