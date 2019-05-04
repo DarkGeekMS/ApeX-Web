@@ -37,7 +37,7 @@
 <div class="posthead">
 
   <div  class="fontUser" @click="ToggleShowModalVar()">
-      <router-link  class="fontUser" id="subred" :to="{name:'NewApexCom' , params: {apexComId:postData.apex_id}}">{{postData.apex_com_name}}</router-link>
+      <router-link  class="fontUser" id="subred" :to="{name:'NewApexCom' , params: {apexComId:postData.apex_id,ap:postData.apex_id}}">{{postData.apex_com_name}}</router-link>
     </div>
       <font class="postby" id="fontPostby">. Posted by u/</font>
       <div class="postby" @click="ToggleShowModalVar()">
