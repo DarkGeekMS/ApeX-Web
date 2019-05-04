@@ -43,6 +43,7 @@ import Comment from './Comment.vue'
 import {AllServices} from '../MimicServices/AllServices.js'
 import reportBox from './ReportModal.vue'
 
+import swal from 'sweetalert'
 
 
 export default {
