@@ -2,7 +2,7 @@
 
 
 <template>
-<modal name="changepass" transition="pop-out" :scrollable="true" width="44%" height="44%">
+<modal name="changepass" transition="pop-out" :scrollable="true" width="44%" height="44%" @before-open="beforeOpen">
   <div class="box">
     <div class="box-part" id="bp-left">
       <div class="partition" id="partition-register">
@@ -19,6 +19,8 @@
             <input v-model="password" id="n-password2" type="password" placeholder="New Password">
 
           </form>
+
+           <span id="PassError" class="lead" style="fontSize:15px; color:red; padding-left:15px"> {{error}}  </span>
 
 
           <div class="button-set">
@@ -41,18 +43,34 @@ export default {
       password:'',
       username:'',
       key:'',
+      error:''
     }
   },
 
 
   methods:{
     change(){
-    AllServices.changePass(this.password,this.username,this.key).then((data)=> {});
-    this.$modal.hide('changepass');
-},
+      if(this.password == '')
+      {
+        this.error = 'Please enter the new password'
+      }
+      else if(this.password.length < 6)
+      {
+        this.error = "Password must be at least 6 characters long"
+      }
+      else{
+          AllServices.changePass(this.password,this.username,this.key).then((data)=> {});
+          this.$modal.hide('changepass');
+      }
+
+    },
     hide () {
     this.$modal.hide('changepass');
-  }
+  },
+  beforeOpen:function (event) {
+      this.error=""
+
+    }
 
   }
 
