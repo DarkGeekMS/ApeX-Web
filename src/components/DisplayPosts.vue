@@ -4,14 +4,14 @@
      <post
       v-bind:postData="onePost"
       v-on:showUp="showPost"
-    
+
       >
       </post>
 
     </div>
-    <OnePost  
-     id="PostModal" 
-     :onePostData="postInfo"  
+    <OnePost
+     id="PostModal"
+     :onePostData="postInfo"
      v-bind:upVoted="upVoted"
      v-bind:downVoted="downVoted"></OnePost>
     <!-- v-bind:style="{width: 80 +'%'}" -->
@@ -52,9 +52,9 @@ return{
 },
 mounted () {
   this.getPosts();
-
+  setInterval(() => this.getPosts(), 120000);
   },
-  
+
 // beforeUpdate(){
 //
 // this.getPosts();
@@ -103,7 +103,7 @@ else{
   AllServices.getUserInfoByIdforGuest(this.userName).then((data) =>{ this.posts = data.posts;})
 }
 else{
-  alert("hena keda 3azama awy")
+
   AllServices.getUserInfoById(this.userName).then((data) =>{this.posts = data.posts;})
 }
 }
