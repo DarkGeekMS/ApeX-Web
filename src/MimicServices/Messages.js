@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import axios from 'axios'
+import swal from 'sweetalert'
+
 export  const MimicMessage =new Vue({
 
   methods:{
@@ -16,28 +18,14 @@ export  const MimicMessage =new Vue({
               });
     return promise1;
           }
-          alert("Log In First!!");
+          swal("Log In First!!");
           return false;
       }
       else
       {
-//         axios.post(baseUrl + 'api/Me', {
-//           token:this.$localStorage.get('token')
-//       })
-//          .then(response=> {
-//            console.log("me",response);
-//          })
-//          .catch(function (error) {
-//           return false;
-
-//           });
 
 
 
-// console.log("rec",rec);
-
-
-//           console.log(title);
         return axios.post(baseUrl + 'api/ComposeMessage', {
             receiver:rec,
             subject:title,
@@ -48,7 +36,7 @@ export  const MimicMessage =new Vue({
             return response.data;
            })
            .catch(function (error) {
-            alert("You Can't Message this User");
+            swal("You Can't Message this User");
             return false;
 
             });
@@ -93,7 +81,6 @@ export  const MimicMessage =new Vue({
       }
       else
       {
-        console.log(ID);
 
         return axios.post(baseUrl + 'api/BlockUser', {
             blockedID:ID,

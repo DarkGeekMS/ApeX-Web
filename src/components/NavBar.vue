@@ -19,8 +19,8 @@
       <ul class="dropdown-menu drop1">
         <li class="dropdown-header">APEX FEEDS</li>
         <li v-show="this.$localStorage.get('login')"><a href="/" class="glyphicon glyphicon-home blue" ><span id="items">Home</span></a></li>
-        <li><router-link  :to="{ name: 'NewHomePage', params:''}" class="glyphicon glyphicon-arrow-up blue"><span id="items">Popular</span></router-link></li>
-        <li><router-link :to="{ name: 'NewHomePage', params:''}" class="glyphicon glyphicon-stats blue"><span id="items">All</span></router-link></li>
+        <li><router-link  :to="{ name: 'HotHomePage'}" class="glyphicon glyphicon-arrow-up blue"><span id="items">Popular</span></router-link></li>
+        <li><router-link :to="{ name: 'NewHomePage'}" class="glyphicon glyphicon-stats blue"><span id="items">All</span></router-link></li>
         <li><a href="#"> <span style="background-color:blue; color:white; padding-left:3px"> oc </span> <span style="color:black;padding-left:7%">Original Content</span></a></li>
 
         <li v-show="log" class="divider"></li>
@@ -73,7 +73,7 @@
       </button>
       <ul class="dropdown-menu">
         <li class="dropdown-header">MY STUFF</li>
-        <li><router-link :to="{ name: 'UserProfile', params: {userName:userLog} } "><i class="glyphicon glyphicon-user"/> My Profile</router-link></li>
+        <li><router-link :to="{ name: 'UserPosts', params: {userName:userLog} } "><i class="glyphicon glyphicon-user"/> My Profile</router-link></li>
         <li><router-link :to="{ name: 'UserSettings',params:{user:userLog}}" ><i class="glyphicon glyphicon-cog"></i> User Settings</router-link></li>
         <li class="divider"></li>
         <li><a style="cursor:pointer" class="logOut" @click="Logout()"> <i class="glyphicon glyphicon-log-out"></i>   Log Out</a></li>
@@ -224,8 +224,8 @@ import $ from'jquery/dist/jquery.min.js'
         }
       },
       /**
-       * when user or guest click at popular sort at navbar  
-      */      
+       * when user or guest click at popular sort at navbar
+      */
       NavHot:function()
       {
         this.$router.push({ name: 'HotHomePage', params:'' });
@@ -235,8 +235,8 @@ import $ from'jquery/dist/jquery.min.js'
         $('#classed').addClass("glyphicon glyphicon-arrow-up");
       },
       /**
-       * when user or guest click at All sort at navbar  
-      */  
+       * when user or guest click at All sort at navbar
+      */
       NavAll:function()
       {
         this.$router.push({ name: 'NewHomePage', params:''});

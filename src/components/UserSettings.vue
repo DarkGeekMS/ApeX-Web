@@ -172,19 +172,18 @@ export default {
     },
 updateprefs(){
 
+
+
   let formData = new FormData();
   formData.append('username', this.userName);
   formData.append('fullname', this.userName);
   formData.append('email', this.email);
-
-  if(this.imgName!=null){
+  if(this.imgName!=''){
     formData.append('avatar', this.imgContent, this.imgContent.name);
   }
-  else{
-    formData.append('avatar', this.avatar);
-  }
 
-  formData.append('notifications', this.notifie);
+
+  formData.append('notification', this.notifie);
   formData.append('token', this.$localStorage.get('token'));
 
 

@@ -1,6 +1,6 @@
 <template>
 <div id="DisplayOnePost" class="modalview">
-<modal id="PopupModal" name="Demo-OnePost" :scrollable="true"  transition="pop-out"  width="90%" height="auto">
+<modal id="PopupModal" name="Demo-OnePost" :scrollable="true" @before-close="close()"  transition="pop-out"  width="90%" height="auto">
   <div id="PostContent" class="postContent">
     <div>
 
@@ -14,6 +14,7 @@
   </div>
  <ApexComSideBar
    v-bind:apexComId= onePostData.apex_id
+      v-on:mod = moderators
  class="sidebar"></ApexComSideBar>
 
       <CommentParent
@@ -22,7 +23,7 @@
       v-bind:postID= onePostData.id
       class="cmt"
       v-bind:postOwnerUserName = 'postOwnerUserName'
-      v-bind:moderatorUserName = 'moderatorUserName'
+      v-bind:moderatorsUserNames = 'moderatorsUserNames'
       >
       </CommentParent>
 
@@ -46,7 +47,7 @@ props:{
 
   },
 
-  
+
 },
 components:
 {
@@ -54,7 +55,13 @@ components:
   'CommentParent':CommentParent,
   'ApexComSideBar':ApexComSideBar
 },
+close: function () {
+  alert("sss")
+},
 methods:{
+moderators:function(m){
+  this.moderatorsUserNames = m;
+}
 
 },
 updated(){
@@ -62,16 +69,16 @@ updated(){
 
 },
 created(){
-  
-    //  setInterval(() => console.log(this.onePostData.id ),1000);
+
 
 },
   data(){
     return{
 
       locked:false,
-      postOwnerUserName : "hohoho",
-      moderatorUserName : 'FF',
+      postOwnerUserName : this.onePostData.post_writer_username,
+      moderatorsUserNames : []
+
     };
       }
 

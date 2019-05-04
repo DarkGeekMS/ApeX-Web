@@ -4,7 +4,7 @@
     <div class="box" id="infobox">
         <div class="bluebackgroung">
           <div class="img">
-             <img width="100%" class="image" :src="image" />
+             <img width="100%" class="image" :src="'http://35.232.3.8'+image" />
           </div>
         </div>
         <div class="content">
@@ -73,7 +73,7 @@
 		/>
 </g>
 </svg>
-<h5 style="display:inline; font-size: 14px; color:#7c7c7c;" id="cakedaynumber" > {{cakeDay}} </h5>
+<!-- <h5 style="display:inline; font-size: 14px; color:#7c7c7c;" id="cakedaynumber" > {{cakeDay}} </h5> -->
   </div>
 </div>
           <button v-show="notGuest&&!settings" id="createpostbutton" class="button" type="button" v-on:click="createPost()">new post</button>
@@ -116,7 +116,7 @@ export default {
       loggeduser:this.$localStorage.get('userName'),
       karmaCount:0,
       image:'',
-      cakeDay:'',
+      // cakeDay:'',
       fullName:'',
       id:'',
       isAdmin:false,
@@ -130,7 +130,6 @@ export default {
     */
     isAdminFunction:function(){
       AllServices.userType().then((data) =>{
-        console.log(data.user.type+'meside')
         if(data.user.type ==3){
           this.isAdmin= true;
           }
@@ -155,7 +154,7 @@ export default {
        })
        }
       else{
-        this.$modal.show('demo-login');
+        swal('you have to log in first');
       }
     },
     /**
@@ -197,30 +196,23 @@ export default {
     /**
     * get user profile info
     */
-    getUserProfile:function(){
+    getUserProfile:function(){ 
       AllServices.getUserInfo().then((data) =>{
-        console.log('helloo');
       this.karmaCount = data.user_info[0].karma;
-      this.image = 'http://35.232.3.8'+data.user_info[0].avatar;
+      this.image = data.user_info[0].avatar;
       this.id = data.user_info[0].id;
       this.fullName = data.user_info[0].fullname;
-      this.savedPosts = data.posts.saved_posts;
-      this.hiddenPosts = data.hidden_posts;
-      this.personalPosts = data.posts;
-
       })
    },
     /**
     * get user account data for another user
     */
    getUserData:function(){
-     console.log(this.userName);
       AllServices.getUserInfoById(this.userName).then((data) =>{
       this.karmaCount = data.userData.karma;
-      this.image = 'http://35.232.3.8'+data.userData.avatar;
+      this.image = data.userData.avatar;
       this.id = data.userData.id;
       this.fullName = data.userData.fullname;
-      this.personalPosts = data.posts;
       // this.cakeDay = data.userData.cakeDay;
       })
    },
@@ -230,10 +222,9 @@ export default {
    getUserDataForGuest:function(){
      AllServices.getUserInfoByIdforGuest(this.userName).then((data) =>{
       this.karmaCount = data.userData.karma;
-      this.image ='http://35.232.3.8'+ data.userData.avatar;
+      this.image =data.userData.avatar;
       this.id = data.userData.id;
       this.fullName = data.userData.fullname;
-      this.personalPosts = data.posts;
      })
    },
   },

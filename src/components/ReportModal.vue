@@ -1,6 +1,6 @@
 <template>
 <div>
-<modal name="reportBox" transition="pop-out" width="50%" height="80%" :clickToClose="false">
+<modal name="reportBox" transition="pop-out" width="50%" height="505px" :clickToClose="false">
  
   <div class = "checked" v-show = "checked && checkedLevel == 0"  v-bind:style="{marginTop: 2 +'px'}"></div>
   <div class = "checked" v-show = "checked && checkedLevel == 1"  v-bind:style="{marginTop: 54 +'px'}"></div>
@@ -34,6 +34,11 @@
 </template>
 
 <script>
+/**
+ * @vue-data {string} [ID] ID of the comment or post to be reported
+ * @vue-data {integer} [idx]   idx of the comment in the array to be deleted from the array in comment parent if the comment is reported successfully
+
+ */
 import {AllServices} from '../MimicServices/AllServices.js'
 export default {
   name: 'reportBox',
@@ -57,7 +62,6 @@ export default {
       if(this.reason == "It's spam or abuse"){
         this.reason = "none";
         this.enable = false;
-        this.changeColorButton("1");
         this.checked = false;
       }
       else{
@@ -179,12 +183,6 @@ export default {
     });
     }
     ,
-    changeColorButton:function(id){
-      // document.getElementById('1').bgcolor='rgb(159, 252, 201)';
-      document.getElementById("1").style.backgroundColor="#000000";
-      document.getElementById("pp").style.backgroundColor="#000000";
-
-    },
     close:function(){
       this.checked = false;
       this.checkedLevel=0;

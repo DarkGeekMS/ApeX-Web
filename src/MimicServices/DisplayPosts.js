@@ -164,7 +164,7 @@ else {
     {
       return axios.post(baseUrl + 'api/SortPosts',
      {
-        apexCommID:ApexComName ,
+        apexComID:ApexComName ,
         sortingParam:sortparam,
         token:this.$localStorage.get('token')
       }).then(response => {
