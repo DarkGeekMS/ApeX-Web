@@ -3,7 +3,7 @@ import axios from 'axios'
 
 export  const MimicUserSettings =new Vue({
   methods:{
-    deleteAcc: function(mimic,Pass,id, baseUrl){
+    deleteAcc: function(mimic,id,Pass, baseUrl){
       if(mimic==true){
 
         if(pass!="")
@@ -25,6 +25,8 @@ return promise1;
                 }
               }
 else {
+  alert(id)
+  alert(Pass)
   return axios.delete(baseUrl + 'api/DeleteUser',
  {
     UserID:id,

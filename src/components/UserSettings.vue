@@ -182,8 +182,11 @@ updateprefs(){
     formData.append('avatar', this.imgContent, this.imgContent.name);
   }
 
-
-  formData.append('notification', this.notifie);
+if(this.notifie){
+  formData.append('notification',1);
+}else{
+  formData.append('notification',0);
+}
   formData.append('token', this.$localStorage.get('token'));
 
 
