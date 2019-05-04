@@ -41,17 +41,20 @@ password:'',
 id:''
     }
   },
+  mounted(){
+    AllServices.userType().then((data)=>{
+      console.log(data.user.id)
+      this.id=data.user.id
+    });
+  },
 methods:{
 hide(){
   this.$modal.hide('DeleteAcount')
 },
 deleteacc(){
-  AllServices.userType().then((data)=>{
-    this.id=data.user.id
-  });
   AllServices.deleteAcc(this.id,this.password).then((data) => {
    this.error= data;
-console.log(data) });
+});
 },
 ErrorCheck(){
 // todo check error type and do behavior

@@ -3,7 +3,7 @@
     <router-link  id="subDiv" v-show="exist" v-for='(apex,index) in apexs' :key="index" :to="{ name:'HotApexCom', params: {apexComId:apex.id} }" > 
       <div id="sub1">
          <img width="38px" :src="'http://35.232.3.8'+ apex.avatar" />
-         <a class="name"> {{apex.name}} <br/> <span class="memb"> {{apex.numOfMeb}} Members </span></a>
+         <a class="name"> {{apex.name}} <br/> <span class="memb"> {{apex.subscribers_count}} Members </span></a>
          <span >  </span>
        </div>
        <div class="about"  style="display:inline-block;float:right">{{apex.description}} </div>
