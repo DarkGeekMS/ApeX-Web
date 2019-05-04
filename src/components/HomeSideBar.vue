@@ -36,7 +36,7 @@ import $ from'jquery/dist/jquery.min.js'
     data () {
       return {
         login: false,
-        type: 1
+        type: 0
       }
     },
     created () {
@@ -44,7 +44,7 @@ import $ from'jquery/dist/jquery.min.js'
         this.login = this.$localStorage.get('login')
       }, 1000)
     },
-    mounted(){
+    beforeUpdate(){
       if(this.$localStorage.get('login'))
       {
         AllServices.userType().then((data)=>{
