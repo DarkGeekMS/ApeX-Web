@@ -43,7 +43,6 @@ import Comment from './Comment.vue'
 import {AllServices} from '../MimicServices/AllServices.js'
 import reportBox from './ReportModal.vue'
 
-import swal from 'sweetalert'
 
 
 export default {
@@ -106,7 +105,6 @@ export default {
      * @param {string} cID current ID
  */
       addReply:function(cont,con,parent,l,pID,cID){
-        console.log(cont);
         if (cont!='')
         {
           var i = parent+1;

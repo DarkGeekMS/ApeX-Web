@@ -56,7 +56,6 @@ export  const MimicMessage =new Vue({
       }
       else
       {
-        console.log(baseUrl,'jjjj',ID,'cccc',this.$localStorage.get('token'));
         return axios.delete(baseUrl + 'api/DeleteMessage', {
           data:{
             id:ID,
@@ -66,7 +65,6 @@ export  const MimicMessage =new Vue({
             return response.data;
            })
            .catch(function (error) {
-             console.log(error);
             return false;
 
             });
