@@ -51,7 +51,7 @@ export  const MimicComment =new Vue({
         else
         {
             var self = this;
-            axios.delete(baseUrl + 'api/Delete', {
+            return axios.delete(baseUrl + 'api/Delete', {
                 data : {
                 name: ID,
                 token: self.$localStorage.get('token')
@@ -74,7 +74,7 @@ export  const MimicComment =new Vue({
         }
         else
         {
-            axios.post(baseUrl + 'api/Save', {
+            return axios.post(baseUrl + 'api/Save', {
             ID: ID,
             token:this.$localStorage.get('token')
              })
@@ -166,10 +166,7 @@ export  const MimicComment =new Vue({
        })
       .catch(function (error)
       {
-        return {
-            done:false,
-            points:points
-        }
+        return false;
        });
         }
     },
