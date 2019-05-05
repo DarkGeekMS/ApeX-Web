@@ -463,8 +463,16 @@ export default {
         this.ToggleShowModalVar();
 
       }
+      
         this.PostId=this.postData.id;
         this.saveCheck=!this.saveCheck;
+        if(this.saveCheck==true){
+          this.postData.current_user_saved_post=true;
+         }
+         else{
+           this.postData.current_user_saved_post=false;
+
+         }
         AllServices.save(this.$localStorage.get('token'),this.PostId);
 
 

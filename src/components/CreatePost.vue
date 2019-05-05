@@ -154,6 +154,7 @@ export default {
 
         switchTo:'Switch to Fancy Pants Editor',
         normal:true,
+        ID:'',
         isCreated:false,
         indx:null,
         enable:true,
@@ -250,6 +251,7 @@ this.apexComId=this.apexs[this.indx-1].id;
             document.getElementById('button').disabled = false;
 
         }
+        
 
 
 
@@ -370,12 +372,15 @@ this.apexComId=this.apexs[this.indx-1].id;
       var id
       
       AllServices.submit(formData).then((data)=>{
-
+      if(data){
        id=data.id;
-     
-      });
+       this.$emit('PostEmit',id,dateTime,this.title,this.bodyPost,this.imgName,this.videoUrl,this.$localStorage.get('userName'),this.apexs[this.indx-1].name);
+       
+      }
    
-      this.$emit('PostEmit',id,dateTime,this.title,this.bodyPost,this.imgName,this.videoUrl,this.$localStorage.get('userName'),this.apexs[this.indx-1].name);
+      });
+
+
     }
     },
 
