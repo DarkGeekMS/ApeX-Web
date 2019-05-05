@@ -73,14 +73,20 @@
 import {AllServices} from '../MimicServices/AllServices.js'
 import $ from'jquery/dist/jquery.min.js'
 import swal from 'sweetalert';
-
+/**
+ * @vue-data  {string} name - the name of tha ApexCom we what to create
+  *@vue-data {string} description - the description of tha ApexCom we what to create
+  *@vue-data {string} rule - the rules of tha ApexCom we what to create
+  *@vue-data {string} error - the value returned from the request
+  *@vue-data {string} imgContent - the image of tha ApexCom we what to create
+*/
 export default {
   data(){
     return{
     name:"",
     description:"",
     rule:"",
-    error:false,
+    error:'',
     imgName:'',
     imgContent:'',
     image:''
@@ -96,12 +102,6 @@ export default {
 computed:{
 },
 methods:{
-  onDrop: function(e) {
-       e.stopPropagation();
-       e.preventDefault();
-       var files = e.dataTransfer.files;
-       this.createFile(files[0]);
-     },
       /**
     * when the user upload the img it enable the post button and store the img src
     */
@@ -143,7 +143,9 @@ methods:{
        this.imgContent=null;
        this.Enable();
      },
-
+     /**
+   * Create the ApexCom
+   */
   CreateApex:function() {
     if(this.name.length>3&&this.description.length>3&&this.rule.length>3){
       let formData = new FormData();

@@ -12,7 +12,6 @@ import HomeSideBar from "./HomeSideBar.vue"
 import $ from'jquery/dist/jquery.min.js'
 
 export default {
-  props:['sortingparam'],
   name: 'HomePage',
   components:{
     'DisplayPosts':DisplayPosts,
@@ -20,11 +19,6 @@ export default {
     'Sort':Sort,
 
   },
-  data(){
-    return{
-    }
-  },
-
   mounted()
     {
       if(this.$localStorage.get('login')){
@@ -47,7 +41,4 @@ export default {
 </script>
 
 <style scoped>
-.ds{
-  width: 60%
-}
 </style>

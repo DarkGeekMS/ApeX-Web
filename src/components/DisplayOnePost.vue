@@ -1,6 +1,6 @@
 <template>
 <div id="DisplayOnePost" class="modalview">
-<modal id="PopupModal" name="Demo-OnePost" :scrollable="true"  transition="pop-out"  width="90%" height="auto">
+<modal id="PopupModal" name="Demo-OnePost" :scrollable="true"  transition="pop-out"  width="90%" height="90%">
   <div id="PostContent" class="postContent">
     <div>
 
@@ -18,11 +18,11 @@
  class="sidebar"></ApexComSideBar>
 yy{{onePostData.post_writer_username}}
 
-      <CommentParent 
-     
-      v-show="onePostData.locked==0" 
-      v-bind:postID= onePostData.id 
-      class="cmt"  
+      <CommentParent
+
+      v-show="onePostData.locked==0"
+      v-bind:postID= onePostData.id
+      class="cmt"
       v-bind:postOwnerUserName = "onePostData.post_writer_username"
       v-bind:moderatorsUserNames = 'moderatorsUserNames'
       >
@@ -40,15 +40,15 @@ import CommentParent from "./CommentParent.vue"
 import ApexComSideBar from "./ApexComSideBar.vue"
 /**
  * @vue-prop  {object} onePostData - the data of the post in the modal
+ * @vue-data  {boolean} locked - the post is locked or not
+ * @vue-data  {string} postOwnerUserName - the post owner user name
+ * @vue-data  {array} moderatorsUserNames - the array of moderators of the ApexCom of that post
+
  */
 export default {
 name: 'DemoOnePost',
 props:{
-  onePostData:{
-
-  },
-
-  
+  onePostData:{},
 },
 components:
 {
@@ -62,21 +62,13 @@ moderators:function(m){
 }
 
 },
-updated(){
-
-
-},
-created(){
-  
-
-},
   data(){
     return{
 
       locked:false,
       postOwnerUserName : this.onePostData.post_writer_username,
       moderatorsUserNames : []
-      
+
     };
       }
 

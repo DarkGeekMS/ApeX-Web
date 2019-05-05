@@ -14,14 +14,7 @@ name: 'UserPosts',
 props:['userName'],
   components:{
     'DisplayPosts':DisplayPosts,
-
-
   },
-  data(){
-    return{
-  }
-},
-
 
 }
 

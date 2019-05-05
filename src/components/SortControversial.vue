@@ -7,21 +7,11 @@
 <script>
 
 import DisplayPosts from "./DisplayPosts.vue"
-
-
 export default {
 props:['ap'],
   components:{
     'DisplayPosts':DisplayPosts,
-
-
-  },
-  data(){
-    return{
-  }
 },
-
-
 }
 
 </script>

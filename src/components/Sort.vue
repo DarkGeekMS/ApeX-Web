@@ -30,7 +30,6 @@
         <li v-show="!check()" class="divider"></li>
 
         <li v-show="check()"><router-link :to="{ name: 'RisingHomePage', params: {ap:apex}}" class="glyphicon glyphicon-arrow-up"> Rising </router-link></li>
-        <li v-show="check()" class="divider"></li>
 
         <li v-show="!check()"><router-link :to="{ name: 'RisingApexCom', params: {ap:apex}}" class="glyphicon glyphicon-arrow-up"> Rising </router-link></li>
 
@@ -42,15 +41,18 @@
 
 <script>
 import $ from'jquery/dist/jquery.min.js'
+/**
+  *@vue-prop {string} apex - the name of the ApexCom we are into its values is an empty string if we are in the HomePage
+*/
+
   export default {
     props:{
       apex:String
     },
-    data () {
-      return {
-      }
-    },
     methods:{
+      /**
+      * check if we are in the HomePage or in an ApexCom
+      */
       check(){
         if(this.apex==""){
           return true;
@@ -59,9 +61,6 @@ import $ from'jquery/dist/jquery.min.js'
           return false;
         }
       },
-      emitsort(par){
-        this.$emit('choose',par);
-      }
     },
     mounted(){
       $('.sort a').click(function(){

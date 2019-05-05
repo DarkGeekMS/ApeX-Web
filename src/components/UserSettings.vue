@@ -7,7 +7,7 @@
 <h2 id='settingshead' class="page-header">User settings</h2>
 <h6  class="page-header"><b>ACCOUNT PREFERENCES</b></h6>
 <div>
-  <h2><button  id ="ChangeButton" type="button"  @click="showpass()">CHANGE</button></h2>
+  <h2><button  id ="ChangeButton" type="button"  @click=" showPass()">CHANGE</button></h2>
   <h2>Change password</h2>
   <h6 id='notepassword'>Password must be at least 6 characters long</h6>
 </div>
@@ -26,7 +26,7 @@
     </div>
   </div>
 
-  <!-- <h2><button  id ="ChangeButton" type="button"  @click="showmail()">CHANGE</button></h2> -->
+
 <div class="noti">
   <label id='checkboxnotifie' class="switch"><input v-model="notifie" type="checkbox"><span class="slider round"></span></label>
   <h2>Allow Notifications</h2>
@@ -46,7 +46,7 @@
             </g>
           </svg>
         </div>
-        <div class=" words">Drag and Drop or Upload Avatar Image</div>
+        <div class=" words"> Upload Avatar Image</div>
         <div class="display">
           <input  name="profileIcon" type="file" @dragover.prevent  @change="onChange" accept="image/x-png,image/jpeg" >
 
@@ -66,7 +66,7 @@
 
 <button
  class="btn btn-info" data-toggle="button" type="submit"
- aria-pressed="true" autocomplete="off" @click="updateprefs()" id="ChangeButton">Save</button>
+ aria-pressed="true" autocomplete="off" @click=" updatePrefs()" id="ChangeButton">Save</button>
 
 
 </div>
@@ -74,9 +74,9 @@
 <div class="">
 </div>
 
-<div class="s19ceyn0-2 htFOkz">
-  <button id='deactivateaccount' class="s19ceyn0-1 knawbn" @click="showDel()">
-    <svg class="s19ceyn0-0 iFmWTj" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+<div class="  deactivatediv">
+  <button id='deactivateaccount' class=" knawbn" @click="showDel()">
+    <svg class=" svgtag" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
       <path d="M16.5,2H12.71l-.85-.85A.5.5,0,0,0,11.5,1h-3a.5.5,0,0,0-.35.15L7.29,2H3.5a.5.5,0,0,0-.5.5v1a.5.5,0,0,0,.5.5h13a.5.5,0,0,0,.5-.5v-1A.5.5,0,0,0,16.5,2Z"></path>
       <path d="M16.5,5H3.5a.5.5,0,0,0-.5.5v12A1.5,1.5,0,0,0,4.5,19h11A1.5,1.5,0,0,0,17,17.5V5.5A.5.5,0,0,0,16.5,5ZM6.75,15.5a.75.75,0,0,1-1.5,0v-7a.75.75,0,0,1,1.5,0Zm4,0a.75.75,0,0,1-1.5,0v-7a.75.75,0,0,1,1.5,0Zm4,0a.75.75,0,0,1-1.5,0v-7a.75.75,0,0,1,1.5,0Z"></path>
     </svg>deactivate account</button>
@@ -94,13 +94,20 @@ import ChangePass from './UserSettingsModals/ChangePass.vue'
 import UserProfileSideBar from './UserProfileSideBar.vue'
 import {AllServices} from '../MimicServices/AllServices.js'
 import $ from'jquery/dist/jquery.min.js'
-
+/**
+ * @vue-prop  {string} user - the username taken from the route
+ *@vue-data {bit} notifie - the notification status
+  *@vue-data {string} avatar - the photo of the user
+  *@vue-data {string} email - the email of the user
+  *@vue-data {string} userName - the name of the user
+  *@vue-data {string} imgContent - the image that is uploaded if the user upload one
+*/
 export default {
   props:['user'],
   components:{
-    DelAcc,
-    ChangePass,
-    UserProfileSideBar
+    'DelAcc':DelAcc,
+    'ChangePass':ChangePass,
+    'UserProfileSideBar':UserProfileSideBar
   },
   data(){
     return{
@@ -114,12 +121,6 @@ export default {
     }
   },
   methods:{
-    onDrop: function(e) {
-         e.stopPropagation();
-         e.preventDefault();
-         var files = e.dataTransfer.files;
-         this.createFile(files[0]);
-       },
         /**
       * when the user upload the img it enable the post button and store the img src
       */
@@ -161,18 +162,23 @@ export default {
          this.imgContent=null;
          this.Enable();
        },
-
-    showpass(){
+       /**
+     * open the change password modal
+     */
+     showPass(){
       this.$modal.show('changepass')
     },
+    /**
+  * open the Delete account modal
+  */
     showDel()
     {
     this.$modal.show('DeleteAcount')
     },
-updateprefs(){
-
-
-
+    /**
+  * when save button is clicked it update the user settings
+  */
+ updatePrefs(){
   let formData = new FormData();
   formData.append('username', this.userName);
   formData.append('fullname', this.userName);
@@ -310,7 +316,7 @@ background: white;
 
 
 
-.htFOkz {
+. deactivatediv {
     display: flex;
     -webkit-box-pack: end;
     justify-content: flex-end;
@@ -329,7 +335,7 @@ background: white;
 
 
 
-.iFmWTj {
+. svgtag {
     width: 20px;
     margin-right: 4px;
     fill: rgb(255, 88, 91);

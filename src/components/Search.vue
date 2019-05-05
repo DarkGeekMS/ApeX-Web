@@ -1,7 +1,7 @@
 <template>
   <div id="mainDiv">
     <div class="header">
-       <h1>  {{ searchValue }} </h1> 
+       <h1>  {{ searchValue }} </h1>
        <p> Search results </p>
        <br/>
     </div>
@@ -11,18 +11,18 @@
        <li><router-link to="/Search/users" id="h" exact> Communities and users </router-link></li>
       </ul>
     </div>
-    <div v-if="this.$route.name == 'Search'" v-show="!exist" id="subDiv"> {{error}} ''{{this.$localStorage.get('search')}}'' </div> 
+    <div v-if="this.$route.name == 'Search'" v-show="!exist" id="subDiv"> {{error}} ''{{this.$localStorage.get('search')}}'' </div>
 
-    <div v-if="this.$route.name == 'Search'" v-show="exist" id="DisplayPosts">  
-      <Sort class="sort" :style="{width:wid, marginTop:'2%'}" ></Sort> 
+    <div v-if="this.$route.name == 'Search'" v-show="exist" id="DisplayPosts">
+      <!-- <Sort class="sort" :style="{width:wid, marginTop:'2%'}" ></Sort>  -->
       <div id="PostContainer" v-for="onePost in posts" :key="onePost.name">
          <post :postData="onePost" v-on:showUp="showPost"></post>
       </div>
       <DemoOnePost id="PostModal" :onePostData="postInfo" ></DemoOnePost>
-    </div> 
+    </div>
     <SearchSideBar v-show="login"></SearchSideBar>
     <router-view></router-view>
-    
+
   </div>
 
 </template>
@@ -37,10 +37,10 @@ import $ from'jquery/dist/jquery.min.js'
 
 /**
  * @vue-data {string} [error=""] if there is no matching
- * @vue-data {string} [searchVal=""] search value  
+ * @vue-data {string} [searchVal=""] search value
  * @vue-data {object} [posts] posts that reflect with search value
- * @vue-data {boolean} [login=false] if user logged in 
- * @vue-data {boolean} [exist=true] if there is matching between searchValue and data 
+ * @vue-data {boolean} [login=false] if user logged in
+ * @vue-data {boolean} [exist=true] if there is matching between searchValue and data
  * @vue-data {string} [postInfo] the content of the post to be displayed on the modal
  * @vue-data {string} [wid="80%"] width of sort component
 */
@@ -69,7 +69,7 @@ export default {
         var mq = window.matchMedia( "(max-width: 933px)" );
         if (mq.matches) {
          this.wid = '158%'
-        }   
+        }
         else{
           this.wid = '80%'
         }
@@ -110,7 +110,7 @@ export default {
             this.exist = true
           }
         })
-      }     
+      }
     }
     else{
       if(AllServices.getState())
@@ -138,7 +138,7 @@ export default {
             this.exist = true
           }
         })
-      } 
+      }
     }
   },
   methods:{
@@ -244,6 +244,6 @@ export default {
   div ul #h{
     display: none
   }
-} 
+}
 /**/
 </style>
