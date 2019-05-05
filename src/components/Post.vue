@@ -397,6 +397,13 @@ export default {
 
                this.PostId=this.postData.id;
                this.upVoted = !this.upVoted;
+               if(this.upVoted){
+                    this.postData.current_user_vote=1;
+               }
+               else{
+                 this.postData.current_user_vote=0;
+               }
+            
                var downState = this.downVoted;
                this.downVoted = false;
                AllServices.upvote(this.PostId,this.points,this.upVoted,downState).then((data) => {
@@ -427,7 +434,12 @@ export default {
      }
 
           this.PostId=this.postData.id;
-
+          if(this.downVoted){
+                    this.postData.current_user_vote=-1;
+               }
+               else{
+                 this.postData.current_user_vote=0;
+               }
           AllServices.downvote(this.PostId,this.points,this.downVoted,upState).then((data) => {
            if(data){
              this.points=data.votes;
@@ -451,8 +463,16 @@ export default {
         this.ToggleShowModalVar();
 
       }
+      
         this.PostId=this.postData.id;
         this.saveCheck=!this.saveCheck;
+        if(this.saveCheck==true){
+          this.postData.current_user_saved_post=true;
+         }
+         else{
+           this.postData.current_user_saved_post=false;
+
+         }
         AllServices.save(this.$localStorage.get('token'),this.PostId);
 
 
