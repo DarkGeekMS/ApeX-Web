@@ -119,6 +119,16 @@ export default {
          this.read=true;
          this.unread=false;
          this.sent=false;
+
+         AllServices.getAllMessages().then((data) => {
+         if(data){
+             this.sentArr=data.sent;
+             this.allArr=data.received.all;
+             this.readArr=data.received.read;
+             this.unreadArr =data.received.unread;
+                  }
+                        });
+
         
       },
        /**
@@ -130,6 +140,16 @@ export default {
          this.read=false;
          this.unread=true;
          this.sent=false;
+
+         AllServices.getAllMessages().then((data) => {
+         if(data){
+             this.sentArr=data.sent;
+             this.allArr=data.received.all;
+             this.readArr=data.received.read;
+             this.unreadArr =data.received.unread;
+                  }
+                        });
+
          
       },
        /**
@@ -141,7 +161,16 @@ export default {
          this.read=false;
          this.unread=false;
          this.sent=false;
-         
+
+         AllServices.getAllMessages().then((data) => {
+         if(data){
+             this.sentArr=data.sent;
+             this.allArr=data.received.all;
+             this.readArr=data.received.read;
+             this.unreadArr =data.received.unread;
+                  }
+               });
+
     
       },
        /**

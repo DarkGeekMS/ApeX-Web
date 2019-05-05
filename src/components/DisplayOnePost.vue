@@ -16,7 +16,6 @@
    v-bind:apexComId= onePostData.apex_id
       v-on:mod = moderators
  class="sidebar"></ApexComSideBar>
-yy{{onePostData.post_writer_username}}
 
       <CommentParent
 

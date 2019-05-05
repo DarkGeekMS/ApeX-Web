@@ -1,8 +1,10 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Module: SearchSideBar | Module: SearchSideBar</title>
+    <title>Source: MessageBar.vue | Source: MessageBar.vue</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -24,7 +26,7 @@
         
     </div>
     <div class="title">
-        <h1><a href="index.html" class="link">Module: SearchSideBar</a></h1>
+        <h1><a href="index.html" class="link">Source: MessageBar.vue</a></h1>
         
     </div>
     <div class="search-container" id="search-container">
@@ -41,243 +43,303 @@
 
 
 
-
-<section>
-
-<header>
     
-        <h2>SearchSideBar</h2>
-        
-            
-        
-    
-</header>
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>&lt;template>
+&lt;div class = "container3">
+    &lt;div class = "bar">
+        &lt;button  class="But" v-on:click="sendMessage" id="send">Send A Private Message&lt;/button>
+        &lt;button  class="But" v-on:click="showInbox" id="inbox">Inbox&lt;/button>
+        &lt;button  class="But" v-on:click="showSent" id="sent">Sent&lt;/button>
 
-<article>
+    &lt;/div>
+    &lt;div class = "bar2" v-show="inbox">
+        &lt;button  class="But2"  id="all" v-on:click="showAll">All&lt;/button>
+        &lt;button  class="But2"  id="read" v-on:click="showRead">Read&lt;/button>
+        &lt;button  class="But2"  id="unread" v-on:click="showUnread">Unread&lt;/button>
+    &lt;/div>
     
-        <div class="container-overview">
+
+    &lt;div class = "sentMessages" v-show="sent" v-for="msg in sentArr" v-bind:key="msg.id">
+        &lt;Message  v-bind:date= msg.date  v-bind:title= msg.subject v-bind:content= msg.content v-bind:sender= msg.receiver.username v-bind:type= 0 v-bind:ID=msg.id>&lt;/Message>
+    &lt;/div>
+&lt;div>
+    &lt;div class = "allMessages" v-show="all" v-for="msg in allArr" v-bind:key="msg.id">
+        &lt;Message  v-bind:date= msg.date  v-bind:title= msg.subject v-bind:content= msg.content v-bind:senderID= msg.sender.id v-bind:sender= msg.sender.username v-bind:type= 1 v-bind:ID=msg.id>&lt;/Message>
+    &lt;/div>
+&lt;/div>
+&lt;div>
+    &lt;div class = "readMessages" v-show="read" v-for="msg in readArr" v-bind:key="msg.id">
+        &lt;Message  v-bind:date= msg.date  v-bind:title= msg.subject v-bind:content= msg.content  v-bind:senderID= msg.sender.id v-bind:sender= msg.sender.username v-bind:type= 1 v-bind:ID=msg.id>&lt;/Message>
+    &lt;/div>
+&lt;/div>
+&lt;div>
+    &lt;div class = "unreadMessages" v-show="unread" v-for="msg in unreadArr" v-bind:key="msg.id">
+        &lt;Message  v-bind:date= msg.date  v-bind:title= msg.subject v-bind:content= msg.content v-bind:senderID= msg.sender.id v-bind:sender= msg.sender.username v-bind:type= 1 v-bind:ID=msg.id>&lt;/Message>
+    &lt;/div>
+&lt;/div>  
+    &lt;WriteMessage v-show="send">&lt;/WriteMessage>
+&lt;/div>
+&lt;/template>
+
+&lt;script>
+/**
+ * @vue-data {boolean} [send] opens the "send a private message" box
+ * @vue-data {boolean} [all] opens the "all messages" box
+ * @vue-data {boolean} [read] opens the "read messages" box
+ * @vue-data {boolean} [unread] opens the "unread messages" box
+ * @vue-data {boolean} [sent] opens the "sent messages" box
+ * @vue-data {boolean} [inbox] opens the "inbox messages" box
+ * @vue-data {array} [sentArr] array of sent messages
+ * @vue-data {array} [allArr] array of all received messages
+ * @vue-data {array} [readArr] array of read messages
+ * @vue-data {array} [unreadArr] array of unread messages
+
+ */
+import axios from 'axios'
+import WriteMessage from "./WriteMessage.vue"
+import Message from "./Message.vue"
+import {AllServices} from '../MimicServices/AllServices.js'
+import $ from'jquery/dist/jquery.min.js'
+
+
+export default {
+  name: 'MessageBar',
+  data(){
+        return{
+            send:true,
+            all:false,
+            read:false,
+            unread:false,
+            sent:false,
+            inbox:false,
+            sentArr:[],
+            allArr:[],
+            readArr:[],
+            unreadArr:[]
+        }
+  },
+  created () {
+  },
+  mounted(){
+     $('#selectted').text('Messages');
+        var remclass = $('#classed').prop('class');
+        $('#classed').removeClass(remclass);
+        $('#classed').addClass("glyphicon glyphicon-envelope");
+  },
+  methods:{
+      /**
+     * opens the "send a private message" box
+     */
+      sendMessage:function() {
+         this.send=true;
+         this.all=false;
+         this.read=false;
+         this.unread=false;
+         this.sent=false;
+        this.inbox=false;
+
+      },
+        /**
+     * opens the "inbox messages" box
+     */
+      showInbox:function() {
         
-            
-                <div class="description"><p></p></div></div> </p>
-<style>
-.container-overview {
-    display: none;
+         this.inbox=true;
+         AllServices.getAllMessages().then((data) => {
+         if(data){
+             this.sentArr=data.sent;
+             this.allArr=data.received.all;
+             this.readArr=data.received.read;
+             this.unreadArr =data.received.unread;
+                  }
+      });
+               this.showAll();
+
+      },
+       /**
+     * opens the "read messages" box
+     */
+      showRead:function() {
+        this.send=false;
+         this.all=false;
+         this.read=true;
+         this.unread=false;
+         this.sent=false;
+
+         AllServices.getAllMessages().then((data) => {
+         if(data){
+             this.sentArr=data.sent;
+             this.allArr=data.received.all;
+             this.readArr=data.received.read;
+             this.unreadArr =data.received.unread;
+                  }
+                        });
+
+        
+      },
+       /**
+     * opens the "unread messages" box
+     */
+      showUnread:function() {
+        this.send=false;
+         this.all=false;
+         this.read=false;
+         this.unread=true;
+         this.sent=false;
+
+         AllServices.getAllMessages().then((data) => {
+         if(data){
+             this.sentArr=data.sent;
+             this.allArr=data.received.all;
+             this.readArr=data.received.read;
+             this.unreadArr =data.received.unread;
+                  }
+                        });
+
+         
+      },
+       /**
+     * opens the "all messages" box
+     */
+      showAll:function() {
+        this.send=false;
+         this.all=true;
+         this.read=false;
+         this.unread=false;
+         this.sent=false;
+
+         AllServices.getAllMessages().then((data) => {
+         if(data){
+             this.sentArr=data.sent;
+             this.allArr=data.received.all;
+             this.readArr=data.received.read;
+             this.unreadArr =data.received.unread;
+                  }
+               });
+
+    
+      },
+       /**
+     * opens the "sent messages" box
+     */
+      showSent:function() {
+         this.send=false;
+         this.all=false;
+         this.read=false;
+         this.unread=false;
+         this.sent=true;
+        this.inbox=false;
+          AllServices.getAllMessages().then((data) => {
+         if(data){
+             this.sentArr=data.sent;
+             this.allArr=data.received.all;
+             this.readArr=data.received.read;
+             this.unreadArr =data.received.unread;
+                  }
+      });
+  }},
+  components:{
+      'WriteMessage':WriteMessage,
+      'Message':Message
+  }
+}
+&lt;/script>
+
+&lt;style scoped>
+.bar{
+border: none;
+padding-left :7%;
+width:100%;
+height:15%;
+background-color: #710404;
+}
+.bar2{
+border: none;
+padding-left :10%;
+width:100%;
+height:12%;
+background-color: #710404;
 }
 
-.main section article table td.name,
-.main section article table td.type,
-.main section article table td.attributes,
-.main section article table td.default {
-    max-width: none;
+.But{
+padding-left:3%;
+padding-right:3%;
+font-size: 20px;
+font-family: Verdana, Geneva, Tahoma, sans-serif;
+color: white;
+-webkit-font-smoothing: antialiased;
+-moz-osx-font-smoothing: grayscale;
+background-color: #710404;
+border:none;
 }
-</style>
-
-
-
-
-<p><h3 class="subsection-title" style="margin-top: 1em" data-jsdoc-vuejs="section-data">Data</h3></p>
-<div class="container-params">
-    <table class="params" data-jsdoc-vuejs="table-data">
-        <thead>
-        <tr>
-            <th>Name</th>
-            <th>Type</th>
-            <th>Default value</th>
-            <th class="last">Description</th>
-        </tr>
-        </thead>
-        <tbody>
-
-        <tr>
-            <td class="name"><code>type</code></td>
-            <td class="type"><span class="param-type">integer</span></td>
-            <td class="description"><code>1</code></td>
-            <td class="description last">type of the user</td>
-        </tr>
-
-        </tbody>
-    </table>
-</div>
-
-
-
-
-
-
-<p><div class="container-overview"><div><p> </p></div>
-            
-
-            
-                
-
-<dt>
-    
-</dt>
-<dd>
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-    
-
-</dd>
-
-            
-        
-        </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-        <h3 class="subsection-title">Members</h3>
-
-        <dl>
-            
-
-<dt>
-<h4 class="name" id=".methods">
-    <span class="type-signature"><span class="icon green">static</span> </span>methods<span class="type-signature"></span>
-    
-    <div class="container-source members">
-        <code><a href="SearchSideBar.vue.html">SearchSideBar.vue</a></code>,
-        <code><a href="SearchSideBar.vue.html#line37">line 37</a></code>
-    </div>
-    
-</h4>
-
-
-</dt>
-<dd>
-    
-    <div class="description">
-        <p>must be an admin to create community</p>
-    </div>
-    
-
-    <!--
-    
-    -->
-
-    
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-    
-
-    
-</dd>
-
-        </dl>
-    
-
-    
-
-    
-
-    
-</article>
-
-</section>
+.But:focus{
+    opacity: 0.75;
+}
+.But2{
+padding-left:1%;
+padding-right:1%;
+font-size: 15px;
+font-family: Verdana, Geneva, Tahoma, sans-serif;
+color: white;
+-webkit-font-smoothing: antialiased;
+-moz-osx-font-smoothing: grayscale;
+background-color: #710404;
+border:none;
+}
+.But2:focus{
+    opacity: 0.75;
+}
+
+.Send:hover {opacity: 0.75}
+
+.Send{
+  font-size: 17px;
+font-family: Verdana, Geneva, Tahoma, sans-serif;
+color: white;
+-webkit-font-smoothing: antialiased;
+-moz-osx-font-smoothing: grayscale;
+border: none;
+border-radius: 8px;
+padding-left: 1%;
+padding-right : 1%;
+position: relative;
+background-color: #710404;
+}
+.send-message{
+   padding-left:2%;
+   background-color:white;
+   padding-right:25%;
+   margin-left:20%;
+   margin-right:20%;
+   margin-bottom:0%;
+   padding-bottom:1%;
+   padding-top:0%;
+   margin-top:1%;
+   font-size:20px;
+}
+.in{
+    width:100%;
+    resize:vertical;
+}
+#text{
+    font-size: 15px;
+
+}
+.container3{
+    margin-top:50px;
+    width : 100%;
+}
+.sentMessages,.readMessages,.allMessages,.unreadMessages{
+    width : 65%;
+    margin:auto;
+}
+
+&lt;/style>
+</code></pre>
+        </article>
+    </section>
 
 
 
@@ -294,7 +356,7 @@
 <script src="scripts/linenumber.js"></script>
 
     <script>
-        var id = 'module:SearchSideBar_sub'.replace(/"/g, '_');
+        var id = '_sub'.replace(/"/g, '_');
         var selectedApi = document.getElementById(id); // do not use jquery selector
         var $selectedApi = $(selectedApi);
 

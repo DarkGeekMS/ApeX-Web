@@ -1,8 +1,10 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Module: SearchSideBar | Module: SearchSideBar</title>
+    <title>Source: CommentParent.vue | Source: CommentParent.vue</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -24,7 +26,7 @@
         
     </div>
     <div class="title">
-        <h1><a href="index.html" class="link">Module: SearchSideBar</a></h1>
+        <h1><a href="index.html" class="link">Source: CommentParent.vue</a></h1>
         
     </div>
     <div class="search-container" id="search-container">
@@ -41,243 +43,305 @@
 
 
 
-
-<section>
-
-<header>
     
-        <h2>SearchSideBar</h2>
-        
-            
-        
-    
-</header>
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>&lt;template>
+  &lt;div id = "CommentParent">
+    &lt;WriteComment buttonType="0" v-bind:parentID="postID" v-on:Comment="addComment" >&lt;/WriteComment>
+    &lt;div v-for = "comment in comments" :key="comment.id">
+      &lt;Comment 
+      v-on:Delete="deleteComment"  
+      v-on:Reply2="addReply" 
+      v-on:Edit="editComment" 
+      v-on:Report="reportComment"
+      v-bind:user= comment.user  
+      v-bind:level= comment.level 
+      v-bind:content= comment.content 
+      v-bind:con= comment.con 
+      v-bind:idx=comment.idx 
+      v-bind:parentIdx=comment.parentIdx 
+      v-bind:parentID=comment.parentID 
+      v-bind:ID=comment.currentID 
+      v-bind:date=comment.date 
+      v-bind:points=comment.points 
+      v-bind:unSaved = comment.unSaved
+      v-bind:upVoted = comment.upVoted
+      v-bind:downVoted = comment.downVoted
+      v-bind:postOwnerUserName = 'postOwnerUserName'
+      v-bind:moderatorsUserNames = 'moderatorsUserNames'
+      >&lt;/Comment>
+    &lt;/div>
 
-<article>
-    
-        <div class="container-overview">
+    &lt;reportBox v-bind:ID ='IDreported' v-bind:idx ='idxReported'  v-on:Delete="deleteComment($event)"  > &lt;/reportBox>
+
+  &lt;/div>
+&lt;/template>
+
+&lt;script>
+/**
+ * @vue-data {string} [postID] ID of the post that the comments will be on
+ * @vue-data {array} [comments]   array that includes all comments that should be rendered
+ * @vue-data {array} [moderatorsUserNames]   array that includes all moderators of the apex-com of the post
+ * @vue-data {string} [postOwnerUserName]  name of the post owner
+ 
+ */
+import WriteComment from './WriteComment.vue'
+import Comment from './Comment.vue'
+import {AllServices} from '../MimicServices/AllServices.js'
+import reportBox from './ReportModal.vue'
+
+import swal from 'sweetalert'
+
+
+export default {
+  name:'CommentParentItem',
+  props:{
+    postID:String,
+    moderatorsUserNames:Array,
+    postOwnerUserName:String
+  },
+ components: {
+    WriteComment,
+    reportBox,
+    Comment
+  },
+  data(){
+      return{
+          comments:[
+              /*{
+            user:localStorage.Username,
+            content:'',
+            idx:-1,
+            level,
+            parentIdx,
+            parentID,
+            CurrentID
+          }*/
+          ],
+          IDreported:"",
+          idxReported:-1
+      }
+  },
+  mounted(){
+    //each 2 minutes
+    this.getAllComments();
+    setInterval(() => this.getAllComments(), 120000);
+  /////
+  },
+  methods:{
+     /**
+     * adds a comment from the comment box in the array
+     * @param {string} cont content of the added comment
+     * @param {array} con content of the added comment split to view mentions
+     * @param {string} use user name of the comment owner
+     * @param {string} pID parent ID
+     * @param {string} cID current ID
+ */
+      addComment:function(cont,con,use,pID,cID){
+        if (cont!='')
+          this.comments.push({user:this.$localStorage.get('userName'), content:cont,con:con , idx:this.comments.length,level:0,parentIdx:-1,parentID:pID,currentID:cID, date:new Date(),points:0 , unSaved :"Save", upVoted :false,downVoted:false});
+          else
+          swal("empty text not allowed!");
+      },
+       /**
+     * adds a reply from the reply box in the array in the correct index 
+     * @param {string} cont content of the added comment
+     * @param {array} con content of the added comment split to view mentions
+     * @param {integer} parent parent index in the array 
+     * @param {integer} l level of the comment
+     * @param {string} pID parent ID
+     * @param {string} cID current ID
+ */
+      addReply:function(cont,con,parent,l,pID,cID){
+        if (cont!='')
+        {
+          var i = parent+1;
+          this.comments.push({user:this.$localStorage.get('userName'), content:cont,con:this.OpString(cont) ,idx:i ,level:l,parentIdx:parent,parentID:pID,currentID:cID, date:new Date(),points:0, unSaved :"Save", upVoted :false,downVoted:false });
+          var rep = this.comments.pop();
+          for (var x = this.comments.length;x>i;x--){
+            this.comments[x]=this.comments[x-1];
+            this.comments[x].idx++;
+          }
+
+        this.comments[i]=rep;
+        }
+        else{
+          swal("empty text not allowed!");
+
+        }
+
+      },
+
+       /**
+     * edits a comment from the edit box in the array
+     * @param {string} content new content of the comment
+     * @param {integer} i index of comment to be updated
+  */
+      editComment:function(content,i){
+         
+
+         if (content!=''){
+          this.comments[i].content=content;
+          this.comments[i].con=this.OpString(content);
+         }
+          else
+        swal("empty text not allowed!");
+
+      },
+       /**
+     * show the report modal of that comment
+          * @param {string} ID ID of the comment to be reported
+          * @param {integer} idx idx of the comment to be reported in the array
+
+ */
+      reportComment:function(ID,idx){
+        this.IDreported=ID;
+        this.idxReported=idx;
+        this.$modal.show('reportBox');
+      },
+        /**
+     * deletes a comment in the array without deleting its children
+     * @param {integer} x index of the comment to be deleted
+ */
+      deleteCommentByIdx:function(x){
+        for(var i = x;i&lt;this.comments.length-1;i++)
+        {
+          this.comments[i]=this.comments[i+1];
+          this.comments[i].idx--;
+        }
+        this.comments.pop();
+
+      },
+
+       /**
+     * deletes a comment in the array with deleting its children
+          * @param {integer} x index of the comment to be deleted
+
+ */
+      deleteComment:function(x){
+
+        var maxDeletedIdx = x;
+        var flag = 0;
+        for(var a = x+1;a&lt;this.comments.length;a++)
+        {
+          flag=0;
+          for(var pre = x;pre&lt;a;pre++)
+         {
+
+            if (this.comments[a].parentIdx==this.comments[pre].idx)
+          {
+            flag = 1;
+          maxDeletedIdx++;
+          }
+
+         }
+         if(!flag)
+         {
+           break;
+         }
+
+        }
+        for (var i = x;i&lt;=maxDeletedIdx;i++)
+        {
+          this.deleteCommentByIdx(x);
+        }
+
+        for(var i = 0;i&lt;this.comments.length;i++){
+          this.comments[i].parentIdx = this.getParentIdx(this.comments,i);
+        }
+
+
+
+      },
+      getAllComments:function(){
+        var arr;
+        AllServices.getComments(this.postID).then((data) => {
+       if(data){
+          arr = data.comments;
+          this.comments =[];
+        for(var i = 0; i &lt; arr.length; i++){
+          
+          var d = new Date (arr[i].created_at).getTime();
+var n = new Date().getTimezoneOffset()*60000;
+var dd = new Date(d-n);
+          var obj = {};
+          obj.user = arr[i].writerUsername;
+          obj.content = arr[i].content;
+          obj.con = this.OpString(arr[i].content);
+          obj.idx=i;
+          obj.level = arr[i].level;
+          obj.parentIdx = -1;
+          obj.parentID = arr[i].parent;
+          obj.currentID = arr[i].id;
+          obj.date = dd;
+          obj.points = arr[i].votes;
+          obj.upVoted = arr[i].userVote==1?true:false;
+          obj.downVoted = arr[i].userVote==-1?true:false;
+          ///
+          obj.unSaved = arr[i].Saved?"Unsave":"Save";
+          ///
+         
+
+          this.comments[i] = obj;
+          this.comments[i].parentIdx = this.getParentIdx(this.comments,i);
+
+        }}});
         
-            
-                <div class="description"><p></p></div></div> </p>
-<style>
-.container-overview {
-    display: none;
+        
+
+      },
+      getParentIdx:function(arr,t){
+        for(var i = 0;i&lt;t;i++){
+          if(arr[t].parentID == arr[i].currentID)
+          {
+            return i;
+          }
+        }
+      },
+      OpString:function(content){
+        var con = [];
+        for (var i = 0;i&lt;content.length;i++)
+                {
+                    if (content[i]=='u' &amp;&amp; content[i+1]=='/' &amp;&amp; content[i+2]!=' ')
+                    {
+                      for (var x = i;x&lt;content.length;x++)
+                      {
+                          if (content[x+1]==' '|| x==content.length-1)
+                          {
+                          var str = content.slice(i,x+1);
+                          con.push({c:str , type:1});
+                          i=x+1;
+                          break;
+                          }
+                      }
+                    }
+
+                          for (var x = i;x&lt;content.length;x++)
+                          {
+                              if((content[x+1]=='u' &amp;&amp; content[x+2]=='/' &amp;&amp; content[x]==' ')||x==content.length-1)
+                              {
+                                  var str = content.slice(i,x+1);
+                                  con.push({c:str , type:0});
+                                  i=x;
+                                  break;
+                              }
+                          }
+
+
+                }
+                return con;
 }
-
-.main section article table td.name,
-.main section article table td.type,
-.main section article table td.attributes,
-.main section article table td.default {
-    max-width: none;
+  }
 }
-</style>
-
-
-
-
-<p><h3 class="subsection-title" style="margin-top: 1em" data-jsdoc-vuejs="section-data">Data</h3></p>
-<div class="container-params">
-    <table class="params" data-jsdoc-vuejs="table-data">
-        <thead>
-        <tr>
-            <th>Name</th>
-            <th>Type</th>
-            <th>Default value</th>
-            <th class="last">Description</th>
-        </tr>
-        </thead>
-        <tbody>
-
-        <tr>
-            <td class="name"><code>type</code></td>
-            <td class="type"><span class="param-type">integer</span></td>
-            <td class="description"><code>1</code></td>
-            <td class="description last">type of the user</td>
-        </tr>
-
-        </tbody>
-    </table>
-</div>
-
-
-
-
-
-
-<p><div class="container-overview"><div><p> </p></div>
-            
-
-            
-                
-
-<dt>
-    
-</dt>
-<dd>
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-    
-
-</dd>
-
-            
-        
-        </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-        <h3 class="subsection-title">Members</h3>
-
-        <dl>
-            
-
-<dt>
-<h4 class="name" id=".methods">
-    <span class="type-signature"><span class="icon green">static</span> </span>methods<span class="type-signature"></span>
-    
-    <div class="container-source members">
-        <code><a href="SearchSideBar.vue.html">SearchSideBar.vue</a></code>,
-        <code><a href="SearchSideBar.vue.html#line37">line 37</a></code>
-    </div>
-    
-</h4>
-
-
-</dt>
-<dd>
-    
-    <div class="description">
-        <p>must be an admin to create community</p>
-    </div>
-    
-
-    <!--
-    
-    -->
-
-    
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-    
-
-    
-</dd>
-
-        </dl>
-    
-
-    
-
-    
-
-    
-</article>
-
-</section>
+&lt;/script>
+&lt;style scoped>
+#CommentParent{
+  margin-left:3%;
+}
+&lt;/style></code></pre>
+        </article>
+    </section>
 
 
 
@@ -294,7 +358,7 @@
 <script src="scripts/linenumber.js"></script>
 
     <script>
-        var id = 'module:SearchSideBar_sub'.replace(/"/g, '_');
+        var id = '_sub'.replace(/"/g, '_');
         var selectedApi = document.getElementById(id); // do not use jquery selector
         var $selectedApi = $(selectedApi);
 

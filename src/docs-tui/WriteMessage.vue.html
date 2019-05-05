@@ -1,8 +1,10 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Module: SearchSideBar | Module: SearchSideBar</title>
+    <title>Source: WriteMessage.vue | Source: WriteMessage.vue</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -24,7 +26,7 @@
         
     </div>
     <div class="title">
-        <h1><a href="index.html" class="link">Module: SearchSideBar</a></h1>
+        <h1><a href="index.html" class="link">Source: WriteMessage.vue</a></h1>
         
     </div>
     <div class="search-container" id="search-container">
@@ -41,243 +43,120 @@
 
 
 
-
-<section>
-
-<header>
     
-        <h2>SearchSideBar</h2>
-        
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>&lt;template>
+&lt;div class = "send-message">
+        &lt;br>
+            to &lt;br>
+            &lt;input class = "in" type="text" v-model="reciever" >&lt;br>
+            subject &lt;br>
+            &lt;input class = "in" type="text" v-model="subject" >&lt;br>
+            message &lt;br>
+            &lt;textarea id="text" class = "in"  v-model="content"  rows="5" >&lt;/textarea>&lt;br>
+            &lt;button class="Send" v-on:click="send">SEND&lt;/button>
+
             
-        
-    
-</header>
+    &lt;/div>
+&lt;/template>
+&lt;script>
+/**
+ * @vue-data {string} [content] content of the message
+ * @vue-data {string} [reciever] reciever of the message
+ * @vue-data {string} [subject] subject of the message
+ 
+ */
+import axios from 'axios'
+import {AllServices} from '../MimicServices/AllServices.js'
+import swal from 'sweetalert'
 
-<article>
-    
-        <div class="container-overview">
-        
-            
-                <div class="description"><p></p></div></div> </p>
-<style>
-.container-overview {
-    display: none;
+export default {
+  name: 'WriteMessage',
+  data(){
+        return{
+         content:'',
+         reciever:'',
+         subject:''
+        }
+  },
+  created () {
+  },
+  methods:{
+    /**
+     *sends the message if all boxes are filled
+     */
+      send:function() {
+         //TODD:request to backend 
+        if (this.reciever==''){
+            swal('To box cannot be empty!');
+          }
+           else if (this.subject==''){
+            swal('Subject box cannot be empty!');
+          }
+          else if(this.content == ''){
+            swal('Message box cannot be empty!');
+          }
+          
+          else
+        AllServices.sendMessage(this.reciever,this.subject,this.content).then((data) => {
+          
+          if(data){
+            swal('Message Sent!');
+            this.content = '';
+            this.subject = '';
+            this.reciever = '';
+          }
+ 
+      });
+}
+  }
 }
 
-.main section article table td.name,
-.main section article table td.type,
-.main section article table td.attributes,
-.main section article table td.default {
-    max-width: none;
+&lt;/script>
+
+&lt;style scoped>
+
+
+.Send:hover {opacity: 0.75}
+
+.Send{
+  font-size: 17px;
+font-family: Verdana, Geneva, Tahoma, sans-serif;
+color: white;
+-webkit-font-smoothing: antialiased;
+-moz-osx-font-smoothing: grayscale;
+border: none;
+border-radius: 8px;
+padding-left: 1%;
+padding-right : 1%;
+position: relative;
+background-color: #710404;
 }
-</style>
-
-
-
-
-<p><h3 class="subsection-title" style="margin-top: 1em" data-jsdoc-vuejs="section-data">Data</h3></p>
-<div class="container-params">
-    <table class="params" data-jsdoc-vuejs="table-data">
-        <thead>
-        <tr>
-            <th>Name</th>
-            <th>Type</th>
-            <th>Default value</th>
-            <th class="last">Description</th>
-        </tr>
-        </thead>
-        <tbody>
-
-        <tr>
-            <td class="name"><code>type</code></td>
-            <td class="type"><span class="param-type">integer</span></td>
-            <td class="description"><code>1</code></td>
-            <td class="description last">type of the user</td>
-        </tr>
-
-        </tbody>
-    </table>
-</div>
-
-
-
-
-
-
-<p><div class="container-overview"><div><p> </p></div>
-            
-
-            
-                
-
-<dt>
-    
-</dt>
-<dd>
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-    
-
-</dd>
-
-            
-        
-        </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-        <h3 class="subsection-title">Members</h3>
-
-        <dl>
-            
-
-<dt>
-<h4 class="name" id=".methods">
-    <span class="type-signature"><span class="icon green">static</span> </span>methods<span class="type-signature"></span>
-    
-    <div class="container-source members">
-        <code><a href="SearchSideBar.vue.html">SearchSideBar.vue</a></code>,
-        <code><a href="SearchSideBar.vue.html#line37">line 37</a></code>
-    </div>
-    
-</h4>
-
-
-</dt>
-<dd>
-    
-    <div class="description">
-        <p>must be an admin to create community</p>
-    </div>
-    
-
-    <!--
-    
-    -->
-
-    
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-    
-
-    
-</dd>
-
-        </dl>
-    
-
-    
-
-    
-
-    
-</article>
-
-</section>
+.send-message{
+   padding-left:2%;
+   background-color:white;
+   padding-right:25%;
+   margin-left:20%;
+   margin-right:20%;
+   margin-bottom:0%;
+   padding-bottom:1%;
+   padding-top:0%;
+   margin-top:1%;
+   font-size:20px;
+}
+.in{
+    width:100%;
+    resize:vertical;
+}
+#text{
+    font-size: 15px;
+
+}
+&lt;/style>
+</code></pre>
+        </article>
+    </section>
 
 
 
@@ -294,7 +173,7 @@
 <script src="scripts/linenumber.js"></script>
 
     <script>
-        var id = 'module:SearchSideBar_sub'.replace(/"/g, '_');
+        var id = '_sub'.replace(/"/g, '_');
         var selectedApi = document.getElementById(id); // do not use jquery selector
         var $selectedApi = $(selectedApi);
 
