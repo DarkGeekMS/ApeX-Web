@@ -7,25 +7,13 @@
 <script>
 
 import DisplayPosts from "./DisplayPosts.vue"
-
-
 export default {
 name: 'HiddenPosts',
 props:['userName'],
-
-  components:{
+components:{
     'DisplayPosts':DisplayPosts,
-
-
   },
-  data(){
-    return{
-  }
-},
-
-
 }
-
 </script>
 
 <style scoped>

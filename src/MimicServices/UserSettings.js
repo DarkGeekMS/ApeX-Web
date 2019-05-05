@@ -76,14 +76,14 @@ updatePrefs:function (mimic,fd, baseUrl) {
   }
 },
 
-changePass:function (mimic,password,username,key, baseUrl) {
+changePass:function (mimic,password,userName,key, baseUrl) {
   if(mimic==false){
     return axios.patch(baseUrl + 'api/ChangePassword',
    {
      token:this.$localStorage.get('token'),
      withCode:0,
     password:password,
-    username:username,
+    username:userName,
     key:key
       }).then(response => {
         return response.data;

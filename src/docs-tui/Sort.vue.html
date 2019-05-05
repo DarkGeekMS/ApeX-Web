@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Source: ResetCode.vue | Source: ResetCode.vue</title>
+    <title>Source: Sort.vue | Source: Sort.vue</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -26,7 +26,7 @@
         
     </div>
     <div class="title">
-        <h1><a href="index.html" class="link">Source: ResetCode.vue</a></h1>
+        <h1><a href="index.html" class="link">Source: Sort.vue</a></h1>
         
     </div>
     <div class="search-container" id="search-container">
@@ -47,241 +47,150 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>&lt;template>
-&lt;modal name="ResetCode" transition="pop-out" width="50%" height="70%" :clickToClose="false" @before-open="beforeOpen">
-  &lt;ResetPass/>
-  &lt;div class="box">
-    &lt;div class="box-part" id="bp-right">&lt;/div>
+  &lt;div id="main">
+     &lt;p class="text" >SORT&lt;/p>
 
-    &lt;div class="box-part" id="bp-left">
-      &lt;div class="partition" id="partition-register">
+     &lt;div  class="btn-group list">
+      &lt;button data-toggle="dropdown" class="btn btn-default dropdown-toggle" id="loggedbutton" >
+      &lt;span id="selected" class="glyphicon glyphicon-fire"> Hot&lt;/span>
+      &lt;span class="caret" style="margin-left:5px" >&lt;/span>
+      &lt;/button>
+      &lt;ul class="dropdown-menu sort">
 
-        &lt;button class="lead" id="closebtn" @click="close()"> X&lt;/button>
+        &lt;li v-show="check()"> &lt;router-link :to="{ name: 'HotHomePage', params: {ap:apex} }"  class="glyphicon glyphicon-fire"> Hot&lt;/router-link>&lt;/li>
+        &lt;li v-show="check()" class="divider">&lt;/li>
+        &lt;li v-show="!check()"> &lt;router-link :to="{ name: 'HotApexCom', params: {ap:apex} }"  class="glyphicon glyphicon-fire"> Hot&lt;/router-link>&lt;/li>
+        &lt;li v-show="!check()" class="divider">&lt;/li>
 
-        &lt;div class="partition-title">
-        &lt;h1> Please set your code here to continue &lt;/h1>
-        &lt;/div>
+        &lt;li v-show="check()">&lt;router-link :to="{ name: 'NewHomePage', params: {ap:apex}}"  class="glyphicon glyphicon-certificate"> New &lt;/router-link>&lt;/li>
+        &lt;li v-show="check()" class="divider">&lt;/li>
+        &lt;li v-show="!check()">&lt;router-link :to="{ name: 'NewApexCom', params: {ap:apex}}"  class="glyphicon glyphicon-certificate"> New &lt;/router-link>&lt;/li>
+        &lt;li v-show="!check()" class="divider">&lt;/li>
 
-        &lt;div class="partition-form">
+        &lt;li v-show="check()">&lt;router-link :to="{ name: 'ControversialHomePage', params: {ap:apex}}" class="glyphicon glyphicon-flash"> Controversial &lt;/router-link>&lt;/li>
+        &lt;li v-show="check()" class="divider">&lt;/li>
+        &lt;li v-show="!check()">&lt;router-link :to="{ name: 'ControversialApexCom', params: {ap:apex}}" class="glyphicon glyphicon-flash"> Controversial &lt;/router-link>&lt;/li>
+        &lt;li v-show="!check()" class="divider">&lt;/li>
 
-            &lt;input type="text" class="form-control" name="code"
-            placeholder="CODE" v-model="code" v-on:keyup="restart()" required autofocus>
+        &lt;li v-show="check()">&lt;router-link :to="{ name: 'TopHomePage', params: {ap:apex}}" class="glyphicon glyphicon-stats"> Top &lt;/router-link>&lt;/li>
+        &lt;li v-show="check()" class="divider">&lt;/li>
+        &lt;li v-show="!check()">&lt;router-link :to="{ name: 'TopApexCom', params: {ap:apex}}" class="glyphicon glyphicon-stats"> Top &lt;/router-link>&lt;/li>
+        &lt;li v-show="!check()" class="divider">&lt;/li>
 
-            &lt;button id="Next" class="btn blue" style="display:block" @click.prevent="post()">SEND&lt;/button>
-            &lt;span class="lead"> {{error}}  &lt;/span>
-            
-            &lt;p class = "lead" style = "fontSize:15px; color:blue;" > {{ congra }}  &lt;/p>
+        &lt;li v-show="check()">&lt;router-link :to="{ name: 'RisingHomePage', params: {ap:apex}}" class="glyphicon glyphicon-arrow-up"> Rising &lt;/router-link>&lt;/li>
 
-        &lt;/div>
+        &lt;li v-show="!check()">&lt;router-link :to="{ name: 'RisingApexCom', params: {ap:apex}}" class="glyphicon glyphicon-arrow-up"> Rising &lt;/router-link>&lt;/li>
 
-      &lt;/div>
+      &lt;/ul>
     &lt;/div>
+    &lt;router-view>&lt;/router-view>
   &lt;/div>
-&lt;/modal>
 &lt;/template>
 
 &lt;script>
-import {AllServices} from '../MimicServices/AllServices.js'
-import ResetPass  from './ResetPass.vue'
-
+import $ from'jquery/dist/jquery.min.js'
 /**
- * @vue-data {string} [email=""] email of user
- * @vue-data {string} [code=""] code value
- * @vue-data {string} [username=""] username of user 
- * @vue-data {string} [error=""] error value
- * @vue-data {string} [congra=''] congratulation when code is correct 
+  *@vue-prop {string} apex - the name of the ApexCom we are into its values is an empty string if we are in the HomePage
+*/
 
- */
-export default {
-  name: 'ResetCode',
-  components:{
-    ResetPass
-  },
-  data(){
-    return{
-      code:'',
-      email:'',
-      username:'',
-      error:'',
-      congra:''
-    }
-  },
-  methods:{
-    /**
-     * check out the value of code is empty or invalid, and generate an error in this case, if not show the third modal and send value to change password   
-    */
-    post: function(){
-      if(this.code == '')
-      {
-        this.error = 'Please enter the code'
-      }
-      else
-      {
-        if(AllServices.getState()){
-          var check = AllServices.setCode(this.code,this.email,this.username);
-          if(check)
-          {
-            this.congra = "your code is correct, Now set your password" ;
-            setTimeout(() =>this.$modal.show('ResetPass',{user: this.username ,code:this.code}) , 2000)
-
-          }
-          else{
-            this.error =  this.$localStorage.get('error');
-          }
+  export default {
+    props:{
+      apex:String
+    },
+    methods:{
+      /**
+      * check if we are in the HomePage or in an ApexCom
+      */
+      check(){
+        if(this.apex==""){
+          return true;
         }
         else {
-         AllServices.setCode(this.code,this.email,this.username).then((data) => {
-         if(data)
-          {
-            this.congra = "your code is correct, Now set your password " ;
-            setTimeout(() =>this.$modal.show('ResetPass',{user: this.username, code:this.code}) , 2000)
-
-          }
-          else{
-            this.error =  this.$localStorage.get('error');
-          }
-         })
+          return false;
         }
-      }
+      },
     },
-    /**
-     * function to restart parameters every time you open login
-    */
-    restart: function()
-    {
-      this.error = '',
-      this.congra=''
-    },
-     /**
-     * function to close all modal which opened
-    */
-    close: function(){
-      this.$modal.hide('ResetCode');
-      this.$modal.hide('ForgetPass');
-      this.$modal.hide('demo-login');
-    }, 
-    /**
-      * take parameter email from forget password modal
-    */
-    beforeOpen:function (event) {
-      this.email = event.params.email;
-      this.username = event.params.user;
+    mounted(){
+      $('.sort a').click(function(){
+        $('#selected').text($(this).text());
+        var className = $(this).prop('class');
+        var remclass = $('#selected').prop('class');
+        $('#selected').removeClass(remclass);
+        $('#selected').addClass(className);
+        $('.sort a').css('color','rgb(135, 138, 140)');
+        $(this).css('color','blue');
+        $('.list button').css('background-color','#33a8ff2b');
+
+      });
+      $(document).click(function(e)
+      {
+        var container = $(".list");
+        if (!container.is(e.target) &amp;&amp; container.has(e.target).length === 0)
+        {
+          $('.list button').css('background-color','white');
+        }
+      });
+      $('.list button').hover(function() {
+      $('.list button').css('background-color','#33a8ff2b');        }, function() {
+      $('.list button').css('background-color','white');
+      });
     }
-  },
 }
 &lt;/script>
 
-&lt;style lang="scss" scoped >
-body{
-  display: grid;
-  font-family: IBMPlexSans,sans-serif;
-}
-.box a{
-  text-decoration:none;
-  font-weight:500;
-  font-size:14px
-}
-$background_color: #404142;
-#closebtn
-{
-  float:right;
-  margin:7px -5px;
-  border:0;
-  color:grey;
-  width:22px;
-  height:25px;
-  font-size:19px;
-  background-color:white;
-}
-.box {
-  background: white;
-  overflow: hidden;
-  width: 100%;
-  height: 100%;
-  border-radius: 2px;
+&lt;style scoped>
+#main{
+  background-color: white;
+  max-height:3%;
+  width:100%;
+  margin-top: 58px;
+  border-bottom: 1px solid #eee;
   box-sizing: border-box;
-  box-shadow: 0 0 40px black;
-  color: #8b8c8d;
-  font-size: 0;
-  .box-part {
-    display: inline-block;
-    position: relative;
-    vertical-align: top;
-    box-sizing: border-box;
-    height: 100%;
-    width: 80%;
-    &amp;#bp-right {
-      background:url('../../public/form2.png') ;
-      background-size:cover;
-      background-repeat: no-repeat;
-      border-left: 1px solid #eee;
-      width:18%   
-    }
-  }
-  .partition {
-    width: 100%;
-    height: 100%;
-    .partition-title {
-      box-sizing: border-box;
-      padding: 30px;
-      width: 100%;
-      letter-spacing: 1px;
-      font-family: Noto Sans,sans-serif;
-      font-size: 14px;
-      font-weight: 500;
-      line-height: 21px;
-    }
-    .partition-title h1{
-      font-size: 20px;
-      color:black
-    }
-    .partition-form {
-      padding: 0 20px;
-      box-sizing: border-box;
-    }
-    .partition-form span{
-      color: #FF0000;
-      display: block;
-      font-size:14px;
-      margin-left:15px
-    }
-  }
-
 }
-button.btn {
-  outline: none;
-  border: 0;
-  padding: 10px 25px;
+.text{
+  color:#999;
+  margin-left: 27.5%;
+  font-weight: 550;
+  font-size: 13px;
+  display: inline-block;
+}
+
+.list{
+  display: inline-block;
+  width:20%;
+  color:rgb(135, 138, 140);
+  margin-top:-0.4%;
+}
+#loggedbutton{
+  height:30px;
+  font-size:15px;
+  border-radius: 5%;
+  margin-left: 5%;
+  font-weight: 570;
+  border:1px solid white;
+  color:rgb(0, 121, 211);
+}
+ul{
+  width:10px;
+  margin:2px 4px;
+}
+
+li a{
+  color:rgb(135, 138, 140);
+  padding:0 8px;
   cursor: pointer;
-  border-radius: 3px;
-  color: white;
-  box-shadow: 0 4px 8px rgba(#20a0ff, .3);
-  background: #4db3ff;
-  font-weight: 600;
-  min-width: 25%;
-  margin-bottom: 5%;
-  margin-top: 10%;
-  margin-left:10px;
-  &amp;:hover {
-    background: #20a0ff;
-  }
-  
+  width:100%;
 }
 
-input {
-display: block;
-box-sizing: border-box;
-margin: 5px;
-width: 90%;
-font-size: 12px;
-line-height: 2;
-padding: 4px 8px;
-font-family: inherit;
-transition: 0.5s all;
+li a:hover{
+  color:black;
+  background-color:#33a8ff2b;
 }
-@media(max-width:750px){
-  div .partition-title p{
+@media(max-width:71.5px){
+  div .list {
     display: none
   }
+
 }
 &lt;/style>
 </code></pre>

@@ -1,10 +1,8 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Source: ResetCode.vue | Source: ResetCode.vue</title>
+    <title>Module: CreateApexCom | Module: CreateApexCom</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -26,7 +24,7 @@
         
     </div>
     <div class="title">
-        <h1><a href="index.html" class="link">Source: ResetCode.vue</a></h1>
+        <h1><a href="index.html" class="link">Module: CreateApexCom</a></h1>
         
     </div>
     <div class="search-container" id="search-container">
@@ -43,250 +41,558 @@
 
 
 
+
+<section>
+
+<header>
     
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>&lt;template>
-&lt;modal name="ResetCode" transition="pop-out" width="50%" height="70%" :clickToClose="false" @before-open="beforeOpen">
-  &lt;ResetPass/>
-  &lt;div class="box">
-    &lt;div class="box-part" id="bp-right">&lt;/div>
-
-    &lt;div class="box-part" id="bp-left">
-      &lt;div class="partition" id="partition-register">
-
-        &lt;button class="lead" id="closebtn" @click="close()"> X&lt;/button>
-
-        &lt;div class="partition-title">
-        &lt;h1> Please set your code here to continue &lt;/h1>
-        &lt;/div>
-
-        &lt;div class="partition-form">
-
-            &lt;input type="text" class="form-control" name="code"
-            placeholder="CODE" v-model="code" v-on:keyup="restart()" required autofocus>
-
-            &lt;button id="Next" class="btn blue" style="display:block" @click.prevent="post()">SEND&lt;/button>
-            &lt;span class="lead"> {{error}}  &lt;/span>
+        <h2>CreateApexCom</h2>
+        
             
-            &lt;p class = "lead" style = "fontSize:15px; color:blue;" > {{ congra }}  &lt;/p>
+        
+    
+</header>
 
-        &lt;/div>
-
-      &lt;/div>
-    &lt;/div>
-  &lt;/div>
-&lt;/modal>
-&lt;/template>
-
-&lt;script>
-import {AllServices} from '../MimicServices/AllServices.js'
-import ResetPass  from './ResetPass.vue'
-
-/**
- * @vue-data {string} [email=""] email of user
- * @vue-data {string} [code=""] code value
- * @vue-data {string} [username=""] username of user 
- * @vue-data {string} [error=""] error value
- * @vue-data {string} [congra=''] congratulation when code is correct 
-
- */
-export default {
-  name: 'ResetCode',
-  components:{
-    ResetPass
-  },
-  data(){
-    return{
-      code:'',
-      email:'',
-      username:'',
-      error:'',
-      congra:''
-    }
-  },
-  methods:{
-    /**
-     * check out the value of code is empty or invalid, and generate an error in this case, if not show the third modal and send value to change password   
-    */
-    post: function(){
-      if(this.code == '')
-      {
-        this.error = 'Please enter the code'
-      }
-      else
-      {
-        if(AllServices.getState()){
-          var check = AllServices.setCode(this.code,this.email,this.username);
-          if(check)
-          {
-            this.congra = "your code is correct, Now set your password" ;
-            setTimeout(() =>this.$modal.show('ResetPass',{user: this.username ,code:this.code}) , 2000)
-
-          }
-          else{
-            this.error =  this.$localStorage.get('error');
-          }
-        }
-        else {
-         AllServices.setCode(this.code,this.email,this.username).then((data) => {
-         if(data)
-          {
-            this.congra = "your code is correct, Now set your password " ;
-            setTimeout(() =>this.$modal.show('ResetPass',{user: this.username, code:this.code}) , 2000)
-
-          }
-          else{
-            this.error =  this.$localStorage.get('error');
-          }
-         })
-        }
-      }
-    },
-    /**
-     * function to restart parameters every time you open login
-    */
-    restart: function()
-    {
-      this.error = '',
-      this.congra=''
-    },
-     /**
-     * function to close all modal which opened
-    */
-    close: function(){
-      this.$modal.hide('ResetCode');
-      this.$modal.hide('ForgetPass');
-      this.$modal.hide('demo-login');
-    }, 
-    /**
-      * take parameter email from forget password modal
-    */
-    beforeOpen:function (event) {
-      this.email = event.params.email;
-      this.username = event.params.user;
-    }
-  },
-}
-&lt;/script>
-
-&lt;style lang="scss" scoped >
-body{
-  display: grid;
-  font-family: IBMPlexSans,sans-serif;
-}
-.box a{
-  text-decoration:none;
-  font-weight:500;
-  font-size:14px
-}
-$background_color: #404142;
-#closebtn
-{
-  float:right;
-  margin:7px -5px;
-  border:0;
-  color:grey;
-  width:22px;
-  height:25px;
-  font-size:19px;
-  background-color:white;
-}
-.box {
-  background: white;
-  overflow: hidden;
-  width: 100%;
-  height: 100%;
-  border-radius: 2px;
-  box-sizing: border-box;
-  box-shadow: 0 0 40px black;
-  color: #8b8c8d;
-  font-size: 0;
-  .box-part {
-    display: inline-block;
-    position: relative;
-    vertical-align: top;
-    box-sizing: border-box;
-    height: 100%;
-    width: 80%;
-    &amp;#bp-right {
-      background:url('../../public/form2.png') ;
-      background-size:cover;
-      background-repeat: no-repeat;
-      border-left: 1px solid #eee;
-      width:18%   
-    }
-  }
-  .partition {
-    width: 100%;
-    height: 100%;
-    .partition-title {
-      box-sizing: border-box;
-      padding: 30px;
-      width: 100%;
-      letter-spacing: 1px;
-      font-family: Noto Sans,sans-serif;
-      font-size: 14px;
-      font-weight: 500;
-      line-height: 21px;
-    }
-    .partition-title h1{
-      font-size: 20px;
-      color:black
-    }
-    .partition-form {
-      padding: 0 20px;
-      box-sizing: border-box;
-    }
-    .partition-form span{
-      color: #FF0000;
-      display: block;
-      font-size:14px;
-      margin-left:15px
-    }
-  }
-
-}
-button.btn {
-  outline: none;
-  border: 0;
-  padding: 10px 25px;
-  cursor: pointer;
-  border-radius: 3px;
-  color: white;
-  box-shadow: 0 4px 8px rgba(#20a0ff, .3);
-  background: #4db3ff;
-  font-weight: 600;
-  min-width: 25%;
-  margin-bottom: 5%;
-  margin-top: 10%;
-  margin-left:10px;
-  &amp;:hover {
-    background: #20a0ff;
-  }
-  
+<article>
+    
+        <div class="container-overview">
+        
+            
+                <div class="description"><p></p></div></div> </p>
+<style>
+.container-overview {
+    display: none;
 }
 
-input {
-display: block;
-box-sizing: border-box;
-margin: 5px;
-width: 90%;
-font-size: 12px;
-line-height: 2;
-padding: 4px 8px;
-font-family: inherit;
-transition: 0.5s all;
+.main section article table td.name,
+.main section article table td.type,
+.main section article table td.attributes,
+.main section article table td.default {
+    max-width: none;
 }
-@media(max-width:750px){
-  div .partition-title p{
-    display: none
-  }
-}
-&lt;/style>
-</code></pre>
-        </article>
-    </section>
+</style>
+
+
+
+
+<p><h3 class="subsection-title" style="margin-top: 1em" data-jsdoc-vuejs="section-data">Data</h3></p>
+<div class="container-params">
+    <table class="params" data-jsdoc-vuejs="table-data">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Default value</th>
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr>
+            <td class="name"><code>name</code></td>
+            <td class="type"><span class="param-type">string</span></td>
+            <td class="description">-</td>
+            <td class="description last">the name of tha ApexCom we what to create</td>
+        </tr>
+
+        <tr>
+            <td class="name"><code>description</code></td>
+            <td class="type"><span class="param-type">string</span></td>
+            <td class="description">-</td>
+            <td class="description last">the description of tha ApexCom we what to create</td>
+        </tr>
+
+        <tr>
+            <td class="name"><code>rule</code></td>
+            <td class="type"><span class="param-type">string</span></td>
+            <td class="description">-</td>
+            <td class="description last">the rules of tha ApexCom we what to create</td>
+        </tr>
+
+        <tr>
+            <td class="name"><code>error</code></td>
+            <td class="type"><span class="param-type">string</span></td>
+            <td class="description">-</td>
+            <td class="description last">the value returned from the request</td>
+        </tr>
+
+        <tr>
+            <td class="name"><code>imgContent</code></td>
+            <td class="type"><span class="param-type">string</span></td>
+            <td class="description">-</td>
+            <td class="description last">the image of tha ApexCom we what to create</td>
+        </tr>
+
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+
+<p><div class="container-overview"><div><p> </p></div>
+            
+
+            
+                
+
+<dt>
+    
+</dt>
+<dd>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+        
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        <dl>
+                
+
+<dt>
+    
+        <h4 class="name" id="CreateApex">
+            
+                <span class="type-signature"></span>CreateApex<span class="signature">()</span><span class="type-signature"></span>
+                
+            
+            <div class="container-source members">
+                <code><a href="CreateApexCom.vue.html">CreateApexCom.vue</a></code>,
+                <code><a href="CreateApexCom.vue.html#line149">line 149</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Create the ApexCom</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id="createFile">
+            
+                <span class="type-signature"></span>createFile<span class="signature">()</span><span class="type-signature"></span>
+                
+            
+            <div class="container-source members">
+                <code><a href="CreateApexCom.vue.html">CreateApexCom.vue</a></code>,
+                <code><a href="CreateApexCom.vue.html#line119">line 119</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>it create file to be stored in img src</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id="onChange">
+            
+                <span class="type-signature"></span>onChange<span class="signature">()</span><span class="type-signature"></span>
+                
+            
+            <div class="container-source members">
+                <code><a href="CreateApexCom.vue.html">CreateApexCom.vue</a></code>,
+                <code><a href="CreateApexCom.vue.html#line108">line 108</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>when the user upload the img it enable the post button and store the img src</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id="removeFile">
+            
+                <span class="type-signature"></span>removeFile<span class="signature">()</span><span class="type-signature"></span>
+                
+            
+            <div class="container-source members">
+                <code><a href="CreateApexCom.vue.html">CreateApexCom.vue</a></code>,
+                <code><a href="CreateApexCom.vue.html#line140">line 140</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>it remove the img if the user upload an img from browser and want to remove it so it make the src empty.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            </dl>
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 
@@ -303,7 +609,7 @@ transition: 0.5s all;
 <script src="scripts/linenumber.js"></script>
 
     <script>
-        var id = '_sub'.replace(/"/g, '_');
+        var id = 'module:CreateApexCom_sub'.replace(/"/g, '_');
         var selectedApi = document.getElementById(id); // do not use jquery selector
         var $selectedApi = $(selectedApi);
 

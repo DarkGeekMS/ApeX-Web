@@ -9,20 +9,20 @@
             <textarea id="text" class = "in"  v-model="content"  rows="5" ></textarea><br>
             <button class="Send" v-on:click="send">SEND</button>
 
-            
+
     </div>
 </template>
 <script>
-/**
- * @vue-data {string} [content] content of the message
- * @vue-data {string} [reciever] reciever of the message
- * @vue-data {string} [subject] subject of the message
- 
- */
 import axios from 'axios'
 import {AllServices} from '../MimicServices/AllServices.js'
 import swal from 'sweetalert'
 
+/**
+* @vue-data {string} [content] content of the message
+* @vue-data {string} [reciever] reciever of the message
+* @vue-data {string} [subject] subject of the message
+
+*/
 export default {
   name: 'WriteMessage',
   data(){
@@ -39,7 +39,7 @@ export default {
      *sends the message if all boxes are filled
      */
       send:function() {
-         //TODD:request to backend 
+         //TODD:request to backend
         if (this.reciever==''){
             swal('To box cannot be empty!');
           }
@@ -49,17 +49,17 @@ export default {
           else if(this.content == ''){
             swal('Message box cannot be empty!');
           }
-          
+
           else
         AllServices.sendMessage(this.reciever,this.subject,this.content).then((data) => {
-          
+
           if(data){
             swal('Message Sent!');
             this.content = '';
             this.subject = '';
             this.reciever = '';
           }
- 
+
       });
 }
   }

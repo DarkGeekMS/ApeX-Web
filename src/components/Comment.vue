@@ -5,7 +5,7 @@
       <div id = "firstLine">
         <button id ="Up" v-on:click="Upvote" v-show="!this.upVotedLocal" class = "arrows,up"></button>
         <button id ="Up2" v-on:click="Upvote" v-show="this.upVotedLocal" class = "arrows,up"></button>
-        
+
         <b class = "smallText">
           <router-link
           :to="{name:'UserProfile' ,
@@ -31,7 +31,7 @@
         </div>
       </div>
       </div>
-      
+
 
       <div id = "thirdLine" v-show="!showEditBox">
         <button class = "buttons" v-on:click = "replyClicked"  id = "Reply"  v-show = "showReplyButton">Reply</button>
@@ -49,31 +49,31 @@
 </template>
 
 <script>
-/**
- * @vue-data {string} [content] content of the comment
- * @vue-data {integer} [idx]    idx of the comment in the array of comments
- * @vue-data {integer} [level]   level of indentation of the comment in the view
- * @vue-data {integer} [parentIdx]    idx of the parent of the comment in the array of comments
- * @vue-data {string} [parentID]  ID of the parent component
- * @vue-data {string} [ID]  ID of the the current comment
- * @vue-data {string} [user] user name of the current logged-in user
- * @vue-data {boolean} [upVoted=false] check if the Post is upVoted by the user
- * @vue-data {boolean} [downVoted=false] check if the Post is downVoted by the user
- * @vue-data  {integer} [Points=0] # of points the the comment got
- * @vue-data  {boolean} [showReplyBox=0] to show the reply box
- * @vue-data  {boolean} [showEditBox=0] to show the edit box
- * @vue-data  {boolean} [showDeleteButton=false] to show the delete button to some specific users
- * @vue-data  {boolean} [showEditButton=false] to show the edit button to some specific users
- * @vue-data  {boolean} [showReportButton=false] to show the report button to some specific users
- * @vue-data  {boolean} [deleted=1] check if the comment is Deleted
- * @vue-data  {string} [unSaved='Save'] check if the comment is Saved
- */
 
 import WriteComment from './WriteComment.vue'
 import reportBox from './ReportModal.vue'
 import {AllServices} from '../MimicServices/AllServices.js'
 var moment =require('moment');
 
+/**
+* @vue-data {string} [content] content of the comment
+* @vue-data {integer} [idx]    idx of the comment in the array of comments
+* @vue-data {integer} [level]   level of indentation of the comment in the view
+* @vue-data {integer} [parentIdx]    idx of the parent of the comment in the array of comments
+* @vue-data {string} [parentID]  ID of the parent component
+* @vue-data {string} [ID]  ID of the the current comment
+* @vue-data {string} [user] user name of the current logged-in user
+* @vue-data {boolean} [upVoted=false] check if the Post is upVoted by the user
+* @vue-data {boolean} [downVoted=false] check if the Post is downVoted by the user
+* @vue-data  {integer} [Points=0] # of points the the comment got
+* @vue-data  {boolean} [showReplyBox=0] to show the reply box
+* @vue-data  {boolean} [showEditBox=0] to show the edit box
+* @vue-data  {boolean} [showDeleteButton=false] to show the delete button to some specific users
+* @vue-data  {boolean} [showEditButton=false] to show the edit button to some specific users
+* @vue-data  {boolean} [showReportButton=false] to show the report button to some specific users
+* @vue-data  {boolean} [deleted=1] check if the comment is Deleted
+* @vue-data  {string} [unSaved='Save'] check if the comment is Saved
+*/
 
 export default {
   name: 'CommentItem',
@@ -82,7 +82,7 @@ export default {
     content:String,
     idx:Number,
     level:Number,
-    parentIdx:{type:Number, 
+    parentIdx:{type:Number,
     default: function () { return -1 }},
     parentID:String,
     ID:String,
@@ -139,7 +139,7 @@ this.unSavedLocal=this.unSaved;
 
 
     //
-          
+
           var isModerator = false;
           for(var i = 0;i<this.moderatorsUserNames.length;i++)
           {
@@ -157,7 +157,7 @@ this.unSavedLocal=this.unSaved;
       // moderator
       this.moderatorButtons();
     }
-    
+
     else if (this.$localStorage.get('userName') == this.postOwnerUserName)
     {
       console.log("aho");
@@ -275,7 +275,7 @@ Report:function(){
 
 },
 /**
-     * saves the the comment 
+     * saves the the comment
      */
 Save:function(){
     if(this.$localStorage.get('login')){
@@ -327,7 +327,7 @@ Downvote:function(){
      * @param {string} cont content of the added comment
      * @param {array} con content of the added comment split to make the mentions work
      * @param {string} use user-name of the writer of the added comment
-     * @param {integer} parent parent index in the array 
+     * @param {integer} parent parent index in the array
      * @param {integer} parentLevel level of the parent comment
      * @param {string} parentID parent ID
      * @param {string} currentID current ID
@@ -365,7 +365,7 @@ this.time=fuzzy;
 },
 
 /**
-     * to show buttons under comments for comments owners 
+     * to show buttons under comments for comments owners
      */
 commentOwnerButtons:function(){
   this.showReportButton = false;
@@ -524,7 +524,7 @@ deleteReportedComment:function(idx){
   position:static;
   float:left;
 }
- .content  { 
+ .content  {
 overflow: hidden;
    display: inline;
 

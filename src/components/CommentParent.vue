@@ -2,21 +2,21 @@
   <div id = "CommentParent">
     <WriteComment buttonType="0" v-bind:parentID="postID" v-on:Comment="addComment" ></WriteComment>
     <div v-for = "comment in comments" :key="comment.id">
-      <Comment 
-      v-on:Delete="deleteComment"  
-      v-on:Reply2="addReply" 
-      v-on:Edit="editComment" 
+      <Comment
+      v-on:Delete="deleteComment"
+      v-on:Reply2="addReply"
+      v-on:Edit="editComment"
       v-on:Report="reportComment"
-      v-bind:user= comment.user  
-      v-bind:level= comment.level 
-      v-bind:content= comment.content 
-      v-bind:con= comment.con 
-      v-bind:idx=comment.idx 
-      v-bind:parentIdx=comment.parentIdx 
-      v-bind:parentID=comment.parentID 
-      v-bind:ID=comment.currentID 
-      v-bind:date=comment.date 
-      v-bind:points=comment.points 
+      v-bind:user= comment.user
+      v-bind:level= comment.level
+      v-bind:content= comment.content
+      v-bind:con= comment.con
+      v-bind:idx=comment.idx
+      v-bind:parentIdx=comment.parentIdx
+      v-bind:parentID=comment.parentID
+      v-bind:ID=comment.currentID
+      v-bind:date=comment.date
+      v-bind:points=comment.points
       v-bind:unSaved = comment.unSaved
       v-bind:upVoted = comment.upVoted
       v-bind:downVoted = comment.downVoted
@@ -31,13 +31,6 @@
 </template>
 
 <script>
-/**
- * @vue-data {string} [postID] ID of the post that the comments will be on
- * @vue-data {array} [comments]   array that includes all comments that should be rendered
- * @vue-data {array} [moderatorsUserNames]   array that includes all moderators of the apex-com of the post
- * @vue-data {string} [postOwnerUserName]  name of the post owner
- 
- */
 import WriteComment from './WriteComment.vue'
 import Comment from './Comment.vue'
 import {AllServices} from '../MimicServices/AllServices.js'
@@ -45,6 +38,13 @@ import reportBox from './ReportModal.vue'
 
 import swal from 'sweetalert'
 
+/**
+* @vue-data {string} [postID] ID of the post that the comments will be on
+* @vue-data {array} [comments]   array that includes all comments that should be rendered
+* @vue-data {array} [moderatorsUserNames]   array that includes all moderators of the apex-com of the post
+* @vue-data {string} [postOwnerUserName]  name of the post owner
+
+*/
 
 export default {
   name:'CommentParentItem',
@@ -97,10 +97,10 @@ export default {
           swal("empty text not allowed!");
       },
        /**
-     * adds a reply from the reply box in the array in the correct index 
+     * adds a reply from the reply box in the array in the correct index
      * @param {string} cont content of the added comment
      * @param {array} con content of the added comment split to view mentions
-     * @param {integer} parent parent index in the array 
+     * @param {integer} parent parent index in the array
      * @param {integer} l level of the comment
      * @param {string} pID parent ID
      * @param {string} cID current ID
@@ -131,7 +131,7 @@ export default {
      * @param {integer} i index of comment to be updated
   */
       editComment:function(content,i){
-         
+
 
          if (content!=''){
           this.comments[i].content=content;
@@ -213,7 +213,7 @@ export default {
           arr = data.comments;
           this.comments =[];
         for(var i = 0; i < arr.length; i++){
-          
+
           var d = new Date (arr[i].created_at).getTime();
 var n = new Date().getTimezoneOffset()*60000;
 var dd = new Date(d-n);
@@ -233,14 +233,14 @@ var dd = new Date(d-n);
           ///
           obj.unSaved = arr[i].Saved?"Unsave":"Save";
           ///
-         
+
 
           this.comments[i] = obj;
           this.comments[i].parentIdx = this.getParentIdx(this.comments,i);
 
         }}});
-        
-        
+
+
 
       },
       getParentIdx:function(arr,t){

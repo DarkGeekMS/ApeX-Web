@@ -11,7 +11,7 @@
         <button  class="But2"  id="read" v-on:click="showRead">Read</button>
         <button  class="But2"  id="unread" v-on:click="showUnread">Unread</button>
     </div>
-    
+
 
     <div class = "sentMessages" v-show="sent" v-for="msg in sentArr" v-bind:key="msg.id">
         <Message  v-bind:date= msg.date  v-bind:title= msg.subject v-bind:content= msg.content v-bind:sender= msg.receiver.username v-bind:type= 0 v-bind:ID=msg.id></Message>
@@ -30,31 +30,31 @@
     <div class = "unreadMessages" v-show="unread" v-for="msg in unreadArr" v-bind:key="msg.id">
         <Message  v-bind:date= msg.date  v-bind:title= msg.subject v-bind:content= msg.content v-bind:senderID= msg.sender.id v-bind:sender= msg.sender.username v-bind:type= 1 v-bind:ID=msg.id></Message>
     </div>
-</div>  
+</div>
     <WriteMessage v-show="send"></WriteMessage>
 </div>
 </template>
 
 <script>
-/**
- * @vue-data {boolean} [send] opens the "send a private message" box
- * @vue-data {boolean} [all] opens the "all messages" box
- * @vue-data {boolean} [read] opens the "read messages" box
- * @vue-data {boolean} [unread] opens the "unread messages" box
- * @vue-data {boolean} [sent] opens the "sent messages" box
- * @vue-data {boolean} [inbox] opens the "inbox messages" box
- * @vue-data {array} [sentArr] array of sent messages
- * @vue-data {array} [allArr] array of all received messages
- * @vue-data {array} [readArr] array of read messages
- * @vue-data {array} [unreadArr] array of unread messages
-
- */
 import axios from 'axios'
 import WriteMessage from "./WriteMessage.vue"
 import Message from "./Message.vue"
 import {AllServices} from '../MimicServices/AllServices.js'
 import $ from'jquery/dist/jquery.min.js'
 
+/**
+* @vue-data {boolean} [send] opens the "send a private message" box
+* @vue-data {boolean} [all] opens the "all messages" box
+* @vue-data {boolean} [read] opens the "read messages" box
+* @vue-data {boolean} [unread] opens the "unread messages" box
+* @vue-data {boolean} [sent] opens the "sent messages" box
+* @vue-data {boolean} [inbox] opens the "inbox messages" box
+* @vue-data {array} [sentArr] array of sent messages
+* @vue-data {array} [allArr] array of all received messages
+* @vue-data {array} [readArr] array of read messages
+* @vue-data {array} [unreadArr] array of unread messages
+
+*/
 
 export default {
   name: 'MessageBar',
@@ -97,7 +97,7 @@ export default {
      * opens the "inbox messages" box
      */
       showInbox:function() {
-        
+
          this.inbox=true;
          AllServices.getAllMessages().then((data) => {
          if(data){
@@ -129,7 +129,7 @@ export default {
                   }
                         });
 
-        
+
       },
        /**
      * opens the "unread messages" box
@@ -150,7 +150,7 @@ export default {
                   }
                         });
 
-         
+
       },
        /**
      * opens the "all messages" box
@@ -171,7 +171,7 @@ export default {
                   }
                });
 
-    
+
       },
        /**
      * opens the "sent messages" box

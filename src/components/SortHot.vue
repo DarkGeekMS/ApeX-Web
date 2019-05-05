@@ -15,15 +15,7 @@ name: 'SortHot',
 
   components:{
     'DisplayPosts':DisplayPosts,
-
-
   },
-  data(){
-    return{
-  }
-},
-
-
 }
 
 </script>

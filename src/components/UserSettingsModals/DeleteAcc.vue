@@ -6,27 +6,22 @@
       <h6>Sorry to see you go!</h6>
 <ul>
   <li><h6>If you are having a problem on ApexCom, please consider contacting us about it before deactivating your account.</h6></li>
-<br>
+  <br>
   <li><h6>  Deactivating your account will not delete the content of posts and comments you've made on ApexCom. To do so please delete them individually.</h6></li>
 </ul>
 <br>
 <h6>ACCOUNT CREDENTIALS FOR SECURITY PURPOSES</h6>
-
 <div class="partition" id="partition-register">
   <div class="partition-form">
     <form autocomplete="false">
       <input id="n-password2" type="password" v-model="password" placeholder="Password">
-
     </form>
   </div>
 </div>
-
             <div class="button-set">
               <button id="goto-signin-btn" @click="hide()" class="Button">Cancel</button>
               <button id="register-btn" @click="deleteacc()" class="Button">Delete</button>
             </div>
-
-
   </div>
   </div>
 </modal>
@@ -35,6 +30,11 @@
 <script>
 import {AllServices} from '../../MimicServices/AllServices.js'
 import swal from 'sweetalert';
+/**
+
+  *@vue-data {string} password - the password taken from the user for validations
+  *@vue-data {string} id - the Userid
+*/
 export default {
   data () {
     return {
@@ -48,11 +48,17 @@ id:''
     });
   },
 methods:{
-hide(){
+  /**
+  * when pressing cancel it close the modal
+  */
+  hide(){
   this.$modal.hide('DeleteAcount')
-},
-deleteacc(){
-  AllServices.deleteAcc(this.id,this.password).then((data) => {
+  },
+  /**
+  * when pressing delete it calls the request that delete the user account
+  */
+  deleteacc(){
+    AllServices.deleteAcc(this.id,this.password).then((data) => {
    if(data)
    {
      swal('User dectivated successfully');
@@ -60,16 +66,15 @@ deleteacc(){
    this.$localStorage.set('token', '');
    this.$localStorage.set('userName', '');
    this.$router.replace({ name: 'NewHomePage' , params: {sortingparam:'hot'}});
- } else{
-   swal("Something went wrong")
- }
-});
-},
-ErrorCheck(){
-// todo check error type and do behavior
-}
-}
-}
+    }
+     else
+    {
+      swal("Something went wrong")
+    }
+      });
+            },
+          }
+        }
 </script>
 <style lang="scss" scoped>
 h6{
@@ -152,30 +157,6 @@ $background_color: #404142;
     transition: 0.5s all;
     outline: none;
   }
-  // button {
-  //   background: white;
-  //   border-radius: 4px;
-  //   box-sizing: border-box;
-  //   padding: 10px;
-  //   letter-spacing: 1px;
-  //   font-family: "Open Sans", sans-serif;
-  //   font-weight: 400;
-  //   min-width: 140px;
-  //   margin-top: 8px;
-  //   color: black;
-  //   cursor: pointer;
-  //   border: 1px solid #DDDEDF;
-  //   text-transform: uppercase;
-  //   transition: 0.1s all;
-  //   font-size: 10px;
-  //   outline: none;
-  //   &:hover {
-  //     border-color: mix(#DDDEDF, black, 90%);
-  //     color: mix(#8b8c8d, black, 80%);
-  //   }
-  // }
-  //
-  //
   .large-btn {
     width: 100%;
     background: white;

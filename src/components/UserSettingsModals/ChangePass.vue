@@ -36,6 +36,12 @@
 </template>
 <script>
 import {AllServices} from '../../MimicServices/AllServices.js'
+/**
+ * @vue-data  {string} password - the new password thst will be taken from the user
+ *@vue-data {string} username - the username taken from the user for validations
+  *@vue-data {string} key - the password taken from the user for validations
+  *@vue-data {string} error - error when checking on the new password
+*/
 export default {
   name: 'Changepass',
   data () {
@@ -49,6 +55,9 @@ export default {
 
 
   methods:{
+    /**
+    * check the validation of the new password and if valid send the request to the server to change password
+    */
     change(){
       if(this.password == '')
       {
@@ -59,11 +68,25 @@ export default {
         this.error = "Password must be at least 6 characters long"
       }
       else{
-          AllServices.changePass(this.password,this.username,this.key).then((data)=> {});
-          this.$modal.hide('changepass');
+        if(this.username!=this.$localStorage.get('userName')){
+          swal("Error when changing password, check your username or password");
+        }
+          else{
+            AllServices.changePass(this.password,this.username,this.key).then((data)=> {
+
+            swal("Password changed successfully")
+            this.$modal.hide('changepass');
+          })
+            .catch(function () {
+              swal("Error when changing password, check your username or password");
+            });
+          }
       }
 
     },
+    /**
+    * when pressing cancel it close the modal
+    */
     hide () {
     this.$modal.hide('changepass');
   },
@@ -78,8 +101,6 @@ export default {
 </script>
 <style lang="scss" scoped>
 $background_color: #404142;
-$github_color: #DBA226;
-$facebook_color: #3880FF;
 .box {
   background: white;
   overflow: hidden;
@@ -150,30 +171,6 @@ $facebook_color: #3880FF;
     transition: 0.5s all;
     outline: none;
   }
-  // button {
-  //   background: white;
-  //   border-radius: 4px;
-  //   box-sizing: border-box;
-  //   padding: 10px;
-  //   letter-spacing: 1px;
-  //   font-family: "Open Sans", sans-serif;
-  //   font-weight: 400;
-  //   min-width: 140px;
-  //   margin-top: 8px;
-  //   color: #8b8c8d;
-  //   cursor: pointer;
-  //   border: 1px solid #DDDEDF;
-  //   text-transform: uppercase;
-  //   transition: 0.1s all;
-  //   font-size: 10px;
-  //   outline: none;
-  //   &:hover {
-  //     border-color: mix(#DDDEDF, black, 90%);
-  //     color: mix(#8b8c8d, black, 80%);
-  //   }
-  // }
-  //
-  //
   .large-btn {
     width: 100%;
     background: white;
@@ -191,22 +188,6 @@ $facebook_color: #3880FF;
   #register-btn,
   #signin-btn {
     margin-left: 8px;
-  }
-  .facebook-btn {
-    border-color: $facebook_color;
-    color: $facebook_color;
-    &:hover {
-      border-color: $facebook_color;
-      background: $facebook_color;
-    }
-  }
-  .github-btn {
-    border-color: $github_color;
-    color: $github_color;
-    &:hover {
-      border-color: $github_color;
-      background: $github_color;
-    }
   }
   .autocomplete-fix {
     position: absolute;

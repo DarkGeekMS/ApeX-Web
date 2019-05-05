@@ -14,14 +14,7 @@ props:['ap'],
   name: 'HomePage',
   components:{
     'DisplayPosts':DisplayPosts,
-
-
   },
-  data(){
-    return{
-  }
-},
-
 
 }
 
