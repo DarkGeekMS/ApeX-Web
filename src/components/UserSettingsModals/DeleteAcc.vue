@@ -34,6 +34,7 @@
 
 <script>
 import {AllServices} from '../../MimicServices/AllServices.js'
+import swal from 'sweetalert';
 export default {
   data () {
     return {
@@ -41,21 +42,31 @@ password:'',
 id:''
     }
   },
+  mounted(){
+    AllServices.userType().then((data)=>{
+      this.id=data.user.id
+    });
+  },
 methods:{
 hide(){
   this.$modal.hide('DeleteAcount')
 },
 deleteacc(){
-  AllServices.userType().then((data)=>{
-    this.id=data.user.id
-  });
   AllServices.deleteAcc(this.id,this.password).then((data) => {
-   this.error= data;
-console.log(data) });
+   if(data)
+   {
+     swal('User dectivated successfully');
+     this.$localStorage.set('login', false);
+   this.$localStorage.set('token', '');
+   this.$localStorage.set('userName', '');
+   this.$router.replace({ name: 'NewHomePage' , params: {sortingparam:'hot'}});
+ } else{
+   swal("Something went wrong")
+ }
+});
 },
 ErrorCheck(){
 // todo check error type and do behavior
-
 }
 }
 }

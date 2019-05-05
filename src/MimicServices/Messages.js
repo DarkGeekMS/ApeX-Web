@@ -56,10 +56,10 @@ export  const MimicMessage =new Vue({
       }
       else
       {
-        
-        return axios.post(baseUrl + 'api/DeleteMessage', {
+        return axios.delete(baseUrl + 'api/DeleteMessage', {
+          data:{
             id:ID,
-            token:this.$localStorage.get('token')
+            token:this.$localStorage.get('token')}
         })
            .then(response=> {
             return response.data;

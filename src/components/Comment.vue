@@ -1,26 +1,25 @@
 <template>
 
   <div id="Comment" v-show = "deleted">
-    
      <div v-bind:style="{marginLeft: level*4 +'%'}">
       <div id = "firstLine">
-        <button id ="Up" v-on:click="Upvote" v-show="!this.upVoted" class = "arrows,up"></button>
-        <button id ="Up2" v-on:click="Upvote" v-show="this.upVoted" class = "arrows,up"></button>
-        <router-link
-          class ="smallText"
+        <button id ="Up" v-on:click="Upvote" v-show="!this.upVotedLocal" class = "arrows,up"></button>
+        <button id ="Up2" v-on:click="Upvote" v-show="this.upVotedLocal" class = "arrows,up"></button>
+        
+        <b class = "smallText">
+          <router-link
           :to="{name:'UserProfile' ,
            params: {userName:this.user}}">
             {{user}}
-          </router-link>
-        <b class = "smallText">{{points}} points</b>
-        <b class = "smallText">{{moment(date).fromNow()}}</b>
+          </router-link>{{pointsLocal}} points {{moment(date).fromNow()}} </b>
+        <!-- <b class = "smallText"></b> -->
         </div>
 
       <br>
 
       <div id = "secondLine">
-        <button id ="Down" v-on:click="Downvote" v-show="!this.downVoted" class = "arrows,down"></button>
-        <button id ="Down2" v-on:click="Downvote" v-show="this.downVoted" class = "arrows,down"></button>
+        <button id ="Down" v-on:click="Downvote" v-show="!this.downVotedLocal" class = "arrows,down"></button>
+        <button id ="Down2" v-on:click="Downvote" v-show="this.downVotedLocal" class = "arrows,down"></button>
         <div class = "condiv" v-for = "part in con" :key="part.start">
           <p class="content"  v-if = "!part.type" >{{part.c}}</p>
           <router-link
@@ -37,7 +36,7 @@
       <div id = "thirdLine" v-show="!showEditBox">
         <button class = "buttons" v-on:click = "replyClicked"  id = "Reply"  v-show = "showReplyButton">Reply</button>
         <button class = "buttons" id = "Report" @click="Report" v-show = "showReportButton">Report</button>
-        <button class = "buttons" v-on:click="Save" id = "Save" >{{unSaved}}</button>
+        <button class = "buttons" v-on:click="Save" id = "Save" >{{unSavedLocal}}</button>
         <button class = "buttons" v-on:click = "showEditBox = !showEditBox  ,showReplyBox = false" id = "Edit" v-show = "showEditButton">Edit</button>
         <button class = "buttons" v-on:click ="Delete" id = "Delete" v-show = "showDeleteButton">Delete</button>
       </div>
@@ -109,7 +108,13 @@ export default {
   },
   data(){
     return{
-    
+    //local
+    upVotedLocal:false,
+    downVotedLocal:false,
+    pointsLocal:0,
+    unSavedLocal:'Save',
+
+    //
     time:'',
     showReplyBox:0,
     showEditBox:0,
@@ -124,6 +129,16 @@ export default {
     }
   },
   mounted(){
+    ///locals
+this.upVotedLocal = this.upVoted;
+this.downVotedLocal = this.downVoted;
+this.pointsLocal=this.points;
+this.unSavedLocal=this.unSaved;
+
+
+
+
+    //
           
           var isModerator = false;
           for(var i = 0;i<this.moderatorsUserNames.length;i++)
@@ -142,8 +157,10 @@ export default {
       // moderator
       this.moderatorButtons();
     }
+    
     else if (this.$localStorage.get('userName') == this.postOwnerUserName)
     {
+      console.log("aho");
       // post owner
       this.postOwnerButtons();
     }
@@ -258,10 +275,10 @@ Report:function(){
 Save:function(){
     if(this.$localStorage.get('login')){
       AllServices.SaveComment(this.ID);
-      if(this.unSaved=='Save')
-        this.unSaved='Unsave';
+      if(this.unSavedLocal=='Save')
+        this.unSavedLocal='Unsave';
       else
-        this.unSaved='Save';
+        this.unSavedLocal='Save';
     }
     else
       swal("Log In First!!");
@@ -272,12 +289,12 @@ Save:function(){
 Upvote:function(){
 
   if(this.$localStorage.get('login')){
-    this.upVoted = !this.upVoted;
-    var downState = this.downVoted;
-    this.downVoted = false;
-    AllServices.UpVoteComment(this.ID,this.points,this.upVoted,downState).then((data) => {
+    this.upVotedLocal = !this.upVotedLocal;
+    var downState = this.downVotedLocal;
+    this.downVotedLocal = false;
+    AllServices.UpVoteComment(this.ID,this.pointsLocal,this.upVotedLocal,downState).then((data) => {
         if(data){
-            this.points=data.votes;
+            this.pointsLocal=data.votes;
           }});
   }
   else
@@ -289,12 +306,12 @@ Upvote:function(){
 Downvote:function(){
 
   if(this.$localStorage.get('login')){
-    this.downVoted = !this.downVoted;
-    var upState = this.upVoted;
-    this.upVoted = false;
-    AllServices.DownVoteComment(this.ID,this.points,this.downVoted,upState).then((data) => {
+    this.downVotedLocal = !this.downVotedLocal;
+    var upState = this.upVotedLocal;
+    this.upVotedLocal = false;
+    AllServices.DownVoteComment(this.ID,this.pointsLocal,this.downVotedLocal,upState).then((data) => {
           if(data){
-            this.points=data.votes;
+            this.pointsLocal=data.votes;
           }});
   }
   else
@@ -405,6 +422,7 @@ deleteReportedComment:function(idx){
     width:53%;
     float:left;
     background:transparent;
+    margin-bottom:20px;
 }
 
 
@@ -453,7 +471,6 @@ deleteReportedComment:function(idx){
     font-family: 'Courier New', Courier, monospace;
     font-style:normal;
     margin-right: 7px;
-
 }
 .smallText:hover{
     background-color: rgb(235, 233, 233);
@@ -463,6 +480,7 @@ deleteReportedComment:function(idx){
 
 }
 #secondLine{
+  /* float:left; */
     padding-top: 4px;
 }
 #thirdLine{
@@ -520,4 +538,15 @@ width:60%;
 float:left;
 margin-top:5%;
 }
+@media only screen and (max-width: 500px) {
+    .smallText {
+        display: none;
+    }
+}
+@media only screen and (max-width: 500px) {
+    #thirdLine {
+        display: none;
+    }
+}
+
 </style>

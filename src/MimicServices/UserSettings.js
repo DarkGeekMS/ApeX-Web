@@ -3,7 +3,7 @@ import axios from 'axios'
 
 export  const MimicUserSettings =new Vue({
   methods:{
-    deleteAcc: function(mimic,Pass,id, baseUrl){
+    deleteAcc: function(mimic,id,Pass, baseUrl){
       if(mimic==true){
 
         if(pass!="")
@@ -25,12 +25,14 @@ return promise1;
                 }
               }
 else {
-  return axios.delete(baseUrl + 'api/DeleteUser',
- {
+
+  return axios.delete(baseUrl + 'api/DeleteUser',{ data:
+     {
     UserID:id,
     token:this.$localStorage.get('token'),
     passwordConfirmation:Pass
-    }).then(response => {
+    }
+  } ).then(response => {
       return response.data;
     })
  }
@@ -67,9 +69,7 @@ return promise1;
 
 updatePrefs:function (mimic,fd, baseUrl) {
   if(mimic==false){
-    console.log(fd)
     return axios.post(baseUrl + 'api/UpdatePreferences',fd).then(response => {
-        console.log(response)
         return response.data;
       })
 
