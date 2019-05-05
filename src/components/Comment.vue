@@ -173,6 +173,7 @@ this.unSavedLocal=this.unSaved;
       this.showEditButton=false;
       this.showReportButton=false;
       this.showReplyButton = false;
+      this.showDeleteButton=true;
     }
   },
   methods:{
@@ -202,8 +203,12 @@ retrieveWithNoEdit:function(){
 Delete:function(){
 
     if(this.$localStorage.get('login')){
+      if(this.inReported)
+      this.deleted=0;
       AllServices.DeleteComment(this.ID);
+
       this.$emit('Delete',this.idx );
+
     }
     else{
       swal("Log In First!!");
