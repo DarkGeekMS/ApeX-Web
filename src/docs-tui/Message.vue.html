@@ -1,8 +1,10 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Module: SearchSideBar | Module: SearchSideBar</title>
+    <title>Source: Message.vue | Source: Message.vue</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -24,7 +26,7 @@
         
     </div>
     <div class="title">
-        <h1><a href="index.html" class="link">Module: SearchSideBar</a></h1>
+        <h1><a href="index.html" class="link">Source: Message.vue</a></h1>
         
     </div>
     <div class="search-container" id="search-container">
@@ -41,243 +43,256 @@
 
 
 
-
-<section>
-
-<header>
     
-        <h2>SearchSideBar</h2>
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>&lt;template>
+&lt;div class = "container2" v-if="this.showMessage">
+   &lt;p class = "title">{{title}}:&lt;/P>
+   &lt;div class = "sub">
+       &lt;div class="first-line">
         
-            
-        
-    
-</header>
+        &lt;div class="block-container" v-if="this.type">from&lt;/div>
+        &lt;div class="block-container" v-if="!this.type">to&lt;/div>
+        &lt;router-link 
+          :to="{name:'UserProfile' ,
+           params: {userName:sender}}">
+            {{sender}}
+          &lt;/router-link>
+          sent {{time}}
+       &lt;/div>
+       &lt;br>
+       &lt;div class="second-line">
+            {{content}}
+       &lt;/div>
+       &lt;br>
+       &lt;div class = "first-line">
+        &lt;button class = "buttons"  id = "Permalink" v-on:click="showReplies">Permalink&lt;/button>
+        &lt;div class="block-container" v-show="this.type">
+        &lt;button class = "buttons"  id = "Delete" v-on:click="deleteMsg">Delete&lt;/button>
+        &lt;button class = "buttons"  id = "BlockUserBut"  v-on:click="blockButton"  v-show="!this.block">Block User&lt;/button>
 
-<article>
+        &lt;div class="block-container" v-if="this.block">
+            Are You Sure?
+            &lt;button id = "yes" class = "buttons" v-on:click="blockUser">Yes&lt;/button>
+            &lt;button id = "no" class = "buttons" v-on:click="blockButton">No&lt;/button>
+        &lt;/div>
+        &lt;button class = "buttons"  id = "Reply" v-on:click="showReply">Reply&lt;/button>
+        &lt;/div>
+   &lt;/div>
+   &lt;div class="block-container2">
+    &lt;WriteReply class="rep" v-on:ReplyOnMessage="addDemoReply"  buttonType="3" v-bind:parentID=ID  v-show = "showReplyBox" v-bind:style="{width:'70%'}">&lt;/WriteReply>
+&lt;/div>
+&lt;br>
+    &lt;div class="block-container" v-show="permalink" v-for="msg in replies" v-bind:key="msg.id">
+    &lt;Reply  v-bind:date= msg.date  v-bind:content= msg.content v-bind:sender= sender v-bind:type= "typeBar">&lt;/Reply>
+    &lt;/div>
+
+&lt;/div>
+&lt;/div>
+    &lt;/template>
+
+&lt;script>
+/**
+ * @vue-data {string} [content] content of the message
+ * @vue-data {date} [date]   date of the message
+ * @vue-data {string} [title]  title of the message
+ * @vue-data {string} [sender] sender of the message
+ * @vue-data {string} [ID] ID of the message
+  * @vue-data {string} [senderID] ID of the sender of the message
+  * @vue-data {integer} [type] type of the message (inbox"1" or sent"0")
+
+
+ */
+import axios from 'axios'
+import WriteComment from "./WriteComment.vue"
+import MessageReply from "./MessageReply.vue"
+import {AllServices} from '../MimicServices/AllServices.js'
+
+export default {
+  name: 'Message',
+  props:{
+    content:String,
+    date:Date,
+    title:String,
+    sender:String,
+    ID:String,
+    senderID:String,
+    type:Number   // sent : 0   // inbox : 1
     
-        <div class="container-overview">
-        
-            
-                <div class="description"><p></p></div></div> </p>
-<style>
-.container-overview {
-    display: none;
+    
+  },
+  components:{
+'WriteReply':WriteComment,
+'Reply':MessageReply
+  },
+  data(){
+        return{
+           time:'',
+            showReplyBox:false,
+            showMessage:true,
+            block:false,
+            permalink:false,
+            replies:[],
+            typeBar:0
+        }
+  },
+  created () {
+    setInterval(() => this.DateFormat(this.date), 1000);
+    
+  },
+  methods:{
+     DateFormat:function(date){
+  // Make a fuzzy time
+var delta = Math.round((+new Date - date) / 1000);
+
+var minute = 60,
+    hour = minute * 60,
+    day = hour * 24,
+    week = day * 7;
+
+var fuzzy;
+
+if (delta &lt; 60) {
+    fuzzy = 'just now';
+}  else if (delta &lt; 2 * minute) {
+    fuzzy = 'a minute ago.'
+} else if (delta &lt; hour) {
+    fuzzy = Math.floor(delta / minute) + ' minutes ago.';
+} else if (Math.floor(delta / hour) == 1) {
+    fuzzy = '1 hour ago.'
+} else if (delta &lt; day) {
+    fuzzy = Math.floor(delta / hour) + ' hours ago.';
+} else if (delta &lt; day * 2) {
+    fuzzy = 'yesterday';
+}
+this.time=fuzzy;
+},
+/**
+     * shows the reply box after pressing reply button
+     */
+showReply:function(){
+    this.showReplyBox=!this.showReplyBox;
+    },
+    /**
+     * deletes the message
+     */
+deleteMsg:function(){
+    AllServices.deleteMessage(this.ID).then((data) => {
+    if(data)
+        {
+        this.showMessage=!this.showMessage;
+        }
+   
+
+    });
+    
+},
+/**
+     * makes sure that you want to block the sender
+     */
+blockButton:function(){
+    this.block=!this.block;
+},
+/**
+     * blocks the sender
+     */
+blockUser:function(){
+    this.showMessage = false;
+    AllServices.blockSender(this.senderID).then((data) => {
+      });
+},
+/**
+     * shows the replies of the message
+     */
+showReplies:function(){
+    this.permalink = !this.permalink;
+    if(this.permalink){
+    AllServices.getReplies(this.ID).then((data) => {
+   if(data){    
+    if(this.type == 1)
+        this.typeBar = 0;
+    else
+        this.typeBar =1;
+    this.replies = data.replies;
+        }
+      });
+    }
+},
+/**
+     *allows you to see your reply without getting all replies from the database
+     */
+addDemoReply:function(con){
+    this.permalink = true;
+    this.replies.push(
+        {
+             id:Math.random().toString(36).substr(2, 5),
+             content:con,
+             sender_name:this.sender,
+             date:new Date()
+        }
+    );
+}
+}
+}
+&lt;/script>
+
+&lt;style scoped>
+.sub{
+    margin-left:3%;
+}
+.first-line{
+    font-size:70%;
+    position: static;
+    top: 0;
+    left: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    align-items: center;
+    color:gray;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+
+}
+.title{
+    font-size:180% ;
+    font-weight:bold;
+}
+.buttons{
+ border:none;
+ background-color:white;
+}
+#yes{
+    color:red;
+}
+#no{
+    color:blue;
+
+}
+.container2{
+    background-color:white;
+    margin-top:5%;
+    width:70%;
+    height:auto;
+    
+}
+.block-container{
+    display:inline;
+}
+.block-container2{
+    display:flex;
+}
+.rep{
+    background-color:rgb(181, 241, 213);
+
+}
+.second-line{
+    font-size:95%;
 }
 
-.main section article table td.name,
-.main section article table td.type,
-.main section article table td.attributes,
-.main section article table td.default {
-    max-width: none;
-}
-</style>
-
-
-
-
-<p><h3 class="subsection-title" style="margin-top: 1em" data-jsdoc-vuejs="section-data">Data</h3></p>
-<div class="container-params">
-    <table class="params" data-jsdoc-vuejs="table-data">
-        <thead>
-        <tr>
-            <th>Name</th>
-            <th>Type</th>
-            <th>Default value</th>
-            <th class="last">Description</th>
-        </tr>
-        </thead>
-        <tbody>
-
-        <tr>
-            <td class="name"><code>type</code></td>
-            <td class="type"><span class="param-type">integer</span></td>
-            <td class="description"><code>1</code></td>
-            <td class="description last">type of the user</td>
-        </tr>
-
-        </tbody>
-    </table>
-</div>
-
-
-
-
-
-
-<p><div class="container-overview"><div><p> </p></div>
-            
-
-            
-                
-
-<dt>
-    
-</dt>
-<dd>
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-    
-
-</dd>
-
-            
-        
-        </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-        <h3 class="subsection-title">Members</h3>
-
-        <dl>
-            
-
-<dt>
-<h4 class="name" id=".methods">
-    <span class="type-signature"><span class="icon green">static</span> </span>methods<span class="type-signature"></span>
-    
-    <div class="container-source members">
-        <code><a href="SearchSideBar.vue.html">SearchSideBar.vue</a></code>,
-        <code><a href="SearchSideBar.vue.html#line37">line 37</a></code>
-    </div>
-    
-</h4>
-
-
-</dt>
-<dd>
-    
-    <div class="description">
-        <p>must be an admin to create community</p>
-    </div>
-    
-
-    <!--
-    
-    -->
-
-    
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-    
-
-    
-</dd>
-
-        </dl>
-    
-
-    
-
-    
-
-    
-</article>
-
-</section>
+&lt;/style>
+</code></pre>
+        </article>
+    </section>
 
 
 
@@ -294,7 +309,7 @@
 <script src="scripts/linenumber.js"></script>
 
     <script>
-        var id = 'module:SearchSideBar_sub'.replace(/"/g, '_');
+        var id = '_sub'.replace(/"/g, '_');
         var selectedApi = document.getElementById(id); // do not use jquery selector
         var $selectedApi = $(selectedApi);
 

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Module: SearchSideBar | Module: SearchSideBar</title>
+    <title>Module: ApexComReports | Module: ApexComReports</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -24,7 +24,7 @@
         
     </div>
     <div class="title">
-        <h1><a href="index.html" class="link">Module: SearchSideBar</a></h1>
+        <h1><a href="index.html" class="link">Module: ApexComReports</a></h1>
         
     </div>
     <div class="search-container" id="search-container">
@@ -46,7 +46,7 @@
 
 <header>
     
-        <h2>SearchSideBar</h2>
+        <h2>ApexComReports</h2>
         
             
         
@@ -73,6 +73,40 @@
 </style>
 
 
+<p><h3 class="subsection-title" style="margin-top: 1em" data-jsdoc-vuejs="section-props">Props</h3></p>
+<div class="container-params">
+    <table class="params" data-jsdoc-vuejs="table-props">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Default value</th>
+            <th>Required?</th>
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr>
+            <td class="name"><code>apexComId</code></td>
+            <td class="type"><span class="param-type">string</span></td>
+            <td class="description">-</td>
+            <td class="description"><b>Yes</b></td>
+            <td class="description last">community Id</td>
+        </tr>
+
+        <tr>
+            <td class="name"><code>userName</code></td>
+            <td class="type"><span class="param-type">string</span></td>
+            <td class="description">-</td>
+            <td class="description"><b>Yes</b></td>
+            <td class="description last">user name</td>
+        </tr>
+
+        </tbody>
+    </table>
+</div>
+
 
 
 <p><h3 class="subsection-title" style="margin-top: 1em" data-jsdoc-vuejs="section-data">Data</h3></p>
@@ -89,10 +123,24 @@
         <tbody>
 
         <tr>
-            <td class="name"><code>type</code></td>
-            <td class="type"><span class="param-type">integer</span></td>
-            <td class="description"><code>1</code></td>
-            <td class="description last">type of the user</td>
+            <td class="name"><code>token</code></td>
+            <td class="type"><span class="param-type">JWT</span></td>
+            <td class="description"><code>''</code></td>
+            <td class="description last">user Token</td>
+        </tr>
+
+        <tr>
+            <td class="name"><code>reportedComment</code></td>
+            <td class="type"><span class="param-type">array</span></td>
+            <td class="description">-</td>
+            <td class="description last">list of reported comments</td>
+        </tr>
+
+        <tr>
+            <td class="name"><code>reportedPost</code></td>
+            <td class="type"><span class="param-type">array</span></td>
+            <td class="description">-</td>
+            <td class="description last">list of reported posts</td>
         </tr>
 
         </tbody>
@@ -196,34 +244,57 @@
     
 
     
-        <h3 class="subsection-title">Members</h3>
+
+    
+        <h3 class="subsection-title">Methods</h3>
 
         <dl>
-            
+                
 
 <dt>
-<h4 class="name" id=".methods">
-    <span class="type-signature"><span class="icon green">static</span> </span>methods<span class="type-signature"></span>
     
-    <div class="container-source members">
-        <code><a href="SearchSideBar.vue.html">SearchSideBar.vue</a></code>,
-        <code><a href="SearchSideBar.vue.html#line37">line 37</a></code>
-    </div>
+        <h4 class="name" id="ignoreReport">
+            
+                <span class="type-signature"></span>ignoreReport<span class="signature">()</span><span class="type-signature"></span>
+                
+            
+            <div class="container-source members">
+                <code><a href="ApexComReports.vue.html">ApexComReports.vue</a></code>,
+                <code><a href="ApexComReports.vue.html#line85">line 85</a></code>
+            </div>
+            
+        </h4>
+
+        
     
-</h4>
-
-
 </dt>
 <dd>
+
     
     <div class="description">
-        <p>must be an admin to create community</p>
+        <p>request to ignore certain report</p>
     </div>
     
 
-    <!--
     
-    -->
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
 
     
 
@@ -264,12 +335,98 @@
 
     
 
-    
 </dd>
 
-        </dl>
+            
+                
+
+<dt>
+    
+        <h4 class="name" id="reviewReportsAC">
+            
+                <span class="type-signature"></span>reviewReportsAC<span class="signature">()</span><span class="type-signature"></span>
+                
+            
+            <div class="container-source members">
+                <code><a href="ApexComReports.vue.html">ApexComReports.vue</a></code>,
+                <code><a href="ApexComReports.vue.html#line75">line 75</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>returns list of reported comments and posts for certain community</p>
+    </div>
     
 
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            </dl>
     
 
     
@@ -294,7 +451,7 @@
 <script src="scripts/linenumber.js"></script>
 
     <script>
-        var id = 'module:SearchSideBar_sub'.replace(/"/g, '_');
+        var id = 'module:ApexComReports_sub'.replace(/"/g, '_');
         var selectedApi = document.getElementById(id); // do not use jquery selector
         var $selectedApi = $(selectedApi);
 

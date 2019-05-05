@@ -1,8 +1,10 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Module: SearchSideBar | Module: SearchSideBar</title>
+    <title>Source: CreateApexCom.vue | Source: CreateApexCom.vue</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -24,7 +26,7 @@
         
     </div>
     <div class="title">
-        <h1><a href="index.html" class="link">Module: SearchSideBar</a></h1>
+        <h1><a href="index.html" class="link">Source: CreateApexCom.vue</a></h1>
         
     </div>
     <div class="search-container" id="search-container">
@@ -41,243 +43,420 @@
 
 
 
-
-<section>
-
-<header>
     
-        <h2>SearchSideBar</h2>
-        
-            
-        
-    
-</header>
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>&lt;template class='temp'>
+  &lt;div class="ApexComm">
 
-<article>
-    
-        <div class="container-overview">
-        
-            
-                <div class="description"><p></p></div></div> </p>
-<style>
-.container-overview {
+&lt;div class="CreateApexCom">
+&lt;!-- here -->
+
+&lt;h2 class="page-header">Create Apex Community&lt;/h2>
+
+
+
+
+&lt;!-- community name -->
+&lt;div class="form-group">
+  &lt;h6 class="page-header" >&lt;b>Write community name&lt;/b>&lt;/h6>
+  &lt;input type="text"  id="name"  placeholder="ApexCom Name" v-model="name" required>&lt;/input>
+&lt;/div>
+
+
+
+&lt;!-- description -->
+&lt;div class="form-group">
+  &lt;h6 class="page-header">&lt;b>Write community Description&lt;/b>&lt;/h6>
+  &lt;textarea class="form-control" id="Description" placeholder="ApexCom Description" name="description" rows="2" v-model="description" required>&lt;/textarea>
+&lt;/div>
+
+&lt;!-- rules -->
+&lt;div class="form-group">
+  &lt;h6 class="page-header">&lt;b>Enter Community Rules&lt;/b>&lt;/h6>
+  &lt;textarea class="form-control" id="rules" placeholder="ApexCom Rules" name="rule" rows="3" v-model="rule" required>&lt;/textarea>
+&lt;/div>
+
+&lt;!-- image update -->
+
+&lt;div class="upload photos">
+  &lt;div class="samerow">
+    &lt;div class="box" @dragover.prevent v-if="this.image==''">
+      &lt;label id='profilephoto' class="borderbox view">
+        &lt;div class=" margins">
+          &lt;svg class=" photo" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+            &lt;g>
+              &lt;polygon fill="inherit" opacity="0" points="0.610673352 20 20.625 20 20.625 0 0.610673352 0">&lt;/polygon>
+              &lt;path d="M17.451,9.14823765 C17.03,5.40791696 13.8555,2.5 10,2.5 C6.1445,2.5 2.97,5.40791696 2.549,9.14823765 C1.0455,9.84024195 0,11.3551568 0,13.1173944 C0,15.531665 1.959,17.4892627 4.375,17.4892627 L7.8125,17.4892627 L7.8125,12.8051181 L5,12.8051181 C4.8735,12.8051181 4.7595,12.7291725 4.7115,12.6122563 C4.6625,12.49534 4.6895,12.3614359 4.779,12.272 L9.779,7.2755791 C9.901,7.15366643 10.099,7.15366643 10.221,7.2755791 L15.187,12.2375247 C15.2665,12.2944839 15.3185,12.3874173 15.3185,12.4928418 C15.3185,12.6652183 15.1785,12.8051181 15.006,12.8051181 L15,12.8051181 L12.1875,12.8051181 L12.1875,17.4892627 L15.625,17.4892627 C18.041,17.4892627 20,15.531665 20,13.1173944 C20,11.3551568 18.954,9.84024195 17.451,9.14823765" fill="inherit">
+              &lt;/path>
+            &lt;/g>
+          &lt;/svg>
+        &lt;/div>
+        &lt;div class=" words">Drag and Drop or Upload Avatar Image&lt;/div>
+        &lt;div class="display">
+          &lt;input  name="profileIcon" type="file" @dragover.prevent  @change="onChange" accept="image/x-png,image/jpeg" >
+
+
+        &lt;/div>
+
+      &lt;/label>
+
+    &lt;/div>
+    &lt;div v-else>
+      &lt;img  :src=" this.image" alt="" class="img" id="imgId" />
+      &lt;button class="ChangeButton" @click="removeFile">REMOVE&lt;/button>
+    &lt;/div>
+
+    &lt;/div>
+&lt;/div>
+&lt;!-- create bottum -->
+&lt;button  type="submit" style="margin-left:80%"   id="Button" @click="CreateApex()">Create&lt;/button>
+
+
+&lt;/div>
+&lt;/div>
+&lt;/template>
+
+&lt;script>
+import {AllServices} from '../MimicServices/AllServices.js'
+import $ from'jquery/dist/jquery.min.js'
+import swal from 'sweetalert';
+
+export default {
+  data(){
+    return{
+    name:"",
+    description:"",
+    rule:"",
+    error:false,
+    imgName:'',
+    imgContent:'',
+    image:''
+
+  }
+},
+ mounted(){
+  $('#selectted').text('Create ApexCom');
+  var remclass = $('#classed').prop('class');
+  $('#classed').removeClass(remclass);
+  $('#classed').addClass("glyphicon glyphicon-edit");
+},
+computed:{
+},
+methods:{
+  onDrop: function(e) {
+       e.stopPropagation();
+       e.preventDefault();
+       var files = e.dataTransfer.files;
+       this.createFile(files[0]);
+     },
+      /**
+    * when the user upload the img it enable the post button and store the img src
+    */
+     onChange(e) {
+       this.imgContent = e.target.files[0];
+       var files = e.target.files;
+       this.createFile(files[0]);
+       this.imagable=true;
+       this.Enable();
+
+     },
+      /**
+    * it create file to be stored in img src
+    */
+     createFile(file) {
+       if (!file.type.match('image.*')) {
+
+         return;
+       }
+
+       var reader = new FileReader();
+       var vm = this;
+
+       reader.onload = function(e) {
+         vm.image = e.target.result;
+
+         this.imgName=vm.image;
+        this.image=vm.image;
+       }
+       reader.readAsDataURL(file);
+
+     },
+      /**
+    * it remove the img if the user upload an img from browser and want to remove it so it make the src empty.
+    */
+     removeFile() {
+       this.image = '';
+       this.imagable=false;
+       this.imgContent=null;
+       this.Enable();
+     },
+
+  CreateApex:function() {
+    if(this.name.length>3&amp;&amp;this.description.length>3&amp;&amp;this.rule.length>3){
+      let formData = new FormData();
+      formData.append('name', this.name);
+      formData.append('description', this.description);
+      formData.append('rules', this.rule);
+      formData.append('token', this.$localStorage.get('token'));
+
+
+      if(this.imgName!=''){
+        formData.append('avatar', this.imgContent, this.imgContent.name);
+      }
+    AllServices.CreateApexCom(formData).then((data) => {
+     this.error= data.state;
+     this.ErrorCheck();
+   });
+ }
+ else{
+swal('Please fill all the boxes with more than 3 letter')
+ }
+  },
+  ErrorCheck:function(){
+swal(this.error)
+}
+}
+}
+&lt;/script>
+
+&lt;style scoped>
+.temp{
+  background: white
+}
+.CreateApexCom{
+  margin-top: 5%;
+  margin-left: 10%;
+  margin-right: 40%;
+  background:white;
+  height: 110%;
+}
+
+.ApexComm{
+  width: 100%;
+
+  background:white;
+}
+
+
+#Button{
+
+box-sizing: border-box;
+text-align: center;
+font-size: 12px;
+font-weight: 700;
+letter-spacing: 0.5px;
+line-height: 24px;
+text-transform: uppercase;
+background-color: transparent;
+color: rgb(0, 121, 211);
+fill: rgb(0, 121, 211);
+border-width: 1px;
+border-style: solid;
+border-image: initial;
+border-radius: 4px;
+text-decoration: none;
+padding: 3px 16px;
+border-color: rgb(0, 121, 211);
+
+}
+
+
+
+.view {
+    -webkit-box-align: center;
+    align-items: center;
+    box-sizing: border-box;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    -webkit-box-pack: center;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+    background-color: rgb(246, 247, 248);
+    border-radius: 4px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(237, 239, 241);
+    border-image: initial;
+}
+.words {
+    color: rgb(164, 167, 168);
+    font-size: 11px;
+}
+.photo {
+    fill: rgb(135, 138, 140);
+    height: 40px;
+    width: 42px;
+}
+.box2.box2.box2 {
+    width: 412px;
+    height: 100%;
+    margin: 0px;
+}
+.box2 .borderbox {
+    box-sizing: border-box;
+    padding: 4px;
+}
+.samerow {
+    display: flex;
+    height: 120px;
+}
+.box.box.box {
+    width: 120px;
+    height: 100%;
+    margin: 0px 12px 0px 0px;
+}
+.box .borderbox {
+    box-sizing: border-box;
+    padding: 4px;
+}
+.display {
     display: none;
 }
-
-.main section article table td.name,
-.main section article table td.type,
-.main section article table td.attributes,
-.main section article table td.default {
-    max-width: none;
+.margins {
+    margin-top: -8px;
+    margin-bottom: 4px;
 }
-</style>
 
 
 
 
-<p><h3 class="subsection-title" style="margin-top: 1em" data-jsdoc-vuejs="section-data">Data</h3></p>
-<div class="container-params">
-    <table class="params" data-jsdoc-vuejs="table-data">
-        <thead>
-        <tr>
-            <th>Name</th>
-            <th>Type</th>
-            <th>Default value</th>
-            <th class="last">Description</th>
-        </tr>
-        </thead>
-        <tbody>
 
-        <tr>
-            <td class="name"><code>type</code></td>
-            <td class="type"><span class="param-type">integer</span></td>
-            <td class="description"><code>1</code></td>
-            <td class="description last">type of the user</td>
-        </tr>
 
-        </tbody>
-    </table>
-</div>
 
-
-
-
-
-
-<p><div class="container-overview"><div><p> </p></div>
-            
-
-            
-                
-
-<dt>
-    
-</dt>
-<dd>
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-    
-
-</dd>
-
-            
-        
-        </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-        <h3 class="subsection-title">Members</h3>
-
-        <dl>
-            
-
-<dt>
-<h4 class="name" id=".methods">
-    <span class="type-signature"><span class="icon green">static</span> </span>methods<span class="type-signature"></span>
-    
-    <div class="container-source members">
-        <code><a href="SearchSideBar.vue.html">SearchSideBar.vue</a></code>,
-        <code><a href="SearchSideBar.vue.html#line37">line 37</a></code>
-    </div>
-    
-</h4>
-
-
-</dt>
-<dd>
-    
-    <div class="description">
-        <p>must be an admin to create community</p>
-    </div>
-    
-
-    <!--
-    
-    -->
-
-    
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-    
-
-    
-</dd>
-
-        </dl>
-    
-
-    
-
-    
-
-    
-</article>
-
-</section>
+button{
+/* background-color: white; */
+/* color: blue; */
+float: right;
+display: inline-block;
+}
+.noti{
+display: inline;
+
+}
+.switch {
+  margin-top: 20px;
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+  float:right;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+.btnImage {
+
+  cursor: pointer;
+  display: inline-block;
+  font-weight: bold;
+  padding: 10px 25px;
+  position: relative;
+   border-color: rgb(0, 121, 211);
+   color: rgb(0, 121, 211);
+}
+.imgBox{
+
+     height: 300px;
+     width: 70%;
+}
+.helper {
+  height: 100%;
+  display: inline-block;
+  vertical-align: middle;
+  width: 0;
+}
+
+.partition {
+  width: 100%;
+  height: 100%;
+  .partition-title {
+    box-sizing: border-box;
+    padding: 30px;
+    width: 100%;
+    text-align: center;
+    letter-spacing: 1px;
+    font-size: 20px;
+    font-weight: 300;
+  }
+  .partition-form {
+    padding: 0 20px;
+    box-sizing: border-box;
+  }
+}
+input[type=password],
+input[type=text] {
+  display: block;
+  box-sizing: border-box;
+  margin-bottom: 1%;
+  width: 25%;
+  font-size: 12px;
+  line-height: 2;
+  border: 0;
+  border-bottom: 1px solid #DDDEDF;
+  padding: 4px 8px;
+  font-family: inherit;
+  transition: 0.5s all;
+  outline: none;
+}
+
+&lt;/style>
+</code></pre>
+        </article>
+    </section>
 
 
 
@@ -294,7 +473,7 @@
 <script src="scripts/linenumber.js"></script>
 
     <script>
-        var id = 'module:SearchSideBar_sub'.replace(/"/g, '_');
+        var id = '_sub'.replace(/"/g, '_');
         var selectedApi = document.getElementById(id); // do not use jquery selector
         var $selectedApi = $(selectedApi);
 
