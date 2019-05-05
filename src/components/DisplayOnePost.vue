@@ -1,6 +1,6 @@
 <template>
 <div id="DisplayOnePost" class="modalview">
-<modal id="PopupModal" name="Demo-OnePost" :scrollable="true" @before-close="close()"  transition="pop-out"  width="90%" height="auto">
+<modal id="PopupModal" name="Demo-OnePost" :scrollable="true"  transition="pop-out"  width="90%" height="auto">
   <div id="PostContent" class="postContent">
     <div>
 
@@ -17,12 +17,12 @@
       v-on:mod = moderators
  class="sidebar"></ApexComSideBar>
 
-      <CommentParent
-
-      v-show="onePostData.locked==0"
-      v-bind:postID= onePostData.id
-      class="cmt"
-      v-bind:postOwnerUserName = 'postOwnerUserName'
+      <CommentParent 
+     
+      v-show="onePostData.locked==0" 
+      v-bind:postID= onePostData.id 
+      class="cmt"  
+      v-bind:postOwnerUserName = "onePostData.post_writer_username"
       v-bind:moderatorsUserNames = 'moderatorsUserNames'
       >
       </CommentParent>
@@ -47,16 +47,13 @@ props:{
 
   },
 
-
+  
 },
 components:
 {
   'Post':post,
   'CommentParent':CommentParent,
   'ApexComSideBar':ApexComSideBar
-},
-close: function () {
-  alert("sss")
 },
 methods:{
 moderators:function(m){
@@ -69,7 +66,7 @@ updated(){
 
 },
 created(){
-
+  
 
 },
   data(){
@@ -78,7 +75,7 @@ created(){
       locked:false,
       postOwnerUserName : this.onePostData.post_writer_username,
       moderatorsUserNames : []
-
+      
     };
       }
 

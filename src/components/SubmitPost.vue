@@ -1,13 +1,14 @@
 <template>
   <div id="submitPage" >  
 <CreatePostSideBar></CreatePostSideBar>
-<Post v-bind:postData="createPostData" class="postStyle" v-if="isCreated"></Post>
+<Post v-bind:postData="createPostData" class="postStyle" v-if="this.isCreated"></Post>
 <CreatePost v-on:PostEmit="getData" v-if="firstTime" id="createPost"></CreatePost>
 <CommentParent 
   
-     
-       v-bind:postID= createPostData.id  
-      v-if="isCreated" class="comment"
+      v-bind:postOwnerUserName = 'postOwnerUserName'
+      v-bind:moderatorsUserNames = 'moderatorsUserNames'
+      v-bind:postID= createPostData.id  
+      v-if="this.isCreated" class="comment"
 ></CommentParent>
 
   </div>
@@ -50,11 +51,12 @@ export default {
               created_at:"",
               updates_at:null,
               apex_com_name:"",
-              post_writer_user:"",
+              post_writer_username:"",
               current_user_vote:1,
               current_user_saved_post:false
-     }
-
+     },
+      postOwnerUserName : '',
+      moderatorsUserNames : []
     }
     },
   name: 'submitPage',
@@ -73,8 +75,8 @@ export default {
     * it emit methods which receive the data which is just created to display the post
     */
     getData(id,d,title,content,img,video,author,apex){
-
     
+    this.isCreated=true;
         if(content || img ||video){
        
           this.isCreated=true;
@@ -93,6 +95,7 @@ export default {
       this.createPostData.canEdit=true;
       this.createPostData.created_at=d;
       this.createPostData.id=id;
+      this.postOwnerUserName=author;
     
      
 
@@ -112,6 +115,7 @@ export default {
     postData:{},
     
   }
+  
 
 }
 
