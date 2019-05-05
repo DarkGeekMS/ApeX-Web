@@ -18,20 +18,20 @@
 
 <script>
 
-/**
- * @vue-data {string} [buttonType] 1:Comment -- 2:Reply -- 3:Edit
- * @vue-data {string} [content]   content entered by the user
- * @vue-data {integer} [parentLevel]   level of indentation of the parent comment in the view to create the current comment's level
- * @vue-data {integer} [parentIdx]    idx of the parent of the comment in the array of comments
- * @vue-data {string} [parentID]  ID of the parent component
- * @vue-data {string} [currentID]  ID of the the current comment
- * @vue-data {boolean} [editClicked=false] to hide edit box after editing
- * @vue-data {boolean} [replyClicked=false] to hide reply box after replying
- */
 
 import {AllServices} from '../MimicServices/AllServices.js'
 import swal from 'sweetalert'
 
+/**
+* @vue-data {string} [buttonType] 1:Comment -- 2:Reply -- 3:Edit
+* @vue-data {string} [content]   content entered by the user
+* @vue-data {integer} [parentLevel]   level of indentation of the parent comment in the view to create the current comment's level
+* @vue-data {integer} [parentIdx]    idx of the parent of the comment in the array of comments
+* @vue-data {string} [parentID]  ID of the parent component
+* @vue-data {string} [currentID]  ID of the the current comment
+* @vue-data {boolean} [editClicked=false] to hide edit box after editing
+* @vue-data {boolean} [replyClicked=false] to hide reply box after replying
+*/
 
 export default {
   name: 'WriteCommentItem',
@@ -77,7 +77,7 @@ AllServices.EditComment(this.parentID,this.content).then((data) => {
       this.$emit('noEdit');
       }
     },
-    
+
 OpString:function(){
   this.con=[];
    for (var i = 0;i<this.content.length;i++)
@@ -95,7 +95,7 @@ OpString:function(){
                     }
                 }
               }
-             
+
                     for (var x = i;x<this.content.length;x++)
                     {
                         if((this.content[x+1]=='u' && this.content[x+2]=='/' && this.content[x]==' ')||x==this.content.length-1)
@@ -105,9 +105,9 @@ OpString:function(){
                             i=x;
                             break;
                         }
-                    }   
+                    }
 
-              
+
           }
 },
  /**
@@ -171,7 +171,7 @@ OpString:function(){
      * sends to the Message to add the reply in the array and sends the details to the database
  */
      sendReplyOnMessage:function(){
-    
+
        if (this.content!=null)
       {
       AllServices.WriteComment(this.content,this.parentID).then((data) => {

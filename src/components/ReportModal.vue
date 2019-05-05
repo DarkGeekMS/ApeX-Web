@@ -1,7 +1,7 @@
 <template>
 <div>
 <modal name="reportBox" transition="pop-out" width="50%" height="505px" :clickToClose="false">
- 
+
   <div class = "checked" v-show = "checked && checkedLevel == 0"  v-bind:style="{marginTop: 2 +'px'}"></div>
   <div class = "checked" v-show = "checked && checkedLevel == 1"  v-bind:style="{marginTop: 54 +'px'}"></div>
   <div class = "checked" v-show = "checked && checkedLevel == 2"  v-bind:style="{marginTop: 107 +'px'}"></div>
@@ -34,12 +34,12 @@
 </template>
 
 <script>
-/**
- * @vue-data {string} [ID] ID of the comment or post to be reported
- * @vue-data {integer} [idx]   idx of the comment in the array to be deleted from the array in comment parent if the comment is reported successfully
-
- */
 import {AllServices} from '../MimicServices/AllServices.js'
+/**
+* @vue-data {string} [ID] ID of the comment or post to be reported
+* @vue-data {integer} [idx]   idx of the comment in the array to be deleted from the array in comment parent if the comment is reported successfully
+
+*/
 export default {
   name: 'reportBox',
   data(){
@@ -55,7 +55,7 @@ export default {
     idx:Number
   },
   created () {
-  
+
   },
   methods:{
     first:function(){

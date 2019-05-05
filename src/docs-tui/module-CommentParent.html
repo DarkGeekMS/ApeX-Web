@@ -1,10 +1,8 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Source: ResetCode.vue | Source: ResetCode.vue</title>
+    <title>Module: CommentParent | Module: CommentParent</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -26,7 +24,7 @@
         
     </div>
     <div class="title">
-        <h1><a href="index.html" class="link">Source: ResetCode.vue</a></h1>
+        <h1><a href="index.html" class="link">Module: CommentParent</a></h1>
         
     </div>
     <div class="search-container" id="search-container">
@@ -43,250 +41,1282 @@
 
 
 
+
+<section>
+
+<header>
     
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>&lt;template>
-&lt;modal name="ResetCode" transition="pop-out" width="50%" height="70%" :clickToClose="false" @before-open="beforeOpen">
-  &lt;ResetPass/>
-  &lt;div class="box">
-    &lt;div class="box-part" id="bp-right">&lt;/div>
-
-    &lt;div class="box-part" id="bp-left">
-      &lt;div class="partition" id="partition-register">
-
-        &lt;button class="lead" id="closebtn" @click="close()"> X&lt;/button>
-
-        &lt;div class="partition-title">
-        &lt;h1> Please set your code here to continue &lt;/h1>
-        &lt;/div>
-
-        &lt;div class="partition-form">
-
-            &lt;input type="text" class="form-control" name="code"
-            placeholder="CODE" v-model="code" v-on:keyup="restart()" required autofocus>
-
-            &lt;button id="Next" class="btn blue" style="display:block" @click.prevent="post()">SEND&lt;/button>
-            &lt;span class="lead"> {{error}}  &lt;/span>
+        <h2>CommentParent</h2>
+        
             
-            &lt;p class = "lead" style = "fontSize:15px; color:blue;" > {{ congra }}  &lt;/p>
+        
+    
+</header>
 
-        &lt;/div>
-
-      &lt;/div>
-    &lt;/div>
-  &lt;/div>
-&lt;/modal>
-&lt;/template>
-
-&lt;script>
-import {AllServices} from '../MimicServices/AllServices.js'
-import ResetPass  from './ResetPass.vue'
-
-/**
- * @vue-data {string} [email=""] email of user
- * @vue-data {string} [code=""] code value
- * @vue-data {string} [username=""] username of user 
- * @vue-data {string} [error=""] error value
- * @vue-data {string} [congra=''] congratulation when code is correct 
-
- */
-export default {
-  name: 'ResetCode',
-  components:{
-    ResetPass
-  },
-  data(){
-    return{
-      code:'',
-      email:'',
-      username:'',
-      error:'',
-      congra:''
-    }
-  },
-  methods:{
-    /**
-     * check out the value of code is empty or invalid, and generate an error in this case, if not show the third modal and send value to change password   
-    */
-    post: function(){
-      if(this.code == '')
-      {
-        this.error = 'Please enter the code'
-      }
-      else
-      {
-        if(AllServices.getState()){
-          var check = AllServices.setCode(this.code,this.email,this.username);
-          if(check)
-          {
-            this.congra = "your code is correct, Now set your password" ;
-            setTimeout(() =>this.$modal.show('ResetPass',{user: this.username ,code:this.code}) , 2000)
-
-          }
-          else{
-            this.error =  this.$localStorage.get('error');
-          }
-        }
-        else {
-         AllServices.setCode(this.code,this.email,this.username).then((data) => {
-         if(data)
-          {
-            this.congra = "your code is correct, Now set your password " ;
-            setTimeout(() =>this.$modal.show('ResetPass',{user: this.username, code:this.code}) , 2000)
-
-          }
-          else{
-            this.error =  this.$localStorage.get('error');
-          }
-         })
-        }
-      }
-    },
-    /**
-     * function to restart parameters every time you open login
-    */
-    restart: function()
-    {
-      this.error = '',
-      this.congra=''
-    },
-     /**
-     * function to close all modal which opened
-    */
-    close: function(){
-      this.$modal.hide('ResetCode');
-      this.$modal.hide('ForgetPass');
-      this.$modal.hide('demo-login');
-    }, 
-    /**
-      * take parameter email from forget password modal
-    */
-    beforeOpen:function (event) {
-      this.email = event.params.email;
-      this.username = event.params.user;
-    }
-  },
-}
-&lt;/script>
-
-&lt;style lang="scss" scoped >
-body{
-  display: grid;
-  font-family: IBMPlexSans,sans-serif;
-}
-.box a{
-  text-decoration:none;
-  font-weight:500;
-  font-size:14px
-}
-$background_color: #404142;
-#closebtn
-{
-  float:right;
-  margin:7px -5px;
-  border:0;
-  color:grey;
-  width:22px;
-  height:25px;
-  font-size:19px;
-  background-color:white;
-}
-.box {
-  background: white;
-  overflow: hidden;
-  width: 100%;
-  height: 100%;
-  border-radius: 2px;
-  box-sizing: border-box;
-  box-shadow: 0 0 40px black;
-  color: #8b8c8d;
-  font-size: 0;
-  .box-part {
-    display: inline-block;
-    position: relative;
-    vertical-align: top;
-    box-sizing: border-box;
-    height: 100%;
-    width: 80%;
-    &amp;#bp-right {
-      background:url('../../public/form2.png') ;
-      background-size:cover;
-      background-repeat: no-repeat;
-      border-left: 1px solid #eee;
-      width:18%   
-    }
-  }
-  .partition {
-    width: 100%;
-    height: 100%;
-    .partition-title {
-      box-sizing: border-box;
-      padding: 30px;
-      width: 100%;
-      letter-spacing: 1px;
-      font-family: Noto Sans,sans-serif;
-      font-size: 14px;
-      font-weight: 500;
-      line-height: 21px;
-    }
-    .partition-title h1{
-      font-size: 20px;
-      color:black
-    }
-    .partition-form {
-      padding: 0 20px;
-      box-sizing: border-box;
-    }
-    .partition-form span{
-      color: #FF0000;
-      display: block;
-      font-size:14px;
-      margin-left:15px
-    }
-  }
-
-}
-button.btn {
-  outline: none;
-  border: 0;
-  padding: 10px 25px;
-  cursor: pointer;
-  border-radius: 3px;
-  color: white;
-  box-shadow: 0 4px 8px rgba(#20a0ff, .3);
-  background: #4db3ff;
-  font-weight: 600;
-  min-width: 25%;
-  margin-bottom: 5%;
-  margin-top: 10%;
-  margin-left:10px;
-  &amp;:hover {
-    background: #20a0ff;
-  }
-  
+<article>
+    
+        <div class="container-overview">
+        
+            
+                <div class="description"><p></p></div></div> </p>
+<style>
+.container-overview {
+    display: none;
 }
 
-input {
-display: block;
-box-sizing: border-box;
-margin: 5px;
-width: 90%;
-font-size: 12px;
-line-height: 2;
-padding: 4px 8px;
-font-family: inherit;
-transition: 0.5s all;
+.main section article table td.name,
+.main section article table td.type,
+.main section article table td.attributes,
+.main section article table td.default {
+    max-width: none;
 }
-@media(max-width:750px){
-  div .partition-title p{
-    display: none
-  }
-}
-&lt;/style>
-</code></pre>
-        </article>
-    </section>
+</style>
+
+
+
+
+<p><h3 class="subsection-title" style="margin-top: 1em" data-jsdoc-vuejs="section-data">Data</h3></p>
+<div class="container-params">
+    <table class="params" data-jsdoc-vuejs="table-data">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Default value</th>
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr>
+            <td class="name"><code>postID</code></td>
+            <td class="type"><span class="param-type">string</span></td>
+            <td class="description">-</td>
+            <td class="description last">ID of the post that the comments will be on</td>
+        </tr>
+
+        <tr>
+            <td class="name"><code>comments</code></td>
+            <td class="type"><span class="param-type">array</span></td>
+            <td class="description">-</td>
+            <td class="description last">array that includes all comments that should be rendered</td>
+        </tr>
+
+        <tr>
+            <td class="name"><code>moderatorsUserNames</code></td>
+            <td class="type"><span class="param-type">array</span></td>
+            <td class="description">-</td>
+            <td class="description last">array that includes all moderators of the apex-com of the post</td>
+        </tr>
+
+        <tr>
+            <td class="name"><code>postOwnerUserName</code></td>
+            <td class="type"><span class="param-type">string</span></td>
+            <td class="description">-</td>
+            <td class="description last">name of the post owner</td>
+        </tr>
+
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+
+<p><div class="container-overview"><div><p> </p></div>
+            
+
+            
+                
+
+<dt>
+    
+</dt>
+<dd>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+        
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        <dl>
+                
+
+<dt>
+    
+        <h4 class="name" id="addComment">
+            
+                <span class="type-signature"></span>addComment<span class="signature">(cont, con, use, pID, cID)</span><span class="type-signature"></span>
+                
+            
+            <div class="container-source members">
+                <code><a href="CommentParent.vue.html">CommentParent.vue</a></code>,
+                <code><a href="CommentParent.vue.html#line93">line 93</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>adds a comment from the comment box in the array</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>cont</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>content of the added comment</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>con</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">array</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>content of the added comment split to view mentions</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>use</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>user name of the comment owner</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>pID</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>parent ID</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>cID</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>current ID</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id="addReply">
+            
+                <span class="type-signature"></span>addReply<span class="signature">(cont, con, parent, l, pID, cID)</span><span class="type-signature"></span>
+                
+            
+            <div class="container-source members">
+                <code><a href="CommentParent.vue.html">CommentParent.vue</a></code>,
+                <code><a href="CommentParent.vue.html#line108">line 108</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>adds a reply from the reply box in the array in the correct index</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>cont</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>content of the added comment</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>con</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">array</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>content of the added comment split to view mentions</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>parent</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">integer</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>parent index in the array</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>l</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">integer</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>level of the comment</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>pID</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>parent ID</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>cID</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>current ID</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id="deleteComment">
+            
+                <span class="type-signature"></span>deleteComment<span class="signature">(x)</span><span class="type-signature"></span>
+                
+            
+            <div class="container-source members">
+                <code><a href="CommentParent.vue.html">CommentParent.vue</a></code>,
+                <code><a href="CommentParent.vue.html#line174">line 174</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>deletes a comment in the array with deleting its children</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>x</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">integer</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>index of the comment to be deleted</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id="deleteCommentByIdx">
+            
+                <span class="type-signature"></span>deleteCommentByIdx<span class="signature">(x)</span><span class="type-signature"></span>
+                
+            
+            <div class="container-source members">
+                <code><a href="CommentParent.vue.html">CommentParent.vue</a></code>,
+                <code><a href="CommentParent.vue.html#line159">line 159</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>deletes a comment in the array without deleting its children</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>x</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">integer</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>index of the comment to be deleted</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id="editComment">
+            
+                <span class="type-signature"></span>editComment<span class="signature">(content, i)</span><span class="type-signature"></span>
+                
+            
+            <div class="container-source members">
+                <code><a href="CommentParent.vue.html">CommentParent.vue</a></code>,
+                <code><a href="CommentParent.vue.html#line133">line 133</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>edits a comment from the edit box in the array</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>content</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>new content of the comment</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>i</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">integer</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>index of comment to be updated</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id="reportComment">
+            
+                <span class="type-signature"></span>reportComment<span class="signature">(ID, idx)</span><span class="type-signature"></span>
+                
+            
+            <div class="container-source members">
+                <code><a href="CommentParent.vue.html">CommentParent.vue</a></code>,
+                <code><a href="CommentParent.vue.html#line150">line 150</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>show the report modal of that comment</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>ID</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>ID of the comment to be reported</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>idx</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">integer</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>idx of the comment to be reported in the array</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            </dl>
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 
@@ -303,7 +1333,7 @@ transition: 0.5s all;
 <script src="scripts/linenumber.js"></script>
 
     <script>
-        var id = '_sub'.replace(/"/g, '_');
+        var id = 'module:CommentParent_sub'.replace(/"/g, '_');
         var selectedApi = document.getElementById(id); // do not use jquery selector
         var $selectedApi = $(selectedApi);
 

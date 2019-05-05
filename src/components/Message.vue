@@ -3,10 +3,10 @@
    <p class = "title">{{title}}:</P>
    <div class = "sub">
        <div class="first-line">
-        
+
         <div class="block-container" v-if="this.type">from</div>
         <div class="block-container" v-if="!this.type">to</div>
-        <router-link 
+        <router-link
           :to="{name:'UserProfile' ,
            params: {userName:sender}}">
             {{sender}}
@@ -45,22 +45,22 @@
     </template>
 
 <script>
-/**
- * @vue-data {string} [content] content of the message
- * @vue-data {date} [date]   date of the message
- * @vue-data {string} [title]  title of the message
- * @vue-data {string} [sender] sender of the message
- * @vue-data {string} [ID] ID of the message
-  * @vue-data {string} [senderID] ID of the sender of the message
-  * @vue-data {integer} [type] type of the message (inbox"1" or sent"0")
-
-
- */
 import axios from 'axios'
 import WriteComment from "./WriteComment.vue"
 import MessageReply from "./MessageReply.vue"
 import {AllServices} from '../MimicServices/AllServices.js'
 
+/**
+* @vue-data {string} [content] content of the message
+* @vue-data {date} [date]   date of the message
+* @vue-data {string} [title]  title of the message
+* @vue-data {string} [sender] sender of the message
+* @vue-data {string} [ID] ID of the message
+* @vue-data {string} [senderID] ID of the sender of the message
+* @vue-data {integer} [type] type of the message (inbox"1" or sent"0")
+
+
+*/
 export default {
   name: 'Message',
   props:{
@@ -71,8 +71,8 @@ export default {
     ID:String,
     senderID:String,
     type:Number   // sent : 0   // inbox : 1
-    
-    
+
+
   },
   components:{
 'WriteReply':WriteComment,
@@ -91,7 +91,7 @@ export default {
   },
   created () {
     setInterval(() => this.DateFormat(this.date), 1000);
-    
+
   },
   methods:{
      DateFormat:function(date){
@@ -135,10 +135,10 @@ deleteMsg:function(){
         {
         this.showMessage=!this.showMessage;
         }
-   
+
 
     });
-    
+
 },
 /**
      * makes sure that you want to block the sender
@@ -161,7 +161,7 @@ showReplies:function(){
     this.permalink = !this.permalink;
     if(this.permalink){
     AllServices.getReplies(this.ID).then((data) => {
-   if(data){    
+   if(data){
     if(this.type == 1)
         this.typeBar = 0;
     else
@@ -225,7 +225,7 @@ addDemoReply:function(con){
     margin-top:5%;
     width:70%;
     height:auto;
-    
+
 }
 .block-container{
     display:inline;
