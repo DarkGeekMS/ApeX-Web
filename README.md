@@ -5,7 +5,7 @@
 
 ## Brief Description
 
-Front-End code of ApeX, a social media application that mimicks reddit.
+Front-End code of ApeX, a social media application that mimics reddit.
 
 
 ## Utilized Technologies 
