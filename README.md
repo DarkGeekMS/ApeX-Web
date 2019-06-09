@@ -1,9 +1,11 @@
 # ApeX Frontend
+
+### Note: Apex is no longer maintained or deployed!
 [![Build Status](https://travis-ci.com/DarkGeekMS/ApeX-Web.svg?token=kEyZRKsdTeESZQ8KMgx8&branch=master)](https://travis-ci.com/DarkGeekMS/ApeX-Web)
 
 ## Brief Description
 
-This is the repository for frontend code of ApeX, a website mimicking reddit.
+Front-End code of ApeX, a social media application that mimicks reddit.
 
 
 ## Utilized Technologies 
@@ -20,7 +22,7 @@ This is the repository for frontend code of ApeX, a website mimicking reddit.
 ```
 npm install
 ```
-2) Compile for Development:
+2) Serve for Development:
 ```
 npm run serve
 ```
@@ -28,9 +30,6 @@ npm run serve
 ```
 npm run build
 ```
-
-## Host IP
-http://35.232.3.8/
 
 
 ## Website Samples
