@@ -34,8 +34,8 @@ npm run build
 
 ## Website Samples
 
-![](samples/Sample#1.png)
+![sample 0](/samples/sample0.png)
 
-![](samples/Sample#2.png)
+![sample 1](samples/sample1.png)
 
 
