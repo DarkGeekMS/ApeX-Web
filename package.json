@@ -18,7 +18,7 @@
     "@syncfusion/ej2-vue-popups": "^17.1.40",
     "@syncfusion/ej2-vue-richtexteditor": "^17.1.40",
     "@syncfusion/ej2-vue-splitbuttons": "^17.1.38",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "css-loader": "^2.1.1",
     "jquery": "^3.4.0",
     "moment": "^2.24.0",
