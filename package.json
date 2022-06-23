@@ -47,7 +47,7 @@
     "eslint-plugin-vue": "^5.0.0",
     "expect": "^24.5.0",
     "jsdoc-vuejs": "^2.4.3",
-    "jsdom": "^14.0.0",
+    "jsdom": "^16.5.0",
     "jsdom-global": "^3.0.2",
     "mocha": "^6.1.4",
     "mocha-webpack": "^2.0.0-beta.0",
