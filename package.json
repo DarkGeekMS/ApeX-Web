@@ -49,7 +49,7 @@
     "jsdoc-vuejs": "^2.4.3",
     "jsdom": "^14.0.0",
     "jsdom-global": "^3.0.2",
-    "mocha": "^6.1.4",
+    "mocha": "^10.2.0",
     "mocha-webpack": "^2.0.0-beta.0",
     "moxios": "^0.4.0",
     "node-sass": "^4.11.0",
